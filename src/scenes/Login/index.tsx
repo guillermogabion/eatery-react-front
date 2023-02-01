@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import packageJson from "./../../../package.json"
-import { Button } from "react-bootstrap"
+import { Button, Card } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
 import {
@@ -21,6 +21,8 @@ import withReactContent from "sweetalert2-react-content"
 import UserPopup from "../../components/Popup/UserPopup"
 import { history } from "../../helpers"
 import Swal from "sweetalert2";
+import { Image } from 'react-bootstrap';
+import '../../assets/css/login.css'
 const ErrorSwal = withReactContent(Swal);
 const CryptoJS = require("crypto-js")
 
@@ -167,21 +169,25 @@ export const Login = () => {
   }
 
   return (
-    <div className="body">
+    <div className="body body-ground">
       <div className="loginPage">
         <div className="loginbody">
-          <div className="fullWidth">
-            
+          <div className="fullWidth">          
             {!isReset ? (
+              <Card className="card-container">
                 <div className="contentForm">
-                  <h3>Login</h3>
-
+                  <Card.Body className="d-flex align-items-center justify-content-center">
+                    <Image src="https://via.placeholder.com/300/09f.png/ffffff" className="avatar" roundedCircle></Image><br />
+                  </Card.Body>
+                  <Card.Text className="d-flex align-items-center justify-content-center">
+                    <h3>Please Log In</h3>
+                  </Card.Text>
                   <form id="_form" className="loginForm" action="#">
                     <input
                       id="_name"
                       autoComplete="new-password"
                       name="name"
-                      placeholder="User ID"
+                      placeholder="Username or Email"
                       type="text"
                       value={username}
                       className="form-control"
@@ -231,23 +237,11 @@ export const Login = () => {
                     </div>
                     
                   </form>
-                  {/* <div style={{width: '100%',textAlign: "center",}}>
-                  <p
-                    style={{
-                      position: "absolute",
-                      bottom: 0,
-                      textAlign: "center",
-                      width: "1200px",
-                      color: "#003139",
-                    }}>
-                    v{packageJson.version}
-                  </p>
-                  </div> */}
+              
                 </div>
-                
+              </Card> 
             ) : (
               null
-              // <ResetPassword closeReset={setIsReset} tempToken={tempToken} />
             )}
           </div>
         </div>
@@ -255,5 +249,36 @@ export const Login = () => {
       </div>
       
     </div>
+
+    // <div className="back-ground">
+    //   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+    //   <Card className="card-main">
+    //     <Card.Header>
+    //         Login
+    //     </Card.Header>
+    //     <Card.Body>
+    //       <Form>
+    //         <Form.Control type="text" placeholder="Email or Username"></Form.Control>
+    //         <Form.Control  type={visibile ? "text" : "password"} placeholder="Email or Username">
+    //         </Form.Control>
+    //         <Button
+    //           variant="link"
+    //           onClick={() => setVisibile(!visibile)}
+    //           className="passwordicon"
+    //           disabled={!password}>
+    //           <span className="showpass">
+    //             <img src={show_password_dark} alt="Show" />
+    //           </span>
+    //           <span className="hidepass">
+    //             <img src={hide_password_dark} alt="Hide" />
+    //           </span>
+    //           </Button>
+    //       </Form>
+    //     </Card.Body>
+    //   </Card>
+
+    // </div>
+
+    // </div>
   )
 }
