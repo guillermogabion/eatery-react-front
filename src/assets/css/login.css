@@ -1,14 +1,14 @@
-.content {
-   width: 100%;
-   align-items: center;
-   justify-content: center;
+.card-container {
+    padding: 1.5em;
+    box-shadow: 1px 1px 4px #000000;
+    color: white;
+  }
+  .body-ground {
+    background-image: url(../images/login_back.jpg);
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
   
-}
-@media (max-width: 767px) {
-    .content {
-        height: 50vh;
-    }
-}
-.card-main { 
-    width: 18rem;
-}
