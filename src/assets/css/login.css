@@ -1,0 +1,14 @@
+.card-container {
+    padding: 1.5em;
+    box-shadow: 1px 1px 4px #000000;
+    color: white;
+  }
+  .body-ground {
+    background-image: url(../images/login_back.jpg);
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
