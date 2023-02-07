@@ -67,111 +67,11 @@ const MainLeftMenu = () => {
                       />
                     )
                     break
-                  case "report":
-                    loadIcon = <ReportsIcon color={location.pathname === "/reports" ? "#fff" : "#003139"} />
-                    break
-                  case "home":
-                    loadIcon = (
-                      <HomeIcon
-                        color={
-                          ["/transaction/list", "/transaction/add", "/transaction/edit", "transaction/view"].includes(
-                            location.pathname
-                          ) ||
-                            location.pathname.indexOf("transaction/edit") > -1 ||
-                            location.pathname.indexOf("transaction/view") > -1
-                            ? "#fff"
-                            : "#003139"
-                        }
-                      />
-                    )
-                    break
-                  case "client":
-                    loadIcon = (
-                      <ClientsIcon
-                        color={
-                          ["/client/list", "/client/add", "/client/edit", "/client/view"].includes(location.pathname) ||
-                            location.pathname.indexOf("client/edit") > -1 ||
-                            location.pathname.indexOf("client/view") > -1
-                            ? "#fff"
-                            : "#003139"
-                        }
-                      />
-                    )
-                    break
-                  case "billingreport":
-                    loadIcon = (
-                      <ClientsIcon
-                        color={
-                          ["/billingreport", "/billingreport/add", "/billingreport/edit", "/billingreport/view"].includes(location.pathname) ||
-                            location.pathname.indexOf("billingreport/edit") > -1 ||
-                            location.pathname.indexOf("billingreport/view") > -1
-                            ? "#fff"
-                            : "#003139"
-                        }
-                      />
-                    )
-                    break
                   case "changepassword":
                     loadIcon = (
                       <C_Pwd color={["/useriniatedchangepw"].includes(location.pathname) ? "#fff" : "#003139"} />
                     )
                     break
-                  case "adminreport":
-                    loadIcon = <ReportsIcon color={location.pathname === "/adminreport" ? "#fff" : "#003139"} />
-                    break
-                  case "holidaytagging":
-                    loadIcon = (
-                      <Holiday_Icon
-                        color={
-                          ["/holidaytagging/list", "/holidaytagging/view", "/holidaytagging/add", "/holidaytagging/edit"].includes(location.pathname) ||
-                            location.pathname.indexOf("holidaytagging/edit") > -1 ||
-                            location.pathname.indexOf("holidaytagging/view") > -1
-                            ? "#fff"
-                            : "#003139"
-                        }
-                      />
-                    )
-                    break
-                  case "itsetting":
-                    loadIcon = (
-                      <ITSettings
-                        color={
-                          ["/admin/setting"].includes(location.pathname)
-                            ? "#fff"
-                            : "#003139"
-                        }
-                      />
-                    )
-                    break
-                  case "frontendmaintenance":
-                    loadIcon = (
-                      <FrontendmaintenanceIcon
-                        color={[
-                          "frontendmaintenance",
-                          "/frontendmaintenance",
-                          "/frontendmaintenance/edit",
-                          "/frontendmaintenance/add",
-                          "frontendmaintenance/atm/add",
-                          "frontendmaintenance/atm/view",
-                          "frontendmaintenance/atm/edit",
-                          "/frontendmaintenance/cam/add",
-                          "frontendmaintenance/cam/view",
-                          "frontendmaintenance/cam/edit",
-                          "/frontendmaintenance/bsp/view",
-                          "/frontendmaintenance/bsp/add",
-                          "frontendmaintenance/bsp/edit",
-                          "/frontendmaintenance/user-designation/view",
-                          "/frontendmaintenance/user-designation/add",
-                          "frontendmaintenance/user-designation/edit",
-                          "/frontendmaintenance/depository-bank/view",
-                          "/frontendmaintenance/depository-bank/add",
-                          "frontendmaintenance/depository-bank/edit",
-
-                        ].includes(location.pathname) || location.pathname.indexOf("frontendmaintenance") > -1 ? "#fff" : "#003139"}
-                      />
-                    )
-                    break
-
                   default:
                     break
                 }

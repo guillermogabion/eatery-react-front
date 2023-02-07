@@ -34,10 +34,10 @@ export const UserDetails = (props: any) => {
                 <MainLeftMenu />
                 <div className="contentRightSection">
                     <div className="contentRightFrame">
-                        <div className="contentRightTopHeader">
+                        <div className="topHeader">
                             <UserTopMenu title="User Account Details" />
                         </div>
-                        <div className="contentRightcontent">
+                        <div className="contentContainer">
                             <div className="bredcrum">
                                 <ul>
                                     <li>
@@ -47,7 +47,7 @@ export const UserDetails = (props: any) => {
                                 </ul>
                             </div>
                             <div className="contentscrollDiv">
-                                <div className="UserDetailsContainer">
+                                <div className="UserDetailscontentContainer">
                                     <div className="UserDetailsHeader">
                                         <div className="UserIcon">
                                             <img src={userdetail} width="45" alt="user" />

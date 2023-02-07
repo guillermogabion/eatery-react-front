@@ -89,9 +89,6 @@ img {
 }
 
 .body {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   min-height: 100vh;
 }
 
@@ -273,26 +270,7 @@ h1 {
   align-items: center;
 }
 
-/* .passwordField .passwordicon img{
-    max-width: 26px;
-}
-.passwordField input[type="password"] + .passwordicon span{
-    position: relative;
-}
-.passwordField input[type="password"] + .passwordicon span:before{
-    content: "";
-    width: 28px;
-    height: 3px;
-    background: #1F7888;
-    position: absolute;
-    right: 0px;
-    top: 12px;
-    transform: rotate(45deg);
-    border-radius: 3px;
-}
-.passwordField input[type="password"] + .passwordicon img{
-    max-width: 26px;
-} */
+
 .passwordicon:disabled {
   opacity: 0.5;
 }
@@ -729,7 +707,7 @@ h1 {
   color: #ffffff;
 }
 
-.contentRightTopHeader {
+.topHeader {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -755,7 +733,7 @@ h1 {
   column-gap: 20px;
 }
 
-.contentRightTopHeader h1 {
+.topHeader h1 {
   text-align: left;
   font: normal normal bold 35px/22px "Brandon Text";
   letter-spacing: 0px;
@@ -857,7 +835,7 @@ h1 {
 .UserActionsLink {
   position: absolute;
   z-index: 9999;
-  left: -70px;
+  left: -150px;
   top: 100%;
   width: 200px;
   background: #ffffff;
@@ -936,7 +914,7 @@ h1 {
   white-space: nowrap;
 }
 
-.contentRightsearch {
+.filterContainer {
   display: flex;
   align-items: center;
   margin-top: 0px;
@@ -949,7 +927,7 @@ h1 {
   column-gap: 20px;
 }
 
-.contentRightsearch label {
+.filterContainer label {
   text-align: left;
   font: normal normal 600 16px/22px "Source Sans Pro", sans-serif;
   letter-spacing: 0px;
@@ -1039,10 +1017,10 @@ select {
   text-overflow: "";
 }
 
-.contentRightcontent {
+.contentContainer {
   padding-top: 20px;
   padding-left: 32px;
-  padding-right: 0;
+  padding-right: 0px;
   padding-bottom: 10px;
 }
 
@@ -2354,7 +2332,7 @@ input::-ms-reveal {
   border: none;
 }
 
-.swal2-html-container {
+.swal2-html-contentContainer {
   margin: 0 !important;
 }
 
@@ -3122,11 +3100,11 @@ input::-ms-reveal {
   color: red;
 }
 
-.tabcontent .contentRightsearch {
+.tabcontent .filterContainer {
   flex-wrap: wrap;
 }
 
-.tabcontent .contentRightsearch label {
+.tabcontent .filterContainer label {
   width: 100%;
   margin-bottom: 0.5rem;
 }
@@ -3329,7 +3307,7 @@ input::-ms-reveal {
     width: 100%;
   }
 
-  .contentRightTopHeader {
+  .topHeader {
     padding: 0;
   }
 
@@ -3337,7 +3315,7 @@ input::-ms-reveal {
     flex-wrap: wrap;
   }
 
-  .contentRightTopHeader h1 {
+  .topHeader h1 {
     font: normal normal bold 20px/22px "Brandon Text";
     padding: 15px;
   }
@@ -3395,7 +3373,7 @@ input::-ms-reveal {
     display: none;
   }
 
-  .contentRightsearch {
+  .filterContainer {
     display: none;
   }
 
@@ -3422,7 +3400,7 @@ input::-ms-reveal {
     padding-right: 0;
   }
 
-  .contentRightcontent {
+  .contentContainer {
     padding: 0 15px;
     margin-bottom: 15px;
   }
@@ -3950,7 +3928,7 @@ table.infoBreakdown th:first-child {
     width: 100%;
   }
 
-  .contentRightTopHeader {
+  .topHeader {
     padding: 0;
   }
 
@@ -3958,7 +3936,7 @@ table.infoBreakdown th:first-child {
     flex-wrap: wrap;
   }
 
-  .contentRightTopHeader h1 {
+  .topHeader h1 {
     font: normal normal bold 20px/22px "Brandon Text";
     padding: 15px;
   }
@@ -4016,7 +3994,7 @@ table.infoBreakdown th:first-child {
     display: none;
   }
 
-  .contentRightsearch {
+  .filterContainer {
     display: none;
   }
 
@@ -4043,7 +4021,7 @@ table.infoBreakdown th:first-child {
     padding-right: 0;
   }
 
-  .contentRightcontent {
+  .contentContainer {
     padding: 0 15px;
     margin-bottom: 15px;
   }
@@ -4447,7 +4425,7 @@ strong {
     width: 100%;
   }
 
-  .contentRightTopHeader {
+  .topHeader {
     padding: 0;
   }
 
@@ -4455,7 +4433,7 @@ strong {
     flex-wrap: wrap;
   }
 
-  .contentRightTopHeader h1 {
+  .topHeader h1 {
     font: normal normal bold 20px/22px "Brandon Text";
     padding: 15px;
   }
@@ -4513,7 +4491,7 @@ strong {
     display: none;
   }
 
-  .contentRightsearch {
+  .filterContainer {
     display: none;
   }
 
@@ -4540,7 +4518,7 @@ strong {
     padding-right: 0;
   }
 
-  .contentRightcontent {
+  .contentContainer {
     padding: 0 15px;
     margin-bottom: 15px;
   }
@@ -5299,7 +5277,7 @@ strong {
   overflow: hidden !important
 }
 
-.UserDetailsContainer {
+.UserDetailscontentContainer {
   padding-left: 35px;
 }
 
@@ -5641,22 +5619,6 @@ td.pendingLabel .active {
   opacity: 1;
 }
 
-.cut-off-time-btn{
-    background: #73bf45 0% 0% no-repeat padding-box;
-    border-radius: 5px;
-    padding: 10px 20px;
-    opacity: 1;
-    border: 0;
-    text-align: center;
-    font: normal normal 600 14px/22px "Source Sans Pro", sans-serif;
-    letter-spacing: 0px;
-    color: #ffffff;
-    text-transform: uppercase;
-    margin: 0 10px;
-    width: 100px;
-}
-/* Front-End Maintenance */
-
 
 .fieldsecectYwoCol {
   display: grid;
@@ -5708,83 +5670,7 @@ td.pendingLabel .active {
   font-size: 18px;
   line-height: 1;
 }
-.frontEndTwolColTitle h4{
-  letter-spacing: -0.27px;
-  color: #308693;
-  text-transform: uppercase;
-  font-size: 16px;
-}
 
-
-.frontEndTwolColTitle {
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.frontEndTwolColTitle button.addUser {
-  font-size: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
-  grid-gap: 5px;
-}
-.frontEndManagementList {
-  margin-top: 30px;
-  margin-bottom: 30px;
-  padding: 0;
-  max-height:500px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-table.frontEndManagementListTable{
-  margin-bottom: 3rem;
-}
-table.frontEndManagementListTable th:first-child {
-  width: 150px;
-}
-
-table.frontEndManagementListTable th {
-  letter-spacing: -0.24px;
-  color: #385E64;
-  text-transform: uppercase;
-}
-
-table.frontEndManagementListTable td {
-  letter-spacing: -0.24px;
-  color: #003139;
-  text-transform: uppercase;
-  height: 32px;
-}
-
-table.frontEndManagementListTable tr {
-  background: #f7f7f7;
-}
-
-table.frontEndManagementListTable tr:first-child {
-  background: #ffffff;
-}
-.addServicePopup .modalreportGenerationContent{
-  min-height: 300px;
-  max-height: 350px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-}
-table.frontEndManagementListpopupTable th:first-child {
-  width: auto;
-}
-table.frontEndManagementListpopupTable th:last-child {
-  width: 100px;
-}
-table.frontEndManagementListpopupTable th {
-  color: #1F7888;
-  font-size: 12px;
-}
-table.frontEndManagementListpopupTable td {
-  color: #1F7888;
-  font-size: 12px;
-}
 .addServicePopup .modalBody {
   max-width: 780px;
 }
@@ -5820,86 +5706,10 @@ table.frontEndManagementListpopupTable td {
   margin-bottom: 2rem !important;
 }
 
-.frontEndManagementTabItems {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-flow: column;
-  border: 0.5px solid #73BF45;
-  border-radius: 5px;
-}
-.frontEndManagementTabItems li {
-  text-align: center;
-  padding: 0.5rem;
-  color: #03505D;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.frontEndManagementTabItems li:not(:last-child) {border-right: 0.5px solid #73BF45;}
-.frontEndManagementTabItems li.active {
-  background: #73BF45;
-  color: #ffffff;
-}
-
-.frontEndManagementsearch {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: max-content 1fr;
-  grid-gap: 1rem;
-  align-items: center;
-  margin: 1rem 0;
-}
-
-.frontEndManagementsearch .fieldtext {
-  margin-bottom: 0;
-}
-
-.frontEndManagementsearch .searchForm {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 160px 160px 160px 160px max-content;
-  grid-gap: 0;
-}
-
-.frontEndManagementsearch label {
-  color: #003139;
-  font-weight: 600;
-}
-.frontEndManagementTable .action {
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: center;
-  grid-gap: 1rem;
-}
-ul.frontEndManagementLists {
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  margin-top: 0.5rem;
-}
-.contentscrollDiv1{
-  padding-right: 30px;
-}
-/* Front-End Maintenance */
-
-.border-button{
-  border: 1px solid #73bf45;
-  background: transparent;
-  color: #73bf45;
-  padding: 0 51px;
-}
-/* Front-End Maintenance */
-
-.swal2-container{
+.swal2-contentContainer{
   z-index: 9999 !important;
 }
-.card-container {
+.card-contentContainer {
   padding: 1.5em;
   box-shadow: 1px 1px 4px #000000;
   color: white;

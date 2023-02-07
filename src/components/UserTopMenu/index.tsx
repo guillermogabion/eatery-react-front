@@ -45,10 +45,7 @@ const UserTopMenu = (props: any) => {
     }
 
   }
-  const userGuide = () => {
-    window.open(user_guide, "_blank")
 
-  }
   return (
     <div className="contentRightMain">
       <div className="MobileHeader">
@@ -59,7 +56,7 @@ const UserTopMenu = (props: any) => {
           <img src={RBank_Digital_Logo} alt="RBank" />
         </a>
         <div className="mobileHeaderRight">
-          <UserNotifications />
+          {/* <UserNotifications /> */}
           <div className="MobileUserdetail">
             <div className="UserIcon">
               <img src={user} alt="user" />
@@ -91,7 +88,11 @@ const UserTopMenu = (props: any) => {
           </div>
         </div>
       </div>
-      <h1>{props.title}</h1>
+      <h1>
+      <a className="logo" href="/">
+          <img src={"https://via.placeholder.com/55/09f.png/ffffff"} alt="RBank" />
+        </a>
+      </h1>
       <div className="TopHeaderRight">
         {search ? (
           <div className="mainSearch">
@@ -129,41 +130,56 @@ const UserTopMenu = (props: any) => {
             ) : null}
           </div>
         ) : null}
-        <UserNotifications />
-        <div className="todayDate">
-          Today is <br />
-          <i>{moment().format("DD MMM YYYY")}</i>
-        </div>
         <div className="UserAction" onClick={closePopup}>
           <div className="UserdetailWrap">
             <div className="UserIcon">
               <img src={user} alt="user" />
             </div>
             <div className="Userdetail">
-              <h3>Hello {userData.username}</h3>
+              <h3>Employee  {userData.username}</h3>
               {/* <small>{`00${soleId}`}<br />{userData.unit}</small> */}
               <small>
-                {userData.solId}
-                <br />
-                {userData.unit}
+                Squad Ingenaire
               </small>
+            </div>
+          </div>
+        </div>
+        <div className="UserAction" onClick={closePopup}>
+          <div className="UserdetailWrap">
+            <div className="UserIcon">
+              <img src={user} alt="user" />
             </div>
           </div>
           {userAction ?
             <div className="UserActionsLink">
               <small>
-                <NavLink to={"/userdetails"}>
-                  User Account Details
+                <NavLink to={"/user/list"}>
+                  User Management
                 </NavLink>
               </small>
               <br />
-              <NavLink to={"#"}
+              <small>
+                <NavLink to={"/role/list"}>
+                  Role Management
+                </NavLink>
+              </small>
+              <br />
+              <small>
+                <NavLink to={"/useriniatedchangepw"}>
+                  Profile
+                </NavLink>
+              </small>
+              <br />
+              <NavLink
+                activeClassName="active"
+                to={"/logout"}
                 onClick={() => {
-                  userGuide()
+                  Utility.deleteUserData()
+                  dispatch({ type: "IS_LOGIN", payload: false })
                 }}>
-                <small>
-                  User Guide
-                </small>
+                <span>
+                  <span>Logout</span>
+                </span>
               </NavLink>
             </div>
             : null

@@ -264,13 +264,10 @@ export const Role = (props: any) => {
   return (
     <div className="body">
       <div className="wraper">
-        <MainLeftMenu />
-        <div className="contentRightSection">
-          <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
+            <div className="topHeader">
               <UserTopMenu title="User Management" search={false} />
             </div>
-            <div className="contentRightcontent">
+            <div className="contentContainer">
               <div className="contentbuttonSet">
                 {accessRights.includes("Can_Add_Edit_Role") ? (
                   <Button type="button" onClick={() => history.push("/role/add")} className="addUser">
@@ -334,8 +331,6 @@ export const Role = (props: any) => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   )
 }

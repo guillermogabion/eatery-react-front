@@ -309,10 +309,10 @@ export const RoleAdd = (props: any) => {
           <MainLeftMenu />
           <div className="contentRightSection">
             <div className="contentRightFrame">
-              <div className="contentRightTopHeader">
+              <div className="topHeader">
                 <UserTopMenu title="User Management" search={false} />
               </div>
-              <div className="contentRightcontent">
+              <div className="contentContainer">
                 <div className="bredcrum">
                   <ul>
                     <li onClick={() => history.push("/role/list")}>

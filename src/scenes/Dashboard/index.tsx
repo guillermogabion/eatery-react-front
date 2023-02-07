@@ -185,10 +185,10 @@ export const Dashboard = (props: any) => {
         <MainLeftMenu />
         <div className="contentRightSection">
           <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
+            <div className="topHeader">
               <UserTopMenu title={userId ? "Edit User" : "Add User"} />
             </div>
-            <div className="contentRightcontent" style={{ paddingTop: "15px" }}>
+            <div className="contentContainer" style={{ paddingTop: "15px" }}>
               {userId ? (
                 <div>
                   <div className="bredcrum">

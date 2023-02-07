@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react"
 import { Button, Tooltip, Overlay } from "react-bootstrap"
 import { edit, icon_plus_add, icon_delete, dlt, pagination_right, pagination_left } from "../../assets/images"
-import MainLeftMenu from "./../../components/MainLeftMenu"
 import UserTopMenu from "../../components/UserTopMenu"
 import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
@@ -275,74 +274,72 @@ export const UserList = (props: any) => {
   return (
     <div className="body">
       <div className="wraper">
-        <MainLeftMenu />
-        <div className="contentRightSection">
-          <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
+            <div className="topHeader" >
               <UserTopMenu title="User Management" />
-              <div className="contentRightsearch">
-                <label>Search By</label>
-                <form action="#!" className="searchForm">
-                  <div className="fieldName">
-                    <input
-                      name="name"
-                      placeholder="User ID"
-                      type="text"
-                      className="formControl"
-                      onKeyDown={(evt: any) =>
-                        ((evt.target.value == "" && evt.key == " ") || !/^[a-zA-Z0-9-,.@_ ]+$/gi.test(evt.key)) &&
-                        evt.preventDefault()
-                      }
-                      onChange={(e) => {
-                        makeFilterData(e)
-                      }}
-                      value={filterData && filterData['name']}
-                    />
-                  </div>
-                  <div className="fieldStatus ">
-                    <SingleSelect
-                      type="string"
-                      options={status}
-                      placeholder={"Select Status"}
-                      onChangeOption={singleChangeOption}
-                      name="statusId"
-                      value={filterData && filterData['statusId']}
-                    />
-
-                  </div>
-                  <div className="fieldRole">
-                    <SingleSelect
-                      type="string"
-                      options={user_master_Data.roles || []}
-                      placeholder={"Select Role"}
-                      onChangeOption={singleChangeOption}
-                      name="roleId"
-                      value={filterData && filterData['roleId']}
-                    />
-                  </div>
-                  <div className="fieldLocation">
-                    <SingleSelect
-                      type="string"
-                      options={units}
-                      placeholder={"Select Location"}
-                      onChangeOption={singleChangeOption}
-                      name="unitId"
-                      value={filterData && filterData['unitId']}
-                    />
-                  </div>
-                  <Button
-                    variant="link"
-                    className="searchBtn"
-                    onClick={() => {
-                      dispatch({ type: "SET_TOP_SEARCH", payload: "" })
-                      getFetchData(0)
-                    }}>
-                    Search
-                  </Button>
-                </form>
-              </div>
             </div>
-            <div className="contentRightcontent">
+            <div className="contentContainer">
+              <div className="filterContainer">
+                  <label>Search By</label>
+                  <form action="#!" className="searchForm">
+                    <div className="fieldName">
+                      <input
+                        name="name"
+                        placeholder="User ID"
+                        type="text"
+                        className="formControl"
+                        onKeyDown={(evt: any) =>
+                          ((evt.target.value == "" && evt.key == " ") || !/^[a-zA-Z0-9-,.@_ ]+$/gi.test(evt.key)) &&
+                          evt.preventDefault()
+                        }
+                        onChange={(e) => {
+                          makeFilterData(e)
+                        }}
+                        value={filterData && filterData['name']}
+                      />
+                    </div>
+                    <div className="fieldStatus ">
+                      <SingleSelect
+                        type="string"
+                        options={status}
+                        placeholder={"Select Status"}
+                        onChangeOption={singleChangeOption}
+                        name="statusId"
+                        value={filterData && filterData['statusId']}
+                      />
+
+                    </div>
+                    <div className="fieldRole">
+                      <SingleSelect
+                        type="string"
+                        options={user_master_Data.roles || []}
+                        placeholder={"Select Role"}
+                        onChangeOption={singleChangeOption}
+                        name="roleId"
+                        value={filterData && filterData['roleId']}
+                      />
+                    </div>
+                    <div className="fieldLocation">
+                      <SingleSelect
+                        type="string"
+                        options={units}
+                        placeholder={"Select Location"}
+                        onChangeOption={singleChangeOption}
+                        name="unitId"
+                        value={filterData && filterData['unitId']}
+                      />
+                    </div>
+                    <Button
+                      variant="link"
+                      className="searchBtn"
+                      onClick={() => {
+                        dispatch({ type: "SET_TOP_SEARCH", payload: "" })
+                        getFetchData(0)
+                      }}>
+                      Search
+                    </Button>
+                  </form>
+                </div>
+              <br />
               <div className="contentbuttonSet">
                 {accessRights.includes("Can_Add_Edit_User") ? (
                   <Button type="button" className="addUser" onClick={() => history.push({ pathname: "/user/add" })}>
@@ -704,8 +701,6 @@ export const UserList = (props: any) => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   )
 }

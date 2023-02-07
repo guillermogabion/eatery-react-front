@@ -169,13 +169,13 @@ export const Login = () => {
   }
 
   return (
-    <div className="body body-ground">
+    <div className="body body-ground d-flex align-items-center">
       <div className="loginPage">
         <div className="loginbody">
           <div className="fullWidth">          
             {!isReset ? (
               <Card className="card-container">
-                <div className="contentForm">
+                <div className="contentForm"> 
                   <Card.Body className="d-flex align-items-center justify-content-center">
                     <Image src="https://via.placeholder.com/300/09f.png/ffffff" className="avatar" roundedCircle></Image><br />
                   </Card.Body>
@@ -235,7 +235,19 @@ export const Login = () => {
                         Login
                       </Button>
                     </div>
-                    
+                    <br />
+                    <p
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      textAlign: "center",
+                      width: "auto",
+                      color: "gray"
+                    }}>
+                    v{packageJson.version}
+                  </p>
                   </form>
               
                 </div>

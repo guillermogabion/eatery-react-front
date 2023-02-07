@@ -49,7 +49,7 @@ export const User = (props: any) => {
         </aside>
         <div className="contentRightSection">
           <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
+            <div className="topHeader">
               <div className="contentRightMain">
                 <h1>User Management</h1>
                 <div className="TopHeaderRight">
@@ -104,7 +104,7 @@ export const User = (props: any) => {
                 </div>
               </div>
             </div>
-            <div className="contentRightcontent">
+            <div className="contentContainer">
               <div className="contentbuttonSet">
                 <button type="button" className="addUser">
                   <span>+</span>ADD NEW ROLE

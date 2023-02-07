@@ -9,10 +9,10 @@ export const NotFound = () => {
         <MainLeftMenu />
         <div className="contentRightSection">
           <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
+            <div className="topHeader">
               <UserTopMenu search={false} />
             </div>
-            <div className="contentRightcontent" style={{ paddingTop: "15px" }}>
+            <div className="contentContainer" style={{ paddingTop: "15px" }}>
               <h3 style={{ textAlign: "center" }}>Page Not found</h3>
             </div>
           </div>

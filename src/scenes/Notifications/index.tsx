@@ -331,10 +331,10 @@ export const Notifications = (props: any) => {
         <MainLeftMenu />
         <div className="contentRightSection">
           <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
+            <div className="topHeader">
               <UserTopMenu title="Notifications" />
             </div>
-            <div className="contentRightcontent">
+            <div className="contentContainer">
               <div className="bredcrum">
                 <ul>
                   <li>

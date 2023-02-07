@@ -102,15 +102,13 @@ export const ChangePassword = (props: any) => {
   const [errorConPass, setErrorConPass] = useState<any>([])
 
   return (
-    <div className="body">
+    <div className="body" >
       <div className="wraper">
-        <MainLeftMenu />
-        <div className="contentRightSection">
-          <div className="contentRightFrame">
-            <div className="contentRightTopHeader">
-              <UserTopMenu title={`Change Password`} search={false} />
+        <div className="w-100">
+            <div className="topHeader">
+              <UserTopMenu title={`Change Password`} />
             </div>
-            <div className="contentRightcontent">
+            <div className="contentContainer">
               <div className="ForgotPassword">
                 {!isSuccess ? (
                   <div className="contentForm">
@@ -203,7 +201,6 @@ export const ChangePassword = (props: any) => {
                   </div>
                 )}
               </div>
-            </div>
           </div>
         </div>
       </div>
