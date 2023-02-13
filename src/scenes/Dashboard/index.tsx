@@ -182,9 +182,7 @@ export const Dashboard = (props: any) => {
   return (
     <div className="body">
       <div className="wraper">
-        <MainLeftMenu />
-        <div className="contentRightSection">
-          <div className="contentRightFrame">
+        <div className="w-100">
             <div className="topHeader">
               <UserTopMenu title={userId ? "Edit User" : "Add User"} />
             </div>
@@ -472,7 +470,6 @@ export const Dashboard = (props: any) => {
               </Formik>
             </div>
           </div>
-        </div>
       </div>
     </div>
   )

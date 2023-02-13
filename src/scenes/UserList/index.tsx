@@ -347,6 +347,12 @@ export const UserList = (props: any) => {
                     <img src={icon_plus_add} alt="ADD NEW ROLE" /> Add New User
                   </Button>
                 ) : null}
+                {accessRights.includes("Can_Add_Edit_User") ? (
+                  <Button type="button" className="addUser" onClick={() => history.push({ pathname: "/user/add" })}>
+                    {" "}
+                    <img src={icon_plus_add} alt="ADD NEW ROLE" /> Import Users
+                  </Button>
+                ) : null}
                 {accessRights.includes("Can_Delete_User") ? (
                   <button
                     disabled={!deleteIDs.length}

@@ -306,9 +306,7 @@ export const RoleAdd = (props: any) => {
     <div>
       <div className="body">
         <div className="wraper">
-          <MainLeftMenu />
-          <div className="contentRightSection">
-            <div className="contentRightFrame">
+          <div className="w-100">
               <div className="topHeader">
                 <UserTopMenu title="User Management" search={false} />
               </div>
@@ -378,7 +376,6 @@ export const RoleAdd = (props: any) => {
               </div>
             </div>
           </div>
-        </div>
       </div>
       <aside id="CreateRole" className="modalPopup" style={{ display: showPopup ? "flex" : "none" }}>
         <div className="modalBody">
