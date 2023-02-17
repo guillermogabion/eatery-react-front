@@ -1,5 +1,5 @@
 const Api: any = {
-  Login: process.env.REACT_APP_API_URL + "auth/token",
+  Login: process.env.REACT_APP_API_URL + "user/auth/token",
   USERS: process.env.REACT_APP_API_URL + "users",
   USERSTATUS: process.env.REACT_APP_API_URL + "userStatus",
   USERDESIGNATIONS: process.env.REACT_APP_API_URL + "userDesignations",

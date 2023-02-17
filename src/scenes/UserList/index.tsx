@@ -311,7 +311,7 @@ export const UserList = (props: any) => {
                     <div className="fieldRole">
                       <SingleSelect
                         type="string"
-                        options={user_master_Data.roles || []}
+                        options={[]}
                         placeholder={"Select Role"}
                         onChangeOption={singleChangeOption}
                         name="roleId"

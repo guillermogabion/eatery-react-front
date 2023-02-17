@@ -21,6 +21,7 @@ const UserTopMenu = (props: any) => {
   const [errorTopSearch, setErrorTopSearch] = useState("")
   const [userAction, setUserAction] = useState(false)
   const [searchText, setSearchText] = useState("")
+  const setCurrentRoutePath = (path: string) => dispatch({ type: "SET_CURENT_ROUTE_PATH", payload: path })
 
   const searchTop = useCallback(() => {
     if (!topSearch && !searchText) {
@@ -153,19 +154,37 @@ const UserTopMenu = (props: any) => {
           {userAction ?
             <div className="UserActionsLink">
               <small>
-                <NavLink to={"/user/list"}>
+                <NavLink to={"/dashboard"} 
+                  onClick={() => {
+                    setCurrentRoutePath("/dashboard")
+                  }}>
+                  Dashboard
+                </NavLink>
+              </small>
+              <br />
+              <small>
+                <NavLink to={"/user/list"}
+                onClick={() => {
+                  setCurrentRoutePath("/user/list")
+                }}>
                   User Management
                 </NavLink>
               </small>
               <br />
               <small>
-                <NavLink to={"/role/list"}>
+                <NavLink to={"/role/list"}
+                onClick={() => {
+                  setCurrentRoutePath("/role/list")
+                }}>
                   Role Management
                 </NavLink>
               </small>
               <br />
               <small>
-                <NavLink to={"/useriniatedchangepw"}>
+                <NavLink to={"/useriniatedchangepw"}
+                  onClick={() => {
+                    setCurrentRoutePath("/useriniatedchangepw")
+                  }}>
                   Profile
                 </NavLink>
               </small>
