@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import packageJson from "./../../../package.json"
-import { Button, Card } from "react-bootstrap"
+import { Button, Card, Image } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
 import {
@@ -21,7 +21,6 @@ import withReactContent from "sweetalert2-react-content"
 import UserPopup from "../../components/Popup/UserPopup"
 import { history } from "../../helpers"
 import Swal from "sweetalert2";
-import { Image } from 'react-bootstrap';
 import '../../assets/css/login.css'
 const ErrorSwal = withReactContent(Swal);
 const CryptoJS = require("crypto-js")
@@ -61,7 +60,6 @@ export const Login = () => {
           if (body.error && body.error.message){
             setErrorMessage(body.error.message)
           }else{
-
             Utility.clearOnLoginTimer()
             const { accessToken, changePassword = false, roleId, refreshToken } = body.data
             if (changePassword) {
@@ -70,7 +68,7 @@ export const Login = () => {
             } else {
               window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
               window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
-
+              
               window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
               console.log(moment().format("DD/MM/YYYY H:mm:ss a"))
               const userObj = { ...body }

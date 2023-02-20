@@ -2,78 +2,191 @@ import { useCallback, useState } from "react"
 import moment from "moment"
 import { useSelector, useDispatch } from "react-redux"
 import Accordion from 'react-bootstrap/Accordion';
+import { NavLink } from "react-router-dom";
+
 const DashboardMenu = (props: any) => {
     const { search = true } = props
     const dispatch = useDispatch()
-    const [menu, setMenu] = useState([
+    const [nav, setNav] = useState([
         {
             "name": "Attendance",
             "menu": [
-                "Overview",
-                "Leaves & Absences",
-                "Official Business",
-                "Summary"
+                {
+                    'name': 'Time In & Time Out',
+                    'link': '/attendance'
+                },
+                {
+                    'name': 'Leaves & Time off',
+                    'link': '/leaves/timeoff'
+
+                },
+                {
+                    'name': 'Overtime & Undertime',
+                    'link': '/overtime/undertime'
+
+                },
+                {
+                    'name': 'Attendance Correction',
+                    'link': '/attendance/correction'
+
+                },
+                {
+                    'name': 'Schedule Adjustment',
+                    'link': '/schedule/adjustment'
+
+                },
+                {
+                    'name': 'Summary',
+                    'link': '/summary'
+
+                },
             ]
         },
         {
             "name": "Resolution Center",
             "menu": [
-                "Attendance Logs",
-                "HR Memo",
-                "Overtime & Undertime",
-                "Employee Requirements"
+                {
+                    'name': 'Time In & Time Out',
+                    'link': '/attendance'
+                },
+                {
+                    'name': 'Leaves & Time off',
+                    'link': '/leaves/timeoff'
+
+                },
+                {
+                    'name': 'Overtime & Undertime',
+                    'link': '/overtime/undertime'
+
+                },
+                {
+                    'name': 'Attendance Correction',
+                    'link': '/attendance/correction'
+
+                },
+                {
+                    'name': 'Schedule Adjustment',
+                    'link': '/schedule/adjustment'
+
+                },
+                {
+                    'name': 'Summary',
+                    'link': '/summary'
+
+                },
             ]
         },
         {
             "name": "Resolution Center",
             "menu": [
-                "Attendance Logs",
-                "HR Memo",
-                "Overtime & Undertime",
-                "Employee Requirements"
+                {
+                    'name': 'Time In & Time Out',
+                    'link': '/attendance'
+                },
+                {
+                    'name': 'Leaves & Time off',
+                    'link': '/leaves/timeoff'
+
+                },
+                {
+                    'name': 'Overtime & Undertime',
+                    'link': '/overtime/undertime'
+
+                },
+                {
+                    'name': 'Attendance Correction',
+                    'link': '/attendance/correction'
+
+                },
+                {
+                    'name': 'Schedule Adjustment',
+                    'link': '/schedule/adjustment'
+
+                },
+                {
+                    'name': 'Summary',
+                    'link': '/summary'
+
+                },
+                {
+                    'name': 'Summary1',
+                    'link': '/summary1'
+
+                },
+            ]
+        },
+        {
+            "name": "Resolution Center",
+            "menu": [
+                {
+                    'name': 'Time In & Time Out',
+                    'link': '/attendance'
+                },
+                {
+                    'name': 'Leaves & Time off',
+                    'link': '/leaves/timeoff'
+
+                },
+                {
+                    'name': 'Overtime & Undertime',
+                    'link': '/overtime/undertime'
+
+                },
+                {
+                    'name': 'Attendance Correction',
+                    'link': '/attendance/correction'
+
+                },
+                {
+                    'name': 'Schedule Adjustment',
+                    'link': '/schedule/adjustment'
+
+                },
+                {
+                    'name': 'Summary',
+                    'link': '/summary'
+                },
             ]
         },
     ])
 
     return (
         <Accordion defaultActiveKey="0" alwaysOpen>
-            <Accordion.Item eventKey="0" style={{ borderRadius: 0 }}>
-                <Accordion.Header >Accordion Item #1</Accordion.Header>
-                <Accordion.Body className="p-0 cursor-pointer">
-                    <div className="text-center d-flex align-items-center justify-content-center cursor-pointer bg-danger" style={{ minHeight: 60 }}>Time in & Time out</div>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1" style={{ borderRadius: 0 }}>
-                <Accordion.Header >Accordion Item #1</Accordion.Header>
-                <Accordion.Body className="p-0 cursor-pointer">
-                    <div className="text-center d-flex align-items-center justify-content-center cursor-pointer bg-danger" style={{ minHeight: 60 }}>Time in & Time out</div>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2" style={{ borderRadius: 0 }}>
-                <Accordion.Header >Accordion Item #1</Accordion.Header>
-                <Accordion.Body className="p-0 cursor-pointer">
-                    <div className="text-center d-flex align-items-center justify-content-center cursor-pointer bg-danger" style={{ minHeight: 60 }}>Time in & Time out</div>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3" style={{ borderRadius: 0 }}>
-                <Accordion.Header >Accordion Item #1</Accordion.Header>
-                <Accordion.Body className="p-0 cursor-pointer">
-                    <div className="text-center d-flex align-items-center justify-content-center cursor-pointer bg-danger" style={{ minHeight: 60 }}>Time in & Time out</div>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="4" style={{ borderRadius: 0 }}>
-                <Accordion.Header>Accordion Item #2</Accordion.Header>
-                <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </Accordion.Body>
-            </Accordion.Item>
+            {
+                nav.length > 0 && nav.map((d: any, index: any) => {
+                    const { name , menu} = d
+
+                    return (
+                        <Accordion.Item eventKey={index} key={index} style={{ borderRadius: 0 }}>
+                            <Accordion.Header >{name}</Accordion.Header>
+                            <Accordion.Body className="p-0 cursor-pointer">
+                                {
+                                    menu.length > 0 && menu.map((menu_data: any, menu_index: any) => {
+                                        const { name, link} = menu_data
+                                        return (
+                                            <NavLink
+                                                key = {menu_index}
+                                                activeClassName="active"
+                                                className="text-center d-flex align-items-center justify-content-center cursor-pointer bg-danger"
+                                                style={{ minHeight: 60, color: 'white', textDecoration: 'none' }}
+                                                to={link}
+                                                onClick={() => {
+                                                    alert('Go to ' + name)
+                                                }}>
+                                                <span>
+                                                <span>{name}</span>
+                                                </span>
+                                            </NavLink>
+                                        )
+                                    })
+                                }
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    )
+                })
+            }
         </Accordion>
     )
 }
+
 export default DashboardMenu

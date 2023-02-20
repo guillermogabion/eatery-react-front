@@ -47,6 +47,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     routes.push({ path: "/userdetails", component: UserDetails })
     routes.push({ path: "/dashboard", component: Dashboard })
     routes.push({ path: "/useriniatedchangepw", component: ChangePassword })
+    routes.push({ path: "/attendance", component: Dashboard })
 
     switch (d) {
       // User Access
