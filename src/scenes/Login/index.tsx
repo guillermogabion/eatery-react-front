@@ -27,8 +27,8 @@ const CryptoJS = require("crypto-js")
 
 export const Login = () => {
   const dispatch = useDispatch()
-  const [username, setUsername] = useState<any>("Admin")
-  const [password, setPassword] = useState<any>("Admin")
+  const [username, setUsername] = useState<any>("")
+  const [password, setPassword] = useState<any>("")
   const [visibile, setVisibile] = useState<any>(false)
   const [errorMessage, setErrorMessage] = useState<any>("")
   const [isForgot, setIsForgot] = useState<any>(false)
