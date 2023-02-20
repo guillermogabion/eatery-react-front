@@ -717,7 +717,7 @@ h1 {
   background: #f7f7f7 0% 0% no-repeat padding-box;
   padding-bottom: 20px;
   padding-right: 30px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .contentRightMain {

@@ -83,7 +83,7 @@ const UserPopup = (props: any) => {
           </div>
           <div className="modalContent">
             <div className="sucessContent">
-              <img src={iconCustom ? iconCustom : iconContent} alt="cm upload" />
+              {/* <img src={iconCustom ? iconCustom : iconContent} alt="cm upload" /> */}
               <h3>{title}</h3>
               {midContent}
               <label>{description}</label>

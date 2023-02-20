@@ -1,5 +1,6 @@
 export * from "./Login"
 export * from "./ForgotPassword"
+export * from "./UserForm"
 export * from "./Dashboard"
 export * from "./UserList"
 export * from "./Role"

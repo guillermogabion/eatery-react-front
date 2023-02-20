@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import {
   Login,
-  Dashboard,
+  UserForm,
   ForgotPassword,
   UserList,
   Role,
@@ -12,6 +12,7 @@ import {
   Notifications,
   ChangePassword,
   UserDetails,
+  Dashboard
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -25,13 +26,12 @@ const Privateroutes: React.FunctionComponent = (props) => {
   const isLogin = useSelector((state: any) => state.rootReducer.isLogin)
   const originalUser = CryptoJS.AES.decrypt(sessionStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
   const decoded: any = originalUser ? jwt_decode(originalUser) : {}
-
+  
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
         // const originalRole = CryptoJS.AES.decrypt(sessionStorage.getItem('_ug583k'), 'process.env.REACT_APP_ENCRYPTION_KEY').toString(CryptoJS.enc.Utf8);
         if (decoded.sub && decoded.exp && !isLogin) {
-          //userActiveTime = Number(sessionStorage.getItem("_setSessionTimer"))
           Utility.startResetTokenTimer()
           dispatch({ type: "IS_LOGIN", payload: true })
         }
@@ -41,10 +41,13 @@ const Privateroutes: React.FunctionComponent = (props) => {
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
 
   const routes: any = []
+  
   accessRights.forEach((d: any) => {
     routes.push({ path: "/notifications", component: Notifications })
     routes.push({ path: "/userdetails", component: UserDetails })
+    routes.push({ path: "/dashboard", component: Dashboard })
     routes.push({ path: "/useriniatedchangepw", component: ChangePassword })
+    routes.push({ path: "/attendance", component: Dashboard })
 
     switch (d) {
       // User Access
@@ -53,8 +56,8 @@ const Privateroutes: React.FunctionComponent = (props) => {
         routes.push({ path: "/user/view", component: UserView })
         break
       case "Can_Add_Edit_User":
-        routes.push({ path: "/user/add", component: Dashboard })
-        routes.push({ path: "/user/edit", component: Dashboard })
+        routes.push({ path: "/user/add", component: UserForm })
+        routes.push({ path: "/user/edit", component: UserForm })
         break
       case "Can_Read_Role":
         routes.push({ path: "/role/list", component: Role })
