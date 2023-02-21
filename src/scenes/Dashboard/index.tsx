@@ -32,31 +32,58 @@ export const Dashboard = (props: any) => {
         "status" : "On-Time"
     }
       
-      // RequestAPI.postRequest(Api.timeIn, "", payload, {}, async (res: any) => {
-      //   const { status, body = { data: {}, error: {} } }: any = res
-      //   if (status === 200 || status === 201) {
-      //     if (body.error && body.error.message){
-      //       ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
-      //     }else{
-      //       ErrorSwal.fire("Success!", (body.data) || "", "success")
-      //     }
-      //   }else{
-      //     ErrorSwal.fire("Error!", "Something Error.", "error")
-      //   }
-      // })
-      RequestAPI.getRequest(
-        `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
-        "",
-        {},
-        {},
-        async (res: any) => {
+      ErrorSwal.fire({
+        title: 'Are you sure?',
+        text: "You want to log in.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log me in!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          RequestAPI.postRequest(Api.timeIn, "", payload, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 && body && body.data) {
-            // setNotificationsData(body.data)
-            console.log(body.data)
-          }
+            if (status === 200 || status === 201) {
+              if (body.error && body.error.message){
+                ErrorSwal.fire(
+                  'Error!',
+                  (body.error && body.error.message) || "",
+                  'error'
+                )
+              }else{
+                ErrorSwal.fire("Success!", (body.data) || "", "success")
+                ErrorSwal.fire(
+                  'Success!',
+                  (body.data) || "",
+                  'success'
+                )
+              }
+            }else{
+              ErrorSwal.fire(
+                'Error!',
+                'Something Error.',
+                'error'
+              )
+            }
+          })
+          
         }
-      )
+      })
+      
+      // RequestAPI.getRequest(
+      //   `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
+      //   "",
+      //   {},
+      //   {},
+      //   async (res: any) => {
+      //     const { status, body = { data: {}, error: {} } }: any = res
+      //     if (status === 200 && body && body.data) {
+      //       // setNotificationsData(body.data)
+      //       console.log(body.data)
+      //     }
+      //   }
+      // )
       
     }else if(status == 'time out'){
       ErrorSwal.fire("Error!", ("test1") || "", "success")
