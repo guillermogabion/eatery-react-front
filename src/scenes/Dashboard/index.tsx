@@ -28,7 +28,7 @@ export const Dashboard = (props: any) => {
   const makeAttandance = useCallback((status: any) => {
     if (status == 'time in'){
       let payload = {
-        "timeIn" :  "18:00",
+        "timeIn" :  moment().format("hh:mm"),
         "status" : "On-Time"
     }
       
