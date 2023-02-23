@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import packageJson from "./../../../package.json"
-import { Button, Card, Row, Col, Image, Container, ListGroup, Modal, Form } from "react-bootstrap"
+import { Button, Card, Row, Col, Image, Container, ListGroup, Modal, Form, Alert } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
 import { FaCheckCircle } from "react-icons/fa";
@@ -47,14 +47,12 @@ export const Login = () => {
   const [currentTime, setCurrentTime] = useState(moment().format("hh:mm:ss A"));
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MMMM-DD"));
 
-<<<<<<< Updated upstream
-  
-=======
-  const [attemptCount, setAttemptCount] = useState(0);
-  const [disabled, setDisabled] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(0);
 
  
->>>>>>> Stashed changes
+
+
+ 
 
   function toggleDiv() {
     setShowDiv1(!showDiv1);
@@ -89,79 +87,91 @@ export const Login = () => {
 
 
  
-  const loginRequest = React.useCallback(() => {
+  // 
+  
+  
+const loginRequest = React.useCallback(() => {
 
+  if (username && password) {
+    RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
+      const { status, body } = res
 
-    if (username && password) {
-      RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
-        const { status, body } = res
-        
-        if (status === 200) {
-          if (body.error && body.error.message){
-            setErrorMessage(body.error.message)
-          }else{
-            Utility.clearOnLoginTimer()
-            const { accessToken, changePassword = false, roleId, refreshToken } = body.data
-            if (changePassword) {
-              setIsReset(true)
-              setTempToken(accessToken)
-            } else {
-              window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-              window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
-              
-              window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
-              console.log(moment().format("DD/MM/YYYY H:mm:ss a"))
-              const userObj = { ...body }
-              if (userObj && userObj.accessToken) {
-                delete userObj.accessToken
-              }
+      if (status === 200) {
+        // Login successful, reset login attempts counter
+        setLoginAttempts(0);
 
-              userObj.menu = [
-                {
+        if (body.error && body.error.message){
+          setErrorMessage(body.error.message)
+        }else{
+          Utility.clearOnLoginTimer()
+          const { accessToken, changePassword = false, roleId, refreshToken } = body.data
+          if (changePassword) {
+            setIsReset(true)
+            setTempToken(accessToken)
+          } else {
+            window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+            window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+            
+            window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
+            console.log(moment().format("DD/MM/YYYY H:mm:ss a"))
+            const userObj = { ...body }
+            if (userObj && userObj.accessToken) {
+              delete userObj.accessToken
+            }
+
+            userObj.menu = [              {                "links": [],
+                "label": "Home",
+                "icon": "home",
+                "type": "transaction",
+                "route": "/dashboard"
+              },
+              {
                   "links": [],
                   "label": "Home",
                   "icon": "home",
                   "type": "transaction",
-                  "route": "/dashboard"
-                },
-                {
-                    "links": [],
-                    "label": "Home",
-                    "icon": "home",
-                    "type": "transaction",
-                    "route": "/useriniatedchangepw"
-                },
-                {
-                    "links": [],
-                    "label": "Clients",
-                    "icon": "client",
-                    "type": "client",
-                    "route": "/user/list"
-                },
-                {
+                  "route": "/useriniatedchangepw"
+              },
+              {
                   "links": [],
                   "label": "Clients",
                   "icon": "client",
                   "type": "client",
-                  "route": "/employee"
+                  "route": "/user/list"
+              },
+              {
+                "links": [],
+                "label": "Clients",
+                "icon": "client",
+                "type": "client",
+                "route": "/employee"
               },
             ],
-            userObj.accessRights = [
-                "Can_Read_User",
-                "Can_Add_Edit_User",
-                "Can_Read_Role",
-                "Can_Add_Edit_Role",
+            userObj.accessRights = [              
+              "Can_Read_User",              
+              "Can_Add_Edit_User",              
+              "Can_Read_Role",              
+              "Can_Add_Edit_Role",            
             ]
 
-              
-              dispatch({ type: "USER_DATA", payload: userObj })
-              dispatch({ type: "IS_LOGIN", payload: true })
-            }
+            dispatch({ type: "USER_DATA", payload: userObj })
+            dispatch({ type: "IS_LOGIN", payload: true })
           }
         }
-      })
-    }
-  }, [username, password])
+      } else {
+        setLoginAttempts(loginAttempts + 1);
+
+        if (loginAttempts >= 2) {
+          setErrorMessage("Maximum login attempts reached. Please try again later.");
+        } else {
+          setErrorMessage("Invalid username or password. Please try again.");
+        }
+      }
+    })
+  }
+}, [username, password, loginAttempts])
+
+  
 
 
   // onCopy
@@ -175,7 +185,7 @@ export const Login = () => {
   }
 
   function dualRequest(){
-    toggleDiv();
+    // toggleDiv();
     loginRequest();
   }
 
@@ -252,7 +262,7 @@ export const Login = () => {
                         <div className="d-flex">
                           <Button
                             style={{ width: '100%' }}
-                            onClick={() => dualRequest()}
+                            onClick={() => loginRequest()}
                             className="btn btn-primary btn-styles"
                             disabled={!(username && password)}>
                             Login
@@ -261,7 +271,10 @@ export const Login = () => {
                         <br />
                       </form>
                       <div className="d-flex justify-content-center">
-                        <p className="errorMessage">{errorMessage}</p>
+                        {/* <p className="errorMessage">{errorMessage}</p> */}
+                        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+
+
                       </div>
 
                     </Col>
