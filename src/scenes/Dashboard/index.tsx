@@ -106,50 +106,66 @@ export const Dashboard = (props: any) => {
       // )
       
     }else if(status == 'time out'){
-      let payload = {
-        "id" : timeInData.id,
-        "timeOut" :  moment().format("HH:mm"),
-        "status" : "Out"
+      let timeOutPayload = {}
+      let isProceed = true
+      if (timeInData && timeInData.id){
+          timeOutPayload  = {
+            "id" : timeInData.id,
+            "timeOut" :  moment().format("HH:mm"),
+            "status" : "Out"
+          }
       }
-      ErrorSwal.fire({
-        title: 'Are you sure?',
-        text: "You want to log out.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, log me out!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          RequestAPI.putRequest(Api.timeOut, "", payload, {}, async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-            if (status === 200 || status === 201) {
-              if (body.error && body.error.message){
-                ErrorSwal.fire(
-                  'Error!',
-                  (body.error && body.error.message) || "",
-                  'error'
-                )
-              }else{
-                ErrorSwal.fire(
-                  'Success!',
-                  (body.data) || "",
-                  'success'
-                )
-                getFetchData(0)
-              }
-            }else{
-              ErrorSwal.fire(
-                'Error!',
-                'Something Error.',
-                'error'
-              )
+      else{
+        isProceed = false
+        ErrorSwal.fire(
+          'Error!',
+          'Something Error.',
+          'error'
+        )
+      }
+      
+      if (isProceed){
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to log out.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log me out!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              RequestAPI.putRequest(Api.timeOut, "", timeOutPayload, {}, async (res: any) => {
+              const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 || status === 201) {
+                  if (body.error && body.error.message){
+                    ErrorSwal.fire(
+                      'Error!',
+                      (body.error && body.error.message) || "",
+                      'error'
+                    )
+                  }else{
+                    ErrorSwal.fire(
+                      'Success!',
+                      (body.data) || "",
+                      'success'
+                    )
+                    getFetchData(0)
+                  }
+                }else{
+                  ErrorSwal.fire(
+                    'Error!',
+                    'Something Error.',
+                    'error'
+                  )
+                }
+              })
+              
             }
           })
-          
         }
-      })
-    }
+      }
+      
     
   }, [])
 
