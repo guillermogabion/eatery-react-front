@@ -139,7 +139,12 @@ export const ChangePassword = (props: any) => {
                         RequestAPI.putRequest(`${Api.changePassword}`, "", values, {}, async (res: any) => {
                           const { status, body = { data: {}, error: {} } }: any = res
                           if (status === 200 || status === 201) {
-                            setIsSuccess(true)
+                            if (body.error && body.error.message){
+                              ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
+                            }else{
+                              setIsSuccess(true)
+                            }
+                            
                           } else {
                             ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
                           }
