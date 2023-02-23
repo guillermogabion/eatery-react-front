@@ -13,7 +13,12 @@ import {
   ChangePassword,
   UserDetails,
   Dashboard,
-  Employee
+  Employee,
+  Leaves,
+  Overtime,
+  ScheduleAdjustment,
+  AttendanceCorrection,
+  AttendanceSummary,
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -43,11 +48,18 @@ const Privateroutes: React.FunctionComponent = (props) => {
 
   const routes: any = []
   routes.push({ path: "/employee", component: Employee })
+  routes.push({ path: "/leaves/timeoff", component: Leaves })
+  routes.push({ path: "/overtime/undertime", component: Overtime })
+  routes.push({ path: "/schedule/adjustment", component: ScheduleAdjustment })
+  routes.push({ path: "/attendance/correction", component: AttendanceCorrection })
+  routes.push({ path: "/summary", component: AttendanceSummary })
+  routes.push({ path: "/change/password", component: ChangePassword })
+
   accessRights.forEach((d: any) => {
     routes.push({ path: "/notifications", component: Notifications })
     routes.push({ path: "/userdetails", component: UserDetails })
     routes.push({ path: "/dashboard", component: Dashboard })
-    routes.push({ path: "/useriniatedchangepw", component: ChangePassword })
+    
     routes.push({ path: "/attendance", component: Dashboard })
     
 
