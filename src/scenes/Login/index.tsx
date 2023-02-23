@@ -50,7 +50,7 @@ export const Login = () => {
   const [loginAttempts, setLoginAttempts] = useState(0);
 
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [isLoginSuccess, setIsLoginSuccess] = React.useState(false);
  
 
 
@@ -87,23 +87,21 @@ export const Login = () => {
   }, []);
   
 
-
- 
-  // 
-  
-  
 const loginRequest = React.useCallback(() => {
 
   if (username && password) {
+
     RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
       const { status, body } = res
 
       if (status === 200) {
         // Login successful, reset login attempts counter
-        setLoginAttempts(0);
+        
 
         if (body.error && body.error.message){
           setErrorMessage(body.error.message)
+          setLoginAttempts(loginAttempts + 1);
+          setErrorMessage(body.error.message);
         }else{
           Utility.clearOnLoginTimer()
           const { accessToken, changePassword = false, roleId, refreshToken } = body.data
@@ -121,7 +119,8 @@ const loginRequest = React.useCallback(() => {
               delete userObj.accessToken
             }
 
-            userObj.menu = [              {                "links": [],
+            userObj.menu = [              {
+                "links": [],
                 "label": "Home",
                 "icon": "home",
                 "type": "transaction",
@@ -160,18 +159,10 @@ const loginRequest = React.useCallback(() => {
             dispatch({ type: "IS_LOGIN", payload: true })
           }
         }
-      } else {
-        setLoginAttempts(loginAttempts + 1);
-
-        if (loginAttempts >= 2) {
-          setErrorMessage("Maximum login attempts reached. Please try again later.");
-        } else {
-          setErrorMessage("Invalid username or password. Please try again.");
-        }
       }
-    })
+    });
   }
-}, [username, password, loginAttempts])
+}, [username, password])
 
   
 
@@ -266,7 +257,7 @@ const loginRequest = React.useCallback(() => {
                             style={{ width: '100%' }}
                             onClick={() => loginRequest()}
                             className="btn btn-primary btn-styles"
-                            disabled={!(username && password)}>
+                            disabled={loginAttempts >= 3}>
                             Login
                           </Button>
                         </div>
@@ -274,10 +265,26 @@ const loginRequest = React.useCallback(() => {
                       </form>
                       <div className="d-flex justify-content-center">
                         {/* <p className="errorMessage">{errorMessage}</p> */}
-                        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
+                      {loginAttempts > 0 && (
+                        <div className="text-danger">
+                          {`Login attempts remaining: ${3 - loginAttempts}`}
+                        </div>
+                      )}
 
                       </div>
+
+                      {/* <Button variant="primary" onClick={loginHandler} disabled={loginAttempts >= 3}>
+  Login
+                        </Button> */}
+                        {loginAttempts >= 3 && (
+                          <Alert variant="danger">
+                           <span style={{fontSize:'10px'}}> Login has been disabled due to three consecutive failed attempts.</span>
+                          </Alert>
+                        )}
+
+
+                     <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
 
                     </Col>
                   </Row>
@@ -324,6 +331,8 @@ const loginRequest = React.useCallback(() => {
                       <form id="_form" className="loginForm" action="#">
                         <CheckPassword></CheckPassword>
                       </form>
+                     <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
+
                     </Col>
                   </Row>
                 
