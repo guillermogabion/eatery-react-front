@@ -4,7 +4,8 @@ const Api: any = {
   timeOut: process.env.REACT_APP_API_URL + "timekeeping/timeOut",
   timeKeeping: process.env.REACT_APP_API_URL + "timekeeping/all",
   getAllLeaves: process.env.REACT_APP_API_URL + "request/leave",
- 
+  changePassword: process.env.REACT_APP_API_URL + "user/password",
+  
 
 
   USERS: process.env.REACT_APP_API_URL + "users",
@@ -12,7 +13,7 @@ const Api: any = {
   USERDESIGNATIONS: process.env.REACT_APP_API_URL + "userDesignations",
   UNITS: process.env.REACT_APP_API_URL + "units",
   ROLES: process.env.REACT_APP_API_URL + "roles",
-  USER_RESET_PASSWORD: process.env.REACT_APP_API_URL + "user/changePassword",
+  
   ACCESS: process.env.REACT_APP_API_URL + "access",
   USERS_DELETE: process.env.REACT_APP_API_URL + "users/delete",
   MASTERLIST: process.env.REACT_APP_API_URL + "lists/client",

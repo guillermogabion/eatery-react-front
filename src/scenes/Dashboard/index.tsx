@@ -25,7 +25,7 @@ export const Dashboard = (props: any) => {
   
 
   const getFetchData = (pagging = 0) => {
-    let today = moment().format("YYYY-MMMM-DD")
+    let today = moment().format("YYYY-MM-DD")
     
     RequestAPI.getRequest(
         `${Api.timeKeeping}?size=10&page=${pagging}&userid=${userId}&dateBefore=${today}&dateAfter=${today}&sortDir=desc`,

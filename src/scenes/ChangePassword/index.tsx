@@ -9,7 +9,10 @@ import { RequestAPI, Api } from "../../api"
 import { Utility } from "./../../utils"
 import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
+import DashboardMenu from "../../components/DashboardMenu"
+import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
+
 
 const loginSchema = Yup.object().shape({
   conPassword: Yup.string().oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
@@ -78,6 +81,7 @@ const ReSetPasswordInput = (props: any) => {
         placeholder={placeholder}
         type={visibile ? "text" : type}
         className="form-control"
+        style={{width: 299}}
         required
         onChange={(e) => validatePassword(`${e.target.value}`.trim())}
       />
@@ -108,8 +112,18 @@ export const ChangePassword = (props: any) => {
             <div className="topHeader">
               <UserTopMenu title={`Change Password`} />
             </div>
-            <div className="contentContainer">
-              <div className="ForgotPassword">
+            <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
+            <DashboardMenu />
+            <div className="col-md-12 col-lg-10 px-5 py-5">
+              <div className="row">
+                <div className="col-md-6">
+                  <h2>Good day, Employee 001!</h2>
+                </div>
+                <div className="col-md-6" style={{ textAlign: 'right' }}>
+                  <TimeDate />
+                </div>
+              </div>
+              <div className="ForgotPassword mt-5">
                 {!isSuccess ? (
                   <div className="contentForm">
                     <Formik
@@ -121,10 +135,16 @@ export const ChangePassword = (props: any) => {
                       enableReinitialize={true}
                       validationSchema={loginSchema}
                       onSubmit={(values, actions) => {
-                        RequestAPI.putRequest(`${Api.USER_RESET_PASSWORD}`, "", values, {}, async (res: any) => {
+                        
+                        RequestAPI.putRequest(`${Api.changePassword}`, "", values, {}, async (res: any) => {
                           const { status, body = { data: {}, error: {} } }: any = res
                           if (status === 200 || status === 201) {
-                            setIsSuccess(true)
+                            if (body.error && body.error.message){
+                              ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
+                            }else{
+                              setIsSuccess(true)
+                            }
+                            
                           } else {
                             ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
                           }
@@ -166,15 +186,18 @@ export const ChangePassword = (props: any) => {
                               setFieldValue={setFieldValue}
                               error={errors.conPassword || ""}
                             />
-                            <Button
-                              type="submit"
-                              className="btn btn-primary"
-                              disabled={
-                                !(values.oldPassword && values.newPassword && values.conPassword) ||
-                                (errorOldPass.length && errorNewPass.length && errorConPass.length)
-                              }>
-                              SUBMIT
+                            <div className="d-flex justify-content-center">
+                              <Button
+                                type="submit"
+                                className="btn btn-primary"
+                                disabled={
+                                  !(values.oldPassword && values.newPassword && values.conPassword) ||
+                                  (errorOldPass.length && errorNewPass.length && errorConPass.length)
+                                }>
+                                SUBMIT
                             </Button>
+                            </div>
+                            
                           </Form>
                         )
                       }}
@@ -200,6 +223,7 @@ export const ChangePassword = (props: any) => {
                     </p>
                   </div>
                 )}
+              </div>
               </div>
           </div>
         </div>
