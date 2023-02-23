@@ -3,34 +3,54 @@ import UserTopMenu from "../../components/UserTopMenu"
 
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
-import DashboardMenu from "./DashboardMenu"
+import DashboardMenu from "../../components/DashboardMenu"
 const ErrorSwal = withReactContent(Swal)
 import moment from "moment";
 import { left, right } from "@popperjs/core"
 import { Button, Card, Image } from "react-bootstrap"
 import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
+import TimeDate from "../../components/TimeDate"
+
+
 
 export const Dashboard = (props: any) => {
   const { history } = props
-  const [currentTime, setCurrentTime] = useState(moment().format("hh:mm:ss A"));
-  const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MMMM-DD"));
+  const [userId, setUserId] = useState<any>("1")
+  const [timeInData, setTimeInData] = useState<any>("")
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(moment().format("hh:mm:ss A"));
-      setCurrentDate(moment().format("MMMM-DD-YYYY"));
-    }, 1000);
-    
-    return () => clearInterval(intervalId);
-  }, []);
+    getFetchData(0)
+  }, [userId])
+  
 
-  const makeAttandance = useCallback((status: any) => {
+  const getFetchData = (pagging = 0) => {
+    let today = moment().format("YYYY-MMMM-DD")
+    
+    RequestAPI.getRequest(
+        `${Api.timeKeeping}?size=10&page=${pagging}&userid=${userId}&dateBefore=${today}&dateAfter=${today}&sortDir=desc`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body && body.data) {
+            if(body.data.content.length > 0){
+                if(body.data.content[0].timeOut == null){
+                  setTimeInData(body.data.content[0])
+                }
+            }
+          }
+        }
+      )
+  }
+
+  const makeAttendance = useCallback((status: any) => {
     if (status == 'time in'){
       let payload = {
-        "timeIn" :  moment().format("hh:mm"),
+        "timeIn" :  moment().format("HH:mm"),
         "status" : "On-Time"
-    }
+      }
       
       ErrorSwal.fire({
         title: 'Are you sure?',
@@ -52,12 +72,12 @@ export const Dashboard = (props: any) => {
                   'error'
                 )
               }else{
-                ErrorSwal.fire("Success!", (body.data) || "", "success")
                 ErrorSwal.fire(
                   'Success!',
                   (body.data) || "",
                   'success'
                 )
+                getFetchData(0)
               }
             }else{
               ErrorSwal.fire(
@@ -86,7 +106,49 @@ export const Dashboard = (props: any) => {
       // )
       
     }else if(status == 'time out'){
-      ErrorSwal.fire("Error!", ("test1") || "", "success")
+      let payload = {
+        "id" : timeInData.id,
+        "timeOut" :  moment().format("HH:mm"),
+        "status" : "Out"
+      }
+      ErrorSwal.fire({
+        title: 'Are you sure?',
+        text: "You want to log out.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log me out!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          RequestAPI.putRequest(Api.timeOut, "", payload, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+            if (status === 200 || status === 201) {
+              if (body.error && body.error.message){
+                ErrorSwal.fire(
+                  'Error!',
+                  (body.error && body.error.message) || "",
+                  'error'
+                )
+              }else{
+                ErrorSwal.fire(
+                  'Success!',
+                  (body.data) || "",
+                  'success'
+                )
+                getFetchData(0)
+              }
+            }else{
+              ErrorSwal.fire(
+                'Error!',
+                'Something Error.',
+                'error'
+              )
+            }
+          })
+          
+        }
+      })
     }
     
   }, [])
@@ -99,32 +161,28 @@ export const Dashboard = (props: any) => {
               <UserTopMenu />
             </div>
             <div className="contentContainer row p-0 m-0" style={{ minHeight:'100vh' }}>
-              <div className="col-md-12 col-lg-2 bg-dark p-0">
-                <DashboardMenu />
-              </div>
+              <DashboardMenu />
               <div className="col-md-12 col-lg-10 px-5 py-5">
                 <div className="row">
                     <div className="col-md-6">
                       <h2>Good day, Employee 001!</h2>
                     </div>
-                    <div className="col-md-6" style={{textAlign:'right'}}>
-                      <h5>Today is</h5>
-                      <h5>{currentDate}</h5>
-                      <h3 className="font-weight-bold">{currentTime}</h3>
+                    <div className="col-md-6">
+                      <TimeDate />
                     </div>
                 </div>
                 <div>
                     <h3>Time Card</h3>
                     <div className="d-flex">
                       <div className="" style={{width: 200, textAlign: right}}>
-                          <h5 className="font-weight-bold pt-2">Shift Schedule:</h5>
-                          <h5 className="font-weight-bold pt-2">Last Login:</h5>
-                          <h5 className="font-weight-bold pt-2">Attendance Status:</h5>
+                          <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
+                          <h6 className="font-weight-bold pt-2">Last Login:</h6>
+                          <h6 className="font-weight-bold pt-2">Attendance Status:</h6>
                       </div>
                       <div className="" style={{marginLeft:15, textAlign: left}}>
-                          <h5 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h5>
-                          <h5 className="font-weight-bold pt-2">30 January, 2023 08:54:22 AM</h5>
-                          <h5 className="font-weight-bold p-2" style={{background:'gray', width: 158, borderRadius:5}}>Awaiting time in</h5>
+                          <h6 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h6>
+                          <h6 className="font-weight-bold pt-2">30 January, 2023 08:54:22 AM</h6>
+                          <label className="font-weight-bold p-2 px-3 text-dark" style={{background:'#E9E9E9', width: 'auto', borderRadius:5}}>{ (timeInData && timeInData.status) || "Awaiting time in"}</label>
                       </div>
                     </div>
                     
@@ -136,12 +194,14 @@ export const Dashboard = (props: any) => {
                     </div>
                     <div className="row mt-3">
                       <Button className="mx-2" 
+                        disabled={timeInData != ""}
                         style={{width: 120, background:'red'}}
-                        onClick={() => makeAttandance('time in')}
+                        onClick={() => makeAttendance('time in')}
                         >Log me in</Button>
                       <Button className="mx-2" 
+                        disabled={timeInData == ""}
                         style={{width: 120, background:'red'}}
-                        onClick={() => makeAttandance('time out')}>Log me out</Button>
+                        onClick={() => makeAttendance('time out')}>Log me out</Button>
                     </div>
                   </div>
                 </div>

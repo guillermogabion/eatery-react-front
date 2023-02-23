@@ -27,8 +27,8 @@ const CryptoJS = require("crypto-js")
 
 export const Login = () => {
   const dispatch = useDispatch()
-  const [username, setUsername] = useState<any>("")
-  const [password, setPassword] = useState<any>("")
+  const [username, setUsername] = useState<any>("Admin")
+  const [password, setPassword] = useState<any>("Admin")
   const [visibile, setVisibile] = useState<any>(false)
   const [errorMessage, setErrorMessage] = useState<any>("")
   const [isForgot, setIsForgot] = useState<any>(false)
@@ -98,6 +98,13 @@ export const Login = () => {
                     "type": "client",
                     "route": "/user/list"
                 },
+                {
+                  "links": [],
+                  "label": "Clients",
+                  "icon": "client",
+                  "type": "client",
+                  "route": "/employee"
+              },
             ],
             userObj.accessRights = [
                 "Can_Read_User",
@@ -149,7 +156,7 @@ export const Login = () => {
                       type="text"
                       value={username}
                       className="form-control"
-                      style={{ marginBottom: "20px" }}
+                      style={{ marginBottom: "20px",width: 299 }}
                       required
                       onChange={(e) => setUsername(e.target.value)}
                     />
@@ -159,7 +166,7 @@ export const Login = () => {
                         onCopy={copyHandler}
                         onCut={cutHandler}
                         autoComplete="new-password"
-                        style={{ marginBottom: "20px" }}
+                        style={{ marginBottom: "20px",width: 299  }}
                         name="password"
                         placeholder="Password"
                         value={password}
