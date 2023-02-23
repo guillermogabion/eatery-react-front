@@ -50,7 +50,7 @@ const DashboardMenu = (props: any) => {
             "menu": [
                 {
                     'name': 'Change Password',
-                    'link': '/useriniatedchangepw'
+                    'link': '/change/password'
                 },
             ]
         },
