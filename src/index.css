@@ -42,11 +42,14 @@
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300&family=Roboto:wght@300&display=swap');
 
 body {
   background: #ffffff;
   color: #000000;
-  font-family: "Brandon Text";
+  /* font-family: 'Barlow', sans-serif; */
+  font-family: 'Roboto', sans-serif;
   font-size: 15px;
   line-height: 1.65;
   word-break: break-word;
@@ -201,7 +204,7 @@ h1 {
 }
 
 .form-control {
-  width: 299px;
+  /* width: 299px; */
   height: 44px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #d8d8d8;
@@ -210,6 +213,9 @@ h1 {
   font: normal normal normal 16px/20px "Source Sans Pro", sans-serif;
   color: #003139;
   padding: 0 15px;
+}
+.form-select{
+  height: 44px;
 }
 
 ::-webkit-input-placeholder {
@@ -717,6 +723,10 @@ h1 {
   background: #f7f7f7 0% 0% no-repeat padding-box;
   padding-bottom: 20px;
   padding-right: 30px;
+  box-shadow: -2px 5px 10px -3px rgba(0,0,0,0.75);
+  -webkit-box-shadow: -2px 5px 10px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: -2px 5px 10px -3px rgba(0,0,0,0.75);
+  z-index: 10000;
   /* margin-bottom: 10px; */
 }
 
@@ -724,6 +734,7 @@ h1 {
   width: 100%;
   display: flex;
   align-items: center;
+  
 }
 
 .TopHeaderRight {
@@ -4434,7 +4445,7 @@ strong {
   }
 
   .topHeader h1 {
-    font: normal normal bold 20px/22px "Brandon Text";
+    font: normal normal bold 20px/22px "Roboto";
     padding: 15px;
   }
 
@@ -5722,3 +5733,42 @@ td.pendingLabel .active {
   height: 100px;
   object-fit: cover;
 }
+
+
+/* LEFT MENU CSS */
+.activeMenu{
+  font-weight: bold;
+  background-color: #67499b;
+}
+.accordionMenu:hover {
+  font-weight: bold;
+  background-color: #664e91;
+}
+.accordion {
+  --bs-accordion-inner-border-radius: 0;
+}
+
+.accordion-button{
+  background-color: #67499b !important;
+  color: white;
+  /* opacity: .8; */
+}
+
+.accordion-button:not(.collapsed){
+  background-color: #573596 !important;
+  color: white;
+  box-shadow: none;
+}
+
+/* Accordion icons */
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); 
+}
+/* ^ */
+
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); 
+}
+/* V */
+/* End Accordion icons */
+/* End LEFT MENU CSS */
