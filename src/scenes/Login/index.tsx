@@ -35,7 +35,7 @@ export const Login = () => {
   const [visibile, setVisibile] = useState<any>(false)
   const [visibile2, setVisibile2] = useState<any>(false)
   const [visibile3, setVisibile3] = useState<any>(false)
-  const [errorMessage, setErrorMessage] = useState<any>("")
+  // const [errorMessage, setErrorMessage] = useState<any>("")
   const [isForgot, setIsForgot] = useState<any>(false)
   const [isReset, setIsReset] = useState<any>(false)
 
@@ -48,6 +48,8 @@ export const Login = () => {
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MMMM-DD"));
 
   const [loginAttempts, setLoginAttempts] = useState(0);
+
+  const [errorMessage, setErrorMessage] = useState('');
 
  
 
