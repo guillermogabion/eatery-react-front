@@ -1,5 +1,12 @@
 const Api: any = {
-  Login: process.env.REACT_APP_API_URL + "auth/token",
+  Login: process.env.REACT_APP_API_URL + "user/auth/token",
+  timeIn: process.env.REACT_APP_API_URL + "timekeeping/timeIn",
+  timeOut: process.env.REACT_APP_API_URL + "timekeeping/timeOut",
+  timeKeeping: process.env.REACT_APP_API_URL + "timekeeping/all",
+  getAllLeaves: process.env.REACT_APP_API_URL + "request/leave",
+ 
+
+
   USERS: process.env.REACT_APP_API_URL + "users",
   USERSTATUS: process.env.REACT_APP_API_URL + "userStatus",
   USERDESIGNATIONS: process.env.REACT_APP_API_URL + "userDesignations",
@@ -16,7 +23,7 @@ const Api: any = {
   NOTIFICATIONS: process.env.REACT_APP_API_URL + "users/notifications",
   NOTIFICATIONS_DELETE: process.env.REACT_APP_API_URL + "users/notifications/delete",
   NOTIFICATIONS_DELETE_ALL: process.env.REACT_APP_API_URL + "users/notifications/deleteAll",
-  NOTIFICATIONS_MARK_READ: process.env.REACT_APP_API_URL + "users/notifications", // actual url would be users/notifications/{id}/markasread
+  NOTIFICATIONS_MARK_READ: process.env.REACT_APP_API_URL + "users/notifications", 
   GET_USER_MASTER_LIST: process.env.REACT_APP_API_URL + "lists/user",
   USER: process.env.REACT_APP_API_URL + "user",
   GET_PASSWORD_EXPIRY_NOTIFICATION: process.env.REACT_APP_API_URL + "users/notifications/passwordExpiry",

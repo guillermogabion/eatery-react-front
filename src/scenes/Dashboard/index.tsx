@@ -1,473 +1,211 @@
-import React, { useEffect, useState, useRef } from "react"
-import MainLeftMenu from "../../components/MainLeftMenu"
+import React, { useEffect, useState, useRef, useCallback } from "react"
 import UserTopMenu from "../../components/UserTopMenu"
-import { RInput, RSelect } from "../../components/Forms"
-import { Form, Button } from "react-bootstrap"
-import { RequestAPI, Api } from "../../api"
-import { Formik } from "formik"
-import * as Yup from "yup"
+
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
-import { um_icon } from "../../assets/images"
-import moment from "moment"
-import UserPopup from "../../components/Popup/UserPopup"
-import ReactLoader from "../../components/Loader/ReactLoader"
-import CustomDatePicker from "../../components/CustomDatePicker"
+import DashboardMenu from "../../components/DashboardMenu"
 const ErrorSwal = withReactContent(Swal)
+import moment from "moment";
+import { left, right } from "@popperjs/core"
+import { Button, Card, Image } from "react-bootstrap"
+import UserPopup from "../../components/Popup/UserPopup"
+import { RequestAPI, Api } from "../../api"
+import TimeDate from "../../components/TimeDate"
 
-function createValidation(id: number) {
-  const reg = /^(?=.*[a-z])(?=.*[A-Z])/
-  const reg2 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!&@$%^#\*\?])/
-  const errMsg = "Must contain both upper and lower-case characters (e.g., a-z, A-Z)"
-  const errMsg1 = "Must have a combination of the alphabet, numeric and special characters "
 
-  return Yup.object().shape({
-    userDesignationId: Yup.string().required("User Type is required !"),
-    unitId: Yup.string().required("Unit is required !"),
-    userRoleId: Yup.string().required("Role is required !"),
-    userStatusId: Yup.string().required("Status is required !"),
-    firstName: Yup.string().trim().max(70, "Too Long!").required("First Name is required !"),
-    middleName: Yup.string().trim().max(70, "Too Long!").required("Middle Name is required !"),
-    lastName: Yup.string().trim().max(70, "Too Long!").required("Last Name is required !"),
-    userName: Yup.string()
-      .trim()
-      .max(70, "Too Long!")
-      .required("User ID is required !")
-      .test("len", "Field should be accept minimum 8 alpha-numerical value !", (val: any) => val && val.length >= 8),
-    email: Yup.string()
-      .trim()
-      .email("Invalid Email ID")
-      .matches(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "Invalid Email ID"
-      )
-      .required("Official Email ID is required !"),
-    userIdExpiry: Yup.string().nullable().required("User Expirey is required !"),
-    password: !id
-      ? Yup.string()
-        .trim()
-        .min(8, "Password must be at least 8 character !")
-        .required("Password is required !")
-        .matches(reg, errMsg)
-        .matches(reg2, errMsg1)
-      : Yup.string()
-        .trim()
-        .min(8, "Password must be at least 8 character !")
-        .matches(reg, errMsg)
-        .matches(reg2, errMsg1),
-  })
-}
 
 export const Dashboard = (props: any) => {
   const { history } = props
-  const [loader, setLoader] = useState(false)
-  const [initialValues, setInitialValues] = useState<any>({
-    id: 0,
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    userName: "",
-    email: "",
-    password: "",
-    phone: "",
-    changePassword: true,
-    userDesignationId: "",
-    unitId: "",
-    userRoleId: "",
-    userStatusId: "1",
-    userIdExpiry: null,
-  })
-
-  const formRef: any = useRef()
-
-  const userId = props.location && props.location.state && props.location.state.id
-
-  const submitButtonTitle = userId && userId > -1 ? "UPDATE & SUBMIT USER" : "CREATE USER"
-  const generateText = userId && userId > -1 ? "Re-Generate" : "Generate"
-
-  const keydownFun = (event: any) => {
-    if (event.key === "Enter" && Object.keys(formRef.current.values).length) {
-      formRef && formRef.current && formRef.current.submitForm()
-    }
-  }
+  const [userId, setUserId] = useState<any>("1")
+  const [timeInData, setTimeInData] = useState<any>("")
 
   useEffect(() => {
-    document.removeEventListener("keydown", keydownFun)
-    document.addEventListener("keydown", keydownFun)
-    return () => document.removeEventListener("keydown", keydownFun)
-  }, [])
+    getFetchData(0)
+  }, [userId])
+  
 
-  useEffect(() => {
-    if (userId) {
-      setLoader(true)
-      RequestAPI.getRequest(`${Api.USERS}/${userId}`, "", {}, {}, async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200) {
-          setInitialValues((body && body.data) || {})
+  const getFetchData = (pagging = 0) => {
+    let today = moment().format("YYYY-MMMM-DD")
+    
+    RequestAPI.getRequest(
+        `${Api.timeKeeping}?size=10&page=${pagging}&userid=${userId}&dateBefore=${today}&dateAfter=${today}&sortDir=desc`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body && body.data) {
+            if(body.data.content.length > 0){
+                if(body.data.content[0].timeOut == null){
+                  setTimeInData(body.data.content[0])
+                }
+            }
+          }
         }
-        setTimeout(() => setLoader(false), 500)
-      })
-    }
-  }, [])
-
-  const onFormSubmit = (values: any) => {
-    if (userId) {
-      const valuObj: any = { ...values, ...{ changePassword: true } }
-      if (valuObj.creationTimestamp) {
-        delete valuObj.creationTimestamp
-        delete valuObj.id
-      }
-
-      if (!valuObj.password) {
-        valuObj.changePassword = false
-      }
-      RequestAPI.putRequest(`${Api.USERS}/${userId}`, "", valuObj, {}, async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 || status === 201) {
-          ErrorSwal.fire({
-            html: (
-              <UserPopup
-                handleClose={ErrorSwal.close}
-                popupType="success"
-                title={(body && body.data) || "Record Successfully updated."}
-              />
-            ),
-            showConfirmButton: false,
-          })
-
-          history.push("/user/list")
-        } else {
-          ErrorSwal.fire({
-            icon: "error",
-            title: "Error!",
-            text: (body.error && body.error.message) || "",
-            confirmButtonColor: "#73BF45",
-          })
-        }
-      })
-    } else {
-      RequestAPI.postRequest(Api.USERS, "", values, {}, async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 || status === 201) {
-          ErrorSwal.fire({
-            html: <UserPopup handleClose={ErrorSwal.close} title="SUCCESS" popupType="success" />,
-            showConfirmButton: false,
-          })
-          history.push("/user/list")
-        } else {
-          ErrorSwal.fire({
-            icon: "error",
-            title: "Error!",
-            text: (body.error && body.error.message) || "",
-            confirmButtonColor: "#73BF45",
-          })
-        }
-      })
-    }
+      )
   }
 
-  const fourceUserLogout = (id: any) => {
-    RequestAPI.deleteRequest(`${Api.USER}/${id}/forceLogout`, "", {}, async (res: any) => {
-      const { status, body = { data: {}, error: {} } }: any = res
-      if (status === 200) {
-        ErrorSwal.fire("Success", "This User is Successfully logout", "success")
-      } else {
-        ErrorSwal.fire({
-          icon: "error",
-          title: (body.error && body.error.message) || "",
-        })
+  const makeAttendance = useCallback((status: any) => {
+    if (status == 'time in'){
+      let payload = {
+        "timeIn" :  moment().format("HH:mm"),
+        "status" : "On-Time"
       }
-    })
-  }
+      
+      ErrorSwal.fire({
+        title: 'Are you sure?',
+        text: "You want to log in.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log me in!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          RequestAPI.postRequest(Api.timeIn, "", payload, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+            if (status === 200 || status === 201) {
+              if (body.error && body.error.message){
+                ErrorSwal.fire(
+                  'Error!',
+                  (body.error && body.error.message) || "",
+                  'error'
+                )
+              }else{
+                ErrorSwal.fire(
+                  'Success!',
+                  (body.data) || "",
+                  'success'
+                )
+                getFetchData(0)
+              }
+            }else{
+              ErrorSwal.fire(
+                'Error!',
+                'Something Error.',
+                'error'
+              )
+            }
+          })
+          
+        }
+      })
+      
+      // RequestAPI.getRequest(
+      //   `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
+      //   "",
+      //   {},
+      //   {},
+      //   async (res: any) => {
+      //     const { status, body = { data: {}, error: {} } }: any = res
+      //     if (status === 200 && body && body.data) {
+      //       // setNotificationsData(body.data)
+      //       console.log(body.data)
+      //     }
+      //   }
+      // )
+      
+    }else if(status == 'time out'){
+      let payload = {
+        "id" : timeInData.id,
+        "timeOut" :  moment().format("HH:mm"),
+        "status" : "Out"
+      }
+      ErrorSwal.fire({
+        title: 'Are you sure?',
+        text: "You want to log out.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log me out!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          RequestAPI.putRequest(Api.timeOut, "", payload, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+            if (status === 200 || status === 201) {
+              if (body.error && body.error.message){
+                ErrorSwal.fire(
+                  'Error!',
+                  (body.error && body.error.message) || "",
+                  'error'
+                )
+              }else{
+                ErrorSwal.fire(
+                  'Success!',
+                  (body.data) || "",
+                  'success'
+                )
+                getFetchData(0)
+              }
+            }else{
+              ErrorSwal.fire(
+                'Error!',
+                'Something Error.',
+                'error'
+              )
+            }
+          })
+          
+        }
+      })
+    }
+    
+  }, [])
+
   return (
     <div className="body">
       <div className="wraper">
         <div className="w-100">
             <div className="topHeader">
-              <UserTopMenu title={userId ? "Edit User" : "Add User"} />
+              <UserTopMenu />
             </div>
-            <div className="contentContainer" style={{ paddingTop: "15px" }}>
-              {userId ? (
+            <div className="contentContainer row p-0 m-0" style={{ minHeight:'100vh' }}>
+              <DashboardMenu />
+              <div className="col-md-12 col-lg-10 px-5 py-5">
+                <div className="row">
+                    <div className="col-md-6">
+                      <h2>Good day, Employee 001!</h2>
+                    </div>
+                    <div className="col-md-6">
+                      <TimeDate />
+                    </div>
+                </div>
                 <div>
-                  <div className="bredcrum">
-                    <ul>
-                      <li onClick={() => history.push("/user/list")}>
-                        <a href="#!">User List</a>
-                      </li>
-                      <li>Edit User</li>
-                    </ul>
-                  </div>
-                  <div className="LoginDetail" style={{ width: "95%" }}>
-                    <ul>
-                      <li className="umIcon">
-                        <img src={um_icon} alt="user" />
-                      </li>
-                      <li className="LoginDate">
-                        <strong>Date of user id creation:</strong>{" "}
-                        {(initialValues &&
-                          initialValues.creationTimestamp &&
-                          moment(initialValues.creationTimestamp).format("DD/MM/yyyy")) ||
-                          ""}
-                      </li>
-                    </ul>
+                    <h3>Time Card</h3>
+                    <div className="d-flex">
+                      <div className="" style={{width: 200, textAlign: right}}>
+                          <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
+                          <h6 className="font-weight-bold pt-2">Last Login:</h6>
+                          <h6 className="font-weight-bold pt-2">Attendance Status:</h6>
+                      </div>
+                      <div className="" style={{marginLeft:15, textAlign: left}}>
+                          <h6 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h6>
+                          <h6 className="font-weight-bold pt-2">30 January, 2023 08:54:22 AM</h6>
+                          <label className="font-weight-bold p-2 px-3 text-dark" style={{background:'#E9E9E9', width: 'auto', borderRadius:5}}>{ (timeInData && timeInData.status) || "Awaiting time in"}</label>
+                      </div>
+                    </div>
+                    
+                </div>
+                <div className="d-flex" style={{justifyContent:right, marginTop: 300}}>
+                  <div>
+                    <div className="d-flex justify-content-center">
+                      <Image src="https://via.placeholder.com/300/09f.png/ffffff" className="avatar"></Image>
+                    </div>
+                    <div className="row mt-3">
+                      <Button className="mx-2" 
+                        disabled={timeInData != ""}
+                        style={{width: 120, background:'red'}}
+                        onClick={() => makeAttendance('time in')}
+                        >Log me in</Button>
+                      <Button className="mx-2" 
+                        disabled={timeInData == ""}
+                        style={{width: 120, background:'red'}}
+                        onClick={() => makeAttendance('time out')}>Log me out</Button>
+                    </div>
                   </div>
                 </div>
-              ) : (
-                <div className="bredcrum">
-                  <ul>
-                    <li onClick={() => history.push("/user/list")}>
-                      <a href="#!">User List</a>
-                    </li>
-                    <li>Add User</li>
-                  </ul>
-                </div>
-              )}
-              <ReactLoader isLoading={loader} />
-              <Formik
-                initialValues={initialValues}
-                enableReinitialize={true}
-                validationSchema={createValidation(userId)}
-                innerRef={formRef}
-                onSubmit={(values, actions) => onFormSubmit(values)}>
-                {({ values, setFieldValue, handleChange, handleSubmit, errors, touched }) => {
-                  return (
-                    <Form noValidate className="contentAddUser" onSubmit={handleSubmit}>
-                      <div className="row">
-                        <RSelect
-                          name="unitId"
-                          strikes={true}
-                          value={values.unitId}
-                          id="unit"
-                          label="Select Unit"
-                          className="formControlSelect"
-                          onSelect={handleChange}
-                          style={
-                            errors.hasOwnProperty("unitId") && touched["unitId"] && errors["unitId"]
-                              ? { border: "1px solid #ff0000" }
-                              : {}
-                          }
-                        />
-                        <RSelect
-                          name="userRoleId"
-                          value={values.userRoleId}
-                          strikes={true}
-                          id="role"
-                          label="Select Role"
-                          className="formControlSelect"
-                          onSelect={handleChange}
-                          style={
-                            errors.hasOwnProperty("userRoleId") && touched["userRoleId"] && errors["userRoleId"]
-                              ? { border: "1px solid #ff0000" }
-                              : {}
-                          }
-                        />
-                      </div>
-                      <div className="row">
-                        <RSelect
-                          name="userDesignationId"
-                          value={values.userDesignationId}
-                          strikes={true}
-                          id="usertype"
-                          label="Select User Type"
-                          className="formControlSelect"
-                          onSelect={handleChange}
-                          style={
-                            errors.hasOwnProperty("userDesignationId") &&
-                              touched["userDesignationId"] &&
-                              errors["userDesignationId"]
-                              ? { border: "1px solid #ff0000" }
-                              : {}
-                          }
-                        />
-                        <RSelect
-                          name="userStatusId"
-                          value={values.userStatusId}
-                          strikes={true}
-                          id="status"
-                          label="Status"
-                          className="formControlSelect"
-                          onSelect={handleChange}
-                          style={
-                            errors.hasOwnProperty("userStatusId") && touched["userStatusId"] && errors["userStatusId"]
-                              ? { border: "1px solid #ff0000" }
-                              : {}
-                          }
-                        />
-                      </div>
-                      <div className="personalDetail">
-                        <div className="row">
-                          <RInput
-                            label={"Last Name"}
-                            name="lastName"
-                            type="text"
-                            value={`${values.lastName}`.trimStart()}
-                            strikes={true}
-                            className="formControl"
-                            onChange={handleChange}
-                            onKeyDown={(evt) => !/^[a-zA-Z0-9]+$/gi.test(evt.key) && evt.preventDefault()}
-                            style={
-                              errors.hasOwnProperty("lastName") && touched["lastName"] && errors["lastName"]
-                                ? { border: "1px solid #ff0000" }
-                                : {}
-                            }
-                          />
-                          <RInput
-                            value={`${values.userName}`.trimStart()}
-                            label={"User ID"}
-                            strikes={true}
-                            name="userName"
-                            type="text"
-                            onChange={handleChange}
-                            className="formControl"
-                            style={
-                              errors.hasOwnProperty("userName") && touched["userName"] && errors["userName"]
-                                ? { border: "1px solid #ff0000" }
-                                : {}
-                            }
-                            required
-                          />
-                        </div>
-                        <div className="row">
-                          <RInput
-                            label={"First Name"}
-                            value={`${values.firstName}`.trimStart()}
-                            strikes={true}
-                            name="firstName"
-                            type="text"
-                            className="formControl"
-                            onKeyDown={(evt) => !/^[a-zA-Z0-9]+$/gi.test(evt.key) && evt.preventDefault()}
-                            style={
-                              errors.hasOwnProperty("firstName") && touched["firstName"] && errors["firstName"]
-                                ? { border: "1px solid #ff0000" }
-                                : {}
-                            }
-                            onChange={handleChange}
-                          />
-                          <RInput
-                            label={"Official Email ID"}
-                            value={`${values.email}`.trimStart()}
-                            name="email"
-                            placeholder="Enter your official email id"
-                            strikes={true}
-                            style={
-                              errors.hasOwnProperty("email") && touched["email"] && errors["email"]
-                                ? { border: "1px solid #ff0000" }
-                                : {}
-                            }
-                            type="text"
-                            className="formControl"
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="row">
-                          <RInput
-                            label={"Middle Name"}
-                            value={`${values.middleName}`.trimStart()}
-                            strikes={true}
-                            name="middleName"
-                            type="text"
-                            className="formControl"
-                            onChange={handleChange}
-                            onKeyDown={(evt) => !/^[a-zA-Z0-9]+$/gi.test(evt.key) && evt.preventDefault()}
-                            style={
-                              errors.hasOwnProperty("middleName") && touched["middleName"] && errors["middleName"]
-                                ? { border: "1px solid #ff0000" }
-                                : {}
-                            }
-                          />
-                          <RInput
-                            label={"Password"}
-                            strikes={!userId ? true : false}
-                            generatetext={generateText}
-                            value={`${values.password}`.trimStart()}
-                            name="password"
-                            placeholder="Temporary password"
-                            type="text"
-                            generate={true}
-                            className="formControl"
-                            style={
-                              errors.hasOwnProperty("password") && touched["password"] && errors["password"]
-                                ? { border: "1px solid #ff0000" }
-                                : {}
-                            }
-                            onChange={handleChange}
-                            ongenerat={setFieldValue}
-                          />
-                        </div>
-                        <div className="row">
-                          <Form.Group className={"col-md-6"}>
-                            <Form.Label>{"Set User Expiry"}</Form.Label>
-                            <div className="fieldtext">
-                              <CustomDatePicker
-                                inputClassNames="custom_calendar_style"
-                                placeholder="User Expiry Date"
-                                strikes={true}
-                                handleDayChange={(e: any) =>
-                                  setFieldValue("userIdExpiry", moment(e).format("DD MMM YYYY"))
-                                }
-                                value={values.userIdExpiry ? moment(values.userIdExpiry, "DD MMM YYYY").toDate() : null}
-                                minDate={new Date()}
-                                maxYear={10}
-                                error={
-                                  errors &&
-                                  errors.hasOwnProperty("userIdExpiry") &&
-                                  touched["userIdExpiry"] &&
-                                  errors["userIdExpiry"]
-                                }
-                                format={"dd MMM yyyy"}
-                              />
-                              {errors &&
-                                errors.hasOwnProperty("userIdExpiry") &&
-                                touched["userIdExpiry"] &&
-                                errors["userIdExpiry"] && <p style={{ color: "red" }}>{errors["userIdExpiry"]}</p>}
-                            </div>
-                          </Form.Group>
-                          {/* <div className={"col-md-6"}>
-                            <div className="redioField">
-                              <label>Office Designation</label>
-                              <div className="redioFieldwrap" style={{paddingTop: '12px'}}>
-                                <input
-                                  type="radio"
-                                  name="officeDesignation"
-                                  onClick={() => setFieldValue("officeDesignation", 1)}
-                                  checked={values.officeDesignation == 1}
-                                />
-                                <label htmlFor="Back-Officer-Access">Back Officer Access</label>
-                                <input
-                                  type="radio"
-                                  name="officeDesignation"
-                                  onClick={() => setFieldValue("officeDesignation", 2)}
-                                  checked={values.officeDesignation == 2}
-                                />
-                                <label htmlFor="Front-Office-Access">Front Office Access</label>
-                                <input
-                                  type="radio"
-                                  name="officeDesignation"
-                                  onClick={() => setFieldValue("officeDesignation", 3)}
-                                  checked={values.officeDesignation == 3}
-                                />
-                                <label htmlFor="Back-and-Front-Office-Access">Back and Front Office Access</label>
-                              </div>
-                            </div>
-                          </div> */}
-                        </div>
-                        <Button type="submit" className="btn btn-primary float-right createUser">
-                          {submitButtonTitle}
-                        </Button>
-                        {userId ? (
-                          <button
-                            type="button"
-                            className="btn  float-right sendBack"
-                            style={{ marginRight: 10 }}
-                            onClick={() => fourceUserLogout(userId)}>
-                            FORCE LOG OFF
-                          </button>
-                        ) : null}
-                      </div>
-                    </Form>
-                  )
-                }}
-              </Formik>
+              </div>
             </div>
           </div>
       </div>

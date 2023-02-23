@@ -42,6 +42,7 @@ const RequestAPI = {
           callBack(handleResponse(response, response.data, blob))
         })
         .catch((er) => {
+          
           if (er.response !== undefined) {
             const { data } = er.response
             const { message, code } = data.error

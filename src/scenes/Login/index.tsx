@@ -47,6 +47,14 @@ export const Login = () => {
   const [currentTime, setCurrentTime] = useState(moment().format("hh:mm:ss A"));
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MMMM-DD"));
 
+<<<<<<< Updated upstream
+  
+=======
+  const [attemptCount, setAttemptCount] = useState(0);
+  const [disabled, setDisabled] = useState(false);
+
+ 
+>>>>>>> Stashed changes
 
   function toggleDiv() {
     setShowDiv1(!showDiv1);
@@ -77,112 +85,84 @@ export const Login = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+  
+
 
  
   const loginRequest = React.useCallback(() => {
+
+
     if (username && password) {
       RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
         const { status, body } = res
+        
         if (status === 200) {
-          Utility.clearOnLoginTimer()
-          const { accessToken, changePassword = false, roleId, refreshToken } = body
-          if (changePassword) {
-            setIsReset(true)
-            setTempToken(accessToken)
-          } else {
-            window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-            window.sessionStorage.setItem("_ug583k", CryptoJS.AES.encrypt(`${roleId}`, process.env.REACT_APP_ENCRYPTION_KEY))
-            window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
-
-            window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
-
-            // expiry
-            RequestAPI.getRequest(Api.GET_PASSWORD_EXPIRY_NOTIFICATION, "", {}, {}, async (res: any) => {
-              const { status, body = { data: {}, error: {} } }: any = res;
-              if (status === 200 && body.data && body.data.message) {
-                ErrorSwal.fire({
-                  html: <UserPopup onConfirm={() => {
-                    ErrorSwal.close();
-                    history.push("/useriniatedchangepw");
-
-                  }} handleClose={ErrorSwal.close} popupType="expire_password" text={body.data && body.data.message} />,
-                  showConfirmButton: false,
-                  allowOutsideClick: () => true,
-                }).then(() => { })
+          if (body.error && body.error.message){
+            setErrorMessage(body.error.message)
+          }else{
+            Utility.clearOnLoginTimer()
+            const { accessToken, changePassword = false, roleId, refreshToken } = body.data
+            if (changePassword) {
+              setIsReset(true)
+              setTempToken(accessToken)
+            } else {
+              window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+              window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+              
+              window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
+              console.log(moment().format("DD/MM/YYYY H:mm:ss a"))
+              const userObj = { ...body }
+              if (userObj && userObj.accessToken) {
+                delete userObj.accessToken
               }
-            })
 
-            const userObj = { ...body }
-            if (userObj && userObj.accessToken) {
-              delete userObj.accessToken
+              userObj.menu = [
+                {
+                  "links": [],
+                  "label": "Home",
+                  "icon": "home",
+                  "type": "transaction",
+                  "route": "/dashboard"
+                },
+                {
+                    "links": [],
+                    "label": "Home",
+                    "icon": "home",
+                    "type": "transaction",
+                    "route": "/useriniatedchangepw"
+                },
+                {
+                    "links": [],
+                    "label": "Clients",
+                    "icon": "client",
+                    "type": "client",
+                    "route": "/user/list"
+                },
+                {
+                  "links": [],
+                  "label": "Clients",
+                  "icon": "client",
+                  "type": "client",
+                  "route": "/employee"
+              },
+            ],
+            userObj.accessRights = [
+                "Can_Read_User",
+                "Can_Add_Edit_User",
+                "Can_Read_Role",
+                "Can_Add_Edit_Role",
+            ]
+
+              
+              dispatch({ type: "USER_DATA", payload: userObj })
+              dispatch({ type: "IS_LOGIN", payload: true })
             }
-
-            if (userObj && userObj.changePassword) {
-              delete userObj.changePassword
-            }
-
-            ;[
-              Api.UNITS,
-              Api.ROLES,
-              Api.USERSTATUS,
-              Api.MASTERLIST,
-              Api.GET_TRANSACTION_MASTER_LIST,
-              Api.LISTS_TRANSACTION_SERVICINGUNITS,
-              Api.GET_USER_MASTER_LIST,
-              Api.GET_HOLIDAY_MASTER_LIST,
-              Api.BILLINGREPORT_MASTER_LIST,
-              Api.FRONTENDMAINTAINANCE_MASTER_LIST
-            ].map((d) => {
-              RequestAPI.getRequest(d, "", {}, {}, async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-
-                if (status === 200) {
-                  switch (d) {
-                    case Api.ROLES:
-                      dispatch({
-                        type: "SET_ROLES",
-                        payload: (body && body.data && body.data.content) || body || [],
-                      })
-                      break
-                    case Api.USERSTATUS:
-                      dispatch({
-                        type: "SET_STATUS",
-                        payload: (body && body.data && body.data.content) || body || [],
-                      })
-                      break
-                    case Api.ACCESS:
-                      dispatch({
-                        type: "SET_STATUS",
-                        payload: (body && body.data && body.data.content) || body || [],
-                      })
-                      break
-                    case Api.MASTERLIST:
-                      dispatch({
-                        type: "SET_MASTERLIST",
-                        payload: (body && body.data) || body || [],
-                      })
-                      break
-                    case Api.GET_USER_MASTER_LIST:
-                      dispatch({
-                        type: "SET_GET_USER_MASTER_LIST",
-                        payload: (body && body.data) || body || [],
-                      })
-                      break
-                    default:
-                      break
-                  }
-                }
-              })
-            })
-            dispatch({ type: "USER_DATA", payload: userObj })
-            dispatch({ type: "IS_LOGIN", payload: true })
           }
-        } else {
-          body.error && body.error.message && setErrorMessage(body.error.message)
         }
       })
     }
   }, [username, password])
+
 
   // onCopy
   const copyHandler = (event: React.ClipboardEvent<HTMLInputElement>) => {
@@ -198,6 +178,7 @@ export const Login = () => {
     toggleDiv();
     loginRequest();
   }
+
   const [showModal, setShowModal] = useState(false);
 
   const handleModal = () => setShowModal(!showModal);

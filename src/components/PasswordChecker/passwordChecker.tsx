@@ -143,7 +143,7 @@ function CheckPassword() {
             variant="link"
             onClick={() => setVisibile3(!visibile3)}
             className="passwordicon"
-            disabled={!password}>
+            >
             <span className="showpass">
               <img src={show_password_dark} alt="Show" />
             </span>
