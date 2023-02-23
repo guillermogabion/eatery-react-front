@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import packageJson from "./../../../package.json"
-import { Button, Card, Row, Col, Image, Container, ListGroup } from "react-bootstrap"
+import { Button, Card, Row, Col, Image, Container, ListGroup, Modal, Form } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
+import { FaCheckCircle } from "react-icons/fa";
+import CheckPassword from "../../components/PasswordChecker/passwordChecker"
 import {
   Logo,
   show_password_dark,
@@ -16,7 +18,6 @@ import {
 } from "../../assets/images"
 import moment from "moment";
 import { Utility } from "../../utils"
-import ResetPassword from "../ResetPassword"
 import withReactContent from "sweetalert2-react-content"
 import UserPopup from "../../components/Popup/UserPopup"
 import { history } from "../../helpers"
@@ -43,15 +44,21 @@ export const Login = () => {
   const [isAcknowledgement, setIsAcknowledgement] = useState<any>(false)
   const [showDiv1, setShowDiv1] = useState(true);
 
+  const [currentTime, setCurrentTime] = useState(moment().format("hh:mm:ss A"));
+  const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MMMM-DD"));
+
+
   function toggleDiv() {
     setShowDiv1(!showDiv1);
   }
+  
 
   const keydownFun = (event: any) => {
     if (event.key === "Enter" && username && password) {
       setIsAcknowledgement(true)
     }
   }
+  
 
   useEffect(() => {
     if (username && password) {
@@ -59,8 +66,19 @@ export const Login = () => {
       document.addEventListener("keydown", keydownFun)
     }
     return () => document.removeEventListener("keydown", keydownFun)
+    
   }, [username, password])
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+    setCurrentTime(moment().format("hh:mm:ss A"));
+    setCurrentDate(moment().format("DD-MMMM-YYYY"));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+ 
   const loginRequest = React.useCallback(() => {
     if (username && password) {
       RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
@@ -180,282 +198,178 @@ export const Login = () => {
     toggleDiv();
     loginRequest();
   }
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModal = () => setShowModal(!showModal);
 
   return (
-    <div className="body body-ground d-flex align-items-center">
-      <div className="loginPage">
-        <div >
-          <div className="fullWidth">          
-            {!isReset ? (
+  <>
+  <div className="container">
+       
+    {showDiv1 ? ( 
+        <div className="row containee ">
+          <div className="column-right mobile">
             
-              <Card className="card-card">
-                <div className="row" style={{ boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.8)' }}>
-                {showDiv1 ? (
-                  <div className="column d-none d-sm-block" style={{ backgroundColor : "#aaa"}}>
-                    <h2>Image Here</h2>
-                    <p></p>
-                  </div>
-                  
-                ): (
-                  <div className="column d-none d-sm-block" style={{ backgroundColor : "#aaa"}}>
-                    <div className="align-items-center style-confirm">
-                      <h4 className="container-text-confirm">A Strong Password Must Have :</h4>
-                      <ul className="list-group-background ">
-                        <li className="list-group-item">At least 10 characters long</li>
-                        <li className="list-group-item">Combination of UPPERCASE and lowercase, letters, numbers and symbols</li>
-                        <li className="list-group-item">Not a valid word, name found in dictionary</li>
-                      </ul>
-                    </div>
-                  </div>
-                )}
-                {showDiv1 ? (
-                  <div className="column">
-                    <Container className="d-flex justify-content-center align-items-center">
-                      <Row className="d-flex justify-content-center align-items-center">
-                        <Col>
-                          <div className="align-items-center">
-                            <h4 className="container-text">Employee Portal</h4>
-                          </div>
-                          <form id="_form" className="loginForm" action="#">
-                              <input
-                                id="_name"
-                                autoComplete="new-password"
-                                name="name"
-                                type="text"
-                                value={username}
-                                className="form-control text-field-color"
-                                style={{ marginBottom: "20px" }}
-                                required
-                                onChange={(e) => setUsername(e.target.value)}
-                              />
-                              <div className="passwordField">
-                              <input
-                                id="_password"
-                                onCopy={copyHandler}
-                                onCut={cutHandler}
-                                autoComplete="new-password"
-                                style={{ marginBottom: "20px" }}
-                                name="password"
-                                value={password}
-                                type={visibile ? "text" : "password"}
-                                className="form-control text-field-color"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}
-                              />
-                              <Button
-                                variant="link"
-                                onClick={() => setVisibile(!visibile)}
-                                className="passwordicon"
-                                disabled={!password}>
-                                <span className="showpass">
-                                  <img src={show_password_dark} alt="Show" />
-                                </span>
-                                <span className="hidepass">
-                                  <img src={hide_password_dark} alt="Hide" />
-                                </span>
-                              </Button>
-                            </div>
-                            <a href="#!" onClick={() => alert("Ongoing")} className="forgotPassword">
-                              Help Me Log In?
-                            </a>
-                          
-                            <div className="d-flex">
-                              <Button
-                                style={{ width: '100%' }}
-                                onClick={() => dualRequest()}
-                                className="btn btn-primary"
-                                disabled={!(username && password)}>
-                                Login
-                              </Button>
-                              {/* <Button
-                                style={{ width: '100%' }}
-                                onClick={() => loginRequest()}
-                                className="btn btn-primary"
-                                disabled={!(username && password)}>
-                                Login
-                              </Button> */}
-                            </div>
-                            <br />
-                          </form>
-                          <div className="d-flex justify-content-center">
-                            <p className="errorMessage">{errorMessage}</p>
-                          </div>
+          </div>
+          <div className="column-center containeer">
+            <Card className="card-card">
+              <div className="row" style={{ boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.8)' }}>
+                <Container className="d-flex justify-content-center align-items-center">
+                  <Row className="d-flex justify-content-center align-items-center">
+                    <Col>
+                      <div className="company-logo">
+                        <img src="https://via.placeholder.com/150" alt="" width={300} height={100}/>
+                      </div>
+                      <div className="align-items-center">
+                        <h4 className="container-text">Employee Portal Login</h4>
+                      </div>
+                      <form id="_form" className="loginForm" action="#">
+                          <input
+                            id="_name"
+                            autoComplete="new-password"
+                            name="name"
+                            type="text"
+                            value={username}
+                            className="form-control text-field-color input-login exception-style"
+                            style={{ marginBottom: "20px" }}
+                            placeholder="Username or Employee ID"
+                            required
+                            onChange={(e) => setUsername(e.target.value)}
+                          />
+                          <div className="passwordField">
+                          <input
+                            id="_password"
+                            onCopy={copyHandler}
+                            onCut={cutHandler}
+                            autoComplete="new-password"
+                            style={{ marginBottom: "20px" }}
+                            name="password"
+                            value={password}
+                            type={visibile ? "text" : "password"}
+                            className="form-control text-field-color input-login "
+                            required
+                            placeholder="Password"
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                          <Button
+                            variant="link"
+                            onClick={() => setVisibile(!visibile)}
+                            className="passwordicon"
+                            disabled={!password}>
+                            <span className="showpass">
+                              <img src={show_password_dark} alt="Show" />
+                            </span>
+                            <span className="hidepass">
+                              <img src={hide_password_dark} alt="Hide" />
+                            </span>
+                          </Button>
+                        </div>
+                        <a href="#!" onClick={handleModal} className="forgotPassword">
+                          Help Me Log In?
+                        </a>
+                      
+                        <div className="d-flex">
+                          <Button
+                            style={{ width: '100%' }}
+                            onClick={() => dualRequest()}
+                            className="btn btn-primary btn-styles"
+                            disabled={!(username && password)}>
+                            Login
+                          </Button>
+                        </div>
+                        <br />
+                      </form>
+                      <div className="d-flex justify-content-center">
+                        <p className="errorMessage">{errorMessage}</p>
+                      </div>
 
-                        </Col>
-                      </Row>
-                    
-                    </Container>
+                    </Col>
+                  </Row>
                 
-                </div>
-                ): (
-                  <div className="column column-new">
-                    <Container className="d-flex justify-content-center align-items-center">
-                      <Row className="d-flex justify-content-center align-items-center">
-                        <Col>
-                          <div className="align-items-center">
-                            <h5 className="container-text-confirm">Lets Create A Strong Password</h5>
-                          </div>
-                          <form id="_form" className="loginForm" action="#">
-                          
-
-                          <div className="passwordField">
-                            <input
-                              id="_current_password"
-                              onCopy={copyHandler}
-                              onCut={cutHandler}
-                              autoComplete="current-password"
-                              style={{ marginBottom: "20px" }}
-                              name="current_password"
-                              // value={confirm_password}
-                              type={visibile ? "text" : "password"}
-                              className="form-control text-field-color"
-                              required
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <Button
-                              variant="link"
-                              onClick={() => setVisibile(!visibile)}
-                              className="passwordicon"
-                              disabled={!password}>
-                              <span className="showpass">
-                                <img src={show_password_dark} alt="Show" />
-                              </span>
-                              <span className="hidepass">
-                                <img src={hide_password_dark} alt="Hide" />
-                              </span>
-                            </Button>
-                          </div>
-                          <div className="passwordField">
-                              <input
-                                id="_new_password"
-                                onCopy={copyHandler}
-                                onCut={cutHandler}
-                                autoComplete="new-password"
-                                style={{ marginBottom: "20px" }}
-                                name="new_password"
-                                // value={current_password}
-                                type={visibile2 ? "text" : "password"}
-                                className="form-control text-field-color"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}
-                              />
-                              <Button
-                                variant="link"
-                                onClick={() => setVisibile2(!visibile2)}
-                                className="passwordicon"
-                                disabled={!password}>
-                                <span className="showpass">
-                                  <img src={show_password_dark} alt="Show" />
-                                </span>
-                                <span className="hidepass">
-                                  <img src={hide_password_dark} alt="Hide" />
-                                </span>
-                              </Button>
-                            </div>
-                          <div className="passwordField">
-                              <input
-                                id="_confirm_password"
-                                onCopy={copyHandler}
-                                onCut={cutHandler}
-                                autoComplete="confirm-password"
-                                style={{ marginBottom: "20px" }}
-                                name="confirm_password"
-                                // value={new_password}
-                                type={visibile3 ? "text" : "password"}
-                                className="form-control text-field-color"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}
-                              />
-                              <Button
-                                variant="link"
-                                onClick={() => setVisibile3(!visibile3)}
-                                className="passwordicon"
-                                disabled={!password}>
-                                <span className="showpass">
-                                  <img src={show_password_dark} alt="Show" />
-                                </span>
-                                <span className="hidepass">
-                                  <img src={hide_password_dark} alt="Hide" />
-                                </span>
-                              </Button>
-                            </div>
-                         
-                           
-                          
-                            <div className="d-flex">
-                              <Button
-                                style={{ width: '100%' }}
-                                onClick={() => dualRequest()}
-                                className="btn btn-primary"
-                                disabled={!(username && password)}>
-                                Change Password
-                              </Button>
-                              {/* <Button
-                                style={{ width: '100%' }}
-                                onClick={() => loginRequest()}
-                                className="btn btn-primary"
-                                disabled={!(username && password)}>
-                                Login
-                              </Button> */}
-                            </div>
-                            <ul className="list-group-background mobile">
-                              <li className="list-group-item">At least 10 characters long</li>
-                              <li className="list-group-item">Combination of UPPERCASE and lowercase, letters, numbers and symbols</li>
-                              <li className="list-group-item">Not a valid word, name found in dictionary</li>
-                            </ul>
-                            <br />
-                          </form>
-                          
-
-                        </Col>
-                      </Row>
-                    
-                    </Container>
+                </Container>
+              </div>
+            </Card>
+          </div>
+          <div className="column-right mobile">
+            <Col className="content-right paddin-top" >
+                <p className="container-time"><span className="end-flex">Today is:</span> 
+                <br/>
+                {currentDate}
+                <br/>
+                <span className="end-flex" style={{fontSize:'22px'}}>{currentTime}</span>
+                </p>
+            </Col>
+          </div>
+      </div>
+      ): (
+        <div className="row containee">
+          <div className="change-password-column-left mobile adjustments-left">
+            <span className="left-title">Password Creation Guidelines :</span>
+           <ul>
+           <li><FaCheckCircle/><span className="check-circle">At least 12 characters long but 14 or more is better </span></li>
+           <li><FaCheckCircle/><span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span></li>
+           <li><FaCheckCircle/><span className="check-circle">Not a word that can be found in a dictionary or the name of a person, character, product or organization</span></li>
+           <li><FaCheckCircle/><span className="check-circle">Significantly different from your previous passwords</span></li>
+           </ul>
+            
+          </div>
+          <div className="change-password-column-center containeer">
+          <Card className="card-card">
+              <div className="row" style={{ boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.8)' }}>
+                <Container className="d-flex justify-content-center align-items-center">
+                  <Row className="d-flex justify-content-center align-items-center">
+                    <Col>
+                      <div className="company-logo">
+                        <img src="https://via.placeholder.com/150" alt="" width={300} height={100}/>
+                      </div>
+                      <div className="align-items-center">
+                        <h4 className="container-text">Please Change your Password</h4>
+                      </div>
+                      <form id="_form" className="loginForm" action="#">
+                        <CheckPassword></CheckPassword>
+                      </form>
+                    </Col>
+                  </Row>
                 
-                </div>
-                )}
-                  
-                </div>
-              </Card>
-            ) : (
-              null
-            )}
+                </Container>
+              </div>
+            </Card>
+          </div>
+          <div className="change-password-column-right mobile">
+            <Col className="content-right paddin-top" >
+              <p className="container-time"><span className="end-flex">Today is:</span> 
+              <br/>
+              {currentDate}
+              <br/>
+              <span style={{fontSize:'22px'}}>{currentTime}</span>
+              </p>
+            </Col>
           </div>
         </div>
-        
-      </div>
+
+      )}
       
-    </div>
+      <Modal show={showModal} onHide={handleModal} centered>
+        <Modal.Header className="reset-header">
+          <Modal.Title className="header-text">Forgot Password - Reset</Modal.Title>
+        </Modal.Header>
+        <div className="body-centered header-text">
+          <span>Please enter your Employee Number</span>
+        </div>
+        <div className="modal-input">
+          <Form.Control type="text" className=" " placeholder="Employee Number" />
+        </div>
+        <div className="modal-btns">
+            <Button variant="primary" className="modal-btn">Submit</Button>
+            <a href="#!" className="close-modal" onClick={handleModal}>
+              Cancel
+            </a>
+          </div>
+      </Modal>
+  </div>
 
-    // <div className="back-ground">
-    //   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-    //   <Card className="card-main">
-    //     <Card.Header>
-    //         Login
-    //     </Card.Header>
-    //     <Card.Body>
-    //       <Form>
-    //         <Form.Control type="text" placeholder="Email or Username"></Form.Control>
-    //         <Form.Control  type={visibile ? "text" : "password"} placeholder="Email or Username">
-    //         </Form.Control>
-    //         <Button
-    //           variant="link"
-    //           onClick={() => setVisibile(!visibile)}
-    //           className="passwordicon"
-    //           disabled={!password}>
-    //           <span className="showpass">
-    //             <img src={show_password_dark} alt="Show" />
-    //           </span>
-    //           <span className="hidepass">
-    //             <img src={hide_password_dark} alt="Hide" />
-    //           </span>
-    //           </Button>
-    //       </Form>
-    //     </Card.Body>
-    //   </Card>
-
-    // </div>
-
-    // </div>
+    
+</> 
+   
   )
 }

@@ -1,4 +1,4 @@
-.card-card {
+/* .card-card {
   margin : 0;
   padding: 0;
   width: 1000px;
@@ -19,11 +19,10 @@
 
 .column {
 float: left;
-width: 50%;
-height: 500px; /* Should be removed. Only for demonstration */
+width: 33.3333%;
+height: 500px; 
 }
 
-/* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
@@ -33,7 +32,6 @@ height: 500px; /* Should be removed. Only for demonstration */
   display: none;
 }
 
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 
 
 .container-text {
@@ -97,7 +95,6 @@ height: 500px; /* Should be removed. Only for demonstration */
   background-color: 'rgba(255, 255, 255, 0.5)';
 }
 
- /* Style for the parent container */
 
  @media screen and (max-width: 600px) {
   .column {
@@ -131,7 +128,206 @@ height: 500px; /* Should be removed. Only for demonstration */
   }
   ul li {
     font-size: 12px !important;
-    list-style-position: inside !important; /* Change the font size to whatever you like */
+    list-style-position: inside !important;
   }
   
+} */
+* {
+  box-sizing: border-box;
 }
+
+
+.column-right {
+  float: left;
+  width: 20%;
+  padding: 20px;
+  height: 100vh;
+ 
+  
+}
+.company-logo {
+  justify-content: center; /* Center vertically */
+  align-items: center;
+  display: flex;
+  padding: 2em;
+
+}
+.content-right {
+  display: flex;
+  justify-content: flex-end; 
+  padding-right: 4em;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.paddin-top {
+  padding-top: 10em;
+  padding-bottom: 0;
+}
+.container-time {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-end;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.column-center {
+  width: 60%;
+  padding: 10px;
+  height: 100vh;
+  justify-content: center; /* Center vertically */
+  align-items: center;
+
+}
+.column-left {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  height: 100vh;
+
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.card-card {
+  margin : 0;
+  padding: 0;
+  width: 500px;
+  max-width: 500px;
+  box-shadow: 21px;
+  border: 0;
+}
+.containeer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-text {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  padding-bottom: 1em;
+  font-weight: bold;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.container-date {
+  padding-bottom: 0
+}
+@media screen and (max-width: 600px) {
+  .mobile {
+    display: none;
+  }
+  .column-center {
+  
+    justify-content: center; /* Center vertically */
+    align-items: center;/* Center horizontally */
+  }
+  .containee {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+  }
+}
+.input-login {
+  width: 350px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+.exception-style {
+  margin-bottom: 50px !important ;
+
+}
+.btn-styles {
+  margin-bottom: 10em;
+}
+.reset-header {
+  justify-content: center;
+  align-items: center;
+ 
+}
+.header-text {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.body-centered {
+text-align: center;
+font-size: 15px;
+margin-bottom: 2em;
+}
+.body-text {
+  font-weight: bold;
+}
+.modal-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+.modal-btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal-btn {
+  margin-bottom: 1em;
+  width: 100px;
+}
+.close-modal {
+  text-decoration: none;
+  margin-bottom: 2em;
+}
+
+/* .first-log-page */
+
+.change-password-column-left {
+  float: left;
+  width: 40%;
+  padding: 10px;
+  height: 100vh;
+}
+.change-password-column-center {
+  float: left;
+  width: 40%;
+  padding: 10px;
+  height: 100vh;
+
+}
+.change-password-column-right {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  height: 100vh;
+
+}
+.end-flex {
+  float: right;
+}
+ul {
+  list-style: none;
+}
+.adjustments-left {
+  padding-top: 15em;
+  font-size: 18px;
+}
+.left-title {
+  font-weight: bold;
+}
+.check-circle {
+  padding-left: 10px;
+}
+
