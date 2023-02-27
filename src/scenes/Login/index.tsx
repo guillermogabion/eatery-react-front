@@ -188,7 +188,7 @@ const loginRequest = React.useCallback(() => {
 
   return (
   <>
-  <div className="container">
+  {/* <div className="container"> */}
        
     {showDiv1 ? ( 
         <div className="row containee ">
@@ -202,7 +202,7 @@ const loginRequest = React.useCallback(() => {
                   <Row className="d-flex justify-content-center align-items-center">
                     <Col>
                       <div className="company-logo">
-                        <img src="https://via.placeholder.com/150" alt="" width={300} height={100}/>
+                        <img src="https://via.placeholder.com/150" alt="" width={300} height={150}/>
                       </div>
                       <div className="align-items-center">
                         <h4 className="container-text">Employee Portal Login</h4>
@@ -249,7 +249,7 @@ const loginRequest = React.useCallback(() => {
                           </Button>
                         </div>
                         <a href="#!" onClick={handleModal} className="forgotPassword">
-                          Help Me Log In?
+                          Forgot Password?
                         </a>
                       
                         <div className="d-flex">
@@ -261,25 +261,24 @@ const loginRequest = React.useCallback(() => {
                             Login
                           </Button>
                         </div>
+                        <div className="d-flex justify-content-center">
+                        {loginAttempts > 0 && (
+                          <div className="text-danger text-error-notif">
+                            {`Login attempts remaining: ${3 - loginAttempts}`}
+                          </div>
+                        )}
+
+                        </div>
                         <br />
                       </form>
-                      <div className="d-flex justify-content-center">
-                        {/* <p className="errorMessage">{errorMessage}</p> */}
-
-                      {loginAttempts > 0 && (
-                        <div className="text-danger">
-                          {`Login attempts remaining: ${3 - loginAttempts}`}
-                        </div>
-                      )}
-
-                      </div>
+                     
 
                       {/* <Button variant="primary" onClick={loginHandler} disabled={loginAttempts >= 3}>
   Login
                         </Button> */}
                         {loginAttempts >= 3 && (
-                          <Alert variant="danger">
-                           <span style={{fontSize:'10px'}}> Login has been disabled due to three consecutive failed attempts.</span>
+                          <Alert variant="danger danger-banner">
+                           <span className="danger-text"> Login has been disabled due to three consecutive failed attempts.</span>
                           </Alert>
                         )}
 
@@ -371,7 +370,7 @@ const loginRequest = React.useCallback(() => {
             </a>
           </div>
       </Modal>
-  </div>
+  {/* </div> */}
 
     
 </> 

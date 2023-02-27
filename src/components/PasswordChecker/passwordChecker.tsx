@@ -164,6 +164,7 @@ function CheckPassword() {
         </div>
       </form>
       <style tsx>
+        
         {`
        
           .password-strength-meter {
@@ -186,7 +187,10 @@ function CheckPassword() {
             border-radius: 3px;
             transition: width 0.4s;
           }
+          
+        
         `}
+
       </style>
     </div>
   );
