@@ -261,8 +261,7 @@ margin-bottom: 2em;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 1em;
-  padding-top: 1em;
+  padding: 1em;
 }
 .modal-btns {
   display: flex;
