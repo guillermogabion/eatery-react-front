@@ -26,7 +26,7 @@ export const Dashboard = (props: any) => {
 
   const getFetchData = (pagging = 0) => {
     let today = moment().format("YYYY-MM-DD")
-    
+
     RequestAPI.getRequest(
         `${Api.timeKeeping}?size=10&page=${pagging}&userid=${userId}&dateBefore=${today}&dateAfter=${today}&sortDir=desc`,
         "",
@@ -92,6 +92,21 @@ export const Dashboard = (props: any) => {
           
         }
       })
+      
+
+      //  RequestAPI.getRequest(
+      //   `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
+      //   "",
+      //   {},
+      //   {},
+      //   async (res: any) => {
+      //     const { status, body = { data: {}, error: {} } }: any = res
+      //     if (status === 200 && body && body.data) {
+      //       // setNotificationsData(body.data)
+      //       console.log(body.data)
+      //     }
+      //   }
+      // )
       
     }else if(status == 'time out'){
       let timeOutPayload = {}

@@ -3,7 +3,8 @@ const Api: any = {
   timeIn: process.env.REACT_APP_API_URL + "timekeeping/timeIn",
   timeOut: process.env.REACT_APP_API_URL + "timekeeping/timeOut",
   timeKeeping: process.env.REACT_APP_API_URL + "timekeeping/all",
-  getAllLeaves: process.env.REACT_APP_API_URL + "request/leave",
+  getTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/get",
+  getAllLeaves: process.env.REACT_APP_API_URL + "request/leave/all",
   changePassword: process.env.REACT_APP_API_URL + "user/password",
   
 
