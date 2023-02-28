@@ -38,6 +38,8 @@ export const Dashboard = (props: any) => {
             if(body.data.content.length > 0){
                 if(body.data.content[0].timeOut == null){
                   setTimeInData(body.data.content[0])
+                }else{
+                  setTimeInData("")
                 }
             }
           }
@@ -91,23 +93,10 @@ export const Dashboard = (props: any) => {
         }
       })
       
-      // RequestAPI.getRequest(
-      //   `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
-      //   "",
-      //   {},
-      //   {},
-      //   async (res: any) => {
-      //     const { status, body = { data: {}, error: {} } }: any = res
-      //     if (status === 200 && body && body.data) {
-      //       // setNotificationsData(body.data)
-      //       console.log(body.data)
-      //     }
-      //   }
-      // )
-      
     }else if(status == 'time out'){
       let timeOutPayload = {}
       let isProceed = true
+      
       if (timeInData && timeInData.id){
           timeOutPayload  = {
             "id" : timeInData.id,
@@ -145,12 +134,13 @@ export const Dashboard = (props: any) => {
                       'error'
                     )
                   }else{
+                    getFetchData(0)
                     ErrorSwal.fire(
                       'Success!',
                       (body.data) || "",
                       'success'
                     )
-                    getFetchData(0)
+                    
                   }
                 }else{
                   ErrorSwal.fire(
@@ -167,7 +157,7 @@ export const Dashboard = (props: any) => {
       }
       
     
-  }, [])
+  }, [timeInData])
 
   return (
     <div className="body">
