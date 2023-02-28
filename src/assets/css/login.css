@@ -1,14 +1,61 @@
 .card-container {
-    padding: 1.5em;
-    box-shadow: 1px 1px 4px #000000;
-    color: white;
-  }
-  .body-ground {
-    background-image: url(../images/login_back.jpg);
-  }
-  .avatar {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  }
-  
+  padding: 1.5em;
+  box-shadow: 1px 1px 4px #000000;
+  color: white;
+}
+.body-ground {
+  background-image: url(../images/login_back.jpg);
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* input {
+  color: black !important;
+  border-color: grey !important;
+  outline: none;
+}
+
+input:focus::-webkit-input-placeholder {
+  transition: transform 0.2s ease-out, font-size 0.2s ease-out, opacity 0.2s ease-out;
+  transform: translateY(-100%);
+  font-size: 12px;
+  opacity: 1;
+  color: transparent;
+  border-color: rgb(84, 224, 232) !important;
+
+}
+
+input:focus:-moz-placeholder {
+  transition: transform 0.2s ease-out, font-size 0.2s ease-out, opacity 0.2s ease-out;
+  transform: translateY(-100%);
+  font-size: 12px;
+  opacity: 1;
+  color: transparent;
+  border-color: rgb(84, 224, 232) !important;
+  outline: none
+}
+
+input:focus::-moz-placeholder {
+  transition: transform 0.2s ease-out, font-size 0.2s ease-out, opacity 0.2s ease-out;
+  transform: translateY(-100%);
+  font-size: 12px;
+  opacity: 1;
+  color: transparent;
+  border-color: rgb(84, 224, 232) !important;
+  outline: none
+}
+
+input:focus:-ms-input-placeholder {
+  transition: transform 0.2s ease-out, font-size 0.2s ease-out, opacity 0.2s ease-out;
+  transform: translateY(-100%);
+  font-size: 12px;
+  opacity: 1;
+  color: transparent;
+  border-color: rgb(84, 224, 232) !important;
+  outline: none
+} */
+
+
