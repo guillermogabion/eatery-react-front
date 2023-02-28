@@ -12,8 +12,8 @@
   object-fit: cover;
 }
 
-input {
-   color: black !important;
+/* input {
+  color: black !important;
   border-color: grey !important;
   outline: none;
 }
@@ -56,6 +56,6 @@ input:focus:-ms-input-placeholder {
   color: transparent;
   border-color: rgb(84, 224, 232) !important;
   outline: none
-}
+} */
 
 
