@@ -293,14 +293,20 @@ const loginRequest = React.useCallback(() => {
             </Card>
           </div>
           <div className="column-right mobile">
-            <Col className="content-right paddin-top" >
-                <p className="container-time"><span className="end-flex">Today is:</span> 
-                <br/>
-                {currentDate}
-                <br/>
-                <span className="end-flex" style={{fontSize:'22px'}}>{currentTime}</span>
-                </p>
-            </Col>
+              <div className="date-display">
+                <h6 className="end-flex">Today is : </h6>
+               
+                <br />
+                <span className="end-flex date-flex">{currentDate}</span>
+               
+                <br />
+              
+               
+                <h4 className="end-flex time-flex">{currentTime}</h4>
+
+              </div>
+            
+              
           </div>
       </div>
       ): (
