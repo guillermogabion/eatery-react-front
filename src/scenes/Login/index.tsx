@@ -80,7 +80,7 @@ export const Login = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
     setCurrentTime(moment().format("hh:mm:ss A"));
-    setCurrentDate(moment().format("DD-MMMM-YYYY"));
+    setCurrentDate(moment().format("MMMM-DD-YYYY"));
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -112,8 +112,8 @@ const loginRequest = React.useCallback(() => {
             window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
             window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
             
-            window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
-            console.log(moment().format("DD/MM/YYYY H:mm:ss a"))
+            window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("MM/DD/YYYY H:mm:ss a"))
+            console.log(moment().format("MM/DD/YYYY H:mm:ss a"))
             const userObj = { ...body }
             if (userObj && userObj.accessToken) {
               delete userObj.accessToken
