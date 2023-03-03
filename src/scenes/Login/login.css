@@ -17,9 +17,12 @@
 
 .column-right {
   float: left;
-  width: 20%;
+  width: 30%;
   padding: 20px;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
  
   
 }
@@ -42,7 +45,7 @@
 }
 
 .paddin-top {
-  padding-top: 10em;
+  padding-top: 4em;
   padding-bottom: 0;
 }
 .container-time {
@@ -54,7 +57,7 @@
 }
 
 .column-center {
-  width: 60%;
+  width: 40%;
   padding: 10px;
   height: 100vh;
   justify-content: center; /* Center vertically */
@@ -63,7 +66,7 @@
 }
 .column-left {
   float: left;
-  width: 20%;
+  width: 30%;
   padding: 10px;
   height: 100vh;
 
@@ -222,6 +225,11 @@
   }
 
 }
+.danger-text {
+  font-size: 12px;
+  padding-top: 0;
+  padding-left: 20px;
+}
 .input-login {
   width:430px;
   height: 50px;
@@ -312,5 +320,21 @@ ul {
 }
 .check-circle {
   padding-left: 10px;
+}
+.padd {
+ padding: 0px;
+}
+
+.text-container p {
+  float: right;
+}
+.date-display {
+  padding-top: 4em;
+}
+.date-flex {
+  font-size: 15px;
+}
+.time-flex {
+  font-weight: bold;
 }
 

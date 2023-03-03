@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
-import packageJson from "./../../../package.json"
+
 import { Button, Card, Row, Col, Image, Container, ListGroup, Modal, Form, Alert } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
@@ -9,18 +9,10 @@ import {
   Logo,
   show_password_dark,
   hide_password_dark,
-  logo_s,
-  logo_mob,
-  lhs_image,
-  ts_image,
-  acm_pwd_reset,
-  user_ack,
 } from "../../assets/images"
 import moment from "moment";
 import { Utility } from "../../utils"
 import withReactContent from "sweetalert2-react-content"
-import UserPopup from "../../components/Popup/UserPopup"
-import { history } from "../../helpers"
 import Swal from "sweetalert2";
 import '../../assets/css/login.css'
 import './login.css'
@@ -29,7 +21,7 @@ const ErrorSwal = withReactContent(Swal);
 const CryptoJS = require("crypto-js")
 
 export const Login = () => {
-  
+
   const dispatch = useDispatch()
   const [username, setUsername] = useState<any>("")
   const [password, setPassword] = useState<any>("")
@@ -60,14 +52,14 @@ export const Login = () => {
   function toggleDiv() {
     setShowDiv1(!showDiv1);
   }
-  
+
 
   const keydownFun = (event: any) => {
     if (event.key === "Enter" && username && password) {
       setIsAcknowledgement(true)
     }
   }
-  
+
 
   useEffect(() => {
     if (username && password) {
@@ -75,52 +67,46 @@ export const Login = () => {
       document.addEventListener("keydown", keydownFun)
     }
     return () => document.removeEventListener("keydown", keydownFun)
-    
+
   }, [username, password])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-    setCurrentTime(moment().format("hh:mm:ss A"));
-    setCurrentDate(moment().format("DD-MMMM-YYYY"));
+      setCurrentTime(moment().format("hh:mm:ss A"));
+      setCurrentDate(moment().format("MMMM-DD-YYYY"));
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
-  
 
-const loginRequest = React.useCallback(() => {
-
-  if (username && password) {
-
-    RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
-      const { status, body } = res
-
-      if (status === 200) {
-        // Login successful, reset login attempts counter
-        
-
-        if (body.error && body.error.message){
-          setErrorMessage(body.error.message)
-          setLoginAttempts(loginAttempts + 1);
-          setErrorMessage(body.error.message);
-        }else{
-          Utility.clearOnLoginTimer()
-          const { accessToken, changePassword = false, roleId, refreshToken } = body.data
-          if (changePassword) {
-            setIsReset(true)
-            setTempToken(accessToken)
+  const loginRequest = React.useCallback(() => {
+    if (username && password) {
+      RequestAPI.postRequest(Api.Login, "", { username, password }, {}, async (res: any) => {
+        const { status, body } = res
+        if (status === 200) {
+          // Login successful, reset login attempts counter
+          if (body.error && body.error.message) {
+            setErrorMessage(body.error.message)
+            setLoginAttempts(loginAttempts + 1);
+            setErrorMessage(body.error.message);
           } else {
-            window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-            window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
-            
-            window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("DD/MM/YYYY H:mm:ss a"))
-            console.log(moment().format("DD/MM/YYYY H:mm:ss a"))
-            const userObj = { ...body }
-            if (userObj && userObj.accessToken) {
-              delete userObj.accessToken
-            }
+            Utility.clearOnLoginTimer()
+            const { accessToken, changePassword = false, roleId, refreshToken } = body.data
+            if (changePassword) {
+              setIsReset(true)
+              setTempToken(accessToken)
+            } else {
+              window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+              window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
 
-            userObj.menu = [              {
+              window.sessionStorage.setItem("_setSessionLoginTimer", moment().format("MM/DD/YYYY H:mm:ss a"))
+              console.log(moment().format("MM/DD/YYYY H:mm:ss a"))
+              const userObj = { ...body }
+              if (userObj && userObj.accessToken) {
+                delete userObj.accessToken
+              }
+
+              userObj.menu = [{
                 "links": [],
                 "label": "Home",
                 "icon": "home",
@@ -128,18 +114,18 @@ const loginRequest = React.useCallback(() => {
                 "route": "/dashboard"
               },
               {
-                  "links": [],
-                  "label": "Home",
-                  "icon": "home",
-                  "type": "transaction",
-                  "route": "/useriniatedchangepw"
+                "links": [],
+                "label": "Home",
+                "icon": "home",
+                "type": "transaction",
+                "route": "/useriniatedchangepw"
               },
               {
-                  "links": [],
-                  "label": "Clients",
-                  "icon": "client",
-                  "type": "client",
-                  "route": "/user/list"
+                "links": [],
+                "label": "Clients",
+                "icon": "client",
+                "type": "client",
+                "route": "/user/list"
               },
               {
                 "links": [],
@@ -148,24 +134,24 @@ const loginRequest = React.useCallback(() => {
                 "type": "client",
                 "route": "/employee"
               },
-            ],
-            userObj.accessRights = [              
-              "Can_Read_User",              
-              "Can_Add_Edit_User",              
-              "Can_Read_Role",              
-              "Can_Add_Edit_Role",            
-            ]
-            dispatch({ type: "SET_MASTERLIST", payload: userObj.data.masterList })
-            dispatch({ type: "USER_DATA", payload: userObj })
-            dispatch({ type: "IS_LOGIN", payload: true })
+              ],
+                userObj.accessRights = [
+                  "Can_Read_User",
+                  "Can_Add_Edit_User",
+                  "Can_Read_Role",
+                  "Can_Add_Edit_Role",
+                ]
+              dispatch({ type: "SET_MASTERLIST", payload: userObj.data.masterList })
+              dispatch({ type: "USER_DATA", payload: userObj })
+              dispatch({ type: "IS_LOGIN", payload: true })
+            }
           }
         }
-      }
-    });
-  }
-}, [username, password])
+      });
+    }
+  }, [username, password])
 
-  
+
 
 
   // onCopy
@@ -178,7 +164,7 @@ const loginRequest = React.useCallback(() => {
     event.preventDefault()
   }
 
-  function dualRequest(){
+  function dualRequest() {
     // toggleDiv();
     loginRequest();
   }
@@ -188,13 +174,11 @@ const loginRequest = React.useCallback(() => {
   const handleModal = () => setShowModal(!showModal);
 
   return (
-  <>
-  {/* <div className="container"> */}
-      
-    {showDiv1 ? ( 
+    <>
+      {showDiv1 ? 
         <div className="row containee ">
           <div className="column-right mobile">
-            
+
           </div>
           <div className="column-center containeer">
             <Card className="card-card">
@@ -203,25 +187,25 @@ const loginRequest = React.useCallback(() => {
                   <Row className="d-flex justify-content-center align-items-center">
                     <Col>
                       <div className="company-logo">
-                        <img src="https://via.placeholder.com/150" alt="" width={300} height={150}/>
+                        <img src="https://via.placeholder.com/150" alt="" width={300} height={150} />
                       </div>
                       <div className="align-items-center">
                         <h4 className="container-text">Employee Portal Login</h4>
                       </div>
                       <form id="_form" className="loginForm" action="#">
-                          <input
-                            id="_name"
-                            autoComplete="new-password"
-                            name="name"
-                            type="text"
-                            value={username}
-                            className="form-control text-field-color input-login"
-                            style={{ marginBottom: "20px" }}
-                            placeholder="Username or Employee ID"
-                            required
-                            onChange={(e) => setUsername(e.target.value)}
-                          />
-                          <div className="passwordField">
+                        <input
+                          id="_name"
+                          autoComplete="new-password"
+                          name="name"
+                          type="text"
+                          value={username}
+                          className="form-control text-field-color input-login"
+                          style={{ marginBottom: "20px" }}
+                          placeholder="Username or Employee ID"
+                          required
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <div className="passwordField">
                           <input
                             id="_password"
                             onCopy={copyHandler}
@@ -252,7 +236,7 @@ const loginRequest = React.useCallback(() => {
                         <a href="#!" onClick={handleModal} className="forgotPassword">
                           Forgot Password?
                         </a>
-                      
+
                         <div className="d-flex">
                           <Button
                             style={{ width: '100%' }}
@@ -266,46 +250,44 @@ const loginRequest = React.useCallback(() => {
                         <br />
                         {errorMessage != "" && (
                           <Alert variant="danger danger-banner">
-                          <span className="danger-text">{errorMessage}</span>
+                            <span className="danger-text">{errorMessage}</span>
                           </Alert>
                         )}
                         <br />
                       </form>
-                    <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
+                      <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
                     </Col>
                   </Row>
-                
+
                 </Container>
               </div>
             </Card>
           </div>
-          <div className="column-right mobile mt-5">
-            <div className="mt-3 w-100 d-flex justify-content-start">
+          <div className="column-right mobile">
+            <div className="date-display">
               <TimeDate />
             </div>
-            
           </div>
-      </div>
-      ): (
+        </div>
+        :
         <div className="row containee">
           <div className="change-password-column-left mobile adjustments-left">
             <span className="left-title">Password Creation Guidelines :</span>
-          <ul>
-          <li><FaCheckCircle/><span className="check-circle">At least 12 characters long but 14 or more is better </span></li>
-          <li><FaCheckCircle/><span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span></li>
-          <li><FaCheckCircle/><span className="check-circle">Not a word that can be found in a dictionary or the name of a person, character, product or organization</span></li>
-          <li><FaCheckCircle/><span className="check-circle">Significantly different from your previous passwords</span></li>
-          </ul>
-            
+            <ul>
+              <li><FaCheckCircle /><span className="check-circle">At least 12 characters long but 14 or more is better </span></li>
+              <li><FaCheckCircle /><span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span></li>
+              <li><FaCheckCircle /><span className="check-circle">Not a word that can be found in a dictionary or the name of a person, character, product or organization</span></li>
+              <li><FaCheckCircle /><span className="check-circle">Significantly different from your previous passwords</span></li>
+            </ul>
           </div>
           <div className="change-password-column-center containeer">
-          <Card className="card-card">
+            <Card className="card-card">
               <div className="row" style={{ boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.8)' }}>
                 <Container className="d-flex justify-content-center align-items-center">
                   <Row className="d-flex justify-content-center align-items-center">
                     <Col>
                       <div className="company-logo">
-                        <img src="https://via.placeholder.com/150" alt="" width={300} height={100}/>
+                        <img src="https://via.placeholder.com/150" alt="" width={300} height={100} />
                       </div>
                       <div className="align-items-center">
                         <h4 className="container-text">Please Change your Password</h4>
@@ -313,29 +295,22 @@ const loginRequest = React.useCallback(() => {
                       <form id="_form" className="loginForm" action="#">
                         <CheckPassword></CheckPassword>
                       </form>
-                    <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
-
+                      <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
                     </Col>
                   </Row>
-                
                 </Container>
               </div>
             </Card>
           </div>
           <div className="change-password-column-right mobile">
+
             <Col className="content-right paddin-top" >
-              <p className="container-time"><span className="end-flex">Today is:</span> 
-              <br/>
-              {currentDate}
-              <br/>
-              <span style={{fontSize:'22px'}}>{currentTime}</span>
-              </p>
+              <TimeDate />
             </Col>
           </div>
         </div>
+      }
 
-      )}
-      
       <Modal show={showModal} onHide={handleModal} centered>
         <Modal.Header className="reset-header">
           <Modal.Title className="header-text">Forgot Password - Reset</Modal.Title>
@@ -347,16 +322,12 @@ const loginRequest = React.useCallback(() => {
           <Form.Control type="text" className=" " placeholder="Employee Number" />
         </div>
         <div className="modal-btns">
-            <Button variant="primary" className="modal-btn">Submit</Button>
-            <a href="#!" className="close-modal" onClick={handleModal}>
-              Cancel
-            </a>
-          </div>
+          <Button variant="primary" className="modal-btn">Submit</Button>
+          <a href="#!" className="close-modal" onClick={handleModal}>
+            Cancel
+          </a>
+        </div>
       </Modal>
-  {/* </div> */}
-
-    
-</> 
-  
+    </>
   )
 }
