@@ -155,7 +155,7 @@ const loginRequest = React.useCallback(() => {
               "Can_Read_Role",              
               "Can_Add_Edit_Role",            
             ]
-
+            dispatch({ type: "SET_MASTERLIST", payload: userObj.data.masterList })
             dispatch({ type: "USER_DATA", payload: userObj })
             dispatch({ type: "IS_LOGIN", payload: true })
           }
