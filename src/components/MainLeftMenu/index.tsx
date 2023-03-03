@@ -115,7 +115,7 @@ const MainLeftMenu = () => {
                 to={{}}
                 onClick={() => {
                   RequestAPI.deleteRequest(
-                    Api.REFRESH_TOKEN,
+                    Api.refreshToken,
                     "",
                     { token: Utility.getRefreshToken() },
                     async (res: any) => {

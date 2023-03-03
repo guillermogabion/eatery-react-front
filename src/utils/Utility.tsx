@@ -156,16 +156,20 @@ export const Utility = {
     const timeDiffSecond = moment().diff(sessionLogin, 'seconds')
     if (timeDiffSecond > 0 && (userActiveTime - timeDiffSecond < 400) && isFetch) {
       isFetch = false
-      RequestAPI.postRequest(Api.REFRESH_TOKEN, "", { token: Utility.getRefreshToken() }, {}, async (res: any) => {
+      RequestAPI.postRequest(Api.refreshToken, "", { "refreshToken": Utility.getRefreshToken() }, {}, async (res: any) => {
         const { status, body } = res;
         isFetch = true
         if (status === 200) {
-          const { data } = body
-          const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
-          window.sessionStorage.setItem("_setSessionLoginTimer", sessionDateTime)
-          sessionLoginDate = sessionDateTime;
-          window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-          window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+          if (body.error && body.error.message){
+          }else{
+            const { data } = body
+            const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
+            window.sessionStorage.setItem("_setSessionLoginTimer", sessionDateTime)
+            sessionLoginDate = sessionDateTime;
+            window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+            window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+          }
+          
         }
       })
     }

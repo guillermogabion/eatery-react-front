@@ -9,6 +9,7 @@ import {
   ROLE_ACCESS,
   UPDATE_HUMBERGER_MENU,
   SET_CURENT_ROUTE_PATH,
+  SET_MASTERLIST,
 } from "../actions/rootAction"
 import { loadState } from "../sessionStorage"
 const persistedState = loadState()
@@ -30,6 +31,7 @@ const initialState: any = {
   isLogin: false,
   userRole: null,
   userData: {},
+  masterList: {},
   status: [],
   topSearch: "",
   roleAccess: [],
@@ -62,6 +64,8 @@ export default function rootReducer(state: State = initialState, action: Action)
       return { ...state, humbergerMenu: payload }
     case SET_CURENT_ROUTE_PATH:
       return { ...state, currentRoutePath: payload }
+    case SET_MASTERLIST:
+      return { ...state, masterList: payload }
 
 
     default:

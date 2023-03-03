@@ -14,21 +14,22 @@ import TimeDate from "../../components/TimeDate"
 
 
 
+
 export const Dashboard = (props: any) => {
   const { history } = props
-  const [userId, setUserId] = useState<any>("1")
+  
   const [timeInData, setTimeInData] = useState<any>("")
 
   useEffect(() => {
     getFetchData(0)
-  }, [userId])
+  }, [])
   
 
   const getFetchData = (pagging = 0) => {
     let today = moment().format("YYYY-MM-DD")
 
     RequestAPI.getRequest(
-        `${Api.timeKeeping}?size=10&page=${pagging}&userid=${userId}&dateBefore=${today}&dateAfter=${today}&sortDir=desc`,
+        `${Api.myTimeKeeping}?size=10&page=${pagging}&sortDir=desc`,
         "",
         {},
         {},

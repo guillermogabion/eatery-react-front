@@ -7,19 +7,44 @@ import DashboardMenu from "../../components/DashboardMenu"
 const ErrorSwal = withReactContent(Swal)
 import moment from "moment";
 import { left, right } from "@popperjs/core"
-import { Button, Card, Image, Modal } from "react-bootstrap"
+import { Button, Card, Form, Modal } from "react-bootstrap"
 import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
 import TimeDate from "../../components/TimeDate"
 import TableComponent from "../../components/TableComponent"
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Table from 'react-bootstrap/Table';
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 
 export const Leaves = (props: any) => {
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
-  const [key, setKey] =React.useState('all');
+  const [key, setKey] = React.useState('all');
+  const [leaveTypes, setLeaveTypes] = useState<any>([]);
+  const [dateFrom, setDateFrom] = useState<any>(moment().format("YYYY-MM-DD"));
+  const [dateTo, setDateTo] = useState<any>(moment().format("YYYY-MM-DD"));
+  const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
+  const [allLeaves, setAllLeaves] = useState<any>([]);
+  const [status, setStatus] = useState<any>("All");
+  const [initialValues, setInitialValues] = useState<any>({
+    "id": 2,
+    "dateFrom": moment().format("YYYY-MM-DD"),
+    "dateTo": moment().format("YYYY-MM-DD"),
+    "type": "SICK",
+    "status": "PENDING",
+    "reason": "string",
+    "breakdown": [
+      {
+        "date": "string",
+        "credit": 0
+      }
+    ]
+  })
+
+
   const tableHeaders = [
     'Type',
     'Date Filed',
@@ -29,7 +54,248 @@ export const Leaves = (props: any) => {
     'Remarks',
     'Action',
   ]
-  
+
+  useEffect(() => {
+    RequestAPI.getRequest(
+      `${Api.leaveTypes}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          setLeaveTypes(body)
+        } else {
+
+        }
+      }
+    )
+
+  }, [])
+
+
+  useEffect(() => {
+    getAllLeaves(0)
+  }, [])
+
+  const getAllLeaves = (page: any = 0) => {
+
+    RequestAPI.getRequest(
+      `${Api.allRequestLeave}?status=${status}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+
+          } else {
+            setAllLeaves(body.data)
+          }
+        }
+      }
+    )
+  }
+
+
+  useEffect(() => {
+    dateBreakdown()
+  }, [dateFrom, dateTo])
+
+  const dateBreakdown = () => {
+    const date1 = moment(dateFrom);
+    const date2 = moment(dateTo);
+    let leavesBreakdown = []
+    let diffInDays = date2.diff(date1, 'days') + 1;
+
+
+    let dateCounter = 0
+
+    if (dateFrom && dateTo && diffInDays >= 1) {
+      for (let index = 1; index <= diffInDays; index++) {
+        var added_date = moment(dateFrom).add(dateCounter, 'days');
+        let new_date = new Date(added_date.format('YYYY-MM-DD'))
+        if (new_date.getDay() == 0 || new_date.getDay() == 6) {
+          dateCounter += 1
+        } else if (new_date.getDay() == 6) {
+          dateCounter += 2
+        } else {
+          leavesBreakdown.push({
+            "date": moment(dateFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
+            "credit": 0
+          })
+          dateCounter += 1
+        }
+      }
+
+      setLeaveBreakdown(leavesBreakdown)
+    } else {
+      ErrorSwal.fire(
+        'Error!',
+        "Invalid date range.",
+        'error'
+      )
+    }
+  }
+
+  const setDateOption = (index: any, value: any) => {
+    const valuesObj: any = { ...leaveBreakdown }
+    valuesObj[index].credit = value
+  }
+
+
+  const approveLeave = (id: any = 0) => {
+
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to approve this leave.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.approveLeave, "", { "id" : id}, {}, async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message){
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            }else{
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getAllLeaves(0)
+            }
+          }else{
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+        
+      }
+    })
+    
+  }
+
+  const declineLeave = (id: any = 0) => {
+
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to decline this leave.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.declineLeave, "", { "id" : id}, {}, async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message){
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            }else{
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getAllLeaves(0)
+            }
+          }else{
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+        
+      }
+    })
+  }
+
+
+  const leaveTable = useCallback(() => {
+
+    return (
+      <div>
+        <Table responsive="lg">
+          <thead>
+            <tr>
+              <th style={{ width: 'auto' }}>Type</th>
+              <th style={{ width: 'auto' }}>Date From</th>
+              <th style={{ width: 'auto' }}>Date To</th>
+              <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Status</th>
+              <th style={{ width: 'auto' }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              allLeaves &&
+              allLeaves.content &&
+              allLeaves.content.length &&
+              allLeaves.content.map((item: any, index: any) => {
+                
+                return (
+                  <tr>
+                    <td> {item.type} </td>
+                    <td> {item.dateFrom} </td>
+                    <td> {item.dateTo} </td>
+                    <td> {item.reason} </td>
+                    <td> {item.status} </td>
+                    <td>
+                      <label
+                        onClick={() => {
+                          approveLeave(item.id)
+                        }}
+                        className="text-muted cursor-pointer">
+                          Approve
+                      </label> <br />
+
+                      <label
+                        onClick={() => {
+                          declineLeave(item.id)
+                        }}
+                        className="text-muted cursor-pointer">
+                          Decline
+                      </label> <br />
+
+                      <label
+                        onClick={() => {
+                          alert('Ongoing')
+                        }}
+                        className="text-muted cursor-pointer">
+                          Update
+                      </label> 
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </Table>
+      </div>
+    )
+  }, [allLeaves])
+
+
   return (
     <div className="body">
       <div className="wraper">
@@ -57,43 +323,36 @@ export const Leaves = (props: any) => {
                     <h5>Without pay:</h5>
                   </div>
                   <div className="col-md-3">
-                    <h5>12</h5>
-                    <h5>15</h5>
+                    <h5>0</h5>
+                    <h5>0</h5>
                     <h5>0</h5>
                   </div>
-                  
+
                 </div>
                 <div className="w-100 pt-4">
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={key}
-                  onSelect={(k: any) => {
-                    setKey(k)
-                  }}
-                  className="mb-3"
-                >
-                  <Tab eventKey="all" title="All">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="pending" title="Pending">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="approved" title="Approved" >
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                </Tabs>
-                  
+                  <Tabs
+                    id="controlled-tab-example"
+                    activeKey={key}
+                    onSelect={(k: any) => {
+                      setKey(k)
+                      setStatus(key)
+                    }}
+                    className="mb-3"
+                  >
+                    <Tab eventKey="all" title="All">
+                      {leaveTable()}
+                    </Tab>
+                    <Tab eventKey="pending" title="Pending">
+                      {leaveTable()}
+                    </Tab>
+                    <Tab eventKey="approved" title="Approved" >
+                      {leaveTable()}
+                    </Tab>
+                    <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
+                      {leaveTable()}
+                    </Tab>
+                  </Tabs>
+
                 </div>
               </div>
               <div className="d-flex justify-content-end mt-3" >
@@ -122,15 +381,163 @@ export const Leaves = (props: any) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Create New Employee
+              Request For Leave/Time-off
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
-            
+            <Formik
+              initialValues={initialValues}
+              enableReinitialize={true}
+              validationSchema={null}
+              onSubmit={(values, actions) => {
+                const valuesObj: any = { ...values }
+                valuesObj.breakdown = leaveBreakdown
+
+                RequestAPI.putRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  console.log(body)
+                  if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                    }
+                  } else {
+                    ErrorSwal.fire(
+                      'Error!',
+                      'Something Error.',
+                      'error'
+                    )
+                  }
+                })
+              }}>
+              {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                return (
+                  <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                    <div className="row w-100 px-5">
+                      <div className="form-group col-md-12 mb-3 " >
+                        <label>Leave Type</label>
+                        <select
+                          className="form-select"
+                          name="type"
+                          id="type"
+                          value={values.type}
+                          onChange={(e) => setFieldValue('type', e.target.value)}>
+                          {leaveTypes &&
+                            leaveTypes.types &&
+                            leaveTypes.types.length &&
+                            leaveTypes.types.map((item: any, index: string) => (
+                              <option key={`${index}_${item}`} value={item}>
+                                {item}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                      <div className="form-group col-md-6 mb-3" >
+                        <label>Date From</label>
+                        <input type="date"
+                          name="dateFrom"
+                          id="dateFrom"
+                          className="form-control"
+                          value={values.dateFrom}
+                          min={moment().format("YYYY-MM-DD")}
+                          onChange={(e) => {
+                            setDateFrom(e.target.value)
+                            setFieldValue('dateFrom', e.target.value)
+                            dateBreakdown()
+                          }}
+                        />
+                      </div>
+                      <div className="form-group col-md-6 mb-3" >
+                        <label>Date To</label>
+                        <input type="date"
+                          name="dateTo"
+                          id="dateTo"
+                          className="form-control"
+                          value={values.dateTo}
+                          min={dateFrom}
+                          onChange={(e) => {
+                            setDateTo(e.target.value)
+                            setFieldValue('dateTo', e.target.value)
+                            dateBreakdown()
+                          }}
+                        />
+                      </div>
+                      <div className="form-group col-md-12 mb-3" >
+                        <label>Reason</label>
+                        <input type="text"
+                          name="reason"
+                          id="reason"
+                          className="form-control"
+                          value={values.reason}
+                          onChange={(e) => setFieldValue('reason', e.target.value)}
+                        />
+                      </div>
+
+                      <div className="form-group col-md-12 mb-3" >
+                        <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                          <thead>
+                            <tr>
+                              <th style={{ width: 'auto' }}>Date Breakdown</th>
+                              <th style={{ width: 'auto' }}>Options</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            {
+                              leaveBreakdown &&
+                              leaveBreakdown.length &&
+                              leaveBreakdown.map((item: any, index: any) => {
+                                const { date } = item
+                                return (
+                                  <tr>
+                                    <td key={index + 'date'} >{date}</td>
+                                    <td key={index} >
+                                      <input
+                                        type="radio"
+                                        name={"leaveCredit" + index.toString()}
+                                        id={"leaveCreditWhole" + index.toString()}
+                                        onClick={() => setDateOption(index, 1)}
+                                      /> <label htmlFor={"leaveCreditWhole" + index.toString()} style={{ marginRight: 10 }}>Whole Day</label>
+                                      <input
+                                        type="radio"
+                                        name={"leaveCredit" + index.toString()}
+                                        id={"leaveCreditDay" + index.toString()}
+                                        onClick={() => setDateOption(index, .5)}
+                                      /> <label htmlFor={"leaveCreditDay" + index.toString()} style={{ paddingTop: -10 }}>Half Day</label>
+
+                                    </td>
+                                  </tr>
+                                )
+                              })
+                            }
+                          </tbody>
+                        </Table>
+                      </div>
+                    </div>
+                    <br />
+                    <Modal.Footer>
+                      <div className="d-flex justify-content-end px-5">
+                        <button
+                          type="submit"
+                          className="btn btn-primary">
+                          Save
+                        </button>
+                      </div>
+                    </Modal.Footer>
+                  </Form>
+                )
+              }}
+            </Formik>
           </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => setModalShow(false)}>Close</Button>
-          </Modal.Footer>
         </Modal>
         {/* End Create User Modal Form */}
       </div>
