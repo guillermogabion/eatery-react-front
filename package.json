@@ -1,5 +1,5 @@
 {
-  "name": "web-app",
+  "name": "Inhouse",
   "version": "1.0.0",
   "description": "A web application",
   "main": "index.js",
@@ -12,7 +12,7 @@
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "http://192.168.1.49:5000",
+  "homepage": "https://portal.actimai.com",
   "keywords": [],
   "author": "",
   "license": "MIT",

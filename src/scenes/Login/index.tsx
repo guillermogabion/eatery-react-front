@@ -24,6 +24,7 @@ import { history } from "../../helpers"
 import Swal from "sweetalert2";
 import '../../assets/css/login.css'
 import './login.css'
+import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal);
 const CryptoJS = require("crypto-js")
 
@@ -51,10 +52,10 @@ export const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoginSuccess, setIsLoginSuccess] = React.useState(false);
- 
 
 
- 
+
+
 
   function toggleDiv() {
     setShowDiv1(!showDiv1);
@@ -189,7 +190,7 @@ const loginRequest = React.useCallback(() => {
   return (
   <>
   {/* <div className="container"> */}
-       
+      
     {showDiv1 ? ( 
         <div className="row containee ">
           <div className="column-right mobile">
@@ -214,7 +215,7 @@ const loginRequest = React.useCallback(() => {
                             name="name"
                             type="text"
                             value={username}
-                            className="form-control text-field-color input-login exception-style"
+                            className="form-control text-field-color input-login"
                             style={{ marginBottom: "20px" }}
                             placeholder="Username or Employee ID"
                             required
@@ -261,30 +262,16 @@ const loginRequest = React.useCallback(() => {
                             Login
                           </Button>
                         </div>
-                        <div className="d-flex justify-content-center">
-                        {loginAttempts > 0 && (
-                          <div className="text-danger text-error-notif">
-                            {`Login attempts remaining: ${3 - loginAttempts}`}
-                          </div>
-                        )}
-
-                        </div>
                         <br />
-                      </form>
-                     
-
-                      {/* <Button variant="primary" onClick={loginHandler} disabled={loginAttempts >= 3}>
-  Login
-                        </Button> */}
-                        {loginAttempts >= 3 && (
+                        <br />
+                        {errorMessage != "" && (
                           <Alert variant="danger danger-banner">
-                           <span className="danger-text"> Login has been disabled due to three consecutive failed attempts.</span>
+                          <span className="danger-text">{errorMessage}</span>
                           </Alert>
                         )}
-
-
-                     <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
-
+                        <br />
+                      </form>
+                    <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
                     </Col>
                   </Row>
                 
@@ -313,12 +300,12 @@ const loginRequest = React.useCallback(() => {
         <div className="row containee">
           <div className="change-password-column-left mobile adjustments-left">
             <span className="left-title">Password Creation Guidelines :</span>
-           <ul>
-           <li><FaCheckCircle/><span className="check-circle">At least 12 characters long but 14 or more is better </span></li>
-           <li><FaCheckCircle/><span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span></li>
-           <li><FaCheckCircle/><span className="check-circle">Not a word that can be found in a dictionary or the name of a person, character, product or organization</span></li>
-           <li><FaCheckCircle/><span className="check-circle">Significantly different from your previous passwords</span></li>
-           </ul>
+          <ul>
+          <li><FaCheckCircle/><span className="check-circle">At least 12 characters long but 14 or more is better </span></li>
+          <li><FaCheckCircle/><span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span></li>
+          <li><FaCheckCircle/><span className="check-circle">Not a word that can be found in a dictionary or the name of a person, character, product or organization</span></li>
+          <li><FaCheckCircle/><span className="check-circle">Significantly different from your previous passwords</span></li>
+          </ul>
             
           </div>
           <div className="change-password-column-center containeer">
@@ -336,7 +323,7 @@ const loginRequest = React.useCallback(() => {
                       <form id="_form" className="loginForm" action="#">
                         <CheckPassword></CheckPassword>
                       </form>
-                     <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
+                    <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
 
                     </Col>
                   </Row>
@@ -380,6 +367,6 @@ const loginRequest = React.useCallback(() => {
 
     
 </> 
-   
+  
   )
 }
