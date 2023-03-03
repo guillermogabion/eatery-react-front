@@ -2,10 +2,18 @@ const Api: any = {
   Login: process.env.REACT_APP_API_URL + "user/auth/token",
   timeIn: process.env.REACT_APP_API_URL + "timekeeping/timeIn",
   timeOut: process.env.REACT_APP_API_URL + "timekeeping/timeOut",
+  myTimeKeeping: process.env.REACT_APP_API_URL + "mytimekeeping/all",
   timeKeeping: process.env.REACT_APP_API_URL + "timekeeping/all",
-  getAllLeaves: process.env.REACT_APP_API_URL + "request/leave",
+  getTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/get",
+  getAllLeaves: process.env.REACT_APP_API_URL + "request/leave/all",
+  createEmployee: process.env.REACT_APP_API_URL + "employee/create",
   changePassword: process.env.REACT_APP_API_URL + "user/password",
-  
+  refreshToken: process.env.REACT_APP_API_URL + "user/auth/refresh",
+  leaveTypes: process.env.REACT_APP_API_URL + "request/leave/types",
+  requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
+  allRequestLeave: process.env.REACT_APP_API_URL + "request/leave/all",
+  approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
+  declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
 
 
   USERS: process.env.REACT_APP_API_URL + "users",
@@ -20,7 +28,7 @@ const Api: any = {
   GET_TRANSACTION_MASTER_LIST: process.env.REACT_APP_API_URL + "lists/transaction",
   REQUESTS: process.env.REACT_APP_API_URL + "requests",
   BULK_STATUS_REQUESTS: process.env.REACT_APP_API_URL + "request/status",
-  REFRESH_TOKEN: process.env.REACT_APP_API_URL + "auth/refreshToken",
+
   NOTIFICATIONS: process.env.REACT_APP_API_URL + "users/notifications",
   NOTIFICATIONS_DELETE: process.env.REACT_APP_API_URL + "users/notifications/delete",
   NOTIFICATIONS_DELETE_ALL: process.env.REACT_APP_API_URL + "users/notifications/deleteAll",

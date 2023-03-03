@@ -14,21 +14,22 @@ import TimeDate from "../../components/TimeDate"
 
 
 
+
 export const Dashboard = (props: any) => {
   const { history } = props
-  const [userId, setUserId] = useState<any>("1")
+  
   const [timeInData, setTimeInData] = useState<any>("")
 
   useEffect(() => {
     getFetchData(0)
-  }, [userId])
+  }, [])
   
 
   const getFetchData = (pagging = 0) => {
     let today = moment().format("YYYY-MM-DD")
-    
+
     RequestAPI.getRequest(
-        `${Api.timeKeeping}?size=10&page=${pagging}&userid=${userId}&dateBefore=${today}&dateAfter=${today}&sortDir=desc`,
+        `${Api.myTimeKeeping}?size=10&page=${pagging}&sortDir=desc`,
         "",
         {},
         {},
@@ -92,6 +93,21 @@ export const Dashboard = (props: any) => {
           
         }
       })
+      
+
+      //  RequestAPI.getRequest(
+      //   `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
+      //   "",
+      //   {},
+      //   {},
+      //   async (res: any) => {
+      //     const { status, body = { data: {}, error: {} } }: any = res
+      //     if (status === 200 && body && body.data) {
+      //       // setNotificationsData(body.data)
+      //       console.log(body.data)
+      //     }
+      //   }
+      // )
       
     }else if(status == 'time out'){
       let timeOutPayload = {}

@@ -65,31 +65,7 @@ img {
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
-  width: 7px;
-  height: 6px;
-  background: #e8e8e8;
-  border-radius: 0;
-  box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.1);
-}
 
-::-webkit-scrollbar-thumb {
-  background: #73bf45;
-  border-radius: 0;
-}
-
-::-moz-scrollbar {
-  width: 7px;
-  height: 6px;
-  background: #e8e8e8;
-  border-radius: 0;
-  box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.1);
-}
-
-::-moz-scrollbar-thumb {
-  background: #73bf45;
-  border-radius: 0;
-}
 
 .body {
   min-height: 100vh;
@@ -5772,3 +5748,34 @@ td.pendingLabel .active {
 /* V */
 /* End Accordion icons */
 /* End LEFT MENU CSS */
+
+
+/* SCROLL BAR
+
+/* ::-webkit-scrollbar {
+  width: 7px;
+  height: 6px;
+  background: #e8e8e8;
+  border-radius: 0;
+  box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #73bf45;
+  border-radius: 0;
+}
+
+::-moz-scrollbar {
+  width: 7px;
+  height: 6px;
+  background: #e8e8e8;
+  border-radius: 0;
+  box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.1);
+}
+
+::-moz-scrollbar-thumb {
+  background: #73bf45;
+  border-radius: 0;
+} 
+
+END SCROLL BAR */
