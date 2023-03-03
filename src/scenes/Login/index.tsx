@@ -248,9 +248,7 @@ export const Login = () => {
                         <br /><br /><br />
                       </form>
                       <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
-                    </div>
-
-                    <div className=" mobile">
+                      <div className=" mobile">
 
                     <Col className="loginTime" >
                       <TimeDate 
@@ -258,6 +256,9 @@ export const Login = () => {
                       />
                     </Col>
           </div>
+                    </div>
+
+                    
                 </Container>
           
         </div>
