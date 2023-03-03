@@ -73,7 +73,8 @@ import userdetail from "./user_detail.png"
 import active_icon from './deactivate_icon1.png'
 import inactive_icon from "./reactivate1.png"
 
-// import createrole from "./createrole.png"
+
+import actimai_logo from "./dist/Actimai Logo.svg"
 
 export {
   Logo,
@@ -147,5 +148,7 @@ export {
   Deactivate_icon,
   userdetail,
   active_icon,
-  inactive_icon
+  inactive_icon,
+
+  actimai_logo
 }

@@ -2,17 +2,17 @@
 * {
   box-sizing: border-box;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
   background-color: transparent;
-}
+} */
 
 /* Set thumb color and transparency */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   opacity: 0.8;
-}
+} */
 
 
 .column-right {
@@ -30,7 +30,6 @@
   justify-content: center; /* Center vertically */
   align-items: center;
   display: flex;
-  padding: 4em;
 
 }
 .content-right {
@@ -103,12 +102,12 @@
 .container-date {
   padding-bottom: 0
 }
+
 @media screen and (max-width: 600px) and (max-width: 767px) {
   .mobile {
     display: none;
   }
   .column-center {
-  
     justify-content: center; /* Center vertically */
     align-items: center;/* Center horizontally */
   }
@@ -231,12 +230,13 @@
   padding-left: 20px;
 }
 .input-login {
-  width:430px;
+  width:330px;
   height: 50px;
   margin-top: 20px;
   border-radius: 10px;
   border-width: 0.2;
-  border-color: rgb(250, 240, 240);
+  border-color: rgb(170, 170, 170);
+  background-color: #F0F1F3;
 
 }
 

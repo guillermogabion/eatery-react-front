@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import { icon_search_grey, user, RBank_Digital_Logo, power } from "../../assets/images"
+import { icon_search_grey, user, actimai_logo } from "../../assets/images"
 import { user_guide } from "../../assets/others"
 import { NavLink } from "react-router-dom"
 import { Utility } from "../../utils"
@@ -49,49 +49,9 @@ const UserTopMenu = (props: any) => {
 
   return (
     <div className="contentRightMain">
-      <div className="MobileHeader">
-        <div
-          className="humbergerMenu "
-          onClick={() => dispatch({ type: "UPDATE_HUMBERGER_MENU", payload: !humbergerMenu })}></div>
-        <a className="logo" href="/">
-          <img src={RBank_Digital_Logo} alt="RBank" />
-        </a>
-        <div className="mobileHeaderRight">
-          {/* <UserNotifications /> */}
-          <div className="MobileUserdetail">
-            <div className="UserIcon">
-              <img src={user} alt="user" />
-            </div>
-            <div className="MobileUserdetailDropDown">
-              <ul>
-                <li>{moment().format("MMMM DD, YYYY")}</li>
-                <li>
-                  <strong>Sol Id</strong> {userData.solId}
-                  <br />
-                  {userData.unit}
-                </li>
-                <li className="mobilelogout">
-                  <NavLink
-                    activeClassName="active"
-                    to={"/logout"}
-                    onClick={() => {
-                      Utility.deleteUserData()
-                      dispatch({ type: "IS_LOGIN", payload: false })
-                    }}>
-                    <span>
-                      <img src={power} alt="Logout" />
-                      <span>Logout</span>
-                    </span>
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
       <h1>
       <a className="logo" href="/">
-          <img src={"https://via.placeholder.com/55/09f.png/ffffff"} alt="RBank" />
+          <img src={actimai_logo} alt="Actimai logo" width={80} height={55} />
         </a>
       </h1>
       <div className="TopHeaderRight">

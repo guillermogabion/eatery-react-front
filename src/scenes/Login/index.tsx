@@ -9,6 +9,7 @@ import {
   Logo,
   show_password_dark,
   hide_password_dark,
+  actimai_logo,
 } from "../../assets/images"
 import moment from "moment";
 import { Utility } from "../../utils"
@@ -176,21 +177,14 @@ export const Login = () => {
   return (
     <>
       {showDiv1 ? 
-        <div className="row containee ">
-          <div className="column-right mobile">
-
-          </div>
-          <div className="column-center containeer">
-            <Card className="card-card">
-              <div className="row" style={{ boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.8)' }}>
-                <Container className="d-flex justify-content-center align-items-center">
-                  <Row className="d-flex justify-content-center align-items-center">
-                    <Col>
-                      <div className="company-logo">
-                        <img src="https://via.placeholder.com/150" alt="" width={300} height={150} />
+        <div className="row bg-dark w-100 h-100 p-0 m-0" style={{minHeight:'100vh', height:'100vh'}}>
+          <Container className="d-flex justify-content-center align-items-center p-0 m-0 loginBackground ">
+                    <div className="m-0  bg-white formContainer" >
+                      <div className="company-logo pb-3">
+                        <img src={actimai_logo} alt="Actimai logo"/>
                       </div>
                       <div className="align-items-center">
-                        <h4 className="container-text">Employee Portal Login</h4>
+                        <h4 className="container-text color-primary">Employee Portal Login</h4>
                       </div>
                       <form id="_form" className="loginForm" action="#">
                         <input
@@ -199,13 +193,13 @@ export const Login = () => {
                           name="name"
                           type="text"
                           value={username}
-                          className="form-control text-field-color input-login"
+                          className="form-control input-login"
                           style={{ marginBottom: "20px" }}
                           placeholder="Username or Employee ID"
                           required
                           onChange={(e) => setUsername(e.target.value)}
                         />
-                        <div className="passwordField">
+                        <div className="passwordField mt-4">
                           <input
                             id="_password"
                             onCopy={copyHandler}
@@ -233,10 +227,9 @@ export const Login = () => {
                             </span>
                           </Button>
                         </div>
-                        <a href="#!" onClick={handleModal} className="forgotPassword">
+                        <a href="#!" onClick={handleModal} className="forgotPassword mb-3">
                           Forgot Password?
                         </a>
-
                         <div className="d-flex">
                           <Button
                             style={{ width: '100%' }}
@@ -246,28 +239,27 @@ export const Login = () => {
                             Login
                           </Button>
                         </div>
-                        <br />
-                        <br />
+                        <br /><br /><br />
                         {errorMessage != "" && (
-                          <Alert variant="danger danger-banner">
-                            <span className="danger-text">{errorMessage}</span>
+                          <Alert variant="" className="text-center">
+                            <span className="text-danger">{errorMessage}</span>
                           </Alert>
                         )}
-                        <br />
+                        <br /><br /><br />
                       </form>
-                      <div className="d-flex justify-content-center"> <p>&copy; 2023 Actimai Philippines Incorporated</p></div>
-                    </Col>
-                  </Row>
+                      <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+                    </div>
 
+                    <div className=" mobile">
+
+                    <Col className="loginTime" >
+                      <TimeDate 
+                        textColor={'white'}
+                      />
+                    </Col>
+          </div>
                 </Container>
-              </div>
-            </Card>
-          </div>
-          <div className="column-right mobile">
-            <div className="date-display">
-              <TimeDate />
-            </div>
-          </div>
+          
         </div>
         :
         <div className="row containee">

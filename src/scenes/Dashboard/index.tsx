@@ -50,10 +50,6 @@ export const Dashboard = (props: any) => {
 
   const makeAttendance = useCallback((status: any) => {
     if (status == 'time in'){
-      let payload = {
-        "timeIn" :  moment().format("HH:mm"),
-        "status" : "On-Time"
-      }
       
       ErrorSwal.fire({
         title: 'Are you sure?',
@@ -65,7 +61,7 @@ export const Dashboard = (props: any) => {
         confirmButtonText: 'Yes, log me in!'
       }).then((result) => {
         if (result.isConfirmed) {
-          RequestAPI.postRequest(Api.timeIn, "", payload, {}, async (res: any) => {
+          RequestAPI.postRequest(Api.timeIn, "", {}, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
             if (status === 200 || status === 201) {
               if (body.error && body.error.message){
@@ -94,42 +90,8 @@ export const Dashboard = (props: any) => {
         }
       })
       
-
-      //  RequestAPI.getRequest(
-      //   `${Api.getAllLeaves}?size=10&page=0&sort=id&sortDir=desc`,
-      //   "",
-      //   {},
-      //   {},
-      //   async (res: any) => {
-      //     const { status, body = { data: {}, error: {} } }: any = res
-      //     if (status === 200 && body && body.data) {
-      //       // setNotificationsData(body.data)
-      //       console.log(body.data)
-      //     }
-      //   }
-      // )
-      
     }else if(status == 'time out'){
-      let timeOutPayload = {}
-      let isProceed = true
       
-      if (timeInData && timeInData.id){
-          timeOutPayload  = {
-            "id" : timeInData.id,
-            "timeOut" :  moment().format("HH:mm"),
-            "status" : "Out"
-          }
-      }
-      else{
-        isProceed = false
-        ErrorSwal.fire(
-          'Error!',
-          'Something Error.',
-          'error'
-        )
-      }
-      
-      if (isProceed){
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to log out.",
@@ -140,7 +102,7 @@ export const Dashboard = (props: any) => {
             confirmButtonText: 'Yes, log me out!'
           }).then((result) => {
             if (result.isConfirmed) {
-              RequestAPI.putRequest(Api.timeOut, "", timeOutPayload, {}, async (res: any) => {
+              RequestAPI.postRequest(Api.timeOut, "", {}, {}, async (res: any) => {
               const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 || status === 201) {
                   if (body.error && body.error.message){
@@ -169,7 +131,6 @@ export const Dashboard = (props: any) => {
               
             }
           })
-        }
       }
       
     

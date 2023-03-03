@@ -53,7 +53,9 @@ body {
   font-size: 15px;
   line-height: 1.65;
   word-break: break-word;
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
 }
 
 img {
@@ -61,9 +63,9 @@ img {
   vertical-align: top;
 }
 
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
 
 
@@ -216,7 +218,7 @@ h1 {
 
 .form-control:focus,
 .formControl:focus {
-  border-color: #97cd4c;
+  border-color: #604195;
   color: #333333;
 }
 
@@ -261,7 +263,7 @@ h1 {
   outline: 0;
   box-shadow: 0 0 0 0 rgb(13 110 253 / 0%) !important;
 }
-
+/* 
 .loginForm .btn-primary {
   background: #54e0e8 0% 0% no-repeat padding-box;
   border-color: #54e0e8;
@@ -277,7 +279,7 @@ h1 {
   text-transform: uppercase;
   float: right;
   margin-top: 5px;
-}
+} */
 
 .btn-primary:disabled {
   opacity: 0.5;
@@ -317,7 +319,7 @@ h1 {
   margin-bottom: 26px;
 }
 
-@media (min-width: 768px) and (max-width: 1200px) {
+/* @media (min-width: 768px) and (max-width: 1200px) {
   .wraper {
     padding: 0 15px;
   }
@@ -326,17 +328,17 @@ h1 {
     max-width: 100px;
     margin-bottom: 1rem;
   }
-}
+} */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
 
   .bannerMobile,
   .mobileLogo {
     display: none;
   }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
 
   .loginLogo,
   .bannerDekstop {
@@ -409,7 +411,7 @@ h1 {
     left: 0;
     right: 0;
   }
-}
+} */
 
 /* ForgotPassword */
 
@@ -490,8 +492,8 @@ h1 {
 
 .btn-primary {
   color: #fff;
-  background-color: #54e0e8 !important;
-  border-color: #54e0e8 !important;
+  background-color: #189FB5 !important;
+  border-color: rgb(81, 206, 212) !important;
   font-size: 16px;
   font-weight: 700;
 }
@@ -1735,23 +1737,23 @@ input[type="checkbox"] {
 }
 
 /* RolePopup */
-#CreateRole .modalBody {
+/* #CreateRole .modalBody {
   padding: 2rem 0;
   max-height: 605px;
   overflow-y: scroll;
   align-items: flex-start;
-}
+} */
 
-#CreateRole .modalBody .modalmainContent {
+/* #CreateRole .modalBody .modalmainContent {
   max-width: 90%;
-}
+} */
 
-#CreateRole .modalTop {
+/* #CreateRole .modalTop {
   display: flex;
   text-align: left;
   column-gap: 20px;
-}
-
+} */
+/* 
 #CreateRole .modalTop .modalmedia {
   min-width: 180px;
 }
@@ -1772,8 +1774,8 @@ input[type="checkbox"] {
   color: #1f7888;
   height: auto;
   padding: 10px 10px;
-}
-
+} */
+/* 
 #CreateRole ul {
   padding: 0;
   margin: 0;
@@ -1781,8 +1783,8 @@ input[type="checkbox"] {
   display: flex;
   flex-wrap: wrap;
   column-gap: 15px;
-}
-
+} */
+/* 
 #CreateRole tr:nth-child(even) {
   background: transparent;
 }
@@ -1798,7 +1800,7 @@ input[type="checkbox"] {
   opacity: 1;
   padding: 3px 10px;
   margin-bottom: 4px;
-}
+} */
 
 .modalFooter {
   margin-top: 15px;
@@ -1811,7 +1813,7 @@ input[type="checkbox"] {
   justify-content: flex-end;
   column-gap: 15px;
 }
-
+/* 
 .modalPopup .btn-secondry {
   height: 44px;
   border-radius: 5px;
@@ -1821,7 +1823,7 @@ input[type="checkbox"] {
   line-height: 44px;
   color: #73bf45 !important;
   text-decoration: none !important;
-}
+} */
 
 .caret {
   display: inline-block;
@@ -3240,7 +3242,7 @@ input::-ms-reveal {
 
 /* Responsive */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .MobileHeader {
     display: none;
   }
@@ -3248,9 +3250,9 @@ input::-ms-reveal {
   .DekstopHide {
     display: none;
   }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .MobleHide {
     display: none;
   }
@@ -3553,7 +3555,7 @@ input::-ms-reveal {
   .MessagePopup h3 {
     font-size: 27px;
     color: #003139;
-    /*margin: 30px 0 20px;*/
+
   }
 
   .basic-single-select .Status__option--is-focused {
@@ -3562,7 +3564,6 @@ input::-ms-reveal {
 
   .basic-single-select .Status__option--is-selected {
     background-color: rgba(216, 216, 216, 0.2) !important;
-    /* color: #fff; */
   }
 
   .txt_overflow {
@@ -3616,7 +3617,7 @@ input::-ms-reveal {
     transform: rotate(-45deg);
     top: 15px;
   }
-}
+} */
 
 * Create Request */ .fieldDateCommon {
   margin-bottom: 15px;
@@ -3861,7 +3862,7 @@ table.infoBreakdown th:first-child {
 /* Create Request */
 /* Responsive */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .MobileHeader {
     display: none;
   }
@@ -3869,9 +3870,9 @@ table.infoBreakdown th:first-child {
   .DekstopHide {
     display: none;
   }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .MobleHide {
     display: none;
   }
@@ -4143,7 +4144,7 @@ table.infoBreakdown th:first-child {
   td .listaction .btn {
     padding: 0 2px !important;
   }
-}
+} */
 
 /* Review Request */
 table.reviewTable th:first-child {
@@ -4358,7 +4359,7 @@ strong {
 
 /* Responsive */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .MobileHeader {
     display: none;
   }
@@ -4366,9 +4367,9 @@ strong {
   .DekstopHide {
     display: none;
   }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .MobleHide {
     display: none;
   }
@@ -4639,7 +4640,7 @@ strong {
   td .listaction .btn {
     padding: 0 2px !important;
   }
-}
+} */
 
 /* Report 25-Dec */
 .fieldAuto {
@@ -4696,9 +4697,9 @@ strong {
   font-weight: 700;
 }
 
-.loginForm .btn-primary {
+/* .loginForm .btn-primary {
   line-height: 45px;
-}
+} */
 
 .NoticePopup .modalmainContent {
   padding: 40px;
@@ -4943,7 +4944,7 @@ strong {
 }
 
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .dpuContener>.row>.col-md-4 {
     padding-right: 0;
     padding-left: 0;
@@ -4961,7 +4962,7 @@ strong {
     margin-top: 1rem;
   }
 
-}
+} */
 
 .strikes-input {
   color: red;
@@ -5696,20 +5697,6 @@ td.pendingLabel .active {
 .swal2-contentContainer{
   z-index: 9999 !important;
 }
-.card-contentContainer {
-  padding: 1.5em;
-  box-shadow: 1px 1px 4px #000000;
-  color: white;
-}
-.body-ground {
-  background-image: url(./assets/images/login_back.jpg);
-}
-.avatar {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-
 
 /* LEFT MENU CSS */
 .activeMenu{
@@ -5750,7 +5737,7 @@ td.pendingLabel .active {
 /* End LEFT MENU CSS */
 
 
-/* SCROLL BAR
+ /* SCROLL BAR */
 
 /* ::-webkit-scrollbar {
   width: 7px;
@@ -5776,6 +5763,14 @@ td.pendingLabel .active {
 ::-moz-scrollbar-thumb {
   background: #73bf45;
   border-radius: 0;
-} 
+}  */
 
-END SCROLL BAR */
+/* END SCROLL BAR  */
+
+.bg-primary{
+  background-color: #604195 !important;
+}
+
+.color-primary{
+  color:#604195 !important;
+}
