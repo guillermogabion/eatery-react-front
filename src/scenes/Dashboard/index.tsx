@@ -11,25 +11,22 @@ import { Button, Card, Image } from "react-bootstrap"
 import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
 import TimeDate from "../../components/TimeDate"
-
-
-
+import { bundy_clock } from "../../assets/images"
 
 export const Dashboard = (props: any) => {
   const { history } = props
   
   const [timeInData, setTimeInData] = useState<any>("")
+  const [hasLogout, setHasLogout] = useState<any>(false)
 
   useEffect(() => {
     getFetchData(0)
   }, [])
   
-
   const getFetchData = (pagging = 0) => {
     let today = moment().format("YYYY-MM-DD")
-
     RequestAPI.getRequest(
-        `${Api.myTimeKeeping}?size=10&page=${pagging}&sortDir=desc`,
+        `${Api.myTimeKeeping}?size=10&page=${pagging}&sortDir=desc&date=${today}`,
         "",
         {},
         {},
@@ -37,10 +34,11 @@ export const Dashboard = (props: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 && body && body.data) {
             if(body.data.content.length > 0){
-                if(body.data.content[0].timeOut == null){
-                  setTimeInData(body.data.content[0])
+                setTimeInData(body.data.content[0])
+                if(body.data.content[0].timeOut != null){
+                  setHasLogout(true)
                 }else{
-                  setTimeInData("")
+                  setHasLogout(false)
                 }
             }
           }
@@ -50,7 +48,6 @@ export const Dashboard = (props: any) => {
 
   const makeAttendance = useCallback((status: any) => {
     if (status == 'time in'){
-      
       ErrorSwal.fire({
         title: 'Are you sure?',
         text: "You want to log in.",
@@ -165,25 +162,28 @@ export const Dashboard = (props: any) => {
                       <div className="" style={{marginLeft:15, textAlign: left}}>
                           <h6 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h6>
                           <h6 className="font-weight-bold pt-2">30 January, 2023 08:54:22 AM</h6>
-                          <label className="font-weight-bold p-2 px-3 text-dark" style={{background:'#E9E9E9', width: 'auto', borderRadius:5}}>{ (timeInData && timeInData.status) || "Awaiting time in"}</label>
+                          <label 
+                            className="font-weight-bold p-2 px-3 text-dark" 
+                            style={{background:'#E9E9E9', width: 'auto', borderRadius:5}}>
+                            { (timeInData ) ? "Awaiting time out" : "Awaiting time in"}
+                          </label>
                       </div>
                     </div>
                     
                 </div>
-                <div className="d-flex" style={{justifyContent:right, marginTop: 300}}>
+                <div className="d-flex" style={{justifyContent:right, marginTop: 230}}>
                   <div>
                     <div className="d-flex justify-content-center">
-                      <Image src="https://via.placeholder.com/300/09f.png/ffffff" className="avatar"></Image>
+                      <img src={bundy_clock} className="Bundy Clock"/>
                     </div>
                     <div className="row mt-3">
                       <Button className="mx-2" 
                         disabled={timeInData != ""}
-                        style={{width: 120, background:'red'}}
+                        style={{width: 120}}
                         onClick={() => makeAttendance('time in')}
                         >Log me in</Button>
-                      <Button className="mx-2" 
-                        disabled={timeInData == ""}
-                        style={{width: 120, background:'red'}}
+                      <Button className={ hasLogout ? "mx-2 timeout-btn" : "mx-2"}
+                        style={{width: 120}}
                         onClick={() => makeAttendance('time out')}>Log me out</Button>
                     </div>
                   </div>

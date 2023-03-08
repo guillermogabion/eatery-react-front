@@ -12,6 +12,7 @@ const Api: any = {
   leaveTypes: process.env.REACT_APP_API_URL + "request/leave/types",
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
   allRequestLeave: process.env.REACT_APP_API_URL + "request/leave/all",
+  getLeave: process.env.REACT_APP_API_URL + "request/leave",
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
   declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
 

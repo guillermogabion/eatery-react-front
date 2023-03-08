@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react"
-import { icon_search_grey, user, actimai_logo } from "../../assets/images"
+import { icon_search_grey, user, actimai_logo, arrow_down } from "../../assets/images"
 import { user_guide } from "../../assets/others"
 import { NavLink } from "react-router-dom"
 import { Utility } from "../../utils"
@@ -50,7 +50,7 @@ const UserTopMenu = (props: any) => {
   return (
     <div className="contentRightMain">
       <h1>
-      <a className="logo" href="/">
+        <a className="logo" href="/">
           <img src={actimai_logo} alt="Actimai logo" width={80} height={55} />
         </a>
       </h1>
@@ -91,7 +91,7 @@ const UserTopMenu = (props: any) => {
             ) : null}
           </div>
         ) : null}
-        <div className="UserAction" onClick={closePopup}>
+        <div className="UserAction">
           <div className="UserdetailWrap">
             <div className="UserIcon">
               <img src={user} alt="user" />
@@ -105,24 +105,24 @@ const UserTopMenu = (props: any) => {
             </div>
           </div>
         </div>
-        <div className="UserAction" onClick={closePopup}>
+        <div className="menu-dropdown" onClick={closePopup}>
           <div className="UserdetailWrap">
-            <div className="UserIcon">
-              <img src={user} alt="user" />
+            <div className="DropdownIcon">
+              <img src={arrow_down} alt="Arrow Down" />
             </div>
           </div>
           {userAction ?
-            <div className="UserActionsLink">
+            <div className="MenuActionsLink">
               <small>
-                <NavLink to={"/dashboard"} 
+                <NavLink to={"/dashboard"}
                   onClick={() => {
                     setCurrentRoutePath("/dashboard")
                   }}>
-                  Dashboard
+                  <span>Dashboard</span>
                 </NavLink>
               </small>
               <br />
-              <small>
+              {/* <small>
                 <NavLink to={"/user/list"}
                 onClick={() => {
                   setCurrentRoutePath("/user/list")
@@ -130,8 +130,8 @@ const UserTopMenu = (props: any) => {
                   User Management
                 </NavLink>
               </small>
-              <br />
-              <small>
+              <br /> */}
+              {/* <small>
                 <NavLink to={"/role/list"}
                 onClick={() => {
                   setCurrentRoutePath("/role/list")
@@ -139,8 +139,8 @@ const UserTopMenu = (props: any) => {
                   Role Management
                 </NavLink>
               </small>
-              <br />
-              <small>
+              <br /> */}
+              {/* <small>
                 <NavLink to={"/useriniatedchangepw"}
                   onClick={() => {
                     setCurrentRoutePath("/useriniatedchangepw")
@@ -148,7 +148,7 @@ const UserTopMenu = (props: any) => {
                   Profile
                 </NavLink>
               </small>
-              <br />
+              <br /> */}
               <NavLink
                 activeClassName="active"
                 to={"/logout"}

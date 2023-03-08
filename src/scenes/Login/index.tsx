@@ -217,7 +217,7 @@ export const Login = () => {
                           <Button
                             variant="link"
                             onClick={() => setVisibile(!visibile)}
-                            className="passwordicon"
+                            className="passwordicon pt-3"
                             disabled={!password}>
                             <span className="showpass">
                               <img src={show_password_dark} alt="Show" />

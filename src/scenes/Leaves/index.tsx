@@ -28,21 +28,23 @@ export const Leaves = (props: any) => {
   const [dateTo, setDateTo] = useState<any>(moment().format("YYYY-MM-DD"));
   const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
   const [allLeaves, setAllLeaves] = useState<any>([]);
+  const [dayTypes, setDayTypes] = useState<any>([]);
   const [status, setStatus] = useState<any>("All");
   const [initialValues, setInitialValues] = useState<any>({
-    "id": 2,
     "dateFrom": moment().format("YYYY-MM-DD"),
     "dateTo": moment().format("YYYY-MM-DD"),
     "type": "SICK",
     "status": "PENDING",
-    "reason": "string",
+    "reason": "",
     "breakdown": [
       {
-        "date": "string",
-        "credit": 0
+        "date": "",
+        "credit": 0,
+        "dayType": null
       }
     ]
   })
+  const formRef: any = useRef()
 
 
   const tableHeaders = [
@@ -73,13 +75,11 @@ export const Leaves = (props: any) => {
 
   }, [])
 
-
   useEffect(() => {
-    getAllLeaves(0)
-  }, [])
+    getAllLeaves(0, "")
+  }, [dayTypes])
 
-  const getAllLeaves = (page: any = 0) => {
-
+  const getAllLeaves = (page: any = 0, status: any = "All") => {
     RequestAPI.getRequest(
       `${Api.allRequestLeave}?status=${status}`,
       "",
@@ -97,7 +97,24 @@ export const Leaves = (props: any) => {
       }
     )
   }
+  const getLeave = (id: any = 0) => {
+    RequestAPI.getRequest(
+      `${Api.getLeave}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
 
+          } else {
+            console.log(body)
+          }
+        }
+      }
+    )
+  }
 
   useEffect(() => {
     dateBreakdown()
@@ -108,10 +125,7 @@ export const Leaves = (props: any) => {
     const date2 = moment(dateTo);
     let leavesBreakdown = []
     let diffInDays = date2.diff(date1, 'days') + 1;
-
-
     let dateCounter = 0
-
     if (dateFrom && dateTo && diffInDays >= 1) {
       for (let index = 1; index <= diffInDays; index++) {
         var added_date = moment(dateFrom).add(dateCounter, 'days');
@@ -123,13 +137,21 @@ export const Leaves = (props: any) => {
         } else {
           leavesBreakdown.push({
             "date": moment(dateFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
-            "credit": 0
+            "credit": 0,
+            "dayType": null
           })
+          setDayTypes([
+            ...dayTypes,
+            false
+          ]);
           dateCounter += 1
         }
       }
-
+      // const valuesObj: any = { ...initialValues }
+      // valuesObj.breakdown = leavesBreakdown
+      // setInitialValues(valuesObj)
       setLeaveBreakdown(leavesBreakdown)
+      
     } else {
       ErrorSwal.fire(
         'Error!',
@@ -139,14 +161,27 @@ export const Leaves = (props: any) => {
     }
   }
 
-  const setDateOption = (index: any, value: any) => {
+  const setDateOption = (index: any, value: any, dayType: any = null) => {
     const valuesObj: any = { ...leaveBreakdown }
-    valuesObj[index].credit = value
+    let breakDownObj: any = {}
+    if(valuesObj.breakdown){
+      breakDownObj= { ...valuesObj.breakdown }
+      console.log(breakDownObj)
+      breakDownObj[index].credit = value
+      breakDownObj[index].dayType = dayType
+    }
+    const valuesObjDayType: any = { ...dayTypes }
+    
+    if (value == .5) {
+      valuesObjDayType[index] = true
+    }
+    else {
+      valuesObjDayType[index] = false
+    }
+    setDayTypes(valuesObjDayType)
   }
 
-
   const approveLeave = (id: any = 0) => {
-
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this leave.",
@@ -157,24 +192,24 @@ export const Leaves = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-        RequestAPI.postRequest(Api.approveLeave, "", { "id" : id}, {}, async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
+        RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
-            if (body.error && body.error.message){
+            if (body.error && body.error.message) {
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
                 'error'
               )
-            }else{
+            } else {
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0)
+              getAllLeaves(0, "")
             }
-          }else{
+          } else {
             ErrorSwal.fire(
               'Error!',
               'Something Error.',
@@ -182,14 +217,12 @@ export const Leaves = (props: any) => {
             )
           }
         })
-        
+
       }
     })
-    
   }
 
   const declineLeave = (id: any = 0) => {
-
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this leave.",
@@ -200,24 +233,24 @@ export const Leaves = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-        RequestAPI.postRequest(Api.declineLeave, "", { "id" : id}, {}, async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
+        RequestAPI.postRequest(Api.declineLeave, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
-            if (body.error && body.error.message){
+            if (body.error && body.error.message) {
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
                 'error'
               )
-            }else{
+            } else {
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0)
+              getAllLeaves(0, "")
             }
-          }else{
+          } else {
             ErrorSwal.fire(
               'Error!',
               'Something Error.',
@@ -225,14 +258,11 @@ export const Leaves = (props: any) => {
             )
           }
         })
-        
       }
     })
   }
 
-
   const leaveTable = useCallback(() => {
-
     return (
       <div>
         <Table responsive="lg">
@@ -252,7 +282,6 @@ export const Leaves = (props: any) => {
               allLeaves.content &&
               allLeaves.content.length &&
               allLeaves.content.map((item: any, index: any) => {
-                
                 return (
                   <tr>
                     <td> {item.type} </td>
@@ -261,29 +290,36 @@ export const Leaves = (props: any) => {
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td>
+                      {
+                        item.status != "APPROVED" && item.status != "DECLINED" ?
+                          <>
+                            <label
+                              onClick={() => {
+                                approveLeave(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Approve
+                            </label> <br />
+                            <label
+                              onClick={() => {
+                                declineLeave(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Decline
+                            </label>
+                            <br />
+                          </>
+                          :
+                          null
+                      }
+                      
                       <label
                         onClick={() => {
-                          approveLeave(item.id)
+                          getLeave(item.id)
                         }}
                         className="text-muted cursor-pointer">
-                          Approve
-                      </label> <br />
-
-                      <label
-                        onClick={() => {
-                          declineLeave(item.id)
-                        }}
-                        className="text-muted cursor-pointer">
-                          Decline
-                      </label> <br />
-
-                      <label
-                        onClick={() => {
-                          alert('Ongoing')
-                        }}
-                        className="text-muted cursor-pointer">
-                          Update
-                      </label> 
+                        Update
+                      </label>
                     </td>
                   </tr>
                 )
@@ -295,7 +331,14 @@ export const Leaves = (props: any) => {
     )
   }, [allLeaves])
 
-
+  const setFormField = (e: any, setFieldValue: any) => {
+      if (setFieldValue) {
+          const { name , value } = e.target
+          setFieldValue(name, value)
+          setFieldValue("formoutside", true)
+      }
+  }
+  
   return (
     <div className="body">
       <div className="wraper">
@@ -327,15 +370,15 @@ export const Leaves = (props: any) => {
                     <h5>0</h5>
                     <h5>0</h5>
                   </div>
-
                 </div>
                 <div className="w-100 pt-4">
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      getAllLeaves(0, k)
                       setKey(k)
-                      setStatus(key)
+                      // setStatus(key)
                     }}
                     className="mb-3"
                   >
@@ -348,11 +391,10 @@ export const Leaves = (props: any) => {
                     <Tab eventKey="approved" title="Approved" >
                       {leaveTable()}
                     </Tab>
-                    <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
+                    <Tab eventKey="declined" title="DECLINED">
                       {leaveTable()}
                     </Tab>
                   </Tabs>
-
                 </div>
               </div>
               <div className="d-flex justify-content-end mt-3" >
@@ -367,7 +409,6 @@ export const Leaves = (props: any) => {
             </div>
           </div>
         </div>
-
         {/* Create User Modal Form */}
         <Modal
           show={modalShow}
@@ -386,16 +427,16 @@ export const Leaves = (props: any) => {
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
             <Formik
+              innerRef={formRef}
               initialValues={initialValues}
               enableReinitialize={true}
               validationSchema={null}
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = leaveBreakdown
-
-                RequestAPI.putRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                
+                RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
-                  console.log(body)
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
                       ErrorSwal.fire(
@@ -409,6 +450,10 @@ export const Leaves = (props: any) => {
                         (body.data) || "",
                         'success'
                       )
+                      console.log(JSON.stringify(valuesObj))
+                      getAllLeaves(0, "")
+                      setModalShow(false)
+                      formRef.current?.resetForm()
                     }
                   } else {
                     ErrorSwal.fire(
@@ -430,7 +475,7 @@ export const Leaves = (props: any) => {
                           name="type"
                           id="type"
                           value={values.type}
-                          onChange={(e) => setFieldValue('type', e.target.value)}>
+                          onChange={(e) => setFormField(e, setFieldValue)}>
                           {leaveTypes &&
                             leaveTypes.types &&
                             leaveTypes.types.length &&
@@ -450,8 +495,8 @@ export const Leaves = (props: any) => {
                           value={values.dateFrom}
                           min={moment().format("YYYY-MM-DD")}
                           onChange={(e) => {
+                            setFormField(e, setFieldValue)
                             setDateFrom(e.target.value)
-                            setFieldValue('dateFrom', e.target.value)
                             dateBreakdown()
                           }}
                         />
@@ -463,10 +508,10 @@ export const Leaves = (props: any) => {
                           id="dateTo"
                           className="form-control"
                           value={values.dateTo}
-                          min={dateFrom}
+                          min={values.dateFrom}
                           onChange={(e) => {
                             setDateTo(e.target.value)
-                            setFieldValue('dateTo', e.target.value)
+                            setFormField(e, setFieldValue)
                             dateBreakdown()
                           }}
                         />
@@ -478,10 +523,9 @@ export const Leaves = (props: any) => {
                           id="reason"
                           className="form-control"
                           value={values.reason}
-                          onChange={(e) => setFieldValue('reason', e.target.value)}
+                          onChange={(e) => setFormField(e, setFieldValue)}
                         />
                       </div>
-
                       <div className="form-group col-md-12 mb-3" >
                         <Table responsive="lg" style={{ maxHeight: '100vh' }}>
                           <thead>
@@ -491,7 +535,6 @@ export const Leaves = (props: any) => {
                             </tr>
                           </thead>
                           <tbody>
-
                             {
                               leaveBreakdown &&
                               leaveBreakdown.length &&
@@ -505,15 +548,47 @@ export const Leaves = (props: any) => {
                                         type="radio"
                                         name={"leaveCredit" + index.toString()}
                                         id={"leaveCreditWhole" + index.toString()}
-                                        onClick={() => setDateOption(index, 1)}
-                                      /> <label htmlFor={"leaveCreditWhole" + index.toString()} style={{ marginRight: 10 }}>Whole Day</label>
+                                        defaultChecked
+                                        onChange={() => {
+                                          setDateOption(index,1, null)
+                                        }}
+                                      />
+                                      <label htmlFor={"leaveCreditWhole" + index.toString()}
+                                        style={{ marginRight: 10 }}>Whole Day</label>
                                       <input
                                         type="radio"
                                         name={"leaveCredit" + index.toString()}
                                         id={"leaveCreditDay" + index.toString()}
-                                        onClick={() => setDateOption(index, .5)}
-                                      /> <label htmlFor={"leaveCreditDay" + index.toString()} style={{ paddingTop: -10 }}>Half Day</label>
-
+                                        onChange={() => {
+                                          setDateOption(index, .5, "FIRST_HALF")
+                                        }}
+                                      /> <label htmlFor={"leaveCreditDay" + index.toString()}
+                                        style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
+                                      {
+                                        dayTypes[index] ?
+                                          <>
+                                            <br />
+                                            <input
+                                              type="radio"
+                                              name={"dayTypes" + index.toString()}
+                                              id={"leaveCreditWhole1" + index.toString()}
+                                              defaultChecked
+                                              onChange={() => setDateOption(index, .5, "FIRST_HALF")}
+                                            />
+                                            <label htmlFor={"leaveCreditWhole1" + index.toString()}
+                                              style={{ marginRight: 10 }}>First Half</label>
+                                            <input
+                                              type="radio"
+                                              name={"dayTypes" + index.toString()}
+                                              id={"leaveCreditDay1" + index.toString()}
+                                              onChange={() => setDateOption(index, .5, "SECOND_HALF")}
+                                            />
+                                            <label htmlFor={"leaveCreditDay1" + index.toString()}
+                                              style={{ paddingTop: -10 }}>Second Half</label>
+                                          </>
+                                          :
+                                          null
+                                      }
                                     </td>
                                   </tr>
                                 )
@@ -541,8 +616,6 @@ export const Leaves = (props: any) => {
         </Modal>
         {/* End Create User Modal Form */}
       </div>
-
     </div>
-
   )
 }

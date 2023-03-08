@@ -813,13 +813,14 @@ h1 {
   cursor: pointer;
 }
 
+.menu-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
 .userNotification:hover .notificationDropdown {
   display: block;
 }
-
-/* .UserAction:hover .UserActionsLink {
-  display: block;
-} */
 
 .UserActionsLink {
   position: absolute;
@@ -834,6 +835,23 @@ h1 {
 }
 
 .UserActionsLink a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+.MenuActionsLink {
+  position: absolute;
+  z-index: 9999;
+  left: -150px;
+  top: 100%;
+  width: 200px;
+  background: #ffffff;
+  border-radius: 0;
+  box-shadow: 0 0 3px 1px rgb(51 51 51 / 30%);
+  padding: 15px 25px;
+}
+
+.MenuActionsLink a {
   text-decoration: none;
   color: rgb(0, 0, 0);
 }
@@ -864,12 +882,18 @@ h1 {
 }
 
 .UserIcon {
+  padding-top: 5px;
+  grid-area: image;
+}
+
+.DropdownIcon {
+  padding-top: 12px;
   grid-area: image;
 }
 
 .Userdetail {
   grid-area: details;
-  text-align: right;
+  text-align: left;
   line-height: 1;
 }
 
@@ -882,7 +906,7 @@ h1 {
 
 .Userdetail h3 {
   margin: 0;
-  text-align: right;
+  text-align: left;
   font: normal normal bold 14px/24px "Brandon Text";
   letter-spacing: 0px;
   color: #003139;
@@ -5773,4 +5797,8 @@ td.pendingLabel .active {
 
 .color-primary{
   color:#604195 !important;
+}
+
+.timeout-btn {
+  background-color: gray !important;
 }

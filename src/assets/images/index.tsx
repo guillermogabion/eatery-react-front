@@ -20,7 +20,7 @@ import menu_logout_dark from "./menu_logout_dark.png"
 import icon_search_grey from "./icon_search_grey.png"
 import menu_notifications from "./menu_notifications.png"
 import menu_notifications_normal from "./menu_notifications_normal.png"
-import user from "./user.png"
+import user from "./dist/User.png"
 import edit from "./edit.png"
 import dlt from "./dlt.png"
 import icon_plus_add from "./icon_plus_add.svg"
@@ -75,6 +75,8 @@ import inactive_icon from "./reactivate1.png"
 
 
 import actimai_logo from "./dist/Actimai Logo.svg"
+import bundy_clock from "./dist/Bundy Clock.png"
+import arrow_down from "./dist/Arrow Down.png"
 
 export {
   Logo,
@@ -150,5 +152,7 @@ export {
   active_icon,
   inactive_icon,
 
-  actimai_logo
+  actimai_logo,
+  bundy_clock,
+  arrow_down
 }
