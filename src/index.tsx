@@ -25,11 +25,11 @@ store.subscribe(() => {
       masterData: rootReducer && rootReducer.masterData,
       masterDataTransaction: rootReducer && rootReducer.masterDataTransaction,
       currentRoutePath: rootReducer && rootReducer.currentRoutePath,
-      transaction_servicingunits: rootReducer && rootReducer.transaction_servicingunits,
-      user_master_Data: rootReducer && rootReducer.user_master_Data,
-      holiday_master_Data: rootReducer && rootReducer.holiday_master_Data,
-      billingreport_master_Data: rootReducer && rootReducer.billingreport_master_Data,
-      frontendmaintainance_master_data: rootReducer && rootReducer.frontendmaintainance_master_data,
+      masterList: rootReducer && rootReducer.masterList
+      // user_master_Data: rootReducer && rootReducer.user_master_Data,
+      // holiday_master_Data: rootReducer && rootReducer.holiday_master_Data,
+      // billingreport_master_Data: rootReducer && rootReducer.billingreport_master_Data,
+      // frontendmaintainance_master_data: rootReducer && rootReducer.frontendmaintainance_master_data,
     })
   }
 })

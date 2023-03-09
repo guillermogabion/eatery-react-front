@@ -18,6 +18,9 @@ export const Dashboard = (props: any) => {
   
   const [timeInData, setTimeInData] = useState<any>("")
   const [hasLogout, setHasLogout] = useState<any>(false)
+  const [hasTimeIn, setHasTimeIN] = useState<any>(false)
+  const [hasTimeOut, setHasTimeOut] = useState<any>(false)
+
 
   useEffect(() => {
     getFetchData(0)
@@ -35,11 +38,18 @@ export const Dashboard = (props: any) => {
           if (status === 200 && body && body.data) {
             if(body.data.content.length > 0){
                 setTimeInData(body.data.content[0])
-                if(body.data.content[0].timeOut != null){
-                  setHasLogout(true)
-                }else{
-                  setHasLogout(false)
-                }
+                body.data.content.forEach((d: any, index: any) => {
+                  if (d.type == 'Time In'){
+                    setHasTimeIN(true)
+                  }else if(d.type == 'Time Out'){
+                    setHasTimeOut(true)
+                  }
+                });
+                // if(body.data.content[0].timeOut != null){
+                //   setHasLogout(true)
+                // }else{
+                //   setHasLogout(false)
+                // }
             }
           }
         }
@@ -177,14 +187,13 @@ export const Dashboard = (props: any) => {
                       <img src={bundy_clock} className="Bundy Clock"/>
                     </div>
                     <div className="row mt-3">
-                      <Button className="mx-2" 
-                        disabled={timeInData != ""}
+                      <Button className={ hasTimeIn ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
                         style={{width: 120}}
                         onClick={() => makeAttendance('time in')}
-                        >Log me in</Button>
-                      <Button className={ hasLogout ? "mx-2 timeout-btn" : "mx-2"}
+                        >Time in</Button>
+                      <Button className={ hasTimeOut ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
                         style={{width: 120}}
-                        onClick={() => makeAttendance('time out')}>Log me out</Button>
+                        onClick={() => makeAttendance('time out')}>Time out</Button>
                     </div>
                   </div>
                 </div>

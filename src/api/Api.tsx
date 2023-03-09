@@ -7,6 +7,7 @@ const Api: any = {
   getTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/get",
   getAllLeaves: process.env.REACT_APP_API_URL + "request/leave/all",
   createEmployee: process.env.REACT_APP_API_URL + "employee/create",
+  updateEmployee: process.env.REACT_APP_API_URL + "employee/update",
   changePassword: process.env.REACT_APP_API_URL + "user/password",
   refreshToken: process.env.REACT_APP_API_URL + "user/auth/refresh",
   leaveTypes: process.env.REACT_APP_API_URL + "request/leave/types",
@@ -15,6 +16,9 @@ const Api: any = {
   getLeave: process.env.REACT_APP_API_URL + "request/leave",
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
   declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
+  getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
+  employeeInformation: process.env.REACT_APP_API_URL + "employee/info",
+  allEmployee: process.env.REACT_APP_API_URL + "employee/all",
 
 
   USERS: process.env.REACT_APP_API_URL + "users",

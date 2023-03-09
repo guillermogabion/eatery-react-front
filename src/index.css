@@ -446,7 +446,7 @@ h1 {
 
 /* Modal Popup */
 
-.modalPopup {
+/* .modalPopup {
   position: fixed;
   top: 0;
   left: 0;
@@ -457,38 +457,37 @@ h1 {
   display: none;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .open_root {
   display: flex;
   overflow: hidden;
 }
 
-.modalBody {
+/* .modalBody {
   width: 94%;
   max-width: 674px;
   min-height: 412px;
   background: #ffffff 0% 0% no-repeat padding-box;
-  /* border: 1px solid #707070; */
   border-radius: 10px;
   opacity: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
-.modalmainContent {
+/* .modalmainContent {
   max-width: 500px;
   text-align: center;
   font: normal normal normal 22px/28px "Source Sans Pro", sans-serif;
   letter-spacing: 0px;
   color: #003139;
-}
+} */
 
-.modalmainContent a {
+/* .modalmainContent a {
   color: #1f7888 !important;
   text-decoration: none;
-}
+} */
 
 .btn-primary {
   color: #fff;
@@ -513,7 +512,7 @@ h1 {
   font-weight: 700;
 }
 
-.modalPopup .btn-primary {
+/* .modalPopup .btn-primary {
   height: 52px;
   background: #73bf45 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 4px #0000001a;
@@ -526,21 +525,20 @@ h1 {
   text-decoration: none !important;
   font-size: 16px;
   font-weight: 700;
-}
+} */
 
-.modalmedia {
+/* .modalmedia {
   margin-bottom: 1.5rem;
-}
+} */
 
-.modalContent {
-  /* max-height: 55vh; */
+/* .modalContent {
   overflow: auto;
   padding-right: 10px;
-}
+} */
 
-.modalContent p {
+/* .modalContent p {
   margin-bottom: 1.5rem;
-}
+} */
 
 /* UserList */
 
@@ -1825,11 +1823,11 @@ input[type="checkbox"] {
   padding: 3px 10px;
   margin-bottom: 4px;
 } */
-
+/* 
 .modalFooter {
   margin-top: 15px;
   text-align: right;
-}
+} */
 
 .buttonSet {
   display: flex;
@@ -2329,7 +2327,7 @@ input::-ms-reveal {
   color: #ffffff;
 }
 
-.modalBody {
+/* .modalBody {
   position: relative;
 }
 
@@ -2343,13 +2341,13 @@ input::-ms-reveal {
   cursor: pointer;
   background: transparent;
   border: none;
-}
+} */
 
 .swal2-html-contentContainer {
   margin: 0 !important;
 }
 
-.modalBody .modalmainContent .CloseBtn:before {
+/* .modalBody .modalmainContent .CloseBtn:before {
   content: "";
   width: 1px;
   height: 15px;
@@ -2358,9 +2356,9 @@ input::-ms-reveal {
   right: 15px;
   top: 8px;
   transform: rotate(45deg);
-}
+} */
 
-.modalBody .modalmainContent .CloseBtn:after {
+/* .modalBody .modalmainContent .CloseBtn:after {
   content: "";
   width: 1px;
   height: 15px;
@@ -2369,7 +2367,7 @@ input::-ms-reveal {
   right: 15px;
   top: 8px;
   transform: rotate(-45deg);
-}
+} */
 
 .uploadPopup h3 {
   font-size: 22px;
@@ -2384,12 +2382,12 @@ input::-ms-reveal {
 .uploadSelectDoc p {
   margin-bottom: 5px !important;
 }
-
+/* 
 .uploadPopup .modalBody {
   justify-content: flex-start;
   align-items: flex-start;
   padding: 30px;
-}
+} */
 
 .css-yk16xz-control,
 .css-1pahdxg-control {
@@ -2398,13 +2396,13 @@ input::-ms-reveal {
   box-shadow: none !important;
 }
 
-.uploadPopup .modalBody .modalmainContent {
+/* .uploadPopup .modalBody .modalmainContent {
   width: 100%;
   text-align: left;
   max-width: 100%;
   position: relative;
-}
-
+} */
+/* 
 .uploadPopup .modalBody .modalmainContent .CloseBtn {
   position: absolute;
   right: 0;
@@ -2412,9 +2410,9 @@ input::-ms-reveal {
   font-size: 0;
   width: 32px;
   height: 32px;
-}
+} */
 
-.uploadPopup .modalBody .modalmainContent .CloseBtn:before {
+/* .uploadPopup .modalBody .modalmainContent .CloseBtn:before {
   content: "";
   width: 1px;
   height: 15px;
@@ -2423,9 +2421,9 @@ input::-ms-reveal {
   right: 0;
   top: 0;
   transform: rotate(45deg);
-}
+} */
 
-.uploadPopup .modalBody .modalmainContent .CloseBtn:after {
+/* .uploadPopup .modalBody .modalmainContent .CloseBtn:after {
   content: "";
   width: 1px;
   height: 15px;
@@ -2434,7 +2432,7 @@ input::-ms-reveal {
   right: 0;
   top: 0;
   transform: rotate(-45deg);
-}
+} */
 
 .uploadtexxt {
   background: #f7f7f7 0% 0% no-repeat padding-box;
@@ -2445,9 +2443,9 @@ input::-ms-reveal {
   font-size: 13px;
 }
 
-.uploadPopup .modalTop {
+/* .uploadPopup .modalTop {
   margin-bottom: 20px;
-}
+} */
 
 .uploadtexxt p {
   margin-bottom: 0;
@@ -2826,36 +2824,36 @@ input::-ms-reveal {
   grid-gap: 10px;
 }
 
-.aprovePopup .modalBody {
+/* .aprovePopup .modalBody {
   max-width: 360px;
   padding: 0 15px;
   min-height: 390px;
-}
+} */
 
-.aprovePopup .modalBody .modalmainContent {
+/* .aprovePopup .modalBody .modalmainContent {
   max-width: 100%;
 }
 
 .aprovePopup .modalBody h3 {
   font-size: 16px;
   margin-top: 10px;
-}
+} */
 
-.aprovePopup .modalBody textarea {
+/* .aprovePopup .modalBody textarea {
   width: 100%;
   height: 130px;
   padding: 10px;
   resize: none;
-}
+} */
 
-.aprovePopup .modalBody .modalFooter {
+/* .aprovePopup .modalBody .modalFooter {
   text-align: center;
 }
 
 .aprovePopup .modalBody .buttonSet {
   justify-content: center;
   margin-top: 1rem;
-}
+} */
 
 .progress-bar {
   height: 2px;
@@ -2958,10 +2956,10 @@ input::-ms-reveal {
   margin: 30px 0 20px;
 }
 
-#SuccessPopup.MessagePopup .modalFooter .btn-primary {
+/* #SuccessPopup.MessagePopup .modalFooter .btn-primary {
   color: #fff !important;
   line-height: 45px;
-}
+} */
 
 .basic-single-select .Status__option--is-focused {
   background-color: rgba(216, 216, 216, 0.2) !important;
@@ -3692,25 +3690,25 @@ table.informationTable th:last-child {
   height: 52px;
 }
 
-.SendRequest .modalBody {
+/* .SendRequest .modalBody {
   max-width: 920px;
   padding: 30px;
   align-items: flex-start;
   justify-content: flex-start;
-}
+} */
 
-.SendRequest .modalmainContent {
+/* .SendRequest .modalmainContent {
   width: 100%;
   max-width: 100%;
   text-align: left;
-}
+} */
 
-.ModalHeader {
+/* .ModalHeader {
   display: flex;
   align-items: flex-end;
   width: 100%;
   margin-bottom: 30px;
-}
+} */
 
 .qtyWrap {
   margin-left: auto;
@@ -3718,16 +3716,16 @@ table.informationTable th:last-child {
   align-items: flex-start;
 }
 
-.ModalHeaderLeft {
+/* .ModalHeaderLeft {
   display: flex;
   align-items: flex-end;
   column-gap: 50px;
-}
-
+} */
+/* 
 .ModalHeaderLeft h3 {
   font-size: 20px;
   font-weight: 600;
-}
+} */
 
 .qtyfield {
   width: 34px;
@@ -4318,11 +4316,11 @@ strong {
   margin: 30px 0;
 }
 
-.notificationPopup .modalFooter .buttonSet {
+/* .notificationPopup .modalFooter .buttonSet {
   justify-content: center;
-}
+} */
 
-.notificationPopup .modalFooter .buttonSet .clearAll {
+/* .notificationPopup .modalFooter .buttonSet .clearAll {
   height: 45px;
   background: #ff6059;
   border-radius: 5px;
@@ -4337,9 +4335,9 @@ strong {
   display: flex;
   align-items: center;
   grid-gap: 10px;
-}
+} */
 
-.notificationPopup .modalFooter .buttonSet .clearAll img {
+/* .notificationPopup .modalFooter .buttonSet .clearAll img {
   transform: rotate(45deg);
 }
 
@@ -4355,11 +4353,11 @@ strong {
   letter-spacing: 0px;
   color: #ffffff;
   text-transform: uppercase;
-}
+} */
 
-.notificationPopup .modalFooter {
+/* .notificationPopup .modalFooter {
   margin-top: 0;
-}
+} */
 
 .emptyNotification {
   display: flex;
@@ -4725,31 +4723,31 @@ strong {
   line-height: 45px;
 } */
 
-.NoticePopup .modalmainContent {
+/* .NoticePopup .modalmainContent {
   padding: 40px;
   max-width: 600px;
   text-align: left;
   font-size: 18px;
-}
+} */
 
-.NoticePopup .modalTop {
+/* .NoticePopup .modalTop {
   display: flex;
   align-items: center;
   grid-gap: 30px;
   margin-bottom: 30px;
-}
+} */
 
-.NoticePopup .modalFooter {
+/* .NoticePopup .modalFooter {
   text-align: center;
-}
+} */
 
 .NoticePopup .buttonSet {
   justify-content: center;
 }
-
+/* 
 .NoticePopup.modalPopup .btn-primary {
   line-height: 52px;
-}
+} */
 
 .dateInput_calander {
   width: 100%;
@@ -4838,9 +4836,9 @@ strong {
   right: 11px;
 }
 
-.modalPopup .btn-primary:disabled {
+/* .modalPopup .btn-primary:disabled {
   opacity: 0.5;
-}
+} */
 
 .validate-popup {
   transition: opacity ease 400ms;
@@ -4879,20 +4877,20 @@ strong {
   z-index: 15 !important;
 }
 
-.modalContent .fieldtext,
+/* .modalContent .fieldtext,
 .modalContent .fieldsecect,
 .modalContent p {
   margin-bottom: 0 !important;
   padding-right: 0 !important;
-}
-
+} */
+/* 
 .aprovePopup .modalBody textarea {
   margin-top: 15px !important;
 }
 
 .modalBody .formControlSelect {
   padding-right: 25px;
-}
+} */
 
 .fieldtext p {
   padding: 0;
@@ -5103,15 +5101,15 @@ strong {
   overflow-x: hidden;
 }
 
-.uploadPopup .modalBody {
+/* .uploadPopup .modalBody {
   justify-content: flex-start;
   align-items: flex-start;
   padding: 30px;
-}
+} */
 
-.modalmainContent {
+/* .modalmainContent {
   position: relative;
-}
+} */
 
 .uploadPopup .modalBody .modalmainContent {
   width: 100%;
@@ -5119,15 +5117,15 @@ strong {
   max-width: 100%;
 }
 
-.modalPopup .CloseBtn {
+/* .modalPopup .CloseBtn {
   position: absolute;
   right: 0;
   top: 0;
   font-size: 0;
   width: 32px;
   height: 32px;
-}
-
+} */
+/* 
 .modalPopup .CloseBtn:before {
   content: "";
   width: 1px;
@@ -5137,8 +5135,8 @@ strong {
   right: 0;
   top: 0;
   transform: rotate(45deg);
-}
-
+} */
+/* 
 .modalPopup .CloseBtn:after {
   content: "";
   width: 1px;
@@ -5148,23 +5146,23 @@ strong {
   right: 0;
   top: 0;
   transform: rotate(-45deg);
-}
+} */
 
 .deactivateuser .greentext {
   color: #1F7888;
 }
 
-.deactivateuser .modalContent h3 {
+/* .deactivateuser .modalContent h3 {
   font-size: 27px;
   font-weight: 600;
   margin-bottom: 0;
-}
+} */
 
-.deactivateuser .modalContent p {
+/* .deactivateuser .modalContent p {
   font-weight: 500;
   color: #808080;
   font-size: 15px;
-}
+} */
 
 .deactivateuser .height-90 {
   height: 90px;
@@ -5249,10 +5247,10 @@ strong {
 
 
 /*new modal*/
-
+/* 
 .modalmxw-674 {
   max-width: 674px
-}
+} */
 
 .rounded-10 {
   border-radius: 10px !important;
@@ -5285,9 +5283,9 @@ strong {
   border-bottom: 1px solid #e0d8d8;
 }
 
-.deactivemodalContent {
+/* .deactivemodalContent {
   overflow: hidden !important
-}
+} */
 
 .UserDetailscontentContainer {
   padding-left: 35px;
@@ -5467,11 +5465,11 @@ td.pendingLabel .active {
   font-weight: 700;
 }
 
-.UpdatePopup .modalmainContent {
+/* .UpdatePopup .modalmainContent {
   max-width: 600px;
   width: 100%;
   text-align: left;
-}
+} */
 
 .UpdatePopup h3 {
   color: #1F7888;
@@ -5479,18 +5477,18 @@ td.pendingLabel .active {
   font-weight: 700;
 }
 
-.UpdatePopup .modalTop {
+/* .UpdatePopup .modalTop {
   margin-bottom: 3rem;
   padding-top: 3rem;
-}
+} */
 
-.modalTitle p {
+/* .modalTitle p {
   letter-spacing: -0.18px;
   color: rgb(0 49 57 / 50%);
   text-transform: uppercase;
   font-size: 12px;
   text-align: center;
-}
+} */
 
 .labelTitle {
   color: #1F7888;
@@ -5513,39 +5511,37 @@ td.pendingLabel .active {
   margin-bottom: 1.5rem;
 }
 
-.modalContent {
-  /* max-height: 35vh; */
+/* .modalContent {
   overflow-y: auto;
   overflow-x: hidden;
-}
+} */
 
 .UpdatePopup .buttonSet {
   justify-content: center;
   margin-bottom: 2rem;
 }
 
-.UpdatePopup .modalBody .modalmainContent .CloseBtn {
+/* .UpdatePopup .modalBody .modalmainContent .CloseBtn {
   right: -20px;
-}
+} */
 
-.modalreportGenerationItems .redioFieldwrap label {
+/* .modalreportGenerationItems .redioFieldwrap label {
   position: relative;
-}
+} */
 
 
 
-.modalreportGenerationItems {
+/* .modalreportGenerationItems {
   display: grid;
   grid-template-columns: max-content max-content;
-  /* grid-gap: 2rem; */
   margin-bottom: 1rem;
   margin-left: -10px;
-}
+} */
 
-.modalreportGenerationItems .redioFieldwrap {
+/* .modalreportGenerationItems .redioFieldwrap {
   display: grid;
   grid-template-columns: 20px 1fr;
-}
+} */
 
 .checkedContent {
   display: none;
@@ -5656,9 +5652,9 @@ td.pendingLabel .active {
   text-align: center;
 
 }
-.addServicePopup .modalTop .row {
+/* .addServicePopup .modalTop .row {
   align-items: end;
-}
+} */
 
 .addServicePopup .incDecWrap {
   grid-template-columns: 30px 60px 30px;
@@ -5683,22 +5679,22 @@ td.pendingLabel .active {
   line-height: 1;
 }
 
-.addServicePopup .modalBody {
+/* .addServicePopup .modalBody {
   max-width: 780px;
-}
+} */
 
-.addServicePopup .modalmainContent {
+/* .addServicePopup .modalmainContent {
   max-width: 740px;
-}
+} */
 
-.addcompletePopup .modalmainContent {
+/* .addcompletePopup .modalmainContent {
   max-width: 400px;
-}
+} */
 
-.addcompletePopup .modalBody {
+/* .addcompletePopup .modalBody {
   max-width: 460px;
   min-height: 285px;
-}
+} */
 
 .addcompletePopuptext {
   text-align: center;
@@ -5799,6 +5795,11 @@ td.pendingLabel .active {
   color:#604195 !important;
 }
 
-.timeout-btn {
+.has-timeout-timeint-btn {
   background-color: gray !important;
+}
+
+.emp-modal-body{
+  max-height: 70vh !important;
+  overflow-y: auto;  
 }

@@ -139,6 +139,7 @@ export const Utility = {
     sessionLoginDate = window.sessionStorage.getItem("_setSessionLoginTimer");
     activetimerHandler = setInterval(() => {
       if (userActiveTime - moment().diff(moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a"), 'seconds') <= 0) {
+        // Logout the user if this script executed
         clearInterval(activetimerHandler)
         window.sessionStorage.removeItem("_setSessionLoginTimer")
         Utility.stopResetTokenTimer();
@@ -154,6 +155,7 @@ export const Utility = {
   startTokenProcess() {
     const sessionLogin = moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a");
     const timeDiffSecond = moment().diff(sessionLogin, 'seconds')
+
     if (timeDiffSecond > 0 && (userActiveTime - timeDiffSecond < 400) && isFetch) {
       isFetch = false
       RequestAPI.postRequest(Api.refreshToken, "", { "refreshToken": Utility.getRefreshToken() }, {}, async (res: any) => {
@@ -169,7 +171,6 @@ export const Utility = {
             window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
             window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
           }
-          
         }
       })
     }

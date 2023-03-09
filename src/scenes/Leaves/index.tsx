@@ -391,7 +391,7 @@ export const Leaves = (props: any) => {
                     <Tab eventKey="approved" title="Approved" >
                       {leaveTable()}
                     </Tab>
-                    <Tab eventKey="declined" title="DECLINED">
+                    <Tab eventKey="declined" title="Rejected/Cancelled">
                       {leaveTable()}
                     </Tab>
                   </Tabs>
