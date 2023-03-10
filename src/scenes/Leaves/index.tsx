@@ -355,7 +355,8 @@ export const Leaves = (props: any) => {
           setFieldValue("formoutside", true)
       }
   }
-  
+
+ 
   return (
     <div className="body">
       <div className="wraper">
@@ -433,13 +434,18 @@ export const Leaves = (props: any) => {
           centered
           backdrop="static"
           keyboard={false}
-          onHide={() => setModalShow(false)}
+          onHide={() => {
+            setLeaveId(null);
+            setModalShow(false)}}
           dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
+            {/* <Modal.Title id="contained-modal-title-vcenter">
               Request For Leave/Time-off
-            </Modal.Title>
+            </Modal.Title> */}
+              <Modal.Title id="contained-modal-title-vcenter">
+                {leaveId ? 'Edit Leave/Time-off Request' : 'Request For Leave/Time-off'}
+              </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
             <Formik
