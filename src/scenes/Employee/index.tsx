@@ -165,6 +165,44 @@ export const Employee = (props: any) => {
       }
     )
   }
+  const unlockEmployee = (id: any = 0) => {
+    ErrorSwal.fire({
+      title: 'Notification',
+      text: "Confirm Unlock?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.UNLOCK_EMPLOYEE, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            } else {
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+            }
+          } else {
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
 
   const information = (
     <Formik
@@ -780,7 +818,6 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-
               <div className="form-group col-md-6 mb-3" >
                 <label>Job Code</label>
                 <input type="text"
@@ -915,8 +952,6 @@ export const Employee = (props: any) => {
                 </button>
               </div>
             </Modal.Footer>
-
-
           </Form>
         )
       }}
@@ -1127,7 +1162,6 @@ export const Employee = (props: any) => {
     </Formik>
   )
 
-
   return (
     <div className="body">
       <div className="wraper">
@@ -1171,21 +1205,20 @@ export const Employee = (props: any) => {
                           if (item.role == 'ADMIN'){
                             return null
                           }
-
                           return (
                             <tr>
                               <td> {item.username} </td>
                               <td> {item.role} </td>
                               <td> {item.failedLoginAttemps} </td>
                               <td>
-
                                 <label
                                   onClick={() => {
                                     getEmployee(item.userId)
                                   }}
                                   className="text-muted cursor-pointer">
                                   Update
-                                </label>
+                                </label><br />
+                                <label onClick={() => unlockEmployee(item.userId)}>Unlock</label>
                               </td>
                             </tr>
                           )
@@ -1193,11 +1226,8 @@ export const Employee = (props: any) => {
                       }
                     </tbody>
                   </Table>
-
                 </div>
-
               </div>
-
               <div className="d-flex justify-content-end mt-5" >
                 <div>
                   <Button className="mx-2">Import</Button>

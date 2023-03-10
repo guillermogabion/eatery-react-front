@@ -46,6 +46,10 @@ const Api: any = {
   USER: process.env.REACT_APP_API_URL + "user",
   GET_PASSWORD_EXPIRY_NOTIFICATION: process.env.REACT_APP_API_URL + "users/notifications/passwordExpiry",
   GET_USER_DETAILS: process.env.REACT_APP_API_URL + "users/self",
+
+  // locked 
+
+  UNLOCK_EMPLOYEE: process.env.REACT_APP_API_URL + "user/unlock"
 }
 
 export default Api
