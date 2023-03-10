@@ -203,13 +203,6 @@ export const Employee = (props: any) => {
       }
     })
   }
-  
-  
-  
-  
-  
-
-  // const unlockUser
 
   const information = (
     <Formik
@@ -825,7 +818,6 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-
               <div className="form-group col-md-6 mb-3" >
                 <label>Job Code</label>
                 <input type="text"
@@ -960,8 +952,6 @@ export const Employee = (props: any) => {
                 </button>
               </div>
             </Modal.Footer>
-
-
           </Form>
         )
       }}
@@ -1172,7 +1162,6 @@ export const Employee = (props: any) => {
     </Formik>
   )
 
-
   return (
     <div className="body">
       <div className="wraper">
@@ -1216,14 +1205,12 @@ export const Employee = (props: any) => {
                           if (item.role == 'ADMIN'){
                             return null
                           }
-
                           return (
                             <tr>
                               <td> {item.username} </td>
                               <td> {item.role} </td>
                               <td> {item.failedLoginAttemps} </td>
                               <td>
-
                                 <label
                                   onClick={() => {
                                     getEmployee(item.userId)
@@ -1231,20 +1218,16 @@ export const Employee = (props: any) => {
                                   className="text-muted cursor-pointer">
                                   Update
                                 </label><br />
-                                <label onClick={() => unlockEmployee(item.userId, (id) => console.log(id))}>Unlock</label>
+                                <label onClick={() => unlockEmployee(item.userId)}>Unlock</label>
                               </td>
-                             
                             </tr>
                           )
                         })
                       }
                     </tbody>
                   </Table>
-
                 </div>
-
               </div>
-
               <div className="d-flex justify-content-end mt-5" >
                 <div>
                   <Button className="mx-2">Import</Button>
