@@ -4,7 +4,6 @@ import { Button, Card, Row, Col, Image, Container, ListGroup, Modal, Form, Alert
 import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
 import { FaCheckCircle } from "react-icons/fa";
-import CheckPassword from "../../components/PasswordChecker/passwordChecker"
 import {
   Logo,
   show_password_dark,
@@ -26,35 +25,23 @@ export const Login = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState<any>("")
   const [password, setPassword] = useState<any>("")
-
   const [oldPassword, setOldPassword] = useState<any>("")
   const [newPassword, setNewPassword] = useState<any>("")
   const [confirmPassword, setConfirmPassword] = useState<any>("")
-
-
   const [visibile, setVisibile] = useState<any>(false)
   const [visibile1, setVisibile1] = useState<any>(false)
   const [visibile2, setVisibile2] = useState<any>(false)
   const [visibile3, setVisibile3] = useState<any>(false)
-  // const [errorMessage, setErrorMessage] = useState<any>("")
   const [isForgot, setIsForgot] = useState<any>(false)
   const [isReset, setIsReset] = useState<any>(false)
-
   const [tempToken, setTempToken] = useState<any>("")
-
   const [isAcknowledgement, setIsAcknowledgement] = useState<any>(false)
   const [isNewAccount, setIsNewAccount] = useState(false);
-
   const [currentTime, setCurrentTime] = useState(moment().format("hh:mm:ss A"));
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MMMM-DD"));
-
   const [loginAttempts, setLoginAttempts] = useState(0);
-
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoginSuccess, setIsLoginSuccess] = React.useState(false);
-
-
-
 
   const keydownFun = (event: any) => {
     if (event.key === "Enter" && username && password) {
@@ -68,7 +55,6 @@ export const Login = () => {
       document.addEventListener("keydown", keydownFun)
     }
     return () => document.removeEventListener("keydown", keydownFun)
-
   }, [username, password])
 
   useEffect(() => {
@@ -76,7 +62,6 @@ export const Login = () => {
       setCurrentTime(moment().format("hh:mm:ss A"));
       setCurrentDate(moment().format("MMMM-DD-YYYY"));
     }, 1000);
-
     return () => clearInterval(intervalId);
   }, []);
 
@@ -91,7 +76,6 @@ export const Login = () => {
             Utility.clearOnLoginTimer()
             const { accessToken, roleId, refreshToken } = body.data
             const { newAccount = false } = body.data.profile
-            
             if (newAccount) {
               setTempToken(accessToken)
               setIsNewAccount(true)
@@ -153,7 +137,6 @@ export const Login = () => {
     }
   }, [username, password])
 
-
   const changePassword = React.useCallback(() => {
     if (newPassword != confirmPassword){
       setErrorMessage("Password not match.");
@@ -171,7 +154,6 @@ export const Login = () => {
             if (body.error && body.error.message) {
               setErrorMessage(body.error.message);
             } else {
-
               ErrorSwal.fire(
                 'Success',
                 (body.data || ""),
@@ -417,7 +399,6 @@ export const Login = () => {
                         Submit
                       </Button>
                     </div>
-
                     <div className="d-flex justify-content-center p-0 ">
                       {errorMessage != "" && (
                         <Alert variant="" className="w-100 p-0 pt-2" style={{ textAlign: "left" }}>
@@ -430,7 +411,6 @@ export const Login = () => {
                   </form>
                   <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
                   <div className=" mobile">
-
                     <Col className="changePasswordLoginTime" >
                       <TimeDate
                         textColor={'white'}

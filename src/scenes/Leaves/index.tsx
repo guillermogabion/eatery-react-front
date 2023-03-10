@@ -122,6 +122,8 @@ export const Leaves = (props: any) => {
             });
             setInitialValues(valueObj)
             setLeaveBreakdown(valueObj.breakdown)
+            setDateFrom(valueObj.dateFrom)
+            setDateTo(valueObj.dateTo)
             setLeaveId(valueObj.id)
             setModalShow(true)
           }

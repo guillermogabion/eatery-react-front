@@ -4,7 +4,6 @@
   "description": "A web application",
   "main": "index.js",
   "repository": "",
-  
   "scripts": {
     "start": "webpack serve --config webpack/webpack.config.js --env env=dev --history-api-fallback",
     "build": "webpack --config webpack/webpack.config.js --env env=prod",
@@ -19,7 +18,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap": "^5.1.3",
-    "bootstrap-react-password-strength": "0.0.1",
     "core-js": "^3.19.2",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.27.0",
