@@ -3,12 +3,12 @@ import MainLeftMenu from "../../components/MainLeftMenu"
 import UserTopMenu from "../../components/UserTopMenu"
 import { show_password_dark, acm_success } from "../../assets/images"
 import { Formik } from "formik"
+import * as Yup from "yup"
 import { Form, Button } from "react-bootstrap"
 import Swal from "sweetalert2"
 import { RequestAPI, Api } from "../../api"
 import { Utility } from "./../../utils"
 import withReactContent from "sweetalert2-react-content"
-import * as Yup from "yup"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
@@ -80,7 +80,7 @@ const ReSetPasswordInput = (props: any) => {
         name={name}
         placeholder={placeholder}
         type={visibile ? "text" : type}
-        className="form-control"
+        className="form-control w-100"
         style={{width: 299}}
         required
         onChange={(e) => validatePassword(`${e.target.value}`.trim())}

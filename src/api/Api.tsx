@@ -10,8 +10,12 @@ const Api: any = {
   updateEmployee: process.env.REACT_APP_API_URL + "employee/update",
   changePassword: process.env.REACT_APP_API_URL + "user/password",
   refreshToken: process.env.REACT_APP_API_URL + "user/auth/refresh",
-  leaveTypes: process.env.REACT_APP_API_URL + "request/leave/types",
+  leaveTypes: process.env.REACT_APP_API_URL + "request/getTypes",
+  leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
+  
+  
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
+  requestLeaveUpdate: process.env.REACT_APP_API_URL + "request/leave/update",
   allRequestLeave: process.env.REACT_APP_API_URL + "request/leave/all",
   getLeave: process.env.REACT_APP_API_URL + "request/leave",
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",

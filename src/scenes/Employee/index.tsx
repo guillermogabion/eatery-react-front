@@ -173,13 +173,18 @@ export const Employee = (props: any) => {
       validationSchema={null}
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
-        console.log(valuesObj)
         setInitialValues(valuesObj)
         setTabIndex(2)
       }}>
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+            <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Employee Information</h5>
+                </div>
+              </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>First name</label>
@@ -329,6 +334,12 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid1" autoComplete="off">
+            <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Emergency Contact</h5>
+                </div>
+              </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>Contact No.</label>
@@ -417,6 +428,12 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid2" autoComplete="off">
+            <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Employment Information</h5>
+                </div>
+              </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>Employee ID</label>
@@ -986,6 +1003,12 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid2" autoComplete="off">
+            <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Payroll Information</h5>
+                </div>
+              </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>Clothing Allowance</label>
@@ -1207,24 +1230,7 @@ export const Employee = (props: any) => {
           </Modal.Header>
           <Modal.Body className="row w-100 p-0 m-0" >
             <div className="emp-modal-body">
-              <div className="col-md-12 row p-0 m-0" >
-                <div className="form-group col-md-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Information</h5>
-                </div>
-                <div className="form-group col-md-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Emergency Contact</h5>
-                </div>
-                <div className="form-group col-md-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Other Information</h5>
-                </div>
-                <div className="form-group col-md-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Payroll Information</h5>
-                </div>
-              </div>
+              
               {tabIndex == 1 ? information : null}
               {tabIndex == 2 ? emergencyContacts : null}
               {tabIndex == 3 ? otherInformation : null}

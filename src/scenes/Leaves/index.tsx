@@ -24,28 +24,22 @@ export const Leaves = (props: any) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
+  const [leaveDayTypes, setLeaveDayTypes] = useState<any>([]);
   const [dateFrom, setDateFrom] = useState<any>(moment().format("YYYY-MM-DD"));
   const [dateTo, setDateTo] = useState<any>(moment().format("YYYY-MM-DD"));
   const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
   const [allLeaves, setAllLeaves] = useState<any>([]);
   const [dayTypes, setDayTypes] = useState<any>([]);
-  const [status, setStatus] = useState<any>("All");
+  const [leaveId, setLeaveId] = useState<any>("");
   const [initialValues, setInitialValues] = useState<any>({
     "dateFrom": moment().format("YYYY-MM-DD"),
     "dateTo": moment().format("YYYY-MM-DD"),
-    "type": "SICK",
+    "type": 1,
     "status": "PENDING",
     "reason": "",
-    "breakdown": [
-      {
-        "date": "",
-        "credit": 0,
-        "dayType": null
-      }
-    ]
+    "breakdown": []
   })
   const formRef: any = useRef()
-
 
   const tableHeaders = [
     'Type',
@@ -65,14 +59,26 @@ export const Leaves = (props: any) => {
       {},
       async (res: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 && body) {
-          setLeaveTypes(body)
+        if (status === 200 && body && body.data) {
+          setLeaveTypes(body.data)
         } else {
-
         }
       }
     )
 
+    RequestAPI.getRequest(
+      `${Api.leaveDayTypes}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          setLeaveDayTypes(body.data)
+        } else {
+        }
+      }
+    )
   }, [])
 
   useEffect(() => {
@@ -89,7 +95,6 @@ export const Leaves = (props: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body) {
           if (body.error && body.error.message) {
-
           } else {
             setAllLeaves(body.data)
           }
@@ -97,6 +102,7 @@ export const Leaves = (props: any) => {
       }
     )
   }
+  
   const getLeave = (id: any = 0) => {
     RequestAPI.getRequest(
       `${Api.getLeave}?id=${id}`,
@@ -105,11 +111,19 @@ export const Leaves = (props: any) => {
       {},
       async (res: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 && body) {
+        if (status === 200 && body && body.data) {
           if (body.error && body.error.message) {
-
           } else {
-            console.log(body)
+            const valueObj: any = body.data
+            leaveTypes.forEach((element: any, index: any) => {
+              if (element.name == valueObj.type){
+                  valueObj.type = element.id
+              }
+            });
+            setInitialValues(valueObj)
+            setLeaveBreakdown(valueObj.breakdown)
+            setLeaveId(valueObj.id)
+            setModalShow(true)
           }
         }
       }
@@ -124,8 +138,10 @@ export const Leaves = (props: any) => {
     const date1 = moment(dateFrom);
     const date2 = moment(dateTo);
     let leavesBreakdown = []
+    let dayTypesArray = []
     let diffInDays = date2.diff(date1, 'days') + 1;
     let dateCounter = 0
+    
     if (dateFrom && dateTo && diffInDays >= 1) {
       for (let index = 1; index <= diffInDays; index++) {
         var added_date = moment(dateFrom).add(dateCounter, 'days');
@@ -137,48 +153,50 @@ export const Leaves = (props: any) => {
         } else {
           leavesBreakdown.push({
             "date": moment(dateFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
-            "credit": 0,
-            "dayType": null
+            "credit": 1,
+            "dayType": 'WHOLE_DAY'
           })
-          setDayTypes([
-            ...dayTypes,
-            false
-          ]);
+          dayTypesArray.push(false)
           dateCounter += 1
         }
       }
-      // const valuesObj: any = { ...initialValues }
-      // valuesObj.breakdown = leavesBreakdown
-      // setInitialValues(valuesObj)
+      setDayTypes(dayTypesArray)
       setLeaveBreakdown(leavesBreakdown)
       
     } else {
-      ErrorSwal.fire(
-        'Error!',
-        "Invalid date range.",
-        'error'
-      )
+      setDayTypes([])
+      setLeaveBreakdown([])
+      // ErrorSwal.fire(
+      //   'Error!',
+      //   "Invalid date range.",
+      //   'error'
+      // )
     }
   }
 
   const setDateOption = (index: any, value: any, dayType: any = null) => {
-    const valuesObj: any = { ...leaveBreakdown }
-    let breakDownObj: any = {}
-    if(valuesObj.breakdown){
-      breakDownObj= { ...valuesObj.breakdown }
-      console.log(breakDownObj)
-      breakDownObj[index].credit = value
-      breakDownObj[index].dayType = dayType
-    }
-    const valuesObjDayType: any = { ...dayTypes }
     
-    if (value == .5) {
-      valuesObjDayType[index] = true
+    if(leaveBreakdown){
+      const valuesObj: any = { ...leaveBreakdown }
+    
+      if(valuesObj){
+        valuesObj[index].credit = value
+        valuesObj[index].dayType = dayType
+      }
+      
+      const valuesObjDayType: any = { ...dayTypes }
+      if(valuesObjDayType){
+        if (value == .5) {
+          valuesObjDayType[index] = true
+        }
+        else {
+          valuesObjDayType[index] = false
+        }
+        setDayTypes(valuesObjDayType)
+      }
     }
-    else {
-      valuesObjDayType[index] = false
-    }
-    setDayTypes(valuesObjDayType)
+    
+    
   }
 
   const approveLeave = (id: any = 0) => {
@@ -217,7 +235,6 @@ export const Leaves = (props: any) => {
             )
           }
         })
-
       }
     })
   }
@@ -378,7 +395,6 @@ export const Leaves = (props: any) => {
                     onSelect={(k: any) => {
                       getAllLeaves(0, k)
                       setKey(k)
-                      // setStatus(key)
                     }}
                     className="mb-3"
                   >
@@ -434,35 +450,68 @@ export const Leaves = (props: any) => {
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = leaveBreakdown
-                
-                RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                if (leaveId){
+                  delete valuesObj.userId
+                  
+                  RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire(
+                          'Error!',
+                          (body.error && body.error.message) || "",
+                          'error'
+                        )
+                      } else {
+                        ErrorSwal.fire(
+                          'Success!',
+                          (body.data) || "",
+                          'success'
+                        )
+                        setLeaveBreakdown([])
+                        getAllLeaves(0, "")
+                        setModalShow(false)
+                        formRef.current?.resetForm()
+                      }
                     } else {
                       ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
+                        'Error!',
+                        'Something Error.',
+                        'error'
                       )
-                      console.log(JSON.stringify(valuesObj))
-                      getAllLeaves(0, "")
-                      setModalShow(false)
-                      formRef.current?.resetForm()
                     }
-                  } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      'Something Error.',
-                      'error'
-                    )
-                  }
-                })
+                  })
+                }else{
+                  RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire(
+                          'Error!',
+                          (body.error && body.error.message) || "",
+                          'error'
+                        )
+                      } else {
+                        ErrorSwal.fire(
+                          'Success!',
+                          (body.data) || "",
+                          'success'
+                        )
+                        setLeaveBreakdown([])
+                        getAllLeaves(0, "")
+                        setModalShow(false)
+                        formRef.current?.resetForm()
+                      }
+                    } else {
+                      ErrorSwal.fire(
+                        'Error!',
+                        'Something Error.',
+                        'error'
+                      )
+                    }
+                  })
+                }
+                
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (
@@ -477,11 +526,10 @@ export const Leaves = (props: any) => {
                           value={values.type}
                           onChange={(e) => setFormField(e, setFieldValue)}>
                           {leaveTypes &&
-                            leaveTypes.types &&
-                            leaveTypes.types.length &&
-                            leaveTypes.types.map((item: any, index: string) => (
-                              <option key={`${index}_${item}`} value={item}>
-                                {item}
+                            leaveTypes.length &&
+                            leaveTypes.map((item: any, index: string) => (
+                              <option key={`${index}_${item.id}`} value={item.id}>
+                                {item.name}
                               </option>
                             ))}
                         </select>
@@ -548,9 +596,9 @@ export const Leaves = (props: any) => {
                                         type="radio"
                                         name={"leaveCredit" + index.toString()}
                                         id={"leaveCreditWhole" + index.toString()}
-                                        defaultChecked
+                                        checked={item.credit == 1}
                                         onChange={() => {
-                                          setDateOption(index,1, null)
+                                          setDateOption(index,1, 'WHOLE_DAY')
                                         }}
                                       />
                                       <label htmlFor={"leaveCreditWhole" + index.toString()}
@@ -559,20 +607,21 @@ export const Leaves = (props: any) => {
                                         type="radio"
                                         name={"leaveCredit" + index.toString()}
                                         id={"leaveCreditDay" + index.toString()}
+                                        checked={item.credit == 0.5}
                                         onChange={() => {
                                           setDateOption(index, .5, "FIRST_HALF")
                                         }}
                                       /> <label htmlFor={"leaveCreditDay" + index.toString()}
                                         style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
                                       {
-                                        dayTypes[index] ?
+                                        item.dayType != 'WHOLE_DAY' ?
                                           <>
                                             <br />
                                             <input
                                               type="radio"
                                               name={"dayTypes" + index.toString()}
                                               id={"leaveCreditWhole1" + index.toString()}
-                                              defaultChecked
+                                              checked={item.dayType == 'FIRST_HALF'}
                                               onChange={() => setDateOption(index, .5, "FIRST_HALF")}
                                             />
                                             <label htmlFor={"leaveCreditWhole1" + index.toString()}
@@ -580,6 +629,7 @@ export const Leaves = (props: any) => {
                                             <input
                                               type="radio"
                                               name={"dayTypes" + index.toString()}
+                                              checked={item.dayType == 'SECOND_HALF'}
                                               id={"leaveCreditDay1" + index.toString()}
                                               onChange={() => setDateOption(index, .5, "SECOND_HALF")}
                                             />

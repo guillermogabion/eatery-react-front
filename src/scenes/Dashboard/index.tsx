@@ -29,7 +29,7 @@ export const Dashboard = (props: any) => {
   const getFetchData = (pagging = 0) => {
     let today = moment().format("YYYY-MM-DD")
     RequestAPI.getRequest(
-        `${Api.myTimeKeeping}?size=10&page=${pagging}&sortDir=desc&date=${today}`,
+        `${Api.myTimeKeeping}?size=10&page=${pagging}&sortDir=desc&date=${today}&user=4`,
         "",
         {},
         {},
@@ -166,11 +166,13 @@ export const Dashboard = (props: any) => {
                     <div className="d-flex">
                       <div className="" style={{width: 200, textAlign: right}}>
                           <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
-                          <h6 className="font-weight-bold pt-2">Last Login:</h6>
+                          <h6 className="font-weight-bold pt-2">Last login:</h6>
+                          <h6 className="font-weight-bold pt-2">Last logout:</h6>
                           <h6 className="font-weight-bold pt-2">Attendance Status:</h6>
                       </div>
                       <div className="" style={{marginLeft:15, textAlign: left}}>
                           <h6 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h6>
+                          <h6 className="font-weight-bold pt-2">30 January, 2023 08:54:22 AM</h6>
                           <h6 className="font-weight-bold pt-2">30 January, 2023 08:54:22 AM</h6>
                           <label 
                             className="font-weight-bold p-2 px-3 text-dark" 
