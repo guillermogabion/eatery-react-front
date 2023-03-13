@@ -24,16 +24,12 @@ export const Overtime = (props: any) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
-  const [leaveDayTypes, setLeaveDayTypes] = useState<any>([]);
-  const [dateFrom, setDateFrom] = useState<any>(moment().format("YYYY-MM-DD"));
-  const [dateTo, setDateTo] = useState<any>(moment().format("YYYY-MM-DD"));
-  const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
-  const [allLeaves, setAllLeaves] = useState<any>([]);
-  const [dayTypes, setDayTypes] = useState<any>([]);
-  const [leaveId, setLeaveId] = useState<any>("");
+  const [myot, setMyOT] = useState<any>([]);
+  const [otId, setOtId] = useState<any>("");
+  const [otClassification, setOtClassification] = useState<any>([]);
   const [initialValues, setInitialValues] = useState<any>({
-    "shiftDate": "",
-    "classification": "",
+    "shiftDate": moment().format("YYYY-MM-DD"),
+    "classification": "NORMAL_OT",
     "otStart": "",
     "otEnd": ""
   })
@@ -49,10 +45,48 @@ export const Overtime = (props: any) => {
     'Action',
   ]
 
-  const approveLeave = (id: any = 0) => {
+  useEffect(() => {
+    RequestAPI.getRequest(
+      `${Api.OTClassification}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          setOtClassification(body.data)
+        } else {
+        }
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    getMyOT(0, "")
+  }, [])
+
+  const getMyOT = (page: any = 0, status: any = "All") => {
+    RequestAPI.getRequest(
+      `${Api.myOT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            setMyOT(body.data)
+          }
+        }
+      }
+    )
+  }
+
+  const approveOT = (id: any = 0) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
-      text: "You want to approve this leave.",
+      text: "You want to approve this overtime.",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -60,7 +94,7 @@ export const Overtime = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-        RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
+        RequestAPI.postRequest(Api.approveOT, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
@@ -70,6 +104,7 @@ export const Overtime = (props: any) => {
                 'error'
               )
             } else {
+              getMyOT(0, "")
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -88,10 +123,10 @@ export const Overtime = (props: any) => {
     })
   }
 
-  const declineLeave = (id: any = 0) => {
+  const declineOT = (id: any = 0) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
-      text: "You want to decline this leave.",
+      text: "You want to decline this overtime.",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -99,7 +134,7 @@ export const Overtime = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-        RequestAPI.postRequest(Api.declineLeave, "", { "id": id }, {}, async (res: any) => {
+        RequestAPI.postRequest(Api.declineOT, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
@@ -109,6 +144,7 @@ export const Overtime = (props: any) => {
                 'error'
               )
             } else {
+              getMyOT(0, '')
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -127,15 +163,40 @@ export const Overtime = (props: any) => {
     })
   }
 
-  const leaveTable = useCallback(() => {
+  const getOT = (id: any = 0) => {
+    RequestAPI.getRequest(
+      `${Api.otInformation}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.error && body.error.message) {
+          } else {
+            const valueObj: any = body.data
+            valueObj.otStart = moment(valueObj.otStart).format("hh:mm:ss")
+            valueObj.otEnd = moment(valueObj.otEnd).format("hh:mm:ss")
+            setInitialValues(valueObj)
+            // the value of valueObj.id is null - API issue for temp fixing I set ID directly
+            setOtId(id)
+            setModalShow(true)
+          }
+        }
+      }
+    )
+  }
+
+  const overTimeTable = useCallback(() => {
     return (
       <div>
         <Table responsive="lg">
           <thead>
             <tr>
-              <th style={{ width: 'auto' }}>Type</th>
-              <th style={{ width: 'auto' }}>Date From</th>
-              <th style={{ width: 'auto' }}>Date To</th>
+              <th style={{ width: 'auto' }}>Shift Date</th>
+              <th style={{ width: 'auto' }}>Classification</th>
+              <th style={{ width: 'auto' }}>OT Start</th>
+              <th style={{ width: 'auto' }}>OT End</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -143,15 +204,16 @@ export const Overtime = (props: any) => {
           </thead>
           <tbody>
             {
-              allLeaves &&
-              allLeaves.content &&
-              allLeaves.content.length &&
-              allLeaves.content.map((item: any, index: any) => {
+              myot &&
+              myot.content &&
+              myot.content.length &&
+              myot.content.map((item: any, index: any) => {
                 return (
                   <tr>
-                    <td> {item.type} </td>
-                    <td> {item.dateFrom} </td>
-                    <td> {item.dateTo} </td>
+                    <td> {item.shiftDate} </td>
+                    <td> {item.classification} </td>
+                    <td> {item.otStart} </td>
+                    <td> {item.otEnd} </td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td>
@@ -160,14 +222,22 @@ export const Overtime = (props: any) => {
                           <>
                             <label
                               onClick={() => {
-                                approveLeave(item.id)
+                                getOT(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Update
+                            </label>
+                            <br />
+                            <label
+                              onClick={() => {
+                                approveOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
                               Approve
                             </label> <br />
                             <label
                               onClick={() => {
-                                declineLeave(item.id)
+                                declineOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
                               Decline
@@ -177,13 +247,6 @@ export const Overtime = (props: any) => {
                           :
                           null
                       }
-                      
-                      <label
-                        onClick={() => {
-                        }}
-                        className="text-muted cursor-pointer">
-                        Update
-                      </label>
                     </td>
                   </tr>
                 )
@@ -193,16 +256,16 @@ export const Overtime = (props: any) => {
         </Table>
       </div>
     )
-  }, [allLeaves])
+  }, [myot])
 
   const setFormField = (e: any, setFieldValue: any) => {
-      if (setFieldValue) {
-          const { name , value } = e.target
-          setFieldValue(name, value)
-          setFieldValue("formoutside", true)
-      }
+    if (setFieldValue) {
+      const { name, value } = e.target
+      setFieldValue(name, value)
+      setFieldValue("formoutside", true)
+    }
   }
-  
+
   return (
     <div className="body">
       <div className="wraper">
@@ -232,28 +295,29 @@ export const Overtime = (props: any) => {
                     <h5>200 mins</h5>
                     <h5>150 mins</h5>
                   </div>
-                  
+
                 </div>
                 <div className="w-100 pt-4">
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      getMyOT(0, k)
                       setKey(k)
                     }}
                     className="mb-3"
                   >
                     <Tab eventKey="all" title="All">
-                      {leaveTable()}
+                      {overTimeTable()}
                     </Tab>
                     <Tab eventKey="pending" title="Pending">
-                      {leaveTable()}
+                      {overTimeTable()}
                     </Tab>
                     <Tab eventKey="approved" title="Approved" >
-                      {leaveTable()}
+                      {overTimeTable()}
                     </Tab>
                     <Tab eventKey="declined" title="Rejected/Cancelled">
-                      {leaveTable()}
+                      {overTimeTable()}
                     </Tab>
                   </Tabs>
                 </div>
@@ -264,7 +328,7 @@ export const Overtime = (props: any) => {
                     className="mx-2"
                     onClick={() => {
                       setModalShow(true)
-                    }}>Request Overtime/Undertime</Button>
+                    }}>Request Overtime</Button>
                 </div>
               </div>
             </div>
@@ -283,7 +347,7 @@ export const Overtime = (props: any) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Request Overtime/Undertime
+              Request Overtime
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
@@ -294,9 +358,13 @@ export const Overtime = (props: any) => {
               validationSchema={null}
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
-                if ( leaveId ){
-                  
-                  RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+
+                if (otId) {
+                  valuesObj.id = otId
+                  valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
+                  valuesObj.otEnd = valuesObj.shiftDate + "T" + valuesObj.otEnd
+
+                  RequestAPI.putRequest(Api.updateOT, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       if (body.error && body.error.message) {
@@ -306,12 +374,12 @@ export const Overtime = (props: any) => {
                           'error'
                         )
                       } else {
+                        getMyOT(0, "")
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",
                           'success'
                         )
-                        setLeaveBreakdown([])
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -323,8 +391,11 @@ export const Overtime = (props: any) => {
                       )
                     }
                   })
-                }else{
-                  RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                } else {
+                  valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
+                  valuesObj.otEnd = valuesObj.shiftDate + "T" + valuesObj.otEnd
+
+                  RequestAPI.postRequest(Api.OTCreate, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       if (body.error && body.error.message) {
@@ -334,12 +405,12 @@ export const Overtime = (props: any) => {
                           'error'
                         )
                       } else {
+                        getMyOT(0, "")
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",
                           'success'
                         )
-                        setLeaveBreakdown([])
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -352,7 +423,7 @@ export const Overtime = (props: any) => {
                     }
                   })
                 }
-                
+
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (
@@ -366,11 +437,11 @@ export const Overtime = (props: any) => {
                           id="classification"
                           value={values.classification}
                           onChange={(e) => setFormField(e, setFieldValue)}>
-                          {leaveTypes &&
-                            leaveTypes.length &&
-                            leaveTypes.map((item: any, index: string) => (
-                              <option key={`${index}_${item.id}`} value={item.id}>
-                                {item.name}
+                          {otClassification &&
+                            otClassification.length &&
+                            otClassification.map((item: any, index: string) => (
+                              <option key={`${index}_${item.item}`} value={item.item}>
+                                {item}
                               </option>
                             ))}
                         </select>
@@ -392,6 +463,7 @@ export const Overtime = (props: any) => {
                         <input type="time"
                           name="otStart"
                           id="otStart"
+                          step="1"
                           className="form-control"
                           value={values.otStart}
                           onChange={(e) => {
@@ -404,6 +476,7 @@ export const Overtime = (props: any) => {
                         <input type="time"
                           name="otEnd"
                           id="otEnd"
+                          step="1"
                           className="form-control"
                           value={values.otEnd}
                           onChange={(e) => {
@@ -413,11 +486,11 @@ export const Overtime = (props: any) => {
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <label>Indicate Ticket Number (If Applicable) and Reason</label>
-                        <textarea 
+                        <textarea
                           name="reason"
                           id="reason"
                           className="form-control p-2"
-                          style={{minHeight: 100}}
+                          style={{ minHeight: 100 }}
                           value={values.reason}
                           onChange={(e) => setFormField(e, setFieldValue)}
                         />

@@ -21,24 +21,25 @@ import * as Yup from "yup";
 
 export const Leaves = (props: any) => {
   const { history } = props
-  const [modalShow, setModalShow] = React.useState(false);
-  const [key, setKey] = React.useState('all');
-  const [leaveTypes, setLeaveTypes] = useState<any>([]);
-  const [leaveDayTypes, setLeaveDayTypes] = useState<any>([]);
-  const [dateFrom, setDateFrom] = useState<any>(moment().format("YYYY-MM-DD"));
-  const [dateTo, setDateTo] = useState<any>(moment().format("YYYY-MM-DD"));
-  const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
-  const [allLeaves, setAllLeaves] = useState<any>([]);
-  const [dayTypes, setDayTypes] = useState<any>([]);
-  const [leaveId, setLeaveId] = useState<any>("");
-  const [initialValues, setInitialValues] = useState<any>({
+  let initialPayload = {
     "dateFrom": moment().format("YYYY-MM-DD"),
     "dateTo": moment().format("YYYY-MM-DD"),
     "type": 1,
     "status": "PENDING",
     "reason": "",
     "breakdown": []
-  })
+  }
+
+  const [modalShow, setModalShow] = React.useState(false);
+  const [key, setKey] = React.useState('all');
+  const [leaveTypes, setLeaveTypes] = useState<any>([]);
+  const [leaveDayTypes, setLeaveDayTypes] = useState<any>([]);
+  const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
+  const [allLeaves, setAllLeaves] = useState<any>([]);
+  const [dayTypes, setDayTypes] = useState<any>([]);
+  const [leaveId, setLeaveId] = useState<any>("");
+
+  const [initialValues, setInitialValues] = useState<any>(initialPayload)
   const formRef: any = useRef()
 
   const tableHeaders = [
@@ -102,7 +103,7 @@ export const Leaves = (props: any) => {
       }
     )
   }
-  
+
   const getLeave = (id: any = 0) => {
     RequestAPI.getRequest(
       `${Api.getLeave}?id=${id}`,
@@ -116,14 +117,12 @@ export const Leaves = (props: any) => {
           } else {
             const valueObj: any = body.data
             leaveTypes.forEach((element: any, index: any) => {
-              if (element.name == valueObj.type){
-                  valueObj.type = element.id
+              if (element.name == valueObj.type) {
+                valueObj.type = element.id
               }
             });
             setInitialValues(valueObj)
             setLeaveBreakdown(valueObj.breakdown)
-            setDateFrom(valueObj.dateFrom)
-            setDateTo(valueObj.dateTo)
             setLeaveId(valueObj.id)
             setModalShow(true)
           }
@@ -133,20 +132,21 @@ export const Leaves = (props: any) => {
   }
 
   useEffect(() => {
-    dateBreakdown()
-  }, [dateFrom, dateTo])
+    dateBreakdown(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'))
+  }, [])
 
-  const dateBreakdown = () => {
-    const date1 = moment(dateFrom);
-    const date2 = moment(dateTo);
+  const dateBreakdown = (dFrom: any, dTo: any) => {
+    const date1 = moment(dFrom);
+    const date2 = moment(dTo);
+    console.log(dFrom)
     let leavesBreakdown = []
     let dayTypesArray = []
     let diffInDays = date2.diff(date1, 'days') + 1;
     let dateCounter = 0
-    
-    if (dateFrom && dateTo && diffInDays >= 1) {
+
+    if (diffInDays >= 1) {
       for (let index = 1; index <= diffInDays; index++) {
-        var added_date = moment(dateFrom).add(dateCounter, 'days');
+        var added_date = moment(dFrom).add(dateCounter, 'days');
         let new_date = new Date(added_date.format('YYYY-MM-DD'))
         if (new_date.getDay() == 0 || new_date.getDay() == 6) {
           dateCounter += 1
@@ -154,7 +154,7 @@ export const Leaves = (props: any) => {
           dateCounter += 2
         } else {
           leavesBreakdown.push({
-            "date": moment(dateFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
+            "date": moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
             "credit": 1,
             "dayType": 'WHOLE_DAY'
           })
@@ -164,30 +164,25 @@ export const Leaves = (props: any) => {
       }
       setDayTypes(dayTypesArray)
       setLeaveBreakdown(leavesBreakdown)
-      
+
     } else {
       setDayTypes([])
       setLeaveBreakdown([])
-      // ErrorSwal.fire(
-      //   'Error!',
-      //   "Invalid date range.",
-      //   'error'
-      // )
     }
   }
 
   const setDateOption = (index: any, value: any, dayType: any = null) => {
-    
-    if(leaveBreakdown){
+
+    if (leaveBreakdown) {
       const valuesObj: any = { ...leaveBreakdown }
-    
-      if(valuesObj){
+
+      if (valuesObj) {
         valuesObj[index].credit = value
         valuesObj[index].dayType = dayType
       }
-      
+
       const valuesObjDayType: any = { ...dayTypes }
-      if(valuesObjDayType){
+      if (valuesObjDayType) {
         if (value == .5) {
           valuesObjDayType[index] = true
         }
@@ -197,8 +192,6 @@ export const Leaves = (props: any) => {
         setDayTypes(valuesObjDayType)
       }
     }
-    
-    
   }
 
   const approveLeave = (id: any = 0) => {
@@ -314,6 +307,14 @@ export const Leaves = (props: any) => {
                           <>
                             <label
                               onClick={() => {
+                                getLeave(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Update
+                            </label>
+                            <br />
+                            <label
+                              onClick={() => {
                                 approveLeave(item.id)
                               }}
                               className="text-muted cursor-pointer">
@@ -327,18 +328,13 @@ export const Leaves = (props: any) => {
                               Decline
                             </label>
                             <br />
+
                           </>
                           :
                           null
                       }
-                      
-                      <label
-                        onClick={() => {
-                          getLeave(item.id)
-                        }}
-                        className="text-muted cursor-pointer">
-                        Update
-                      </label>
+
+
                     </td>
                   </tr>
                 )
@@ -351,14 +347,14 @@ export const Leaves = (props: any) => {
   }, [allLeaves])
 
   const setFormField = (e: any, setFieldValue: any) => {
-      if (setFieldValue) {
-          const { name , value } = e.target
-          setFieldValue(name, value)
-          setFieldValue("formoutside", true)
-      }
+    if (setFieldValue) {
+      const { name, value } = e.target
+      setFieldValue(name, value)
+      setFieldValue("formoutside", true)
+    }
   }
 
- 
+
   return (
     <div className="body">
       <div className="wraper">
@@ -421,6 +417,9 @@ export const Leaves = (props: any) => {
                   <Button
                     className="mx-2"
                     onClick={() => {
+                      setInitialValues(initialPayload)
+                      setLeaveBreakdown([])
+                      setLeaveId("")
                       setModalShow(true)
                     }}>Request for Leave/Time-off</Button>
                 </div>
@@ -438,16 +437,17 @@ export const Leaves = (props: any) => {
           keyboard={false}
           onHide={() => {
             setLeaveId(null);
-            setModalShow(false)}}
+            setModalShow(false)
+          }}
           dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
             {/* <Modal.Title id="contained-modal-title-vcenter">
               Request For Leave/Time-off
             </Modal.Title> */}
-              <Modal.Title id="contained-modal-title-vcenter">
-                {leaveId ? 'Edit Leave/Time-off Request' : 'Request For Leave/Time-off'}
-              </Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter">
+              {leaveId ? 'Edit Leave/Time-off Request' : 'Request For Leave/Time-off'}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
             <Formik
@@ -458,9 +458,9 @@ export const Leaves = (props: any) => {
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = leaveBreakdown
-                if (leaveId){
+                if (leaveId) {
                   delete valuesObj.userId
-                  
+
                   RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -489,7 +489,7 @@ export const Leaves = (props: any) => {
                       )
                     }
                   })
-                }else{
+                } else {
                   RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -519,7 +519,7 @@ export const Leaves = (props: any) => {
                     }
                   })
                 }
-                
+
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (
@@ -552,8 +552,8 @@ export const Leaves = (props: any) => {
                           min={moment().format("YYYY-MM-DD")}
                           onChange={(e) => {
                             setFormField(e, setFieldValue)
-                            setDateFrom(e.target.value)
-                            dateBreakdown()
+                            // setDateFrom(e.target.value)
+                            dateBreakdown(e.target.value, values.dateTo)
                           }}
                         />
                       </div>
@@ -566,9 +566,9 @@ export const Leaves = (props: any) => {
                           value={values.dateTo}
                           min={values.dateFrom}
                           onChange={(e) => {
-                            setDateTo(e.target.value)
+                            // setDateTo(e.target.value)
                             setFormField(e, setFieldValue)
-                            dateBreakdown()
+                            dateBreakdown(values.dateFrom, e.target.value)
                           }}
                         />
                       </div>
@@ -606,7 +606,7 @@ export const Leaves = (props: any) => {
                                         id={"leaveCreditWhole" + index.toString()}
                                         checked={item.credit == 1}
                                         onChange={() => {
-                                          setDateOption(index,1, 'WHOLE_DAY')
+                                          setDateOption(index, 1, 'WHOLE_DAY')
                                         }}
                                       />
                                       <label htmlFor={"leaveCreditWhole" + index.toString()}

@@ -16,6 +16,7 @@ import {
   Employee,
   Leaves,
   Overtime,
+  Undertime,
   ScheduleAdjustment,
   AttendanceCorrection,
   AttendanceSummary,
@@ -49,7 +50,8 @@ const Privateroutes: React.FunctionComponent = (props) => {
   const routes: any = []
   routes.push({ path: "/employee", component: Employee })
   routes.push({ path: "/leaves/timeoff", component: Leaves })
-  routes.push({ path: "/overtime/undertime", component: Overtime })
+  routes.push({ path: "/overtime", component: Overtime })
+  routes.push({ path: "/undertime", component: Undertime })
   routes.push({ path: "/schedule/adjustment", component: ScheduleAdjustment })
   routes.push({ path: "/attendance/correction", component: AttendanceCorrection })
   routes.push({ path: "/summary", component: AttendanceSummary })

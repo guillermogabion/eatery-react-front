@@ -6,8 +6,10 @@ import { NavLink } from "react-router-dom";
 
 const DashboardMenu = (props: any) => {
     const { search = true } = props
+    const userData = useSelector((state: any) => state.rootReducer.userData)
     const setCurrentRoutePath = (path: string) => dispatch({ type: "SET_CURENT_ROUTE_PATH", payload: path })
     const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
+    const [isRoleCheck, setIsRoleCheck] = useState(false);
     const dispatch = useDispatch()
     const [index, setIndex] = useState<any>("")
     const [nav, setNav] = useState([
@@ -24,8 +26,13 @@ const DashboardMenu = (props: any) => {
 
                 },
                 {
-                    'name': 'Overtime & Undertime',
-                    'link': '/overtime/undertime'
+                    'name': 'Overtime',
+                    'link': '/overtime'
+
+                },
+                {
+                    'name': 'Undertime',
+                    'link': '/undertime'
 
                 },
                 {
@@ -115,8 +122,81 @@ const DashboardMenu = (props: any) => {
                 }
             })
         })
-
-    }, [index])
+        if(userData.data.profile.role == 'EMPLOYEE' && isRoleCheck == false){
+            setIsRoleCheck(true)
+            setNav([
+                {
+                    "name": "Attendance",
+                    "menu": [
+                        {
+                            'name': 'Time In & Time Out',
+                            'link': '/attendance'
+                        },
+                        {
+                            'name': 'Leaves & Time off',
+                            'link': '/leaves/timeoff'
+                        },
+                        {
+                            'name': 'Overtime',
+                            'link': '/overtime'
+                        },
+                        {
+                            'name': 'Undertime',
+                            'link': '/undertime'
+                        },
+                        {
+                            'name': 'Attendance Correction',
+                            'link': '/attendance/correction'
+                        },
+                        {
+                            'name': 'Schedule Adjustment',
+                            'link': '/schedule/adjustment'
+                        },
+                        {
+                            'name': 'Summary',
+                            'link': '/summary'
+                        },
+                    ]
+                },
+                {
+                    "name": "Profile",
+                    "menu": [
+                        {
+                            'name': 'Change Password',
+                            'link': '/change/password'
+                        },
+                    ]
+                },
+                {
+                    "name": "Resolution Center",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance5'
+                        },
+                    ]
+                },
+                {
+                    "name": "Announcements",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance5'
+                        },
+                    ]
+                },
+                {
+                    "name": "Actimai Directory",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance5'
+                        },
+                    ]
+                },
+            ])
+        }
+    }, [index, nav])
 
 
     const leftMenu = useCallback((menu_index: any) => {

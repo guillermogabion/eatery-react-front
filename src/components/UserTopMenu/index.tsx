@@ -97,10 +97,10 @@ const UserTopMenu = (props: any) => {
               <img src={user} alt="user" />
             </div>
             <div className="Userdetail">
-              <h3>Employee  {userData.username}</h3>
-              {/* <small>{`00${soleId}`}<br />{userData.unit}</small> */}
+              <h3>Employee  {userData.data.profile.firstName}</h3>
               <small>
-                Squad Ingenaire
+                {userData.data.profile.squad}
+                
               </small>
             </div>
           </div>

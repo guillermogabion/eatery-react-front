@@ -111,26 +111,28 @@ export const Employee = (props: any) => {
   }, [])
 
   useEffect(() => {
-    RequestAPI.getRequest(
-      `${Api.allEmployee}`,
-      "",
-      {},
-      {},
-      async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 && body && body.data) {
-          if (body.data.content) {
-            setEmployeeList(body.data.content)
-          }
-          // setLeaveTypes(body)
-        } else {
-
-        }
-      }
-    )
-
+    getAllEmploye()
   }, [])
 
+const getAllEmploye = () => {
+  RequestAPI.getRequest(
+    `${Api.allEmployee}?size=20`,
+    "",
+    {},
+    {},
+    async (res: any) => {
+      const { status, body = { data: {}, error: {} } }: any = res
+      if (status === 200 && body && body.data) {
+        if (body.data.content) {
+          setEmployeeList(body.data.content)
+        }
+        
+      } else {
+
+      }
+    }
+  )
+}
 
   const setFormField = (e: any, setFieldValue: any) => {
     const { name, value } = e.target
@@ -140,9 +142,11 @@ export const Employee = (props: any) => {
   }
 
   const tableHeaders = [
-    'Username',
-    'Role',
-    'Failed Login Attempts',
+    'Employee Type',
+    'Employee Status',
+    'Full Name',
+    'Hired Date',
+    'Account Status',
     'Action',
   ]
 
@@ -165,6 +169,7 @@ export const Employee = (props: any) => {
       }
     )
   }
+  
   const unlockEmployee = (id: any = 0) => {
     ErrorSwal.fire({
       title: 'Notification',
@@ -186,6 +191,7 @@ export const Employee = (props: any) => {
                 'error'
               )
             } else {
+              getAllEmploye()
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -1207,18 +1213,29 @@ export const Employee = (props: any) => {
                           }
                           return (
                             <tr>
-                              <td> {item.username} </td>
-                              <td> {item.role} </td>
-                              <td> {item.failedLoginAttemps} </td>
+                              <td> {item.empType} </td>
+                              <td> {item.empStatus} </td>
+                              <td> {item.fullname} </td>
+                              <td> {item.hireDate} </td>
+                              <td> {item.acctStatus} </td>
                               <td>
                                 <label
                                   onClick={() => {
-                                    getEmployee(item.userId)
+                                    getEmployee(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
                                   Update
-                                </label><br />
-                                <label onClick={() => unlockEmployee(item.userId)}>Unlock</label>
+                                </label>
+                                {
+                                  item.acctStatus == 'LOCKED' ?
+                                  <div>
+                                    <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
+                                  </div>
+                                
+                                  :
+                                  null
+                                }
+                                
                               </td>
                             </tr>
                           )

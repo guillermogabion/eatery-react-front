@@ -2,7 +2,7 @@ const Api: any = {
   Login: process.env.REACT_APP_API_URL + "user/auth/token",
   timeIn: process.env.REACT_APP_API_URL + "timekeeping/timeIn",
   timeOut: process.env.REACT_APP_API_URL + "timekeeping/timeOut",
-  myTimeKeeping: process.env.REACT_APP_API_URL + "mytimekeeping/all",
+  myTimeKeeping: process.env.REACT_APP_API_URL + "mytimekeeping/perday/all",
   timeKeeping: process.env.REACT_APP_API_URL + "timekeeping/all",
   getTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/get",
   getAllLeaves: process.env.REACT_APP_API_URL + "request/leave/all",
@@ -16,14 +16,30 @@ const Api: any = {
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
   requestLeaveUpdate: process.env.REACT_APP_API_URL + "request/leave/update",
-  allRequestLeave: process.env.REACT_APP_API_URL + "request/leave/all",
+  allRequestLeave: process.env.REACT_APP_API_URL + "request/leave/myleaves",
   getLeave: process.env.REACT_APP_API_URL + "request/leave",
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
   declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
   getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
   employeeInformation: process.env.REACT_APP_API_URL + "employee/info",
   allEmployee: process.env.REACT_APP_API_URL + "employee/all",
+  OTClassification: process.env.REACT_APP_API_URL + "request/ot/classifications",
+  OTCreate: process.env.REACT_APP_API_URL + "request/ot/create",
+  myOT: process.env.REACT_APP_API_URL + "request/ot/myot",
+  approveOT: process.env.REACT_APP_API_URL + "request/ot/approve",
+  declineOT: process.env.REACT_APP_API_URL + "request/ot/decline",
+  otInformation: process.env.REACT_APP_API_URL + "request/ot/info",
+  updateOT: process.env.REACT_APP_API_URL + "request/ot/update",
 
+  myUT: process.env.REACT_APP_API_URL + "request/ut/myut",
+  UTCreate: process.env.REACT_APP_API_URL + "request/ut/create",
+  approveUT: process.env.REACT_APP_API_URL + "request/ut/approve",
+  declineUT: process.env.REACT_APP_API_URL + "request/ut/decline",
+  utInformation: process.env.REACT_APP_API_URL + "request/ut/info",
+  updateUT: process.env.REACT_APP_API_URL + "request/ut/update",
+  
+  
+  // /request/ot/classifications
 
   USERS: process.env.REACT_APP_API_URL + "users",
   USERSTATUS: process.env.REACT_APP_API_URL + "userStatus",
