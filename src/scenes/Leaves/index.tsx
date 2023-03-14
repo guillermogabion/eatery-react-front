@@ -38,7 +38,7 @@ export const Leaves = (props: any) => {
   const [allLeaves, setAllLeaves] = useState<any>([]);
   const [dayTypes, setDayTypes] = useState<any>([]);
   const [leaveId, setLeaveId] = useState<any>("");
-
+  const [filterData, setFilterData] = React.useState([]);
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
   const formRef: any = useRef()
 
@@ -86,9 +86,27 @@ export const Leaves = (props: any) => {
     getAllLeaves(0, "")
   }, [dayTypes])
 
-  const getAllLeaves = (page: any = 0, status: any = "All") => {
+  const getAllLeaves = (page: any = 0, status?: any = "All") => {
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if(status != ""){
+      queryString = "&status="+ status
+    }else{
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            console.log('g1')
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
+    
     RequestAPI.getRequest(
-      `${Api.allRequestLeave}?status=${status}`,
+      `${Api.allRequestLeave}?size=10${queryString}`,
       "",
       {},
       {},
@@ -354,6 +372,12 @@ export const Leaves = (props: any) => {
     }
   }
 
+  const makeFilterData = (event: any) => {
+    const { name, value } = event.target
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && value !== "Select" ? value : ""
+    setFilterData(filterObj)
+  }
 
   return (
     <div className="body">
@@ -388,6 +412,24 @@ export const Leaves = (props: any) => {
                   </div>
                 </div>
                 <div className="w-100 pt-4">
+                  <div className="fieldtext d-flex col-md-3">
+                    <input
+                      name="status"
+                      placeholder="Status"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    <Button
+                        style={{ width: 120}}
+                        onClick={() => getAllLeaves(0,"")}
+                        className="btn btn-primary mx-2">
+                        Search
+                      </Button>
+                  </div>
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
