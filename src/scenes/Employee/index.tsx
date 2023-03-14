@@ -16,6 +16,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Table from 'react-bootstrap/Table';
 import { useSelector, useDispatch } from "react-redux"
+import { async } from "validate.js"
 
 
 export const Employee = (props: any) => {
@@ -28,6 +29,8 @@ export const Employee = (props: any) => {
   const [squadList, setSquadList] = React.useState([]);
   const [employeeList, setEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
+  const [filterData, setFilterData] = React.useState([]);
+
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
     "status": "ACTIVE",
@@ -114,25 +117,69 @@ export const Employee = (props: any) => {
     getAllEmploye()
   }, [])
 
-const getAllEmploye = () => {
+
+const makeFilterData = (event: any) => {
+  const { name, value } = event.target
+  const filterObj: any = { ...filterData }
+  filterObj[name] = name && value !== "Select" ? value : ""
+  setFilterData(filterObj)
+}
+
+
+const getAllEmploye = ( page : any , fullname? : any) =>  {
+  let queryString = ""
+  let filterDataTemp = { ...filterData }
+  if(fullname){
+    queryString = "&fullname" + fullname
+  } else {
+    if(filterDataTemp) {  
+      Object.keys(filterDataTemp).forEach((d: any) => {
+        if(filterDataTemp[d]) {
+          queryString += `&${d}=${filterDataTemp[d]}`
+        }else{
+          console.log('g1')
+          queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+        }
+      })
+    }
+  }
+// const getAllEmploye = ( page : any , fullname? : any) =>  {
+//   let queryString = ""
+//   let filterDataTemp = { ...filterData }
+//   if(fullname != ""){
+//     queryString = "&fullname" + fullname
+//   }else{
+//     if(filterDataTemp) {  
+//       Object.keys(filterDataTemp).forEach((d: any) => {
+//         if(filterDataTemp[d]) {
+//           queryString += `&${d}=${filterDataTemp[d]}`
+//         }else{
+//           console.log('g1')
+//           queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+//         }
+//       })
+//     }
+//   }
+
   RequestAPI.getRequest(
-    `${Api.allEmployee}?size=20`,
+    `${Api.allEmployee}?size=20${queryString}`,
     "",
     {},
     {},
-    async (res: any) => {
-      const { status, body = { data: {}, error: {} } }: any = res
-      if (status === 200 && body && body.data) {
-        if (body.data.content) {
+    async(res: any) => {
+      const { status , body = {data : {}, error : {}} } : any = res
+      if (status == 200 && body) {
+        if (body.error && body.error.message) {
+
+        }else {
           setEmployeeList(body.data.content)
         }
-        
-      } else {
-
       }
     }
   )
 }
+
+
 
   const setFormField = (e: any, setFieldValue: any) => {
     const { name, value } = e.target
@@ -1189,6 +1236,25 @@ const getAllEmploye = () => {
               <div>
                 <h3>Employee Management</h3>
                 <div className="w-100">
+
+                <div className="fieldtext d-flex col-md-3">
+                    <input
+                      name="fullname"
+                      placeholder="Status"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    <Button
+                        style={{ width: 120}}
+                        onClick={() => getAllEmploye(0,"")}
+                        className="btn btn-primary mx-2">
+                        Search
+                      </Button>
+                  </div>
                   <Table responsive="lg">
                     <thead>
                       <tr>
