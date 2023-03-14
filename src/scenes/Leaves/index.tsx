@@ -412,7 +412,7 @@ export const Leaves = (props: any) => {
                   </div>
                 </div>
                 <div className="w-100 pt-4">
-                  <div className="fieldtext d-flex col-md-3">
+                  <div className="fieldtext d-flex col-md-3 d-none">
                     <input
                       name="status"
                       placeholder="Status"
