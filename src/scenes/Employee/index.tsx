@@ -126,11 +126,11 @@ const makeFilterData = (event: any) => {
 }
 
 
-const getAllEmploye = ( page : any , fullname? : any) =>  {
+const getAllEmploye = ( page : any , employeeId? : any) =>  {
   let queryString = ""
   let filterDataTemp = { ...filterData }
-  if(fullname){
-    queryString = "&fullname" + fullname
+  if(employeeId){
+    queryString = "&employeeId" + employeeId
   } else {
     if(filterDataTemp) {  
       Object.keys(filterDataTemp).forEach((d: any) => {
@@ -191,6 +191,7 @@ const getAllEmploye = ( page : any , fullname? : any) =>  {
   const tableHeaders = [
     'Employee Type',
     'Employee Status',
+    'Employee ID',
     'Full Name',
     'Hired Date',
     'Account Status',
@@ -1239,7 +1240,7 @@ const getAllEmploye = ( page : any , fullname? : any) =>  {
 
                 <div className="fieldtext d-flex col-md-3">
                     <input
-                      name="fullname"
+                      name="employeeId"
                       placeholder="Status"
                       type="text"
                       autoComplete="off"
@@ -1281,6 +1282,7 @@ const getAllEmploye = ( page : any , fullname? : any) =>  {
                             <tr>
                               <td> {item.empType} </td>
                               <td> {item.empStatus} </td>
+                              <td> {item.employeeId} </td>
                               <td> {item.fullname} </td>
                               <td> {item.hireDate} </td>
                               <td> {item.acctStatus} </td>
