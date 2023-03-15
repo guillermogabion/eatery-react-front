@@ -5803,3 +5803,7 @@ td.pendingLabel .active {
   max-height: 70vh !important;
   overflow-y: auto;  
 }
+.error-text {
+  font-size: 10px;
+  color: red;
+}
