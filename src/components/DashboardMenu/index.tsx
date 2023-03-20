@@ -123,7 +123,7 @@ const DashboardMenu = (props: any) => {
             })
         })
         let userRole = userData.data.profile.role
-        console.log(userRole)
+        
         if(userRole == 'EMPLOYEE'){
             setNav([
                 {

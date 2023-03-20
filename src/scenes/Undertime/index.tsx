@@ -45,21 +45,39 @@ export const Undertime = (props: any) => {
     };
 
     const getMyUT = (page: any = 0, status: any = "All") => {
-        RequestAPI.getRequest(
-            `${Api.myUT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        setMyUT(body.data)
+        if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+            RequestAPI.getRequest(
+                `${Api.allUndertime}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setMyUT(body.data)
+                        }
                     }
                 }
-            }
-        )
+            )
+        }else{
+            RequestAPI.getRequest(
+                `${Api.myUT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setMyUT(body.data)
+                        }
+                    }
+                }
+            )
+        }        
     }
 
     const approveUT = (id: any = 0) => {

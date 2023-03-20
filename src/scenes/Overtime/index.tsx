@@ -75,7 +75,7 @@ export const Overtime = (props: any) => {
   const getMyOT = (page: any = 0, status: any = "All") => {
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
       RequestAPI.getRequest(
-        `${Api.allRequestLeave}?size=10&page=${page}`,
+        `${Api.allOvertime}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
         "",
         {},
         {},
