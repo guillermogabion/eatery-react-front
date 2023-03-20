@@ -5803,3 +5803,24 @@ td.pendingLabel .active {
   max-height: 70vh !important;
   overflow-y: auto;  
 }
+.prev-next-pagination{
+  color: #189FB5;
+  font-weight: bolder;
+  text-decoration: none;
+  margin: 0px 3px;
+  border: 1px solid #189FB5;
+  padding: 3px 10px;
+  
+}
+.active-page-link{
+  color: white;
+  background-color: #357EAE;
+}
+.page-link{
+  color: #189FB5;
+  text-decoration: none;
+  font-weight: bold;
+  border: 1px solid #189FB5;
+  padding: 0px 10px;
+  margin: 1px 1px;
+}

@@ -17,6 +17,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux"
+import ReactPaginate from 'react-paginate';
 
 
 export const Leaves = (props: any) => {
@@ -29,7 +31,8 @@ export const Leaves = (props: any) => {
     "reason": "",
     "breakdown": []
   }
-
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
+  const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
@@ -86,7 +89,7 @@ export const Leaves = (props: any) => {
     getAllLeaves(0, "")
   }, [dayTypes])
 
-  const getAllLeaves = (page: any = 0, status?: any = "All") => {
+  const getAllLeaves = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
     if(status != ""){
@@ -98,28 +101,45 @@ export const Leaves = (props: any) => {
             
             queryString += `&${d}=${filterDataTemp[d]}`
           } else {
-            console.log('g1')
             queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
           }
         })
       }
     }
     
-    RequestAPI.getRequest(
-      `${Api.allRequestLeave}?size=10${queryString}`,
-      "",
-      {},
-      {},
-      async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 && body) {
-          if (body.error && body.error.message) {
-          } else {
-            setAllLeaves(body.data)
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+      RequestAPI.getRequest(
+        `${Api.allRequestLeave}?size=10${queryString}&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setAllLeaves(body.data)
+            }
           }
         }
-      }
-    )
+      )
+    }else{
+      RequestAPI.getRequest(
+        `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setAllLeaves(body.data)
+            }
+          }
+        }
+      )
+    }
   }
 
   const getLeave = (id: any = 0) => {
@@ -156,7 +176,6 @@ export const Leaves = (props: any) => {
   const dateBreakdown = (dFrom: any, dTo: any) => {
     const date1 = moment(dFrom);
     const date2 = moment(dTo);
-    console.log(dFrom)
     let leavesBreakdown = []
     let dayTypesArray = []
     let diffInDays = date2.diff(date1, 'days') + 1;
@@ -174,7 +193,7 @@ export const Leaves = (props: any) => {
           leavesBreakdown.push({
             "date": moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
             "credit": 1,
-            "dayType": 'WHOLE_DAY'
+            "dayType": 'WHOLEDAY'
           })
           dayTypesArray.push(false)
           dateCounter += 1
@@ -323,21 +342,33 @@ export const Leaves = (props: any) => {
                       {
                         item.status != "APPROVED" && item.status != "DECLINED" ?
                           <>
-                            <label
-                              onClick={() => {
-                                getLeave(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              Update
-                            </label>
-                            <br />
-                            <label
+                          {authorizations.includes("Request:Update") ? (
+                            <>
+                                <label
+                                onClick={() => {
+                                  getLeave(item.id)
+                                }}
+                                className="text-muted cursor-pointer">
+                                Update
+                              </label>
+                              <br />
+                            </>
+                          ) : null}
+
+                          {authorizations.includes("Request:Approve") ? (
+                            <>
+                              <label
                               onClick={() => {
                                 approveLeave(item.id)
                               }}
                               className="text-muted cursor-pointer">
                               Approve
                             </label> <br />
+                            </>
+                          ) : null}
+
+                            {authorizations.includes("Request:Reject") ? (
+                            <>
                             <label
                               onClick={() => {
                                 declineLeave(item.id)
@@ -346,13 +377,12 @@ export const Leaves = (props: any) => {
                               Decline
                             </label>
                             <br />
-
+                            </>
+                          ) : null}
                           </>
                           :
                           null
                       }
-
-
                     </td>
                   </tr>
                 )
@@ -378,7 +408,9 @@ export const Leaves = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
-
+  const handlePageClick = (event: any) => {
+    getAllLeaves(event.selected, "")
+  };
   return (
     <div className="body">
       <div className="wraper">
@@ -454,18 +486,39 @@ export const Leaves = (props: any) => {
                   </Tabs>
                 </div>
               </div>
-              <div className="d-flex justify-content-end mt-3" >
-                <div>
-                  <Button
-                    className="mx-2"
-                    onClick={() => {
-                      setInitialValues(initialPayload)
-                      setLeaveBreakdown([])
-                      setLeaveId("")
-                      setModalShow(true)
-                    }}>Request for Leave/Time-off</Button>
+              <div className="d-flex justify-content-end">
+                <div className="">
+                  <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(allLeaves && allLeaves.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeClassName="active-page-link"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                  />
                 </div>
-              </div>
+            </div>
+                  {authorizations.includes("Request:Create") ? (
+                  <div className="d-flex justify-content-end mt-3" >
+                      <div>
+                        <Button
+                          className="mx-2"
+                          onClick={() => {
+                            setInitialValues(initialPayload)
+                            setLeaveBreakdown([])
+                            setLeaveId("")
+                            setModalShow(true)
+                          }}>Request for Leave/Time-off</Button>
+                      </div>
+                  </div>
+                ) : null}
+              
             </div>
           </div>
         </div>
@@ -496,7 +549,15 @@ export const Leaves = (props: any) => {
               innerRef={formRef}
               initialValues={initialValues}
               enableReinitialize={true}
-              validationSchema={null}
+              validationSchema={
+                Yup.object().shape({
+                  dateFrom: Yup.string().required("Date from is required !"),
+                  dateTo: Yup.string().required("Date to is required !"),
+                  reason: Yup.string().required("Reason is required !"),
+                  status: Yup.string().required("Status is required !"),
+                  type: Yup.string().required("Status is required !"),
+                })
+              }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = leaveBreakdown
@@ -583,6 +644,9 @@ export const Leaves = (props: any) => {
                               </option>
                             ))}
                         </select>
+                        {errors && errors.type && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date From</label>
@@ -598,6 +662,9 @@ export const Leaves = (props: any) => {
                             dateBreakdown(e.target.value, values.dateTo)
                           }}
                         />
+                        {errors && errors.dateFrom && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date To</label>
@@ -613,6 +680,9 @@ export const Leaves = (props: any) => {
                             dateBreakdown(values.dateFrom, e.target.value)
                           }}
                         />
+                        {errors && errors.dateTo && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <label>Reason</label>
@@ -623,6 +693,9 @@ export const Leaves = (props: any) => {
                           value={values.reason}
                           onChange={(e) => setFormField(e, setFieldValue)}
                         />
+                        {errors && errors.reason && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <Table responsive="lg" style={{ maxHeight: '100vh' }}>
@@ -648,7 +721,7 @@ export const Leaves = (props: any) => {
                                         id={"leaveCreditWhole" + index.toString()}
                                         checked={item.credit == 1}
                                         onChange={() => {
-                                          setDateOption(index, 1, 'WHOLE_DAY')
+                                          setDateOption(index, 1, 'WHOLEDAY')
                                         }}
                                       />
                                       <label htmlFor={"leaveCreditWhole" + index.toString()}
@@ -664,7 +737,7 @@ export const Leaves = (props: any) => {
                                       /> <label htmlFor={"leaveCreditDay" + index.toString()}
                                         style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
                                       {
-                                        item.dayType != 'WHOLE_DAY' ?
+                                        item.dayType != 'WHOLEDAY' ?
                                           <>
                                             <br />
                                             <input

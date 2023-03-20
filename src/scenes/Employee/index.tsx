@@ -16,7 +16,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Table from 'react-bootstrap/Table';
 import { useSelector, useDispatch } from "react-redux"
-
+import ReactPaginate from 'react-paginate';
 
 export const Employee = (props: any) => {
   const { history } = props
@@ -111,28 +111,31 @@ export const Employee = (props: any) => {
   }, [])
 
   useEffect(() => {
-    getAllEmploye()
+    getAllEmployee(0)
   }, [])
 
-const getAllEmploye = () => {
-  RequestAPI.getRequest(
-    `${Api.allEmployee}?size=20`,
-    "",
-    {},
-    {},
-    async (res: any) => {
-      const { status, body = { data: {}, error: {} } }: any = res
-      if (status === 200 && body && body.data) {
-        if (body.data.content) {
-          setEmployeeList(body.data.content)
-        }
-        
-      } else {
+  const handlePageClick = (event: any) => {
+    getAllEmployee(event.selected)
+  };
 
+  const getAllEmployee = (pageNo: any) => {
+    RequestAPI.getRequest(
+      `${Api.allEmployee}?size=10&page=${pageNo}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.data.content) {
+            setEmployeeList(body.data)
+          }
+        } else {
+
+        }
       }
-    }
-  )
-}
+    )
+  }
 
   const setFormField = (e: any, setFieldValue: any) => {
     const { name, value } = e.target
@@ -142,6 +145,7 @@ const getAllEmploye = () => {
   }
 
   const tableHeaders = [
+    'Employee ID',
     'Employee Type',
     'Employee Status',
     'Full Name',
@@ -165,11 +169,11 @@ const getAllEmploye = () => {
             setModalShow(true)
             setTabIndex(1)
           }
-        } 
+        }
       }
     )
   }
-  
+
   const unlockEmployee = (id: any = 0) => {
     ErrorSwal.fire({
       title: 'Notification',
@@ -191,7 +195,7 @@ const getAllEmploye = () => {
                 'error'
               )
             } else {
-              getAllEmploye()
+              getAllEmployee(0)
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -224,11 +228,11 @@ const getAllEmploye = () => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
             <div className="col-md-12 row p-0 m-0" >
-                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Employee Information</h5>
-                </div>
+              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                <h5>Employee Information</h5>
               </div>
+            </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>First name</label>
@@ -379,11 +383,11 @@ const getAllEmploye = () => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid1" autoComplete="off">
             <div className="col-md-12 row p-0 m-0" >
-                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Emergency Contact</h5>
-                </div>
+              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                <h5>Emergency Contact</h5>
               </div>
+            </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>Contact No.</label>
@@ -473,11 +477,11 @@ const getAllEmploye = () => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid2" autoComplete="off">
             <div className="col-md-12 row p-0 m-0" >
-                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Employment Information</h5>
-                </div>
+              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                <h5>Employment Information</h5>
               </div>
+            </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>Employee ID</label>
@@ -972,10 +976,10 @@ const getAllEmploye = () => {
       validationSchema={null}
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
-        if (userId){
+        if (userId) {
           RequestAPI.putRequest(Api.updateEmployee, "", valuesObj, {}, async (res: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
-            
+
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
                 ErrorSwal.fire(
@@ -983,7 +987,7 @@ const getAllEmploye = () => {
                   (body.error && body.error.message) || "",
                   'error'
                 )
-              } else {  
+              } else {
                 ErrorSwal.fire(
                   'Updated Successfully!',
                   (body.data || ""),
@@ -991,9 +995,9 @@ const getAllEmploye = () => {
                 ).then((result) => {
                   if (result.isConfirmed) {
                     location.reload()
-                  } 
+                  }
                 })
-                
+
               }
             } else {
               ErrorSwal.fire(
@@ -1003,10 +1007,10 @@ const getAllEmploye = () => {
               )
             }
           })
-        }else{
+        } else {
           RequestAPI.postRequest(Api.createEmployee, "", valuesObj, {}, async (res: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
-            
+
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
                 ErrorSwal.fire(
@@ -1026,9 +1030,9 @@ const getAllEmploye = () => {
                 ).then((result) => {
                   if (result.isConfirmed) {
                     location.reload()
-                  } 
+                  }
                 })
-                
+
               }
             } else {
               ErrorSwal.fire(
@@ -1039,17 +1043,17 @@ const getAllEmploye = () => {
             }
           })
         }
-        
+
       }}>
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid2" autoComplete="off">
             <div className="col-md-12 row p-0 m-0" >
-                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                  <h5>Payroll Information</h5>
-                </div>
+              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                <h5>Payroll Information</h5>
               </div>
+            </div>
             <div className="row w-100 px-5">
               <div className="form-group col-md-6 mb-3 " >
                 <label>Clothing Allowance</label>
@@ -1206,13 +1210,15 @@ const getAllEmploye = () => {
                     <tbody>
                       {
                         employeeList &&
-                        employeeList.length &&
-                        employeeList.map((item: any, index: any) => {
-                          if (item.role == 'ADMIN'){
+                        employeeList.content &&
+                        employeeList.content.length &&
+                        employeeList.content.map((item: any, index: any) => {
+                          if (item.role == 'ADMIN') {
                             return null
                           }
                           return (
                             <tr>
+                              <td> {item.employeeId} </td>
                               <td> {item.empType} </td>
                               <td> {item.empStatus} </td>
                               <td> {item.fullname} </td>
@@ -1228,14 +1234,14 @@ const getAllEmploye = () => {
                                 </label>
                                 {
                                   item.acctStatus == 'LOCKED' ?
-                                  <div>
-                                    <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
-                                  </div>
-                                
-                                  :
-                                  null
+                                    <div>
+                                      <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
+                                    </div>
+
+                                    :
+                                    null
                                 }
-                                
+
                               </td>
                             </tr>
                           )
@@ -1245,7 +1251,25 @@ const getAllEmploye = () => {
                   </Table>
                 </div>
               </div>
-              <div className="d-flex justify-content-end mt-5" >
+              <div className="d-flex justify-content-end">
+                  <div className="">
+                    <ReactPaginate
+                      className="d-flex justify-content-center align-items-center"
+                      breakLabel="..."
+                      nextLabel=">"
+                      onPageChange={handlePageClick}
+                      pageRangeDisplayed={5}
+                      pageCount={(employeeList && employeeList.totalPages) || 0}
+                      previousLabel="<"
+                      previousLinkClassName="prev-next-pagination"
+                      nextLinkClassName="prev-next-pagination"
+                      activeClassName="active-page-link"
+                      pageLinkClassName="page-link"
+                      renderOnZeroPageCount={null}
+                    />
+                  </div>
+                </div>
+              <div className="d-flex justify-content-end mt-3" >
                 <div>
                   <Button className="mx-2">Import</Button>
                   <Button
@@ -1277,7 +1301,7 @@ const getAllEmploye = () => {
           </Modal.Header>
           <Modal.Body className="row w-100 p-0 m-0" >
             <div className="emp-modal-body">
-              
+
               {tabIndex == 1 ? information : null}
               {tabIndex == 2 ? emergencyContacts : null}
               {tabIndex == 3 ? otherInformation : null}

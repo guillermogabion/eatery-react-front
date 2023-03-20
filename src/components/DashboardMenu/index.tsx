@@ -122,8 +122,9 @@ const DashboardMenu = (props: any) => {
                 }
             })
         })
-        if(userData.data.profile.role == 'EMPLOYEE' && isRoleCheck == false){
-            setIsRoleCheck(true)
+        let userRole = userData.data.profile.role
+        console.log(userRole)
+        if(userRole == 'EMPLOYEE'){
             setNav([
                 {
                     "name": "Attendance",
@@ -195,8 +196,104 @@ const DashboardMenu = (props: any) => {
                     ]
                 },
             ])
+        }else if (userRole == 'APPROVER'){
+            setNav([
+                {
+                    "name": "Attendance",
+                    "menu": [
+                        {
+                            'name': 'Time In & Time Out',
+                            'link': '/attendance'
+                        },
+                        {
+                            'name': 'Leaves & Time off',
+                            'link': '/leaves/timeoff'
+        
+                        },
+                        {
+                            'name': 'Overtime',
+                            'link': '/overtime'
+        
+                        },
+                        {
+                            'name': 'Undertime',
+                            'link': '/undertime'
+        
+                        },
+                        {
+                            'name': 'Attendance Correction',
+                            'link': '/attendance/correction'
+        
+                        },
+                        {
+                            'name': 'Schedule Adjustment',
+                            'link': '/schedule/adjustment'
+        
+                        },
+                        {
+                            'name': 'Summary',
+                            'link': '/summary'
+        
+                        },
+                    ]
+                },
+                {
+                    "name": "Profile",
+                    "menu": [
+                        {
+                            'name': 'Change Password',
+                            'link': '/change/password'
+                        },
+                    ]
+                },
+                {
+                    "name": "Resolution Center",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance5'
+                        },
+                    ]
+                },
+                {
+                    "name": "My Squad",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/squad'
+                        },
+                    ]
+                },
+                {
+                    "name": "Announcements",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance5'
+                        },
+                    ]
+                },
+                {
+                    "name": "Actimai Directory",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance5'
+                        },
+                    ]
+                },
+                {
+                    "name": "Payroll",
+                    "menu": [
+                        {
+                            'name': 'Menu 1',
+                            'link': '/attendance2'
+                        },
+                    ]
+                },
+            ])
         }
-    }, [index, nav])
+    }, [index])
 
 
     const leftMenu = useCallback((menu_index: any) => {
@@ -206,7 +303,6 @@ const DashboardMenu = (props: any) => {
                         {
                             nav.length > 0 && nav.map((d: any, i: any) => {
                                 const { name, menu } = d
-
                                 return (
                                     <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#604195" }} >
                                         <Accordion.Header >{name}</Accordion.Header>
@@ -239,8 +335,7 @@ const DashboardMenu = (props: any) => {
                     </Accordion>
                 </div>
         )
-    }, [])
-
+    }, [nav])
 
     return <>
         {

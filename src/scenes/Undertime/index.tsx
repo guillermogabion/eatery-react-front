@@ -17,10 +17,13 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import { Formik } from "formik";
 import * as Yup from "yup";
-
+import { useDispatch, useSelector } from "react-redux"
+import ReactPaginate from 'react-paginate';
 
 export const Undertime = (props: any) => {
     const { history } = props
+    const { data } = useSelector((state: any) => state.rootReducer.userData)
+    const { authorizations } = data?.profile
     const [modalShow, setModalShow] = React.useState(false);
     const [key, setKey] = React.useState('all');
     const [myut, setMyUT] = useState<any>([]);
@@ -36,6 +39,10 @@ export const Undertime = (props: any) => {
     useEffect(() => {
         getMyUT(0, "")
     }, [])
+
+    const handlePageClick = (event: any) => {
+        getMyUT(event.selected, "")
+    };
 
     const getMyUT = (page: any = 0, status: any = "All") => {
         RequestAPI.getRequest(
@@ -190,6 +197,8 @@ export const Undertime = (props: any) => {
                                             {
                                                 item.status != "APPROVED" && item.status != "DECLINED" ?
                                                     <>
+                                                    {authorizations.includes("Request:Update") ? (
+                                                        <>
                                                         <label
                                                             onClick={() => {
                                                                 getUT(item.id)
@@ -198,6 +207,10 @@ export const Undertime = (props: any) => {
                                                             Update
                                                         </label>
                                                         <br />
+                                                        </>
+                                                    ) : null}
+                                                    {authorizations.includes("Request:Approve") ? (
+                                                        <>
                                                         <label
                                                             onClick={() => {
                                                                 approveUT(item.id)
@@ -205,6 +218,10 @@ export const Undertime = (props: any) => {
                                                             className="text-muted cursor-pointer">
                                                             Approve
                                                         </label> <br />
+                                                        </>
+                                                    ) : null}
+                                                    {authorizations.includes("Request:Decline") ? (
+                                                        <>
                                                         <label
                                                             onClick={() => {
                                                                 declineUT(item.id)
@@ -213,6 +230,8 @@ export const Undertime = (props: any) => {
                                                             Decline
                                                         </label>
                                                         <br />
+                                                        </>
+                                                    ) : null}
                                                     </>
                                                     :
                                                     null
@@ -292,7 +311,27 @@ export const Undertime = (props: any) => {
                                     </Tabs>
                                 </div>
                             </div>
-                            <div className="d-flex justify-content-end mt-3" >
+                            <div className="d-flex justify-content-end">
+                                <div className="">
+                                <ReactPaginate
+                                    className="d-flex justify-content-center align-items-center"
+                                    breakLabel="..."
+                                    nextLabel=">"
+                                    onPageChange={handlePageClick}
+                                    pageRangeDisplayed={5}
+                                    pageCount={(myut && myut.totalPages) || 0}
+                                    previousLabel="<"
+                                    previousLinkClassName="prev-next-pagination"
+                                    nextLinkClassName="prev-next-pagination"
+                                    activeClassName="active-page-link"
+                                    pageLinkClassName="page-link"
+                                    renderOnZeroPageCount={null}
+                                />
+                                </div>
+                            </div>
+                            {authorizations.includes("Request:Create") ? (
+                                <>
+                                <div className="d-flex justify-content-end mt-3" >
                                 <div>
                                     <Button
                                         className="mx-2"
@@ -301,6 +340,9 @@ export const Undertime = (props: any) => {
                                         }}>Request Undertime</Button>
                                 </div>
                             </div>
+                                </>
+                            ) : null}
+                            
                         </div>
                     </div>
                 </div>
@@ -325,7 +367,14 @@ export const Undertime = (props: any) => {
                             innerRef={formRef}
                             initialValues={initialValues}
                             enableReinitialize={true}
-                            validationSchema={null}
+                            validationSchema={
+                                Yup.object().shape({
+                                    shiftDate: Yup.string().required("Shift date is required !"),
+                                    utStart: Yup.string().required("Undertime start is required !"),
+                                    utEnd: Yup.string().required("Undertime end is required !"),
+                                    reason: Yup.string().required("Reason is required !"),
+                                })
+                            }
                             onSubmit={(values, actions) => {
                                 const valuesObj: any = { ...values }
 
@@ -409,6 +458,9 @@ export const Undertime = (props: any) => {
                                                         setFormField(e, setFieldValue)
                                                     }}
                                                 />
+                                                {errors && errors.shiftDate && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                )}
                                             </div>
                                             <div className="form-group col-md-6 mb-3" >
                                                 <label>Start</label>
@@ -422,6 +474,9 @@ export const Undertime = (props: any) => {
                                                         setFormField(e, setFieldValue)
                                                     }}
                                                 />
+                                                {errors && errors.utStart && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                                )}
                                             </div>
                                             <div className="form-group col-md-6 mb-3" >
                                                 <label>End</label>
@@ -435,6 +490,9 @@ export const Undertime = (props: any) => {
                                                         setFormField(e, setFieldValue)
                                                     }}
                                                 />
+                                                {errors && errors.utEnd && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                                )}
                                             </div>
                                             <div className="form-group col-md-12 mb-3" >
                                                 <label>Reason</label>
@@ -446,6 +504,9 @@ export const Undertime = (props: any) => {
                                                     value={values.reason}
                                                     onChange={(e) => setFormField(e, setFieldValue)}
                                                 />
+                                                {errors && errors.reason && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                                )}
                                             </div>
                                         </div>
                                         <br />

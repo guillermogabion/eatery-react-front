@@ -17,10 +17,13 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import { Formik } from "formik";
 import * as Yup from "yup";
-
+import { useDispatch, useSelector } from "react-redux"
+import ReactPaginate from 'react-paginate';
 
 export const Overtime = (props: any) => {
   const { history } = props
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
+  const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
@@ -65,22 +68,45 @@ export const Overtime = (props: any) => {
     getMyOT(0, "")
   }, [])
 
+  const handlePageClick = (event: any) => {
+    getMyOT(event.selected, "")
+  };
+
   const getMyOT = (page: any = 0, status: any = "All") => {
-    RequestAPI.getRequest(
-      `${Api.myOT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
-      "",
-      {},
-      {},
-      async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 && body) {
-          if (body.error && body.error.message) {
-          } else {
-            setMyOT(body.data)
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+      RequestAPI.getRequest(
+        `${Api.allRequestLeave}?size=10&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setMyOT(body.data)
+            }
           }
         }
-      }
-    )
+      )
+    }else{
+      RequestAPI.getRequest(
+        `${Api.myOT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setMyOT(body.data)
+            }
+          }
+        }
+      )
+    }
+    
   }
 
   const approveOT = (id: any = 0) => {
@@ -220,22 +246,32 @@ export const Overtime = (props: any) => {
                       {
                         item.status != "APPROVED" && item.status != "DECLINED" ?
                           <>
-                            <label
-                              onClick={() => {
-                                getOT(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              Update
-                            </label>
-                            <br />
-                            <label
+                          {authorizations.includes("Request:Update") ? (
+                            <>
+                              <label
+                                onClick={() => {
+                                  getOT(item.id)
+                                }}
+                                className="text-muted cursor-pointer">
+                                Update
+                              </label>
+                              <br />
+                            </>
+                          ) : null}
+                            {authorizations.includes("Request:Approve") ? (
+                            <>
+                              <label
                               onClick={() => {
                                 approveOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
                               Approve
                             </label> <br />
-                            <label
+                            </>
+                          ) : null}
+                          {authorizations.includes("Request:Decline") ? (
+                            <>
+                              <label
                               onClick={() => {
                                 declineOT(item.id)
                               }}
@@ -243,6 +279,9 @@ export const Overtime = (props: any) => {
                               Decline
                             </label>
                             <br />
+                            </>
+                          ) : null}
+                            
                           </>
                           :
                           null
@@ -322,15 +361,38 @@ export const Overtime = (props: any) => {
                   </Tabs>
                 </div>
               </div>
-              <div className="d-flex justify-content-end mt-3" >
-                <div>
-                  <Button
-                    className="mx-2"
-                    onClick={() => {
-                      setModalShow(true)
-                    }}>Request Overtime</Button>
+              <div className="d-flex justify-content-end">
+                <div className="">
+                  <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(myot && myot.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeClassName="active-page-link"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                  />
                 </div>
+            </div>
+              {authorizations.includes("Request:Create") ? (
+                <>
+                <div className="d-flex justify-content-end mt-3" >
+                  <div>
+                    <Button
+                      className="mx-2"
+                      onClick={() => {
+                        setModalShow(true)
+                      }}>Request Overtime</Button>
+                  </div>
               </div>
+                </>
+              ) : null}
+              
             </div>
           </div>
         </div>
@@ -355,10 +417,16 @@ export const Overtime = (props: any) => {
               innerRef={formRef}
               initialValues={initialValues}
               enableReinitialize={true}
-              validationSchema={null}
+              validationSchema={
+                Yup.object().shape({
+                  shiftDate: Yup.string().required("Shift date is required !"),
+                  classification: Yup.string().required("Classification is required !"),
+                  otStart: Yup.string().required("OT Start is required !"),
+                  otEnd: Yup.string().required("OT End is required !"),
+                })
+              }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
-
                 if (otId) {
                   valuesObj.id = otId
                   valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
@@ -445,6 +513,9 @@ export const Overtime = (props: any) => {
                               </option>
                             ))}
                         </select>
+                        {errors && errors.classification && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Shift Date</label>
@@ -457,6 +528,9 @@ export const Overtime = (props: any) => {
                             setFormField(e, setFieldValue)
                           }}
                         />
+                        {errors && errors.shiftDate && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Start</label>
@@ -470,6 +544,9 @@ export const Overtime = (props: any) => {
                             setFormField(e, setFieldValue)
                           }}
                         />
+                        {errors && errors.otStart && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>End</label>
@@ -483,6 +560,9 @@ export const Overtime = (props: any) => {
                             setFormField(e, setFieldValue)
                           }}
                         />
+                        {errors && errors.otEnd && (
+                              <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                          )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <label>Indicate Ticket Number (If Applicable) and Reason</label>
