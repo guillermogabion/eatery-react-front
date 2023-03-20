@@ -360,8 +360,8 @@ export const Employee = (props: any) => {
                   value={values.roleId}
                   onChange={(e) => setFormField(e, setFieldValue)}>
                   <option key={1} value={1}>Admin</option>
-                  <option key={2} value={2}>Approver</option>
-                  <option key={3} value={3}>Employee</option>
+                  <option key={2} value={2}>Employee</option>
+                  <option key={3} value={3}>Approver</option>
                 </select>
               </div>
             </div>
