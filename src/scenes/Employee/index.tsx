@@ -1226,9 +1226,7 @@ export const Employee = (props: any) => {
                         employeeList.content &&
                         employeeList.content.length &&
                         employeeList.content.map((item: any, index: any) => {
-                          if (item.role == 'ADMIN') {
-                            return null
-                          }
+                          
                           return (
                             <tr>
                               <td> {item.employeeId} </td>

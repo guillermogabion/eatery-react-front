@@ -162,7 +162,7 @@ export const Dashboard = (props: any) => {
                     <div className="d-flex">
                       <div className="" style={{width: 200, textAlign: right}}>
                           <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
-                          <h6 className="font-weight-bold pt-2">Last login:</h6>
+                          <h6 className="font-weight-bold pt-2">First login:</h6>
                           <h6 className="font-weight-bold pt-2">Last logout:</h6>
                           <h6 className="font-weight-bold pt-2">Attendance Status:</h6>
                       </div>
