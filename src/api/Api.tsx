@@ -68,7 +68,12 @@ const Api: any = {
 
   // locked 
 
-  UNLOCK_EMPLOYEE: process.env.REACT_APP_API_URL + "user/unlock"
+  UNLOCK_EMPLOYEE: process.env.REACT_APP_API_URL + "user/unlock",
+
+
+  // coa 
+
+  CreateCOA: process.env.REACT_APP_API_URL + "request/coa/create"
 }
 
 export default Api
