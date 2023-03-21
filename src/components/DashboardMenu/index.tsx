@@ -108,6 +108,10 @@ const DashboardMenu = (props: any) => {
                     'name': 'Roles & Access',
                     'link': '/attendance1'
                 },
+                {
+                    'name': 'Report',
+                    'link': '/Report'
+                },
             ]
         },
     ])
