@@ -43,7 +43,7 @@ export const AttendanceCorrection = (props: any) => {
     'status',
     'Action',
   ]
-  let initialPayload ={
+  const [initialValues, setInitialValues] = useState<any>({
     "type": "Biometric_Device_Malfunction",
     "reason": "",
     "coaBd": [
@@ -53,21 +53,9 @@ export const AttendanceCorrection = (props: any) => {
         "time": ""
       }
     ]
-  }
-  const [initialValues, setInitialValues] = useState<any>(initialPayload)
+  })
   const [showReason, setShowReason] = useState(false);
   const [value, setValue] = useState('');
-  const setFormField = (e, setFieldValue) => {
-    const { name, value } = e.target;
-    setFieldValue(name, value);
-
-    if (name === "type") {
-      setShowReason(value === "others"); // set showReason state based on whether "Others" is selected
-    }
-  };
-  function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setValue(event.target.value);
-  }
 
   useEffect(() => {
     getAllCOARequest(0, "")
@@ -143,8 +131,6 @@ export const AttendanceCorrection = (props: any) => {
           <thead>
             <tr>
               <th style={{ width: 'auto' }}>Type</th>
-              <th style={{ width: 'auto' }}>Date From</th>
-              <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -158,9 +144,7 @@ export const AttendanceCorrection = (props: any) => {
               allCOA.content.map((item: any, index: any) => {
                 return (
                   <tr>
-                    <td>{`${item.data.firstName} ${item.data.lastName}`}</td>
-                    <td> {item.type} </td>
-                    <td> {item.date} </td>
+                    <td>{item.type}</td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td>
@@ -219,10 +203,6 @@ export const AttendanceCorrection = (props: any) => {
     )
   }, [allCOA])
 
-  
-  
-  
-  
   return (
     <div className="body">
       <div className="wraper">
@@ -299,33 +279,21 @@ export const AttendanceCorrection = (props: any) => {
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
             <Formik
-             innerRef={formRef}
-             enableReinitialize={true}
-             initialValues={initialValues}
-             validationSchema={null}
-             onSubmit={(values, actions) => {
-             
-           
-              values.coaBd = [
+              innerRef={formRef}
+              enableReinitialize={true}
+              initialValues={initialValues}
+              validationSchema={null}
+              onSubmit={(values, actions) => {
+              const valuesObj: any = { ...values }
+
+              valuesObj.coaBd = [
                 {
                   date: values.date,
                   time: values.time,
                   coaBdType: values.coaBdType,
                 },
-              ];
-              // setFieldValue("coaBd", values.coaBd);  
-              const payload = {
-                type: values.type,
-                reason: values.reason,
-                coaBd: values.coaBd,
-              };
-            
-
-              console.log(payload)
-
-
-              const valuesObj: any = {payload}
-
+              ]
+              
               RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 || status === 201) {
