@@ -20,6 +20,7 @@ import {
   ScheduleAdjustment,
   AttendanceCorrection,
   AttendanceSummary,
+  Report
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -56,6 +57,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/attendance/correction", component: AttendanceCorrection })
   routes.push({ path: "/summary", component: AttendanceSummary })
   routes.push({ path: "/change/password", component: ChangePassword })
+  routes.push({ path: "/report", component: Report })
 
   accessRights.forEach((d: any) => {
     routes.push({ path: "/notifications", component: Notifications })
