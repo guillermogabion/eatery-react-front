@@ -28,6 +28,7 @@ export const Undertime = (props: any) => {
     const [key, setKey] = React.useState('all');
     const [myut, setMyUT] = useState<any>([]);
     const [utId, setUtId] = useState<any>("");
+    const [filterData, setFilterData] = React.useState([]);
     const [initialValues, setInitialValues] = useState<any>({
         "shiftDate": moment().format("YYYY-MM-DD"),
         "utStart": "",
@@ -43,6 +44,12 @@ export const Undertime = (props: any) => {
     const handlePageClick = (event: any) => {
         getMyUT(event.selected, "")
     };
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+      }
 
     const getMyUT = (page: any = 0, status: any = "All") => {
         if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){

@@ -23,17 +23,29 @@ import { useDispatch, useSelector } from "react-redux"
 export const AttendanceCorrection = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
-  const [attendanceBreakdown, setAttendanceBreakdown] = useState<any>([]);
-  const [dayTypes, setDayTypes] = useState<any>([]);
-  const [leaveTypes, setLeaveTypes] = useState<any>([]);
+  const [coaBreakdown, setCoaBreakdown] = useState<any>([]);
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] =React.useState('all');
   const [allCOA, setAllCOA] = useState<any>([]);
   const [filterData, setFilterData] = React.useState([]);
+  const [coaId, setCoaId] = useState<any>("");
+  const [fields, setFields] = useState<any>([]);
 
+  const handleAddField = () => {
+    setCoaBreakdown([
+      ...coaBreakdown,
+      {
+        date: "",
+        time: "",
+        coaBdType: "",
+      },
+    ]);
+  };
 
   const formRef: any = useRef()
+
+  
   const tableHeaders = [
     'Date Filed',
     'Type',
@@ -81,7 +93,7 @@ export const AttendanceCorrection = (props: any) => {
     
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
       RequestAPI.getRequest(
-        `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
+        `${Api.getAllCOA}?size=100${queryString}&page=${page}`,
         "",
         {},
         {},
@@ -113,6 +125,114 @@ export const AttendanceCorrection = (props: any) => {
       )
     }
   }
+  const getCoa = (id: any = 0) => {
+   
+    RequestAPI.getRequest(
+      `${Api.getCoaInfo}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        console.log("Response:", res); 
+        const { status, body = {data: {}, error: {}}} : any = res
+        if (status === 200 && body && body.data) {
+          if (body.error && body.error.message) {
+          }else{
+            const valueObj: any = body.data
+            setInitialValues(valueObj)
+            setCoaBreakdown(valueObj.breakdown)
+            setCoaId(valueObj.id)
+            setModalShow(true)
+          }
+        }
+      }
+    )
+  }
+
+  const approveCoa = (id: any = 0) => {
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to approve this Attendance.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.approveCoa, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            } else {
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getAllCOARequest(0, "")
+            }
+          } else {
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
+  const declineCoa = (id: any = 0) => {
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to decline this Attendance.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.declineCoa, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            } else {
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getAllCOARequest(0, "")
+            }
+          } else {
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
+  const dateBreakdown = (date: any) => {
+    let coasBreakdown = []
+    coasBreakdown.push({
+      "date" : moment(date).add
+    })
+  }
 
   const makeFilterData = (event: any) => {
     const { name, value } = event.target
@@ -120,8 +240,12 @@ export const AttendanceCorrection = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   };
+  const options = [
+    { label: "Select Log Type", value: "" },
+    { label: "Time In", value: "TIME_IN" },
+    { label: "Time Out", value: "TIME_OUT" }
+  ];
 
-  
 
 
   const COATable = useCallback(() => {
@@ -155,7 +279,7 @@ export const AttendanceCorrection = (props: any) => {
                             <>
                                 <label
                                 onClick={() => {
-                                  // getLeave(item.id)
+                                  getCoa(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
                                 Update
@@ -168,7 +292,7 @@ export const AttendanceCorrection = (props: any) => {
                             <>
                               <label
                               onClick={() => {
-                                // approveLeave(item.id)
+                                approveCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
                               Approve
@@ -180,7 +304,7 @@ export const AttendanceCorrection = (props: any) => {
                             <>
                             <label
                               onClick={() => {
-                                // declineLeave(item.id)
+                                declineCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
                               Decline
@@ -188,6 +312,18 @@ export const AttendanceCorrection = (props: any) => {
                             <br />
                             </>
                           ) : null}
+                            {/* {authorizations.includes("Request:Reject") ? (
+                            <>
+                            <label
+                              onClick={() => {
+                                deleteCoa(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Decline
+                            </label>
+                            <br />
+                            </>
+                          ) : null} */}
                           </>
                           :
                           null
@@ -239,10 +375,10 @@ export const AttendanceCorrection = (props: any) => {
                   <Tab eventKey="pending" title="Pending">
                     {COATable()}
                   </Tab>
-                  <Tab eventKey="approved" title="Approved" >
+                  <Tab eventKey="APPROVED" title="Approved" >
                     {COATable()}
                   </Tab>
-                  <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
+                  <Tab eventKey="declined" title="Rejected/Cancelled">
                     {COATable()}
                   </Tab>
                 </Tabs>
@@ -269,7 +405,10 @@ export const AttendanceCorrection = (props: any) => {
           centered
           backdrop="static"
           keyboard={false}
-          onHide={() => setModalShow(false)}
+          onHide={() => {
+            setCoaId(null);
+            setModalShow(false)
+          }}
           dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
@@ -284,36 +423,86 @@ export const AttendanceCorrection = (props: any) => {
               initialValues={initialValues}
               validationSchema={null}
               onSubmit={(values, actions) => {
-              const valuesObj: any = { ...values }
-
-              valuesObj.coaBd = [
-                {
+              // const valuesObj: any = { ...values }
+              // valuesObj.breakdown = coaBreakdown
+              // valuesObj.breakdown = {
+              //   coaBd: coaBreakdown.map(values => ({
+              //     date: values.date,
+              //     time: values.time,
+              //     coaBdType: values.coaBdType
+              //   }))
+              // }
+              const valuesObj = {
+                // include other form values here
+                type: values.type,
+                reason: values.reason,
+                coaBd: coaBreakdown.map(values => ({
                   date: values.date,
                   time: values.time,
-                  coaBdType: values.coaBdType,
-                },
-              ]
+                  coaBdType: values.coaBdType
+                }))
+              };
               
-              RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 || status === 201) {
-                  if(body.error && body.error.message) {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "",
-                      'error'
-                    )
 
-                  } else {
-                    ErrorSwal.fire(
-                      'Success!',
-                      (body.data) || "",
-                      'success'
-                    )
+
+              if(coaId){
+                delete valuesObj.userId
+                  RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async(res : any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire(
+                          'Error!',
+                          (body.error && body.error.message) || "",
+                          'error'
+                        )
+                      } else {
+                        ErrorSwal.fire(
+                          'Success!',
+                          (body.data) || "",
+                          'success'
+                        )
+                        setCoaBreakdown([])
+                        getAllCOARequest(0, "")
+                        setModalShow(false)
+                        formRef.current?.resetForm()
+                      }
+                    } else {
+                      ErrorSwal.fire(
+                        'Error!',
+                        'Something Error.',
+                        'error'
+                      )
+                    }
+                  })
+
+
+              }else {
+                RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    console.log("Response body:", res);
+                    if(body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+  
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                    }
+                  
                   }
+                })
                 
-                }
-              })
+              }
+              
+              
             }}
             >
                  {({ values, setFieldValue, handleSubmit, errors, touched }) => {
@@ -331,12 +520,13 @@ export const AttendanceCorrection = (props: any) => {
                           id="type"
                           onChange={(e) => {
                             setFieldValue('type', e.target.value);
-                            setShowReason(e.target.value === 'others');
+                            setShowReason(e.target.value === 'Others');
                           }}
+                          value={values.type}
                         > 
                           <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
                           <option value="Power_Outage">Power Outage</option>
-                          <option value="others">Others</option>
+                          <option value="Others">Others</option>
                         </select>
 
                         {showReason && (
@@ -355,12 +545,13 @@ export const AttendanceCorrection = (props: any) => {
                         )}
                       </div>
 
-                      <div className="form-group col-md-6 mb-3">
+                      {/* <div className="form-group col-md-6 mb-3">
                         <div  >
                           <label>Date</label>
                             <input type="date"
                                 name="date"
                                 id="date"
+                                min={moment().format("YYYY-MM-DD")}
                                 className="form-control"
                                 onChange={(e) => {
                                   setFieldValue("date", e.target.value)
@@ -373,6 +564,8 @@ export const AttendanceCorrection = (props: any) => {
                                 name="time"
                                 id="time"
                                 step="1"
+                                value={values.time}
+
                                 className="form-control"
                                 onChange={(e) => {
                                   setFieldValue("time", e.target.value);
@@ -382,7 +575,7 @@ export const AttendanceCorrection = (props: any) => {
                         </div>
                           
                       </div>
-                      <div  >
+                      <div>
                          
                       </div>
                       <select
@@ -396,7 +589,70 @@ export const AttendanceCorrection = (props: any) => {
                         <option disabled selected>Select Log Type</option>
                         <option value="TIME_IN">Time In</option>
                         <option value="TIME_OUT">Time Out</option>
-                      </select>
+                      </select> */}
+
+                      {coaBreakdown.map((values, index) => (
+                        <div key={index}>
+                          <div className="form-group col-md-6 mb-3">
+                            <div>
+                              <label>Date</label>
+                              <input
+                                type="date"
+                                name="date"
+                                value={values.date}
+                                onChange={(e) => {
+                                  const updatedFields = [...coaBreakdown];
+                                  updatedFields[index].date = e.target.value;
+                                  setCoaBreakdown(updatedFields);
+                                }}
+                                className="form-control"
+                              />
+                            </div>
+                            <div>
+                              <label>Time</label>
+                              <input
+                                type="time"
+                                name="time"
+                                value={values.time}
+                                onChange={(e) => {
+                                  const updatedFields = [...coaBreakdown];
+                                  updatedFields[index].time = e.target.value;
+                                  setCoaBreakdown(updatedFields);
+                                }}
+                                className="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div className="form-group col-md-6 mb-3">
+                            <select
+                              name="coaBdType"
+                              value={values.coaBdType}
+                              onChange={(e) => {
+                                const updatedFields = [...coaBreakdown];
+                                updatedFields[index].coaBdType = e.target.value;
+                                setCoaBreakdown(updatedFields);
+                              }}
+                              className="form-select"
+                            >
+                              {options.map(option => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      ))}
+
+                      <div className="d-flex justify-content-end px-5">
+                        <button
+                          type="button"
+                          className="btn btn-secondary me-2"
+                          onClick={handleAddField}
+                        >
+                          Add Field
+                        </button>
+                      </div>
                       <Modal.Footer>
                       <div className="d-flex justify-content-end px-5">
                           <button
@@ -414,10 +670,13 @@ export const AttendanceCorrection = (props: any) => {
 
                  }
                  }
+
+                 
                 
              
 
             </Formik>
+           
           </Modal.Body>
          
         </Modal>

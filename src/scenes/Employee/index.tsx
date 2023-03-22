@@ -188,9 +188,26 @@ export const Employee = (props: any) => {
   }
   
 
-  const getAllEmployee = (pageNo: any) => {
+  const getAllEmployee = (pageNo: any, employeeId? : any) => {
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if(employeeId){
+      queryString = "&employeeId" + employeeId
+    }else{
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
+    
     RequestAPI.getRequest(
-      `${Api.allEmployee}?size=10&page=${pageNo}`,
+      `${Api.allEmployee}?size=10&page=${pageNo}${queryString}`,
       "",
       {},
       {},
@@ -206,6 +223,9 @@ export const Employee = (props: any) => {
       }
     )
   }
+
+
+  
 
 
 
@@ -1334,8 +1354,28 @@ export const Employee = (props: any) => {
 
                 <div className="fieldtext d-flex col-md-3">
                     <input
-                      name="empStatus"
+                      name="employeeId"
                       placeholder="Status"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    <input
+                      name="firstname"
+                      placeholder="First name"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    <input
+                      name="lastname"
+                      placeholder="Last name"
                       type="text"
                       autoComplete="off"
                       className="formControl"
@@ -1345,7 +1385,7 @@ export const Employee = (props: any) => {
                     />
                     <Button
                         style={{ width: 120}}
-                        onClick={() => getAllEmploye(0,"")}
+                        onClick={() => getAllEmployee(0,"")}
                         className="btn btn-primary mx-2">
                         Search
                       </Button>
