@@ -73,7 +73,9 @@ const Api: any = {
 
   // coa 
 
-  CreateCOA: process.env.REACT_APP_API_URL + "request/coa/create"
+  CreateCOA: process.env.REACT_APP_API_URL + "request/coa/create",
+  getAllCOA: process.env.REACT_APP_API_URL + "request/coa/all",
+  allMyCOA :  process.env.REACT_APP_API_URL + "request/coa/mycoa",
 }
 
 export default Api

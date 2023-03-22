@@ -16,16 +16,23 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { Formik } from "formik"
 import { async } from "validate.js"
+import { useDispatch, useSelector } from "react-redux"
 
 
 
 export const AttendanceCorrection = (props: any) => {
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
+  const { authorizations } = data?.profile
   const [attendanceBreakdown, setAttendanceBreakdown] = useState<any>([]);
   const [dayTypes, setDayTypes] = useState<any>([]);
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] =React.useState('all');
+  const [allCOA, setAllCOA] = useState<any>([]);
+  const [filterData, setFilterData] = React.useState([]);
+
+
   const formRef: any = useRef()
   const tableHeaders = [
     'Date Filed',
@@ -43,46 +50,13 @@ export const AttendanceCorrection = (props: any) => {
       {
         "date": "2023-03-21",
         "coaBdType": "TIME_IN",
-        "time": {
-          "hour": 0,
-          "minute": 0,
-          "second": 0,
-          "nano": 0
-        }
-       
+        "time": ""
       }
     ]
   }
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
   const [showReason, setShowReason] = useState(false);
   const [value, setValue] = useState('');
-
-
-
-
-  
-  const setDateOption = (index: any, value: any, dayType: any = null) => {
-
-    if (attendanceBreakdown) {
-      const valuesObj: any = { ...attendanceBreakdown }
-
-      if (valuesObj) {
-        valuesObj[index].credit = value
-        valuesObj[index].dayType = dayType
-      }
-
-      const valuesObjDayType: any = { ...dayTypes }
-      if (valuesObjDayType) {
-        if (value == .5) {
-          valuesObjDayType[index] = true
-        }
-        else {
-          valuesObjDayType[index] = false
-        }
-        setDayTypes(valuesObjDayType)
-      }
-    }
-  }
   const setFormField = (e, setFieldValue) => {
     const { name, value } = e.target;
     setFieldValue(name, value);
@@ -91,36 +65,160 @@ export const AttendanceCorrection = (props: any) => {
       setShowReason(value === "others"); // set showReason state based on whether "Others" is selected
     }
   };
- 
-
-  // const dateBreakdown = (date: any) => {
-  //   const momentDate = moment(date);
-  //   let dayTypesArray = []
-  //   let attendancesBreakdown = []
-  
-  //   if (momentDate.isValid()) {
-  //     let dateCounter = 0;
-  //     let new_date = momentDate;
-  
-  //     while (new_date.month() === momentDate.month()) {
-  //       if (new_date.day() !== 0 && new_date.day() !== 6) {
-  //         attendancesBreakdown.push({
-  //           "date": new_date.format('YYYY-MM-DD'),
-  //           "credit": 1,
-  //           "dayType": 'WHOLEDAY'
-  //         });
-  //         dayTypesArray.push(false);
-  //       }
-  //       dateCounter += 1;
-  //       new_date = momentDate.clone().add(dateCounter, 'days');
-  //     }
-  //   }
-  
-  //   return { dayTypesArray, attendancesBreakdown };
-  // };
   function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
   }
+
+  useEffect(() => {
+    getAllCOARequest(0, "")
+  }, [])
+
+  const getAllCOARequest = (page: any = 0, status: any = "All") => {
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if(status != ""){
+      queryString = "&status="+ status
+    }else{
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
+    
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+      RequestAPI.getRequest(
+        `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setAllCOA(body.data)
+            }
+          }
+        }
+      )
+    }else{
+      RequestAPI.getRequest(
+        `${Api.allMyCOA}?size=10${queryString}&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setAllCOA(body.data)
+            }
+          }
+        }
+      )
+    }
+  }
+
+  const makeFilterData = (event: any) => {
+    const { name, value } = event.target
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && value !== "Select" ? value : ""
+    setFilterData(filterObj)
+  };
+
+  
+
+
+  const COATable = useCallback(() => {
+    return (
+      <div>
+        <Table responsive="lg">
+          <thead>
+            <tr>
+              <th style={{ width: 'auto' }}>Type</th>
+              <th style={{ width: 'auto' }}>Date From</th>
+              <th style={{ width: 'auto' }}>Date To</th>
+              <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Status</th>
+              <th style={{ width: 'auto' }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              allCOA &&
+              allCOA.content &&
+              allCOA.content.length &&
+              allCOA.content.map((item: any, index: any) => {
+                return (
+                  <tr>
+                    <td>{`${item.data.firstName} ${item.data.lastName}`}</td>
+                    <td> {item.type} </td>
+                    <td> {item.date} </td>
+                    <td> {item.reason} </td>
+                    <td> {item.status} </td>
+                    <td>
+                      {
+                        item.status != "APPROVED" && item.status != "DECLINED" ?
+                          <>
+                          {authorizations.includes("Request:Update") ? (
+                            <>
+                                <label
+                                onClick={() => {
+                                  // getLeave(item.id)
+                                }}
+                                className="text-muted cursor-pointer">
+                                Update
+                              </label>
+                              <br />
+                            </>
+                          ) : null}
+
+                          {authorizations.includes("Request:Approve") ? (
+                            <>
+                              <label
+                              onClick={() => {
+                                // approveLeave(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Approve
+                            </label> <br />
+                            </>
+                          ) : null}
+
+                            {authorizations.includes("Request:Reject") ? (
+                            <>
+                            <label
+                              onClick={() => {
+                                // declineLeave(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Decline
+                            </label>
+                            <br />
+                            </>
+                          ) : null}
+                          </>
+                          :
+                          null
+                      }
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </Table>
+      </div>
+    )
+  }, [allCOA])
+
   
   
   
@@ -150,32 +248,24 @@ export const AttendanceCorrection = (props: any) => {
                   id="controlled-tab-example"
                   activeKey={key}
                   onSelect={(k: any) => {
+                    getAllCOARequest(0, k)
                     setKey(k)
                   }}
                   className="mb-3"
                 >
                   <Tab eventKey="all" title="All">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
+                    {COATable()}
                   </Tab>
                   <Tab eventKey="pending" title="Pending">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
+                    {COATable()}
                   </Tab>
                   <Tab eventKey="approved" title="Approved" >
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
+                    {COATable()}
                   </Tab>
                   <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
+                    {COATable()}
                   </Tab>
                 </Tabs>
-                  
                 </div>
               </div>
               <div className="d-flex justify-content-end mt-3" >
@@ -215,22 +305,26 @@ export const AttendanceCorrection = (props: any) => {
              validationSchema={null}
              onSubmit={(values, actions) => {
              
-              const timeArr = values.time.split(":").map(Number);
-              const timeObj = {
-                hour: timeArr[0],
-                minute: timeArr[1],
-                second: timeArr[2] || 0,
-                nano: 0,
-              };
+           
               values.coaBd = [
                 {
                   date: values.date,
-                  time: timeObj,
+                  time: values.time,
                   coaBdType: values.coaBdType,
                 },
               ];
-              // setFieldValue("coaBd", values.coaBd);
-              const valuesObj: any = {values}
+              // setFieldValue("coaBd", values.coaBd);  
+              const payload = {
+                type: values.type,
+                reason: values.reason,
+                coaBd: values.coaBd,
+              };
+            
+
+              console.log(payload)
+
+
+              const valuesObj: any = {payload}
 
               RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
@@ -274,7 +368,7 @@ export const AttendanceCorrection = (props: any) => {
                         > 
                           <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
                           <option value="Power_Outage">Power Outage</option>
-                          <option value="Others">Others</option>
+                          <option value="others">Others</option>
                         </select>
 
                         {showReason && (
@@ -331,7 +425,7 @@ export const AttendanceCorrection = (props: any) => {
                           setFieldValue('coaBdType', e.target.value);
                         }}
                       >
-                        <option value="">Select Log Type</option>
+                        <option disabled selected>Select Log Type</option>
                         <option value="TIME_IN">Time In</option>
                         <option value="TIME_OUT">Time Out</option>
                       </select>
