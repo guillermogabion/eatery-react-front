@@ -17,5 +17,6 @@ export * from "./Undertime"
 export * from "./AttendanceCorrection"
 export * from "./AttendanceSummary"
 export * from "./ScheduleAdjustment"
+export * from "./Report"
 
 

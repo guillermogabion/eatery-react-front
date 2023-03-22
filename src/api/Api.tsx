@@ -40,6 +40,7 @@ const Api: any = {
   declineUT: process.env.REACT_APP_API_URL + "request/ut/decline",
   utInformation: process.env.REACT_APP_API_URL + "request/ut/info",
   updateUT: process.env.REACT_APP_API_URL + "request/ut/update",
+  downloadTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadExcel",
   
   
   // /request/ot/classifications
