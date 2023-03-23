@@ -65,7 +65,7 @@ export const Employee = (props: any) => {
     "sssNumber": "",
     "philHealthId": "",
     "hdmfNumber": "",
-    "squadid": 1,
+    "squadId": 1,
     "otComputationTable": "",
     "minimumWageEarner": true,
     "totalWorkHrsPerDay": 0,
@@ -232,7 +232,6 @@ export const Employee = (props: any) => {
         })
       }
       onSubmit={(values, actions) => {
-        alert("submit")
         const valuesObj: any = { ...values }
         setInitialValues(valuesObj)
         setTabIndex(2)
@@ -564,7 +563,7 @@ export const Employee = (props: any) => {
           sssNumber: Yup.string().required("Required"),
           philHealthId: Yup.string().required("Required"),
           hdmfNumber: Yup.string().required("Required"),
-          squadid: Yup.string().required("Required"),
+          squadId: Yup.string().required("Required"),
           otComputationTable: Yup.string().required("Required"),
           minimumWageEarner: Yup.string().required("Required"),
           totalWorkHrsPerDay: Yup.string().required("Required"),
@@ -928,9 +927,9 @@ export const Employee = (props: any) => {
                 <label>Squad</label>
                 <select
                   className="form-select"
-                  name="squadid"
-                  id="squadid"
-                  value={values.squadid}
+                  name="squadId"
+                  id="squadId"
+                  value={values.squadId}
                   onChange={(e) => setFormField(e, setFieldValue)}>
                   {squadList &&
                     squadList.length &&
@@ -944,8 +943,8 @@ export const Employee = (props: any) => {
                     })
                   }
                 </select>
-                {errors && errors.squadid && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.squadid}</p>
+                {errors && errors.squadId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.squadId}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
