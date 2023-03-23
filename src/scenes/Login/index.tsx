@@ -139,44 +139,6 @@ export const Login = () => {
     }
   }, [username, password])
 
-  const changePassword = React.useCallback(() => {
-    if (newPassword != confirmPassword) {
-      setErrorMessage("Password not match.");
-    }
-    else {
-      if (oldPassword && newPassword && confirmPassword) {
-        let payload = {
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-          conPassword: confirmPassword,
-        }
-        RequestAPI.putRequest(Api.changePassword, tempToken, payload, {}, async (res: any) => {
-          const { status, body } = res
-          if (status === 200) {
-            if (body.error && body.error.message) {
-              setErrorMessage(body.error.message);
-            } else {
-              ErrorSwal.fire(
-                'Success',
-                (body.data || ""),
-                'success'
-              ).then((result) => {
-                if (result.isConfirmed) {
-                  // location.reload()
-                  setIsNewAccount(false)
-                }
-              })
-            }
-          } else {
-            if (body.error && body.error.message) {
-              setErrorMessage(body.error.message);
-            }
-          }
-        });
-      }
-    }
-  }, [oldPassword, newPassword, confirmPassword])
-
   // onCopy
   const copyHandler = (event: React.ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault()
