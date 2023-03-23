@@ -538,7 +538,6 @@ export const Overtime = (props: any) => {
                         <input type="time"
                           name="otStart"
                           id="otStart"
-                          step="1"
                           className="form-control"
                           value={values.otStart}
                           onChange={(e) => {
@@ -554,7 +553,6 @@ export const Overtime = (props: any) => {
                         <input type="time"
                           name="otEnd"
                           id="otEnd"
-                          step="1"
                           className="form-control"
                           value={values.otEnd}
                           onChange={(e) => {

@@ -485,7 +485,6 @@ export const Undertime = (props: any) => {
                                                 <input type="time"
                                                     name="utStart"
                                                     id="utStart"
-                                                    step="1"
                                                     className="form-control"
                                                     value={values.utStart}
                                                     onChange={(e) => {
@@ -501,7 +500,6 @@ export const Undertime = (props: any) => {
                                                 <input type="time"
                                                     name="utEnd"
                                                     id="utEnd"
-                                                    step="1"
                                                     className="form-control"
                                                     value={values.utEnd}
                                                     onChange={(e) => {
