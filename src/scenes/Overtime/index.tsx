@@ -22,6 +22,12 @@ import ReactPaginate from 'react-paginate';
 
 export const Overtime = (props: any) => {
   const { history } = props
+  let initialPayload = {
+    "shiftDate": moment().format("YYYY-MM-DD"),
+    "classification": "NORMAL_OT",
+    "otStart": "",
+    "otEnd": ""
+  }
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
@@ -30,13 +36,11 @@ export const Overtime = (props: any) => {
   const [myot, setMyOT] = useState<any>([]);
   const [otId, setOtId] = useState<any>("");
   const [otClassification, setOtClassification] = useState<any>([]);
-  const [initialValues, setInitialValues] = useState<any>({
-    "shiftDate": moment().format("YYYY-MM-DD"),
-    "classification": "NORMAL_OT",
-    "otStart": "",
-    "otEnd": ""
-  })
+  const [onSubmit, setOnSubmit] = useState<any>(false);
+  const [initialValues, setInitialValues] = useState<any>(initialPayload)
+  
   const formRef: any = useRef()
+  
 
   const tableHeaders = [
     'Type',
@@ -386,6 +390,8 @@ export const Overtime = (props: any) => {
                     <Button
                       className="mx-2"
                       onClick={() => {
+                        setOtId("")
+                        setInitialValues(initialPayload)
                         setModalShow(true)
                       }}>Request Overtime</Button>
                   </div>
@@ -426,6 +432,7 @@ export const Overtime = (props: any) => {
                 })
               }
               onSubmit={(values, actions) => {
+                setOnSubmit(true)
                 const valuesObj: any = { ...values }
                 if (otId) {
                   valuesObj.id = otId
@@ -485,7 +492,7 @@ export const Overtime = (props: any) => {
                     }
                   })
                 }
-
+                setOnSubmit(false)
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (
@@ -575,6 +582,7 @@ export const Overtime = (props: any) => {
                       <div className="d-flex justify-content-end px-5">
                         <button
                           type="submit"
+                          disabled={onSubmit}
                           className="btn btn-primary">
                           Save
                         </button>

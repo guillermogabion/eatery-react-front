@@ -28,12 +28,14 @@ export const Undertime = (props: any) => {
     const [key, setKey] = React.useState('all');
     const [myut, setMyUT] = useState<any>([]);
     const [utId, setUtId] = useState<any>("");
-    const [initialValues, setInitialValues] = useState<any>({
+    const [onSubmit, setOnSubmit] = useState<any>(false);
+    let initialPayload = {
         "shiftDate": moment().format("YYYY-MM-DD"),
         "utStart": "",
         "utEnd": "",
         "reason": ""
-    })
+    }
+    const [initialValues, setInitialValues] = useState<any>(initialPayload)
     const formRef: any = useRef()
 
     useEffect(() => {
@@ -354,6 +356,8 @@ export const Undertime = (props: any) => {
                                     <Button
                                         className="mx-2"
                                         onClick={() => {
+                                            setUtId("")
+                                            setInitialValues(initialPayload)
                                             setModalShow(true)
                                         }}>Request Undertime</Button>
                                 </div>
@@ -395,7 +399,7 @@ export const Undertime = (props: any) => {
                             }
                             onSubmit={(values, actions) => {
                                 const valuesObj: any = { ...values }
-
+                                setOnSubmit(true)
                                 if (utId) {
                                     valuesObj.id = utId
                                     RequestAPI.putRequest(Api.updateUT, "", valuesObj, {}, async (res: any) => {
@@ -454,7 +458,7 @@ export const Undertime = (props: any) => {
                                         }
                                     })
                                 }
-
+                                setOnSubmit(false)
                             }}>
                             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                                 return (
@@ -528,6 +532,7 @@ export const Undertime = (props: any) => {
                                             <div className="d-flex justify-content-end px-5">
                                                 <button
                                                     type="submit"
+                                                    disabled={onSubmit}
                                                     className="btn btn-primary">
                                                     Save
                                                 </button>
