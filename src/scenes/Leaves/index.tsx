@@ -444,11 +444,19 @@ export const Leaves = (props: any) => {
                   </div>
                 </div>
                 <div className="w-100 pt-4">
-                  <div className="fieldtext d-flex col-md-3 d-none">
+                  <div className="fieldtext d-flex col-md-3">
                     <input
-                      name="status"
-                      placeholder="Status"
-                      type="text"
+                      name="dateFrom"
+                      type="date"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    <input
+                      name="dateTo"
+                      type="date"
                       autoComplete="off"
                       className="formControl"
                       maxLength={40}

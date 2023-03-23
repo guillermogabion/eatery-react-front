@@ -5829,5 +5829,9 @@ td.pendingLabel .active {
   font-size: 10px;
   color: red;
 }
+.input-container {
+  margin-right: 10px;
+  margin-left: 10px;
+}
 
 

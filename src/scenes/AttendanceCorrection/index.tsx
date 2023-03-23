@@ -17,8 +17,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import { Formik } from "formik"
 import { async } from "validate.js"
 import { useDispatch, useSelector } from "react-redux"
-
-
+import ReactPaginate from 'react-paginate';
+import * as Yup from "yup";
 
 export const AttendanceCorrection = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
@@ -31,6 +31,7 @@ export const AttendanceCorrection = (props: any) => {
   const [filterData, setFilterData] = React.useState([]);
   const [coaId, setCoaId] = useState<any>("");
   const [fields, setFields] = useState<any>([]);
+  const formRef: any = useRef()
 
   const handleAddField = () => {
     setCoaBreakdown([
@@ -42,8 +43,15 @@ export const AttendanceCorrection = (props: any) => {
       },
     ]);
   };
-
-  const formRef: any = useRef()
+  const handleRemoveItem = (index) => {
+    const updatedFields = [...coaBreakdown];
+    updatedFields.splice(index, 1);
+    setCoaBreakdown(updatedFields);
+  }
+  const handleRemoveAllItems = () => {
+    setCoaBreakdown([]);
+    
+  };
 
   
   const tableHeaders = [
@@ -93,7 +101,7 @@ export const AttendanceCorrection = (props: any) => {
     
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
       RequestAPI.getRequest(
-        `${Api.getAllCOA}?size=100${queryString}&page=${page}`,
+        `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
         "",
         {},
         {},
@@ -245,6 +253,9 @@ export const AttendanceCorrection = (props: any) => {
     { label: "Time In", value: "TIME_IN" },
     { label: "Time Out", value: "TIME_OUT" }
   ];
+  const handlePageClick = (event: any) => {
+    getAllCOARequest(event.selected, "")
+  };
 
 
 
@@ -312,18 +323,6 @@ export const AttendanceCorrection = (props: any) => {
                             <br />
                             </>
                           ) : null}
-                            {/* {authorizations.includes("Request:Reject") ? (
-                            <>
-                            <label
-                              onClick={() => {
-                                deleteCoa(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              Decline
-                            </label>
-                            <br />
-                            </>
-                          ) : null} */}
                           </>
                           :
                           null
@@ -384,12 +383,31 @@ export const AttendanceCorrection = (props: any) => {
                 </Tabs>
                 </div>
               </div>
+              <div className="d-flex justify-content-end">
+                <div className="">
+                  <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(allCOA && allCOA.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeClassName="active-page-link"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
+            </div>
               <div className="d-flex justify-content-end mt-3" >
                 <div>
                   <Button
                     className="mx-2"
                     onClick={() => {
-                      setModalShow(true)
+                      setModalShow(true),
+                      handleRemoveAllItems()
                     }}>Request for COA</Button>
                 </div>
               </div>
@@ -423,29 +441,10 @@ export const AttendanceCorrection = (props: any) => {
               initialValues={initialValues}
               validationSchema={null}
               onSubmit={(values, actions) => {
-              // const valuesObj: any = { ...values }
-              // valuesObj.breakdown = coaBreakdown
-              // valuesObj.breakdown = {
-              //   coaBd: coaBreakdown.map(values => ({
-              //     date: values.date,
-              //     time: values.time,
-              //     coaBdType: values.coaBdType
-              //   }))
-              // }
-              const valuesObj = {
-                // include other form values here
-                type: values.type,
-                reason: values.reason,
-                coaBd: coaBreakdown.map(values => ({
-                  date: values.date,
-                  time: values.time,
-                  coaBdType: values.coaBdType
-                }))
-              };
-              
-
-
+              const valuesObj: any = { ...values }
+              valuesObj.coaBd = coaBreakdown
               if(coaId){
+                console.log(valuesObj)
                 delete valuesObj.userId
                   RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async(res : any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
@@ -488,7 +487,10 @@ export const AttendanceCorrection = (props: any) => {
                         (body.error && body.error.message) || "",
                         'error'
                       )
-  
+                      setCoaBreakdown([])
+                      getAllCOARequest(0, "")
+                      setModalShow(false)
+                      formRef.current?.resetForm()
                     } else {
                       ErrorSwal.fire(
                         'Success!',
@@ -545,56 +547,10 @@ export const AttendanceCorrection = (props: any) => {
                         )}
                       </div>
 
-                      {/* <div className="form-group col-md-6 mb-3">
-                        <div  >
-                          <label>Date</label>
-                            <input type="date"
-                                name="date"
-                                id="date"
-                                min={moment().format("YYYY-MM-DD")}
-                                className="form-control"
-                                onChange={(e) => {
-                                  setFieldValue("date", e.target.value)
-                                }}
-                            />
-                        </div>
-                        <div>
-                          <label>Time</label>
-                            <input type="time"
-                                name="time"
-                                id="time"
-                                step="1"
-                                value={values.time}
-
-                                className="form-control"
-                                onChange={(e) => {
-                                  setFieldValue("time", e.target.value);
-                                }}
-                               
-                            />
-                        </div>
-                          
-                      </div>
-                      <div>
-                         
-                      </div>
-                      <select
-                        className="form-select"
-                        name="coaBdType"
-                        id="coaBdType"
-                        onChange={(e) => {
-                          setFieldValue('coaBdType', e.target.value);
-                        }}
-                      >
-                        <option disabled selected>Select Log Type</option>
-                        <option value="TIME_IN">Time In</option>
-                        <option value="TIME_OUT">Time Out</option>
-                      </select> */}
-
                       {coaBreakdown.map((values, index) => (
                         <div key={index}>
-                          <div className="form-group col-md-6 mb-3">
-                            <div>
+                         <div className="form-group row">
+                            <div className="col-md-6 mb-3">
                               <label>Date</label>
                               <input
                                 type="date"
@@ -608,7 +564,7 @@ export const AttendanceCorrection = (props: any) => {
                                 className="form-control"
                               />
                             </div>
-                            <div>
+                            <div className="col-md-6 mb-3">
                               <label>Time</label>
                               <input
                                 type="time"
@@ -622,8 +578,8 @@ export const AttendanceCorrection = (props: any) => {
                                 className="form-control"
                               />
                             </div>
-                          </div>
-                          <div className="form-group col-md-6 mb-3">
+                          </div> 
+                          <div className="form-group col-md-12 mb-3">
                             <select
                               name="coaBdType"
                               value={values.coaBdType}
@@ -641,6 +597,7 @@ export const AttendanceCorrection = (props: any) => {
                               ))}
                             </select>
                           </div>
+                          <button onClick={() => handleRemoveItem(index)}>Remove</button>
                         </div>
                       ))}
 

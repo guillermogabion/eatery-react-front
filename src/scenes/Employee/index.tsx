@@ -1352,10 +1352,11 @@ export const Employee = (props: any) => {
                 <h3>Employee Management</h3>
                 <div className="w-100">
 
-                <div className="fieldtext d-flex col-md-3">
+                <div className="fieldtext d-flex col-md-6">
+                <div className="input-container">
                     <input
                       name="employeeId"
-                      placeholder="Status"
+                      placeholder="Employee ID"
                       type="text"
                       autoComplete="off"
                       className="formControl"
@@ -1363,6 +1364,9 @@ export const Employee = (props: any) => {
                       onChange={(e) => makeFilterData(e)}
                       onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                     />
+                    </div>
+                    <div className="input-container">
+
                     <input
                       name="firstname"
                       placeholder="First name"
@@ -1373,6 +1377,9 @@ export const Employee = (props: any) => {
                       onChange={(e) => makeFilterData(e)}
                       onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                     />
+                     </div>
+                    <div className="input-container">
+
                     <input
                       name="lastname"
                       placeholder="Last name"
@@ -1383,8 +1390,9 @@ export const Employee = (props: any) => {
                       onChange={(e) => makeFilterData(e)}
                       onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                     />
+                    </div>
                     <Button
-                        style={{ width: 120}}
+                        style={{ width: 210}}
                         onClick={() => getAllEmployee(0,"")}
                         className="btn btn-primary mx-2">
                         Search
