@@ -172,8 +172,8 @@ export const Undertime = (props: any) => {
                     if (body.error && body.error.message) {
                     } else {
                         const valueObj: any = body.data
-                        valueObj.utStart = moment(valueObj.utStart).format("hh:mm:ss")
-                        valueObj.utEnd = moment(valueObj.utEnd).format("hh:mm:ss")
+                        valueObj.utStart = moment(valueObj.utStart).format("HH:mm")
+                        valueObj.utEnd = moment(valueObj.utEnd).format("HH:mm")
                         setInitialValues(valueObj)
                         // the value of valueObj.id is null - API issue for temp fixing I set ID directly
                         setUtId(id)
@@ -207,8 +207,8 @@ export const Undertime = (props: any) => {
                                 return (
                                     <tr>
                                         <td> {item.shiftDate} </td>
-                                        <td> {item.utStart} </td>
-                                        <td> {item.utEnd} </td>
+                                        <td> {moment(item.utStart).format("MMM DD, YYYY hh:mm A")}</td>
+                                        <td> {moment(item.utEnd).format("MMM DD, YYYY hh:mm A")} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.status} </td>
                                         <td>
@@ -398,8 +398,6 @@ export const Undertime = (props: any) => {
 
                                 if (utId) {
                                     valuesObj.id = utId
-                                    valuesObj.utStart = valuesObj.shiftDate + "T" + valuesObj.utStart
-                                    valuesObj.utEnd = valuesObj.shiftDate + "T" + valuesObj.utEnd
                                     RequestAPI.putRequest(Api.updateUT, "", valuesObj, {}, async (res: any) => {
                                         const { status, body = { data: {}, error: {} } }: any = res
                                         if (status === 200 || status === 201) {
@@ -422,14 +420,12 @@ export const Undertime = (props: any) => {
                                         } else {
                                             ErrorSwal.fire(
                                                 'Error!',
-                                                'Something Error.',
+                                                (body.error && body.error.message) || "Something error!",
                                                 'error'
                                             )
                                         }
                                     })
                                 } else {
-                                    valuesObj.utStart = valuesObj.shiftDate + "T" + valuesObj.utStart
-                                    valuesObj.utEnd = valuesObj.shiftDate + "T" + valuesObj.utEnd
                                     RequestAPI.postRequest(Api.UTCreate, "", valuesObj, {}, async (res: any) => {
                                         const { status, body = { data: {}, error: {} } }: any = res
                                         if (status === 200 || status === 201) {
@@ -452,7 +448,7 @@ export const Undertime = (props: any) => {
                                         } else {
                                             ErrorSwal.fire(
                                                 'Error!',
-                                                'Something Error.',
+                                                (body.error && body.error.message) || "Something error!",
                                                 'error'
                                             )
                                         }

@@ -201,8 +201,8 @@ export const Overtime = (props: any) => {
           if (body.error && body.error.message) {
           } else {
             const valueObj: any = body.data
-            valueObj.otStart = moment(valueObj.otStart).format("hh:mm:ss")
-            valueObj.otEnd = moment(valueObj.otEnd).format("hh:mm:ss")
+            valueObj.otStart = moment(valueObj.otStart).format("HH:mm")
+            valueObj.otEnd = moment(valueObj.otEnd).format("HH:mm")
             setInitialValues(valueObj)
             // the value of valueObj.id is null - API issue for temp fixing I set ID directly
             setOtId(id)
@@ -238,8 +238,8 @@ export const Overtime = (props: any) => {
                   <tr>
                     <td> {item.shiftDate} </td>
                     <td> {item.classification} </td>
-                    <td> {item.otStart} </td>
-                    <td> {item.otEnd} </td>
+                    <td> {moment(item.otStart).format("MMM DD, YYYY hh:mm A")} </td>
+                    <td> {moment(item.otEnd).format("MMM DD, YYYY hh:mm A")} </td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td>
@@ -429,9 +429,6 @@ export const Overtime = (props: any) => {
                 const valuesObj: any = { ...values }
                 if (otId) {
                   valuesObj.id = otId
-                  valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
-                  valuesObj.otEnd = valuesObj.shiftDate + "T" + valuesObj.otEnd
-
                   RequestAPI.putRequest(Api.updateOT, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -454,15 +451,12 @@ export const Overtime = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        (body.error && body.error.message) || "Something error!",
                         'error'
                       )
                     }
                   })
                 } else {
-                  valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
-                  valuesObj.otEnd = valuesObj.shiftDate + "T" + valuesObj.otEnd
-
                   RequestAPI.postRequest(Api.OTCreate, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -485,7 +479,7 @@ export const Overtime = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        (body.error && body.error.message) || "Something error!",
                         'error'
                       )
                     }
