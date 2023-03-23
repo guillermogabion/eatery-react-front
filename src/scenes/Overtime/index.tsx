@@ -236,7 +236,7 @@ export const Overtime = (props: any) => {
             {
               myot &&
               myot.content &&
-              myot.content.length &&
+              myot.content.length > 0 &&
               myot.content.map((item: any, index: any) => {
                 return (
                   <tr>
@@ -297,6 +297,16 @@ export const Overtime = (props: any) => {
             }
           </tbody>
         </Table>
+        {
+              myot &&
+              myot.content &&
+              myot.content.length == 0 ?
+              <div className="w-100 text-center">
+                <label htmlFor="">No Records Found</label>
+              </div>
+              : 
+              null
+        }
       </div>
     )
   }, [myot])

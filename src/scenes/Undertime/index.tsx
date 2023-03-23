@@ -204,7 +204,7 @@ export const Undertime = (props: any) => {
                         {
                             myut &&
                             myut.content &&
-                            myut.content.length &&
+                            myut.content.length > 0 &&
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
@@ -263,6 +263,16 @@ export const Undertime = (props: any) => {
                         }
                     </tbody>
                 </Table>
+                {
+                        myut &&
+                        myut.content &&
+                        myut.content.length == 0 ?
+                        <div className="w-100 text-center">
+                          <label htmlFor="">No Records Found</label>
+                        </div>
+                        : 
+                        null
+                  }
             </div>
         )
     }, [myut])

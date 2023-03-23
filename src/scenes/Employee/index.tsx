@@ -1485,7 +1485,7 @@ export const Employee = (props: any) => {
                       {
                         employeeList &&
                         employeeList.content &&
-                        employeeList.content.length &&
+                        employeeList.content.length > 0 &&
                         employeeList.content.map((item: any, index: any) => {
                           
                           return (
@@ -1521,6 +1521,16 @@ export const Employee = (props: any) => {
                       }
                     </tbody>
                   </Table>
+                  {
+                        employeeList &&
+                        employeeList.content &&
+                        employeeList.content.length == 0 ?
+                        <div className="w-100 text-center">
+                          <label htmlFor="">No Records Found</label>
+                        </div>
+                        : 
+                        null
+                  }
                 </div>
               </div>
               <div className="d-flex justify-content-end">
