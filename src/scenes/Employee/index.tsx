@@ -240,7 +240,6 @@ export const Employee = (props: any) => {
     'Employee ID',
     'Employee Type',
     'Employee Status',
-    'Employee ID',
     'Full Name',
     'Hired Date',
     'Account Status',
@@ -1635,7 +1634,6 @@ export const Employee = (props: any) => {
                               <td> {item.employeeId} </td>
                               <td> {item.empType} </td>
                               <td> {item.empStatus} </td>
-                              <td> {item.employeeId} </td>
                               <td> {item.fullname} </td>
                               <td> {item.hireDate} </td>
                               <td> {item.acctStatus} </td>

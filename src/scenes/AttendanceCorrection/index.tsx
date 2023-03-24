@@ -21,6 +21,7 @@ import ReactPaginate from 'react-paginate';
 import * as Yup from "yup";
 
 export const AttendanceCorrection = (props: any) => {
+  const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
@@ -34,16 +35,25 @@ export const AttendanceCorrection = (props: any) => {
   const [fields, setFields] = useState<any>([]);
   const formRef: any = useRef()
 
+  // const handleAddField = () => {
+  //   setCoaBreakdown([
+  //     ...coaBreakdown,
+  //     {
+  //       date: "",
+  //       time: "",
+  //       coaBdType: "",
+  //     },
+  //   ]);
+  // };
+
   const handleAddField = () => {
-    setCoaBreakdown([
-      ...coaBreakdown,
-      {
-        date: "",
-        time: "",
-        coaBdType: "",
-      },
-    ]);
+    if (coaBreakdownCount < 2) {
+      setCoaBreakdown([...coaBreakdown, { date: "", coaBdType: "", time: "" }]);
+      setCoaBreakdownCount(coaBreakdownCount + 1);
+    }
   };
+
+  
   const handleRemoveItem = (index) => {
     const updatedFields = [...coaBreakdown];
     updatedFields.splice(index, 1);
@@ -615,6 +625,7 @@ export const AttendanceCorrection = (props: any) => {
                           type="button"
                           className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
                           onClick={handleAddField}
+                          
                         >
                           Add Field
                         </button>
