@@ -67,7 +67,7 @@ export const Employee = (props: any) => {
     "sssNumber": "",
     "philHealthId": "",
     "hdmfNumber": "",
-    "squadid": 1,
+    "squadId": 1,
     "otComputationTable": "",
     "minimumWageEarner": true,
     "totalWorkHrsPerDay": 0,
@@ -311,7 +311,19 @@ export const Employee = (props: any) => {
     <Formik
       initialValues={initialValues}
       enableReinitialize={true}
-      validationSchema={validationSchema}
+      validationSchema={
+        Yup.object().shape({
+          firstName: Yup.string().required("Required"),
+          lastName: Yup.string().required("Required"),
+          gender: Yup.string().required("Required"),
+          civilStatus: Yup.string().required("Required"),
+          birthDay: Yup.string().required("Required"),
+          contactNumber: Yup.string().required("Required"),
+          emailAddress: Yup.string().required("Required"),
+          prclicenseNo: Yup.string().required("Required"),
+          passportNo: Yup.string().required("Required"),
+        })
+      }
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         setInitialValues(valuesObj)
@@ -336,7 +348,9 @@ export const Employee = (props: any) => {
                   value={values.firstName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                 {errors.firstName && <div className="error-text">{String(errors.firstName)}</div>}
+                {errors && errors.firstName && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.firstName}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Last name</label>
@@ -347,7 +361,9 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.lastName && errors.lastName ? 'is-invalid' : ''}`}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                 {errors.lastName && <div className="error-text">{String(errors.lastName)}</div>}
+                {errors && errors.lastName && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.lastName}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Middle name</label>
@@ -379,8 +395,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
-                {errors.gender && <div className="error-text">{String(errors.gender)}</div>}
-
+                {errors && errors.gender && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.gender}</p>
+                )}
               </div>
               <div className="form-group col-md-3 mb-3" >
                 <label>Civil Status</label>
@@ -399,6 +416,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.civilStatus && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.civilStatus}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Date of Birth</label>
@@ -409,8 +429,9 @@ export const Employee = (props: any) => {
                   value={values.birthDay}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.birthDay && <div className="error-text">{String(errors.birthDay)}</div>}
-
+                {errors && errors.birthDay && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.birthDay}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Contact Number</label>
@@ -421,8 +442,9 @@ export const Employee = (props: any) => {
                   value={values.contactNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.contactNumber && <div className="error-text">{String(errors.contactNumber)}</div>}
-
+                {errors && errors.contactNumber && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.contactNumber}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Email Address</label>
@@ -433,8 +455,9 @@ export const Employee = (props: any) => {
                   value={values.emailAddress}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.emailAddress && <div className="error-text">{String(errors.emailAddress)}</div>}
-
+                {errors && errors.emailAddress && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emailAddress}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>PRC License No</label>
@@ -445,8 +468,9 @@ export const Employee = (props: any) => {
                   value={values.prclicenseNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.prclicenseNo && <div className="error-text">{String(errors.prclicenseNo)}</div>}
-
+                {errors && errors.prclicenseNo && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.prclicenseNo}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Passport No</label>
@@ -457,8 +481,9 @@ export const Employee = (props: any) => {
                   value={values.passportNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.passportNo && <div className="error-text">{String(errors.passportNo)}</div>}
-
+                {errors && errors.passportNo && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.passportNo}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>User Role</label>
@@ -472,16 +497,19 @@ export const Employee = (props: any) => {
                   <option key={2} value={2}>Employee</option>
                   <option key={3} value={3}>Approver</option>
                 </select>
+                {errors && errors.roleId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.roleId}</p>
+                )}
               </div>
             </div>
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
-                <button
+                <Button
                   type="submit"
                   className="btn btn-primary">
                   Next
-                </button>
+                </Button>
               </div>
             </Modal.Footer>
 
@@ -495,7 +523,12 @@ export const Employee = (props: any) => {
     <Formik
       initialValues={initialValues}
       enableReinitialize={true}
-      validationSchema={validationSchema}
+      validationSchema={ Yup.object().shape({
+        emergencyContactNo: Yup.string().required("Required"),
+        emergencyContactName: Yup.string().required("Required"),
+        emergencyContactAddress: Yup.string().required("Required"),
+        emergencyContactRelationship: Yup.string().required("Required"),
+      })}
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         setInitialValues(valuesObj)
@@ -519,8 +552,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.emergencyContactNo && errors.emergencyContactNo ? 'is-invalid' : ''}`}
                   value={values.emergencyContactNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.emergencyContactNo && <div className="error-text">{String(errors.emergencyContactNo)}</div>}
+                />
+                {errors && errors.emergencyContactNo && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactNo}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Contact Name</label>
@@ -532,8 +567,9 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
 
                 />
-                 {errors.emergencyContactName && <div className="error-text">{String(errors.emergencyContactName)}</div>}
-
+                {errors && errors.emergencyContactName && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactName}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Contact Address</label>
@@ -543,8 +579,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.emergencyContactAddress && errors.emergencyContactAddress ? 'is-invalid' : ''}`}
                   value={values.emergencyContactAddress}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.emergencyContactAddress && <div className="error-text">{String(errors.emergencyContactAddress)}</div>}
+                />
+                {errors && errors.emergencyContactAddress && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactAddress}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Contact Relationship</label>
@@ -563,6 +601,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.emergencyContactRelationship && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactRelationship}</p>
+                )}
               </div>
             </div>
             <br />
@@ -594,7 +635,49 @@ export const Employee = (props: any) => {
     <Formik
       initialValues={initialValues}
       enableReinitialize={true}
-      validationSchema={validationSchema}
+      validationSchema={
+        Yup.object().shape({
+          employeeId: Yup.string().required("Required"),
+          biometricsId: Yup.string().required("Required"),
+          companyEmail: Yup.string().required("Required"),
+          employeeType: Yup.string().required("Required"),
+          jobTitle: Yup.string().required("Required"),
+          userLevel: Yup.string().required("Required"),
+          immediateSuperiorId: Yup.string().required("Required"),
+          employeeStatus: Yup.string().required("Required"),
+          employmentStatusEffectivityDate: Yup.string().required("Required"),
+          hireDate: Yup.string().required("Required"),
+          bankAcctType: Yup.string().required("Required"),
+          bankAccountNumber: Yup.string().required("Required"),
+          tinNumber: Yup.string().required("Required"),
+          position: Yup.string().required("Required"),
+          regularizationDate: Yup.string().required("Required"),
+          statusDate: Yup.string().required("Required"),
+          department: Yup.string().required("Required"),
+          costCenter: Yup.string().required("Required"),
+          seperationDate: Yup.string().required("Required"),
+          sssNumber: Yup.string().required("Required"),
+          philHealthId: Yup.string().required("Required"),
+          hdmfNumber: Yup.string().required("Required"),
+          squadId: Yup.string().required("Required"),
+          otComputationTable: Yup.string().required("Required"),
+          minimumWageEarner: Yup.string().required("Required"),
+          totalWorkHrsPerDay: Yup.string().required("Required"),
+          workDaysPerYear: Yup.string().required("Required"),
+          consultantPercentTax: Yup.string().required("Required"),
+          clientName: Yup.string().required("Required"),
+          jobCode: Yup.string().required("Required"),
+          jobGrade: Yup.string().required("Required"),
+          billability: Yup.string().required("Required"),
+          payrollRole: Yup.string().required("Required"),
+          payGroup: Yup.string().required("Required"),
+          payrollRunType: Yup.string().required("Required"),
+          basicMonthlySalary: Yup.string().required("Required"),
+          salaryEffectivityDate: Yup.string().required("Required"),
+          monthlyDeMinimisBenefits: Yup.string().required("Required"),
+          ecola: Yup.string().required("Required"),
+        })
+      }
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         setInitialValues(valuesObj)
@@ -619,8 +702,9 @@ export const Employee = (props: any) => {
                   value={values.employeeId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.employeeId && <div className="error-text">{String(errors.employeeId)}</div>}
-
+                {errors && errors.employeeId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employeeId}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Biometrics ID</label>
@@ -630,8 +714,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.biometricsId && errors.biometricsId ? 'is-invalid' : ''}`}
                   value={values.biometricsId}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.biometricsId && <div className="error-text">{String(errors.biometricsId)}</div>}
+                />
+                {errors && errors.biometricsId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.biometricsId}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Company Email</label>
@@ -641,8 +727,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.companyEmail && errors.companyEmail ? 'is-invalid' : ''}`}
                   value={values.companyEmail}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.companyEmail && <div className="error-text">{String(errors.companyEmail)}</div>}
+                />
+                {errors && errors.companyEmail && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.companyEmail}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Employee Type</label>
@@ -661,6 +749,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.employeeType && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employeeType}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Job Title</label>
@@ -670,8 +761,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.jobTitle && errors.jobTitle ? 'is-invalid' : ''}`}
                   value={values.jobTitle}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.jobTitle && <div className="error-text">{String(errors.jobTitle)}</div>}
+                />
+                {errors && errors.jobTitle && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.jobTitle}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>User Level</label>
@@ -690,6 +783,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.userLevel && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.userLevel}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Immediate Superior ID</label>
@@ -700,7 +796,9 @@ export const Employee = (props: any) => {
                   value={values.immediateSuperiorId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.immediateSuperiorId && <div className="error-text">{String(errors.immediateSuperiorId)}</div>}
+                {errors && errors.immediateSuperiorId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.immediateSuperiorId}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Employee Status</label>
@@ -719,6 +817,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.employeeStatus && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employeeStatus}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Effectivity Date</label>
@@ -729,7 +830,9 @@ export const Employee = (props: any) => {
                   value={values.employmentStatusEffectivityDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.employmentStatusEffectivityDate && <div className="error-text">{String(errors.employmentStatusEffectivityDate)}</div>}
+                {errors && errors.employmentStatusEffectivityDate && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employmentStatusEffectivityDate}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Hire Date</label>
@@ -740,7 +843,9 @@ export const Employee = (props: any) => {
                   value={values.hireDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.hireDate && <div className="error-text">{String(errors.hireDate)}</div>}
+                {errors && errors.hireDate && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.hireDate}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Bank Account Type</label>
@@ -759,6 +864,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.bankAcctType && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.bankAcctType}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Bank Account Number</label>
@@ -769,7 +877,9 @@ export const Employee = (props: any) => {
                   value={values.bankAccountNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.bankAccountNumber && <div className="error-text">{String(errors.bankAccountNumber)}</div>}
+                {errors && errors.bankAccountNumber && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.bankAccountNumber}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Tin Number</label>
@@ -779,8 +889,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.tinNumber && errors.tinNumber ? 'is-invalid' : ''}`}
                   value={values.tinNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.tinNumber && <div className="error-text">{String(errors.tinNumber)}</div>}
+                />
+                {errors && errors.tinNumber && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.tinNumber}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Position</label>
@@ -790,8 +902,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.position && errors.position ? 'is-invalid' : ''}`}
                   value={values.position}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.position && <div className="error-text">{String(errors.position)}</div>}
+                />
+                {errors && errors.position && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.position}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Regularization Date</label>
@@ -801,8 +915,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.regularizationDate && errors.regularizationDate ? 'is-invalid' : ''}`}
                   value={values.regularizationDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.regularizationDate && <div className="error-text">{String(errors.regularizationDate)}</div>}
+                />
+                {errors && errors.regularizationDate && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.regularizationDate}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Status Date</label>
@@ -813,7 +929,9 @@ export const Employee = (props: any) => {
                   value={values.statusDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.statusDate && <div className="error-text">{String(errors.statusDate)}</div>}
+                {errors && errors.statusDate && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.statusDate}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Department</label>
@@ -832,6 +950,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.department && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.department}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Cost Center</label>
@@ -842,7 +963,9 @@ export const Employee = (props: any) => {
                   value={values.costCenter}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.costCenter && <div className="error-text">{String(errors.costCenter)}</div>}
+                {errors && errors.costCenter && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.costCenter}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Separation Date</label>
@@ -852,8 +975,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.seperationDate && errors.seperationDate ? 'is-invalid' : ''}`}
                   value={values.seperationDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.seperationDate && <div className="error-text">{String(errors.seperationDate)}</div>}
+                />
+                {errors && errors.seperationDate && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.seperationDate}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>SSS Number</label>
@@ -864,7 +989,9 @@ export const Employee = (props: any) => {
                   value={values.sssNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.sssNumber && <div className="error-text">{String(errors.sssNumber)}</div>}
+                {errors && errors.sssNumber && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.sssNumber}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Philhealth ID</label>
@@ -874,8 +1001,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.philHealthId && errors.philHealthId ? 'is-invalid' : ''}`}
                   value={values.philHealthId}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.philHealthId && <div className="error-text">{String(errors.philHealthId)}</div>}
+                />
+                {errors && errors.philHealthId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.philHealthId}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Hdmf Number</label>
@@ -886,24 +1015,33 @@ export const Employee = (props: any) => {
                   value={values.hdmfNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.hdmfNumber && <div className="error-text">{String(errors.hdmfNumber)}</div>}
+                {errors && errors.hdmfNumber && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.hdmfNumber}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Squad</label>
                 <select
                   className="form-select"
-                  name="squadid"
-                  id="squadid"
-                  value={values.squadid}
+                  name="squadId"
+                  id="squadId"
+                  value={values.squadId}
                   onChange={(e) => setFormField(e, setFieldValue)}>
                   {squadList &&
                     squadList.length &&
-                    squadList.map((item: any, index: string) => (
-                      <option key={`${index}_${item.name}`} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
+                    squadList.map((_data: any, index: string) => {
+                      return (
+                        <option key={_data.name} value={_data.id}>
+                          {_data.name}
+                        </option>
+                      )
+                      
+                    })
+                  }
                 </select>
+                {errors && errors.squadId && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.squadId}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>OT Computation Table</label>
@@ -914,7 +1052,9 @@ export const Employee = (props: any) => {
                   value={values.otComputationTable}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.otComputationTable && <div className="error-text">{String(errors.otComputationTable)}</div>}
+                {errors && errors.otComputationTable && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.otComputationTable}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Minimum Wage Earner</label>
@@ -924,8 +1064,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.minimumWageEarner && errors.minimumWageEarner ? 'is-invalid' : ''}`}
                   value={values.minimumWageEarner}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.minimumWageEarner && <div className="error-text">{String(errors.minimumWageEarner)}</div>}
+                />
+                {errors && errors.minimumWageEarner && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.minimumWageEarner}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Total Work Hours per Day</label>
@@ -936,7 +1078,9 @@ export const Employee = (props: any) => {
                   value={values.totalWorkHrsPerDay}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.totalWorkHrsPerDay && <div className="error-text">{String(errors.totalWorkHrsPerDay)}</div>}
+                {errors && errors.totalWorkHrsPerDay && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.totalWorkHrsPerDay}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Work Days Per Year</label>
@@ -947,7 +1091,9 @@ export const Employee = (props: any) => {
                   value={values.workDaysPerYear}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.workDaysPerYear && <div className="error-text">{String(errors.workDaysPerYear)}</div>}
+                {errors && errors.workDaysPerYear && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.workDaysPerYear}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Cosultant Percent tax</label>
@@ -966,6 +1112,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.consultantPercentTax && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.consultantPercentTax}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Client Name</label>
@@ -975,8 +1124,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.clientName && errors.clientName ? 'is-invalid' : ''}`}
                   value={values.clientName}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.clientName && <div className="error-text">{String(errors.clientName)}</div>}
+                />
+                {errors && errors.clientName && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.clientName}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Job Code</label>
@@ -986,8 +1137,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.jobCode && errors.jobCode ? 'is-invalid' : ''}`}
                   value={values.jobCode}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.jobCode && <div className="error-text">{String(errors.jobCode)}</div>}
+                />
+                {errors && errors.jobCode && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.jobCode}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Job Grade</label>
@@ -1006,6 +1159,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.jobGrade && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.jobGrade}</p>
+                )}
               </div><div className="form-group col-md-6 mb-3" >
                 <label>Billability</label>
                 <input type="text"
@@ -1015,7 +1171,9 @@ export const Employee = (props: any) => {
                   value={values.billability}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                  {errors.billability && <div className="error-text">{String(errors.billability)}</div>}
+                {errors && errors.billability && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.billability}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Payroll Role</label>
@@ -1034,6 +1192,9 @@ export const Employee = (props: any) => {
                       </option>
                     ))}
                 </select>
+                {errors && errors.payrollRole && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollRole}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Pay Group</label>
@@ -1043,8 +1204,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.payGroup && errors.payGroup ? 'is-invalid' : ''}`}
                   value={values.payGroup}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-              {errors.payGroup && <div className="error-text">{String(errors.payGroup)}</div>}
+                />
+                {errors && errors.payGroup && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.payGroup}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Payroll Run Type</label>
@@ -1054,8 +1217,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.payrollRunType && errors.payrollRunType ? 'is-invalid' : ''}`}
                   value={values.payrollRunType}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.payrollRunType && <div className="error-text">{String(errors.payrollRunType)}</div>}
+                />
+                {errors && errors.payrollRunType && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollRunType}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Basic Monthly Salary</label>
@@ -1065,8 +1230,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.basicMonthlySalary && errors.basicMonthlySalary ? 'is-invalid' : ''}`}
                   value={values.basicMonthlySalary}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.basicMonthlySalary && <div className="error-text">{String(errors.basicMonthlySalary)}</div>}
+                />
+                {errors && errors.basicMonthlySalary && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.basicMonthlySalary}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Salary Effectivity Date</label>
@@ -1076,8 +1243,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.salaryEffectivityDate && errors.salaryEffectivityDate ? 'is-invalid' : ''}`}
                   value={values.salaryEffectivityDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.salaryEffectivityDate && <div className="error-text">{String(errors.salaryEffectivityDate)}</div>}
+                />
+                {errors && errors.salaryEffectivityDate && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.salaryEffectivityDate}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Monthly De Mininmis Benefits</label>
@@ -1087,8 +1256,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.monthlyDeMinimisBenefits && errors.monthlyDeMinimisBenefits ? 'is-invalid' : ''}`}
                   value={values.monthlyDeMinimisBenefits}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.monthlyDeMinimisBenefits && <div className="error-text">{String(errors.monthlyDeMinimisBenefits)}</div>}
+                />
+                {errors && errors.monthlyDeMinimisBenefits && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.monthlyDeMinimisBenefits}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Ecola</label>
@@ -1098,8 +1269,10 @@ export const Employee = (props: any) => {
                   className={`form-control ${touched.ecola && errors.ecola ? 'is-invalid' : ''}`}
                   value={values.ecola}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                  {errors.ecola && <div className="error-text">{String(errors.ecola)}</div>}
+                />
+                {errors && errors.ecola && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.ecola}</p>
+                )}
               </div>
             </div>
             <br />
@@ -1131,7 +1304,19 @@ export const Employee = (props: any) => {
     <Formik
       initialValues={initialValues}
       enableReinitialize={true}
-      validationSchema={null}
+      validationSchema={
+        Yup.object().shape({
+          clothingAllowance: Yup.string().required("Required"),
+          communicationAllowance: Yup.string().required("Required"),
+          discretionaryAllowance: Yup.string().required("Required"),
+          mealAllowance: Yup.string().required("Required"),
+          medicalAllowance: Yup.string().required("Required"),
+          productivityAllowance: Yup.string().required("Required"),
+          conveyanceAllowance: Yup.string().required("Required"),
+          otherAllowance: Yup.string().required("Required"),
+          rdo: Yup.string().required("Required"),
+        })
+      }
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         if (userId) {
@@ -1222,6 +1407,9 @@ export const Employee = (props: any) => {
                   value={values.clothingAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.clothingAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Communication Allowance</label>
@@ -1232,6 +1420,9 @@ export const Employee = (props: any) => {
                   value={values.communicationAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.communicationAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Discretionary Allowance</label>
@@ -1242,6 +1433,9 @@ export const Employee = (props: any) => {
                   value={values.discretionaryAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.discretionaryAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Meal Allowance</label>
@@ -1252,6 +1446,9 @@ export const Employee = (props: any) => {
                   value={values.mealAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.mealAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Medical Allowance</label>
@@ -1262,6 +1459,9 @@ export const Employee = (props: any) => {
                   value={values.medicalAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.medicalAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Productivity Allowance</label>
@@ -1272,6 +1472,9 @@ export const Employee = (props: any) => {
                   value={values.productivityAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.productivityAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.productivityAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Conveyance Allowance</label>
@@ -1282,6 +1485,9 @@ export const Employee = (props: any) => {
                   value={values.conveyanceAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.conveyanceAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Other Allowance</label>
@@ -1292,6 +1498,9 @@ export const Employee = (props: any) => {
                   value={values.otherAllowance}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.otherAllowance && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
+                )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>RDO</label>
@@ -1302,6 +1511,9 @@ export const Employee = (props: any) => {
                   value={values.rdo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                {errors && errors.rdo && (
+                  <p style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
+                )}
               </div>
             </div>
             <br />
@@ -1416,7 +1628,7 @@ export const Employee = (props: any) => {
                       {
                         employeeList &&
                         employeeList.content &&
-                        employeeList.content.length &&
+                        employeeList.content.length > 0 &&
                         employeeList.content.map((item: any, index: any) => {
                           
                           return (
@@ -1453,6 +1665,16 @@ export const Employee = (props: any) => {
                       }
                     </tbody>
                   </Table>
+                  {
+                        employeeList &&
+                        employeeList.content &&
+                        employeeList.content.length == 0 ?
+                        <div className="w-100 text-center">
+                          <label htmlFor="">No Records Found</label>
+                        </div>
+                        : 
+                        null
+                  }
                 </div>
               </div>
               <div className="d-flex justify-content-end">

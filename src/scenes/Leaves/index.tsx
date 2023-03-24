@@ -329,67 +329,86 @@ export const Leaves = (props: any) => {
             {
               allLeaves &&
               allLeaves.content &&
-              allLeaves.content.length &&
-              allLeaves.content.map((item: any, index: any) => {
-                return (
-                  <tr>
-                    <td> {item.type} </td>
-                    <td> {item.dateFrom} </td>
-                    <td> {item.dateTo} </td>
-                    <td> {item.reason} </td>
-                    <td> {item.status} </td>
-                    <td>
-                      {
-                        item.status != "APPROVED" && item.status != "DECLINED" ?
-                          <>
-                          {authorizations.includes("Request:Update") ? (
+              allLeaves.content.length > 0 ?
+              <>
+              {
+                allLeaves.content.map((item: any, index: any) => {
+                  return (
+                    <tr>
+                      <td> {item.type} </td>
+                      <td> {item.dateFrom} </td>
+                      <td> {item.dateTo} </td>
+                      <td> {item.reason} </td>
+                      <td> {item.status} </td>
+                      <td>
+                        {
+                          item.status != "APPROVED" && item.status != "DECLINED" ?
                             <>
+                            {authorizations.includes("Request:Update") ? (
+                              <>
+                                  <label
+                                  onClick={() => {
+                                    getLeave(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  Update
+                                </label>
+                                <br />
+                              </>
+                            ) : null}
+  
+                            {authorizations.includes("Request:Approve") ? (
+                              <>
                                 <label
                                 onClick={() => {
-                                  getLeave(item.id)
+                                  approveLeave(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
-                                Update
+                                Approve
+                              </label> <br />
+                              </>
+                            ) : null}
+  
+                              {authorizations.includes("Request:Reject") ? (
+                              <>
+                              <label
+                                onClick={() => {
+                                  declineLeave(item.id)
+                                }}
+                                className="text-muted cursor-pointer">
+                                Decline
                               </label>
                               <br />
+                              </>
+                            ) : null}
                             </>
-                          ) : null}
-
-                          {authorizations.includes("Request:Approve") ? (
-                            <>
-                              <label
-                              onClick={() => {
-                                approveLeave(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              Approve
-                            </label> <br />
-                            </>
-                          ) : null}
-
-                            {authorizations.includes("Request:Reject") ? (
-                            <>
-                            <label
-                              onClick={() => {
-                                declineLeave(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              Decline
-                            </label>
-                            <br />
-                            </>
-                          ) : null}
-                          </>
-                          :
-                          null
-                      }
-                    </td>
-                  </tr>
-                )
-              })
+                            :
+                            null
+                        }
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+              
+              </>
+              :
+              null
             }
           </tbody>
+          
         </Table>
+        {
+              allLeaves &&
+              allLeaves.content &&
+              allLeaves.content.length == 0 ?
+              <div className="w-100 text-center">
+                <label htmlFor="">No Records Found</label>
+              </div>
+              : 
+              null
+        }
+        
       </div>
     )
   }, [allLeaves])

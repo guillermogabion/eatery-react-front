@@ -19,6 +19,163 @@ import './login.css'
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal);
 const CryptoJS = require("crypto-js")
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+
+function ChangePassword(props: any) {
+  return (<div className="row p-0 m-0 w-100">
+    <div className="col-xl-5 col-lg-4 d-flex flex-column justify-content-center align-items-center passwordGuide ">
+      <div className="px-5" style={{
+        marginLeft: 80
+      }}>
+        <span className="text-white mb-3" style={{
+          fontSize: 20
+        }}>Password Creation Guidelines :</span> <br />
+        <div className="text-white p-0 pt-3" style={{
+          letterSpacing: .5
+        }}>
+          <div>
+            <FaCheckCircle style={{
+              color: 'white'
+            }} />
+            <span className="check-circle">At least 8 characters long but less than 16 </span>
+          </div><br />
+          <div>
+            <FaCheckCircle style={{
+              color: 'white'
+            }} />
+            <span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span>
+          </div> <br />
+          <div>
+            <FaCheckCircle style={{
+              color: 'white'
+            }} />
+            <span className="check-circle">Significantly different from your previous passwords.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="col-xl-6  col-lg-6 col-md-12 changePasswordCont ">
+      <div className="m-0  bg-white changePasswordFormContainer ">
+        <div className="company-logo pb-3">
+          <img src={actimai_logo} alt="Actimai logo" />
+        </div>
+        <div className="align-items-center">
+          <h5 className="container-text color-primary" style={{
+            fontSize: 23
+          }}>Please change your password</h5>
+        </div>
+
+        <Formik initialValues={{
+          oldPassword: "",
+          newPassword: "",
+          conPassword: ""
+        }} enableReinitialize={true} validationSchema={Yup.object().shape({
+          oldPassword: Yup.string().required('Old password is required'),
+          newPassword: Yup.string().required('New password is required').matches(/^(?=.*[a-z])/, "Must Contain 8 Characters").matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase").matches(/^(?=.*[0-9])/, "Must Contain One Number ").matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
+          conPassword: Yup.string().required('Confirm password is required').oneOf([Yup.ref('newPassword'), null], "Password not match")
+        })} onSubmit={(values: any, actions: any) => {
+          RequestAPI.putRequest(Api.changePassword, props.tempToken, values, {}, async (res: any) => {
+            const {
+              status,
+              body
+            } = res;
+
+            if (status === 200) {
+              if (body.error && body.error.message) {
+                props.setErrorMessage(body.error.message);
+              } else {
+                ErrorSwal.fire('Success', body.data || "", 'success').then(result => {
+                  if (result.isConfirmed) {
+                    props.setIsNewAccount(false);
+                  }
+                });
+              }
+            } else {
+              if (body.error && body.error.message) {
+                props.setErrorMessage(body.error.message);
+              }
+            }
+          });
+        }}>
+          {({
+            values,
+            setFieldValue,
+            handleSubmit,
+            handleChange,
+            errors,
+            touched
+          }) => {
+            return <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+              <div className="passwordField mt-3">
+                <input id="_oldpassword" onCopy={props.copyHandler} onCut={props.cutHandler} autoComplete="new-password" name="oldPassword" value={values.oldPassword} type={props.visibile1 ? "text" : "password"} className="form-control w-100 text-field-color input-login " placeholder="Current Password" onChange={e => setFieldValue('oldPassword', e.target.value)} />
+                <Button variant="link" onClick={() => props.setVisibile1(!props.visibile1)} className="passwordicon pt-3" type="button">
+                  <span className="showpass">
+                    <img src={show_password_dark} alt="Show" />
+                  </span>
+                  <span className="hidepass">
+                    <img src={hide_password_dark} alt="Hide" />
+                  </span>
+                </Button>
+                {errors && errors.oldPassword && <p style={{
+                  color: "red",
+                  fontSize: "12px"
+                }}>{errors.oldPassword}</p>}
+              </div>
+              <div className="passwordField mt-5">
+                <input id="_newpassword" onCopy={props.copyHandler} onCut={props.cutHandler} autoComplete="new-password" name="newPassword" value={values.newPassword} type={props.visibile2 ? "text" : "password"} className="form-control w-100 text-field-color input-login " maxLength={16} placeholder="New Password" onChange={e => setFieldValue('newPassword', e.target.value)} />
+                <Button variant="link" onClick={() => props.setVisibile2(!props.visibile2)} className="passwordicon pt-3" type="button">
+                  <span className="showpass">
+                    <img src={show_password_dark} alt="Show" />
+                  </span>
+                  <span className="hidepass">
+                    <img src={hide_password_dark} alt="Hide" />
+                  </span>
+                </Button>
+                {errors && errors.newPassword && <p style={{
+                  color: "red",
+                  fontSize: "12px"
+                }}>{errors.newPassword}</p>}
+              </div>
+              <div className="passwordField mt-5">
+                <input id="_confirmpassword" onCopy={props.copyHandler} onCut={props.cutHandler} autoComplete="new-password" name="conPassword" value={values.conPassword} type={props.visibile3 ? "text" : "password"} className="form-control w-100 text-field-color input-login " maxLength={16} placeholder="Confirm New Password" onChange={e => setFieldValue('conPassword', e.target.value)} />
+                <Button variant="link" onClick={() => props.setVisibile3(!props.visibile3)} className="passwordicon pt-3" type="button">
+                  <span className="showpass">
+                    <img src={show_password_dark} alt="Show" />
+                  </span>
+                  <span className="hidepass">
+                    <img src={hide_password_dark} alt="Hide" />
+                  </span>
+                </Button>
+                {errors && errors.conPassword && <p style={{
+                  color: "red",
+                  fontSize: "12px"
+                }}>{errors.conPassword}</p>}
+              </div>
+              <br /> <br />
+              <div className="d-flex">
+                <Button type="submit" className="w-100 btn btn-primary">
+                  Submit
+                </Button>
+                <br /><br />
+                <br /><br /><br />
+                <br />
+              </div>
+            </Form>;
+          }}
+        </Formik>
+        <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+        <div className=" mobile">
+          <Col className="changePasswordLoginTime">
+            <TimeDate textColor={'white'} />
+          </Col>
+        </div>
+      </div>
+    </div>
+  </div>);
+}
+
 
 export const Login = () => {
 
@@ -137,44 +294,6 @@ export const Login = () => {
     }
   }, [username, password])
 
-  const changePassword = React.useCallback(() => {
-    if (newPassword != confirmPassword){
-      setErrorMessage("Password not match.");
-    }
-    else{
-      if (oldPassword && newPassword && confirmPassword) {
-        let payload = {
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-          conPassword: confirmPassword,
-        }
-        RequestAPI.putRequest(Api.changePassword, tempToken, payload, {}, async (res: any) => {
-          const { status, body } = res
-          if (status === 200) {
-            if (body.error && body.error.message) {
-              setErrorMessage(body.error.message);
-            } else {
-              ErrorSwal.fire(
-                'Success',
-                (body.data || ""),
-                'success'
-              ).then((result) => {
-                if (result.isConfirmed) {
-                  // location.reload()
-                  setIsNewAccount(false)
-                } 
-              })
-            }
-          } else {
-            if (body.error && body.error.message) {
-              setErrorMessage(body.error.message);
-            }
-          }
-        });
-      }
-    }
-  }, [oldPassword, newPassword, confirmPassword])
-
   // onCopy
   const copyHandler = (event: React.ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault()
@@ -276,150 +395,17 @@ export const Login = () => {
             </div>
 
             :
-            <div className="row p-0 m-0 w-100">
-              <div className="col-xl-5 col-lg-4 d-flex flex-column justify-content-center align-items-center passwordGuide ">
-                <div className="px-5" style={{ marginLeft: 80 }}>
-                  <span className="text-white mb-3" style={{ fontSize: 20 }}>Password Creation Guidelines :</span> <br />
-                  <div className="text-white p-0 pt-3" style={{ letterSpacing: .5 }}>
-                    <div>
-                      <FaCheckCircle style={{ color: 'white' }} />
-                      <span className="check-circle">At least 8 characters long but less than 16 </span>
-                    </div><br />
-                    <div>
-                      <FaCheckCircle style={{ color: 'white' }} />
-                      <span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span>
-                    </div> <br />
-                    <div>
-                      <FaCheckCircle style={{ color: 'white' }} />
-                      <span className="check-circle">Significantly different from your previous passwords.</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-6  col-lg-6 col-md-12 changePasswordCont ">
-                <div className="m-0  bg-white changePasswordFormContainer " >
-                  <div className="company-logo pb-3">
-                    <img src={actimai_logo} alt="Actimai logo" />
-                  </div>
-                  <div className="align-items-center">
-                    <h5 className="container-text color-primary" style={{ fontSize: 23 }}>Please change your password</h5>
-                  </div>
-                  <form id="_form" className="" action="#">
-                    <div className="passwordField mt-3">
-                      <input
-                        id="_password"
-                        onCopy={copyHandler}
-                        onCut={cutHandler}
-                        autoComplete="new-password"
-                        style={{ marginBottom: "20px" }}
-                        name="oldPassword"
-                        value={oldPassword}
-                        type={visibile1 ? "text" : "password"}
-                        className="form-control w-100 text-field-color input-login "
-                        required
-                        placeholder="Current Password"
-                        onChange={(e) => setOldPassword(e.target.value)}
-                      />
-                      <Button
-                        variant="link"
-                        onClick={() => setVisibile1(!visibile1)}
-                        className="passwordicon pt-3"
-                        >
-                        <span className="showpass">
-                          <img src={show_password_dark} alt="Show" />
-                        </span>
-                        <span className="hidepass">
-                          <img src={hide_password_dark} alt="Hide" />
-                        </span>
-                      </Button>
-                    </div>
-                    <div className="passwordField mt-4">
-                      <input
-                        id="_password"
-                        onCopy={copyHandler}
-                        onCut={cutHandler}
-                        autoComplete="new-password"
-                        style={{ marginBottom: "20px" }}
-                        name="newPassword"
-                        value={newPassword}
-                        type={visibile2 ? "text" : "password"}
-                        className="form-control w-100 text-field-color input-login "
-                        required
-                        placeholder="New Password"
-                        onChange={(e) => setNewPassword(e.target.value)}
-                      />
-                      <Button
-                        variant="link"
-                        onClick={() => setVisibile2(!visibile2)}
-                        className="passwordicon pt-3"
-                        >
-                        <span className="showpass">
-                          <img src={show_password_dark} alt="Show" />
-                        </span>
-                        <span className="hidepass">
-                          <img src={hide_password_dark} alt="Hide" />
-                        </span>
-                      </Button>
-                    </div>
-                    <div className="passwordField mt-4">
-                      <input
-                        id="_password"
-                        onCopy={copyHandler}
-                        onCut={cutHandler}
-                        autoComplete="new-password"
-                        style={{ marginBottom: "20px" }}
-                        name="confirmPassword"
-                        value={confirmPassword}
-                        type={visibile3 ? "text" : "password"}
-                        className="form-control w-100 text-field-color input-login "
-                        required
-                        placeholder="Confirm New Password"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                      />
-                      <Button
-                        variant="link"
-                        onClick={() => setVisibile3(!visibile3)}
-                        className="passwordicon pt-3"
-                        >
-                        <span className="showpass">
-                          <img src={show_password_dark} alt="Show" />
-                        </span>
-                        <span className="hidepass">
-                          <img src={hide_password_dark} alt="Hide" />
-                        </span>
-                      </Button>
-                    </div>
-                    <br /> <br />
-                    <div className="d-flex">
-                      <Button
-                        style={{ width: '100%' }}
-                        onClick={() => changePassword()}
-                        className="btn btn-primary"
-                        disabled={loginAttempts >= 3}>
-                        Submit
-                      </Button>
-                    </div>
-                    <div className="d-flex justify-content-center p-0 ">
-                      {errorMessage != "" && (
-                        <Alert variant="" className="w-100 p-0 pt-2" style={{ textAlign: "left" }}>
-                          <span className="text-danger"><b>{errorMessage}</b> </span>
-                        </Alert>
-                      )}
-                    </div>
-                    <br /><br />
-                    <br /><br />
-                  </form>
-                  <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
-                  <div className=" mobile">
-                    <Col className="changePasswordLoginTime" >
-                      <TimeDate
-                        textColor={'white'}
-                      />
-                    </Col>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ChangePassword visibile1={visibile1} 
+                setVisibile1={setVisibile1} 
+                visibile2={visibile2} 
+                setVisibile2={setVisibile2} 
+                visibile3={visibile3} 
+                setVisibile3={setVisibile3} 
+                tempToken={tempToken} 
+                setIsNewAccount={setIsNewAccount} 
+                setErrorMessage={setErrorMessage} 
+                copyHandler={copyHandler} 
+                cutHandler={cutHandler} />
           }
         </Container>
       </div>

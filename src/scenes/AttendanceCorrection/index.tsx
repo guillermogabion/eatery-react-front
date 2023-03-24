@@ -537,6 +537,7 @@ export const AttendanceCorrection = (props: any) => {
                             <textarea
                               name="reason"
                               id="reason"
+                              value={values.reason}
                               className="form-control"
                               style={{ height: "200px" }}
                               onChange={(e) => {
@@ -597,14 +598,16 @@ export const AttendanceCorrection = (props: any) => {
                               ))}
                             </select>
                           </div>
-                          <button onClick={() => handleRemoveItem(index)}>Remove</button>
+                          <button
+                          className="btn btn-secondary me-2 mb-2"
+                          onClick={() => handleRemoveItem(index)}>Remove</button>
                         </div>
                       ))}
 
                       <div className="d-flex justify-content-end px-5">
                         <button
                           type="button"
-                          className="btn btn-secondary me-2"
+                          className="btn btn-secondary me-2 mb-2 mt-2 "
                           onClick={handleAddField}
                         >
                           Add Field

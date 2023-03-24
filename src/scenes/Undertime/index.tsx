@@ -28,13 +28,14 @@ export const Undertime = (props: any) => {
     const [key, setKey] = React.useState('all');
     const [myut, setMyUT] = useState<any>([]);
     const [utId, setUtId] = useState<any>("");
-    const [filterData, setFilterData] = React.useState([]);
-    const [initialValues, setInitialValues] = useState<any>({
+    const [onSubmit, setOnSubmit] = useState<any>(false);
+    let initialPayload = {
         "shiftDate": moment().format("YYYY-MM-DD"),
         "utStart": "",
         "utEnd": "",
         "reason": ""
-    })
+    }
+    const [initialValues, setInitialValues] = useState<any>(initialPayload)
     const formRef: any = useRef()
 
     useEffect(() => {
@@ -196,8 +197,8 @@ export const Undertime = (props: any) => {
                     if (body.error && body.error.message) {
                     } else {
                         const valueObj: any = body.data
-                        valueObj.utStart = moment(valueObj.utStart).format("hh:mm:ss")
-                        valueObj.utEnd = moment(valueObj.utEnd).format("hh:mm:ss")
+                        valueObj.utStart = moment(valueObj.utStart).format("HH:mm")
+                        valueObj.utEnd = moment(valueObj.utEnd).format("HH:mm")
                         setInitialValues(valueObj)
                         // the value of valueObj.id is null - API issue for temp fixing I set ID directly
                         setUtId(id)
@@ -227,7 +228,7 @@ export const Undertime = (props: any) => {
                         {
                             myut &&
                             myut.content &&
-                            myut.content.length &&
+                            myut.content.length > 0 &&
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
@@ -287,6 +288,16 @@ export const Undertime = (props: any) => {
                         }
                     </tbody>
                 </Table>
+                {
+                        myut &&
+                        myut.content &&
+                        myut.content.length == 0 ?
+                        <div className="w-100 text-center">
+                          <label htmlFor="">No Records Found</label>
+                        </div>
+                        : 
+                        null
+                  }
             </div>
         )
     }, [myut])
@@ -431,6 +442,8 @@ export const Undertime = (props: any) => {
                                     <Button
                                         className="mx-2"
                                         onClick={() => {
+                                            setUtId("")
+                                            setInitialValues(initialPayload)
                                             setModalShow(true)
                                         }}>Request Undertime</Button>
                                 </div>
@@ -472,11 +485,9 @@ export const Undertime = (props: any) => {
                             }
                             onSubmit={(values, actions) => {
                                 const valuesObj: any = { ...values }
-
+                                setOnSubmit(true)
                                 if (utId) {
                                     valuesObj.id = utId
-                                    valuesObj.utStart = valuesObj.shiftDate + "T" + valuesObj.utStart
-                                    valuesObj.utEnd = valuesObj.shiftDate + "T" + valuesObj.utEnd
                                     RequestAPI.putRequest(Api.updateUT, "", valuesObj, {}, async (res: any) => {
                                         const { status, body = { data: {}, error: {} } }: any = res
                                         if (status === 200 || status === 201) {
@@ -499,14 +510,12 @@ export const Undertime = (props: any) => {
                                         } else {
                                             ErrorSwal.fire(
                                                 'Error!',
-                                                'Something Error.',
+                                                (body.error && body.error.message) || "Something error!",
                                                 'error'
                                             )
                                         }
                                     })
                                 } else {
-                                    valuesObj.utStart = valuesObj.shiftDate + "T" + valuesObj.utStart
-                                    valuesObj.utEnd = valuesObj.shiftDate + "T" + valuesObj.utEnd
                                     RequestAPI.postRequest(Api.UTCreate, "", valuesObj, {}, async (res: any) => {
                                         const { status, body = { data: {}, error: {} } }: any = res
                                         if (status === 200 || status === 201) {
@@ -529,13 +538,13 @@ export const Undertime = (props: any) => {
                                         } else {
                                             ErrorSwal.fire(
                                                 'Error!',
-                                                'Something Error.',
+                                                (body.error && body.error.message) || "Something error!",
                                                 'error'
                                             )
                                         }
                                     })
                                 }
-
+                                setOnSubmit(false)
                             }}>
                             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                                 return (
@@ -562,7 +571,6 @@ export const Undertime = (props: any) => {
                                                 <input type="time"
                                                     name="utStart"
                                                     id="utStart"
-                                                    step="1"
                                                     className="form-control"
                                                     value={values.utStart}
                                                     onChange={(e) => {
@@ -578,7 +586,6 @@ export const Undertime = (props: any) => {
                                                 <input type="time"
                                                     name="utEnd"
                                                     id="utEnd"
-                                                    step="1"
                                                     className="form-control"
                                                     value={values.utEnd}
                                                     onChange={(e) => {
@@ -609,6 +616,7 @@ export const Undertime = (props: any) => {
                                             <div className="d-flex justify-content-end px-5">
                                                 <button
                                                     type="submit"
+                                                    disabled={onSubmit}
                                                     className="btn btn-primary">
                                                     Save
                                                 </button>

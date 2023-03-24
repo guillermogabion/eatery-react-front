@@ -22,6 +22,12 @@ import ReactPaginate from 'react-paginate';
 
 export const Overtime = (props: any) => {
   const { history } = props
+  let initialPayload = {
+    "shiftDate": moment().format("YYYY-MM-DD"),
+    "classification": "NORMAL_OT",
+    "otStart": "",
+    "otEnd": ""
+  }
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
@@ -38,6 +44,7 @@ export const Overtime = (props: any) => {
     "otEnd": ""
   })
   const formRef: any = useRef()
+  
 
   const tableHeaders = [
     'Type',
@@ -225,8 +232,8 @@ export const Overtime = (props: any) => {
           if (body.error && body.error.message) {
           } else {
             const valueObj: any = body.data
-            valueObj.otStart = moment(valueObj.otStart).format("hh:mm:ss")
-            valueObj.otEnd = moment(valueObj.otEnd).format("hh:mm:ss")
+            valueObj.otStart = moment(valueObj.otStart).format("HH:mm")
+            valueObj.otEnd = moment(valueObj.otEnd).format("HH:mm")
             setInitialValues(valueObj)
             // the value of valueObj.id is null - API issue for temp fixing I set ID directly
             setOtId(id)
@@ -257,7 +264,7 @@ export const Overtime = (props: any) => {
             {
               myot &&
               myot.content &&
-              myot.content.length &&
+              myot.content.length > 0 &&
               myot.content.map((item: any, index: any) => {
                 return (
                   <tr>
@@ -319,6 +326,16 @@ export const Overtime = (props: any) => {
             }
           </tbody>
         </Table>
+        {
+              myot &&
+              myot.content &&
+              myot.content.length == 0 ?
+              <div className="w-100 text-center">
+                <label htmlFor="">No Records Found</label>
+              </div>
+              : 
+              null
+        }
       </div>
     )
   }, [myot])
@@ -461,6 +478,8 @@ export const Overtime = (props: any) => {
                     <Button
                       className="mx-2"
                       onClick={() => {
+                        setOtId("")
+                        setInitialValues(initialPayload)
                         setModalShow(true)
                       }}>Request Overtime</Button>
                   </div>
@@ -501,12 +520,10 @@ export const Overtime = (props: any) => {
                 })
               }
               onSubmit={(values, actions) => {
+                setOnSubmit(true)
                 const valuesObj: any = { ...values }
                 if (otId) {
                   valuesObj.id = otId
-                  valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
-                  valuesObj.otEnd = valuesObj.shiftDate + "T" + valuesObj.otEnd
-
                   RequestAPI.putRequest(Api.updateOT, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -529,15 +546,12 @@ export const Overtime = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        (body.error && body.error.message) || "Something error!",
                         'error'
                       )
                     }
                   })
                 } else {
-                  valuesObj.otStart = valuesObj.shiftDate + "T" + valuesObj.otStart
-                  valuesObj.otEnd = valuesObj.shiftDate + "T" + valuesObj.otEnd
-
                   RequestAPI.postRequest(Api.OTCreate, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -560,13 +574,13 @@ export const Overtime = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        (body.error && body.error.message) || "Something error!",
                         'error'
                       )
                     }
                   })
                 }
-
+                setOnSubmit(false)
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (
@@ -612,7 +626,6 @@ export const Overtime = (props: any) => {
                         <input type="time"
                           name="otStart"
                           id="otStart"
-                          step="1"
                           className="form-control"
                           value={values.otStart}
                           onChange={(e) => {
@@ -628,7 +641,6 @@ export const Overtime = (props: any) => {
                         <input type="time"
                           name="otEnd"
                           id="otEnd"
-                          step="1"
                           className="form-control"
                           value={values.otEnd}
                           onChange={(e) => {
@@ -656,6 +668,7 @@ export const Overtime = (props: any) => {
                       <div className="d-flex justify-content-end px-5">
                         <button
                           type="submit"
+                          disabled={onSubmit}
                           className="btn btn-primary">
                           Save
                         </button>

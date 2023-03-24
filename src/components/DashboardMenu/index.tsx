@@ -45,11 +45,6 @@ const DashboardMenu = (props: any) => {
                     'link': '/schedule/adjustment'
 
                 },
-                {
-                    'name': 'Summary',
-                    'link': '/summary'
-
-                },
             ]
         },
         {
@@ -63,39 +58,19 @@ const DashboardMenu = (props: any) => {
         },
         {
             "name": "Resolution Center",
-            "menu": [
-                {
-                    'name': 'Menu 1',
-                    'link': '/attendance5'
-                },
-            ]
+            "menu": []
         },
         {
             "name": "Announcements",
-            "menu": [
-                {
-                    'name': 'Menu 1',
-                    'link': '/attendance5'
-                },
-            ]
+            "menu": []
         },
         {
             "name": "Actimai Directory",
-            "menu": [
-                {
-                    'name': 'Menu 1',
-                    'link': '/attendance5'
-                },
-            ]
+            "menu": []
         },
         {
             "name": "Payroll",
-            "menu": [
-                {
-                    'name': 'Menu 1',
-                    'link': '/attendance2'
-                },
-            ]
+            "menu": []
         },
         {
             "name": "Manage",
@@ -106,7 +81,7 @@ const DashboardMenu = (props: any) => {
                 },
                 {
                     'name': 'Roles & Access',
-                    'link': '/attendance1'
+                    'link': '/roles/access'
                 },
                 {
                     'name': 'Report',
@@ -157,10 +132,6 @@ const DashboardMenu = (props: any) => {
                             'name': 'Schedule Adjustment',
                             'link': '/schedule/adjustment'
                         },
-                        {
-                            'name': 'Summary',
-                            'link': '/summary'
-                        },
                     ]
                 },
                 {
@@ -174,30 +145,15 @@ const DashboardMenu = (props: any) => {
                 },
                 {
                     "name": "Resolution Center",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance5'
-                        },
-                    ]
+                    "menu": []
                 },
                 {
                     "name": "Announcements",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance5'
-                        },
-                    ]
+                    "menu": []
                 },
                 {
                     "name": "Actimai Directory",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance5'
-                        },
-                    ]
+                    "menu": []
                 },
             ])
         }else if (userRole == 'APPROVER'){
@@ -234,11 +190,6 @@ const DashboardMenu = (props: any) => {
                             'link': '/schedule/adjustment'
         
                         },
-                        {
-                            'name': 'Summary',
-                            'link': '/summary'
-        
-                        },
                     ]
                 },
                 {
@@ -252,48 +203,23 @@ const DashboardMenu = (props: any) => {
                 },
                 {
                     "name": "Resolution Center",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance5'
-                        },
-                    ]
+                    "menu": []
                 },
                 {
                     "name": "My Squad",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/squad'
-                        },
-                    ]
+                    "menu": []
                 },
                 {
                     "name": "Announcements",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance5'
-                        },
-                    ]
+                    "menu": []
                 },
                 {
                     "name": "Actimai Directory",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance5'
-                        },
-                    ]
+                    "menu": []
                 },
                 {
                     "name": "Payroll",
-                    "menu": [
-                        {
-                            'name': 'Menu 1',
-                            'link': '/attendance2'
-                        },
-                    ]
+                    "menu": []
                 },
             ])
         }
