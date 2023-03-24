@@ -487,15 +487,19 @@ export const AttendanceCorrection = (props: any) => {
                         'error'
                       )
                       setCoaBreakdown([])
-                      getAllCOARequest(0, "")
-                      setModalShow(false)
-                      formRef.current?.resetForm()
+                        getAllCOARequest(0, "")
+                        setModalShow(false)
+                        formRef.current?.resetForm()
                     } else {
                       ErrorSwal.fire(
                         'Success!',
                         (body.data) || "",
                         'success'
                       )
+                      setCoaBreakdown([]);
+                      getAllCOARequest(0, "");
+                      setModalShow(false);
+                      formRef.current?.resetForm();
                     }
                   
                   }
@@ -616,7 +620,9 @@ export const AttendanceCorrection = (props: any) => {
                       <div className="d-flex justify-content-end px-5">
                           <button
                               type="submit"
-                              className="btn btn-primary">
+                              className="btn btn-primary"
+                              disabled={!coaBreakdown.length}
+                              >
                               Save
                           </button>
                       </div>
