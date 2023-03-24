@@ -464,8 +464,8 @@ export const Leaves = (props: any) => {
                 </div>
                 <div className="w-100 pt-4">
                   <div className="fieldtext d-flex col-md-6">
-                    <div className="input-container">
-
+                      <div>
+                        <label>Date From</label>
                         <input
                           name="dateFrom"
                           type="date"
@@ -475,22 +475,26 @@ export const Leaves = (props: any) => {
                           onChange={(e) => makeFilterData(e)}
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                         />
-                    </div>
-                    <div className="input-container">
-                      <input
-                        name="dateTo"
-                        type="date"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
+                      </div>
+                      <div>
+                        <label>Date To</label>
+                        <div className="input-container">
+                          <input
+                            name="dateTo"
+                            type="date"
+                            autoComplete="off"
+                            className="formControl"
+                            maxLength={40}
+                            onChange={(e) => makeFilterData(e)}
+                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                          />
+                        </div>
+                      </div>
+                    
                     <Button
                         style={{ width: 120}}
                         onClick={() => getAllLeaves(0,"")}
-                        className="btn btn-primary mx-2">
+                        className="btn btn-primary mx-2 mt-4">
                         Search
                       </Button>
                   </div>
