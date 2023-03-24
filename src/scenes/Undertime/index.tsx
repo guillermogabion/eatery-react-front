@@ -29,6 +29,7 @@ export const Undertime = (props: any) => {
     const [myut, setMyUT] = useState<any>([]);
     const [utId, setUtId] = useState<any>("");
     const [onSubmit, setOnSubmit] = useState<any>(false);
+    const [filterData, setFilterData] = React.useState([]);
     let initialPayload = {
         "shiftDate": moment().format("YYYY-MM-DD"),
         "utStart": "",
