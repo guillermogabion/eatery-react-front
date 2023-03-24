@@ -367,19 +367,7 @@ export const Overtime = (props: any) => {
                 </div>
               </div>
               <div>
-                <h3>OTs & UTs</h3>
-                <div className="row p-0 m-0 pt-2">
-                  <div className="col-md-3">
-                    <h5>Monthly Total OTs:</h5>
-                    <h5>Monthly Total UTs:</h5>
-                  </div>
-                  <div className="col-md-3">
-                    <h5>200 mins</h5>
-                    <h5>150 mins</h5>
-                  </div>
-
-                </div>
-                <div className="w-100 pt-4">
+                <div className="w-100 pt-2">
                 <div className="fieldtext d-flex col-md-3">
                   <div>
                       <label>Date From</label>

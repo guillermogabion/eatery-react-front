@@ -449,20 +449,7 @@ export const Leaves = (props: any) => {
                 </div>
               </div>
               <div>
-                <h3>Leave Credits</h3>
-                <div className="row p-0 m-0 pt-2">
-                  <div className="col-md-2">
-                    <h5>Sickness:</h5>
-                    <h5>Vacation:</h5>
-                    <h5>Without pay:</h5>
-                  </div>
-                  <div className="col-md-3">
-                    <h5>0</h5>
-                    <h5>0</h5>
-                    <h5>0</h5>
-                  </div>
-                </div>
-                <div className="w-100 pt-4">
+                <div className="w-100 pt-2">
                   <div className="fieldtext d-flex col-md-6">
                       <div>
                         <label>Date From</label>

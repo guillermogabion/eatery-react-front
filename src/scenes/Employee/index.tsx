@@ -1561,7 +1561,6 @@ export const Employee = (props: any) => {
                 </div>
               </div>
               <div>
-                <h3>Employee Management</h3>
                 <div className="w-100">
 
                 <div className="fieldtext d-flex col-md-6">

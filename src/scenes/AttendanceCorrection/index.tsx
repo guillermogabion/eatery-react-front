@@ -357,8 +357,7 @@ export const AttendanceCorrection = (props: any) => {
                 </div>
               </div>
               <div>
-                <h3>Certificate Of Attendance</h3>
-                <div className="w-100 pt-4">
+                <div className="w-100 pt-2">
                 <Tabs
                   id="controlled-tab-example"
                   activeKey={key}
