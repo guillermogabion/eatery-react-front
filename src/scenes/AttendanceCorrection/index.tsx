@@ -425,6 +425,7 @@ export const AttendanceCorrection = (props: any) => {
           onHide={() => {
             setCoaId(null);
             setModalShow(false)
+            setShowReason(false);
           }}
           dialogClassName="modal-90w"
         >
@@ -554,7 +555,7 @@ export const AttendanceCorrection = (props: any) => {
                       {coaBreakdown.map((values, index) => (
                         <div key={index}>
                          <div className="form-group row">
-                            <div className="col-md-6 mb-3">
+                            <div className="col-md-4 mb-3">
                               <label>Date</label>
                               <input
                                 type="date"
@@ -568,7 +569,25 @@ export const AttendanceCorrection = (props: any) => {
                                 className="form-control"
                               />
                             </div>
-                            <div className="col-md-6 mb-3">
+                            <div className="col-md-4 mb-3 mt-4">
+                              <select
+                                name="coaBdType"
+                                value={values.coaBdType}
+                                onChange={(e) => {
+                                  const updatedFields = [...coaBreakdown];
+                                  updatedFields[index].coaBdType = e.target.value;
+                                  setCoaBreakdown(updatedFields);
+                                }}
+                                className="form-select"
+                              >
+                                {options.map(option => (
+                                  <option key={option.value} value={option.value}>
+                                    {option.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="col-md-4 mb-3">
                               <label>Time</label>
                               <input
                                 type="time"
@@ -583,26 +602,9 @@ export const AttendanceCorrection = (props: any) => {
                               />
                             </div>
                           </div> 
-                          <div className="form-group col-md-12 mb-3">
-                            <select
-                              name="coaBdType"
-                              value={values.coaBdType}
-                              onChange={(e) => {
-                                const updatedFields = [...coaBreakdown];
-                                updatedFields[index].coaBdType = e.target.value;
-                                setCoaBreakdown(updatedFields);
-                              }}
-                              className="form-select"
-                            >
-                              {options.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
+                         
                           <button
-                          className="btn btn-secondary me-2 mb-2"
+                          className="btn btn btn-outline-primary me-2 mb-2"
                           onClick={() => handleRemoveItem(index)}>Remove</button>
                         </div>
                       ))}
@@ -610,7 +612,7 @@ export const AttendanceCorrection = (props: any) => {
                       <div className="d-flex justify-content-end px-5">
                         <button
                           type="button"
-                          className="btn btn-secondary me-2 mb-2 mt-2 "
+                          className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
                           onClick={handleAddField}
                         >
                           Add Field
