@@ -12,10 +12,11 @@ import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
 import TimeDate from "../../components/TimeDate"
 import { bundy_clock } from "../../assets/images"
+import { useSelector, useDispatch } from "react-redux"
 
 export const Dashboard = (props: any) => {
   const { history } = props
-  
+  const userData = useSelector((state: any) => state.rootReducer.userData)
   const [timeInData, setTimeInData] = useState<any>("")
   const [hasLogout, setHasLogout] = useState<any>(false)
   const [hasTimeIn, setHasTimeIN] = useState<any>(false)
@@ -151,7 +152,7 @@ export const Dashboard = (props: any) => {
               <div className="col-md-12 col-lg-10 px-5 py-5">
                 <div className="row">
                     <div className="col-md-6">
-                      <h2>Good day, Employee 001!</h2>
+                      <h2>Good day, {userData.data.profile.firstName}!</h2>
                     </div>
                     <div className="col-md-6">
                       <TimeDate />
