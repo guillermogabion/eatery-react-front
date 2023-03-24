@@ -36,7 +36,7 @@ const DashboardMenu = (props: any) => {
 
                 },
                 {
-                    'name': 'Attendance Correction',
+                    'name': 'Attendance Reversal',
                     'link': '/attendance/correction'
 
                 },
@@ -125,7 +125,7 @@ const DashboardMenu = (props: any) => {
                             'link': '/undertime'
                         },
                         {
-                            'name': 'Attendance Correction',
+                            'name': 'Attendance Reversal',
                             'link': '/attendance/correction'
                         },
                         {
@@ -181,7 +181,7 @@ const DashboardMenu = (props: any) => {
         
                         },
                         {
-                            'name': 'Attendance Correction',
+                            'name': 'Attendance Reversal',
                             'link': '/attendance/correction'
         
                         },
