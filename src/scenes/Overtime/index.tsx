@@ -36,9 +36,13 @@ export const Overtime = (props: any) => {
   const [myot, setMyOT] = useState<any>([]);
   const [otId, setOtId] = useState<any>("");
   const [otClassification, setOtClassification] = useState<any>([]);
-  const [onSubmit, setOnSubmit] = useState<any>(false);
-  const [initialValues, setInitialValues] = useState<any>(initialPayload)
-  
+  const [filterData, setFilterData] = React.useState([]);
+  const [initialValues, setInitialValues] = useState<any>({
+    "shiftDate": moment().format("YYYY-MM-DD"),
+    "classification": "NORMAL_OT",
+    "otStart": "",
+    "otEnd": ""
+  })
   const formRef: any = useRef()
   
 
@@ -76,10 +80,33 @@ export const Overtime = (props: any) => {
     getMyOT(event.selected, "")
   };
 
+  const makeFilterData = (event: any) => {
+    const { name, value } = event.target
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && value !== "Select" ? value : ""
+    setFilterData(filterObj)
+  }
   const getMyOT = (page: any = 0, status: any = "All") => {
+
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if(status != ""){
+      queryString = "&status="+ status
+    }else{
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
       RequestAPI.getRequest(
-        `${Api.allOvertime}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+        `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
         "",
         {},
         {},
@@ -227,6 +254,7 @@ export const Overtime = (props: any) => {
               <th style={{ width: 'auto' }}>Classification</th>
               <th style={{ width: 'auto' }}>OT Start</th>
               <th style={{ width: 'auto' }}>OT End</th>
+              <th style={{ width: 'auto' }}>File Date</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -242,8 +270,9 @@ export const Overtime = (props: any) => {
                   <tr>
                     <td> {item.shiftDate} </td>
                     <td> {item.classification} </td>
-                    <td> {moment(item.otStart).format("MMM DD, YYYY hh:mm A")} </td>
-                    <td> {moment(item.otEnd).format("MMM DD, YYYY hh:mm A")} </td>
+                    <td> {item.otStart} </td>
+                    <td> {item.otEnd} </td>
+                    <td> {item.fileDate} </td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td>
@@ -351,6 +380,55 @@ export const Overtime = (props: any) => {
 
                 </div>
                 <div className="w-100 pt-4">
+                <div className="fieldtext d-flex col-md-3">
+                  <div>
+                      <label>Date From</label>
+                      <div>
+                          <input
+                          name="dateFrom"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                          />
+                      </div>
+                  </div>
+                  <div>
+                      <label>Date To</label>
+                      <div className="input-container">
+                          <input
+                          name="dateTo"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                          />
+                      </div>
+                  </div>
+                  <div>
+                      <label>Date Filed</label>
+                      <div className="input-container">
+                          <input
+                          name="dateFiled"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                          />
+                      </div>
+                  </div>
+                  <div>
+                      <Button
+                      style={{ width: 120}}
+                      onClick={() => getMyOT(0,"")}
+                      className="btn btn-primary mx-2 mt-4">
+                      Search
+                      </Button>
+                  </div>
+              </div>
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}

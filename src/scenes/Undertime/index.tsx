@@ -29,6 +29,7 @@ export const Undertime = (props: any) => {
     const [myut, setMyUT] = useState<any>([]);
     const [utId, setUtId] = useState<any>("");
     const [onSubmit, setOnSubmit] = useState<any>(false);
+    const [filterData, setFilterData] = React.useState([]);
     let initialPayload = {
         "shiftDate": moment().format("YYYY-MM-DD"),
         "utStart": "",
@@ -45,11 +46,34 @@ export const Undertime = (props: any) => {
     const handlePageClick = (event: any) => {
         getMyUT(event.selected, "")
     };
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+      }
 
     const getMyUT = (page: any = 0, status: any = "All") => {
+
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if(status != ""){
+          queryString = "&status="+ status
+        }else{
+          if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+              if (filterDataTemp[d]) {
+                
+                queryString += `&${d}=${filterDataTemp[d]}`
+              } else {
+                queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+              }
+            })
+          }
+        }
         if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
             RequestAPI.getRequest(
-                `${Api.allUndertime}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+                `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                 "",
                 {},
                 {},
@@ -65,7 +89,7 @@ export const Undertime = (props: any) => {
             )
         }else{
             RequestAPI.getRequest(
-                `${Api.myUT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+                `${Api.myUT}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                 "",
                 {},
                 {},
@@ -195,6 +219,7 @@ export const Undertime = (props: any) => {
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>UT Start</th>
                             <th style={{ width: 'auto' }}>UT End</th>
+                            <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Reason</th>
                             <th style={{ width: 'auto' }}>Status</th>
                             <th style={{ width: 'auto' }}>Action</th>
@@ -209,8 +234,9 @@ export const Undertime = (props: any) => {
                                 return (
                                     <tr>
                                         <td> {item.shiftDate} </td>
-                                        <td> {moment(item.utStart).format("MMM DD, YYYY hh:mm A")}</td>
-                                        <td> {moment(item.utEnd).format("MMM DD, YYYY hh:mm A")} </td>
+                                        <td> {item.utStart} </td>
+                                        <td> {item.utEnd} </td>
+                                        <td> {item.fileDate} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.status} </td>
                                         <td>
@@ -316,7 +342,58 @@ export const Undertime = (props: any) => {
                     </div>
                     
                     </div> */}
+                   
                                 <div className="w-100 pt-4">
+                                    <div className="fieldtext d-flex col-md-3">
+                                        <div>
+                                            <label>Date From</label>
+                                            <div>
+                                                <input
+                                                name="dateFrom"
+                                                type="date"
+                                                autoComplete="off"
+                                                className="formControl"
+                                                onChange={(e) => makeFilterData(e)}
+                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label>Date To</label>
+                                            <div className="input-container">
+                                                <input
+                                                name="dateTo"
+                                                type="date"
+                                                autoComplete="off"
+                                                className="formControl"
+                                                onChange={(e) => makeFilterData(e)}
+                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label>Date Filed</label>
+                                            <div className="input-container">
+                                                <input
+                                                name="dateFiled"
+                                                type="date"
+                                                autoComplete="off"
+                                                className="formControl"
+                                                onChange={(e) => makeFilterData(e)}
+                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <Button
+                                            style={{ width: 120}}
+                                            onClick={() => getMyUT(0,"")}
+                                            className="btn btn-primary mx-2 mt-4">
+                                            Search
+                                            </Button>
+                                        </div>
+                                    </div>
+                                   
                                     <Tabs
                                         id="controlled-tab-example"
                                         activeKey={key}

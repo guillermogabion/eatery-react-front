@@ -5824,3 +5824,14 @@ td.pendingLabel .active {
   padding: 0px 10px;
   margin: 1px 1px;
 }
+
+.error-text {
+  font-size: 10px;
+  color: red;
+}
+.input-container {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+

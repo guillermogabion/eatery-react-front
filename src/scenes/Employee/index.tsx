@@ -28,6 +28,8 @@ export const Employee = (props: any) => {
   const [squadList, setSquadList] = React.useState([]);
   const [employeeList, setEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
+  const [filterData, setFilterData] = React.useState([]);
+
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
     "status": "ACTIVE",
@@ -95,6 +97,66 @@ export const Employee = (props: any) => {
     "passportNo": 0
   })
 
+
+  const validationSchema = Yup.object().shape({
+
+    // information 
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    middleName: Yup.string().required('Middle name is required'),
+    gender: Yup.string().required('Gender is required'),
+    civilStatus: Yup.string().required('Civil Status is required'),
+    birthDay: Yup.date().required('Birth Date is required').typeError('Please enter a valid date'),
+    contactNumber: Yup.number().required('Contact Number is required').typeError('Please enter a valid number'),
+    emailAddress: Yup.string().required('Email Address is required').email('Invalid Email Address'),
+    prclicenseNo: Yup.number().required('PRC License Number is required').typeError('Please enter a valid number'),
+    passportNo: Yup.string().required('Passport Number is required'),
+
+    
+    // emergency 
+    emergencyContactNo: Yup.number().required('Contact Number is required').typeError('Please enter a valid number'),
+    emergencyContactName: Yup.string().required('Contact name is required'),
+    emergencyContactAddress: Yup.string().required('Contact name is required'),
+
+    // other information 
+    employeeId: Yup.string().required('Employee ID is required'),
+    biometricsId: Yup.string().required('Biometrics ID is required'),
+    companyEmail: Yup.string().required('Company Email is required').email('Invalid Email Address'),
+    jobTitle: Yup.string().required('Job Title is required'),
+    immediateSuperiorId: Yup.string().required('Immediate Superior ID is required'),
+    employmentStatusEffectivityDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    bankAccountNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
+    tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
+    position: Yup.string().required('Position is required'),
+    regularizationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    costCenter: Yup.string().required('Cost Center is required'),
+    seperationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    sssNumber: Yup.number().required('SSS Number is required').typeError('Please enter a valid number'),
+    philHealthId: Yup.number().required('PhilHealth ID is required').typeError('Please enter a valid number'),
+    hdmfNumber: Yup.number().required('HDMF Number is required').typeError('Please enter a valid number'),
+    otComputationTable: Yup.string().required('OT Computation Table is required'),
+    minimumWageEarner: Yup.string().required('Minimum Wage Earner is required'),
+    totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
+    workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
+    clientName: Yup.string().required('Client Name is required'),
+    jobCode: Yup.string().required('Job Code is required'),
+    billability: Yup.string().required('Billability is required'),
+    payGroup: Yup.string().required('Pay Group is required'),
+    payrollRunType: Yup.string().required('Payroll Run Type is required'),
+    basicMonthlySalary: Yup.string().required('Basic Monthly Salary is required'),
+    salaryEffectivityDate: Yup.string().required('Salary Effectivity Date is required'),
+    monthlyDeMinimisBenefits: Yup.string().required('Monthly De Minimis Benefits is required'),
+    ecola: Yup.string().required('Ecola is required'),
+
+
+
+
+
+    
+    
+  })
+
   useEffect(() => {
     RequestAPI.getRequest(
       `${Api.getAllSquad}`,
@@ -118,9 +180,34 @@ export const Employee = (props: any) => {
     getAllEmployee(event.selected)
   };
 
-  const getAllEmployee = (pageNo: any) => {
+  const makeFilterData = (event: any) => {
+    const { name, value } = event.target
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && value !== "Select" ? value : ""
+    setFilterData(filterObj)
+  }
+  
+
+  const getAllEmployee = (pageNo: any, employeeId? : any) => {
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if(employeeId){
+      queryString = "&employeeId" + employeeId
+    }else{
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
+    
     RequestAPI.getRequest(
-      `${Api.allEmployee}?size=10&page=${pageNo}`,
+      `${Api.allEmployee}?size=10&page=${pageNo}${queryString}`,
       "",
       {},
       {},
@@ -137,6 +224,11 @@ export const Employee = (props: any) => {
     )
   }
 
+
+  
+
+
+
   const setFormField = (e: any, setFieldValue: any) => {
     const { name, value } = e.target
     if (setFieldValue) {
@@ -148,6 +240,7 @@ export const Employee = (props: any) => {
     'Employee ID',
     'Employee Type',
     'Employee Status',
+    'Employee ID',
     'Full Name',
     'Hired Date',
     'Account Status',
@@ -251,7 +344,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="firstName"
                   id="firstName"
-                  className="form-control"
+                  className={`form-control ${touched.firstName && errors.firstName ? 'is-invalid' : ''}`}
                   value={values.firstName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -265,7 +358,7 @@ export const Employee = (props: any) => {
                   name="lastName"
                   id="lastName"
                   value={values.lastName}
-                  className="form-control"
+                  className={`form-control ${touched.lastName && errors.lastName ? 'is-invalid' : ''}`}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.lastName && (
@@ -278,15 +371,17 @@ export const Employee = (props: any) => {
                   type="text"
                   name="middleName"
                   id="middleName"
-                  className="form-control"
+                  className={`form-control ${touched.middleName && errors.middleName ? 'is-invalid' : ''}`}
                   value={values.middleName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
+                 {errors.middleName && <div className="error-text">{String(errors.middleName)}</div>}
+
               </div>
               <div className="form-group col-md-3 mb-3" >
                 <label>Gender</label>
                 <select
-                  className="form-select"
+                  className={`form-select ${touched.gender && errors.gender ? 'is-invalid' : ''}`}
                   name="gender"
                   id="gender"
                   value={values.gender}
@@ -330,7 +425,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="birthDay"
                   id="birthDay"
-                  className="form-control"
+                  className={`form-control ${touched.birthDay && errors.birthDay ? 'is-invalid' : ''}`}
                   value={values.birthDay}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -343,7 +438,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="contactNumber"
                   id="contactNumber"
-                  className="form-control"
+                  className={`form-control ${touched.contactNumber && errors.contactNumber ? 'is-invalid' : ''}`}
                   value={values.contactNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -356,7 +451,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emailAddress"
                   id="emailAddress"
-                  className="form-control"
+                  className={`form-control ${touched.emailAddress && errors.emailAddress ? 'is-invalid' : ''}`}
                   value={values.emailAddress}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -369,7 +464,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="prclicenseNo"
                   id="prclicenseNo"
-                  className="form-control"
+                  className={`form-control ${touched.prclicenseNo && errors.prclicenseNo ? 'is-invalid' : ''}`}
                   value={values.prclicenseNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -382,7 +477,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="passportNo"
                   id="passportNo"
-                  className="form-control"
+                  className={`form-control ${touched.passportNo && errors.passportNo ? 'is-invalid' : ''}`}
                   value={values.passportNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -454,7 +549,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emergencyContactNo"
                   id="emergencyContactNo"
-                  className="form-control"
+                  className={`form-control ${touched.emergencyContactNo && errors.emergencyContactNo ? 'is-invalid' : ''}`}
                   value={values.emergencyContactNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -467,9 +562,10 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emergencyContactName"
                   id="emergencyContactName"
-                  className="form-control"
+                  className={`form-control ${touched.emergencyContactName && errors.emergencyContactName ? 'is-invalid' : ''}`}
                   value={values.emergencyContactName}
                   onChange={(e) => setFormField(e, setFieldValue)}
+
                 />
                 {errors && errors.emergencyContactName && (
                   <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactName}</p>
@@ -480,7 +576,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emergencyContactAddress"
                   id="emergencyContactAddress"
-                  className="form-control"
+                  className={`form-control ${touched.emergencyContactAddress && errors.emergencyContactAddress ? 'is-invalid' : ''}`}
                   value={values.emergencyContactAddress}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -602,7 +698,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="employeeId"
                   id="employeeId"
-                  className="form-control"
+                  className={`form-control ${touched.employeeId && errors.employeeId ? 'is-invalid' : ''}`}
                   value={values.employeeId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -615,7 +711,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="biometricsId"
                   id="biometricsId"
-                  className="form-control"
+                  className={`form-control ${touched.biometricsId && errors.biometricsId ? 'is-invalid' : ''}`}
                   value={values.biometricsId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -628,7 +724,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="companyEmail"
                   id="companyEmail"
-                  className="form-control"
+                  className={`form-control ${touched.companyEmail && errors.companyEmail ? 'is-invalid' : ''}`}
                   value={values.companyEmail}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -662,7 +758,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="jobTitle"
                   id="jobTitle"
-                  className="form-control"
+                  className={`form-control ${touched.jobTitle && errors.jobTitle ? 'is-invalid' : ''}`}
                   value={values.jobTitle}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -696,7 +792,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="immediateSuperiorId"
                   id="immediateSuperiorId"
-                  className="form-control"
+                  className={`form-control ${touched.immediateSuperiorId && errors.immediateSuperiorId ? 'is-invalid' : ''}`}
                   value={values.immediateSuperiorId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -730,7 +826,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="employmentStatusEffectivityDate"
                   id="employmentStatusEffectivityDate"
-                  className="form-control"
+                  className={`form-control ${touched.employmentStatusEffectivityDate && errors.employmentStatusEffectivityDate ? 'is-invalid' : ''}`}
                   value={values.employmentStatusEffectivityDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -743,7 +839,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="hireDate"
                   id="hireDate"
-                  className="form-control"
+                  className={`form-control ${touched.hireDate && errors.hireDate ? 'is-invalid' : ''}`}
                   value={values.hireDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -777,7 +873,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="bankAccountNumber"
                   id="bankAccountNumber"
-                  className="form-control"
+                  className={`form-control ${touched.bankAccountNumber && errors.bankAccountNumber ? 'is-invalid' : ''}`}
                   value={values.bankAccountNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -790,7 +886,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="tinNumber"
                   id="tinNumber"
-                  className="form-control"
+                  className={`form-control ${touched.tinNumber && errors.tinNumber ? 'is-invalid' : ''}`}
                   value={values.tinNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -803,7 +899,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="position"
                   id="position"
-                  className="form-control"
+                  className={`form-control ${touched.position && errors.position ? 'is-invalid' : ''}`}
                   value={values.position}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -816,7 +912,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="regularizationDate"
                   id="regularizationDate"
-                  className="form-control"
+                  className={`form-control ${touched.regularizationDate && errors.regularizationDate ? 'is-invalid' : ''}`}
                   value={values.regularizationDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -829,7 +925,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="statusDate"
                   id="statusDate"
-                  className="form-control"
+                  className={`form-control ${touched.statusDate && errors.statusDate ? 'is-invalid' : ''}`}
                   value={values.statusDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -863,7 +959,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="costCenter"
                   id="costCenter"
-                  className="form-control"
+                  className={`form-control ${touched.costCenter && errors.costCenter ? 'is-invalid' : ''}`}
                   value={values.costCenter}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -876,7 +972,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="seperationDate"
                   id="seperationDate"
-                  className="form-control"
+                  className={`form-control ${touched.seperationDate && errors.seperationDate ? 'is-invalid' : ''}`}
                   value={values.seperationDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -889,7 +985,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="sssNumber"
                   id="sssNumber"
-                  className="form-control"
+                  className={`form-control ${touched.sssNumber && errors.sssNumber ? 'is-invalid' : ''}`}
                   value={values.sssNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -902,7 +998,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="philHealthId"
                   id="philHealthId"
-                  className="form-control"
+                  className={`form-control ${touched.philHealthId && errors.philHealthId ? 'is-invalid' : ''}`}
                   value={values.philHealthId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -915,7 +1011,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="hdmfNumber"
                   id="hdmfNumber"
-                  className="form-control"
+                  className={`form-control ${touched.hdmfNumber && errors.hdmfNumber ? 'is-invalid' : ''}`}
                   value={values.hdmfNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -952,7 +1048,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="otComputationTable"
                   id="otComputationTable"
-                  className="form-control"
+                  className={`form-control ${touched.otComputationTable && errors.otComputationTable ? 'is-invalid' : ''}`}
                   value={values.otComputationTable}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -965,7 +1061,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="minimumWageEarner"
                   id="minimumWageEarner"
-                  className="form-control"
+                  className={`form-control ${touched.minimumWageEarner && errors.minimumWageEarner ? 'is-invalid' : ''}`}
                   value={values.minimumWageEarner}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -978,7 +1074,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="totalWorkHrsPerDay"
                   id="totalWorkHrsPerDay"
-                  className="form-control"
+                  className={`form-control ${touched.totalWorkHrsPerDay && errors.totalWorkHrsPerDay ? 'is-invalid' : ''}`}
                   value={values.totalWorkHrsPerDay}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -991,7 +1087,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="workDaysPerYear"
                   id="workDaysPerYear"
-                  className="form-control"
+                  className={`form-control ${touched.workDaysPerYear && errors.workDaysPerYear ? 'is-invalid' : ''}`}
                   value={values.workDaysPerYear}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1025,7 +1121,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="clientName"
                   id="clientName"
-                  className="form-control"
+                  className={`form-control ${touched.clientName && errors.clientName ? 'is-invalid' : ''}`}
                   value={values.clientName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1038,7 +1134,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="jobCode"
                   id="jobCode"
-                  className="form-control"
+                  className={`form-control ${touched.jobCode && errors.jobCode ? 'is-invalid' : ''}`}
                   value={values.jobCode}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1071,7 +1167,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="billability"
                   id="billability"
-                  className="form-control"
+                  className={`form-control ${touched.billability && errors.billability ? 'is-invalid' : ''}`}
                   value={values.billability}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1105,7 +1201,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="payGroup"
                   id="payGroup"
-                  className="form-control"
+                  className={`form-control ${touched.payGroup && errors.payGroup ? 'is-invalid' : ''}`}
                   value={values.payGroup}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1118,7 +1214,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="payrollRunType"
                   id="payrollRunType"
-                  className="form-control"
+                  className={`form-control ${touched.payrollRunType && errors.payrollRunType ? 'is-invalid' : ''}`}
                   value={values.payrollRunType}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1131,7 +1227,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="basicMonthlySalary"
                   id="basicMonthlySalary"
-                  className="form-control"
+                  className={`form-control ${touched.basicMonthlySalary && errors.basicMonthlySalary ? 'is-invalid' : ''}`}
                   value={values.basicMonthlySalary}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1144,7 +1240,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="salaryEffectivityDate"
                   id="salaryEffectivityDate"
-                  className="form-control"
+                  className={`form-control ${touched.salaryEffectivityDate && errors.salaryEffectivityDate ? 'is-invalid' : ''}`}
                   value={values.salaryEffectivityDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1157,7 +1253,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="monthlyDeMinimisBenefits"
                   id="monthlyDeMinimisBenefits"
-                  className="form-control"
+                  className={`form-control ${touched.monthlyDeMinimisBenefits && errors.monthlyDeMinimisBenefits ? 'is-invalid' : ''}`}
                   value={values.monthlyDeMinimisBenefits}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1170,7 +1266,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="ecola"
                   id="ecola"
-                  className="form-control"
+                  className={`form-control ${touched.ecola && errors.ecola ? 'is-invalid' : ''}`}
                   value={values.ecola}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1467,6 +1563,53 @@ export const Employee = (props: any) => {
               <div>
                 <h3>Employee Management</h3>
                 <div className="w-100">
+
+                <div className="fieldtext d-flex col-md-6">
+                <div className="input-container">
+                    <input
+                      name="employeeId"
+                      placeholder="Employee ID"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    </div>
+                    <div className="input-container">
+
+                    <input
+                      name="firstname"
+                      placeholder="First name"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                     </div>
+                    <div className="input-container">
+
+                    <input
+                      name="lastname"
+                      placeholder="Last name"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                    </div>
+                    <Button
+                        style={{ width: 210}}
+                        onClick={() => getAllEmployee(0,"")}
+                        className="btn btn-primary mx-2">
+                        Search
+                      </Button>
+                  </div>
                   <Table responsive="lg">
                     <thead>
                       <tr>
@@ -1493,6 +1636,7 @@ export const Employee = (props: any) => {
                               <td> {item.employeeId} </td>
                               <td> {item.empType} </td>
                               <td> {item.empStatus} </td>
+                              <td> {item.employeeId} </td>
                               <td> {item.fullname} </td>
                               <td> {item.hireDate} </td>
                               <td> {item.acctStatus} </td>
