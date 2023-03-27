@@ -118,7 +118,7 @@ export const Report = (props: any) => {
                     id="toDate"
                     className="form-control"
                     value={toDate}
-                    min={toDate}
+                    min={fromDate}
                     onChange={(e) => {
                     setToDate(e.target.value)
                     }}
