@@ -418,7 +418,7 @@ export const AttendanceCorrection = (props: any) => {
                     onClick={() => {
                       setModalShow(true),
                       handleRemoveAllItems()
-                    }}>Request for COA</Button>
+                    }}>Request for Attendance Reversal</Button>
                 </div>
               </div>
             </div>
@@ -442,7 +442,8 @@ export const AttendanceCorrection = (props: any) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Create Correction of Attendance
+              {/* Create Attendance Reversal */}
+              {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
