@@ -1719,7 +1719,8 @@ export const Employee = (props: any) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Create New Employee
+              {/* Create New Employee */}
+              {userId ? 'Update Employee' : 'Create New Employee'}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 p-0 m-0" >

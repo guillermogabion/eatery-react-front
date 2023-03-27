@@ -469,7 +469,8 @@ export const Undertime = (props: any) => {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
-                            Request Undertime
+                            {/* Request Undertime */}
+                            {utId ? 'Update Undertime Request' : 'Create Undertime Request'}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="row w-100 px-5">
