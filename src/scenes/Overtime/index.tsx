@@ -17,9 +17,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
-
+import { useSelector, useDispatch } from "react-redux"
 export const Overtime = (props: any) => {
   const { history } = props
   let initialPayload = {
@@ -28,6 +27,10 @@ export const Overtime = (props: any) => {
     "otStart": "",
     "otEnd": ""
   }
+  
+  const userData = useSelector((state: any) => state.rootReducer.userData)
+  const [onSubmit, setOnSubmit] = useState<any>(false);
+
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
@@ -360,7 +363,7 @@ export const Overtime = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good day, Employee 001!</h2>
+                  <h2>Good day, {userData.data.profile.firstName}!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

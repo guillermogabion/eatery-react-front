@@ -43,6 +43,8 @@ export const Leaves = (props: any) => {
   const [leaveId, setLeaveId] = useState<any>("");
   const [filterData, setFilterData] = React.useState([]);
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
+  const userData = useSelector((state: any) => state.rootReducer.userData)
+
   const formRef: any = useRef()
 
   const tableHeaders = [
@@ -442,7 +444,7 @@ export const Leaves = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good day, Employee 001!</h2>
+                  <h2>Good day, {userData.data.profile.firstName}!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

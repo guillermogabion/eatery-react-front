@@ -11,6 +11,8 @@ import { Utility } from "./../../utils"
 import withReactContent from "sweetalert2-react-content"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
+import { useSelector, useDispatch } from "react-redux"
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -19,6 +21,8 @@ const loginSchema = Yup.object().shape({
 })
 
 const ReSetPasswordInput = (props: any) => {
+  const userData = useSelector((state: any) => state.rootReducer.userData)
+
   const { name, placeholder, type, setFieldValue, error, setErrorsForm, errors } = props
   const [onFocusInput, setOnFocusInput] = useState<any>(false)
   const [inputValue, setInputValue] = useState<any>("")
@@ -117,7 +121,7 @@ export const ChangePassword = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good day, Employee 001!</h2>
+                  <h2>Good day, {userData.data.profile.firstName}!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />
