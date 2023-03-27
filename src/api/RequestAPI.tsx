@@ -165,6 +165,28 @@ const RequestAPI = {
         fileDownload(result, filename)
       })
   },
+  getFileAsync(path: any, key: any, filename: any,callBack: (res: any) => Promise<void | any | undefined>) {
+    const myHeaders = new Headers()
+    myHeaders.append("Authorization", `Bearer ${key ? key : Utility.getUserToken() || ""}`)
+
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+      rejectUnauthorized: false,
+      requestCert: true,
+      agent: false,
+      strictSSL: false,
+    }
+
+    fetch(path, requestOptions)
+      .then((response) => response.blob())
+      .then((result) => {
+        const fileDownload = require("js-file-download")
+        fileDownload(result, filename)
+        callBack("Done")
+      })
+  },
   getDownloadRequest(
     path: string,
     key: any,

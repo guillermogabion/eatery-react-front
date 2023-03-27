@@ -21,6 +21,7 @@ export const Report = (props: any) => {
     const [downloadModalShow, setDownloadModalShow] = React.useState(false);
     const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
+    const [isSubmit, setIsSubmit] = React.useState(false);
 
 
     const tableHeaders = [
@@ -34,11 +35,19 @@ export const Report = (props: any) => {
     ]
 
     const downloadExcel = (fromDate: any, toDate: any) => {
-        RequestAPI.getFile(
+        setIsSubmit(true)
+        RequestAPI.getFileAsync(
             `${Api.downloadTimeKeeping}?fromDate=${fromDate}&toDate=${toDate}`,
             "",
-            "timekeeping.xlsx"
+            "timekeeping.xlsx",
+            async (res: any) => {
+                if(res){
+                    setIsSubmit(false)
+                }
+                
+            }
         )
+        // console.log(download)
     }
 
     return (
@@ -126,7 +135,11 @@ export const Report = (props: any) => {
                 </div>
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center">
-                    <Button onClick={() => downloadExcel(fromDate, toDate)}>Proceed</Button>
+                    <Button 
+                        onClick={() => downloadExcel(fromDate, toDate)}
+                        disabled={isSubmit}>
+                            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>: "" } Proceed
+                    </Button>
                 </Modal.Footer>
             </Modal>
             {/* End Create User Modal Form */}
