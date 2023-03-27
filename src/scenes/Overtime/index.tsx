@@ -494,8 +494,8 @@ export const Overtime = (props: any) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              {/* Request Overtime */}
-              {otId ? 'Update Overtime Request' : 'Create Overtime Request'}
+              Request Overtime
+              {/* {otId ? 'Update Overtime Request' : 'Create Overtime Request'} */}
 
             </Modal.Title>
           </Modal.Header>
