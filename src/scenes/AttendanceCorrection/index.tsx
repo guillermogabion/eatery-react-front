@@ -553,8 +553,8 @@ export const AttendanceCorrection = (props: any) => {
                               name="reason"
                               id="reason"
                               value={values.reason}
-                              className="form-control"
-                              style={{ height: "200px" }}
+                              className="form-control p-2"
+                              style={{ height: 100 }}
                               onChange={(e) => {
                                 setFieldValue("reason", e.target.value);
                               }}
