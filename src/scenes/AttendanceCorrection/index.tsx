@@ -533,6 +533,8 @@ export const AttendanceCorrection = (props: any) => {
                     autoComplete="off"
                     >
                        <div>
+                       <label>Type</label>
+                        
                         <select
                           className="form-select"
                           name="type"
@@ -554,7 +556,7 @@ export const AttendanceCorrection = (props: any) => {
                               id="reason"
                               value={values.reason}
                               className="form-control"
-                              style={{ height: "200px" }}
+                              style={{ height: "150px" }}
                               onChange={(e) => {
                                 setFieldValue("reason", e.target.value);
                               }}
