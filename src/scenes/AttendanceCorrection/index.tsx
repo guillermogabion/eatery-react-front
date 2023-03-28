@@ -533,6 +533,8 @@ export const AttendanceCorrection = (props: any) => {
                     autoComplete="off"
                     >
                        <div>
+                       <label>Type</label>
+                        
                         <select
                           className="form-select"
                           name="type"
