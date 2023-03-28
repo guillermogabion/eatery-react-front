@@ -58,6 +58,7 @@ export const AttendanceCorrection = (props: any) => {
     const updatedFields = [...coaBreakdown];
     updatedFields.splice(index, 1);
     setCoaBreakdown(updatedFields);
+    setCoaBreakdownCount(coaBreakdownCount - 1); // update the count
   }
   const handleRemoveAllItems = () => {
     setCoaBreakdown([]);
@@ -546,8 +547,21 @@ export const AttendanceCorrection = (props: any) => {
                           <option value="Power_Outage">Power Outage</option>
                           <option value="Others">Others</option>
                         </select>
+                        <div className="form-group col-md-12 mb-3">
+                            <label>Reason</label>
+                            <textarea
+                              name="reason"
+                              id="reason"
+                              value={values.reason}
+                              className="form-control p-2"
+                              style={{ height: 100 }}
+                              onChange={(e) => {
+                                setFieldValue("reason", e.target.value);
+                              }}
+                            />
+                          </div>
 
-                        {showReason && (
+                        {/* {showReason && (
                           <div className="form-group col-md-12 mb-3">
                             <label>Reason</label>
                             <textarea
@@ -561,11 +575,11 @@ export const AttendanceCorrection = (props: any) => {
                               }}
                             />
                           </div>
-                        )}
+                        )} */}
                       </div>
 
                       {coaBreakdown.map((values, index) => (
-                        <div key={index}>
+                        <div key={`coaBreakdown-${index}`}>
                          <div className="form-group row">
                             <div className="col-md-4 mb-3">
                               <label>Date</label>
