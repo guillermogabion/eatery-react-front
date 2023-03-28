@@ -85,7 +85,7 @@ export const Dashboard = (props: any) => {
             }else{
               ErrorSwal.fire(
                 'Error!',
-                'Something Error.',
+                (body.error && body.error.message) || 'Something Error.',
                 'error'
               )
             }
@@ -127,7 +127,7 @@ export const Dashboard = (props: any) => {
                 }else{
                   ErrorSwal.fire(
                     'Error!',
-                    'Something Error.',
+                    (body.error && body.error.message) || 'Something Error.',
                     'error'
                   )
                 }
