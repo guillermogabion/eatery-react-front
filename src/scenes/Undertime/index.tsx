@@ -267,7 +267,7 @@ export const Undertime = (props: any) => {
                                                         </label> <br />
                                                         </>
                                                     ) : null}
-                                                    {authorizations.includes("Request:Decline") ? (
+                                                    {authorizations.includes("Request:Reject") ? (
                                                         <>
                                                         <label
                                                             onClick={() => {

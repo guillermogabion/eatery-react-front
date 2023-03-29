@@ -80,8 +80,8 @@ export const AttendanceCorrection = (props: any) => {
     "reason": "",
     "coaBd": [
       {
-        "date": "2023-03-21",
-        "coaBdType": "TIME_IN",
+        "date": "",
+        "coaBdType": "",
         "time": ""
       }
     ]
@@ -296,7 +296,7 @@ export const AttendanceCorrection = (props: any) => {
                     <td> {item.status} </td>
                     <td>
                       {
-                        item.status != "APPROVED" && item.status != "DECLINED" ?
+                        item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
                           {authorizations.includes("Request:Update") ? (
                             <>
@@ -452,7 +452,19 @@ export const AttendanceCorrection = (props: any) => {
               innerRef={formRef}
               enableReinitialize={true}
               initialValues={initialValues}
-              validationSchema={null}
+              validationSchema={
+                Yup.object().shape ({
+                  reason: Yup.string().required("Please Enter a Reason"),
+                  date: Yup.date().required("Date is required"),
+                  time: Yup.string().matches(
+                    /^([01]\d|2[0-3]):([0-5]\d)$/,
+                    "Time must be in 24-hour format (HH:MM)"
+                  ).required("Time is required"),
+                  coaBdType: Yup.string()
+                    .oneOf(["Time In", "Time Out"], "COA breakdown type must be 'Time in' or 'Time out'")
+                    .required("COA breakdown type is required"),
+                })
+              }
               onSubmit={(values, actions) => {
               const valuesObj: any = { ...values }
               valuesObj.coaBd = coaBreakdown
@@ -555,13 +567,16 @@ export const AttendanceCorrection = (props: any) => {
                               name="reason"
                               id="reason"
                               value={values.reason}
-                              className="form-control p-2"
-                              style={{ height: 100 }}
+                              className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                              style={{ height: "100px" }}
                               onChange={(e) => {
                                 setFieldValue("reason", e.target.value);
                               }}
                             />
                           </div>
+                          {errors && errors.reason && (
+                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
+                                )}
 
                         {/* {showReason && (
                           <div className="form-group col-md-12 mb-3">
@@ -594,9 +609,10 @@ export const AttendanceCorrection = (props: any) => {
                                   updatedFields[index].date = e.target.value;
                                   setCoaBreakdown(updatedFields);
                                 }}
-                                className="form-control"
+                                className={`form-control ${touched.date && errors.date ? 'is-invalid' : ''}`}
                               />
                             </div>
+                          
                             <div className="col-md-4 mb-3 mt-4">
                               <select
                                 name="coaBdType"
@@ -606,7 +622,7 @@ export const AttendanceCorrection = (props: any) => {
                                   updatedFields[index].coaBdType = e.target.value;
                                   setCoaBreakdown(updatedFields);
                                 }}
-                                className="form-select"
+                                className={`form-control ${touched.coaBdType && errors.coaBdType ? 'is-invalid' : ''}`}
                               >
                                 {options.map(option => (
                                   <option key={option.value} value={option.value}>
@@ -615,6 +631,7 @@ export const AttendanceCorrection = (props: any) => {
                                 ))}
                               </select>
                             </div>
+                           
                             <div className="col-md-4 mb-3">
                               <label>Time</label>
                               <input
@@ -626,11 +643,32 @@ export const AttendanceCorrection = (props: any) => {
                                   updatedFields[index].time = e.target.value;
                                   setCoaBreakdown(updatedFields);
                                 }}
-                                className="form-control"
+                                className={`form-control ${touched.time && errors.time ? 'is-invalid' : ''}`}
+
                               />
+                              
                             </div>
+                           
                           </div> 
+                          <div className="form-group row">
+                            <div className="col-md-4 mb-3">
+                              {errors && errors.date && (
+                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
+                                )}
+                            </div>
+                            <div className="col-md-4 mb-3">
+                              {errors && errors.coaBdType && (
+                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
+                                )}
+                            </div>
+                            <div className="col-md-4 mb-3">
+                              {errors && errors.time && (
+                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
+                                )}
+                            </div>
                          
+                          </div>
+                          
                           <button
                           className="btn btn btn-outline-primary me-2 mb-2"
                           onClick={() => handleRemoveItem(index)}>Remove</button>
