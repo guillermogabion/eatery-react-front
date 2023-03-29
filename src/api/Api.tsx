@@ -12,6 +12,7 @@ const Api: any = {
   refreshToken: process.env.REACT_APP_API_URL + "user/auth/refresh",
   leaveTypes: process.env.REACT_APP_API_URL + "request/getTypes",
   leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
+  uploadExcelFile : process.env.REACT_APP_API_URL + "employee/uploadExcel",
   
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",

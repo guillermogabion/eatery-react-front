@@ -17,11 +17,14 @@ import * as Yup from "yup";
 import Table from 'react-bootstrap/Table';
 import { useSelector, useDispatch } from "react-redux"
 import ReactPaginate from 'react-paginate';
+import { async } from "validate.js"
+import FileUpload from "./upload"
 
 export const Employee = (props: any) => {
   const { history } = props
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalUploadShow, setModalUploadShow] = React.useState(false);
   const formikRef: any = useRef();
   const [tabIndex, setTabIndex] = React.useState(1);
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
@@ -222,6 +225,10 @@ export const Employee = (props: any) => {
         }
       }
     )
+  }
+
+  const uploadExcel = async(file: any) => {
+    const formData = new FormData()
   }
 
 
@@ -1694,7 +1701,11 @@ export const Employee = (props: any) => {
                 </div>
               <div className="d-flex justify-content-end mt-3" >
                 <div>
-                  <Button className="mx-2">Import</Button>
+                  <Button className="mx-2"
+                  onClick={() => {
+                    setModalUploadShow(true)
+                  }}
+                  >Import</Button>
                   <Button
                     className="mx-2"
                     onClick={() => {
@@ -1736,6 +1747,29 @@ export const Employee = (props: any) => {
 
         </Modal>
         {/* End Create User Modal Form */}
+        {/* start of upload modal  */}
+
+        <Modal
+        show={modalUploadShow}
+        size="sm"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalUploadShow(false)}
+        dialogClassName="modal-90w"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Upload Excel File
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="row w-100 px-5">
+                  <FileUpload />
+
+          </Modal.Body>
+
+        </Modal>
       </div>
 
     </div>

@@ -305,7 +305,7 @@ export const Overtime = (props: any) => {
                             </label> <br />
                             </>
                           ) : null}
-                          {authorizations.includes("Request:Decline") ? (
+                          {authorizations.includes("Request:Reject") ? (
                             <>
                               <label
                               onClick={() => {
