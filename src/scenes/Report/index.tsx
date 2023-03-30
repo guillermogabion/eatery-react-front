@@ -14,9 +14,14 @@ import TimeDate from "../../components/TimeDate"
 import TableComponent from "../../components/TableComponent"
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { useSelector, useDispatch } from "react-redux"
+
 
 
 export const Report = (props: any) => {
+    const userData = useSelector((state: any) => state.rootReducer.userData)
+    const { data } = useSelector((state: any) => state.rootReducer.userData)
+
     const { history } = props
     const [downloadModalShow, setDownloadModalShow] = React.useState(false);
     const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
@@ -62,7 +67,7 @@ export const Report = (props: any) => {
                         <div className="col-md-12 col-lg-10 px-5 py-5">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h2>Good day, Employee 001!</h2>
+                                    <h2>Good day, {userData.data.profile.firstName}</h2>
                                 </div>
                                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                                     <TimeDate />

@@ -253,6 +253,7 @@ export const Overtime = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
+              <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Shift Date</th>
               <th style={{ width: 'auto' }}>Classification</th>
               <th style={{ width: 'auto' }}>OT Start</th>
@@ -271,10 +272,11 @@ export const Overtime = (props: any) => {
               myot.content.map((item: any, index: any) => {
                 return (
                   <tr>
+                    <td> {item.lastName}, {item.firstName}</td>
                     <td> {item.shiftDate} </td>
                     <td> {item.classification} </td>
-                    <td> {item.otStart} </td>
-                    <td> {item.otEnd} </td>
+                    <td> {item.otStart.replace('T', ' ')} </td>
+                    <td> {item.otEnd.replace('T', ' ')} </td>
                     <td> {item.fileDate} </td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>

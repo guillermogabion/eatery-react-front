@@ -19,12 +19,25 @@ import { useSelector, useDispatch } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import { async } from "validate.js"
 import FileUpload from "./upload"
+import ViewEmployee from "./view"
+
+interface Employee {
+  id: number;
+  name: string;
+  employeeId: string;
+  lastName: string;
+  firstName: string;
+  middleName: string;
+  // other properties
+}
+
 
 export const Employee = (props: any) => {
   const { history } = props
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalUploadShow, setModalUploadShow] = React.useState(false);
+  const [modalViewShow, setModalViewShow] = React.useState(false);
   const formikRef: any = useRef();
   const [tabIndex, setTabIndex] = React.useState(1);
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
@@ -32,6 +45,7 @@ export const Employee = (props: any) => {
   const [employeeList, setEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
   const [filterData, setFilterData] = React.useState([]);
+  const [employee, setEmployee] = useState<Employee | null>(null);
 
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
@@ -39,8 +53,8 @@ export const Employee = (props: any) => {
     "firstName": "",
     "middleName": "",
     "lastName": "",
-    "gender": "MALE",
-    "civilStatus": "SINGLE",
+    "gender": "Male",
+    "civilStatus": "Single",
     "birthDay": moment().format("YYYY-MM-DD"),
     "contactNumber": "",
     "emailAddress": "",
@@ -309,8 +323,43 @@ export const Employee = (props: any) => {
     })
   }
 
+  const getEmployeeDetails = (id: number) => {
+    RequestAPI.getRequest(
+      `${Api.employeeInformation}?body=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res;
+        if (status === 200 && body && body.data) {
+          const employeeData: Employee = {
+            id,
+            employeeId: body.data.employeeId,
+            name: body.data.name,
+            lastName : body.data.lastName,
+            firstName : body.data.firstName,
+            middleName : body.data.middleName,
+            // lastName : body.data.lastName,
+            // lastName : body.data.lastName,
+            // lastName : body.data.lastName,
+            // lastName : body.data.lastName,
+            // lastName : body.data.lastName,
+            lastName : body.data.lastName,
+            lastName : body.data.lastName,
+            lastName : body.data.lastName,
+            // set other properties based on the response data
+          };
+          setEmployee(employeeData);
+        }
+      }
+    );
+   
+    setModalViewShow(true);
+  };
+
   const handleCloseModal = () => {
     setModalUploadShow(false);
+    setModalViewShow(false);
   };
 
   const information = (
@@ -1661,8 +1710,17 @@ export const Employee = (props: any) => {
                                     :
                                     null
                                 }
-
+                              <br />
+                               <label
+                                  onClick={() => {
+                                    getEmployeeDetails(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  View
+                                </label>
+                                
                               </td>
+                             
                             </tr>
                           )
                         })
@@ -1772,6 +1830,33 @@ export const Employee = (props: any) => {
           </Modal.Body>
 
         </Modal>
+        {/* start of view  */}
+      <Modal show={modalViewShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalViewShow(false)}
+        dialogClassName="modal-90w"
+        >
+           <Modal.Header closeButton>
+            <Modal.Title>
+                Employee Information
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex align-items-center justify-content-center">
+            <div >
+            {employee && <ViewEmployee employee={employee} />}
+            </div>
+
+     
+
+          </Modal.Body>
+
+
+        </Modal>
+
       </div>
 
     </div>
