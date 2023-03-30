@@ -51,7 +51,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
     <div  className="form-group">
       <input type="file" accept=".xlsx" className="file-input-style" onChange={handleFileChange} />
       <button className="btn btn-primary" onClick={upload}>Upload</button>
-      <button className="btn btn-primary" onClick={close}>Upload</button>
     </div>
   );
 };
