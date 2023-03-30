@@ -231,11 +231,7 @@ export const Employee = (props: any) => {
     const formData = new FormData()
   }
 
-
   
-
-
-
   const setFormField = (e: any, setFieldValue: any) => {
     const { name, value } = e.target
     if (setFieldValue) {
@@ -312,6 +308,10 @@ export const Employee = (props: any) => {
       }
     })
   }
+
+  const handleCloseModal = () => {
+    setModalUploadShow(false);
+  };
 
   const information = (
     <Formik
@@ -1751,7 +1751,7 @@ export const Employee = (props: any) => {
 
         <Modal
         show={modalUploadShow}
-        size="sm"
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         backdrop="static"
@@ -1764,8 +1764,10 @@ export const Employee = (props: any) => {
               Upload Excel File
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body className="row w-100 px-5">
-                  <FileUpload />
+          <Modal.Body className="d-flex align-items-center justify-content-center">
+            <div>
+              <FileUpload onCloseModal={handleCloseModal} />
+            </div>
 
           </Modal.Body>
 

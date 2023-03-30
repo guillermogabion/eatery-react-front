@@ -5834,4 +5834,29 @@ td.pendingLabel .active {
   margin-left: 10px;
 }
 
+.file-input-style {
+  display: block;
+  font-size: 16px;
+  color: #495057;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.file-input-style:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+
+
 
