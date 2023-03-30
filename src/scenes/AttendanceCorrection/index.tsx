@@ -352,6 +352,16 @@ export const AttendanceCorrection = (props: any) => {
             }
           </tbody>
         </Table>
+        {
+                allCOA &&
+                allCOA.content &&
+                allCOA.content.length == 0 ?
+                <div className="w-100 text-center">
+                  <label htmlFor="">No Records Found</label>
+                </div>
+                : 
+                null
+          }
       </div>
     )
   }, [allCOA])
