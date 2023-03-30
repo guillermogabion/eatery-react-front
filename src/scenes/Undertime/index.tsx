@@ -217,6 +217,7 @@ export const Undertime = (props: any) => {
                 <Table responsive="lg">
                     <thead>
                         <tr>
+                            <th style={{ width: 'auto' }}>Employee Name</th>
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>UT Start</th>
                             <th style={{ width: 'auto' }}>UT End</th>
@@ -234,9 +235,10 @@ export const Undertime = (props: any) => {
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
+                                        <td> {item.lastName}, {item.firstName}</td>
                                         <td> {item.shiftDate} </td>
-                                        <td> {item.utStart} </td>
-                                        <td> {item.utEnd} </td>
+                                        <td> {item.utStart.replace('T', ' ')} </td>
+                                        <td> {item.utEnd.replace('T', ' ')} </td>
                                         <td> {item.fileDate} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.status} </td>

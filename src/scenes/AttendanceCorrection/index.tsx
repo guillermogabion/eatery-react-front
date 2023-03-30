@@ -268,6 +268,10 @@ export const AttendanceCorrection = (props: any) => {
   const handlePageClick = (event: any) => {
     getAllCOARequest(event.selected, "")
   };
+  const validationSchema = Yup.object().shape({
+    date: Yup.date().required('Date is required'),
+    time: Yup.date().required('Time is required'),
+  });
 
 
 
@@ -277,6 +281,7 @@ export const AttendanceCorrection = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
+              <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Status</th>
@@ -291,6 +296,7 @@ export const AttendanceCorrection = (props: any) => {
               allCOA.content.map((item: any, index: any) => {
                 return (
                   <tr>
+                    <td> {item.lastName}, {item.firstName}</td>
                     <td>{item.type}</td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
@@ -452,20 +458,10 @@ export const AttendanceCorrection = (props: any) => {
               innerRef={formRef}
               enableReinitialize={true}
               initialValues={initialValues}
-              validationSchema={
-                Yup.object().shape ({
-                  reason: Yup.string().required("Please Enter a Reason"),
-                  date: Yup.date().required("Date is required"),
-                  time: Yup.string().matches(
-                    /^([01]\d|2[0-3]):([0-5]\d)$/,
-                    "Time must be in 24-hour format (HH:MM)"
-                  ).required("Time is required"),
-                  coaBdType: Yup.string()
-                    .oneOf(["Time In", "Time Out"], "COA breakdown type must be 'Time in' or 'Time out'")
-                    .required("COA breakdown type is required"),
-                })
-              }
+              validationSchema={null}
               onSubmit={(values, actions) => {
+                actions.resetForm();
+                actions.setErrors({});
               const valuesObj: any = { ...values }
               valuesObj.coaBd = coaBreakdown
               if(coaId){
@@ -574,7 +570,7 @@ export const AttendanceCorrection = (props: any) => {
                               }}
                             />
                           </div>
-                          {errors && errors.reason && (
+                          {touched.errors && errors.reason && (
                                   <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
                                 )}
 
@@ -652,17 +648,17 @@ export const AttendanceCorrection = (props: any) => {
                           </div> 
                           <div className="form-group row">
                             <div className="col-md-4 mb-3">
-                              {errors && errors.date && (
+                              {touched.errors && errors.date && (
                                   <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
                                 )}
                             </div>
                             <div className="col-md-4 mb-3">
-                              {errors && errors.coaBdType && (
+                              {touched.errors && errors.coaBdType && (
                                   <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
                                 )}
                             </div>
                             <div className="col-md-4 mb-3">
-                              {errors && errors.time && (
+                              {touched.errors && errors.time && (
                                   <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
                                 )}
                             </div>

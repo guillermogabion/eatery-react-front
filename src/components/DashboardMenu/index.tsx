@@ -40,11 +40,11 @@ const DashboardMenu = (props: any) => {
                     'link': '/attendance/correction'
 
                 },
-                {
-                    'name': 'Schedule Adjustment',
-                    'link': '/schedule/adjustment'
+                // {
+                //     'name': 'Schedule Adjustment',
+                //     'link': '/schedule/adjustment'
 
-                },
+                // },
             ]
         },
         {
@@ -79,10 +79,10 @@ const DashboardMenu = (props: any) => {
                     'name': 'Employee',
                     'link': '/employee'
                 },
-                {
-                    'name': 'Roles & Access',
-                    'link': '/roles/access'
-                },
+                // {
+                //     'name': 'Roles & Access',
+                //     'link': '/roles/access'
+                // },
                 {
                     'name': 'Report',
                     'link': '/Report'
@@ -128,10 +128,10 @@ const DashboardMenu = (props: any) => {
                             'name': 'Attendance Reversal',
                             'link': '/attendance/correction'
                         },
-                        {
-                            'name': 'Schedule Adjustment',
-                            'link': '/schedule/adjustment'
-                        },
+                        // {
+                        //     'name': 'Schedule Adjustment',
+                        //     'link': '/schedule/adjustment'
+                        // },
                     ]
                 },
                 {
@@ -185,11 +185,11 @@ const DashboardMenu = (props: any) => {
                             'link': '/attendance/correction'
         
                         },
-                        {
-                            'name': 'Schedule Adjustment',
-                            'link': '/schedule/adjustment'
+                        // {
+                        //     'name': 'Schedule Adjustment',
+                        //     'link': '/schedule/adjustment'
         
-                        },
+                        // },
                     ]
                 },
                 {
