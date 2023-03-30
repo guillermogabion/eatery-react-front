@@ -28,6 +28,22 @@ interface Employee {
   lastName: string;
   firstName: string;
   middleName: string;
+  birthDay: string;
+  gender: string;
+  civilStatus: string;
+  contactNumber: string;
+  emailAddress: string;
+  prclicenseNo: string;
+  passportNo: string;
+  userLevel: string;
+  emergencyContactName: string;
+  emergencyContactNo: string;
+  emergencyContactAddress: string;
+  emergencyContactRelationship: string;
+  biometricsId: string;
+  companyEmail: string;
+  employeeType: string;
+  jobTitle: string;
   // other properties
 }
 
@@ -38,14 +54,17 @@ export const Employee = (props: any) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalUploadShow, setModalUploadShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
+  const [modalPasswordShow, setModalPasswordShow] = React.useState(false);
   const formikRef: any = useRef();
   const [tabIndex, setTabIndex] = React.useState(1);
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const [squadList, setSquadList] = React.useState([]);
   const [employeeList, setEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
   const [filterData, setFilterData] = React.useState([]);
   const [employee, setEmployee] = useState<Employee | null>(null);
+  const [password, setPassword] = React.useState("");
 
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
@@ -334,20 +353,29 @@ export const Employee = (props: any) => {
         if (status === 200 && body && body.data) {
           const employeeData: Employee = {
             id,
-            employeeId: body.data.employeeId,
             name: body.data.name,
             lastName : body.data.lastName,
             firstName : body.data.firstName,
             middleName : body.data.middleName,
+            birthDay : body.data.birthDay,
+            gender : body.data.gender,
+            civilStatus : body.data.civilStatus,
+            contactNumber : body.data.contactNumber,
+            emailAddress : body.data.emailAddress,
+            prclicenseNo : body.data.prclicenseNo,
+            passportNo : body.data.passportNo,
+            userLevel : body.data.userLevel,
+            emergencyContactName : body.data.emergencyContactName,
+            emergencyContactNo : body.data.emergencyContactNo,
+            emergencyContactAddress : body.data.emergencyContactAddress,
+            emergencyContactRelationship : body.data.emergencyContactRelationship,
+            employeeId: body.data.employeeId,
+            biometricsId: body.data.biometricsId,
+            companyEmail: body.data.companyEmail,
+            employeeType: body.data.employeeType,
+            jobTitle: body.data.jobTitle,
             // lastName : body.data.lastName,
-            // lastName : body.data.lastName,
-            // lastName : body.data.lastName,
-            // lastName : body.data.lastName,
-            // lastName : body.data.lastName,
-            lastName : body.data.lastName,
-            lastName : body.data.lastName,
-            lastName : body.data.lastName,
-            // set other properties based on the response data
+            // // set other properties based on the response data
           };
           setEmployee(employeeData);
         }
@@ -362,6 +390,78 @@ export const Employee = (props: any) => {
     setModalViewShow(false);
   };
 
+  const changePassword = (id: any = 0) => {
+    RequestAPI.getRequest(
+      `${Api.employeeInformation}?body=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.data) {
+            setUserId(body.data.userId)
+            setFirstName(body.data.firstName)
+            setInitialValues(body.data)
+            setModalPasswordShow(true)
+            setTabIndex(1)
+          }
+        }
+      }
+    )
+  }
+  // const handlePasswordSubmit = () => {
+  //   if (id && newPassword) {
+  //     submitPassword(id, newPassword);
+  //   } else {
+  //     console.log("ID or new password is missing.");
+  //   }
+  // };
+  // const handlePasswordSubmit = (userId) => {
+  //   if (userId && password) {
+  //     console.log("Submitting password with ID:", userId, "and new password:", password);
+  //     submitPassword(userId, password);
+  //   } else {
+  //     console.log("ID or new password is missing.");
+  //   }
+  // };
+  
+  const submitPassword = (userId) => {
+    console.log(userId, password)
+   
+  RequestAPI.putRequest(
+    Api.employeeChangePassword, 
+    "", 
+    { "id": userId }, 
+    { "password": password }, 
+    async (res: any) => {
+      const { status, body = { data: {}, error: {} } }: any = res
+      if (status === 200 || status === 201) {
+        if (body.error && body.error.message) {
+          ErrorSwal.fire(
+            'Error!',
+            (body.error && body.error.message) || "",
+            'error'
+          )
+        } else {
+          getAllEmployee(0)
+          ErrorSwal.fire(
+            'Success!',
+            (body.data) || "",
+            'success'
+          )
+        }
+      } else {
+        ErrorSwal.fire(
+          'Error!',
+          'Something Error.',
+          'error'
+        )
+      }
+    }
+  )
+
+};
   const information = (
     <Formik
       initialValues={initialValues}
@@ -1718,6 +1818,14 @@ export const Employee = (props: any) => {
                                   className="text-muted cursor-pointer">
                                   View
                                 </label>
+                                <br />
+                                <label
+                                  onClick={() => {
+                                    changePassword(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                    Change Password
+                                </label>
                                 
                               </td>
                              
@@ -1848,6 +1956,45 @@ export const Employee = (props: any) => {
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div >
             {employee && <ViewEmployee employee={employee} />}
+            </div>
+
+     
+
+          </Modal.Body>
+
+
+        </Modal>
+      <Modal show={modalPasswordShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalPasswordShow(false)}
+        dialogClassName="modal-90w"
+        >
+           <Modal.Header closeButton>
+            <Modal.Title>
+                Change Password For {firstName}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex align-items-center justify-content-center">
+            <div>
+            <input
+              type="text"
+              className="form-control password-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className="d-flex justify-center align-items-center">
+            <button
+              className="btn btn-primary mx-auto"
+              onClick={() => submitPassword(userId)}
+            >
+              Change Password
+            </button>
+
+            </div>
             </div>
 
      

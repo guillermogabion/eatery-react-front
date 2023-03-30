@@ -292,7 +292,7 @@ export const AttendanceCorrection = (props: any) => {
             {
               allCOA &&
               allCOA.content &&
-              allCOA.content.length &&
+              allCOA.content.length > 0 &&
               allCOA.content.map((item: any, index: any) => {
                 return (
                   <tr>
