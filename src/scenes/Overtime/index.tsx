@@ -282,7 +282,7 @@ export const Overtime = (props: any) => {
                     <td> {item.status} </td>
                     <td>
                       {
-                        item.status != "APPROVED" && item.status != "DECLINED" ?
+                        item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
                           {authorizations.includes("Request:Update") ? (
                             <>

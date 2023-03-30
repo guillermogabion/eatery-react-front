@@ -319,6 +319,7 @@ export const Leaves = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
+              <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
@@ -337,6 +338,7 @@ export const Leaves = (props: any) => {
                 allLeaves.content.map((item: any, index: any) => {
                   return (
                     <tr>
+                      <td> {item.lastName}, {item.firstName} </td>
                       <td> {item.type} </td>
                       <td> {item.dateFrom} </td>
                       <td> {item.dateTo} </td>
@@ -344,7 +346,7 @@ export const Leaves = (props: any) => {
                       <td> {item.status} </td>
                       <td>
                         {
-                          item.status != "APPROVED" && item.status != "DECLINED" ?
+                          item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                             <>
                             {authorizations.includes("Request:Update") ? (
                               <>
