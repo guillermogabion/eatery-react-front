@@ -426,14 +426,14 @@ export const Employee = (props: any) => {
   //   }
   // };
   
-  const submitPassword = (userId) => {
+  const submitPassword = (userId: any) => {
     console.log(userId, password)
    
   RequestAPI.putRequest(
     Api.employeeChangePassword, 
     "", 
-    { "id": userId }, 
-    { "password": password }, 
+    { "id": userId,  "password": password }, 
+    { }, 
     async (res: any) => {
       const { status, body = { data: {}, error: {} } }: any = res
       if (status === 200 || status === 201) {
@@ -1981,7 +1981,7 @@ export const Employee = (props: any) => {
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div>
             <input
-              type="text"
+              type="password"
               className="form-control password-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
