@@ -21,8 +21,7 @@ const loginSchema = Yup.object().shape({
 })
 
 const ReSetPasswordInput = (props: any) => {
-  const userData = useSelector((state: any) => state.rootReducer.userData)
-
+   
   const { name, placeholder, type, setFieldValue, error, setErrorsForm, errors } = props
   const [onFocusInput, setOnFocusInput] = useState<any>(false)
   const [inputValue, setInputValue] = useState<any>("")
@@ -108,6 +107,8 @@ export const ChangePassword = (props: any) => {
   const [errorOldPass, setErrorOldPass] = useState<any>([])
   const [errorNewPass, setErrorNewPass] = useState<any>([])
   const [errorConPass, setErrorConPass] = useState<any>([])
+  const userData = useSelector((state: any) => state.rootReducer.userData)
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
 
   return (
     <div className="body" >

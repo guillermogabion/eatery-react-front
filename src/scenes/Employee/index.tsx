@@ -450,6 +450,7 @@ export const Employee = (props: any) => {
             (body.data) || "",
             'success'
           )
+          setModalPasswordShow(false)
         }
       } else {
         ErrorSwal.fire(
@@ -457,6 +458,7 @@ export const Employee = (props: any) => {
           'Something Error.',
           'error'
         )
+        setModalPasswordShow(false)
       }
     }
   )
