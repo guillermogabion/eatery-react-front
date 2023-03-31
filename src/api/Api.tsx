@@ -13,6 +13,7 @@ const Api: any = {
   leaveTypes: process.env.REACT_APP_API_URL + "request/getTypes",
   leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
   uploadExcelFile : process.env.REACT_APP_API_URL + "employee/uploadExcel",
+  getMyLeave : process.env.REACT_APP_API_URL + "employee/myleavecreds",
   
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
@@ -88,6 +89,10 @@ const Api: any = {
   // employee 
 
   employeeChangePassword : process.env.REACT_APP_API_URL + "employee/changepassword",
+
+
+
+  downloadExcelTemplate : process.env.REACT_APP_API_URL + "employee/downloadTemplate"
 }
 
 export default Api

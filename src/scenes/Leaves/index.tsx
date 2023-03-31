@@ -43,6 +43,7 @@ export const Leaves = (props: any) => {
   const [leaveId, setLeaveId] = useState<any>("");
   const [filterData, setFilterData] = React.useState([]);
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
+  const [getMyLeaves, setGetMyLeaves] = useState<any>([])
   const userData = useSelector((state: any) => state.rootReducer.userData)
 
   const formRef: any = useRef()
@@ -81,6 +82,23 @@ export const Leaves = (props: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
           setLeaveDayTypes(body.data)
+        } else {
+        }
+      }
+    )
+  }, [])
+
+  useEffect (() => {
+    RequestAPI.getRequest(
+      `${Api.getMyLeave}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          setGetMyLeaves(body.data)
+          console.log(body.data); 
         } else {
         }
       }
@@ -313,9 +331,12 @@ export const Leaves = (props: any) => {
     })
   }
 
+
+
   const leaveTable = useCallback(() => {
     return (
       <div>
+       
         <Table responsive="lg">
           <thead>
             <tr>
@@ -447,6 +468,11 @@ export const Leaves = (props: any) => {
               <div className="row">
                 <div className="col-md-6">
                   <h2>Good day, {userData.data.profile.firstName}!</h2>
+                  {getMyLeaves.map((leave: any) => (
+                  <div key={leave.id}>
+                    <p>{leave.leaveName} : {leave.creditsLeft}</p>
+                  </div>
+                ))}
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

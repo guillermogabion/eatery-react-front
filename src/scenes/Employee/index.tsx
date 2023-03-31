@@ -20,6 +20,8 @@ import ReactPaginate from 'react-paginate';
 import { async } from "validate.js"
 import FileUpload from "./upload"
 import ViewEmployee from "./view"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 
 interface Employee {
   id: number;
@@ -65,7 +67,7 @@ export const Employee = (props: any) => {
   const [filterData, setFilterData] = React.useState([]);
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [password, setPassword] = React.useState("");
-
+  const [showPassword, setShowPassword] = useState(false)
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
     "status": "ACTIVE",
@@ -132,6 +134,10 @@ export const Employee = (props: any) => {
     "prclicenseNo": 0,
     "passportNo": 0
   })
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
 
 
   const validationSchema = Yup.object().shape({
@@ -410,6 +416,45 @@ export const Employee = (props: any) => {
       }
     )
   }
+
+  const downloadTemplate = () => {
+    RequestAPI.getRequest(
+      `${Api.downloadExcelTemplate}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        if (res && res.headers) {
+          const { status, headers } = res;
+          if (status === 200) {
+            const filenameHeader = headers["content-disposition"];
+            if (filenameHeader) {
+              const filename = filenameHeader
+                .split(";")
+                .find((n: string) => n.includes("filename="))
+                .replace("filename=", "")
+                .trim();
+              const blob = await res.blob();
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.setAttribute("download", filename);
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            } else {
+              console.log("Error: no filename header found in response");
+            }
+          } else {
+            console.log("Error downloading file");
+          }
+        } else {
+          console.log("Error: API response is undefined or missing headers");
+        }
+      }
+    );
+  };
+  
   // const handlePasswordSubmit = () => {
   //   if (id && newPassword) {
   //     submitPassword(id, newPassword);
@@ -451,6 +496,7 @@ export const Employee = (props: any) => {
             'success'
           )
           setModalPasswordShow(false)
+          setPassword("") 
         }
       } else {
         ErrorSwal.fire(
@@ -1879,6 +1925,10 @@ export const Employee = (props: any) => {
                     onClick={() => {
                       setModalShow(true)
                     }}>Add New</Button>
+                  <Button
+                    className="mx-2"
+                    onClick={downloadTemplate}
+                    >Download Excel Template</Button>
                 </div>
               </div>
             </div>
@@ -1982,12 +2032,24 @@ export const Employee = (props: any) => {
           </Modal.Header>
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div>
-            <input
-              type="password"
-              className="form-control password-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control password-input"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div className="input-group-append">
+                  <button
+                  className="btn btn-outline-secondary mt-3"
+                  type="button"
+                  onClick={toggleShowPassword}
+                  >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </button>
+              </div>
+            </div>
             <div className="d-flex justify-center align-items-center">
             <button
               className="btn btn-primary mx-auto"
