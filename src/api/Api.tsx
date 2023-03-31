@@ -83,6 +83,11 @@ const Api: any = {
   approveCoa :  process.env.REACT_APP_API_URL + "request/coa/approve",
   declineCoa :  process.env.REACT_APP_API_URL + "request/coa/decline",
   deleteCoa :  process.env.REACT_APP_API_URL + "request/coa/delete",
+
+
+  // employee 
+
+  employeeChangePassword : process.env.REACT_APP_API_URL + "employee/changepassword",
 }
 
 export default Api

@@ -414,16 +414,16 @@ export const Login = () => {
           <Modal.Title className="header-text">Forgot Password - Reset</Modal.Title>
         </Modal.Header>
         <div className="body-centered header-text">
-          <span>Please enter your Employee Number</span>
+          <span>Please contact your HR Manager for Assistance</span>
         </div>
-        <div className="modal-input">
+        {/* <div className="modal-input">
           <Form.Control type="text" className=" " placeholder="Employee Number" />
-        </div>
+        </div> */}
         <div className="modal-btns">
-          <Button variant="primary" className="modal-btn">Submit</Button>
-          <a href="#!" className="close-modal" onClick={handleModal}>
+          <Button variant="primary" className="modal-btn" onClick={() => setShowModal(false)}>OK</Button>
+          {/* <a href="#!" className="close-modal" onClick={handleModal}>
             Cancel
-          </a>
+          </a> */}
         </div>
       </Modal>
     </>
