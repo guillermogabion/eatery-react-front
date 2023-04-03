@@ -306,13 +306,13 @@ export const AttendanceCorrection = (props: any) => {
                           <>
                           {authorizations.includes("Request:Update") ? (
                             <>
-                                <label
+                                {/* <label
                                 onClick={() => {
                                   getCoa(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
                                 Update
-                              </label>
+                              </label> */}
                               <br />
                             </>
                           ) : null}
