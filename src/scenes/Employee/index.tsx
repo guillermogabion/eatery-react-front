@@ -497,6 +497,7 @@ export const Employee = (props: any) => {
           )
           setModalPasswordShow(false)
           setPassword("") 
+          setShowPassword(false)
         }
       } else {
         ErrorSwal.fire(
@@ -2022,7 +2023,10 @@ export const Employee = (props: any) => {
         centered
         backdrop="static"
         keyboard={false}
-        onHide={() => setModalPasswordShow(false)}
+        onHide={() => {
+          setModalPasswordShow(false);
+          setPassword("");
+        }}
         dialogClassName="modal-90w"
         >
            <Modal.Header closeButton>
@@ -2042,7 +2046,7 @@ export const Employee = (props: any) => {
               />
               <div className="input-group-append">
                   <button
-                  className="btn btn-outline-secondary mt-3"
+                  className="btn btn-outline-secondary mt-3 "
                   type="button"
                   onClick={toggleShowPassword}
                   >
