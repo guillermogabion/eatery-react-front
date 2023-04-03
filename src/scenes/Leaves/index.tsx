@@ -371,13 +371,13 @@ export const Leaves = (props: any) => {
                             <>
                             {authorizations.includes("Request:Update") ? (
                               <>
-                                  <label
+                                  {/* <label
                                   onClick={() => {
                                     getLeave(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
                                   Update
-                                </label>
+                                </label> */}
                                 <br />
                               </>
                             ) : null}
