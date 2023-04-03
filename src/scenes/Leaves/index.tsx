@@ -378,7 +378,7 @@ export const Leaves = (props: any) => {
                                   className="text-muted cursor-pointer">
                                   Update
                                 </label> */}
-                                <br />
+                                {/* <br /> */}
                               </>
                             ) : null}
   

@@ -293,7 +293,7 @@ export const Overtime = (props: any) => {
                                 className="text-muted cursor-pointer">
                                 Update
                               </label> */}
-                              <br />
+                              {/* <br /> */}
                             </>
                           ) : null}
                             {authorizations.includes("Request:Approve") ? (
