@@ -253,7 +253,10 @@ export const Overtime = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              <th style={{ width: 'auto' }}>Employee Name</th>
+            {data.profile.role != 'EMPLOYEE' ?
+                       <th style={{ width: 'auto' }}>Employee Name</th> :
+                        null
+                    }
               <th style={{ width: 'auto' }}>Shift Date</th>
               <th style={{ width: 'auto' }}>Classification</th>
               <th style={{ width: 'auto' }}>OT Start</th>
@@ -272,7 +275,11 @@ export const Overtime = (props: any) => {
               myot.content.map((item: any, index: any) => {
                 return (
                   <tr>
-                    <td> {item.lastName}, {item.firstName}</td>
+                    {/* <td> {item.lastName}, {item.firstName}</td> */}
+                    {data.profile.role != 'EMPLOYEE' ?
+                        <td>{item.lastName}, {item.firstName}</td> :
+                        null
+                    }
                     <td> {item.shiftDate} </td>
                     <td> {item.classification} </td>
                     <td> {item.otStart.replace('T', ' ')} </td>
@@ -293,7 +300,7 @@ export const Overtime = (props: any) => {
                                 className="text-muted cursor-pointer">
                                 Update
                               </label> */}
-                              {/* <br /> */}
+                              <br />
                             </>
                           ) : null}
                             {authorizations.includes("Request:Approve") ? (

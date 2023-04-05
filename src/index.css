@@ -5862,5 +5862,21 @@ td.pendingLabel .active {
 }
 
 
+.employee-checkbox{
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  background-color: #1e1e1e;
+  border: 1px solid #1a1919;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+label[for="myCheckbox"] {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
 
 
