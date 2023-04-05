@@ -46,6 +46,7 @@ interface Employee {
   companyEmail: string;
   employeeType: string;
   jobTitle: string;
+  squad: string;
   // other properties
 }
 
@@ -424,6 +425,7 @@ export const Employee = (props: any) => {
             companyEmail: body.data.companyEmail,
             employeeType: body.data.employeeType,
             jobTitle: body.data.jobTitle,
+            squad: body.data.squad,
             // lastName : body.data.lastName,
             // // set other properties based on the response data
           };

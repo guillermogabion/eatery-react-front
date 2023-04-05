@@ -21,6 +21,7 @@
                 <p>PRC License Number: {employee.prclicenseNo}</p>
                 <p>Passport Number: {employee.passportNo}</p>
                 <p>User Role: {employee.userLevel}</p>
+                <p>Squad: {employee.squad}</p>
             </div>
             <div className="col">
                 <p><b>Emergency Contact Information</b></p>
