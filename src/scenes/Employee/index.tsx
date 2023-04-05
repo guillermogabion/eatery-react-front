@@ -83,6 +83,13 @@ export const Employee = (props: any) => {
     "emergencyContactName": "",
     "emergencyContactAddress": "",
     "emergencyContactRelationship": "SPOUSE",
+    "addressRegion": "",
+    "addressProvince": "",
+    "addressMunicipality": "",
+    "addressBarangay": "",
+    "addressStreet": "",
+    "addressZipCode": "",
+    "addressType": "PRIMARY",
     "employeeId": "",
     "biometricsId": 0,
     "companyEmail": "",
@@ -116,6 +123,43 @@ export const Employee = (props: any) => {
     "jobGrade": "One",
     "billability": true,
     "payrollRole": "SuperAdmin",
+    "scheduleType": "NORMAL_SHIFT",
+    "workingHours": 0,
+    "mondayRestDay": true,
+    "mondayStartShift": "00:00:00",
+    "mondayStartBreak": "00:00:00",
+    "mondayEndBreak": "01:00:00",
+    "mondayEndShift": "01:00:00",
+    "tuesdayRestDay": true,
+    "tuesdayStartShift": "00:00:00",
+    "tuesdayStartBreak": "00:00:00",
+    "tuesdayEndBreak": "01:00:00",
+    "tuesdayEndShift": "01:00:00",
+    "wednesdayRestDay": true,
+    "wednesdayStartShift": "00:00:00",
+    "wednesdayStartBreak": "00:00:00",
+    "wednesdayEndBreak": "01:00:00",
+    "wednesdayEndShift": "01:00:00",
+    "thursdayRestDay": true,
+    "thursdayStartShift": "00:00:00",
+    "thursdayStartBreak": "00:00:00",
+    "thursdayEndBreak": "01:00:00",
+    "thursdayEndShift": "01:00:00",
+    "fridayRestDay": true,
+    "fridayStartShift": "00:00:00",
+    "fridayStartBreak": "00:00:00",
+    "fridayEndBreak": "01:00:00",
+    "fridayEndShift": "01:00:00",
+    "saturdayRestDay": true,
+    "saturdayStartShift": "00:00:00",
+    "saturdayStartBreak": "00:00:00",
+    "saturdayEndBreak": "01:00:00",
+    "saturdayEndShift": "01:00:00",
+    "sundayRestDay": true,
+    "sundayStartShift": "00:00:00",
+    "sundayStartBreak": "00:00:00",
+    "sundayEndBreak": "01:00:00",
+    "sundayEndShift": "01:00:00",
     "payGroup": "Monthly_Paid_Employees",
     "payrollRunType": "Daily",
     "basicMonthlySalary": 0,
@@ -668,7 +712,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="prclicenseNo"
                   id="prclicenseNo"
-                  className={`form-control ${touched.prclicenseNo && errors.prclicenseNo ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.prclicenseNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -681,7 +725,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="passportNo"
                   id="passportNo"
-                  className={`form-control ${touched.passportNo && errors.passportNo ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.passportNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -723,6 +767,128 @@ export const Employee = (props: any) => {
     </Formik>
   )
 
+  const addressInformation = (
+    <Formik
+    initialValues={initialValues}
+    enableReinitialize={true}
+    validationSchema={null}
+    onSubmit={(values, actions) => {
+      const valuesObj: any = { ...values }
+      setInitialValues(valuesObj)
+      setTabIndex(3)
+    }}
+    >
+      {({values, setFieldValue,  handleSubmit, errors, touched}) => {
+        return (
+          <Form
+          noValidate 
+          onSubmit={handleSubmit} 
+          id="_formid1" 
+          autoComplete="off"
+          >
+            <div className="col-md-12 row p-0 m-0" >
+              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                <h5>Address Information</h5>
+              </div>
+            </div>
+            <div className="row w-100 px-5">
+            <div className="form-group col-md-6 mb-3 " >
+                <label>Region</label>
+                <input type="text"
+                  name="addressRegion"
+                  id="addressRegion"
+                  className="form-control"
+                  value={values.addressRegion}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            <div className="form-group col-md-6 mb-3 " >
+                <label>City/Province</label>
+                <input type="text"
+                  name="addressProvince"
+                  id="addressProvince"
+                  className="form-control"
+                  value={values.addressProvince}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            <div className="form-group col-md-6 mb-3 " >
+                <label>Municipality</label>
+                <input type="text"
+                  name="addressMunicipality"
+                  id="addressMunicipality"
+                  className="form-control"
+                  value={values.addressMunicipality}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            <div className="form-group col-md-6 mb-3 " >
+                <label>Barangay</label>
+                <input type="text"
+                  name="addressBarangay"
+                  id="addressBarangay"
+                  className="form-control"
+                  value={values.addressBarangay}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            <div className="form-group col-md-6 mb-3 " >
+                <label>Street</label>
+                <input type="text"
+                  name="addressStreet"
+                  id="addressStreet"
+                  className="form-control"
+                  value={values.addressStreet}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            <div className="form-group col-md-6 mb-3 " >
+                <label>Zipcode</label>
+                <input type="text"
+                  name="addressZipCode"
+                  id="addressZipCode"
+                  className="form-control"
+                  value={values.addressZipCode}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            <div className="form-group col-md-6 mb-3 " >
+                <label>Address Type</label>
+                <input type="text"
+                  name="addressType"
+                  id="addressType"
+                  className="form-control"
+                  value={values.addressType}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+              </div>
+            </div>
+            <br />
+            <Modal.Footer>
+              <div className="d-flex justify-content-end px-5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTabIndex(1)
+                  }}
+                  className="btn btn-primary mx-2">
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary">
+                  Next
+                </button>
+              </div>
+            </Modal.Footer>
+          </Form>
+        )
+      }}
+
+    </Formik>
+  )
+
   const emergencyContacts = (
     <Formik
       initialValues={initialValues}
@@ -736,7 +902,7 @@ export const Employee = (props: any) => {
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         setInitialValues(valuesObj)
-        setTabIndex(3)
+        setTabIndex(4)
       }}>
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
@@ -753,7 +919,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emergencyContactNo"
                   id="emergencyContactNo"
-                  className={`form-control ${touched.emergencyContactNo && errors.emergencyContactNo ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.emergencyContactNo}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -766,7 +932,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emergencyContactName"
                   id="emergencyContactName"
-                  className={`form-control ${touched.emergencyContactName && errors.emergencyContactName ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.emergencyContactName}
                   onChange={(e) => setFormField(e, setFieldValue)}
 
@@ -780,7 +946,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="emergencyContactAddress"
                   id="emergencyContactAddress"
-                  className={`form-control ${touched.emergencyContactAddress && errors.emergencyContactAddress ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.emergencyContactAddress}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -816,7 +982,7 @@ export const Employee = (props: any) => {
                 <button
                   type="button"
                   onClick={() => {
-                    setTabIndex(1)
+                    setTabIndex(2)
                   }}
                   className="btn btn-primary mx-2">
                   Back
@@ -885,7 +1051,7 @@ export const Employee = (props: any) => {
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         setInitialValues(valuesObj)
-        setTabIndex(4)
+        setTabIndex(5)
       }}>
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
@@ -996,7 +1162,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="immediateSuperiorId"
                   id="immediateSuperiorId"
-                  className={`form-control ${touched.immediateSuperiorId && errors.immediateSuperiorId ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.immediateSuperiorId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1030,7 +1196,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="employmentStatusEffectivityDate"
                   id="employmentStatusEffectivityDate"
-                  className={`form-control ${touched.employmentStatusEffectivityDate && errors.employmentStatusEffectivityDate ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.employmentStatusEffectivityDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1077,7 +1243,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="bankAccountNumber"
                   id="bankAccountNumber"
-                  className={`form-control ${touched.bankAccountNumber && errors.bankAccountNumber ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.bankAccountNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1103,7 +1269,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="position"
                   id="position"
-                  className={`form-control ${touched.position && errors.position ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.position}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1116,7 +1282,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="regularizationDate"
                   id="regularizationDate"
-                  className={`form-control ${touched.regularizationDate && errors.regularizationDate ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.regularizationDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1129,7 +1295,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="statusDate"
                   id="statusDate"
-                  className={`form-control ${touched.statusDate && errors.statusDate ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.statusDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1163,7 +1329,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="costCenter"
                   id="costCenter"
-                  className={`form-control ${touched.costCenter && errors.costCenter ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.costCenter}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1176,7 +1342,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="seperationDate"
                   id="seperationDate"
-                  className={`form-control ${touched.seperationDate && errors.seperationDate ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.seperationDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1189,7 +1355,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="sssNumber"
                   id="sssNumber"
-                  className={`form-control ${touched.sssNumber && errors.sssNumber ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.sssNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1202,7 +1368,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="philHealthId"
                   id="philHealthId"
-                  className={`form-control ${touched.philHealthId && errors.philHealthId ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.philHealthId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1215,7 +1381,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="hdmfNumber"
                   id="hdmfNumber"
-                  className={`form-control ${touched.hdmfNumber && errors.hdmfNumber ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.hdmfNumber}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1252,7 +1418,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="otComputationTable"
                   id="otComputationTable"
-                  className={`form-control ${touched.otComputationTable && errors.otComputationTable ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.otComputationTable}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1265,7 +1431,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="minimumWageEarner"
                   id="minimumWageEarner"
-                  className={`form-control ${touched.minimumWageEarner && errors.minimumWageEarner ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.minimumWageEarner}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1325,7 +1491,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="clientName"
                   id="clientName"
-                  className={`form-control ${touched.clientName && errors.clientName ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.clientName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1338,7 +1504,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="jobCode"
                   id="jobCode"
-                  className={`form-control ${touched.jobCode && errors.jobCode ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.jobCode}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1371,7 +1537,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="billability"
                   id="billability"
-                  className={`form-control ${touched.billability && errors.billability ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.billability}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1405,7 +1571,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="payGroup"
                   id="payGroup"
-                  className={`form-control ${touched.payGroup && errors.payGroup ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.payGroup}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1444,7 +1610,7 @@ export const Employee = (props: any) => {
                 <input type="date"
                   name="salaryEffectivityDate"
                   id="salaryEffectivityDate"
-                  className={`form-control ${touched.salaryEffectivityDate && errors.salaryEffectivityDate ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.salaryEffectivityDate}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1457,7 +1623,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="monthlyDeMinimisBenefits"
                   id="monthlyDeMinimisBenefits"
-                  className={`form-control ${touched.monthlyDeMinimisBenefits && errors.monthlyDeMinimisBenefits ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.monthlyDeMinimisBenefits}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1470,7 +1636,7 @@ export const Employee = (props: any) => {
                 <input type="text"
                   name="ecola"
                   id="ecola"
-                  className={`form-control ${touched.ecola && errors.ecola ? 'is-invalid' : ''}`}
+                  className="form-control"
                   value={values.ecola}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
@@ -1503,6 +1669,213 @@ export const Employee = (props: any) => {
     </Formik>
   )
 
+  const scheduleInformation = (
+    <Formik
+    initialValues={initialValues}
+    enableReinitialize={true}
+    validationSchema={null}
+    onSubmit={(values, actions) => {
+      const valuesObj: any = { ...values }
+      setInitialValues(valuesObj)
+      setTabIndex(6)
+    }}
+    >
+       {({values, setFieldValue,  handleSubmit, errors, touched}) => {
+          return (
+            <Form
+            noValidate 
+            onSubmit={handleSubmit} 
+            id="_formid1" 
+            autoComplete="off"
+            >
+              <div className="col-md-12 row-p-0 m-0">
+                <div className="form-group col-md-12 pt-3 d-flex justify-content-center align-items-center flex-column">
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                    <h5>Schedule Information</h5>
+                </div>
+              </div>
+              <div className="container">
+                <div className="row w-100 px-5">
+                  <div className="form-group col-md-6 mb-3">
+                    <label>Schedule Type</label>
+                    <input 
+                      type="text"
+                      name="scheduleType"
+                      id="scheduleType"
+                      className="form-control"
+                      value={values.scheduleType}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-md-6 mb-3">
+                    <label>Working Hours</label>
+                    <input 
+                      type="text"
+                      name="workingHours"
+                      id="workingHours"
+                      className="form-control"
+                      value={values.workingHours}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  </div>
+                  </div>
+                  <div className="container">
+                    <div className="row">
+                  {/* monday  */}
+                  {/* <div className="form-group col-sm-3 mb-3">
+                   
+                  </div> */}
+                  <div className="form-group col-sm-3 mb-3">
+                  {/* <label className="form-check-label">Monday Rest Day</label> */}
+                  <label className="switch">
+                  <input type="checkbox" id="myCheckbox" className="employee-checkbox" />
+                  <label htmlFor="myCheckbox">Check me out</label>
+                  </label>
+                    <label>Monday Start Shift</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Monday Start Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Monday End Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Monday End Shift</label>
+                  </div>
+                   {/* tuesday  */}
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday Rest Day</label>
+                    <input 
+                      type="checkbox"
+                      name="tuesdayRestDay"
+                      id="tuesdayRestDay"
+                      className="form-check-input"
+                      // checked={values.mondayRestDay}
+                      // onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                    <label>Tuesday Start Shift</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday Start Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday End Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday End Shift</label>
+                  </div>
+
+                   {/* wednesday  */}
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday Rest Day</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday Start Shift</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday Start Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday End Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday End Shift</label>
+                  </div>
+                  {/* thursday  */}
+
+                  
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday Rest Day</label>
+
+                    <label>Thursday Start Shift</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday Start Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday End Break</label>
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday End Shift</label>
+                  </div>
+
+                   {/* friday  */}
+
+               
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday Rest Day</label>
+                  <label>Friday Start Shift</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday Start Break</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday End Break</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday End Shift</label>
+                </div>
+                {/* saturday  */}
+
+               
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday Rest Day</label>
+                  <label>Saturday Start Shift</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday Start Break</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday End Break</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday End Shift</label>
+                </div>
+                {/* Sunday  */}
+
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday Rest Day</label>
+                  <label>Sunday Start Shift</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday Start Break</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday End Break</label>
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday End Shift</label>
+                </div>
+                  
+                  
+
+
+                    </div>
+                  </div>
+              <Modal.Footer>
+              <div className="d-flex justify-content-end px-5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTabIndex(4)
+                  }}
+                  className="btn btn-primary mx-2">
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary">
+                  Next
+                </button>
+              </div>
+            </Modal.Footer>
+              
+            </Form>
+          )
+       }}
+    </Formik>
+  )
 
   const payrollInformation = (
     <Formik
@@ -1726,7 +2099,7 @@ export const Employee = (props: any) => {
                 <button
                   type="button"
                   onClick={() => {
-                    setTabIndex(3)
+                    setTabIndex(5)
                   }}
                   className="btn btn-primary mx-2">
                   Back
@@ -1957,9 +2330,11 @@ export const Employee = (props: any) => {
             <div className="emp-modal-body">
 
               {tabIndex == 1 ? information : null}
-              {tabIndex == 2 ? emergencyContacts : null}
-              {tabIndex == 3 ? otherInformation : null}
-              {tabIndex == 4 ? payrollInformation : null}
+              {tabIndex == 2 ? addressInformation : null}
+              {tabIndex == 3 ? emergencyContacts : null}
+              {tabIndex == 4 ? otherInformation : null}
+              {tabIndex == 5 ? scheduleInformation : null}
+              {tabIndex == 6 ? payrollInformation : null}
 
             </div>
           </Modal.Body>

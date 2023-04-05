@@ -640,7 +640,8 @@ export const Leaves = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        body.error && body.error.message,
+                        // (body.error && body.error.message),
                         'error'
                       )
                     }
@@ -669,7 +670,8 @@ export const Leaves = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        // 'Something Error.',
+                        body.error && body.error.message,
                         'error'
                       )
                     }
