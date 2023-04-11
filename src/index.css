@@ -1238,14 +1238,14 @@ td strong {
   color: #1f7888;
 }
 
-input[type="checkbox"] {
+/* input[type="checkbox"] {
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #d8d8d8;
   border-radius: 3px;
   opacity: 1;
   width: 17px;
   height: 17px;
-}
+} */
 
 td.email {
   text-align: left;
@@ -1638,9 +1638,9 @@ label {
   font-size: 20px;
 }
 
-input[type="checkbox"] {
+/* input[type="checkbox"] {
   visibility: hidden;
-}
+} */
 
 .geenmask {
   position: absolute;
