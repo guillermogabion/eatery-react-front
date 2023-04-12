@@ -245,41 +245,6 @@ export const Login = () => {
               if (userObj && userObj.accessToken) {
                 delete userObj.accessToken
               }
-              userObj.menu = [{
-                "links": [],
-                "label": "Home",
-                "icon": "home",
-                "type": "transaction",
-                "route": "/dashboard"
-              },
-              {
-                "links": [],
-                "label": "Home",
-                "icon": "home",
-                "type": "transaction",
-                "route": "/useriniatedchangepw"
-              },
-              {
-                "links": [],
-                "label": "Clients",
-                "icon": "client",
-                "type": "client",
-                "route": "/user/list"
-              },
-              {
-                "links": [],
-                "label": "Clients",
-                "icon": "client",
-                "type": "client",
-                "route": "/employee"
-              },
-              ],
-                userObj.accessRights = [
-                  "Can_Read_User",
-                  "Can_Add_Edit_User",
-                  "Can_Read_Role",
-                  "Can_Add_Edit_Role",
-                ]
               dispatch({ type: "SET_MASTERLIST", payload: userObj.data.masterList })
               dispatch({ type: "USER_DATA", payload: userObj })
               dispatch({ type: "IS_LOGIN", payload: true })

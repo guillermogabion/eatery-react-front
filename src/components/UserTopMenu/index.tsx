@@ -114,9 +114,9 @@ const UserTopMenu = (props: any) => {
           {userAction ?
             <div className="MenuActionsLink">
               <small>
-                <NavLink to={"/dashboard"}
+                <NavLink to={"/timekeeping"}
                   onClick={() => {
-                    setCurrentRoutePath("/dashboard")
+                    setCurrentRoutePath("/timekeeping")
                   }}>
                   <span>Dashboard</span>
                 </NavLink>
