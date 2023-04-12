@@ -129,38 +129,38 @@ export const Employee = (props: any) => {
     "mondayRestDay": true,
     "mondayStartShift": "09:00:00",
     "mondayStartBreak": "12:00:00",
-    "mondayEndBreak": "01:00:00",
-    "mondayEndShift": "06:00:00",
+    "mondayEndBreak": "13:00:00",
+    "mondayEndShift": "18:00:00",
     "tuesdayRestDay": true,
     "tuesdayStartShift": "09:00:00",
     "tuesdayStartBreak": "12:00:00",
-    "tuesdayEndBreak": "01:00:00",
-    "tuesdayEndShift": "06:00:00",
+    "tuesdayEndBreak": "13:00:00",
+    "tuesdayEndShift": "18:00:00",
     "wednesdayRestDay": true,
     "wednesdayStartShift": "09:00:00",
     "wednesdayStartBreak": "12:00:00",
-    "wednesdayEndBreak": "01:00:00",
-    "wednesdayEndShift": "06:00:00",
+    "wednesdayEndBreak": "13:00:00",
+    "wednesdayEndShift": "18:00:00",
     "thursdayRestDay": true,
     "thursdayStartShift": "09:00:00",
     "thursdayStartBreak": "12:00:00",
-    "thursdayEndBreak": "01:00:00",
-    "thursdayEndShift": "06:00:00",
+    "thursdayEndBreak": "13:00:00",
+    "thursdayEndShift": "18:00:00",
     "fridayRestDay": true,
     "fridayStartShift": "09:00:00",
     "fridayStartBreak": "12:00:00",
-    "fridayEndBreak": "01:00:00",
-    "fridayEndShift": "06:00:00",
+    "fridayEndBreak": "13:00:00",
+    "fridayEndShift": "18:00:00",
     "saturdayRestDay": true,
     "saturdayStartShift": "09:00:00",
     "saturdayStartBreak": "12:00:00",
-    "saturdayEndBreak": "01:00:00",
-    "saturdayEndShift": "06:00:00",
+    "saturdayEndBreak": "13:00:00",
+    "saturdayEndShift": "18:00:00",
     "sundayRestDay": true,
     "sundayStartShift": "09:00:00",
     "sundayStartBreak": "12:00:00",
-    "sundayEndBreak": "01:00:00",
-    "sundayEndShift": "06:00:00",
+    "sundayEndBreak": "13:00:00",
+    "sundayEndShift": "18:00:00",
     "payGroup": "Monthly_Paid_Employees",
     "payrollRunType": "Daily",
     "basicMonthlySalary": 0,
@@ -213,11 +213,6 @@ export const Employee = (props: any) => {
   
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
-<<<<<<< HEAD
-    totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
-    workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
-    payrollRunType: Yup.string().required('Payroll Run Type is required'),
-=======
  
     totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
     workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
@@ -226,7 +221,6 @@ export const Employee = (props: any) => {
   
 
 
->>>>>>> 7954b35e5a82744190c5fb7ba433ddf36d2a183d
 
 
 
