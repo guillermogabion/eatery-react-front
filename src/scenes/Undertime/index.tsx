@@ -248,14 +248,14 @@ export const Undertime = (props: any) => {
                                                     <>
                                                     {authorizations.includes("Request:Update") ? (
                                                         <>
-                                                        {/* <label
+                                                        <label
                                                             onClick={() => {
                                                                 getUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
                                                             Update
-                                                        </label> */}
-                                                        {/* <br /> */}
+                                                        </label>
+                                                        <br />
                                                         </>
                                                     ) : null}
                                                     {authorizations.includes("Request:Approve") ? (
