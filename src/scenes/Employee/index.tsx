@@ -213,28 +213,13 @@ export const Employee = (props: any) => {
     // immediateSuperiorId: Yup.string().required('Immediate Superior ID is required'),
     // employmentStatusEffectivityDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    // bankAccountNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
-    // position: Yup.string().required('Position is required'),
-    // regularizationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    // costCenter: Yup.string().required('Cost Center is required'),
-    // seperationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    // sssNumber: Yup.number().required('SSS Number is required').typeError('Please enter a valid number'),
-    // philHealthId: Yup.number().required('PhilHealth ID is required').typeError('Please enter a valid number'),
-    // hdmfNumber: Yup.number().required('HDMF Number is required').typeError('Please enter a valid number'),
-    // otComputationTable: Yup.string().required('OT Computation Table is required'),
-    // minimumWageEarner: Yup.string().required('Minimum Wage Earner is required'),
+ 
     totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
     workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
-    // clientName: Yup.string().required('Client Name is required'),
-    // jobCode: Yup.string().required('Job Code is required'),
-    // billability: Yup.string().required('Billability is required'),
-    // payGroup: Yup.string().required('Pay Group is required'),
+   
     payrollRunType: Yup.string().required('Payroll Run Type is required'),
-    // basicMonthlySalary: Yup.string().required('Basic Monthly Salary is required'),
-    // salaryEffectivityDate: Yup.string().required('Salary Effectivity Date is required'),
-    // monthlyDeMinimisBenefits: Yup.string().required('Monthly De Minimis Benefits is required'),
-    // ecola: Yup.string().required('Ecola is required'),
+  
 
 
 
@@ -1015,39 +1000,17 @@ export const Employee = (props: any) => {
           employeeType: Yup.string().required("Required"),
           jobTitle: Yup.string().required("Required"),
           userLevel: Yup.string().required("Required"),
-          immediateSuperiorId: Yup.string().required("Required"),
+      
           employeeStatus: Yup.string().required("Required"),
-          employmentStatusEffectivityDate: Yup.string().required("Required"),
           hireDate: Yup.string().required("Required"),
-          bankAcctType: Yup.string().required("Required"),
-          bankAccountNumber: Yup.string().required("Required"),
           tinNumber: Yup.string().required("Required"),
-          position: Yup.string().required("Required"),
-          regularizationDate: Yup.string().required("Required"),
-          statusDate: Yup.string().required("Required"),
           department: Yup.string().required("Required"),
-          costCenter: Yup.string().required("Required"),
-          seperationDate: Yup.string().required("Required"),
-          sssNumber: Yup.string().required("Required"),
-          philHealthId: Yup.string().required("Required"),
-          hdmfNumber: Yup.string().required("Required"),
+      
           squadId: Yup.string().required("Required"),
-          otComputationTable: Yup.string().required("Required"),
-          minimumWageEarner: Yup.string().required("Required"),
           totalWorkHrsPerDay: Yup.string().required("Required"),
           workDaysPerYear: Yup.string().required("Required"),
-          consultantPercentTax: Yup.string().required("Required"),
-          clientName: Yup.string().required("Required"),
-          jobCode: Yup.string().required("Required"),
-          jobGrade: Yup.string().required("Required"),
-          billability: Yup.string().required("Required"),
-          payrollRole: Yup.string().required("Required"),
-          payGroup: Yup.string().required("Required"),
           payrollRunType: Yup.string().required("Required"),
           basicMonthlySalary: Yup.string().required("Required"),
-          salaryEffectivityDate: Yup.string().required("Required"),
-          monthlyDeMinimisBenefits: Yup.string().required("Required"),
-          ecola: Yup.string().required("Required"),
         })
       }
       onSubmit={(values, actions) => {
@@ -2008,7 +1971,7 @@ export const Employee = (props: any) => {
                             label="Saturday Rest Day"
                             name="saturdayRestDay"
                             checked={values.saturdayRestDay}
-                            onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
+                            onChange={(e) => setFieldValue("saturdayRestDay", e.target.checked)}
                           />
                         </div>
                       <div className="form-group col-sm-3 mb-3">
