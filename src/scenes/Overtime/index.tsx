@@ -292,13 +292,13 @@ export const Overtime = (props: any) => {
                           <>
                           {authorizations.includes("Request:Update") ? (
                             <>
-                              {/* <label
+                              <label
                                 onClick={() => {
                                   getOT(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
                                 Update
-                              </label> */}
+                              </label>
                               <br />
                             </>
                           ) : null}
