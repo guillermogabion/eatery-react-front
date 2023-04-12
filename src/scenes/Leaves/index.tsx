@@ -332,6 +332,47 @@ export const Leaves = (props: any) => {
   }
 
 
+  const cancelLeave = (id: any = 0) => {
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to cancel this leave.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.cancelLeave, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            } else {
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getAllLeaves(0, "")
+            }
+          } else {
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
+
+
 
   const leaveTable = useCallback(() => {
     return (
@@ -371,14 +412,14 @@ export const Leaves = (props: any) => {
                             <>
                             {authorizations.includes("Request:Update") ? (
                               <>
-                                  {/* <label
+                                  <label
                                   onClick={() => {
                                     getLeave(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
                                   Update
-                                </label> */}
-                                {/* <br /> */}
+                                </label>
+                                <br />
                               </>
                             ) : null}
   
@@ -409,6 +450,24 @@ export const Leaves = (props: any) => {
                             </>
                             :
                             null
+                        }
+                        {
+                          item.status == "APPROVED" || item.status == "PENDING" ?
+                          <>
+                          {authorizations.includes("Request:Update") ? (
+                            <>
+                            <label
+                              onClick={() => {
+                                cancelLeave(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              Cancel
+                            </label>
+                            <br />
+                            </>
+                          ) : null}
+                          </>
+                          :null
                         }
                       </td>
                     </tr>

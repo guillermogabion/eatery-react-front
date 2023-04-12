@@ -127,40 +127,40 @@ export const Employee = (props: any) => {
     "scheduleType": "NORMAL_SHIFT",
     "workingHours": 0,
     "mondayRestDay": true,
-    "mondayStartShift": "00:00:00",
-    "mondayStartBreak": "00:00:00",
+    "mondayStartShift": "09:00:00",
+    "mondayStartBreak": "12:00:00",
     "mondayEndBreak": "01:00:00",
-    "mondayEndShift": "01:00:00",
+    "mondayEndShift": "06:00:00",
     "tuesdayRestDay": true,
-    "tuesdayStartShift": "00:00:00",
-    "tuesdayStartBreak": "00:00:00",
+    "tuesdayStartShift": "09:00:00",
+    "tuesdayStartBreak": "12:00:00",
     "tuesdayEndBreak": "01:00:00",
-    "tuesdayEndShift": "01:00:00",
+    "tuesdayEndShift": "06:00:00",
     "wednesdayRestDay": true,
-    "wednesdayStartShift": "00:00:00",
-    "wednesdayStartBreak": "00:00:00",
+    "wednesdayStartShift": "09:00:00",
+    "wednesdayStartBreak": "12:00:00",
     "wednesdayEndBreak": "01:00:00",
-    "wednesdayEndShift": "01:00:00",
+    "wednesdayEndShift": "06:00:00",
     "thursdayRestDay": true,
-    "thursdayStartShift": "00:00:00",
-    "thursdayStartBreak": "00:00:00",
+    "thursdayStartShift": "09:00:00",
+    "thursdayStartBreak": "12:00:00",
     "thursdayEndBreak": "01:00:00",
-    "thursdayEndShift": "01:00:00",
+    "thursdayEndShift": "06:00:00",
     "fridayRestDay": true,
-    "fridayStartShift": "00:00:00",
-    "fridayStartBreak": "00:00:00",
+    "fridayStartShift": "09:00:00",
+    "fridayStartBreak": "12:00:00",
     "fridayEndBreak": "01:00:00",
-    "fridayEndShift": "01:00:00",
+    "fridayEndShift": "06:00:00",
     "saturdayRestDay": true,
-    "saturdayStartShift": "00:00:00",
-    "saturdayStartBreak": "00:00:00",
+    "saturdayStartShift": "09:00:00",
+    "saturdayStartBreak": "12:00:00",
     "saturdayEndBreak": "01:00:00",
-    "saturdayEndShift": "01:00:00",
+    "saturdayEndShift": "06:00:00",
     "sundayRestDay": true,
-    "sundayStartShift": "00:00:00",
-    "sundayStartBreak": "00:00:00",
+    "sundayStartShift": "09:00:00",
+    "sundayStartBreak": "12:00:00",
     "sundayEndBreak": "01:00:00",
-    "sundayEndShift": "01:00:00",
+    "sundayEndShift": "06:00:00",
     "payGroup": "Monthly_Paid_Employees",
     "payrollRunType": "Daily",
     "basicMonthlySalary": 0,
@@ -213,9 +213,20 @@ export const Employee = (props: any) => {
   
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
+<<<<<<< HEAD
     totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
     workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
     payrollRunType: Yup.string().required('Payroll Run Type is required'),
+=======
+ 
+    totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
+    workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
+   
+    payrollRunType: Yup.string().required('Payroll Run Type is required'),
+  
+
+
+>>>>>>> 7954b35e5a82744190c5fb7ba433ddf36d2a183d
 
 
 
@@ -994,39 +1005,17 @@ export const Employee = (props: any) => {
           employeeType: Yup.string().required("Required"),
           jobTitle: Yup.string().required("Required"),
           userLevel: Yup.string().required("Required"),
-          immediateSuperiorId: Yup.string().required("Required"),
+      
           employeeStatus: Yup.string().required("Required"),
-          employmentStatusEffectivityDate: Yup.string().required("Required"),
           hireDate: Yup.string().required("Required"),
-          bankAcctType: Yup.string().required("Required"),
-          bankAccountNumber: Yup.string().required("Required"),
           tinNumber: Yup.string().required("Required"),
-          position: Yup.string().required("Required"),
-          regularizationDate: Yup.string().required("Required"),
-          statusDate: Yup.string().required("Required"),
           department: Yup.string().required("Required"),
-          costCenter: Yup.string().required("Required"),
-          seperationDate: Yup.string().required("Required"),
-          sssNumber: Yup.string().required("Required"),
-          philHealthId: Yup.string().required("Required"),
-          hdmfNumber: Yup.string().required("Required"),
+      
           squadId: Yup.string().required("Required"),
-          otComputationTable: Yup.string().required("Required"),
-          minimumWageEarner: Yup.string().required("Required"),
           totalWorkHrsPerDay: Yup.string().required("Required"),
           workDaysPerYear: Yup.string().required("Required"),
-          consultantPercentTax: Yup.string().required("Required"),
-          clientName: Yup.string().required("Required"),
-          jobCode: Yup.string().required("Required"),
-          jobGrade: Yup.string().required("Required"),
-          billability: Yup.string().required("Required"),
-          payrollRole: Yup.string().required("Required"),
-          payGroup: Yup.string().required("Required"),
           payrollRunType: Yup.string().required("Required"),
           basicMonthlySalary: Yup.string().required("Required"),
-          salaryEffectivityDate: Yup.string().required("Required"),
-          monthlyDeMinimisBenefits: Yup.string().required("Required"),
-          ecola: Yup.string().required("Required"),
         })
       }
       onSubmit={(values, actions) => {
@@ -1987,7 +1976,7 @@ export const Employee = (props: any) => {
                             label="Saturday Rest Day"
                             name="saturdayRestDay"
                             checked={values.saturdayRestDay}
-                            onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
+                            onChange={(e) => setFieldValue("saturdayRestDay", e.target.checked)}
                           />
                         </div>
                       <div className="form-group col-sm-3 mb-3">
