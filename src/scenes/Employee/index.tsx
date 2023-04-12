@@ -210,33 +210,12 @@ export const Employee = (props: any) => {
     biometricsId: Yup.string().required('Biometrics ID is required'),
     companyEmail: Yup.string().required('Company Email is required').email('Invalid Email Address'),
     jobTitle: Yup.string().required('Job Title is required'),
-    // immediateSuperiorId: Yup.string().required('Immediate Superior ID is required'),
-    // employmentStatusEffectivityDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+  
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    // bankAccountNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
-    // position: Yup.string().required('Position is required'),
-    // regularizationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    // costCenter: Yup.string().required('Cost Center is required'),
-    // seperationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    // sssNumber: Yup.number().required('SSS Number is required').typeError('Please enter a valid number'),
-    // philHealthId: Yup.number().required('PhilHealth ID is required').typeError('Please enter a valid number'),
-    // hdmfNumber: Yup.number().required('HDMF Number is required').typeError('Please enter a valid number'),
-    // otComputationTable: Yup.string().required('OT Computation Table is required'),
-    // minimumWageEarner: Yup.string().required('Minimum Wage Earner is required'),
     totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
     workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
-    // clientName: Yup.string().required('Client Name is required'),
-    // jobCode: Yup.string().required('Job Code is required'),
-    // billability: Yup.string().required('Billability is required'),
-    // payGroup: Yup.string().required('Pay Group is required'),
     payrollRunType: Yup.string().required('Payroll Run Type is required'),
-    // basicMonthlySalary: Yup.string().required('Basic Monthly Salary is required'),
-    // salaryEffectivityDate: Yup.string().required('Salary Effectivity Date is required'),
-    // monthlyDeMinimisBenefits: Yup.string().required('Monthly De Minimis Benefits is required'),
-    // ecola: Yup.string().required('Ecola is required'),
-
-
 
 
 
@@ -2142,19 +2121,7 @@ export const Employee = (props: any) => {
     <Formik
       initialValues={initialValues}
       enableReinitialize={true}
-      validationSchema={
-        Yup.object().shape({
-          // clothingAllowance: Yup.string().required("Required"),
-          // communicationAllowance: Yup.string().required("Required"),
-          // discretionaryAllowance: Yup.string().required("Required"),
-          // mealAllowance: Yup.string().required("Required"),
-          // medicalAllowance: Yup.string().required("Required"),
-          // productivityAllowance: Yup.string().required("Required"),
-          // conveyanceAllowance: Yup.string().required("Required"),
-          // otherAllowance: Yup.string().required("Required"),
-          // rdo: Yup.string().required("Required"),
-        })
-      }
+      validationSchema={null}
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
         if (userId) {
