@@ -2682,7 +2682,7 @@ export const Employee = (props: any) => {
                       </div>
                       <div className="passwordField w-100">
                         <input
-                          id="_password"
+                          id="_confirmpassword"
                           autoComplete="confirm-password"
                           style={{ marginBottom: "5px" }}
                           name="confirmPassword"
