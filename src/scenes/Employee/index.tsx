@@ -75,8 +75,8 @@ export const Employee = (props: any) => {
     "firstName": "",
     "middleName": "",
     "lastName": "",
-    "gender": "Male",
-    "civilStatus": "Single",
+    "gender": "MALE",
+    "civilStatus": "SINGLE",
     "birthDay": moment().format("YYYY-MM-DD"),
     "contactNumber": "",
     "emailAddress": "",
@@ -210,31 +210,31 @@ export const Employee = (props: any) => {
     biometricsId: Yup.string().required('Biometrics ID is required'),
     companyEmail: Yup.string().required('Company Email is required').email('Invalid Email Address'),
     jobTitle: Yup.string().required('Job Title is required'),
-    immediateSuperiorId: Yup.string().required('Immediate Superior ID is required'),
-    employmentStatusEffectivityDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    // immediateSuperiorId: Yup.string().required('Immediate Superior ID is required'),
+    // employmentStatusEffectivityDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    bankAccountNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
+    // bankAccountNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
-    position: Yup.string().required('Position is required'),
-    regularizationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    costCenter: Yup.string().required('Cost Center is required'),
-    seperationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
-    sssNumber: Yup.number().required('SSS Number is required').typeError('Please enter a valid number'),
-    philHealthId: Yup.number().required('PhilHealth ID is required').typeError('Please enter a valid number'),
-    hdmfNumber: Yup.number().required('HDMF Number is required').typeError('Please enter a valid number'),
-    otComputationTable: Yup.string().required('OT Computation Table is required'),
-    minimumWageEarner: Yup.string().required('Minimum Wage Earner is required'),
+    // position: Yup.string().required('Position is required'),
+    // regularizationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    // costCenter: Yup.string().required('Cost Center is required'),
+    // seperationDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
+    // sssNumber: Yup.number().required('SSS Number is required').typeError('Please enter a valid number'),
+    // philHealthId: Yup.number().required('PhilHealth ID is required').typeError('Please enter a valid number'),
+    // hdmfNumber: Yup.number().required('HDMF Number is required').typeError('Please enter a valid number'),
+    // otComputationTable: Yup.string().required('OT Computation Table is required'),
+    // minimumWageEarner: Yup.string().required('Minimum Wage Earner is required'),
     totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
     workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
-    clientName: Yup.string().required('Client Name is required'),
-    jobCode: Yup.string().required('Job Code is required'),
-    billability: Yup.string().required('Billability is required'),
-    payGroup: Yup.string().required('Pay Group is required'),
+    // clientName: Yup.string().required('Client Name is required'),
+    // jobCode: Yup.string().required('Job Code is required'),
+    // billability: Yup.string().required('Billability is required'),
+    // payGroup: Yup.string().required('Pay Group is required'),
     payrollRunType: Yup.string().required('Payroll Run Type is required'),
-    basicMonthlySalary: Yup.string().required('Basic Monthly Salary is required'),
-    salaryEffectivityDate: Yup.string().required('Salary Effectivity Date is required'),
-    monthlyDeMinimisBenefits: Yup.string().required('Monthly De Minimis Benefits is required'),
-    ecola: Yup.string().required('Ecola is required'),
+    // basicMonthlySalary: Yup.string().required('Basic Monthly Salary is required'),
+    // salaryEffectivityDate: Yup.string().required('Salary Effectivity Date is required'),
+    // monthlyDeMinimisBenefits: Yup.string().required('Monthly De Minimis Benefits is required'),
+    // ecola: Yup.string().required('Ecola is required'),
 
 
 
@@ -570,7 +570,7 @@ export const Employee = (props: any) => {
           birthDay: Yup.string().required("Required"),
           contactNumber: Yup.string().required("Required"),
           emailAddress: Yup.string().required("Required"),
-          prclicenseNo: Yup.string().required("Required"),
+          // prclicenseNo: Yup.string().required("Required"),
           passportNo: Yup.string().required("Required"),
         })
       }
@@ -896,10 +896,10 @@ export const Employee = (props: any) => {
       initialValues={initialValues}
       enableReinitialize={true}
       validationSchema={ Yup.object().shape({
-        emergencyContactNo: Yup.string().required("Required"),
-        emergencyContactName: Yup.string().required("Required"),
-        emergencyContactAddress: Yup.string().required("Required"),
-        emergencyContactRelationship: Yup.string().required("Required"),
+        // emergencyContactNo: Yup.string().required("Required"),
+        // emergencyContactName: Yup.string().required("Required"),
+        // emergencyContactAddress: Yup.string().required("Required"),
+        // emergencyContactRelationship: Yup.string().required("Required"),
       })}
       onSubmit={(values, actions) => {
         const valuesObj: any = { ...values }
@@ -1653,7 +1653,7 @@ export const Employee = (props: any) => {
                 <button
                   type="button"
                   onClick={() => {
-                    setTabIndex(2)
+                    setTabIndex(3)
                   }}
                   className="btn btn-primary mx-2">
                   Back
@@ -1724,132 +1724,391 @@ export const Employee = (props: any) => {
                   </div>
                   <div className="container">
                     <div className="row">
-                  {/* monday  */}
-                  {/* <div className="form-group col-sm-3 mb-3">
-                   
-                  </div> */}
-                  <div className="form-group col-sm-3 mb-3">
-                  {/* <label className="form-check-label">Monday Rest Day</label> */}
-                  <label className="switch">
-                  <input type="checkbox" id="myCheckbox" className="employee-checkbox" />
-                  <label htmlFor="myCheckbox">Check me out</label>
-                  </label>
-                    <label>Monday Start Shift</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Monday Start Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Monday End Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Monday End Shift</label>
-                  </div>
-                   {/* tuesday  */}
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Tuesday Rest Day</label>
-                    <input 
-                      type="checkbox"
-                      name="tuesdayRestDay"
-                      id="tuesdayRestDay"
-                      className="form-check-input"
-                      // checked={values.mondayRestDay}
-                      // onChange={(e) => setFormField(e, setFieldValue)}
-                    />
-                    <label>Tuesday Start Shift</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Tuesday Start Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Tuesday End Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Tuesday End Shift</label>
-                  </div>
+                        <div className="form-group col-sm-12 mb-12">
+                        <Form.Check
+                          type="checkbox"
+                          label="Monday Rest Day"
+                          name="mondayRestDay"
+                          checked={values.mondayRestDay}
+                          onChange={(e) => setFieldValue("mondayRestDay", e.target.checked)}
+                        />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                        
+                          <label>Monday Start Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="mondayStartShift"
+                            className="form-control"
+                            value={values.mondayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Monday Start Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="mondayStartBreak"
+                            className="form-control"
+                            value={values.mondayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Monday End Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="mondayEndBreak"
+                            className="form-control"
+                            value={values.mondayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Monday End Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="mondayEndShift"
+                            className="form-control"
+                            value={values.mondayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        {/* tuesday  */}
+                        <div className="form-group col-sm-12 mb-12">
+                          <Form.Check
+                            type="checkbox"
+                            label="Tuesday Rest Day"
+                            name="tuesdayRestDay"
+                            checked={values.tuesdayRestDay}
+                            onChange={(e) => setFieldValue("tuesdayRestDay", e.target.checked)}
+                            />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Tuesday Start Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="tuesdayStartShift"
+                            className="form-control"
+                            value={values.tuesdayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Tuesday Start Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="tuesdayStartBreak"
+                            className="form-control"
+                            value={values.tuesdayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Tuesday End Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="tuesdayEndBreak"
+                            className="form-control"
+                            value={values.tuesdayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Tuesday End Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="tuesdayEndShift"
+                            className="form-control"
+                            value={values.tuesdayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
 
-                   {/* wednesday  */}
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Wednesday Rest Day</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Wednesday Start Shift</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Wednesday Start Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Wednesday End Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Wednesday End Shift</label>
-                  </div>
-                  {/* thursday  */}
+                        {/* wednesday  */}
+                        <div className="form-group col-sm-12 mb-12">
+                          <Form.Check
+                            type="checkbox"
+                            label="Wednesday Rest Day"
+                            name="wednesdayRestDay"
+                            checked={values.wednesdayRestDay}
+                            onChange={(e) => setFieldValue("wednesdayRestDay", e.target.checked)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Wednesday Start Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="wednesdayStartShift"
+                            className="form-control"
+                            value={values.wednesdayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Wednesday Start Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="wednesdayStartBreak"
+                            className="form-control"
+                            value={values.wednesdayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Wednesday End Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="wednesdayEndBreak"
+                            className="form-control"
+                            value={values.wednesdayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Wednesday End Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="wednesdayEndShift"
+                            className="form-control"
+                            value={values.wednesdayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        {/* thursday  */}
+                        <div className="form-group col-sm-12 mb-12">
+                          <Form.Check
+                            type="checkbox"
+                            label="Thursday Rest Day"
+                            name="thursdayRestDay"
+                            checked={values.thursdayRestDay}
+                            onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
+                          />
+                        </div>
+                        
+                        <div className="form-group col-sm-3 mb-3">
 
-                  
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Thursday Rest Day</label>
+                          <label>Thursday Start Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="thursdayStartShift"
+                            className="form-control"
+                            value={values.thursdayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Thursday Start Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="thursdayStartBreak"
+                            className="form-control"
+                            value={values.thursdayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Thursday End Break</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="thursdayEndBreak"
+                            className="form-control"
+                            value={values.thursdayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
+                        <div className="form-group col-sm-3 mb-3">
+                          <label>Thursday End Shift</label>
+                          <input 
+                            step={1}
+                            type="time"
+                            name="thursdayEndShift"
+                            className="form-control"
+                            value={values.thursdayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                        </div>
 
-                    <label>Thursday Start Shift</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Thursday Start Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Thursday End Break</label>
-                  </div>
-                  <div className="form-group col-sm-3 mb-3">
-                    <label>Thursday End Shift</label>
-                  </div>
+                        {/* friday  */}
 
-                   {/* friday  */}
+                        <div className="form-group col-sm-12 mb-12">
+                          <Form.Check
+                            type="checkbox"
+                            label="Friday Rest Day"
+                            name="fridayRestDay"
+                            checked={values.fridayRestDay}
+                            onChange={(e) => setFieldValue("fridayRestDay", e.target.checked)}
+                          />
+                        </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        
+                        <label>Friday Start Shift</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="fridayStartShift"
+                            className="form-control"
+                            value={values.fridayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Friday Start Break</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="fridayStartBreak"
+                            className="form-control"
+                            value={values.fridayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Friday End Break</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="fridayEndBreak"
+                            className="form-control"
+                            value={values.fridayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Friday End Shift</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="fridayEndShift"
+                            className="form-control"
+                            value={values.fridayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      {/* saturday  */}
 
-               
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday Rest Day</label>
-                  <label>Friday Start Shift</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday Start Break</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday End Break</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday End Shift</label>
-                </div>
-                {/* saturday  */}
-
-               
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday Rest Day</label>
-                  <label>Saturday Start Shift</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday Start Break</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday End Break</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday End Shift</label>
-                </div>
-                {/* Sunday  */}
-
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday Rest Day</label>
-                  <label>Sunday Start Shift</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday Start Break</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday End Break</label>
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday End Shift</label>
-                </div>
-                  
+                      <div className="form-group col-sm-12 mb-12">
+                          <Form.Check
+                            type="checkbox"
+                            label="Saturday Rest Day"
+                            name="saturdayRestDay"
+                            checked={values.saturdayRestDay}
+                            onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
+                          />
+                        </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Saturday Start Shift</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="saturdayStartShift"
+                            className="form-control"
+                            value={values.saturdayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Saturday Start Break</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="saturdayStartBreak"
+                            className="form-control"
+                            value={values.saturdayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Saturday End Break</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="saturdayEndBreak"
+                            className="form-control"
+                            value={values.saturdayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Saturday End Shift</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="saturdayEndShift"
+                            className="form-control"
+                            value={values.saturdayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      {/* Sunday  */}
+                      <div className="form-group col-sm-12 mb-12">
+                          <Form.Check
+                            type="checkbox"
+                            label="Sunday Rest Day"
+                            name="sundayRestDay"
+                            checked={values.sundayRestDay}
+                            onChange={(e) => setFieldValue("sundayRestDay", e.target.checked)}
+                          />
+                        </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Sunday Start Shift</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="sundayStartShift"
+                            className="form-control"
+                            value={values.sundayStartShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Sunday Start Break</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="saturdayStartBreak"
+                            className="form-control"
+                            value={values.saturdayStartBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Sunday End Break</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="saturdayEndBreak"
+                            className="form-control"
+                            value={values.saturdayEndBreak}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
+                      <div className="form-group col-sm-3 mb-3">
+                        <label>Sunday End Shift</label>
+                        <input 
+                            step={1}
+                            type="time"
+                            name="sundayEndShift"
+                            className="form-control"
+                            value={values.sundayEndShift}
+                            onChange={(e) => setFormField(e, setFieldValue)}
+                          />
+                      </div>
                   
 
 
@@ -1885,15 +2144,15 @@ export const Employee = (props: any) => {
       enableReinitialize={true}
       validationSchema={
         Yup.object().shape({
-          clothingAllowance: Yup.string().required("Required"),
-          communicationAllowance: Yup.string().required("Required"),
-          discretionaryAllowance: Yup.string().required("Required"),
-          mealAllowance: Yup.string().required("Required"),
-          medicalAllowance: Yup.string().required("Required"),
-          productivityAllowance: Yup.string().required("Required"),
-          conveyanceAllowance: Yup.string().required("Required"),
-          otherAllowance: Yup.string().required("Required"),
-          rdo: Yup.string().required("Required"),
+          // clothingAllowance: Yup.string().required("Required"),
+          // communicationAllowance: Yup.string().required("Required"),
+          // discretionaryAllowance: Yup.string().required("Required"),
+          // mealAllowance: Yup.string().required("Required"),
+          // medicalAllowance: Yup.string().required("Required"),
+          // productivityAllowance: Yup.string().required("Required"),
+          // conveyanceAllowance: Yup.string().required("Required"),
+          // otherAllowance: Yup.string().required("Required"),
+          // rdo: Yup.string().required("Required"),
         })
       }
       onSubmit={(values, actions) => {
