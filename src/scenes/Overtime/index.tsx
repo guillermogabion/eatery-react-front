@@ -124,7 +124,7 @@ export const Overtime = (props: any) => {
       )
     }else{
       RequestAPI.getRequest(
-        `${Api.myOT}?size=10&page=${page}&sort=id&sortDir=desc&status=${status}`,
+        `${Api.myOT}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
         "",
         {},
         {},
