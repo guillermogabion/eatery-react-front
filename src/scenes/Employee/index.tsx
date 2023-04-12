@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from "react"
 import UserTopMenu from "../../components/UserTopMenu"
-
+import {
+  show_password_dark,
+  hide_password_dark,
+} from "../../assets/images"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import DashboardMenu from "../../components/DashboardMenu"
@@ -69,6 +72,7 @@ export const Employee = (props: any) => {
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
     "status": "ACTIVE",
@@ -85,12 +89,12 @@ export const Employee = (props: any) => {
     "emergencyContactAddress": "",
     "emergencyContactRelationship": "SPOUSE",
     "addressRegion": "",
-    "addressProvince": "",
-    "addressMunicipality": "",
-    "addressBarangay": "",
-    "addressStreet": "",
-    "addressZipCode": "",
-    "addressType": "PRIMARY",
+    "addressProvince": "",
+    "addressMunicipality": "",
+    "addressBarangay": "",
+    "addressStreet": "",
+    "addressZipCode": "",
+    "addressType": "PRIMARY",
     "employeeId": "",
     "biometricsId": 0,
     "companyEmail": "",
@@ -125,6 +129,7 @@ export const Employee = (props: any) => {
     "billability": true,
     "payrollRole": "SuperAdmin",
     "scheduleType": "NORMAL_SHIFT",
+<<<<<<< Updated upstream
     "workingHours": 0,
     "mondayRestDay": true,
     "mondayStartShift": "09:00:00",
@@ -161,6 +166,44 @@ export const Employee = (props: any) => {
     "sundayStartBreak": "12:00:00",
     "sundayEndBreak": "13:00:00",
     "sundayEndShift": "18:00:00",
+=======
+    "workingHours": 0,
+    "mondayRestDay": true,
+    "mondayStartShift": "00:00:00",
+    "mondayStartBreak": "00:00:00",
+    "mondayEndBreak": "01:00:00",
+    "mondayEndShift": "01:00:00",
+    "tuesdayRestDay": true,
+    "tuesdayStartShift": "00:00:00",
+    "tuesdayStartBreak": "00:00:00",
+    "tuesdayEndBreak": "01:00:00",
+    "tuesdayEndShift": "01:00:00",
+    "wednesdayRestDay": true,
+    "wednesdayStartShift": "00:00:00",
+    "wednesdayStartBreak": "00:00:00",
+    "wednesdayEndBreak": "01:00:00",
+    "wednesdayEndShift": "01:00:00",
+    "thursdayRestDay": true,
+    "thursdayStartShift": "00:00:00",
+    "thursdayStartBreak": "00:00:00",
+    "thursdayEndBreak": "01:00:00",
+    "thursdayEndShift": "01:00:00",
+    "fridayRestDay": true,
+    "fridayStartShift": "00:00:00",
+    "fridayStartBreak": "00:00:00",
+    "fridayEndBreak": "01:00:00",
+    "fridayEndShift": "01:00:00",
+    "saturdayRestDay": true,
+    "saturdayStartShift": "00:00:00",
+    "saturdayStartBreak": "00:00:00",
+    "saturdayEndBreak": "01:00:00",
+    "saturdayEndShift": "01:00:00",
+    "sundayRestDay": true,
+    "sundayStartShift": "00:00:00",
+    "sundayStartBreak": "00:00:00",
+    "sundayEndBreak": "01:00:00",
+    "sundayEndShift": "01:00:00",
+>>>>>>> Stashed changes
     "payGroup": "Monthly_Paid_Employees",
     "payrollRunType": "Daily",
     "basicMonthlySalary": 0,
@@ -180,11 +223,6 @@ export const Employee = (props: any) => {
     "passportNo": 0
   })
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
-
-
   const validationSchema = Yup.object().shape({
 
     // information 
@@ -199,7 +237,7 @@ export const Employee = (props: any) => {
     prclicenseNo: Yup.number().required('PRC License Number is required').typeError('Please enter a valid number'),
     passportNo: Yup.string().required('Passport Number is required'),
 
-    
+
     // emergency 
     emergencyContactNo: Yup.number().required('Contact Number is required').typeError('Please enter a valid number'),
     emergencyContactName: Yup.string().required('Contact name is required'),
@@ -213,19 +251,19 @@ export const Employee = (props: any) => {
   
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
- 
+
     totalWorkHrsPerDay: Yup.string().required('Total Works Hours per Day is required'),
     workDaysPerYear: Yup.string().required('Work Days Per Year is required'),
-   
+
     payrollRunType: Yup.string().required('Payroll Run Type is required'),
-  
 
 
 
 
 
-    
-    
+
+
+
   })
 
   useEffect(() => {
@@ -257,18 +295,18 @@ export const Employee = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
-  
 
-  const getAllEmployee = (pageNo: any, employeeId? : any) => {
+
+  const getAllEmployee = (pageNo: any, employeeId?: any) => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if(employeeId){
+    if (employeeId) {
       queryString = "&employeeId" + employeeId
-    }else{
+    } else {
       if (filterDataTemp) {
         Object.keys(filterDataTemp).forEach((d: any) => {
           if (filterDataTemp[d]) {
-            
+
             queryString += `&${d}=${filterDataTemp[d]}`
           } else {
             queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -276,7 +314,7 @@ export const Employee = (props: any) => {
         })
       }
     }
-    
+
     RequestAPI.getRequest(
       `${Api.allEmployee}?size=10&page=${pageNo}${queryString}`,
       "",
@@ -295,11 +333,11 @@ export const Employee = (props: any) => {
     )
   }
 
-  const uploadExcel = async(file: any) => {
+  const uploadExcel = async (file: any) => {
     const formData = new FormData()
   }
 
-  
+
   const setFormField = (e: any, setFieldValue: any) => {
     const { name, value } = e.target
     if (setFieldValue) {
@@ -389,21 +427,21 @@ export const Employee = (props: any) => {
           const employeeData: Employee = {
             id,
             name: body.data.name,
-            lastName : body.data.lastName,
-            firstName : body.data.firstName,
-            middleName : body.data.middleName,
-            birthDay : body.data.birthDay,
-            gender : body.data.gender,
-            civilStatus : body.data.civilStatus,
-            contactNumber : body.data.contactNumber,
-            emailAddress : body.data.emailAddress,
-            prclicenseNo : body.data.prclicenseNo,
-            passportNo : body.data.passportNo,
-            userLevel : body.data.userLevel,
-            emergencyContactName : body.data.emergencyContactName,
-            emergencyContactNo : body.data.emergencyContactNo,
-            emergencyContactAddress : body.data.emergencyContactAddress,
-            emergencyContactRelationship : body.data.emergencyContactRelationship,
+            lastName: body.data.lastName,
+            firstName: body.data.firstName,
+            middleName: body.data.middleName,
+            birthDay: body.data.birthDay,
+            gender: body.data.gender,
+            civilStatus: body.data.civilStatus,
+            contactNumber: body.data.contactNumber,
+            emailAddress: body.data.emailAddress,
+            prclicenseNo: body.data.prclicenseNo,
+            passportNo: body.data.passportNo,
+            userLevel: body.data.userLevel,
+            emergencyContactName: body.data.emergencyContactName,
+            emergencyContactNo: body.data.emergencyContactNo,
+            emergencyContactAddress: body.data.emergencyContactAddress,
+            emergencyContactRelationship: body.data.emergencyContactRelationship,
             employeeId: body.data.employeeId,
             biometricsId: body.data.biometricsId,
             companyEmail: body.data.companyEmail,
@@ -417,7 +455,7 @@ export const Employee = (props: any) => {
         }
       }
     );
-   
+
     setModalViewShow(true);
   };
 
@@ -484,7 +522,7 @@ export const Employee = (props: any) => {
       }
     );
   };
-  
+
   // const handlePasswordSubmit = () => {
   //   if (id && newPassword) {
   //     submitPassword(id, newPassword);
@@ -500,47 +538,13 @@ export const Employee = (props: any) => {
   //     console.log("ID or new password is missing.");
   //   }
   // };
-  
+
   const submitPassword = (userId: any) => {
     console.log(userId, password)
-   
-  RequestAPI.putRequest(
-    Api.employeeChangePassword, 
-    "", 
-    { "id": userId,  "password": password }, 
-    { }, 
-    async (res: any) => {
-      const { status, body = { data: {}, error: {} } }: any = res
-      if (status === 200 || status === 201) {
-        if (body.error && body.error.message) {
-          ErrorSwal.fire(
-            'Error!',
-            (body.error && body.error.message) || "",
-            'error'
-          )
-        } else {
-          getAllEmployee(0)
-          ErrorSwal.fire(
-            'Success!',
-            (body.data) || "",
-            'success'
-          )
-          setModalPasswordShow(false)
-          setPassword("") 
-          setShowPassword(false)
-        }
-      } else {
-        ErrorSwal.fire(
-          'Error!',
-          'Something Error.',
-          'error'
-        )
-        setModalPasswordShow(false)
-      }
-    }
-  )
 
-};
+
+
+  };
   const information = (
     <Formik
       initialValues={initialValues}
@@ -609,7 +613,7 @@ export const Employee = (props: any) => {
                   value={values.middleName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                 {errors.middleName && <div className="error-text">{String(errors.middleName)}</div>}
+                {errors.middleName && <div className="error-text">{String(errors.middleName)}</div>}
 
               </div>
               <div className="form-group col-md-3 mb-3" >
@@ -755,22 +759,22 @@ export const Employee = (props: any) => {
 
   const addressInformation = (
     <Formik
-    initialValues={initialValues}
-    enableReinitialize={true}
-    validationSchema={null}
-    onSubmit={(values, actions) => {
-      const valuesObj: any = { ...values }
-      setInitialValues(valuesObj)
-      setTabIndex(3)
-    }}
+      initialValues={initialValues}
+      enableReinitialize={true}
+      validationSchema={null}
+      onSubmit={(values, actions) => {
+        const valuesObj: any = { ...values }
+        setInitialValues(valuesObj)
+        setTabIndex(3)
+      }}
     >
-      {({values, setFieldValue,  handleSubmit, errors, touched}) => {
+      {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form
-          noValidate 
-          onSubmit={handleSubmit} 
-          id="_formid1" 
-          autoComplete="off"
+            noValidate
+            onSubmit={handleSubmit}
+            id="_formid1"
+            autoComplete="off"
           >
             <div className="col-md-12 row p-0 m-0" >
               <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
@@ -779,7 +783,7 @@ export const Employee = (props: any) => {
               </div>
             </div>
             <div className="row w-100 px-5">
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>Region</label>
                 <input type="text"
                   name="addressRegion"
@@ -789,7 +793,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>City/Province</label>
                 <input type="text"
                   name="addressProvince"
@@ -799,7 +803,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>Municipality</label>
                 <input type="text"
                   name="addressMunicipality"
@@ -809,7 +813,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>Barangay</label>
                 <input type="text"
                   name="addressBarangay"
@@ -819,7 +823,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>Street</label>
                 <input type="text"
                   name="addressStreet"
@@ -829,7 +833,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>Zipcode</label>
                 <input type="text"
                   name="addressZipCode"
@@ -839,7 +843,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
               </div>
-            <div className="form-group col-md-6 mb-3 " >
+              <div className="form-group col-md-6 mb-3 " >
                 <label>Address Type</label>
                 <input type="text"
                   name="addressType"
@@ -879,7 +883,7 @@ export const Employee = (props: any) => {
     <Formik
       initialValues={initialValues}
       enableReinitialize={true}
-      validationSchema={ Yup.object().shape({
+      validationSchema={Yup.object().shape({
         // emergencyContactNo: Yup.string().required("Required"),
         // emergencyContactName: Yup.string().required("Required"),
         // emergencyContactAddress: Yup.string().required("Required"),
@@ -999,12 +1003,12 @@ export const Employee = (props: any) => {
           employeeType: Yup.string().required("Required"),
           jobTitle: Yup.string().required("Required"),
           userLevel: Yup.string().required("Required"),
-      
+
           employeeStatus: Yup.string().required("Required"),
           hireDate: Yup.string().required("Required"),
           tinNumber: Yup.string().required("Required"),
           department: Yup.string().required("Required"),
-      
+
           squadId: Yup.string().required("Required"),
           totalWorkHrsPerDay: Yup.string().required("Required"),
           workDaysPerYear: Yup.string().required("Required"),
@@ -1369,7 +1373,7 @@ export const Employee = (props: any) => {
                           {_data.name}
                         </option>
                       )
-                      
+
                     })
                   }
                 </select>
@@ -1635,448 +1639,448 @@ export const Employee = (props: any) => {
 
   const scheduleInformation = (
     <Formik
-    initialValues={initialValues}
-    enableReinitialize={true}
-    validationSchema={null}
-    onSubmit={(values, actions) => {
-      const valuesObj: any = { ...values }
-      setInitialValues(valuesObj)
-      setTabIndex(6)
-    }}
+      initialValues={initialValues}
+      enableReinitialize={true}
+      validationSchema={null}
+      onSubmit={(values, actions) => {
+        const valuesObj: any = { ...values }
+        setInitialValues(valuesObj)
+        setTabIndex(6)
+      }}
     >
-       {({values, setFieldValue,  handleSubmit, errors, touched}) => {
-          return (
-            <Form
-            noValidate 
-            onSubmit={handleSubmit} 
-            id="_formid1" 
+      {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+        return (
+          <Form
+            noValidate
+            onSubmit={handleSubmit}
+            id="_formid1"
             autoComplete="off"
-            >
-              <div className="col-md-12 row-p-0 m-0">
-                <div className="form-group col-md-12 pt-3 d-flex justify-content-center align-items-center flex-column">
-                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                    <h5>Schedule Information</h5>
+          >
+            <div className="col-md-12 row-p-0 m-0">
+              <div className="form-group col-md-12 pt-3 d-flex justify-content-center align-items-center flex-column">
+                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                <h5>Schedule Information</h5>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3">
+                  <label>Schedule Type</label>
+                  <input
+                    type="text"
+                    name="scheduleType"
+                    id="scheduleType"
+                    className="form-control"
+                    value={values.scheduleType}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3">
+                  <label>Working Hours</label>
+                  <input
+                    type="text"
+                    name="workingHours"
+                    id="workingHours"
+                    className="form-control"
+                    value={values.workingHours}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
                 </div>
               </div>
-              <div className="container">
-                <div className="row w-100 px-5">
-                  <div className="form-group col-md-6 mb-3">
-                    <label>Schedule Type</label>
-                    <input 
-                      type="text"
-                      name="scheduleType"
-                      id="scheduleType"
-                      className="form-control"
-                      value={values.scheduleType}
-                      onChange={(e) => setFormField(e, setFieldValue)}
-                    />
-                  </div>
-                  <div className="form-group col-md-6 mb-3">
-                    <label>Working Hours</label>
-                    <input 
-                      type="text"
-                      name="workingHours"
-                      id="workingHours"
-                      className="form-control"
-                      value={values.workingHours}
-                      onChange={(e) => setFormField(e, setFieldValue)}
-                    />
-                  </div>
-                  </div>
-                  </div>
-                  <div className="container">
-                    <div className="row">
-                        <div className="form-group col-sm-12 mb-12">
-                        <Form.Check
-                          type="checkbox"
-                          label="Monday Rest Day"
-                          name="mondayRestDay"
-                          checked={values.mondayRestDay}
-                          onChange={(e) => setFieldValue("mondayRestDay", e.target.checked)}
-                        />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                        
-                          <label>Monday Start Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="mondayStartShift"
-                            className="form-control"
-                            value={values.mondayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Monday Start Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="mondayStartBreak"
-                            className="form-control"
-                            value={values.mondayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Monday End Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="mondayEndBreak"
-                            className="form-control"
-                            value={values.mondayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Monday End Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="mondayEndShift"
-                            className="form-control"
-                            value={values.mondayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        {/* tuesday  */}
-                        <div className="form-group col-sm-12 mb-12">
-                          <Form.Check
-                            type="checkbox"
-                            label="Tuesday Rest Day"
-                            name="tuesdayRestDay"
-                            checked={values.tuesdayRestDay}
-                            onChange={(e) => setFieldValue("tuesdayRestDay", e.target.checked)}
-                            />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Tuesday Start Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="tuesdayStartShift"
-                            className="form-control"
-                            value={values.tuesdayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Tuesday Start Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="tuesdayStartBreak"
-                            className="form-control"
-                            value={values.tuesdayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Tuesday End Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="tuesdayEndBreak"
-                            className="form-control"
-                            value={values.tuesdayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Tuesday End Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="tuesdayEndShift"
-                            className="form-control"
-                            value={values.tuesdayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Monday Rest Day"
+                    name="mondayRestDay"
+                    checked={values.mondayRestDay}
+                    onChange={(e) => setFieldValue("mondayRestDay", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
 
-                        {/* wednesday  */}
-                        <div className="form-group col-sm-12 mb-12">
-                          <Form.Check
-                            type="checkbox"
-                            label="Wednesday Rest Day"
-                            name="wednesdayRestDay"
-                            checked={values.wednesdayRestDay}
-                            onChange={(e) => setFieldValue("wednesdayRestDay", e.target.checked)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Wednesday Start Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="wednesdayStartShift"
-                            className="form-control"
-                            value={values.wednesdayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Wednesday Start Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="wednesdayStartBreak"
-                            className="form-control"
-                            value={values.wednesdayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Wednesday End Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="wednesdayEndBreak"
-                            className="form-control"
-                            value={values.wednesdayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Wednesday End Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="wednesdayEndShift"
-                            className="form-control"
-                            value={values.wednesdayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        {/* thursday  */}
-                        <div className="form-group col-sm-12 mb-12">
-                          <Form.Check
-                            type="checkbox"
-                            label="Thursday Rest Day"
-                            name="thursdayRestDay"
-                            checked={values.thursdayRestDay}
-                            onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
-                          />
-                        </div>
-                        
-                        <div className="form-group col-sm-3 mb-3">
+                  <label>Monday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="mondayStartShift"
+                    className="form-control"
+                    value={values.mondayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Monday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="mondayStartBreak"
+                    className="form-control"
+                    value={values.mondayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Monday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="mondayEndBreak"
+                    className="form-control"
+                    value={values.mondayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Monday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="mondayEndShift"
+                    className="form-control"
+                    value={values.mondayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                {/* tuesday  */}
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Tuesday Rest Day"
+                    name="tuesdayRestDay"
+                    checked={values.tuesdayRestDay}
+                    onChange={(e) => setFieldValue("tuesdayRestDay", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Tuesday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="tuesdayStartShift"
+                    className="form-control"
+                    value={values.tuesdayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Tuesday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="tuesdayStartBreak"
+                    className="form-control"
+                    value={values.tuesdayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Tuesday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="tuesdayEndBreak"
+                    className="form-control"
+                    value={values.tuesdayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Tuesday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="tuesdayEndShift"
+                    className="form-control"
+                    value={values.tuesdayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
 
-                          <label>Thursday Start Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="thursdayStartShift"
-                            className="form-control"
-                            value={values.thursdayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Thursday Start Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="thursdayStartBreak"
-                            className="form-control"
-                            value={values.thursdayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Thursday End Break</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="thursdayEndBreak"
-                            className="form-control"
-                            value={values.thursdayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
-                        <div className="form-group col-sm-3 mb-3">
-                          <label>Thursday End Shift</label>
-                          <input 
-                            step={1}
-                            type="time"
-                            name="thursdayEndShift"
-                            className="form-control"
-                            value={values.thursdayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                        </div>
+                {/* wednesday  */}
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Wednesday Rest Day"
+                    name="wednesdayRestDay"
+                    checked={values.wednesdayRestDay}
+                    onChange={(e) => setFieldValue("wednesdayRestDay", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Wednesday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="wednesdayStartShift"
+                    className="form-control"
+                    value={values.wednesdayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Wednesday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="wednesdayStartBreak"
+                    className="form-control"
+                    value={values.wednesdayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Wednesday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="wednesdayEndBreak"
+                    className="form-control"
+                    value={values.wednesdayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Wednesday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="wednesdayEndShift"
+                    className="form-control"
+                    value={values.wednesdayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                {/* thursday  */}
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Thursday Rest Day"
+                    name="thursdayRestDay"
+                    checked={values.thursdayRestDay}
+                    onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
+                  />
+                </div>
 
-                        {/* friday  */}
+                <div className="form-group col-sm-3 mb-3">
 
-                        <div className="form-group col-sm-12 mb-12">
-                          <Form.Check
-                            type="checkbox"
-                            label="Friday Rest Day"
-                            name="fridayRestDay"
-                            checked={values.fridayRestDay}
-                            onChange={(e) => setFieldValue("fridayRestDay", e.target.checked)}
-                          />
-                        </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        
-                        <label>Friday Start Shift</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="fridayStartShift"
-                            className="form-control"
-                            value={values.fridayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Friday Start Break</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="fridayStartBreak"
-                            className="form-control"
-                            value={values.fridayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Friday End Break</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="fridayEndBreak"
-                            className="form-control"
-                            value={values.fridayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Friday End Shift</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="fridayEndShift"
-                            className="form-control"
-                            value={values.fridayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      {/* saturday  */}
+                  <label>Thursday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="thursdayStartShift"
+                    className="form-control"
+                    value={values.thursdayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Thursday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="thursdayStartBreak"
+                    className="form-control"
+                    value={values.thursdayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Thursday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="thursdayEndBreak"
+                    className="form-control"
+                    value={values.thursdayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Thursday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="thursdayEndShift"
+                    className="form-control"
+                    value={values.thursdayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
 
-                      <div className="form-group col-sm-12 mb-12">
-                          <Form.Check
-                            type="checkbox"
-                            label="Saturday Rest Day"
-                            name="saturdayRestDay"
-                            checked={values.saturdayRestDay}
-                            onChange={(e) => setFieldValue("saturdayRestDay", e.target.checked)}
-                          />
-                        </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Saturday Start Shift</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="saturdayStartShift"
-                            className="form-control"
-                            value={values.saturdayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Saturday Start Break</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="saturdayStartBreak"
-                            className="form-control"
-                            value={values.saturdayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Saturday End Break</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="saturdayEndBreak"
-                            className="form-control"
-                            value={values.saturdayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Saturday End Shift</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="saturdayEndShift"
-                            className="form-control"
-                            value={values.saturdayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      {/* Sunday  */}
-                      <div className="form-group col-sm-12 mb-12">
-                          <Form.Check
-                            type="checkbox"
-                            label="Sunday Rest Day"
-                            name="sundayRestDay"
-                            checked={values.sundayRestDay}
-                            onChange={(e) => setFieldValue("sundayRestDay", e.target.checked)}
-                          />
-                        </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Sunday Start Shift</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="sundayStartShift"
-                            className="form-control"
-                            value={values.sundayStartShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Sunday Start Break</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="saturdayStartBreak"
-                            className="form-control"
-                            value={values.saturdayStartBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Sunday End Break</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="saturdayEndBreak"
-                            className="form-control"
-                            value={values.saturdayEndBreak}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                      <div className="form-group col-sm-3 mb-3">
-                        <label>Sunday End Shift</label>
-                        <input 
-                            step={1}
-                            type="time"
-                            name="sundayEndShift"
-                            className="form-control"
-                            value={values.sundayEndShift}
-                            onChange={(e) => setFormField(e, setFieldValue)}
-                          />
-                      </div>
-                  
+                {/* friday  */}
+
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Friday Rest Day"
+                    name="fridayRestDay"
+                    checked={values.fridayRestDay}
+                    onChange={(e) => setFieldValue("fridayRestDay", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+
+                  <label>Friday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="fridayStartShift"
+                    className="form-control"
+                    value={values.fridayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="fridayStartBreak"
+                    className="form-control"
+                    value={values.fridayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="fridayEndBreak"
+                    className="form-control"
+                    value={values.fridayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Friday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="fridayEndShift"
+                    className="form-control"
+                    value={values.fridayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                {/* saturday  */}
+
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Saturday Rest Day"
+                    name="saturdayRestDay"
+                    checked={values.saturdayRestDay}
+                    onChange={(e) => setFieldValue("saturdayRestDay", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="saturdayStartShift"
+                    className="form-control"
+                    value={values.saturdayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="saturdayStartBreak"
+                    className="form-control"
+                    value={values.saturdayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="saturdayEndBreak"
+                    className="form-control"
+                    value={values.saturdayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Saturday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="saturdayEndShift"
+                    className="form-control"
+                    value={values.saturdayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                {/* Sunday  */}
+                <div className="form-group col-sm-12 mb-12">
+                  <Form.Check
+                    type="checkbox"
+                    label="Sunday Rest Day"
+                    name="sundayRestDay"
+                    checked={values.sundayRestDay}
+                    onChange={(e) => setFieldValue("sundayRestDay", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday Start Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="sundayStartShift"
+                    className="form-control"
+                    value={values.sundayStartShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday Start Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="saturdayStartBreak"
+                    className="form-control"
+                    value={values.saturdayStartBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday End Break</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="saturdayEndBreak"
+                    className="form-control"
+                    value={values.saturdayEndBreak}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-sm-3 mb-3">
+                  <label>Sunday End Shift</label>
+                  <input
+                    step={1}
+                    type="time"
+                    name="sundayEndShift"
+                    className="form-control"
+                    value={values.sundayEndShift}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
 
 
-                    </div>
-                  </div>
-              <Modal.Footer>
+
+              </div>
+            </div>
+            <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 <button
                   type="button"
@@ -2093,10 +2097,10 @@ export const Employee = (props: any) => {
                 </button>
               </div>
             </Modal.Footer>
-              
-            </Form>
-          )
-       }}
+
+          </Form>
+        )
+      }}
     </Formik>
   )
 
@@ -2351,51 +2355,51 @@ export const Employee = (props: any) => {
               <div>
                 <div className="w-100">
 
-                <div className="fieldtext d-flex col-md-6">
-                <div className="input-container">
-                    <input
-                      name="employeeId"
-                      placeholder="Employee ID"
-                      type="text"
-                      autoComplete="off"
-                      className="formControl"
-                      maxLength={40}
-                      onChange={(e) => makeFilterData(e)}
-                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                    />
+                  <div className="fieldtext d-flex col-md-6">
+                    <div className="input-container">
+                      <input
+                        name="employeeId"
+                        placeholder="Employee ID"
+                        type="text"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
                     </div>
                     <div className="input-container">
 
-                    <input
-                      name="firstname"
-                      placeholder="First name"
-                      type="text"
-                      autoComplete="off"
-                      className="formControl"
-                      maxLength={40}
-                      onChange={(e) => makeFilterData(e)}
-                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                    />
-                     </div>
+                      <input
+                        name="firstname"
+                        placeholder="First name"
+                        type="text"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
+                    </div>
                     <div className="input-container">
 
-                    <input
-                      name="lastname"
-                      placeholder="Last name"
-                      type="text"
-                      autoComplete="off"
-                      className="formControl"
-                      maxLength={40}
-                      onChange={(e) => makeFilterData(e)}
-                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                    />
+                      <input
+                        name="lastname"
+                        placeholder="Last name"
+                        type="text"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
                     </div>
                     <Button
-                        style={{ width: 210}}
-                        onClick={() => getAllEmployee(0,"")}
-                        className="btn btn-primary mx-2">
-                        Search
-                      </Button>
+                      style={{ width: 210 }}
+                      onClick={() => getAllEmployee(0, "")}
+                      className="btn btn-primary mx-2">
+                      Search
+                    </Button>
                   </div>
                   <Table responsive="lg">
                     <thead>
@@ -2417,7 +2421,7 @@ export const Employee = (props: any) => {
                         employeeList.content &&
                         employeeList.content.length > 0 &&
                         employeeList.content.map((item: any, index: any) => {
-                          
+
                           return (
                             <tr>
                               <td> {item.employeeId} </td>
@@ -2443,8 +2447,8 @@ export const Employee = (props: any) => {
                                     :
                                     null
                                 }
-                              <br />
-                               <label
+                                <br />
+                                <label
                                   onClick={() => {
                                     getEmployeeDetails(item.id)
                                   }}
@@ -2457,11 +2461,11 @@ export const Employee = (props: any) => {
                                     changePassword(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                    Change Password
+                                  Change Password
                                 </label>
-                                
+
                               </td>
-                             
+
                             </tr>
                           )
                         })
@@ -2469,41 +2473,41 @@ export const Employee = (props: any) => {
                     </tbody>
                   </Table>
                   {
-                        employeeList &&
-                        employeeList.content &&
-                        employeeList.content.length == 0 ?
-                        <div className="w-100 text-center">
-                          <label htmlFor="">No Records Found</label>
-                        </div>
-                        : 
-                        null
+                    employeeList &&
+                      employeeList.content &&
+                      employeeList.content.length == 0 ?
+                      <div className="w-100 text-center">
+                        <label htmlFor="">No Records Found</label>
+                      </div>
+                      :
+                      null
                   }
                 </div>
               </div>
               <div className="d-flex justify-content-end">
-                  <div className="">
-                    <ReactPaginate
-                      className="d-flex justify-content-center align-items-center"
-                      breakLabel="..."
-                      nextLabel=">"
-                      onPageChange={handlePageClick}
-                      pageRangeDisplayed={5}
-                      pageCount={(employeeList && employeeList.totalPages) || 0}
-                      previousLabel="<"
-                      previousLinkClassName="prev-next-pagination"
-                      nextLinkClassName="prev-next-pagination"
-                      activeClassName="active-page-link"
-                      pageLinkClassName="page-link"
-                      renderOnZeroPageCount={null}
-                    />
-                  </div>
+                <div className="">
+                  <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(employeeList && employeeList.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeClassName="active-page-link"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                  />
                 </div>
+              </div>
               <div className="d-flex justify-content-end mt-3" >
                 <div>
                   <Button className="mx-2"
-                  onClick={() => {
-                    setModalUploadShow(true)
-                  }}
+                    onClick={() => {
+                      setModalUploadShow(true)
+                    }}
                   >Import</Button>
                   <Button
                     className="mx-2"
@@ -2513,7 +2517,7 @@ export const Employee = (props: any) => {
                   <Button
                     className="mx-2"
                     onClick={downloadTemplate}
-                    >Download Excel Template</Button>
+                  >Download Excel Template</Button>
                 </div>
               </div>
             </div>
@@ -2555,14 +2559,14 @@ export const Employee = (props: any) => {
         {/* start of upload modal  */}
 
         <Modal
-        show={modalUploadShow}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => setModalUploadShow(false)}
-        dialogClassName="modal-90w"
+          show={modalUploadShow}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+          onHide={() => setModalUploadShow(false)}
+          dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
             <Modal.Title>
@@ -2578,84 +2582,186 @@ export const Employee = (props: any) => {
 
         </Modal>
         {/* start of view  */}
-      <Modal show={modalViewShow}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => setModalViewShow(false)}
-        dialogClassName="modal-90w"
+        <Modal show={modalViewShow}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+          onHide={() => setModalViewShow(false)}
+          dialogClassName="modal-90w"
         >
-           <Modal.Header closeButton>
+          <Modal.Header closeButton>
             <Modal.Title>
-                Employee Information
+              Employee Information
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div >
-            {employee && <ViewEmployee employee={employee} />}
+              {employee && <ViewEmployee employee={employee} />}
             </div>
 
-     
+
 
           </Modal.Body>
 
 
         </Modal>
-      <Modal show={modalPasswordShow}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-          setModalPasswordShow(false);
-          setPassword("");
-        }}
-        dialogClassName="modal-90w"
+        <Modal show={modalPasswordShow}
+          size={"md"}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+          onHide={() => {
+            setModalPasswordShow(false);
+            setPassword("");
+          }}
+
         >
-           <Modal.Header closeButton>
+          <Modal.Header closeButton>
             <Modal.Title>
-                Change Password For {firstName}
+              Change Password
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="d-flex align-items-center justify-content-center">
-            <div>
-            <div className="input-group">
-              <input
-                type={showPassword ? "text" : "password"}
-                className="form-control password-input"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="input-group-append">
-                  <button
-                  className="btn btn-outline-secondary mt-3 "
-                  type="button"
-                  onClick={toggleShowPassword}
-                  >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </button>
+            <div className="w-100 px-5">
+
+              <div className="input-group w-100 ">
+                <Formik initialValues={{
+                  password: "",
+                  confirmPassword: ""
+                }} enableReinitialize={true}
+                  validationSchema={Yup.object().shape({
+                    password: Yup.string().required('New password is required')
+                      .matches(/^(?=.*[a-z])/, "Must Contain 8 Characters")
+                      .matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase")
+                      .matches(/^(?=.*[0-9])/, "Must Contain One Number ")
+                      .matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
+                    confirmPassword: Yup.string().required('Confirm password is required').oneOf([Yup.ref('password'), null], "Password not match")
+                  })} onSubmit={(values: any, actions: any) => {
+                    const valuesObj = { ...values }
+                    valuesObj.id = userId
+
+                    RequestAPI.putRequest(
+                      Api.employeeChangePassword,
+                      "",
+                      valuesObj,
+                      {},
+                      async (res: any) => {
+                        const { status, body = { data: {}, error: {} } }: any = res
+                        if (status === 200 || status === 201) {
+                          if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                              'Error!',
+                              (body.error && body.error.message) || "",
+                              'error'
+                            )
+                          } else {
+                            getAllEmployee(0)
+                            ErrorSwal.fire(
+                              'Success!',
+                              (body.data) || "",
+                              'success'
+                            )
+                            setModalPasswordShow(false)
+                            setPassword("")
+                            setShowPassword(false)
+                          }
+                        } else {
+                          ErrorSwal.fire(
+                            'Error!',
+                            'Something Error.',
+                            'error'
+                          )
+                          setModalPasswordShow(false)
+                        }
+                      }
+                    )
+                  }}>
+                  {({
+                    values,
+                    setFieldValue,
+                    handleSubmit,
+                    handleChange,
+                    errors,
+                    touched
+                  }) => {
+                    return <Form noValidate onSubmit={handleSubmit} id="_formid" className="w-100" autoComplete="off">
+                      <div className="passwordField w-100">
+                        <input
+                          id="_password"
+                          autoComplete="new-password"
+                          style={{ marginBottom: "5px" }}
+                          name="password"
+                          value={values.password}
+                          type={showPassword ? "text" : "password"}
+                          className="form-control w-100 admin-change-password-field"
+                          required
+                          placeholder="New Password"
+                          onChange={e => setFieldValue('password', e.target.value)}
+                        />
+                        <Button
+                          variant="link"
+                          onClick={()=> setShowPassword(!showPassword)}
+                          className="passwordicon"
+                          style={{ paddingTop: 10, paddingBottom: 0, marginBottom:0 }}
+                          disabled={!values.password}>
+                          <span className="showpass">
+                            <img src={show_password_dark} alt="Show" />
+                          </span>
+                          <span className="hidepass">
+                            <img src={hide_password_dark} alt="Hide" />
+                          </span>
+                        </Button>
+                        {errors && errors.password && <p style={{
+                          color: "red",
+                          fontSize: "12px"
+                        }}>{errors.password}</p>}
+                      </div>
+                      <div className="passwordField w-100">
+                        <input
+                          id="_password"
+                          autoComplete="confirm-password"
+                          style={{ marginBottom: "5px" }}
+                          name="confirmPassword"
+                          value={values.confirmPassword}
+                          type={showConfirmPassword ? "text" : "password"}
+                          className="form-control w-100 admin-change-password-field"
+                          required
+                          placeholder="Confirm Password"
+                          onChange={e => setFieldValue('confirmPassword', e.target.value)}
+                        />
+                        <Button
+                          variant="link"
+                          onClick={()=> setShowConfirmPassword(!showConfirmPassword)}
+                          className="passwordicon"
+                          style={{ paddingTop: 10 }}
+                          disabled={!values.confirmPassword}>
+                          <span className="showpass">
+                            <img src={show_password_dark} alt="Show" />
+                          </span>
+                          <span className="hidepass">
+                            <img src={hide_password_dark} alt="Hide" />
+                          </span>
+                        </Button>
+                        {errors && errors.confirmPassword && <p style={{
+                          color: "red",
+                          fontSize: "12px"
+                        }}>{errors.confirmPassword}</p>}
+                      </div>
+                      <br />
+                      <div className="d-flex justify-content-center">
+                        <Button type="submit" className=" btn btn-primary"  style={{ width: 200 }}>
+                          Submit
+                        </Button>
+                      </div>
+                    </Form>;
+                  }}
+                </Formik>
               </div>
             </div>
-            <div className="d-flex justify-center align-items-center">
-            <button
-              className="btn btn-primary mx-auto"
-              onClick={() => submitPassword(userId)}
-            >
-              Change Password
-            </button>
-
-            </div>
-            </div>
-
-     
-
           </Modal.Body>
-
-
         </Modal>
 
       </div>

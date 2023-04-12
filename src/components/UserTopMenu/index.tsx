@@ -97,7 +97,7 @@ const UserTopMenu = (props: any) => {
               <img src={user} alt="user" />
             </div>
             <div className="Userdetail">
-              <h3>{userData.data.profile.role} {userData.data.profile.firstName}</h3>
+              <h3> {userData.data.profile.firstName} {userData.data.profile.lastName}</h3>
               <small>
                 {userData.data.profile.squad}
                 
