@@ -526,10 +526,14 @@ export const Leaves = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good day, {userData.data.profile.firstName}!</h2>
+                  <h2>Good Day, {userData.data.profile.firstName}!</h2>
+
+                  <br/>
+                  <br/>
+                  <h2><b>Leave Credits</b></h2>
                   {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
-                    <p>{leave.leaveName} : {leave.creditsLeft}</p>
+                    <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))}
                 </div>

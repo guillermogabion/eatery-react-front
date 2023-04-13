@@ -5877,6 +5877,10 @@ label[for="myCheckbox"] {
   margin-bottom: 0;
   font-weight: 400;
   cursor: pointer;
-}
 
+  
+}
+.col-md-6 h2 {
+  font-weight: bold;
+}
 

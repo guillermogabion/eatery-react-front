@@ -152,7 +152,7 @@ export const Dashboard = (props: any) => {
               <div className="col-md-12 col-lg-10 px-5 py-5">
                 <div className="row">
                     <div className="col-md-6">
-                      <h2>Good day, {userData.data.profile.firstName}!</h2>
+                      <h2>Good Day, {userData.data.profile.firstName}!</h2>
                     </div>
                     <div className="col-md-6">
                       <TimeDate />
@@ -161,7 +161,7 @@ export const Dashboard = (props: any) => {
                 <div>
                     <h3>Time Card</h3>
                     <div className="d-flex">
-                      <div className="" style={{width: 200, textAlign: right}}>
+                      <div className="" style={{width: 200, textAlign: left}}>
                           <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
                           <h6 className="font-weight-bold pt-2">First login:</h6>
                           <h6 className="font-weight-bold pt-2">Last logout:</h6>
