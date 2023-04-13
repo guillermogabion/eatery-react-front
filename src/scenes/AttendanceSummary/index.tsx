@@ -54,6 +54,19 @@ export const AttendanceSummary = (props: any) => {
       }
     )
   }
+  const downloadTemplate = () => {
+    RequestAPI.getFileAsync(
+      `${Api.downloadExcelTimekeepingTemplate}`,
+      "",
+      "timekeepingexceltemplate.xlsx",
+      async (res: any) => {
+          if(res){
+            
+          }
+          
+      }
+  )
+  };
 
   const uploadExcel = () => {
     if (selectedFile != null && selectedFile != "") {
@@ -117,6 +130,11 @@ export const AttendanceSummary = (props: any) => {
                         onClick={() => {
                           setDownloadModalShow(true)
                         }}>Export</Button>
+                      <Button
+                        className="mx-2"
+                        onClick={
+                          downloadTemplate
+                        }>Download Template</Button>
                     </div>
                   </div>
                 </div>

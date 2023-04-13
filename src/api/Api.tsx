@@ -100,7 +100,8 @@ const Api: any = {
 
 
 
-  downloadExcelTemplate : process.env.REACT_APP_API_URL + "employee/downloadTemplate"
+  downloadExcelTemplate : process.env.REACT_APP_API_URL + "employee/downloadTemplate",
+  downloadExcelTimekeepingTemplate : process.env.REACT_APP_API_URL + "timekeeping/perday/downloadTemplate"
 }
 
 export default Api
