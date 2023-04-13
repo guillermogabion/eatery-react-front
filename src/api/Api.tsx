@@ -44,6 +44,13 @@ const Api: any = {
   utInformation: process.env.REACT_APP_API_URL + "request/ut/info",
   updateUT: process.env.REACT_APP_API_URL + "request/ut/update",
   downloadTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadExcel",
+  uploadTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/uploadExcel",
+
+  // HOLIDAY
+  updateHoliday: process.env.REACT_APP_API_URL + "holiday/update",
+  saveHoliday: process.env.REACT_APP_API_URL + "holiday/save",
+  allHoliday: process.env.REACT_APP_API_URL + "holiday/all",
+  deleteHoliday: process.env.REACT_APP_API_URL + "holiday/delete",
   
   
   // /request/ot/classifications

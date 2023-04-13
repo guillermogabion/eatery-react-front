@@ -3,15 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import {
   Login,
-  UserForm,
   ForgotPassword,
-  UserList,
-  Role,
-  RoleAdd,
-  UserView,
-  Notifications,
   ChangePassword,
-  UserDetails,
   Dashboard,
   Employee,
   Leaves,
@@ -20,7 +13,8 @@ import {
   ScheduleAdjustment,
   AttendanceCorrection,
   AttendanceSummary,
-  Report
+  Report,
+  Holiday
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -59,40 +53,14 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/request/ut", component: Undertime })
   routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
   routes.push({ path: "/request/coa", component: AttendanceCorrection })
-  routes.push({ path: "/summary", component: AttendanceSummary })
+  routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
   routes.push({ path: "/user", component: ChangePassword })
   routes.push({ path: "/report", component: Report })
   routes.push({ path: "/dashboard", component: Dashboard })
   routes.push({ path: "/timekeeping", component: Dashboard })
   routes.push({ path: "/employee", component: Employee })
+  routes.push({ path: "/holiday", component: Holiday })
 
-  // accessRights.forEach((d: any) => {
-  //   routes.push({ path: "/notifications", component: Notifications })
-  //   routes.push({ path: "/userdetails", component: UserDetails })
-
-
-  //   switch (d) {
-  //     // User Access
-  //     case "Can_Read_User":
-  //       routes.push({ path: "/user/list", component: UserList })
-  //       routes.push({ path: "/user/view", component: UserView })
-  //       break
-  //     case "Can_Add_Edit_User":
-  //       routes.push({ path: "/user/add", component: UserForm })
-  //       routes.push({ path: "/user/edit", component: UserForm })
-  //       break
-  //     case "Can_Read_Role":
-  //       routes.push({ path: "/role/list", component: Role })
-  //       break
-  //     case "Can_Add_Edit_Role":
-  //       routes.push({ path: "/role/add", component: RoleAdd })
-  //       routes.push({ path: "/role/edit", component: RoleAdd })
-  //       break
-
-  //     default:
-  //       break
-  //   }
-  // })
   return isLogin ? (
     <>
       <Switch>
