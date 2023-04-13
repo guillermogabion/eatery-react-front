@@ -29,12 +29,17 @@ const CryptoJS = require("crypto-js")
 
 const Privateroutes: React.FunctionComponent = (props) => {
   const dispatch = useDispatch()
-  const { accessRights = [], menu = [] } = useSelector((state: any) => state.rootReducer.userData) // Login User Data
+  const { data } = useSelector((state: any) => state.rootReducer.userData) 
+  let menu: any = []
+  if (data) {
+    menu = data.profile.menus
+  }
+
   const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
   const isLogin = useSelector((state: any) => state.rootReducer.isLogin)
   const originalUser = CryptoJS.AES.decrypt(sessionStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
   const decoded: any = originalUser ? jwt_decode(originalUser) : {}
-  
+
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
@@ -49,54 +54,53 @@ const Privateroutes: React.FunctionComponent = (props) => {
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
 
   const routes: any = []
-  routes.push({ path: "/employee", component: Employee })
-  routes.push({ path: "/leaves/timeoff", component: Leaves })
-  routes.push({ path: "/overtime", component: Overtime })
-  routes.push({ path: "/undertime", component: Undertime })
-  routes.push({ path: "/schedule/adjustment", component: ScheduleAdjustment })
-  routes.push({ path: "/attendance/correction", component: AttendanceCorrection })
+  routes.push({ path: "/request/leave", component: Leaves })
+  routes.push({ path: "/request/ot", component: Overtime })
+  routes.push({ path: "/request/ut", component: Undertime })
+  routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
+  routes.push({ path: "/request/coa", component: AttendanceCorrection })
   routes.push({ path: "/summary", component: AttendanceSummary })
-  routes.push({ path: "/change/password", component: ChangePassword })
+  routes.push({ path: "/user", component: ChangePassword })
   routes.push({ path: "/report", component: Report })
+  routes.push({ path: "/dashboard", component: Dashboard })
+  routes.push({ path: "/timekeeping", component: Dashboard })
+  routes.push({ path: "/employee", component: Employee })
 
-  accessRights.forEach((d: any) => {
-    routes.push({ path: "/notifications", component: Notifications })
-    routes.push({ path: "/userdetails", component: UserDetails })
-    routes.push({ path: "/dashboard", component: Dashboard })
-    
-    routes.push({ path: "/attendance", component: Dashboard })
-    
+  // accessRights.forEach((d: any) => {
+  //   routes.push({ path: "/notifications", component: Notifications })
+  //   routes.push({ path: "/userdetails", component: UserDetails })
 
-    switch (d) {
-      // User Access
-      case "Can_Read_User":
-        routes.push({ path: "/user/list", component: UserList })
-        routes.push({ path: "/user/view", component: UserView })
-        break
-      case "Can_Add_Edit_User":
-        routes.push({ path: "/user/add", component: UserForm })
-        routes.push({ path: "/user/edit", component: UserForm })
-        break
-      case "Can_Read_Role":
-        routes.push({ path: "/role/list", component: Role })
-        break
-      case "Can_Add_Edit_Role":
-        routes.push({ path: "/role/add", component: RoleAdd })
-        routes.push({ path: "/role/edit", component: RoleAdd })
-        break
 
-      default:
-        break
-    }
-  })
+  //   switch (d) {
+  //     // User Access
+  //     case "Can_Read_User":
+  //       routes.push({ path: "/user/list", component: UserList })
+  //       routes.push({ path: "/user/view", component: UserView })
+  //       break
+  //     case "Can_Add_Edit_User":
+  //       routes.push({ path: "/user/add", component: UserForm })
+  //       routes.push({ path: "/user/edit", component: UserForm })
+  //       break
+  //     case "Can_Read_Role":
+  //       routes.push({ path: "/role/list", component: Role })
+  //       break
+  //     case "Can_Add_Edit_Role":
+  //       routes.push({ path: "/role/add", component: RoleAdd })
+  //       routes.push({ path: "/role/edit", component: RoleAdd })
+  //       break
+
+  //     default:
+  //       break
+  //   }
+  // })
   return isLogin ? (
     <>
       <Switch>
         {routes.map((d: any) => (
           <Route key={d.path} exact path={d.path} component={d.component} />
         ))}
-        {currentRoutePath || (menu && menu.length > 1 && menu[0]) ? (
-          <Route path="*" render={() => <Redirect to={currentRoutePath || menu[0].route} />} />
+        {currentRoutePath || (menu && menu.length > 1) ? (
+          <Route path="*" render={() => <Redirect to={currentRoutePath || "/timekeeping"} />} />
         ) : (
           <Route path="*" render={() => <Redirect to="/" />} />
         )}

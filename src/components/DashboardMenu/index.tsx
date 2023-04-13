@@ -3,6 +3,13 @@ import moment from "moment"
 import { useDispatch, useSelector } from "react-redux"
 import Accordion from 'react-bootstrap/Accordion';
 import { NavLink } from "react-router-dom";
+import Announcements from "../../assets/images/dist/menu/Announcements.png"
+import Directory from "../../assets/images/dist/menu/Directory.png"
+import Payroll from "../../assets/images/dist/menu/Payroll.png"
+import Profile from "../../assets/images/dist/menu/Profile.png"
+import ResolutionCenter from "../../assets/images/dist/menu/ResolutionCenter.png"
+import Attendance from "../../assets/images/dist/menu/Attendance.png"
+import Manage from "../../assets/images/dist/menu/Manage.png"
 
 const DashboardMenu = (props: any) => {
     const { search = true } = props
@@ -12,258 +19,96 @@ const DashboardMenu = (props: any) => {
     const [isRoleCheck, setIsRoleCheck] = useState(false);
     const dispatch = useDispatch()
     const [index, setIndex] = useState<any>("")
-    const [nav, setNav] = useState([
-        {
-            "name": "Attendance",
-            "menu": [
-                {
-                    'name': 'Time In & Time Out',
-                    'link': '/attendance'
-                },
-                {
-                    'name': 'Leaves & Time off',
-                    'link': '/leaves/timeoff'
-
-                },
-                {
-                    'name': 'Overtime',
-                    'link': '/overtime'
-
-                },
-                {
-                    'name': 'Undertime',
-                    'link': '/undertime'
-
-                },
-                {
-                    'name': 'Attendance Reversal',
-                    'link': '/attendance/correction'
-
-                },
-                // {
-                //     'name': 'Schedule Adjustment',
-                //     'link': '/schedule/adjustment'
-
-                // },
-            ]
-        },
-        {
-            "name": "Profile",
-            "menu": [
-                {
-                    'name': 'Change Password',
-                    'link': '/change/password'
-                },
-            ]
-        },
-        {
-            "name": "Resolution Center",
-            "menu": []
-        },
-        {
-            "name": "Announcements",
-            "menu": []
-        },
-        {
-            "name": "Actimai Directory",
-            "menu": []
-        },
-        {
-            "name": "Payroll",
-            "menu": []
-        },
-        {
-            "name": "Manage",
-            "menu": [
-                {
-                    'name': 'Employee',
-                    'link': '/employee'
-                },
-                // {
-                //     'name': 'Roles & Access',
-                //     'link': '/roles/access'
-                // },
-                {
-                    'name': 'Report',
-                    'link': '/Report'
-                },
-            ]
-        },
-    ])
+    const [nav, setNav] = useState(userData.data.profile.menus)
 
     useEffect(() => {
         nav.map((a: any, index: any) => {
             const { name, menu } = a
             menu.map((d: any, i: any) => {
-                const { link } = d
-                if (currentRoutePath == link) {
+                const { route } = d
+                if (currentRoutePath == route) {
                     setIndex(index)
                 }
             })
         })
-        let userRole = userData.data.profile.role
-        
-        if(userRole == 'EMPLOYEE'){
-            setNav([
-                {
-                    "name": "Attendance",
-                    "menu": [
-                        {
-                            'name': 'Time In & Time Out',
-                            'link': '/attendance'
-                        },
-                        {
-                            'name': 'Leaves & Time off',
-                            'link': '/leaves/timeoff'
-                        },
-                        {
-                            'name': 'Overtime',
-                            'link': '/overtime'
-                        },
-                        {
-                            'name': 'Undertime',
-                            'link': '/undertime'
-                        },
-                        {
-                            'name': 'Attendance Reversal',
-                            'link': '/attendance/correction'
-                        },
-                        // {
-                        //     'name': 'Schedule Adjustment',
-                        //     'link': '/schedule/adjustment'
-                        // },
-                    ]
-                },
-                {
-                    "name": "Profile",
-                    "menu": [
-                        {
-                            'name': 'Change Password',
-                            'link': '/change/password'
-                        },
-                    ]
-                },
-                {
-                    "name": "Resolution Center",
-                    "menu": []
-                },
-                {
-                    "name": "Announcements",
-                    "menu": []
-                },
-                {
-                    "name": "Actimai Directory",
-                    "menu": []
-                },
-            ])
-        }else if (userRole == 'APPROVER'){
-            setNav([
-                {
-                    "name": "Attendance",
-                    "menu": [
-                        {
-                            'name': 'Time In & Time Out',
-                            'link': '/attendance'
-                        },
-                        {
-                            'name': 'Leaves & Time off',
-                            'link': '/leaves/timeoff'
-        
-                        },
-                        {
-                            'name': 'Overtime',
-                            'link': '/overtime'
-        
-                        },
-                        {
-                            'name': 'Undertime',
-                            'link': '/undertime'
-        
-                        },
-                        {
-                            'name': 'Attendance Reversal',
-                            'link': '/attendance/correction'
-        
-                        },
-                        // {
-                        //     'name': 'Schedule Adjustment',
-                        //     'link': '/schedule/adjustment'
-        
-                        // },
-                    ]
-                },
-                {
-                    "name": "Profile",
-                    "menu": [
-                        {
-                            'name': 'Change Password',
-                            'link': '/change/password'
-                        },
-                    ]
-                },
-                {
-                    "name": "Resolution Center",
-                    "menu": []
-                },
-                {
-                    "name": "My Squad",
-                    "menu": []
-                },
-                {
-                    "name": "Announcements",
-                    "menu": []
-                },
-                {
-                    "name": "Actimai Directory",
-                    "menu": []
-                },
-                {
-                    "name": "Payroll",
-                    "menu": []
-                },
-            ])
-        }
     }, [index])
 
+    const getMenuIcon = (iconName: any) => {
+        let icon = null
+        let iconNameLower = iconName.toLowerCase()
+        switch (iconNameLower) {
+            case "announcements":
+                icon = Announcements
+                break;
+            case "actimai_directory":
+                icon = Directory
+                break;
+            case "payroll":
+                icon = Payroll
+                break;
+            case "profile":
+                icon = Profile
+                break;
+            case "resolution_center":
+                icon = ResolutionCenter
+                break;
+            case "attendance":
+                icon = Attendance
+                break;
+            case "manage":
+                icon = Manage
+                break;
+            default:
+                icon = Profile
+                break;
+        }
+        return icon
+    }
 
     const leftMenu = useCallback((menu_index: any) => {
         return (
             <div className="col-md-12 col-lg-2 p-0 pt-4" style={{ backgroundColor: "#604195", borderRadius: 0, border: 0 }}>
-                    <Accordion defaultActiveKey={menu_index} style={{ borderRadius: 0, border: 0 }} >
-                        {
-                            nav.length > 0 && nav.map((d: any, i: any) => {
-                                const { name, menu } = d
-                                return (
-                                    <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#604195" }} >
-                                        <Accordion.Header >{name}</Accordion.Header>
-                                        <Accordion.Body className="p-0 cursor-pointer " style={{ backgroundColor: '#604195' }}>
-                                            {
-                                                menu.length > 0 && menu.map((menu_data: any, index: any) => {
-                                                    const { name, link } = menu_data
-                                                    return (
-                                                        <NavLink
-                                                            key={index}
-                                                            activeClassName="activeMenu"
-                                                            className="text-center text-white d-flex align-items-center justify-content-center cursor-pointer accordionMenu"
-                                                            style={{ minHeight: 60, textDecoration: 'none' }}
-                                                            to={link}
-                                                            onClick={() => {
-                                                                setCurrentRoutePath(link)
-                                                            }}>
-                                                            <span>
-                                                                <span>{name}</span>
-                                                            </span>
-                                                        </NavLink>
-                                                    )
-                                                })
-                                            }
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                )
-                            })
-                        }
-                    </Accordion>
-                </div>
+
+                <Accordion defaultActiveKey={menu_index} style={{ borderRadius: 0, border: 0 }} >
+                    {
+                        nav.length > 0 && nav.map((d: any, i: any) => {
+                            const { name, menu } = d
+
+                            return (
+                                <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#604195" }} >
+                                    <Accordion.Header style={{ fontWeight: 'bolder' }}>
+                                        <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt="Attendance" />
+                                        {name}
+                                    </Accordion.Header>
+                                    <Accordion.Body className="p-0 cursor-pointer " style={{ backgroundColor: '#604195' }}>
+                                        {
+                                            menu.length > 0 && menu.map((menu_data: any, index: any) => {
+                                                const { label, route } = menu_data
+
+                                                return (
+                                                    <NavLink
+                                                        key={index}
+                                                        activeClassName="activeMenu"
+                                                        className="text-white d-flex align-items-center cursor-pointer accordionMenu"
+                                                        style={{ minHeight: 60, textDecoration: 'none', paddingLeft: 50 }}
+                                                        to={route}
+                                                        onClick={() => {
+                                                            setCurrentRoutePath(route)
+                                                        }}>
+                                                        <span>
+                                                            <span>{label}</span>
+                                                        </span>
+                                                    </NavLink>
+                                                )
+                                            })
+                                        }
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            )
+                        })
+                    }
+                </Accordion>
+            </div>
         )
     }, [nav])
 

@@ -5723,10 +5723,15 @@ td.pendingLabel .active {
   font-weight: bold;
   background-color: #67499b;
 }
+.accordionMenu {
+  font-weight: 500;
+}
+
 .accordionMenu:hover {
   font-weight: bold;
   background-color: #664e91;
 }
+
 .accordion {
   --bs-accordion-inner-border-radius: 0;
 }
@@ -5734,6 +5739,8 @@ td.pendingLabel .active {
 .accordion-button{
   background-color: #67499b !important;
   color: white;
+  font-size: 15px;
+  font-weight: 600;
   /* opacity: .8; */
 }
 
@@ -5741,6 +5748,20 @@ td.pendingLabel .active {
   background-color: #573596 !important;
   color: white;
   box-shadow: none;
+}
+
+.bold-text{
+  font-weight: 600;
+}
+
+.admin-change-password-field{
+  width:330px;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border-width: 0.2;
+  border-color: rgb(170, 170, 170);
+
 }
 
 /* Accordion icons */

@@ -159,7 +159,7 @@ export const Dashboard = (props: any) => {
                     </div>
                 </div>
                 <div>
-                    <h3>Time Card</h3>
+                    <h3><b></b>Time Card</h3>
                     <div className="d-flex">
                       <div className="" style={{width: 200, textAlign: left}}>
                           <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
