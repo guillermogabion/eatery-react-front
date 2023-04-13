@@ -18,5 +18,6 @@ export * from "./AttendanceCorrection"
 export * from "./AttendanceSummary"
 export * from "./ScheduleAdjustment"
 export * from "./Report"
+export * from "./Holiday"
 
 

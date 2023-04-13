@@ -45,6 +45,7 @@ export const Leaves = (props: any) => {
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
   const [getMyLeaves, setGetMyLeaves] = useState<any>([])
   const userData = useSelector((state: any) => state.rootReducer.userData)
+  const [holidays, setHolidays] = useState<any>([])
 
   const formRef: any = useRef()
 
@@ -83,6 +84,25 @@ export const Leaves = (props: any) => {
         if (status === 200 && body && body.data) {
           setLeaveDayTypes(body.data)
         } else {
+        }
+      }
+    )
+
+    RequestAPI.getRequest(
+      `${Api.allHoliday}?size=10&sort=id&sortDir=desc&dateBefore=${moment().year() + "-01-01"}&dateAfter=${moment().year() + "-12-31"}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          let tempArray: any = []
+          body.data.content.forEach((element: any, index: any) => {
+            if (!tempArray.includes(element.holidayDate)){
+              tempArray.push(element.holidayDate)
+            }
+          });
+          setHolidays(tempArray)
         }
       }
     )
@@ -205,16 +225,21 @@ export const Leaves = (props: any) => {
       for (let index = 1; index <= diffInDays; index++) {
         var added_date = moment(dFrom).add(dateCounter, 'days');
         let new_date = new Date(added_date.format('YYYY-MM-DD'))
+        
+        
         if (new_date.getDay() == 0 || new_date.getDay() == 6) {
           dateCounter += 1
         } else if (new_date.getDay() == 6) {
           dateCounter += 2
         } else {
-          leavesBreakdown.push({
-            "date": moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD'),
-            "credit": 1,
-            "dayType": 'WHOLEDAY'
-          })
+          let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
+          if (!holidays.includes(new_date_with_counter)){
+            leavesBreakdown.push({
+              "date": new_date_with_counter,
+              "credit": 1,
+              "dayType": 'WHOLEDAY'
+            })
+          }
           dayTypesArray.push(false)
           dateCounter += 1
         }

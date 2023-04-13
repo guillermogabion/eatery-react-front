@@ -15,23 +15,71 @@ import TableComponent from "../../components/TableComponent"
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useSelector, useDispatch } from "react-redux"
-
+import FileUploadService from "../../services/FileUploadService"
 
 export const AttendanceSummary = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
+
   const { history } = props
-  const [modalShow, setModalShow] = React.useState(false);
-  const [key, setKey] =React.useState('all');
+  const [importModalShow, setImportModalShow] = React.useState(false);
+  const [downloadModalShow, setDownloadModalShow] = React.useState(false);
+  const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
+  const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
+  const [isSubmit, setIsSubmit] = React.useState(false);
+  const [selectedFile, setSelectedFile] = React.useState(null);
+
+
   const tableHeaders = [
-    'Type',
     'Date Filed',
-    'Date From - To',
-    'No. of Days',
+    'Effectivity Date',
+    'Shift Start',
+    'Shift Type',
     'Reason',
-    'Remarks',
+    'Status',
     'Action',
   ]
-  
+
+  const downloadExcel = (fromDate: any, toDate: any) => {
+    setIsSubmit(true)
+    RequestAPI.getFileAsync(
+      `${Api.downloadTimeKeeping}?fromDate=${fromDate}&toDate=${toDate}`,
+      "",
+      "timekeeping.xlsx",
+      async (res: any) => {
+        if (res) {
+          setIsSubmit(false)
+        }
+
+      }
+    )
+  }
+
+  const uploadExcel = () => {
+    if (selectedFile != null && selectedFile != "") {
+      FileUploadService.uploadTimeKeeping(selectedFile, (event: any) => {
+        if (event.total == event.loaded) {
+          // for loading
+        }
+      })
+        .then((response: any) => {
+          const { data } = response
+          if (data.error) {
+            ErrorSwal.fire("Failed!", (data.error.message || "Something error."), "error")
+          } else {
+            ErrorSwal.fire("Success!", "Successfully uploaded.", "success")
+            setImportModalShow(false)
+          }
+        })
+        .catch(() => {
+          ErrorSwal.fire("Failed!", "Failed to upload.", "error")
+        })
+    } else {
+      ErrorSwal.fire("Warning!", "File is required.", "warning")
+    }
+
+  }
+
   return (
     <div className="body">
       <div className="wraper">
@@ -51,83 +99,125 @@ export const AttendanceSummary = (props: any) => {
                 </div>
               </div>
               <div>
-                <h3>Summary Of Attendance</h3>
-                {/* <div className="row p-0 m-0 pt-2">
-                  <div className="col-md-2">
-                    <h5>Sickness:</h5>
-                    <h5>Vacation:</h5>
-                    <h5>Without pay:</h5>
-                  </div>
-                  <div className="col-md-3">
-                    <h5>12</h5>
-                    <h5>15</h5>
-                    <h5>0</h5>
-                  </div>
-                  
-                </div> */}
+                <h3>Attendance Summary</h3>
+
                 <div className="w-100 pt-4">
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={key}
-                  onSelect={(k: any) => {
-                    setKey(k)
-                  }}
-                  className="mb-3"
-                >
-                  <Tab eventKey="all" title="All">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="pending" title="Pending">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="approved" title="Approved" >
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                </Tabs>
-                  
+                  <TableComponent
+                    tableHeaders={tableHeaders}
+                  />
+                  <div className="d-flex justify-content-end mt-3" >
+                    <div>
+                      <Button
+                        className="mx-2"
+                        onClick={() => {
+                          setImportModalShow(true)
+                        }}>Import</Button>
+                      <Button
+                        className="mx-2"
+                        onClick={() => {
+                          setDownloadModalShow(true)
+                        }}>Export</Button>
+                    </div>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
-
-        {/* Create User Modal Form */}
-        <Modal
-          show={modalShow}
-          size="xl"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => setModalShow(false)}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Create New Employee
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="row w-100 px-5">
-            
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => setModalShow(false)}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-        {/* End Create User Modal Form */}
       </div>
+      {/* Create User Modal Form */}
+      <Modal
+        show={downloadModalShow}
+        size={'md'}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setDownloadModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Export
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date From</label>
+            <input type="date"
+              name="fromDate"
+              id="fromDate"
+              className="form-control"
+              value={fromDate}
+              onChange={(e) => {
+                setFromDate(e.target.value)
+              }}
+            />
+          </div>
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date To</label>
+            <input type="date"
+              name="toDate"
+              id="toDate"
+              className="form-control"
+              value={toDate}
+              min={fromDate}
+              onChange={(e) => {
+                setToDate(e.target.value)
+              }}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button
+            onClick={() => downloadExcel(fromDate, toDate)}
+            disabled={isSubmit}>
+            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* End Create User Modal Form */}
 
+      {/* Create User Modal Form */}
+      <Modal
+        show={importModalShow}
+        size={'md'}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setImportModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Import
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <div className="form-group col-md-12 mb-3" >
+            <label>File</label>
+            <input
+              type="file"
+              accept=".xlsx"
+              className="file-input-style w-100"
+              onChange={(event: any) => {
+                if (event.target.files && event.target.files[0]) {
+                  setSelectedFile(event.target.files[0]);
+                }
+              }} />
+          </div>
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button
+            onClick={() => uploadExcel()}
+            disabled={isSubmit}>
+            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* End Create User Modal Form */}
     </div>
 
   )
