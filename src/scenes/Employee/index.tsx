@@ -447,41 +447,17 @@ export const Employee = (props: any) => {
   }
 
   const downloadTemplate = () => {
-    RequestAPI.getRequest(
+    RequestAPI.getFileAsync(
       `${Api.downloadExcelTemplate}`,
       "",
-      {},
-      {},
+      "employeexceltemplate.xlsx",
       async (res: any) => {
-        if (res && res.headers) {
-          const { status, headers } = res;
-          if (status === 200) {
-            const filenameHeader = headers["content-disposition"];
-            if (filenameHeader) {
-              const filename = filenameHeader
-                .split(";")
-                .find((n: string) => n.includes("filename="))
-                .replace("filename=", "")
-                .trim();
-              const blob = await res.blob();
-              const url = window.URL.createObjectURL(blob);
-              const link = document.createElement("a");
-              link.href = url;
-              link.setAttribute("download", filename);
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            } else {
-              console.log("Error: no filename header found in response");
-            }
-          } else {
-            console.log("Error downloading file");
+          if(res){
+            
           }
-        } else {
-          console.log("Error: API response is undefined or missing headers");
-        }
+          
       }
-    );
+  )
   };
 
   // const handlePasswordSubmit = () => {
@@ -2307,7 +2283,7 @@ export const Employee = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good day, HR Admin!</h2>
+                  <h2 className="bold-text">Good Day, HR Admin!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

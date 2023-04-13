@@ -122,7 +122,7 @@ export const ChangePassword = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good day, {userData.data.profile.firstName}!</h2>
+                  <h2>Good Day, {userData.data.profile.firstName}!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

@@ -152,20 +152,20 @@ export const Dashboard = (props: any) => {
               <div className="col-md-12 col-lg-10 px-5 py-5">
                 <div className="row">
                     <div className="col-md-6">
-                      <h2>Good day, {userData.data.profile.firstName}!</h2>
+                      <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
                     </div>
                     <div className="col-md-6">
                       <TimeDate />
                     </div>
                 </div>
                 <div>
-                    <h3>Time Card</h3>
+                    <h3><b></b>Time Card</h3>
                     <div className="d-flex">
-                      <div className="" style={{width: 200, textAlign: right}}>
-                          <h6 className="bold-text pt-2">Shift Schedule:</h6>
-                          <h6 className="bold-text pt-2">First login:</h6>
-                          <h6 className="bold-text pt-2">Last logout:</h6>
-                          <h6 className="bold-text pt-2">Attendance Status:</h6>
+                      <div className="" style={{width: 200, textAlign: left}}>
+                          <h6 className="font-weight-bold pt-2">Shift Schedule:</h6>
+                          <h6 className="font-weight-bold pt-2">First login:</h6>
+                          <h6 className="font-weight-bold pt-2">Last logout:</h6>
+                          <h6 className="font-weight-bold pt-2">Attendance Status:</h6>
                       </div>
                       <div className="" style={{marginLeft:15, textAlign: left}}>
                           <h6 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h6>
