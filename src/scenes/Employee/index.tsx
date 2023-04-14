@@ -2571,7 +2571,7 @@ export const Employee = (props: any) => {
                 }} enableReinitialize={true}
                   validationSchema={Yup.object().shape({
                     password: Yup.string().required('New password is required')
-                      .matches(/^(?=.*[a-z])/, "Must Contain 8 Characters")
+                      .min(8, "Must Contain 8 Characters")
                       .matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase")
                       .matches(/^(?=.*[0-9])/, "Must Contain One Number ")
                       .matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
