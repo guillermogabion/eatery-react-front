@@ -14,6 +14,14 @@ const Api: any = {
   leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
   uploadExcelFile : process.env.REACT_APP_API_URL + "employee/uploadExcel",
   getMyLeave : process.env.REACT_APP_API_URL + "employee/myleavecreds",
+
+  leaveTypesList: process.env.REACT_APP_API_URL + "request/getTypeList",
+  createLeaveType: process.env.REACT_APP_API_URL + "request/type/create",
+  updateLeaveType: process.env.REACT_APP_API_URL + "request/type/update",
+  deleteLeaveType: process.env.REACT_APP_API_URL + "request/type/delete",
+  
+  adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
+  adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
   
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",

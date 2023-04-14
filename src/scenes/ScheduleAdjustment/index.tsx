@@ -14,12 +14,14 @@ import TimeDate from "../../components/TimeDate"
 import TableComponent from "../../components/TableComponent"
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { useSelector } from "react-redux"
 
 
 export const ScheduleAdjustment = (props: any) => {
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
-  const [key, setKey] =React.useState('all');
+  const userData = useSelector((state: any) => state.rootReducer.userData)
+  const [key, setKey] = React.useState('all');
   const tableHeaders = [
     'Date Filed',
     'Effectivity Date',
@@ -29,7 +31,7 @@ export const ScheduleAdjustment = (props: any) => {
     'Status',
     'Action',
   ]
-  
+
   return (
     <div className="body">
       <div className="wraper">
@@ -42,7 +44,7 @@ export const ScheduleAdjustment = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2 className="bold-text">Good Day, Employee 001!</h2>
+                  <h2>Good Day, {userData.data.profile.firstName}!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />
@@ -57,39 +59,39 @@ export const ScheduleAdjustment = (props: any) => {
                   <div className="col-md-8">
                     <h5>06:00 AM - 03:00 PM</h5>
                   </div>
-                  
+
                 </div>
                 <div className="w-100 pt-4">
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={key}
-                  onSelect={(k: any) => {
-                    setKey(k)
-                  }}
-                  className="mb-3"
-                >
-                  <Tab eventKey="all" title="All">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="pending" title="Pending">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="approved" title="Approved" >
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                  <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
-                    <TableComponent
-                      tableHeaders={tableHeaders}
-                    />
-                  </Tab>
-                </Tabs>
-                  
+                  <Tabs
+                    id="controlled-tab-example"
+                    activeKey={key}
+                    onSelect={(k: any) => {
+                      setKey(k)
+                    }}
+                    className="mb-3"
+                  >
+                    <Tab eventKey="all" title="All">
+                      <TableComponent
+                        tableHeaders={tableHeaders}
+                      />
+                    </Tab>
+                    <Tab eventKey="pending" title="Pending">
+                      <TableComponent
+                        tableHeaders={tableHeaders}
+                      />
+                    </Tab>
+                    <Tab eventKey="approved" title="Approved" >
+                      <TableComponent
+                        tableHeaders={tableHeaders}
+                      />
+                    </Tab>
+                    <Tab eventKey="reject/cancelled" title="Rejected/Cancelled">
+                      <TableComponent
+                        tableHeaders={tableHeaders}
+                      />
+                    </Tab>
+                  </Tabs>
+
                 </div>
               </div>
               <div className="d-flex justify-content-end mt-3" >
@@ -122,7 +124,7 @@ export const ScheduleAdjustment = (props: any) => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="row w-100 px-5">
-            
+
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => setModalShow(false)}>Close</Button>
