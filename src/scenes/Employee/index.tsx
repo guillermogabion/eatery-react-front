@@ -209,7 +209,7 @@ export const Employee = (props: any) => {
     biometricsId: Yup.string().required('Biometrics ID is required'),
     companyEmail: Yup.string().required('Company Email is required').email('Invalid Email Address'),
     jobTitle: Yup.string().required('Job Title is required'),
-  
+
     hireDate: Yup.date().required('Date is required').typeError('Please enter a valid date'),
     tinNumber: Yup.number().required('Bank Account Number is required').typeError('Please enter a valid number'),
 
@@ -452,12 +452,12 @@ export const Employee = (props: any) => {
       "",
       "employeexceltemplate.xlsx",
       async (res: any) => {
-          if(res){
-            
-          }
-          
+        if (res) {
+
+        }
+
       }
-  )
+    )
   };
 
   // const handlePasswordSubmit = () => {
@@ -2572,6 +2572,7 @@ export const Employee = (props: any) => {
                   validationSchema={Yup.object().shape({
                     password: Yup.string().required('New password is required')
                       .min(8, "Must Contain 8 Characters")
+                      .matches(/^(?=.*[a-z])/, "Must Contain One LowerCase")
                       .matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase")
                       .matches(/^(?=.*[0-9])/, "Must Contain One Number ")
                       .matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
@@ -2640,9 +2641,9 @@ export const Employee = (props: any) => {
                         />
                         <Button
                           variant="link"
-                          onClick={()=> setShowPassword(!showPassword)}
+                          onClick={() => setShowPassword(!showPassword)}
                           className="passwordicon"
-                          style={{ paddingTop: 10, paddingBottom: 0, marginBottom:0 }}
+                          style={{ paddingTop: 10, paddingBottom: 0, marginBottom: 0 }}
                           disabled={!values.password}>
                           <span className="showpass">
                             <img src={show_password_dark} alt="Show" />
@@ -2671,7 +2672,7 @@ export const Employee = (props: any) => {
                         />
                         <Button
                           variant="link"
-                          onClick={()=> setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                           className="passwordicon"
                           style={{ paddingTop: 10 }}
                           disabled={!values.confirmPassword}>
@@ -2689,7 +2690,7 @@ export const Employee = (props: any) => {
                       </div>
                       <br />
                       <div className="d-flex justify-content-center">
-                        <Button type="submit" className=" btn btn-primary"  style={{ width: 200 }}>
+                        <Button type="submit" className=" btn btn-primary" style={{ width: 200 }}>
                           Submit
                         </Button>
                       </div>
