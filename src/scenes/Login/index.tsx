@@ -73,7 +73,7 @@ function ChangePassword(props: any) {
           conPassword: ""
         }} enableReinitialize={true} validationSchema={Yup.object().shape({
           oldPassword: Yup.string().required('Old password is required'),
-          newPassword: Yup.string().required('New password is required').matches(/^(?=.*[a-z])/, "Must Contain 8 Characters").matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase").matches(/^(?=.*[0-9])/, "Must Contain One Number ").matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
+          newPassword: Yup.string().required('New password is required').min(8, "Must Contain 8 Characters").matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase").matches(/^(?=.*[0-9])/, "Must Contain One Number ").matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
           conPassword: Yup.string().required('Confirm password is required').oneOf([Yup.ref('newPassword'), null], "Password not match")
         })} onSubmit={(values: any, actions: any) => {
           RequestAPI.putRequest(Api.changePassword, props.tempToken, values, {}, async (res: any) => {
