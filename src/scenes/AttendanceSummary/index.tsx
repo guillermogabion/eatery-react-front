@@ -54,6 +54,19 @@ export const AttendanceSummary = (props: any) => {
       }
     )
   }
+  const downloadTemplate = () => {
+    RequestAPI.getFileAsync(
+      `${Api.downloadExcelTimekeepingTemplate}`,
+      "",
+      "timekeepingexceltemplate.xlsx",
+      async (res: any) => {
+          if(res){
+            
+          }
+          
+      }
+  )
+  };
 
   const uploadExcel = () => {
     if (selectedFile != null && selectedFile != "") {
@@ -92,7 +105,7 @@ export const AttendanceSummary = (props: any) => {
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="row">
                 <div className="col-md-6">
-                  <h2>Good Day, {userData.data.profile.firstName}!</h2>
+                  <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />
@@ -117,6 +130,11 @@ export const AttendanceSummary = (props: any) => {
                         onClick={() => {
                           setDownloadModalShow(true)
                         }}>Export</Button>
+                      <Button
+                        className="mx-2"
+                        onClick={
+                          downloadTemplate
+                        }>Download Template</Button>
                     </div>
                   </div>
                 </div>
