@@ -552,15 +552,27 @@ export const Leaves = (props: any) => {
               <div className="row">
                 <div className="col-md-6">
                   <h2>Good Day, {userData.data.profile.firstName}!</h2>
+                  <br/>
+                  {data.profile.role !== 'ADMIN' ? (
+  // This code block will be rendered only if the user is an ADMIN
+                      <div>
+                        <h4 className="bold-text">Leave Credits </h4>
+                        {getMyLeaves.map((leave: any) => (
+                          <div key={leave.id}>
+                            <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      // This code block will be rendered for all other users
+                      null
+                    )}
 
-                  <br/>
-                  <br/>
-                  <h2><b>Leave Credits</b></h2>
-                  {getMyLeaves.map((leave: any) => (
+                  {/* {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
                     <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
-                ))}
+                ))} */}
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

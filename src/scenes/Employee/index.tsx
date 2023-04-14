@@ -496,7 +496,7 @@ export const Employee = (props: any) => {
           contactNumber: Yup.string().required("Required"),
           emailAddress: Yup.string().required("Required"),
           // prclicenseNo: Yup.string().required("Required"),
-          passportNo: Yup.string().required("Required"),
+          // passportNo: Yup.string().required("Required"),
         })
       }
       onSubmit={(values, actions) => {

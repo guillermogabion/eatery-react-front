@@ -14,7 +14,9 @@ import {
   AttendanceCorrection,
   AttendanceSummary,
   Report,
-  Holiday
+  Squad,
+  Holiday,
+  SquadRequest,
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -60,6 +62,8 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/timekeeping", component: Dashboard })
   routes.push({ path: "/employee", component: Employee })
   routes.push({ path: "/holiday", component: Holiday })
+  routes.push({ path: "/squad", component: Squad })
+  routes.push({ path: "/squad/request", component: SquadRequest })
 
   return isLogin ? (
     <>
