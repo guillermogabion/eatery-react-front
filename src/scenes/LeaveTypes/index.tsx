@@ -15,6 +15,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 const ErrorSwal = withReactContent(Swal)
+import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
 export const LeaveTypes = (props: any) => {
     const { history } = props
@@ -172,7 +173,7 @@ export const LeaveTypes = (props: any) => {
                                                             <tr>
                                                                 <td> {item.name} </td>
                                                                 <td> {item.description} </td>
-                                                                <td>
+                                                                <td className="d-flex">
                                                                     <label
                                                                         onClick={() => {
                                                                             setLeaveTypeId(item.id)
@@ -180,7 +181,8 @@ export const LeaveTypes = (props: any) => {
                                                                             setModalShow(true)
                                                                         }}
                                                                         className="text-muted cursor-pointer">
-                                                                        Update
+                                                                        
+                                                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                                     </label>
                                                                     <br />
                                                                     <label
@@ -188,7 +190,8 @@ export const LeaveTypes = (props: any) => {
                                                                             deleteLeaveType(item.id)
                                                                         }}
                                                                         className="text-muted cursor-pointer">
-                                                                        Delete
+                                                                        
+                                                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                                     </label>
                                                                 </td>
                                                             </tr>
