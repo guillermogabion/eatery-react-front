@@ -32,6 +32,12 @@ const Api: any = {
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
   declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
   cancelLeave: process.env.REACT_APP_API_URL + "request/leave/cancel",
+  cancelCOA: process.env.REACT_APP_API_URL + "request/coa/cancel",
+  cancelOvertime: process.env.REACT_APP_API_URL + "request/ot/cancel",  
+  cancelUndertime: process.env.REACT_APP_API_URL + "request/ut/cancel",  
+  
+
+
   getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
   employeeInformation: process.env.REACT_APP_API_URL + "employee/info",
   allEmployee: process.env.REACT_APP_API_URL + "employee/all",
