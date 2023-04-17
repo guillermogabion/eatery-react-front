@@ -20,6 +20,10 @@ export * from "./ScheduleAdjustment"
 export * from "./Report"
 export * from "./Holiday"
 export * from "./Squad"
-export * from "./SquadRequest"
+export * from "./SquadLeaves"
+export * from "./SquadAttendanceCorrection"
+export * from "./SquadOvertime"
+export * from "./SquadUnderTime"
+
 
 

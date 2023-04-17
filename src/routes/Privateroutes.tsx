@@ -16,7 +16,10 @@ import {
   Report,
   Squad,
   Holiday,
-  SquadRequest,
+  SquadLeaves,
+  SquadAttendanceCorrection,
+  SquadOvertime,
+  SquadUndertime
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -62,9 +65,11 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/timekeeping", component: Dashboard })
   routes.push({ path: "/employee", component: Employee })
   routes.push({ path: "/holiday", component: Holiday })
-  routes.push({ path: "/squad", component: Squad })
-  routes.push({ path: "/squad/request", component: SquadRequest })
-
+  routes.push({ path: "/request", component: Squad })
+  routes.push({ path: "/request/leave/squadmembers", component: SquadLeaves})
+  routes.push({ path: "/request/coa/squadmembers", component: SquadAttendanceCorrection})
+  routes.push({ path: "/request/ot/squadmembers", component: SquadOvertime})
+  routes.push({ path: "/request/Ut/squadmembers", component: SquadUndertime})
   return isLogin ? (
     <>
       <Switch>

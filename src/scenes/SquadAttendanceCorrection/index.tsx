@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import * as Yup from "yup";
 
-export const AttendanceCorrection = (props: any) => {
+export const SquadAttendanceCorrection = (props: any) => {
   const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
@@ -113,23 +113,7 @@ export const AttendanceCorrection = (props: any) => {
     
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
       RequestAPI.getRequest(
-        `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
-        "",
-        {},
-        {},
-        async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 && body) {
-            if (body.error && body.error.message) {
-            } else {
-              setAllCOA(body.data)
-            }
-          }
-        }
-      )
-    }else{
-      RequestAPI.getRequest(
-        `${Api.allMyCOA}?size=10${queryString}&page=${page}`,
+        `${Api.getAllSquadCoa}?size=10${queryString}&page=${page}`,
         "",
         {},
         {},

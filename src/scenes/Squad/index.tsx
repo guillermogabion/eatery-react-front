@@ -15,6 +15,7 @@ import TableComponent from "../../components/TableComponent"
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useSelector, useDispatch } from "react-redux"
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -27,6 +28,7 @@ export const Squad = (props: any) => {
     const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [isSubmit, setIsSubmit] = React.useState(false);
+    const [squad, setSquad] = useState<any>([]);
 
 
     const tableHeaders = [
@@ -38,6 +40,32 @@ export const Squad = (props: any) => {
         'Status',
         'Action',
     ]
+
+    useEffect(() => {
+      getMember(0);
+    }, []);
+
+    const getMember = (page : any = 0) => {
+        RequestAPI.getRequest(
+          `${Api.getSquadMember}?size=10&page=${page}`,
+          "",
+          {},
+          {}, 
+          async (res: any) => {
+            const { status, body = { data: {}, error: {} } }: any = res;
+            if (status === 200 && body) {
+              if (body.error && body.error.message) {
+                // handle error
+              } else {
+                setSquad(body.data);
+              }
+            }
+          }
+        );
+      };
+      const handlePageClick = (event: any) => {
+        getMember(event.selected)
+      };
 
     const downloadExcel = (fromDate: any, toDate: any) => {
         setIsSubmit(true)
@@ -77,9 +105,58 @@ export const Squad = (props: any) => {
                                 <h3>Subordinates</h3>
 
                                 <div className="w-100 pt-4">
-                                    <TableComponent
-                                        tableHeaders={tableHeaders}
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <th style={{ width: 'auto' }}>Name</th>
+                                      <th style={{ width: 'auto' }}>Employee Type</th>
+                                      <th style={{ width: 'auto' }}>Status</th>
+                                    
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    { squad &&
+                                            squad.content &&
+                                            squad.content.length > 0 &&
+                                            squad.content.map((item:any, index: any) => (
+                                      <tr key={item.id}>
+                                        <td>{item.fullname}</td>
+                                        <td>{item.empType}</td>
+                                        <td>{item.empStatus}</td>
+
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                                <div className="d-flex justify-content-end">
+                                    <div className="">
+                                    <ReactPaginate
+                                        className="d-flex justify-content-center align-items-center"
+                                        breakLabel="..."
+                                        nextLabel=">"
+                                        onPageChange={handlePageClick}
+                                        pageRangeDisplayed={5}
+                                        pageCount={(squad && squad.totalPages) || 0}
+                                        previousLabel="<"
+                                        previousLinkClassName="prev-next-pagination"
+                                        nextLinkClassName="prev-next-pagination"
+                                        activeClassName="active-page-link"
+                                        pageLinkClassName="page-link"
+                                        renderOnZeroPageCount={null}
                                     />
+                                    </div>
+                                </div>
+                                
+                                {
+                                    squad &&
+                                    squad.content &&
+                                    squad.content.length == 0 ?
+                                    <div className="w-100 text-center">
+                                    <label htmlFor="">No Records Found</label>
+                                    </div>
+                                    : 
+                                    null
+                                }
                                     <div className="d-flex justify-content-end mt-3" >
                                         <div>
                                             <Button
