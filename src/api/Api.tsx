@@ -75,6 +75,8 @@ const Api: any = {
   declineScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/decline",
   approveScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/approve",
   cancelScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/cancel",
+
+  forgotPassword: process.env.REACT_APP_API_URL + "user/forgotpassword",
   
   // /request/ot/classifications
 
