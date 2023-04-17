@@ -66,6 +66,15 @@ const Api: any = {
   allHoliday: process.env.REACT_APP_API_URL + "holiday/all",
   deleteHoliday: process.env.REACT_APP_API_URL + "holiday/delete",
   
+  // Schedule Adjustment
+  myScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/myrequests",
+  allScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/all",
+  getScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment",
+  createScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/create",
+  updateScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/update",
+  declineScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/decline",
+  approveScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/approve",
+  cancelScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/cancel",
   
   // /request/ot/classifications
 
