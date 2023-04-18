@@ -77,7 +77,7 @@ const DashboardMenu = (props: any) => {
                             return (
                                 <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#604195" }} >
                                     <Accordion.Header style={{ fontWeight: 'bolder' }}>
-                                        <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt="Attendance" />
+                                        <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
                                         {name}
                                     </Accordion.Header>
                                     <Accordion.Body className="p-0 cursor-pointer " style={{ backgroundColor: '#604195' }}>
