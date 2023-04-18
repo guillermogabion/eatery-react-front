@@ -7,7 +7,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 const ErrorSwal = withReactContent(Swal)
 import moment from "moment";
 import { left, right } from "@popperjs/core"
-import { Button, Card, Image, Modal } from "react-bootstrap"
+import { Button, Card, Image, Modal, Table } from "react-bootstrap"
 import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
 import TimeDate from "../../components/TimeDate"
@@ -16,10 +16,13 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useSelector, useDispatch } from "react-redux"
 import FileUploadService from "../../services/FileUploadService"
+import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import ReactPaginate from "react-paginate"
 
 export const AttendanceSummary = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
+  const { authorizations } = data?.profile
 
   const { history } = props
   const [importModalShow, setImportModalShow] = React.useState(false);
@@ -28,7 +31,9 @@ export const AttendanceSummary = (props: any) => {
   const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [isSubmit, setIsSubmit] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
-
+  const [filterData, setFilterData] = React.useState([]);
+  const [key, setKey] = React.useState('all');
+  const [allAttendance, setAllAttendance] = useState<any>([]);
 
   const tableHeaders = [
     'Date Filed',
@@ -60,12 +65,10 @@ export const AttendanceSummary = (props: any) => {
       "",
       "timekeepingexceltemplate.xlsx",
       async (res: any) => {
-          if(res){
-            
-          }
-          
+        if (res) {
+        }
       }
-  )
+    )
   };
 
   const uploadExcel = () => {
@@ -90,8 +93,110 @@ export const AttendanceSummary = (props: any) => {
     } else {
       ErrorSwal.fire("Warning!", "File is required.", "warning")
     }
-
   }
+
+  useEffect(() => {
+    getAllAttendance(0, "")
+    filterData["fromDate"]= moment().format("MMMM-DD-YYYY")
+    filterData["toDate"]= moment().format("MMMM-DD-YYYY")
+  }, [])
+  
+  const getAllAttendance = (page: any = 0, status: any = "All") => {
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if (status != "") {
+      queryString = "&status=" + status
+    } else {
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
+    RequestAPI.getRequest(
+      `${Api.adminAttendanceSummary}?size=10${queryString}&page=${page}&userId=62`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            setAllAttendance(body.data)
+          }
+        }
+      }
+    )
+  }
+
+  const makeFilterData = (event: any) => {
+    const { name, value } = event.target
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && value !== "Select" ? value : ""
+    setFilterData(filterObj)
+  }
+
+  const handlePageClick = (event: any) => {
+    getAllAttendance(event.selected, "")
+  };
+
+  const attendanceTable = useCallback(() => {
+    return (
+      <div>
+        <Table responsive="lg">
+          <thead>
+            <tr>
+              <th style={{ width: 'auto' }}>Employee ID</th>
+              <th style={{ width: 'auto' }}>Employee Name</th>
+              <th style={{ width: 'auto' }}>Present</th>
+              <th style={{ width: 'auto' }}>Absent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              allAttendance &&
+                allAttendance.content &&
+                allAttendance.content.length > 0 ?
+                <>
+                  {
+                    allAttendance.content.map((item: any, index: any) => {
+                      return (
+                        <tr>
+                          <td> {item.empId} </td>
+                          <td> {item.lastName}, {item.firstName} </td>
+                          <td> {item.present} </td>
+                          <td> {item.absent} </td>
+                        </tr>
+                      )
+                    })
+                  }
+
+                </>
+                :
+                null
+            }
+          </tbody>
+
+        </Table>
+        {
+          allAttendance &&
+            allAttendance.content &&
+            allAttendance.content.length == 0 ?
+            <div className="w-100 text-center">
+              <label htmlFor="">No Records Found</label>
+            </div>
+            :
+            null
+        }
+
+      </div>
+    )
+  }, [allAttendance])
 
   return (
     <div className="body">
@@ -115,9 +220,64 @@ export const AttendanceSummary = (props: any) => {
                 <h3>Attendance Summary</h3>
 
                 <div className="w-100 pt-4">
-                  <TableComponent
-                    tableHeaders={tableHeaders}
-                  />
+                  <div className="fieldtext d-flex col-md-6">
+                    <div>
+                      <label>Date From</label>
+                      <input
+                        name="fromDate"
+                        type="date"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        value={filterData["fromDate"]}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
+                    </div>
+
+                    <div>
+                      <label>Date To</label>
+                      <div className="input-container">
+                        <input
+                          name="toDate"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          maxLength={40}
+                          value={filterData["toDate"]}
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        />
+                      </div>
+                    </div>
+
+                    <Button
+                      style={{ width: 120 }}
+                      onClick={() => getAllAttendance(0, "")}
+                      className="btn btn-primary mx-2 mt-4">
+                      Search
+                    </Button>
+                  </div>
+
+                  {attendanceTable()}
+                  <div className="d-flex justify-content-end">
+                    <div className="">
+                      <ReactPaginate
+                        className="d-flex justify-content-center align-items-center"
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={(allAttendance && allAttendance.totalPages) || 0}
+                        previousLabel="<"
+                        previousLinkClassName="prev-next-pagination"
+                        nextLinkClassName="prev-next-pagination"
+                        activeClassName="active-page-link"
+                        pageLinkClassName="page-link"
+                        renderOnZeroPageCount={null}
+                      />
+                    </div>
+                  </div>
                   <div className="d-flex justify-content-end mt-3" >
                     <div>
                       <Button

@@ -21,6 +21,7 @@ const Api: any = {
   deleteLeaveType: process.env.REACT_APP_API_URL + "request/type/delete",
   
   adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
+  myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
   adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
   
   

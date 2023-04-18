@@ -29,7 +29,7 @@ export const Holiday = (props: any) => {
 
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
-  const [onSubmit, setOnSubmit] = useState<any>(false);
+  const [isSubmit, setIsSubmit] = useState<any>(false);
   console.log(masterList)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
@@ -412,7 +412,7 @@ export const Holiday = (props: any) => {
                 })
               }
               onSubmit={(values, actions) => {
-                setOnSubmit(true)
+                setIsSubmit(true)
                 const valuesObj: any = { ...values }
                 if (holidayId) {
                   valuesObj.id = holidayId
@@ -442,6 +442,7 @@ export const Holiday = (props: any) => {
                         'error'
                       )
                     }
+                    setIsSubmit(false)
                   })
                 } else {
                   RequestAPI.postRequest(Api.saveHoliday, "", valuesObj, {}, async (res: any) => {
@@ -470,9 +471,10 @@ export const Holiday = (props: any) => {
                         'error'
                       )
                     }
+                    setIsSubmit(false)
                   })
                 }
-                setOnSubmit(false)
+                
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (
@@ -554,7 +556,7 @@ export const Holiday = (props: any) => {
                       <div className="d-flex justify-content-end px-5">
                         <button
                           type="submit"
-                          disabled={onSubmit}
+                          disabled={isSubmit}
                           className="btn btn-primary">
                           Save
                         </button>
