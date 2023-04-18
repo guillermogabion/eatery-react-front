@@ -568,22 +568,11 @@ export const Leaves = (props: any) => {
                       null
                     )}
 
-<<<<<<< HEAD
                   {/* {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
                     <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))} */}
-=======
-                  <br />
-                  <br />
-                  <h2><b>Leave Credits</b></h2>
-                  {getMyLeaves.map((leave: any) => (
-                    <div key={leave.id}>
-                      <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
-                    </div>
-                  ))}
->>>>>>> 0eb2b6fbba2c9503e8d5b54f9ccb7efb39ec33eb
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />
