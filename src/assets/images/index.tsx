@@ -78,6 +78,11 @@ import actimai_logo from "./dist/Actimai Logo.svg"
 import bundy_clock from "./dist/Bundy Clock.png"
 import arrow_down from "./dist/Arrow Down.png"
 
+import action_approve from "./dist/action/action_approve.png"
+import action_cancel from "./dist/action/action_cancel.png"
+import action_decline from "./dist/action/action_decline.png"
+import action_edit from "./dist/action/action_edit.png"
+
 export {
   Logo,
   Logo2,
@@ -154,5 +159,10 @@ export {
 
   actimai_logo,
   bundy_clock,
-  arrow_down
+  arrow_down,
+  
+  action_approve,
+  action_cancel,
+  action_decline,
+  action_edit
 }

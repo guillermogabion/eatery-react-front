@@ -14,6 +14,14 @@ const Api: any = {
   leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
   uploadExcelFile : process.env.REACT_APP_API_URL + "employee/uploadExcel",
   getMyLeave : process.env.REACT_APP_API_URL + "employee/myleavecreds",
+
+  leaveTypesList: process.env.REACT_APP_API_URL + "request/getTypeList",
+  createLeaveType: process.env.REACT_APP_API_URL + "request/type/create",
+  updateLeaveType: process.env.REACT_APP_API_URL + "request/type/update",
+  deleteLeaveType: process.env.REACT_APP_API_URL + "request/type/delete",
+  
+  adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
+  adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
   
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
@@ -24,6 +32,12 @@ const Api: any = {
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
   declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
   cancelLeave: process.env.REACT_APP_API_URL + "request/leave/cancel",
+  cancelCOA: process.env.REACT_APP_API_URL + "request/coa/cancel",
+  cancelOvertime: process.env.REACT_APP_API_URL + "request/ot/cancel",  
+  cancelUndertime: process.env.REACT_APP_API_URL + "request/ut/cancel",  
+  
+
+
   getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
   employeeInformation: process.env.REACT_APP_API_URL + "employee/info",
   allEmployee: process.env.REACT_APP_API_URL + "employee/all",
@@ -52,6 +66,17 @@ const Api: any = {
   allHoliday: process.env.REACT_APP_API_URL + "holiday/all",
   deleteHoliday: process.env.REACT_APP_API_URL + "holiday/delete",
   
+  // Schedule Adjustment
+  myScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/myrequests",
+  allScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/all",
+  getScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment",
+  createScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/create",
+  updateScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/update",
+  declineScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/decline",
+  approveScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/approve",
+  cancelScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/cancel",
+
+  forgotPassword: process.env.REACT_APP_API_URL + "user/forgotpassword",
   
   // /request/ot/classifications
 

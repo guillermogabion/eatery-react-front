@@ -14,12 +14,17 @@ import {
   AttendanceCorrection,
   AttendanceSummary,
   Report,
+<<<<<<< HEAD
   Squad,
   Holiday,
   SquadLeaves,
   SquadAttendanceCorrection,
   SquadOvertime,
   SquadUndertime
+=======
+  Holiday,
+  LeaveTypes
+>>>>>>> 0eb2b6fbba2c9503e8d5b54f9ccb7efb39ec33eb
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -65,11 +70,16 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/timekeeping", component: Dashboard })
   routes.push({ path: "/employee", component: Employee })
   routes.push({ path: "/holiday", component: Holiday })
+<<<<<<< HEAD
   routes.push({ path: "/request", component: Squad })
   routes.push({ path: "/request/leave/squadmembers", component: SquadLeaves})
   routes.push({ path: "/request/coa/squadmembers", component: SquadAttendanceCorrection})
   routes.push({ path: "/request/ot/squadmembers", component: SquadOvertime})
   routes.push({ path: "/request/Ut/squadmembers", component: SquadUndertime})
+=======
+  routes.push({ path: "/request/type", component: LeaveTypes })
+
+>>>>>>> 0eb2b6fbba2c9503e8d5b54f9ccb7efb39ec33eb
   return isLogin ? (
     <>
       <Switch>

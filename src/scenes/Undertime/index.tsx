@@ -19,6 +19,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
+import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
 export const Undertime = (props: any) => {
     const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -52,27 +53,27 @@ export const Undertime = (props: any) => {
         const filterObj: any = { ...filterData }
         filterObj[name] = name && value !== "Select" ? value : ""
         setFilterData(filterObj)
-      }
+    }
 
     const getMyUT = (page: any = 0, status: any = "All") => {
 
         let queryString = ""
         let filterDataTemp = { ...filterData }
-        if(status != ""){
-          queryString = "&status="+ status
-        }else{
-          if (filterDataTemp) {
-            Object.keys(filterDataTemp).forEach((d: any) => {
-              if (filterDataTemp[d]) {
-                
-                queryString += `&${d}=${filterDataTemp[d]}`
-              } else {
-                queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-              }
-            })
-          }
+        if (status != "") {
+            queryString = "&status=" + status
+        } else {
+            if (filterDataTemp) {
+                Object.keys(filterDataTemp).forEach((d: any) => {
+                    if (filterDataTemp[d]) {
+
+                        queryString += `&${d}=${filterDataTemp[d]}`
+                    } else {
+                        queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                    }
+                })
+            }
         }
-        if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+        if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
             RequestAPI.getRequest(
                 `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                 "",
@@ -88,7 +89,7 @@ export const Undertime = (props: any) => {
                     }
                 }
             )
-        }else{
+        } else {
             RequestAPI.getRequest(
                 `${Api.myUT}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                 "",
@@ -104,7 +105,7 @@ export const Undertime = (props: any) => {
                     }
                 }
             )
-        }        
+        }
     }
 
     const approveUT = (id: any = 0) => {
@@ -134,6 +135,46 @@ export const Undertime = (props: any) => {
                                 (body.data) || "",
                                 'success'
                             )
+                        }
+                    } else {
+                        ErrorSwal.fire(
+                            'Error!',
+                            'Something Error.',
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    }
+
+    const cancelUndertime = (id: any = 0) => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to cancel this undertime.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                RequestAPI.postRequest(Api.cancelUndertime, "", { "id": id }, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                'Error!',
+                                (body.error && body.error.message) || "",
+                                'error'
+                            )
+                        } else {
+                            ErrorSwal.fire(
+                                'Success!',
+                                (body.data) || "",
+                                'success'
+                            )
+                            getMyUT(0, "")
                         }
                     } else {
                         ErrorSwal.fire(
@@ -242,48 +283,66 @@ export const Undertime = (props: any) => {
                                         <td> {item.fileDate} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.status} </td>
-                                        <td>
+                                        <td className="d-flex">
                                             {
                                                 item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                                                     <>
-                                                    {authorizations.includes("Request:Update") ? (
-                                                        <>
-                                                        <label
-                                                            onClick={() => {
-                                                                getUT(item.id)
-                                                            }}
-                                                            className="text-muted cursor-pointer">
-                                                            Update
-                                                        </label>
-                                                        <br />
-                                                        </>
-                                                    ) : null}
-                                                    {authorizations.includes("Request:Approve") ? (
-                                                        <>
-                                                        <label
-                                                            onClick={() => {
-                                                                approveUT(item.id)
-                                                            }}
-                                                            className="text-muted cursor-pointer">
-                                                            Approve
-                                                        </label> <br />
-                                                        </>
-                                                    ) : null}
-                                                    {authorizations.includes("Request:Reject") ? (
-                                                        <>
-                                                        <label
-                                                            onClick={() => {
-                                                                declineUT(item.id)
-                                                            }}
-                                                            className="text-muted cursor-pointer">
-                                                            Decline
-                                                        </label>
-                                                        <br />
-                                                        </>
-                                                    ) : null}
+                                                        {authorizations.includes("Request:Update") ? (
+                                                            <>
+                                                                <label
+                                                                    onClick={() => {
+                                                                        getUT(item.id)
+                                                                    }}
+                                                                    className="text-muted cursor-pointer">
+                                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                                </label>
+                                                                <br />
+                                                            </>
+                                                        ) : null}
+                                                        {authorizations.includes("Request:Approve") ? (
+                                                            <>
+                                                                <label
+                                                                    onClick={() => {
+                                                                        approveUT(item.id)
+                                                                    }}
+                                                                    className="text-muted cursor-pointer">
+                                                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                                                </label> <br />
+                                                            </>
+                                                        ) : null}
+                                                        {authorizations.includes("Request:Reject") ? (
+                                                            <>
+                                                                <label
+                                                                    onClick={() => {
+                                                                        declineUT(item.id)
+                                                                    }}
+                                                                    className="text-muted cursor-pointer">
+                                                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                                                </label>
+                                                                <br />
+                                                            </>
+                                                        ) : null}
                                                     </>
                                                     :
                                                     null
+                                            }
+                                            {
+                                                item.status == "APPROVED" || item.status == "PENDING" ?
+                                                    <>
+                                                        {authorizations.includes("Request:Update") ? (
+                                                            <>
+                                                                <label
+                                                                    onClick={() => {
+                                                                        cancelUndertime(item.id)
+                                                                    }}
+                                                                    className="text-muted cursor-pointer">
+                                                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                                </label>
+                                                                <br />
+                                                            </>
+                                                        ) : null}
+                                                    </>
+                                                    : null
                                             }
                                         </td>
                                     </tr>
@@ -293,15 +352,15 @@ export const Undertime = (props: any) => {
                     </tbody>
                 </Table>
                 {
-                        myut &&
+                    myut &&
                         myut.content &&
                         myut.content.length == 0 ?
                         <div className="w-100 text-center">
-                          <label htmlFor="">No Records Found</label>
+                            <label htmlFor="">No Records Found</label>
                         </div>
-                        : 
+                        :
                         null
-                  }
+                }
             </div>
         )
     }, [myut])
@@ -345,19 +404,19 @@ export const Undertime = (props: any) => {
                     </div>
                     
                     </div> */}
-                   
+
                                 <div className="w-100 pt-2">
                                     <div className="fieldtext d-flex col-md-3">
                                         <div>
                                             <label>Date From</label>
                                             <div>
                                                 <input
-                                                name="dateFrom"
-                                                type="date"
-                                                autoComplete="off"
-                                                className="formControl"
-                                                onChange={(e) => makeFilterData(e)}
-                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                                    name="dateFrom"
+                                                    type="date"
+                                                    autoComplete="off"
+                                                    className="formControl"
+                                                    onChange={(e) => makeFilterData(e)}
+                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                                 />
                                             </div>
                                         </div>
@@ -365,12 +424,12 @@ export const Undertime = (props: any) => {
                                             <label>Date To</label>
                                             <div className="input-container">
                                                 <input
-                                                name="dateTo"
-                                                type="date"
-                                                autoComplete="off"
-                                                className="formControl"
-                                                onChange={(e) => makeFilterData(e)}
-                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                                    name="dateTo"
+                                                    type="date"
+                                                    autoComplete="off"
+                                                    className="formControl"
+                                                    onChange={(e) => makeFilterData(e)}
+                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                                 />
                                             </div>
                                         </div>
@@ -378,25 +437,25 @@ export const Undertime = (props: any) => {
                                             <label>Date Filed</label>
                                             <div className="input-container">
                                                 <input
-                                                name="dateFiled"
-                                                type="date"
-                                                autoComplete="off"
-                                                className="formControl"
-                                                onChange={(e) => makeFilterData(e)}
-                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                                    name="dateFiled"
+                                                    type="date"
+                                                    autoComplete="off"
+                                                    className="formControl"
+                                                    onChange={(e) => makeFilterData(e)}
+                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                                 />
                                             </div>
                                         </div>
                                         <div>
                                             <Button
-                                            style={{ width: 120}}
-                                            onClick={() => getMyUT(0,"")}
-                                            className="btn btn-primary mx-2 mt-4">
-                                            Search
+                                                style={{ width: 120 }}
+                                                onClick={() => getMyUT(0, "")}
+                                                className="btn btn-primary mx-2 mt-4">
+                                                Search
                                             </Button>
                                         </div>
                                     </div>
-                                   
+
                                     <Tabs
                                         id="controlled-tab-example"
                                         activeKey={key}
@@ -423,38 +482,38 @@ export const Undertime = (props: any) => {
                             </div>
                             <div className="d-flex justify-content-end">
                                 <div className="">
-                                <ReactPaginate
-                                    className="d-flex justify-content-center align-items-center"
-                                    breakLabel="..."
-                                    nextLabel=">"
-                                    onPageChange={handlePageClick}
-                                    pageRangeDisplayed={5}
-                                    pageCount={(myut && myut.totalPages) || 0}
-                                    previousLabel="<"
-                                    previousLinkClassName="prev-next-pagination"
-                                    nextLinkClassName="prev-next-pagination"
-                                    activeClassName="active-page-link"
-                                    pageLinkClassName="page-link"
-                                    renderOnZeroPageCount={null}
-                                />
+                                    <ReactPaginate
+                                        className="d-flex justify-content-center align-items-center"
+                                        breakLabel="..."
+                                        nextLabel=">"
+                                        onPageChange={handlePageClick}
+                                        pageRangeDisplayed={5}
+                                        pageCount={(myut && myut.totalPages) || 0}
+                                        previousLabel="<"
+                                        previousLinkClassName="prev-next-pagination"
+                                        nextLinkClassName="prev-next-pagination"
+                                        activeClassName="active-page-link"
+                                        pageLinkClassName="page-link"
+                                        renderOnZeroPageCount={null}
+                                    />
                                 </div>
                             </div>
                             {authorizations.includes("Request:Create") ? (
                                 <>
-                                <div className="d-flex justify-content-end mt-3" >
-                                <div>
-                                    <Button
-                                        className="mx-2"
-                                        onClick={() => {
-                                            setUtId("")
-                                            setInitialValues(initialPayload)
-                                            setModalShow(true)
-                                        }}>Request Undertime</Button>
-                                </div>
-                            </div>
+                                    <div className="d-flex justify-content-end mt-3" >
+                                        <div>
+                                            <Button
+                                                className="mx-2"
+                                                onClick={() => {
+                                                    setUtId("")
+                                                    setInitialValues(initialPayload)
+                                                    setModalShow(true)
+                                                }}>Request Undertime</Button>
+                                        </div>
+                                    </div>
                                 </>
                             ) : null}
-                            
+
                         </div>
                     </div>
                 </div>

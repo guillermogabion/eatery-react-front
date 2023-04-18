@@ -15,6 +15,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 const ErrorSwal = withReactContent(Swal)
+import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
 export const Holiday = (props: any) => {
   const { history } = props
@@ -304,7 +305,7 @@ export const Holiday = (props: any) => {
                                 <td> {item.holidayType} </td>
                                 <td> {item.premiumType} </td>
                                 <td> {item.holidayDate} </td>
-                                <td>
+                                <td className="d-flex">
                                   <label
                                     onClick={() => {
                                       setHolidayId(item.id)
@@ -312,7 +313,7 @@ export const Holiday = (props: any) => {
                                       setModalShow(true)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    Update
+                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                   </label>
                                   <br />
                                   <label
@@ -320,7 +321,7 @@ export const Holiday = (props: any) => {
                                       deleteHoliday(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    Delete
+                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                   </label>
                                 </td>
                               </tr>

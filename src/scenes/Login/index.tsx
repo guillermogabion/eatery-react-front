@@ -73,7 +73,12 @@ function ChangePassword(props: any) {
           conPassword: ""
         }} enableReinitialize={true} validationSchema={Yup.object().shape({
           oldPassword: Yup.string().required('Old password is required'),
-          newPassword: Yup.string().required('New password is required').min(8, "Must Contain 8 Characters").matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase").matches(/^(?=.*[0-9])/, "Must Contain One Number ").matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
+          newPassword: Yup.string().required('New password is required')
+            .min(8, "Must Contain 8 Characters")
+            .matches(/^(?=.*[a-z])/, "Must Contain One LowerCase")
+            .matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase")
+            .matches(/^(?=.*[0-9])/, "Must Contain One Number ")
+            .matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
           conPassword: Yup.string().required('Confirm password is required').oneOf([Yup.ref('newPassword'), null], "Password not match")
         })} onSubmit={(values: any, actions: any) => {
           RequestAPI.putRequest(Api.changePassword, props.tempToken, values, {}, async (res: any) => {
@@ -199,6 +204,8 @@ export const Login = () => {
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoginSuccess, setIsLoginSuccess] = React.useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotIsSubmit, setForgotIsSubmit] = useState(false);
 
   const keydownFun = (event: any) => {
     if (event.key === "Enter" && username && password) {
@@ -258,6 +265,39 @@ export const Login = () => {
       });
     }
   }, [username, password])
+
+  const forgotUserPassword = React.useCallback(() => {
+    setForgotIsSubmit(true)
+    if (forgotEmail) {
+      RequestAPI.putRequest(Api.forgotPassword, "", { "email": forgotEmail }, {}, async (res: any) => {
+        const { status, body } = res
+        if (status === 200 || status === 201) {
+          if (body.error && body.error.message) {
+            ErrorSwal.fire(
+              'Error!',
+              (body.error && body.error.message) || "",
+              'error'
+            )
+          } else {
+            ErrorSwal.fire(
+              'Success!',
+              (body.data) || "",
+              'success'
+            )
+            setShowModal(false)
+            setForgotIsSubmit(false)
+          }
+        } else {
+          ErrorSwal.fire(
+            'Error!',
+            'Something Error.',
+            'error'
+          )
+        }
+      });
+    }
+    setForgotIsSubmit(false)
+  }, [forgotEmail])
 
   // onCopy
   const copyHandler = (event: React.ClipboardEvent<HTMLInputElement>) => {
@@ -360,35 +400,30 @@ export const Login = () => {
             </div>
 
             :
-            <ChangePassword visibile1={visibile1} 
-                setVisibile1={setVisibile1} 
-                visibile2={visibile2} 
-                setVisibile2={setVisibile2} 
-                visibile3={visibile3} 
-                setVisibile3={setVisibile3} 
-                tempToken={tempToken} 
-                setIsNewAccount={setIsNewAccount} 
-                setErrorMessage={setErrorMessage} 
-                copyHandler={copyHandler} 
-                cutHandler={cutHandler} />
+            <ChangePassword visibile1={visibile1}
+              setVisibile1={setVisibile1}
+              visibile2={visibile2}
+              setVisibile2={setVisibile2}
+              visibile3={visibile3}
+              setVisibile3={setVisibile3}
+              tempToken={tempToken}
+              setIsNewAccount={setIsNewAccount}
+              setErrorMessage={setErrorMessage}
+              copyHandler={copyHandler}
+              cutHandler={cutHandler} />
           }
         </Container>
       </div>
-      <Modal show={showModal} onHide={handleModal} centered>
-        <Modal.Header className="reset-header">
-          <Modal.Title className="header-text">Forgot Password - Reset</Modal.Title>
+      <Modal show={showModal} onHide={handleModal} centered >
+        <Modal.Header className="reset-header" closeButton>
+          <Modal.Title className="header-text">Forgot Password</Modal.Title>
         </Modal.Header>
-        <div className="body-centered header-text">
-          <span>Please contact your HR Manager for Assistance</span>
+        
+        <div className="modal-input">
+          <Form.Control type="text" value={forgotEmail} onChange={(e) => {setForgotEmail(e.target.value)}} placeholder="Employee Email Address" />
         </div>
-        {/* <div className="modal-input">
-          <Form.Control type="text" className=" " placeholder="Employee Number" />
-        </div> */}
         <div className="modal-btns">
-          <Button variant="primary" className="modal-btn" onClick={() => setShowModal(false)}>OK</Button>
-          {/* <a href="#!" className="close-modal" onClick={handleModal}>
-            Cancel
-          </a> */}
+          <Button variant="primary" className="modal-btn" disabled={forgotIsSubmit} onClick={() => forgotUserPassword()}>Submit</Button>
         </div>
       </Modal>
     </>

@@ -84,11 +84,11 @@ const DashboardMenu = (props: any) => {
                                         {
                                             menu.length > 0 && menu.map((menu_data: any, index: any) => {
                                                 const { label, route } = menu_data
-
+                                                
                                                 return (
                                                     <NavLink
                                                         key={index}
-                                                        activeClassName="activeMenu"
+                                                        activeClassName={currentRoutePath == route ? "activeMenu" : ""}
                                                         className="text-white d-flex align-items-center cursor-pointer accordionMenu"
                                                         style={{ minHeight: 60, textDecoration: 'none', paddingLeft: 50 }}
                                                         to={route}

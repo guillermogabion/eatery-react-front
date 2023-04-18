@@ -19,13 +19,13 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
-
+import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
 export const Leaves = (props: any) => {
   const { history } = props
   let initialPayload = {
-    "dateFrom": moment().format("YYYY-MM-DD"),
-    "dateTo": moment().format("YYYY-MM-DD"),
+    "dateFrom": "",
+    "dateTo": "",
     "type": 1,
     "status": "PENDING",
     "reason": "",
@@ -98,7 +98,7 @@ export const Leaves = (props: any) => {
         if (status === 200 && body && body.data) {
           let tempArray: any = []
           body.data.content.forEach((element: any, index: any) => {
-            if (!tempArray.includes(element.holidayDate)){
+            if (!tempArray.includes(element.holidayDate)) {
               tempArray.push(element.holidayDate)
             }
           });
@@ -108,7 +108,7 @@ export const Leaves = (props: any) => {
     )
   }, [])
 
-  useEffect (() => {
+  useEffect(() => {
     RequestAPI.getRequest(
       `${Api.getMyLeave}`,
       "",
@@ -118,7 +118,7 @@ export const Leaves = (props: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
           setGetMyLeaves(body.data)
-          console.log(body.data); 
+          console.log(body.data);
         } else {
         }
       }
@@ -132,13 +132,13 @@ export const Leaves = (props: any) => {
   const getAllLeaves = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if(status != ""){
-      queryString = "&status="+ status
-    }else{
+    if (status != "") {
+      queryString = "&status=" + status
+    } else {
       if (filterDataTemp) {
         Object.keys(filterDataTemp).forEach((d: any) => {
           if (filterDataTemp[d]) {
-            
+
             queryString += `&${d}=${filterDataTemp[d]}`
           } else {
             queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -146,8 +146,8 @@ export const Leaves = (props: any) => {
         })
       }
     }
-    
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
         `${Api.allRequestLeave}?size=10${queryString}&page=${page}`,
         "",
@@ -163,7 +163,7 @@ export const Leaves = (props: any) => {
           }
         }
       )
-    }else{
+    } else {
       RequestAPI.getRequest(
         `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}`,
         "",
@@ -225,15 +225,15 @@ export const Leaves = (props: any) => {
       for (let index = 1; index <= diffInDays; index++) {
         var added_date = moment(dFrom).add(dateCounter, 'days');
         let new_date = new Date(added_date.format('YYYY-MM-DD'))
-        
-        
+
+
         if (new_date.getDay() == 0 || new_date.getDay() == 6) {
           dateCounter += 1
         } else if (new_date.getDay() == 6) {
           dateCounter += 2
         } else {
           let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
-          if (!holidays.includes(new_date_with_counter)){
+          if (!holidays.includes(new_date_with_counter)) {
             leavesBreakdown.push({
               "date": new_date_with_counter,
               "credit": 1,
@@ -402,7 +402,7 @@ export const Leaves = (props: any) => {
   const leaveTable = useCallback(() => {
     return (
       <div>
-       
+
         <Table responsive="lg">
           <thead>
             <tr>
@@ -418,106 +418,106 @@ export const Leaves = (props: any) => {
           <tbody>
             {
               allLeaves &&
-              allLeaves.content &&
-              allLeaves.content.length > 0 ?
-              <>
-              {
-                allLeaves.content.map((item: any, index: any) => {
-                  return (
-                    <tr>
-                      <td> {item.lastName}, {item.firstName} </td>
-                      <td> {item.type} </td>
-                      <td> {item.dateFrom} </td>
-                      <td> {item.dateTo} </td>
-                      <td> {item.reason} </td>
-                      <td> {item.status} </td>
-                      <td>
-                        {
-                          item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
-                            <>
-                            {authorizations.includes("Request:Update") ? (
-                              <>
-                                  <label
-                                  onClick={() => {
-                                    getLeave(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  Update
-                                </label>
-                                <br />
-                              </>
-                            ) : null}
-  
-                            {authorizations.includes("Request:Approve") ? (
-                              <>
-                                <label
-                                onClick={() => {
-                                  approveLeave(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                Approve
-                              </label> <br />
-                              </>
-                            ) : null}
-  
-                              {authorizations.includes("Request:Reject") ? (
-                              <>
-                              <label
-                                onClick={() => {
-                                  declineLeave(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                Decline
-                              </label>
-                              <br />
-                              </>
-                            ) : null}
-                            </>
-                            :
-                            null
-                        }
-                        {
-                          item.status == "APPROVED" || item.status == "PENDING" ?
-                          <>
-                          {authorizations.includes("Request:Update") ? (
-                            <>
-                            <label
-                              onClick={() => {
-                                cancelLeave(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              Cancel
-                            </label>
-                            <br />
-                            </>
-                          ) : null}
-                          </>
-                          :null
-                        }
-                      </td>
-                    </tr>
-                  )
-                })
-              }
-              
-              </>
-              :
-              null
+                allLeaves.content &&
+                allLeaves.content.length > 0 ?
+                <>
+                  {
+                    allLeaves.content.map((item: any, index: any) => {
+                      return (
+                        <tr>
+                          <td> {item.lastName}, {item.firstName} </td>
+                          <td> {item.type} </td>
+                          <td> {item.dateFrom} </td>
+                          <td> {item.dateTo} </td>
+                          <td> {item.reason} </td>
+                          <td> {item.status} </td>
+                          <td className="d-flex">
+                            {
+                              item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                                <>
+                                  {authorizations.includes("Request:Update") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          getLeave(item.id)
+                                        }}
+                                        className=" cursor-pointer">
+                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                      </label>
+                                      <br />
+                                    </>
+                                  ) : null}
+
+                                  {authorizations.includes("Request:Approve") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          approveLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                      </label> <br />
+                                    </>
+                                  ) : null}
+
+                                  {authorizations.includes("Request:Reject") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          declineLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                      </label>
+                                      <br />
+                                    </>
+                                  ) : null}
+                                </>
+                                :
+                                null
+                            }
+                            {
+                              item.status == "APPROVED" || item.status == "PENDING" ?
+                                <>
+                                  {authorizations.includes("Request:Update") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          cancelLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                      </label>
+                                      <br />
+                                    </>
+                                  ) : null}
+                                </>
+                                : null
+                            }
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
+
+                </>
+                :
+                null
             }
           </tbody>
-          
+
         </Table>
         {
-              allLeaves &&
-              allLeaves.content &&
-              allLeaves.content.length == 0 ?
-              <div className="w-100 text-center">
-                <label htmlFor="">No Records Found</label>
-              </div>
-              : 
-              null
+          allLeaves &&
+            allLeaves.content &&
+            allLeaves.content.length == 0 ?
+            <div className="w-100 text-center">
+              <label htmlFor="">No Records Found</label>
+            </div>
+            :
+            null
         }
-        
+
       </div>
     )
   }, [allLeaves])
@@ -568,11 +568,22 @@ export const Leaves = (props: any) => {
                       null
                     )}
 
+<<<<<<< HEAD
                   {/* {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
                     <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))} */}
+=======
+                  <br />
+                  <br />
+                  <h2><b>Leave Credits</b></h2>
+                  {getMyLeaves.map((leave: any) => (
+                    <div key={leave.id}>
+                      <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                    </div>
+                  ))}
+>>>>>>> 0eb2b6fbba2c9503e8d5b54f9ccb7efb39ec33eb
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />
@@ -581,10 +592,23 @@ export const Leaves = (props: any) => {
               <div>
                 <div className="w-100 pt-2">
                   <div className="fieldtext d-flex col-md-6">
-                      <div>
-                        <label>Date From</label>
+                    <div>
+                      <label>Date From</label>
+                      <input
+                        name="dateFrom"
+                        type="date"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
+                    </div>
+                    <div>
+                      <label>Date To</label>
+                      <div className="input-container">
                         <input
-                          name="dateFrom"
+                          name="dateTo"
                           type="date"
                           autoComplete="off"
                           className="formControl"
@@ -593,27 +617,14 @@ export const Leaves = (props: any) => {
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                         />
                       </div>
-                      <div>
-                        <label>Date To</label>
-                        <div className="input-container">
-                          <input
-                            name="dateTo"
-                            type="date"
-                            autoComplete="off"
-                            className="formControl"
-                            maxLength={40}
-                            onChange={(e) => makeFilterData(e)}
-                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                          />
-                        </div>
-                      </div>
-                    
+                    </div>
+
                     <Button
-                        style={{ width: 120}}
-                        onClick={() => getAllLeaves(0,"")}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                      </Button>
+                      style={{ width: 120 }}
+                      onClick={() => getAllLeaves(0, "")}
+                      className="btn btn-primary mx-2 mt-4">
+                      Search
+                    </Button>
                   </div>
                   <Tabs
                     id="controlled-tab-example"
@@ -656,22 +667,22 @@ export const Leaves = (props: any) => {
                     renderOnZeroPageCount={null}
                   />
                 </div>
-            </div>
-                  {authorizations.includes("Request:Create") ? (
-                  <div className="d-flex justify-content-end mt-3" >
-                      <div>
-                        <Button
-                          className="mx-2"
-                          onClick={() => {
-                            setInitialValues(initialPayload)
-                            setLeaveBreakdown([])
-                            setLeaveId("")
-                            setModalShow(true)
-                          }}>Request for Leave/Time-off</Button>
-                      </div>
+              </div>
+              {authorizations.includes("Request:Create") ? (
+                <div className="d-flex justify-content-end mt-3" >
+                  <div>
+                    <Button
+                      className="mx-2"
+                      onClick={() => {
+                        setInitialValues(initialPayload)
+                        setLeaveBreakdown([])
+                        setLeaveId("")
+                        setModalShow(true)
+                      }}>Request for Leave/Time-off</Button>
                   </div>
-                ) : null}
-              
+                </div>
+              ) : null}
+
             </div>
           </div>
         </div>
@@ -800,8 +811,8 @@ export const Leaves = (props: any) => {
                             ))}
                         </select>
                         {errors && errors.type && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date From</label>
@@ -810,7 +821,6 @@ export const Leaves = (props: any) => {
                           id="dateFrom"
                           className="form-control"
                           value={values.dateFrom}
-                          min={moment().format("YYYY-MM-DD")}
                           onChange={(e) => {
                             setFormField(e, setFieldValue)
                             // setDateFrom(e.target.value)
@@ -818,8 +828,8 @@ export const Leaves = (props: any) => {
                           }}
                         />
                         {errors && errors.dateFrom && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date To</label>
@@ -836,8 +846,8 @@ export const Leaves = (props: any) => {
                           }}
                         />
                         {errors && errors.dateTo && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <label>Reason</label>
@@ -849,8 +859,8 @@ export const Leaves = (props: any) => {
                           onChange={(e) => setFormField(e, setFieldValue)}
                         />
                         {errors && errors.reason && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <Table responsive="lg" style={{ maxHeight: '100vh' }}>
@@ -863,7 +873,7 @@ export const Leaves = (props: any) => {
                           <tbody>
                             {
                               leaveBreakdown &&
-                              leaveBreakdown.length &&
+                              leaveBreakdown.length > 0 &&
                               leaveBreakdown.map((item: any, index: any) => {
                                 const { date } = item
                                 return (
@@ -924,6 +934,15 @@ export const Leaves = (props: any) => {
                             }
                           </tbody>
                         </Table>
+                        {
+                          leaveBreakdown &&
+                          leaveBreakdown.length == 0 ?
+                            <div className="w-100 text-center">
+                              <label htmlFor="">No Records Found</label>
+                            </div>
+                            :
+                            null
+                        }
                       </div>
                     </div>
                     <br />
