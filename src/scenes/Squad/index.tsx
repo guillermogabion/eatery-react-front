@@ -29,6 +29,7 @@ export const Squad = (props: any) => {
     const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [squad, setSquad] = useState<any>([]);
+    const [filterData, setFilterData] = React.useState([]);
 
 
     const tableHeaders = [
@@ -45,9 +46,34 @@ export const Squad = (props: any) => {
       getMember(0);
     }, []);
 
-    const getMember = (page : any = 0) => {
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+      }
+    
+
+    const getMember = (page : any = 0, employeeId?: any) => {
+
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (employeeId) {
+            queryString = "&employeeId" + employeeId
+          } else {
+            if (filterDataTemp) {
+              Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+      
+                  queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                  queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+              })
+            }
+          }
         RequestAPI.getRequest(
-          `${Api.getSquadMember}?size=10&page=${page}`,
+          `${Api.getSquadMember}?size=10&page=${page}${queryString}`,
           "",
           {},
           {}, 
@@ -104,7 +130,43 @@ export const Squad = (props: any) => {
                             <div>
                                 <h3>Subordinates</h3>
 
+
                                 <div className="w-100 pt-4">
+                                    <div className="fieldtext d-flex col-md-6">
+                                    <div className="input-container">
+                                        <input
+                                            name="firstname"
+                                            placeholder="First name"
+                                            type="text"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                            />
+                                    </div>
+
+                                    <div className="input-container">
+                                            <input
+                                            name="lastname"
+                                            placeholder="Last name"
+                                            type="text"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                            />
+                                    </div>
+                                    <div className="input-container">
+                                            <Button
+                                            style={{ width: 210 }}
+                                            onClick={() => getMember(0, "")}
+                                            className="btn btn-primary mx-2">
+                                            Search
+                                            </Button>
+                                        </div> 
+                                    </div>
                                 <table>
                                   <thead>
                                     <tr>

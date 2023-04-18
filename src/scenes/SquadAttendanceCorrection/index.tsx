@@ -19,6 +19,8 @@ import { async } from "validate.js"
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import * as Yup from "yup";
+import { action_approve, action_edit, action_cancel, action_decline, eye } from "../../assets/images"
+
 
 export const SquadAttendanceCorrection = (props: any) => {
   const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
@@ -28,6 +30,7 @@ export const SquadAttendanceCorrection = (props: any) => {
   const [coaBreakdown, setCoaBreakdown] = useState<any>([]);
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalViewShow, setModalViewShow] = React.useState(false);
   const [key, setKey] =React.useState('all');
   const [allCOA, setAllCOA] = useState<any>([]);
   const [filterData, setFilterData] = React.useState([]);
@@ -152,6 +155,30 @@ export const SquadAttendanceCorrection = (props: any) => {
       }
     )
   }
+  const getViewCoa = (id: any = 0) => {
+   
+    RequestAPI.getRequest(
+      `${Api.getCoaInfo}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        console.log("Response:", res); 
+        const { status, body = {data: {}, error: {}}} : any = res
+        if (status === 200 && body && body.data) {
+          
+          if (body.error && body.error.message) {
+          }else{
+            const valueObj: any = body.data
+            setInitialValues(valueObj)
+            setCoaBreakdown(valueObj.breakdown)
+            setCoaId(valueObj.id)
+            setModalViewShow(true)
+          }
+        }
+      }
+    )
+  }
 
   const approveCoa = (id: any = 0) => {
     ErrorSwal.fire({
@@ -231,6 +258,46 @@ export const SquadAttendanceCorrection = (props: any) => {
       }
     })
   }
+  const cancelAttendanceReversal = (id: any = 0) => {
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to cancel this attendance reversal.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.cancelCOA, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            } else {
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getAllCOARequest(0, "")
+            }
+          } else {
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
+
   const dateBreakdown = (date: any) => {
     let coasBreakdown = []
     coasBreakdown.push({
@@ -285,6 +352,15 @@ export const SquadAttendanceCorrection = (props: any) => {
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td>
+
+                      <label
+                      onClick={() => {
+                        getViewCoa(item.id)
+                      }}
+                      >
+                      <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View"/>
+
+                      </label>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
@@ -295,9 +371,8 @@ export const SquadAttendanceCorrection = (props: any) => {
                                   getCoa(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
-                                Update
+                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
                               </label>
-                              <br />
                             </>
                           ) : null}
 
@@ -308,8 +383,8 @@ export const SquadAttendanceCorrection = (props: any) => {
                                 approveCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              Approve
-                            </label> <br />
+                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
+                            </label> 
                             </>
                           ) : null}
 
@@ -320,15 +395,31 @@ export const SquadAttendanceCorrection = (props: any) => {
                                 declineCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              Decline
+                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
                             </label>
-                            <br />
                             </>
                           ) : null}
                           </>
                           :
                           null
                       }
+                       {
+                              item.status == "APPROVED" || item.status == "PENDING" ?
+                                <>
+                                  {authorizations.includes("Request:Update") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          cancelAttendanceReversal(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel"/>
+                                      </label>
+                                    </>
+                                  ) : null}
+                                </>
+                                : null
+                            }
                     </td>
                   </tr>
                 )
@@ -414,12 +505,7 @@ export const SquadAttendanceCorrection = (props: any) => {
             </div>
               <div className="d-flex justify-content-end mt-3" >
                 <div>
-                  <Button
-                    className="mx-2"
-                    onClick={() => {
-                      setModalShow(true),
-                      handleRemoveAllItems()
-                    }}>Request for Attendance Reversal</Button>
+                 
                 </div>
               </div>
             </div>
@@ -438,7 +524,7 @@ export const SquadAttendanceCorrection = (props: any) => {
             setCoaId(null);
             setModalShow(false)
             setShowReason(false);
-           setFieldValue("reason", '')
+         
            
           }}
           dialogClassName="modal-90w"
@@ -712,6 +798,48 @@ export const SquadAttendanceCorrection = (props: any) => {
          
         </Modal>
         {/* End Create User Modal Form */}
+
+        {/* start of view modal  */}
+
+        <Modal
+        show={modalViewShow}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setCoaId(null);
+          setModalViewShow(false)
+        }}
+        dialogClassName="modal-90w"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Request Information
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex align-items-center justify-content-center">
+            <div className="container">
+                {/* <h4>reason</h4> {{values.reason}} */}
+                    <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
+                    <p>Reason : {initialValues.reason}</p>
+                    <p>Type : {initialValues.type}</p>
+                    <p>Status : {initialValues.status}</p>
+
+                    {coaBreakdown.map ((initialValues, index) =>(
+                      <div key={`coaBreakdown-${index}`}>
+                          <p className="bold-text">Set Request {index + 1}:</p>
+                          <p>Type : {initialValues.coaBdType}</p>
+                          <p>Date : {initialValues.date}</p>
+                          <p>Time : {initialValues.time}</p>
+
+                      </div>
+
+                    ))}
+            </div>
+          </Modal.Body>
+
+        </Modal>
       </div>
 
     </div>

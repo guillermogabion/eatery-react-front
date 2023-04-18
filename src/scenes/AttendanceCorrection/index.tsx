@@ -19,7 +19,7 @@ import { async } from "validate.js"
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import * as Yup from "yup";
-import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import { eye, action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
 export const AttendanceCorrection = (props: any) => {
   const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
@@ -29,6 +29,7 @@ export const AttendanceCorrection = (props: any) => {
   const [coaBreakdown, setCoaBreakdown] = useState<any>([]);
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalViewShow, setModalViewShow] = React.useState(false);
   const [key, setKey] =React.useState('all');
   const [allCOA, setAllCOA] = useState<any>([]);
   const [filterData, setFilterData] = React.useState([]);
@@ -249,6 +250,30 @@ export const AttendanceCorrection = (props: any) => {
       }
     })
   }
+  const getViewCoa = (id: any = 0) => {
+   
+    RequestAPI.getRequest(
+      `${Api.getScheduleAdjustment}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        console.log("Response:", res); 
+        const { status, body = {data: {}, error: {}}} : any = res
+        if (status === 200 && body && body.data) {
+          
+          if (body.error && body.error.message) {
+          }else{
+            const valueObj: any = body.data
+            setInitialValues(valueObj)
+            setCoaBreakdown(valueObj.breakdown)
+            setCoaId(valueObj.id)
+            setModalViewShow(true)
+          }
+        }
+      }
+    )
+  }
 
 
   const declineCoa = (id: any = 0) => {
@@ -344,6 +369,14 @@ export const AttendanceCorrection = (props: any) => {
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
                     <td className="d-flex">
+                    <label
+                      onClick={() => {
+                        getViewCoa(item.id)
+                      }}
+                      >
+                      <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View"/>
+
+                      </label>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
@@ -518,7 +551,6 @@ export const AttendanceCorrection = (props: any) => {
             setCoaId(null);
             setModalShow(false)
             setShowReason(false);
-           setFieldValue("reason", '')
            
           }}
           dialogClassName="modal-90w"
@@ -792,6 +824,48 @@ export const AttendanceCorrection = (props: any) => {
          
         </Modal>
         {/* End Create User Modal Form */}
+
+        {/* start of view dialog */}
+
+        <Modal
+        show={modalViewShow}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setCoaId(null);
+          setModalViewShow(false)
+        }}
+        dialogClassName="modal-90w"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Request Information
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex align-items-center justify-content-center">
+            <div className="container">
+                {/* <h4>reason</h4> {{values.reason}} */}
+                    <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
+                    <p>Reason : {initialValues.reason}</p>
+                    <p>Type : {initialValues.type}</p>
+                    <p>Status : {initialValues.status}</p>
+
+                    {coaBreakdown.map ((initialValues, index) =>(
+                      <div key={`coaBreakdown-${index}`}>
+                          <p className="bold-text">Set Request {index + 1}:</p>
+                          <p>Type : {initialValues.coaBdType}</p>
+                          <p>Date : {initialValues.date}</p>
+                          <p>Time : {initialValues.time}</p>
+
+                      </div>
+
+                    ))}
+            </div>
+          </Modal.Body>
+
+        </Modal>
       </div>
 
     </div>

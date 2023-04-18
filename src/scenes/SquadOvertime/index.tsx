@@ -18,6 +18,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import ReactPaginate from 'react-paginate';
 import { useSelector, useDispatch } from "react-redux"
+import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+
 export const SquadOvertime = (props: any) => {
   const { history } = props
   let initialPayload = {
@@ -165,6 +167,45 @@ export const SquadOvertime = (props: any) => {
       }
     })
   }
+  const cancelOvertime = (id: any = 0) => {
+    ErrorSwal.fire({
+      title: 'Are you sure?',
+      text: "You want to cancel this overtime.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        RequestAPI.postRequest(Api.cancelOvertime, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                'Error!',
+                (body.error && body.error.message) || "",
+                'error'
+              )
+            } else {
+              ErrorSwal.fire(
+                'Success!',
+                (body.data) || "",
+                'success'
+              )
+              getMyOT(0, "")
+            }
+          } else {
+            ErrorSwal.fire(
+              'Error!',
+              'Something Error.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
 
   const declineOT = (id: any = 0) => {
     ErrorSwal.fire({
@@ -281,7 +322,7 @@ export const SquadOvertime = (props: any) => {
                                   getOT(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
-                                Update
+                                <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
                               </label>
                               <br />
                             </>
@@ -293,7 +334,7 @@ export const SquadOvertime = (props: any) => {
                                 approveOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              Approve
+                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
                             </label> <br />
                             </>
                           ) : null}
@@ -304,7 +345,8 @@ export const SquadOvertime = (props: any) => {
                                 declineOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              Decline
+                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
+
                             </label>
                             <br />
                             </>
@@ -313,6 +355,24 @@ export const SquadOvertime = (props: any) => {
                           </>
                           :
                           null
+                      }
+                       {
+                        item.status == "APPROVED" || item.status == "PENDING" ?
+                          <>
+                            {authorizations.includes("Request:Update") ? (
+                              <>
+                                <label
+                                  onClick={() => {
+                                    cancelOvertime(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                </label>
+                                <br />
+                              </>
+                            ) : null}
+                          </>
+                          : null
                       }
                     </td>
                   </tr>
@@ -458,13 +518,7 @@ export const SquadOvertime = (props: any) => {
                 <>
                 <div className="d-flex justify-content-end mt-3" >
                   <div>
-                    <Button
-                      className="mx-2"
-                      onClick={() => {
-                        setOtId("")
-                        setInitialValues(initialPayload)
-                        setModalShow(true)
-                      }}>Request Overtime</Button>
+                   
                   </div>
               </div>
                 </>

@@ -19,6 +19,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
+import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
 
 export const SquadLeaves = (props: any) => {
@@ -426,9 +427,9 @@ export const SquadLeaves = (props: any) => {
                                     getLeave(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  Update
+                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
+
                                 </label>
-                                <br />
                               </>
                             ) : null}
   
@@ -439,8 +440,9 @@ export const SquadLeaves = (props: any) => {
                                   approveLeave(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
-                                Approve
-                              </label> <br />
+                                <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
+
+                              </label>
                               </>
                             ) : null}
   
@@ -451,9 +453,9 @@ export const SquadLeaves = (props: any) => {
                                   declineLeave(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
-                                Decline
+                                <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
                               </label>
-                              <br />
+                              
                               </>
                             ) : null}
                             </>
@@ -470,9 +472,9 @@ export const SquadLeaves = (props: any) => {
                                 cancelLeave(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              Cancel
+                              <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel"/>
                             </label>
-                            <br />
+                          
                             </>
                           ) : null}
                           </>
@@ -644,14 +646,7 @@ export const SquadLeaves = (props: any) => {
                   {authorizations.includes("Request:Create") ? (
                   <div className="d-flex justify-content-end mt-3" >
                       <div>
-                        <Button
-                          className="mx-2"
-                          onClick={() => {
-                            setInitialValues(initialPayload)
-                            setLeaveBreakdown([])
-                            setLeaveId("")
-                            setModalShow(true)
-                          }}>Request for Leave/Time-off</Button>
+                        
                       </div>
                   </div>
                 ) : null}
