@@ -19,15 +19,12 @@ export * from "./AttendanceSummary"
 export * from "./ScheduleAdjustment"
 export * from "./Report"
 export * from "./Holiday"
-<<<<<<< HEAD
 export * from "./Squad"
 export * from "./SquadLeaves"
 export * from "./SquadAttendanceCorrection"
 export * from "./SquadOvertime"
 export * from "./SquadUnderTime"
 
-=======
 export * from "./LeaveTypes"
->>>>>>> 0eb2b6fbba2c9503e8d5b54f9ccb7efb39ec33eb
 
 
