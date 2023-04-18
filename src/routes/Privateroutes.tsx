@@ -14,7 +14,12 @@ import {
   AttendanceCorrection,
   AttendanceSummary,
   Report,
+  Squad,
   Holiday,
+  SquadLeaves,
+  SquadAttendanceCorrection,
+  SquadOvertime,
+  SquadUndertime,
   LeaveTypes
 } from "../scenes"
 
@@ -61,6 +66,11 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/timekeeping", component: Dashboard })
   routes.push({ path: "/employee", component: Employee })
   routes.push({ path: "/holiday", component: Holiday })
+  routes.push({ path: "/request", component: Squad })
+  routes.push({ path: "/request/leave/squadmembers", component: SquadLeaves})
+  routes.push({ path: "/request/coa/squadmembers", component: SquadAttendanceCorrection})
+  routes.push({ path: "/request/ot/squadmembers", component: SquadOvertime})
+  routes.push({ path: "/request/Ut/squadmembers", component: SquadUndertime})
   routes.push({ path: "/request/type", component: LeaveTypes })
 
   return isLogin ? (

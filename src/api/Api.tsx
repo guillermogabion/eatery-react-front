@@ -126,7 +126,17 @@ const Api: any = {
 
 
   downloadExcelTemplate : process.env.REACT_APP_API_URL + "employee/downloadTemplate",
-  downloadExcelTimekeepingTemplate : process.env.REACT_APP_API_URL + "timekeeping/perday/downloadTemplate"
+  downloadExcelTimekeepingTemplate : process.env.REACT_APP_API_URL + "timekeeping/perday/downloadTemplate",
+
+  // squad 
+
+  getSquadMember : process.env.REACT_APP_API_URL + "employee/squadmembers",
+  getAllSquadLeaves: process.env.REACT_APP_API_URL + "request/leave/squadmembers",  
+  getAllSquadCoa: process.env.REACT_APP_API_URL + "request/coa/squadmembers",
+  allSquadOvertime: process.env.REACT_APP_API_URL + "request/ot/squadmembers",
+  allSquadUndertime: process.env.REACT_APP_API_URL + "request/ut/squadmembers",
+
+
 }
 
 export default Api

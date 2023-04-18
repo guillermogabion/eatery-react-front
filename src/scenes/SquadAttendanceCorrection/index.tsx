@@ -19,9 +19,8 @@ import { async } from "validate.js"
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import * as Yup from "yup";
-import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 
-export const AttendanceCorrection = (props: any) => {
+export const SquadAttendanceCorrection = (props: any) => {
   const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
@@ -114,23 +113,7 @@ export const AttendanceCorrection = (props: any) => {
     
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
       RequestAPI.getRequest(
-        `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
-        "",
-        {},
-        {},
-        async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 && body) {
-            if (body.error && body.error.message) {
-            } else {
-              setAllCOA(body.data)
-            }
-          }
-        }
-      )
-    }else{
-      RequestAPI.getRequest(
-        `${Api.allMyCOA}?size=10${queryString}&page=${page}`,
+        `${Api.getAllSquadCoa}?size=10${queryString}&page=${page}`,
         "",
         {},
         {},
@@ -209,48 +192,6 @@ export const AttendanceCorrection = (props: any) => {
       }
     })
   }
-
-  const cancelAttendanceReversal = (id: any = 0) => {
-    ErrorSwal.fire({
-      title: 'Are you sure?',
-      text: "You want to cancel this attendance reversal.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, proceed!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        RequestAPI.postRequest(Api.cancelCOA, "", { "id": id }, {}, async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 || status === 201) {
-            if (body.error && body.error.message) {
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
-            } else {
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
-              getAllCOARequest(0, "")
-            }
-          } else {
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
-          }
-        })
-      }
-    })
-  }
-
-
   const declineCoa = (id: any = 0) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
@@ -343,7 +284,7 @@ export const AttendanceCorrection = (props: any) => {
                     <td>{item.type}</td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>
-                    <td className="d-flex">
+                    <td>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
@@ -354,8 +295,7 @@ export const AttendanceCorrection = (props: any) => {
                                   getCoa(item.id)
                                 }}
                                 className="text-muted cursor-pointer">
-                                
-                                <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
+                                Update
                               </label>
                               <br />
                             </>
@@ -368,8 +308,7 @@ export const AttendanceCorrection = (props: any) => {
                                 approveCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              
-                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
+                              Approve
                             </label> <br />
                             </>
                           ) : null}
@@ -381,8 +320,7 @@ export const AttendanceCorrection = (props: any) => {
                                 declineCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              
-                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
+                              Decline
                             </label>
                             <br />
                             </>
@@ -391,24 +329,6 @@ export const AttendanceCorrection = (props: any) => {
                           :
                           null
                       }
-                      {
-                              item.status == "APPROVED" || item.status == "PENDING" ?
-                                <>
-                                  {authorizations.includes("Request:Update") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          cancelAttendanceReversal(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel"/>
-                                      </label>
-                                      <br />
-                                    </>
-                                  ) : null}
-                                </>
-                                : null
-                            }
                     </td>
                   </tr>
                 )
