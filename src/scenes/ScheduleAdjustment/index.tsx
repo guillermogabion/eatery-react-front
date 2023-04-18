@@ -121,7 +121,7 @@ export const ScheduleAdjustment = (props: any) => {
   const getViewSchedule = (id: any = 0) => {
    
     RequestAPI.getRequest(
-      `${Api.getCoaInfo}?id=${id}`,
+      `${Api.getScheduleAdjustment}?id=${id}`,
       "",
       {},
       {},
@@ -905,10 +905,16 @@ export const ScheduleAdjustment = (props: any) => {
                 {/* <h4>reason</h4> {{values.reason}} */}
                     <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
                     <p>Reason : {initialValues.reason}</p>
-                    <p>Type : {initialValues.type}</p>
+                    <p>Date From : {initialValues.dateFrom}</p>
+                    <p>Date To : {initialValues.dateTo}</p>
+                    <p>Shift Starts : {initialValues.startShift}</p>
+                    <p>Start of Break : {initialValues.startBreak}</p>
+                    <p>End of Break : {initialValues.endBreak}</p>
+                    <p>Shift Ends : {initialValues.endShift}</p>
+
                     <p>Status : {initialValues.status}</p>
 
-                    {adjustmentBreakdown.map ((initialValues, index) =>(
+                    {/* {adjustmentBreakdown.map ((initialValues, index) =>(
                       <div key={`adjustmentBreakdown-${index}`}>
                           <p className="bold-text">Set Request {index + 1}:</p>
                           <p>Type : {initialValues.coaBdType}</p>
@@ -917,7 +923,7 @@ export const ScheduleAdjustment = (props: any) => {
 
                       </div>
 
-                    ))}
+                    ))} */}
             </div>
           </Modal.Body>
 
