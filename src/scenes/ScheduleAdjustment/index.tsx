@@ -37,13 +37,33 @@ export const ScheduleAdjustment = (props: any) => {
   const [filterData, setFilterData] = React.useState([]);
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
   const userData = useSelector((state: any) => state.rootReducer.userData)
+  const [userSchedule, setUserSchedule] = useState<any>("");
 
   const formRef: any = useRef()
 
   useEffect(() => {
     getAllAdjustments(0, "")
+    getMySchedule()
   }, [])
 
+  const getMySchedule = () => {
+
+    RequestAPI.getRequest(
+      `${Api.mySchedule}?date=${moment().format('YYYY-MM-DD')}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            setUserSchedule(body.data)
+          }
+        }
+      }
+    )
+  }
   const getAllAdjustments = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
@@ -439,6 +459,15 @@ export const ScheduleAdjustment = (props: any) => {
                   <br />
                   <br />
                   <h2><b>Adjustment of Schedule</b></h2>
+                  <div className="row p-0 m-0 pt-4 ">
+                    <div className="col-md-4">
+                      <h5>Current Work Schedule:</h5>
+                    </div>
+                    <div className="col-md-8">
+                      <h5>{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
+                    </div>
+
+                  </div>
                 </div>
                 <div className="col-md-6" style={{ textAlign: 'right' }}>
                   <TimeDate />

@@ -23,7 +23,8 @@ const Api: any = {
   adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
   myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
   adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
-  
+
+  mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",  
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
   requestLeaveUpdate: process.env.REACT_APP_API_URL + "request/leave/update",
