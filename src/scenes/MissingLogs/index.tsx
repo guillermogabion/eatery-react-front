@@ -1,0 +1,244 @@
+import React, { useEffect, useState, useRef, useCallback } from "react"
+import UserTopMenu from "../../components/UserTopMenu"
+
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+import DashboardMenu from "../../components/DashboardMenu"
+const ErrorSwal = withReactContent(Swal)
+import moment from "moment";
+import { left, right } from "@popperjs/core"
+import { Button, Card, Form, Image, Modal, Table } from "react-bootstrap"
+import UserPopup from "../../components/Popup/UserPopup"
+import { RequestAPI, Api } from "../../api"
+import TimeDate from "../../components/TimeDate"
+import TableComponent from "../../components/TableComponent"
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import { useSelector, useDispatch } from "react-redux"
+import FileUploadService from "../../services/FileUploadService"
+import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import ReactPaginate from "react-paginate"
+import SingleSelect from "../../components/Forms/SingleSelect"
+import { Formik } from "formik"
+import * as Yup from "yup"
+
+export const MissingLogs = (props: any) => {
+  const userData = useSelector((state: any) => state.rootReducer.userData)
+  const masterList = useSelector((state: any) => state.rootReducer.masterList)
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
+  const { authorizations } = data?.profile
+  const formRef: any = useRef()
+
+  const { history } = props
+  const [importModalShow, setImportModalShow] = React.useState(false);
+  const [downloadModalShow, setDownloadModalShow] = React.useState(false);
+  const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
+  const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
+  const [isSubmit, setIsSubmit] = React.useState(false);
+  const [addBioModal, setAddBioModal] = React.useState(false);
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [filterData, setFilterData] = React.useState([]);
+  const [key, setKey] = React.useState('all');
+  const [allMissingLogs, setAllMissingLogs] = useState<any>([]);
+  const [employeeList, setEmployeeList] = useState<any>([]);
+  const [userId, setUserId] = useState<any>("");
+
+
+  useEffect(() => {
+    getAllMissingLogs(0, "")
+  }, [])
+
+  const getAllMissingLogs = (page: any = 0, status: any = "All") => {
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if (status != "") {
+      queryString = "&status=" + status
+    } else {
+      if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+          if (filterDataTemp[d]) {
+            queryString += `&${d}=${filterDataTemp[d]}`
+          } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+          }
+        })
+      }
+    }
+
+    RequestAPI.getRequest(
+      `${Api.getMissingLogs}?size=10${queryString}&page=${page}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            setAllMissingLogs(body.data)
+          }
+        }
+      }
+    )
+
+  }
+
+  const makeFilterData = (event: any) => {
+    const { name, value } = event.target
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && value !== "Select" ? value : ""
+    setFilterData(filterObj)
+  }
+
+  const handlePageClick = (event: any) => {
+    getAllMissingLogs(event.selected, "")
+  };
+
+  const attendanceTable = useCallback(() => {
+    return (
+      <div>
+        <Table responsive="lg">
+          <thead>
+            <tr>
+              <th style={{ width: 'auto' }}>Fullname</th>
+              <th style={{ width: 'auto' }}>Date</th>
+              <th style={{ width: 'auto' }}>Shift Schedule</th>
+              <th style={{ width: 'auto' }}>Datetime In</th>
+              <th style={{ width: 'auto' }}>Datetime Out</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {
+              allMissingLogs &&
+                allMissingLogs.content &&
+                allMissingLogs.content.length > 0 ?
+                <>
+                  {
+                    allMissingLogs.content.map((item: any, index: any) => {
+                      return (
+                        <tr>
+                          <td> {item.lastName}, {item.firstName} </td>
+                          <td> {item.date} </td>
+                          <td> {item.schedule} </td>
+                          <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
+                          <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                        </tr>
+                      )
+                    })
+                  }
+
+                </>
+                :
+                null
+            }
+          </tbody>
+
+        </Table>
+        {
+          allMissingLogs &&
+            allMissingLogs.content &&
+            allMissingLogs.content.length == 0 ?
+            <div className="w-100 text-center">
+              <label htmlFor="">No Records Found</label>
+            </div>
+            :
+            null
+        }
+
+      </div>
+    )
+  }, [allMissingLogs])
+
+  return (
+    <div className="body">
+      <div className="wraper">
+        <div className="w-100">
+          <div className="topHeader">
+            <UserTopMenu />
+          </div>
+          <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
+            <DashboardMenu />
+            <div className="col-md-12 col-lg-10 px-5 py-5">
+              <div className="row">
+                <div className="col-md-6">
+                  <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
+                </div>
+                <div className="col-md-6" style={{ textAlign: 'right' }}>
+                  <TimeDate />
+                </div>
+              </div>
+              <div>
+                <h3>Missing Logs</h3>
+
+                <div className="w-100 pt-4">
+                  <div className="fieldtext d-flex col-md-12">
+                    <div>
+                      <label>Date From</label>
+                      <input
+                        name="fromDate"
+                        type="date"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        value={filterData["fromDate"]}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
+                    </div>
+
+                    <div>
+                      <label>Date To</label>
+                      <div className="input-container">
+                        <input
+                          name="toDate"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          maxLength={40}
+                          value={filterData["toDate"]}
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        />
+                      </div>
+                    </div>
+
+                    <Button
+                      style={{ width: 120 }}
+                      onClick={() => getAllMissingLogs(0, "")}
+                      className="btn btn-primary mx-2 mt-4">
+                      Search
+                    </Button>
+
+                  </div>
+
+                  {attendanceTable()}
+                  <div className="d-flex justify-content-end">
+                    <div className="">
+                      <ReactPaginate
+                        className="d-flex justify-content-center align-items-center"
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={(allMissingLogs && allMissingLogs.totalPages) || 0}
+                        previousLabel="<"
+                        previousLinkClassName="prev-next-pagination"
+                        nextLinkClassName="prev-next-pagination"
+                        activeClassName="active-page-link"
+                        pageLinkClassName="page-link"
+                        renderOnZeroPageCount={null}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  )
+}

@@ -25,7 +25,7 @@ export * from "./SquadAttendanceCorrection"
 export * from "./SquadOvertime"
 export * from "./SquadUnderTime"
 export * from "./SquadScheduleAdjustmment"
-
+export * from "./MissingLogs"
 export * from "./LeaveTypes"
 
 

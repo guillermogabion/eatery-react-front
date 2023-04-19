@@ -82,6 +82,8 @@ const Api: any = {
   addBioLogs: process.env.REACT_APP_API_URL + "timekeeping/addLog",
   mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",  
   myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
+  getMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
+  
   
   // /request/ot/classifications
 
