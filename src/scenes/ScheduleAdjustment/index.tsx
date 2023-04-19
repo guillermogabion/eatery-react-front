@@ -13,7 +13,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
 import { Api, RequestAPI } from "../../api"
-import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import { eye, action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
@@ -30,6 +30,7 @@ export const ScheduleAdjustment = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
+  const [modalViewShow, setModalViewShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [adjustmentBreakdown, setAdjustmentBreakdown] = useState<any>([]);
   const [allAdjustments, setAllAdjustments] = useState<any>([]);
@@ -117,6 +118,31 @@ export const ScheduleAdjustment = (props: any) => {
       )
     }
   }
+  const getViewSchedule = (id: any = 0) => {
+   
+    RequestAPI.getRequest(
+      `${Api.getScheduleAdjustment}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        console.log("Response:", res); 
+        const { status, body = {data: {}, error: {}}} : any = res
+        if (status === 200 && body && body.data) {
+          
+          if (body.error && body.error.message) {
+          }else{
+            const valueObj: any = body.data
+            setInitialValues(valueObj)
+            setModalViewShow(true)
+
+          
+          }
+        }
+      }
+    )
+  }
+
 
   useEffect(() => {
     dateBreakdown(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'))
@@ -332,6 +358,15 @@ export const ScheduleAdjustment = (props: any) => {
                           <td> {item.reason} </td>
                           <td> {item.status} </td>
                           <td className="d-flex">
+                          <label
+                            onClick={() => {
+                              getViewSchedule(item.id)
+                            }}
+                            >
+                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View"/>
+
+                            </label>
+
                             {
                               item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                                 <>
@@ -475,6 +510,57 @@ export const ScheduleAdjustment = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
+                <div className="fieldtext d-flex col-md-3">
+                  <div>
+                      <label>Date From</label>
+                      <div>
+                        <input
+                          name="dateFrom"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label>Date To</label>
+                      <div className="input-container">
+                        <input
+                          name="dateTo"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label>Date Filed</label>
+                      <div className="input-container">
+                        <input
+                          name="dateFiled"
+                          type="date"
+                          autoComplete="off"
+                          className="formControl"
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Button
+                        style={{ width: 120 }}
+                        onClick={() => getAllAdjustments(0, "")}
+                        className="btn btn-primary mx-2 mt-4">
+                        Search
+                      </Button>
+                    </div>
+                </div>
+                  
+                  
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
@@ -795,6 +881,53 @@ export const ScheduleAdjustment = (props: any) => {
           </Modal.Body>
         </Modal>
         {/* End Create User Modal Form */}
+         {/* start of view dialog */}
+
+         <Modal
+        show={modalViewShow}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+        
+          setModalViewShow(false)
+        }}
+        dialogClassName="modal-90w"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Request Information
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="d-flex align-items-center justify-content-center">
+            <div className="container">
+                {/* <h4>reason</h4> {{values.reason}} */}
+                    <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
+                    <p>Reason : {initialValues.reason}</p>
+                    <p>Date From : {initialValues.dateFrom}</p>
+                    <p>Date To : {initialValues.dateTo}</p>
+                    <p>Shift Starts : {initialValues.startShift}</p>
+                    <p>Start of Break : {initialValues.startBreak}</p>
+                    <p>End of Break : {initialValues.endBreak}</p>
+                    <p>Shift Ends : {initialValues.endShift}</p>
+
+                    <p>Status : {initialValues.status}</p>
+
+                    {/* {adjustmentBreakdown.map ((initialValues, index) =>(
+                      <div key={`adjustmentBreakdown-${index}`}>
+                          <p className="bold-text">Set Request {index + 1}:</p>
+                          <p>Type : {initialValues.coaBdType}</p>
+                          <p>Date : {initialValues.date}</p>
+                          <p>Time : {initialValues.time}</p>
+
+                      </div>
+
+                    ))} */}
+            </div>
+          </Modal.Body>
+
+        </Modal>
       </div>
     </div>
   )
