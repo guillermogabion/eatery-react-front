@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import MainLeftMenu from "../../components/MainLeftMenu"
 import UserTopMenu from "../../components/UserTopMenu"
-import { show_password_dark, acm_success } from "../../assets/images"
+import { show_password_dark,hide_password_dark, acm_success } from "../../assets/images"
 import { Formik } from "formik"
 import * as Yup from "yup"
 import { Form, Button } from "react-bootstrap"
@@ -88,9 +88,9 @@ const ReSetPasswordInput = (props: any) => {
         required
         onChange={(e) => validatePassword(`${e.target.value}`.trim())}
       />
-      <span>
+      <span className="bg-danger">
         <img
-          src={show_password_dark}
+          src={visibile ? hide_password_dark : show_password_dark }
           alt="Hide"
           className={inputValue ? "password-right-icon" : "password-right-icon-disable"}
           onClick={() => setVisibile(!visibile)}

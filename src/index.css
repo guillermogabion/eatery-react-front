@@ -2032,14 +2032,14 @@ input::-ms-reveal {
 
 .password-right-icon {
   position: absolute;
-  right: 13px;
+  right: 30px;
   top: 17px;
   cursor: pointer;
 }
 
 .password-right-icon-disable {
   position: absolute;
-  right: 13px;
+  right: 30px;
   top: 17px;
   cursor: pointer;
   opacity: 0.5;
