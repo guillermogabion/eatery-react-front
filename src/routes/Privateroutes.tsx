@@ -60,6 +60,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
   routes.push({ path: "/request/coa", component: AttendanceCorrection })
   routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
+  routes.push({ path: "/timekeeping/myattendancesummary", component: AttendanceSummary })
   routes.push({ path: "/user", component: ChangePassword })
   routes.push({ path: "/report", component: Report })
   routes.push({ path: "/dashboard", component: Dashboard })

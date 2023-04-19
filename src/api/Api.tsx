@@ -36,9 +36,10 @@ const Api: any = {
   cancelLeave: process.env.REACT_APP_API_URL + "request/leave/cancel",
   cancelCOA: process.env.REACT_APP_API_URL + "request/coa/cancel",
   cancelOvertime: process.env.REACT_APP_API_URL + "request/ot/cancel",  
-  cancelUndertime: process.env.REACT_APP_API_URL + "request/ut/cancel",  
+  cancelUndertime: process.env.REACT_APP_API_URL + "request/ut/cancel", 
   
-
+  
+  employeeList: process.env.REACT_APP_API_URL + "employee/list/all", 
 
   getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
   employeeInformation: process.env.REACT_APP_API_URL + "employee/info",
@@ -79,6 +80,8 @@ const Api: any = {
   cancelScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/cancel",
 
   forgotPassword: process.env.REACT_APP_API_URL + "user/forgotpassword",
+
+  addBioLogs: process.env.REACT_APP_API_URL + "timekeeping/addLog",
   
   // /request/ot/classifications
 

@@ -7,7 +7,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 const ErrorSwal = withReactContent(Swal)
 import moment from "moment";
 import { left, right } from "@popperjs/core"
-import { Button, Card, Image, Modal, Table } from "react-bootstrap"
+import { Button, Card, Form, Image, Modal, Table } from "react-bootstrap"
 import UserPopup from "../../components/Popup/UserPopup"
 import { RequestAPI, Api } from "../../api"
 import TimeDate from "../../components/TimeDate"
@@ -18,11 +18,16 @@ import { useSelector, useDispatch } from "react-redux"
 import FileUploadService from "../../services/FileUploadService"
 import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
 import ReactPaginate from "react-paginate"
+import SingleSelect from "../../components/Forms/SingleSelect"
+import { Formik } from "formik"
+import * as Yup from "yup"
 
 export const AttendanceSummary = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)
+  const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
+  const formRef: any = useRef()
 
   const { history } = props
   const [importModalShow, setImportModalShow] = React.useState(false);
@@ -30,20 +35,13 @@ export const AttendanceSummary = (props: any) => {
   const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [isSubmit, setIsSubmit] = React.useState(false);
+  const [addBioModal, setAddBioModal] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [filterData, setFilterData] = React.useState([]);
   const [key, setKey] = React.useState('all');
   const [allAttendance, setAllAttendance] = useState<any>([]);
-
-  const tableHeaders = [
-    'Date Filed',
-    'Effectivity Date',
-    'Shift Start',
-    'Shift Type',
-    'Reason',
-    'Status',
-    'Action',
-  ]
+  const [employeeList, setEmployeeList] = useState<any>([]);
+  const [userId, setUserId] = useState<any>("");
 
   const downloadExcel = (fromDate: any, toDate: any) => {
     setIsSubmit(true)
@@ -97,10 +95,35 @@ export const AttendanceSummary = (props: any) => {
 
   useEffect(() => {
     getAllAttendance(0, "")
-    filterData["fromDate"]= moment().format("MMMM-DD-YYYY")
-    filterData["toDate"]= moment().format("MMMM-DD-YYYY")
+    getAllEmployee()
   }, [])
-  
+
+  const getAllEmployee = () => {
+    RequestAPI.getRequest(
+      `${Api.employeeList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
+              tempArray.push({
+                value: d.userAccountId,
+                label: d.firstname + " " + d.lastname
+              })
+            });
+            console.log(tempArray)
+            setEmployeeList(tempArray)
+          }
+        }
+      }
+    )
+  }
+
   const getAllAttendance = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
@@ -117,21 +140,40 @@ export const AttendanceSummary = (props: any) => {
         })
       }
     }
-    RequestAPI.getRequest(
-      `${Api.adminAttendanceSummary}?size=10${queryString}&page=${page}&userId=62`,
-      "",
-      {},
-      {},
-      async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res
-        if (status === 200 && body) {
-          if (body.error && body.error.message) {
-          } else {
-            setAllAttendance(body.data)
+    if (data.profile.role == 'ADMIN') {
+      RequestAPI.getRequest(
+        `${Api.adminAttendanceSummary}?size=10${queryString}&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setAllAttendance(body.data)
+            }
           }
         }
-      }
-    )
+      )
+    } else {
+      RequestAPI.getRequest(
+        `${Api.myAttendanceSummary}?size=10${queryString}&page=${page}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body) {
+            if (body.error && body.error.message) {
+            } else {
+              setAllAttendance(body.data)
+            }
+          }
+        }
+      )
+    }
+
   }
 
   const makeFilterData = (event: any) => {
@@ -151,10 +193,18 @@ export const AttendanceSummary = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              <th style={{ width: 'auto' }}>Employee ID</th>
-              <th style={{ width: 'auto' }}>Employee Name</th>
-              <th style={{ width: 'auto' }}>Present</th>
-              <th style={{ width: 'auto' }}>Absent</th>
+              <th style={{ width: 'auto' }}>Fullname</th>
+              <th style={{ width: 'auto' }}>Date</th>
+              <th style={{ width: 'auto' }}>Shift Schedule</th>
+              <th style={{ width: 'auto' }}>Datetime In</th>
+              <th style={{ width: 'auto' }}>Datetime Out</th>
+              {
+                data.profile.role == 'ADMIN' ?
+                  <th style={{ width: 'auto' }}>Action</th>
+                  :
+                  null
+              }
+
             </tr>
           </thead>
           <tbody>
@@ -167,10 +217,34 @@ export const AttendanceSummary = (props: any) => {
                     allAttendance.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.empId} </td>
                           <td> {item.lastName}, {item.firstName} </td>
-                          <td> {item.present} </td>
-                          <td> {item.absent} </td>
+                          <td> {item.date} </td>
+                          <td> {item.schedule} </td>
+                          <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
+                          <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                          {
+                            data.profile.role == 'ADMIN' ?
+                              <td> <label
+                                onClick={() => {
+                                  alert("Ongoing")
+                                }}
+                                className="text-muted cursor-pointer">
+                                Update
+                              </label>
+                                <br />
+                                <label
+                                  onClick={() => {
+                                    alert("Ongoing")
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  Delete
+                                </label>
+                                <br />
+                              </td>
+                              :
+                              null
+                          }
+
                         </tr>
                       )
                     })
@@ -198,6 +272,13 @@ export const AttendanceSummary = (props: any) => {
     )
   }, [allAttendance])
 
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
+
   return (
     <div className="body">
       <div className="wraper">
@@ -220,7 +301,47 @@ export const AttendanceSummary = (props: any) => {
                 <h3>Attendance Summary</h3>
 
                 <div className="w-100 pt-4">
-                  <div className="fieldtext d-flex col-md-6">
+                  <div className="fieldtext d-flex col-md-12">
+                    {
+                      data.profile.role == 'ADMIN' ?
+                        <>
+                          <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                              type="string"
+                              options={employeeList || []}
+                              placeholder={"Employee"}
+                              onChangeOption={singleChangeOption}
+                              name="userid"
+                              value={filterData && filterData['userid']}
+                            />
+                          </div>
+                          <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Department</label>
+                            <select
+                              className={`form-select`}
+                              name="department"
+                              id="type"
+                              value={filterData && filterData['department']}
+                              onChange={(e) => makeFilterData(e)}>
+                                <option key={`departmentItem}`} value={""}>
+                                    Select
+                                  </option>
+                              {masterList &&
+                                masterList.department &&
+                                masterList.department.length &&
+                                masterList.department.map((item: any, index: string) => (
+                                  <option key={`${index}_${item}`} value={item}>
+                                    {item}
+                                  </option>
+                                ))}
+                            </select>
+                          </div>
+                        </>
+                        :
+                        null
+                    }
+
                     <div>
                       <label>Date From</label>
                       <input
@@ -257,46 +378,49 @@ export const AttendanceSummary = (props: any) => {
                       className="btn btn-primary mx-2 mt-4">
                       Search
                     </Button>
+                    {
+                      data.profile.role == 'ADMIN' ?
+                        <Button
+                          style={{ width: 130 }}
+                          onClick={() => setAddBioModal(true)}
+                          disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
+                          className="btn btn-primary mx-2 mt-4">
+                          Add Bio Log
+                        </Button>
+                        :
+                        null
+                    }
+
                   </div>
 
                   {attendanceTable()}
-                  <div className="d-flex justify-content-end">
-                    <div className="">
-                      <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(allAttendance && allAttendance.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeClassName="active-page-link"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                      />
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-end mt-3" >
-                    <div>
-                      <Button
-                        className="mx-2"
-                        onClick={() => {
-                          setImportModalShow(true)
-                        }}>Import</Button>
-                      <Button
-                        className="mx-2"
-                        onClick={() => {
-                          setDownloadModalShow(true)
-                        }}>Export</Button>
-                      <Button
-                        className="mx-2"
-                        onClick={
-                          downloadTemplate
-                        }>Download Template</Button>
-                    </div>
-                  </div>
+                  {
+                    data.profile.role == 'ADMIN' ?
+                      <>
+                        <div className="d-flex justify-content-end mt-3" >
+                          <div>
+                            <Button
+                              className="mx-2"
+                              onClick={() => {
+                                setImportModalShow(true)
+                              }}>Import</Button>
+                            <Button
+                              className="mx-2"
+                              onClick={() => {
+                                setDownloadModalShow(true)
+                              }}>Export</Button>
+                            <Button
+                              className="mx-2"
+                              onClick={
+                                downloadTemplate
+                              }>Download Template</Button>
+                          </div>
+                        </div>
+                      </>
+                      :
+                      null
+                  }
+
                 </div>
               </div>
 
@@ -357,6 +481,7 @@ export const AttendanceSummary = (props: any) => {
       </Modal>
       {/* End Create User Modal Form */}
 
+
       {/* Create User Modal Form */}
       <Modal
         show={importModalShow}
@@ -396,6 +521,162 @@ export const AttendanceSummary = (props: any) => {
         </Modal.Footer>
       </Modal>
       {/* End Create User Modal Form */}
+
+      <Modal
+        show={addBioModal}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setAddBioModal(false)
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title id="contained-modal-title-vcenter">
+              Request For Leave/Time-off
+            </Modal.Title> */}
+          <Modal.Title id="contained-modal-title-vcenter">
+            Add Biometric Logs
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            initialValues={{
+              "userid": 0,
+              "shiftDate": "",
+              "tkDate": "",
+              "tkTime": "",
+              "status": null,
+              "type": ""
+            }}
+            enableReinitialize={true}
+            validationSchema={
+              Yup.object().shape({
+                shiftDate: Yup.string().required("Shift date is required !"),
+                tkDate: Yup.string().required("Date logged is required !"),
+                tkTime: Yup.string().required("Time logged is required !"),
+                type: Yup.string().required("Type is required !"),
+              })
+            }
+            onSubmit={(values, actions) => {
+              const valuesObj: any = { ...values }
+              valuesObj.userid = filterData['userid']
+              RequestAPI.postRequest(Api.addBioLogs, "", valuesObj, {}, async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 || status === 201) {
+                  if (body.error && body.error.message) {
+                    ErrorSwal.fire(
+                      'Error!',
+                      (body.error && body.error.message) || "",
+                      'error'
+                    )
+                  } else {
+                    ErrorSwal.fire(
+                      'Success!',
+                      (body.data) || "",
+                      'success'
+                    )
+                    getAllAttendance(0, "")
+                    setAddBioModal(false)
+                  }
+                } else {
+                  ErrorSwal.fire(
+                    'Error!',
+                    'Something Error.',
+                    'error'
+                  )
+                }
+              })
+            }}>
+            {({ values, setFieldValue, handleChange, handleSubmit, errors, touched }) => {
+              return (
+                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                  <div className="row w-100 px-5">
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Shift Date</label>
+                      <input type="date"
+                        name="shiftDate"
+                        id="shiftDate"
+                        className="form-control"
+                        value={values.shiftDate}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.shiftDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Date Logged</label>
+                      <input type="date"
+                        name="tkDate"
+                        id="tkDate"
+                        className="form-control"
+                        value={values.tkDate}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.tkDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Time Logged</label>
+                      <input type="time"
+                        name="tkTime"
+                        id="tkTime"
+                        step={"1"}
+                        className="form-control"
+                        value={values.tkTime}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.tkTime && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Type</label>
+                      <select
+                        className={`form-select`}
+                        name="type"
+                        id="type"
+                        value={values.type}
+                        onChange={handleChange}>
+                        <option key={`index`} value={""} disabled selected>
+                          Select
+                        </option>
+                        {masterList &&
+                          masterList.timekeepingType &&
+                          masterList.timekeepingType.length &&
+                          masterList.timekeepingType.map((item: any, index: string) => (
+                            <option key={`${index}_${item}`} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                      {errors && errors.type && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                      )}
+                    </div>
+                  </div>
+                  <br />
+                  <Modal.Footer>
+                    <div className="d-flex justify-content-end px-5">
+                      <button
+                        type="submit"
+                        className="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                  </Modal.Footer>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
     </div>
 
   )
