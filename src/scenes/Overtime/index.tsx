@@ -109,7 +109,7 @@ export const Overtime = (props: any) => {
         })
       }
     }
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
+    if (data.profile.role == 'ADMIN') {
       RequestAPI.getRequest(
         `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
         "",
@@ -295,7 +295,7 @@ export const Overtime = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              {data.profile.role != 'EMPLOYEE' ?
+              {data.profile.role == 'ADMIN' ?
                 <th style={{ width: 'auto' }}>Employee Name</th> :
                 null
               }
@@ -318,7 +318,7 @@ export const Overtime = (props: any) => {
                 return (
                   <tr>
                     {/* <td> {item.lastName}, {item.firstName}</td> */}
-                    {data.profile.role != 'EMPLOYEE' ?
+                    {data.profile.role == 'ADMIN' ?
                       <td>{item.lastName}, {item.firstName}</td> :
                       null
                     }

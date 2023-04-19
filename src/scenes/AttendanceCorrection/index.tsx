@@ -113,7 +113,7 @@ export const AttendanceCorrection = (props: any) => {
       }
     }
     
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+    if (data.profile.role == 'ADMIN'){
       RequestAPI.getRequest(
         `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
         "",
@@ -349,7 +349,12 @@ export const AttendanceCorrection = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              <th style={{ width: 'auto' }}>Employee Name</th>
+              {
+                data.profile.role == 'ADMIN' ?
+                <>
+                  <th style={{ width: 'auto' }}>Employee Name</th>
+                </> : null
+              }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Status</th>
@@ -364,7 +369,12 @@ export const AttendanceCorrection = (props: any) => {
               allCOA.content.map((item: any, index: any) => {
                 return (
                   <tr>
-                    <td> {item.lastName}, {item.firstName}</td>
+                    {
+                      data.profile.role == 'ADMIN' ?
+                      <>
+                        <td> {item.lastName}, {item.firstName} </td>
+                      </> : null
+                    }
                     <td>{item.type}</td>
                     <td> {item.reason} </td>
                     <td> {item.status} </td>

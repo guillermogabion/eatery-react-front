@@ -147,7 +147,7 @@ export const Leaves = (props: any) => {
       }
     }
 
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
+    if (data.profile.role == 'ADMIN') {
       RequestAPI.getRequest(
         `${Api.allRequestLeave}?size=10${queryString}&page=${page}`,
         "",
@@ -406,7 +406,12 @@ export const Leaves = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              <th style={{ width: 'auto' }}>Employee Name</th>
+            {
+              data.profile.role == 'ADMIN' ?
+              <>
+                <th style={{ width: 'auto' }}>Employee Name</th>
+              </> : null
+            }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
@@ -425,7 +430,13 @@ export const Leaves = (props: any) => {
                     allLeaves.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.lastName}, {item.firstName} </td>
+                          {
+                            data.profile.role == 'ADMIN' ?
+                            <>
+                              <td> {item.lastName}, {item.firstName} </td>
+                            </> : null
+                          }
+                          
                           <td> {item.type} </td>
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
