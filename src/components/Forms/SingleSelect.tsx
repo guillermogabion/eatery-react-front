@@ -42,7 +42,7 @@ const customStyles = {
     boxShadow: 0,
     color: "#333333",
     borderStyle: "initial",
-    border:!state.isDisabled ? state.hasValue ? "1px solid #97CD4C" : "1px solid #d8d8d8" : "1px solid #d8d8d8",
+    border:!state.isDisabled ? state.hasValue ? "1px solid #d8d8d8" : "1px solid #d8d8d8" : "1px solid #d8d8d8",
     borderRadius: "5px",
     font: "normal normal normal 16px/20px Source Sans Pro, sans-serif",
     height: 44,
@@ -86,19 +86,17 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
   const optionArr = [...options]
   if (type === "string") {
     optionArr.forEach((d: any) => {
+      
       const optionObj = { value: "", label: "" }
       if (typeof d === "object") {
         const { id } = d
-        optionObj.value =
-          name === "transactionType" || name === "accessLevel" || name === "branchUnitDept" || name == "groupName"
-            ? d.name
-            : id
-        optionObj.label = d.name
+        
+        optionObj.value = d.value
+        optionObj.label = d.label
       } else {
         optionObj.value = d
         optionObj.label = d
       }
-
       optionCopy.push(optionObj)
     })
   } else if (type === "Array") {
@@ -144,7 +142,7 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
       isSearchable={true}
       placeholder={placeholder || "placeholder"}
       options={optionCopy}
-      onChange={(option) => onChangeOption(option, name)}
+      onChange={(option:any) => onChangeOption(option, name)}
       components={{
         IndicatorSeparator: () => null,
       }}
