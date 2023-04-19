@@ -21,10 +21,8 @@ const Api: any = {
   deleteLeaveType: process.env.REACT_APP_API_URL + "request/type/delete",
   
   adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
-  myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
   adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
-
-  mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",  
+  
   
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
   requestLeaveUpdate: process.env.REACT_APP_API_URL + "request/leave/update",
@@ -140,6 +138,7 @@ const Api: any = {
   getAllSquadCoa: process.env.REACT_APP_API_URL + "request/coa/squadmembers",
   allSquadOvertime: process.env.REACT_APP_API_URL + "request/ot/squadmembers",
   allSquadUndertime: process.env.REACT_APP_API_URL + "request/ut/squadmembers",
+  allSquadSchedule: process.env.REACT_APP_API_URL + "request/schedule-adjustment/squadmembers",
 
 
 }

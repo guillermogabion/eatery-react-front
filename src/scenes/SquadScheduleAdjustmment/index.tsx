@@ -18,7 +18,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
 
-export const ScheduleAdjustment = (props: any) => {
+export const SquadScheduleAdjustment = (props: any) => {
   const { history } = props
   let initialPayload = {
     "dateFrom": "",
@@ -83,9 +83,9 @@ export const ScheduleAdjustment = (props: any) => {
       }
     }
 
-    if (data.profile.role == 'ADMIN') {
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
-        `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}`,
+        `${Api.allSquadSchedule}?size=10${queryString}&page=${page}`,
         "",
         {},
         {},
@@ -334,12 +334,8 @@ export const ScheduleAdjustment = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              {
-                data.profile.role == 'ADMIN' ?
-                <>
-                  <th style={{ width: 'auto' }}>Employee Name</th>
-                </> : null
-              }
+             
+              <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
@@ -357,12 +353,7 @@ export const ScheduleAdjustment = (props: any) => {
                     allAdjustments.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                           {
-                            data.profile.role == 'ADMIN' ?
-                            <>
-                              <td> {item.lastName}, {item.firstName} </td>
-                            </> : null
-                          }
+                          <td> {item.lastName}, {item.firstName} </td>
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>

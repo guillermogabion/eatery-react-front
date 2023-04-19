@@ -73,7 +73,7 @@ export const Undertime = (props: any) => {
                 })
             }
         }
-        if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
+        if (data.profile.role == 'ADMIN') {
             RequestAPI.getRequest(
                 `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                 "",
@@ -258,7 +258,12 @@ export const Undertime = (props: any) => {
                 <Table responsive="lg">
                     <thead>
                         <tr>
-                            <th style={{ width: 'auto' }}>Employee Name</th>
+                            {
+                            data.profile.role == 'ADMIN' ?
+                            <>
+                                <th style={{ width: 'auto' }}>Employee Name</th>
+                            </> : null
+                            }
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>UT Start</th>
                             <th style={{ width: 'auto' }}>UT End</th>
@@ -276,7 +281,12 @@ export const Undertime = (props: any) => {
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                        <td> {item.lastName}, {item.firstName}</td>
+                                         {
+                                            data.profile.role == 'ADMIN' ?
+                                            <>
+                                            <td> {item.lastName}, {item.firstName} </td>
+                                            </> : null
+                                        }
                                         <td> {item.shiftDate} </td>
                                         <td> {item.utStart.replace('T', ' ')} </td>
                                         <td> {item.utEnd.replace('T', ' ')} </td>
