@@ -80,6 +80,8 @@ const Api: any = {
   forgotPassword: process.env.REACT_APP_API_URL + "user/forgotpassword",
 
   addBioLogs: process.env.REACT_APP_API_URL + "timekeeping/addLog",
+  mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",  
+  myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
   
   // /request/ot/classifications
 
