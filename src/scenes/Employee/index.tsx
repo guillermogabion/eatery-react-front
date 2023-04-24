@@ -970,17 +970,17 @@ export const Employee = (props: any) => {
             </div>
             <br />
             <Modal.Footer>
-            {userId ? 
-                
-                <button
-                    type="submit"
-                    className="btn btn-primary mx-2"
-                    onClick={() => handleFormSubmit(values, userId)}
-                    >
-                    Save
-                </button>
-                : null}
               <div className="d-flex justify-content-end px-5">
+                {userId ? 
+                    
+                    <button
+                        type="submit"
+                        className="btn btn-primary mx-2"
+                        onClick={() => handleFormSubmit(values, userId)}
+                        >
+                        Save
+                    </button>
+                    : null}
                 <button
                   type="button"
                   onClick={() => {
