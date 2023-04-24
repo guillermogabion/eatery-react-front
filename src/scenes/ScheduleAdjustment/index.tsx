@@ -362,7 +362,7 @@ export const ScheduleAdjustment = (props: any) => {
                             <>
                               <td> {item.lastName}, {item.firstName} </td>
                             </> : null
-                          }
+                          } 
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
@@ -694,7 +694,7 @@ export const ScheduleAdjustment = (props: any) => {
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        body.error && body.error.message,
+                        "Please enter a valid time format" ,
                         // (body.error && body.error.message),
                         'error'
                       )
@@ -728,7 +728,7 @@ export const ScheduleAdjustment = (props: any) => {
                       ErrorSwal.fire(
                         'Error!',
                         // 'Something Error.',
-                        body.error && body.error.message,
+                        "Please enter a valid time format",
                         'error'
                       )
                     }

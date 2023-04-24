@@ -607,14 +607,7 @@ export const SquadScheduleAdjustment = (props: any) => {
               {authorizations.includes("Request:Create") ? (
                 <div className="d-flex justify-content-end mt-3" >
                   <div>
-                    <Button
-                      className="mx-2"
-                      onClick={() => {
-                        setInitialValues(initialPayload)
-                        setAdjustmentBreakdown([])
-                        setAdjustmentId("")
-                        setModalShow(true)
-                      }}>Request for  Schedule Adjustment</Button>
+                 
                   </div>
                 </div>
               ) : null}

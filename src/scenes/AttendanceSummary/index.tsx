@@ -94,7 +94,7 @@ export const AttendanceSummary = (props: any) => {
   }
 
   useEffect(() => {
-    getAllAttendance(0, "")
+    getAllAttendance(0)
     getAllEmployee()
   }, [])
 
@@ -124,7 +124,7 @@ export const AttendanceSummary = (props: any) => {
     )
   }
 
-  const getAllAttendance = (page: any = 0, status: any = "All") => {
+  const getAllAttendance = (page: any = 0) => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
     if (status != "") {
@@ -184,7 +184,7 @@ export const AttendanceSummary = (props: any) => {
   }
 
   const handlePageClick = (event: any) => {
-    getAllAttendance(event.selected, "")
+    getAllAttendance(event.selected)
   };
 
   const attendanceTable = useCallback(() => {
@@ -257,6 +257,7 @@ export const AttendanceSummary = (props: any) => {
           </tbody>
 
         </Table>
+       
         {
           allAttendance &&
             allAttendance.content &&
@@ -266,9 +267,29 @@ export const AttendanceSummary = (props: any) => {
             </div>
             :
             null
-        }
+        } 
+        
 
+        <div className="d-flex justify-content-end">
+                <div className="">
+                  <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(allAttendance && allAttendance.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeClassName="active-page-link"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                  />
+                </div>
+              </div>
       </div>
+      
     )
   }, [allAttendance])
 
@@ -374,7 +395,7 @@ export const AttendanceSummary = (props: any) => {
 
                     <Button
                       style={{ width: 120 }}
-                      onClick={() => getAllAttendance(0, "")}
+                      onClick={() => getAllAttendance(0)}
                       className="btn btn-primary mx-2 mt-4">
                       Search
                     </Button>
@@ -580,7 +601,7 @@ export const AttendanceSummary = (props: any) => {
                       (body.data) || "",
                       'success'
                     )
-                    getAllAttendance(0, "")
+                    getAllAttendance(0)
                     setAddBioModal(false)
                   }
                 } else {
