@@ -45,7 +45,7 @@ function ChangePassword(props: any) {
             <FaCheckCircle style={{
               color: 'white'
             }} />
-            <span className="check-circle">A combination of uppercase letters, lower case letters, numbers and symbols</span>
+            <span className="check-circle">A combination of uppercase letters, lower case letters, numbers and special characters(!@#$%^&*)</span>
           </div> <br />
           <div>
             <FaCheckCircle style={{
@@ -89,7 +89,7 @@ function ChangePassword(props: any) {
 
             if (status === 200) {
               if (body.error && body.error.message) {
-                props.setErrorMessage(body.error.message);
+                ErrorSwal.fire('Error', body.error.message, 'error');
               } else {
                 ErrorSwal.fire('Success', body.data || "", 'success').then(result => {
                   if (result.isConfirmed) {
@@ -99,7 +99,7 @@ function ChangePassword(props: any) {
               }
             } else {
               if (body.error && body.error.message) {
-                props.setErrorMessage(body.error.message);
+                ErrorSwal.fire('Error', body.error.message, 'error');
               }
             }
           });
