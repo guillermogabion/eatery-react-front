@@ -253,7 +253,7 @@ export const AttendanceCorrection = (props: any) => {
   const getViewCoa = (id: any = 0) => {
    
     RequestAPI.getRequest(
-      `${Api.getScheduleAdjustment}?id=${id}`,
+      `${Api.getCoaInfo}?id=${id}`,
       "",
       {},
       {},
