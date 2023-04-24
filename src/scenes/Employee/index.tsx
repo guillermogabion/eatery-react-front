@@ -375,8 +375,51 @@ export const Employee = (props: any) => {
       }
     })
   }
+  const handleFormSubmit = (values, userId) => {
+    const valuesObj = { ...values };
+    if (userId) {
+      RequestAPI.putRequest(
+        Api.updateEmployee,
+        "",
+        valuesObj,
+        {},
+        async (res) => {
+          const { status, body = { data: {}, error: {} } } = res;
+  
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              ErrorSwal.fire(
+                "Error!",
+                body.error.message || "",
+                "error"
+                
+              );
+              handleCloseModal();
+            } else {
+              ErrorSwal.fire(
+                "Updated Successfully!",
+                body.data || "",
+                "success"
+              ).then((result) => {
+                if (result.isConfirmed) {
+                  location.reload();
+                }
+              });
+              handleCloseModal();
+            }
+          } else {
+            ErrorSwal.fire("Error!", "Something Error.", "error");
+          }
+        }
+      );
+    }
+  };
+  
 
-  const getEmployeeDetails = (id: number) => {
+  
+  
+
+   const getEmployeeDetails = (id: number) => {
     RequestAPI.getRequest(
       `${Api.employeeInformation}?body=${id}`,
       "",
@@ -423,6 +466,7 @@ export const Employee = (props: any) => {
   const handleCloseModal = () => {
     setModalUploadShow(false);
     setModalViewShow(false);
+    setModalShow(false)
   };
 
   const changePassword = (id: any = 0) => {
@@ -680,11 +724,22 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
+                {userId ? 
+                
+                <button
+                    type="submit"
+                    className="btn btn-primary mx-2"
+                    onClick={() => handleFormSubmit(values, userId)}
+                    >
+                    Save
+                </button>
+                : null}
                 <Button
                   type="submit"
                   className="btn btn-primary">
                   Next
                 </Button>
+
               </div>
             </Modal.Footer>
 
@@ -794,6 +849,16 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
+                {userId ? 
+                
+                <button
+                    type="submit"
+                    className="btn btn-primary mx-2"
+                    onClick={() => handleFormSubmit(values, userId)}
+                    >
+                    Save
+                </button>
+                : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -905,6 +970,16 @@ export const Employee = (props: any) => {
             </div>
             <br />
             <Modal.Footer>
+            {userId ? 
+                
+                <button
+                    type="submit"
+                    className="btn btn-primary mx-2"
+                    onClick={() => handleFormSubmit(values, userId)}
+                    >
+                    Save
+                </button>
+                : null}
               <div className="d-flex justify-content-end px-5">
                 <button
                   type="button"
@@ -1553,6 +1628,16 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
+              {userId ? 
+                
+                <button
+                    type="submit"
+                    className="btn btn-primary mx-2"
+                    onClick={() => handleFormSubmit(values, userId)}
+                    >
+                    Save
+                </button>
+                : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -2019,6 +2104,16 @@ export const Employee = (props: any) => {
             </div>
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
+              {userId ? 
+                
+                <button
+                    type="submit"
+                    className="btn btn-primary mx-2"
+                    onClick={() => handleFormSubmit(values, userId)}
+                    >
+                    Save
+                </button>
+                : null}
                 <button
                   type="button"
                   onClick={() => {
