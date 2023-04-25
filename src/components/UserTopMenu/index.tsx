@@ -122,6 +122,15 @@ const UserTopMenu = (props: any) => {
                 </NavLink>
               </small>
               <br />
+              <small>
+                <NavLink to={"/user"}
+                  onClick={() => {
+                    setCurrentRoutePath("/user")
+                  }}>
+                  <span>Change Password</span>
+                </NavLink>
+              </small>
+              <br />
               {/* <small>
                 <NavLink to={"/user/list"}
                 onClick={() => {

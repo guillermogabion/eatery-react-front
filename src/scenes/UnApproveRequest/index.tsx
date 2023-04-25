@@ -28,17 +28,10 @@ export const UnApproveRequest = (props: any) => {
         "breakdown": []
     }
     const { data } = useSelector((state: any) => state.rootReducer.userData)
-    const { authorizations } = data?.profile
-    const [modalShow, setModalShow] = React.useState(false);
-    const [modalViewShow, setModalViewShow] = React.useState(false);
     const [key, setKey] = React.useState('leaves');
-    const [adjustmentBreakdown, setAdjustmentBreakdown] = useState<any>([]);
     const [allAdjustments, setAllAdjustments] = useState<any>([]);
-    const [adjustmentId, setAdjustmentId] = useState<any>("");
     const [filterData, setFilterData] = React.useState([]);
-    const [initialValues, setInitialValues] = useState<any>(initialPayload)
     const userData = useSelector((state: any) => state.rootReducer.userData)
-    const [userSchedule, setUserSchedule] = useState<any>("");
 
     const formRef: any = useRef()
 
