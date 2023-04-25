@@ -46,7 +46,33 @@ export const MissingLogs = (props: any) => {
 
   useEffect(() => {
     getAllMissingLogs(0, "")
+    getAllEmployee()
   }, [])
+
+  const getAllEmployee = () => {
+    RequestAPI.getRequest(
+      `${Api.employeeList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
+              tempArray.push({
+                value: d.userAccountId,
+                label: d.firstname + " " + d.lastname
+              })
+            });
+            setEmployeeList(tempArray)
+          }
+        }
+      }
+    )
+  }
 
   const getAllMissingLogs = (page: any = 0, status: any = "All") => {
     let queryString = ""
@@ -66,7 +92,7 @@ export const MissingLogs = (props: any) => {
     }
 
     RequestAPI.getRequest(
-      `${Api.getMissingLogs}?size=10${queryString}&page=${page}`,
+      `${Api.getMissingLogs}?size=1000${queryString}&page=${page}`,
       "",
       {},
       {},
@@ -93,6 +119,14 @@ export const MissingLogs = (props: any) => {
   const handlePageClick = (event: any) => {
     getAllMissingLogs(event.selected, "")
   };
+
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
+
 
   const attendanceTable = useCallback(() => {
     return (
@@ -173,6 +207,45 @@ export const MissingLogs = (props: any) => {
 
                 <div className="w-100 pt-4">
                   <div className="fieldtext d-flex col-md-12">
+                  {
+                      data.profile.role == 'ADMIN' ?
+                        <>
+                          <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                              type="string"
+                              options={employeeList || []}
+                              placeholder={"Employee"}
+                              onChangeOption={singleChangeOption}
+                              name="userid"
+                              value={filterData && filterData['userid']}
+                            />
+                          </div>
+                          <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Department</label>
+                            <select
+                              className={`form-select`}
+                              name="department"
+                              id="type"
+                              value={filterData && filterData['department']}
+                              onChange={(e) => makeFilterData(e)}>
+                              <option key={`departmentItem}`} value={""}>
+                                Select
+                              </option>
+                              {masterList &&
+                                masterList.department &&
+                                masterList.department.length &&
+                                masterList.department.map((item: any, index: string) => (
+                                  <option key={`${index}_${item}`} value={item}>
+                                    {item}
+                                  </option>
+                                ))}
+                            </select>
+                          </div>
+                        </>
+                        :
+                        null
+                    }
                     <div>
                       <label>Date From</label>
                       <input

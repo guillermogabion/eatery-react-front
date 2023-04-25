@@ -157,8 +157,9 @@ export const AttendanceSummary = (props: any) => {
       }
     }
     if (data.profile.role == 'ADMIN') {
+      
       RequestAPI.getRequest(
-        `${Api.adminAttendanceSummary}?role=${data.profile.role}${queryString}`,
+        `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}`,
         "",
         {},
         {},
@@ -174,7 +175,7 @@ export const AttendanceSummary = (props: any) => {
       )
     } else {
       RequestAPI.getRequest(
-        `${Api.myAttendanceSummary}?role=${data.profile.role}${queryString}`,
+        `${Api.myAttendanceSummary}?size=10${queryString}&page=${page}`,
         "",
         {},
         {},

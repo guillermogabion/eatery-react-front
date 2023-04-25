@@ -505,7 +505,7 @@ export const ScheduleAdjustment = (props: any) => {
 
                   <br />
                   <br />
-                  <h2><b>Adjustment of Schedule</b></h2>
+                  <h3><b>Adjustment of Schedule</b></h3>
                   <div className="row p-0 m-0 pt-4 ">
                     <div className="col-md-4">
                       <h5>Current Work Schedule:</h5>
@@ -809,7 +809,7 @@ export const ScheduleAdjustment = (props: any) => {
                                 const { date } = item
                                 return (
                                   <tr>
-                                    <td key={index + 'date'} >{date}</td>
+                                    <td key={index + 'date'} className="d-flex align-items-center">{date}</td>
                                     <td key={index + 'startShift'} >
                                       <input
                                         type="time"
@@ -817,7 +817,8 @@ export const ScheduleAdjustment = (props: any) => {
                                         id={"startShift" + index.toString()}
                                         key={"startShift" + index.toString()}
                                         value={item.startShift}
-                                        step={"1"}
+                                        // step={"1"}
+                                        className="form-control"
                                         onChange={(e) => {
                                           setDateOption(index, 'startShift', e.target.value)
                                         }}
@@ -835,8 +836,9 @@ export const ScheduleAdjustment = (props: any) => {
                                         name={"startBreak" + index.toString()}
                                         id={"startBreak" + index.toString()}
                                         key={"startBreak" + index.toString()}
-                                        step={"1"}
+                                        // step={"1"}
                                         value={item.startBreak}
+                                        className="form-control"
                                         onChange={(e) => {
                                           setDateOption(index, 'startBreak', e.target.value)
                                         }}
@@ -848,7 +850,8 @@ export const ScheduleAdjustment = (props: any) => {
                                         name={"endBreak" + index.toString()}
                                         id={"endBreak" + index.toString()}
                                         key={"endBreak" + index.toString()}
-                                        step={"1"}
+                                        // step={"1"}
+                                        className="form-control"
                                         value={item.endBreak}
                                         onChange={(e) => {
                                           setDateOption(index, 'endBreak', e.target.value)
@@ -861,7 +864,8 @@ export const ScheduleAdjustment = (props: any) => {
                                         name={"endShift" + index.toString()}
                                         id={"endShift" + index.toString()}
                                         key={"endShift" + index.toString()}
-                                        step={"1"}
+                                        // step={"1"}
+                                        className="form-control"
                                         value={item.endShift}
                                         onChange={(e) => {
                                           setDateOption(index, 'endShift', e.target.value)

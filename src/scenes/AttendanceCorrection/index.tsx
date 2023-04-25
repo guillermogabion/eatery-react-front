@@ -30,11 +30,12 @@ export const AttendanceCorrection = (props: any) => {
   const { history } = props
   const [modalShow, setModalShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
-  const [key, setKey] =React.useState('all');
+  const [key, setKey] = React.useState('all');
   const [allCOA, setAllCOA] = useState<any>([]);
   const [filterData, setFilterData] = React.useState([]);
   const [coaId, setCoaId] = useState<any>("");
   const [fields, setFields] = useState<any>([]);
+  const [hasError, setHasError] = useState<any>(false);
   const formRef: any = useRef()
 
   // const handleAddField = () => {
@@ -55,7 +56,7 @@ export const AttendanceCorrection = (props: any) => {
     }
   };
 
-  
+
   const handleRemoveItem = (index) => {
     const updatedFields = [...coaBreakdown];
     updatedFields.splice(index, 1);
@@ -64,10 +65,10 @@ export const AttendanceCorrection = (props: any) => {
   }
   const handleRemoveAllItems = () => {
     setCoaBreakdown([]);
-    
+
   };
 
-  
+
   const tableHeaders = [
     'Date Filed',
     'Type',
@@ -76,7 +77,7 @@ export const AttendanceCorrection = (props: any) => {
     'Reason',
     'status',
     'Action',
-  ] 
+  ]
   const [initialValues, setInitialValues] = useState<any>({
     "type": "Biometric_Device_Malfunction",
     "reason": "",
@@ -98,13 +99,13 @@ export const AttendanceCorrection = (props: any) => {
   const getAllCOARequest = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if(status != ""){
-      queryString = "&status="+ status
-    }else{
+    if (status != "") {
+      queryString = "&status=" + status
+    } else {
       if (filterDataTemp) {
         Object.keys(filterDataTemp).forEach((d: any) => {
           if (filterDataTemp[d]) {
-            
+
             queryString += `&${d}=${filterDataTemp[d]}`
           } else {
             queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -112,8 +113,8 @@ export const AttendanceCorrection = (props: any) => {
         })
       }
     }
-    
-    if (data.profile.role == 'ADMIN'){
+
+    if (data.profile.role == 'ADMIN') {
       RequestAPI.getRequest(
         `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
         "",
@@ -129,7 +130,7 @@ export const AttendanceCorrection = (props: any) => {
           }
         }
       )
-    }else{
+    } else {
       RequestAPI.getRequest(
         `${Api.allMyCOA}?size=10${queryString}&page=${page}`,
         "",
@@ -148,18 +149,18 @@ export const AttendanceCorrection = (props: any) => {
     }
   }
   const getCoa = (id: any = 0) => {
-   
+
     RequestAPI.getRequest(
       `${Api.getCoaInfo}?id=${id}`,
       "",
       {},
       {},
       async (res: any) => {
-        console.log("Response:", res); 
-        const { status, body = {data: {}, error: {}}} : any = res
+        console.log("Response:", res);
+        const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
           if (body.error && body.error.message) {
-          }else{
+          } else {
             const valueObj: any = body.data
             setInitialValues(valueObj)
             setCoaBreakdown(valueObj.breakdown)
@@ -251,19 +252,19 @@ export const AttendanceCorrection = (props: any) => {
     })
   }
   const getViewCoa = (id: any = 0) => {
-   
+
     RequestAPI.getRequest(
       `${Api.getCoaInfo}?id=${id}`,
       "",
       {},
       {},
       async (res: any) => {
-        console.log("Response:", res); 
-        const { status, body = {data: {}, error: {}}} : any = res
+        console.log("Response:", res);
+        const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
-          
+
           if (body.error && body.error.message) {
-          }else{
+          } else {
             const valueObj: any = body.data
             setInitialValues(valueObj)
             setCoaBreakdown(valueObj.breakdown)
@@ -318,7 +319,7 @@ export const AttendanceCorrection = (props: any) => {
   const dateBreakdown = (date: any) => {
     let coasBreakdown = []
     coasBreakdown.push({
-      "date" : moment(date).add
+      "date": moment(date).add
     })
   }
 
@@ -351,9 +352,9 @@ export const AttendanceCorrection = (props: any) => {
             <tr>
               {
                 data.profile.role == 'ADMIN' ?
-                <>
-                  <th style={{ width: 'auto' }}>Employee Name</th>
-                </> : null
+                  <>
+                    <th style={{ width: 'auto' }}>Employee Name</th>
+                  </> : null
               }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
@@ -372,88 +373,88 @@ export const AttendanceCorrection = (props: any) => {
                   <tr>
                     {
                       data.profile.role == 'ADMIN' ?
-                      <>
-                        <td> {item.lastName}, {item.firstName} </td>
-                      </> : null
+                        <>
+                          <td> {item.lastName}, {item.firstName} </td>
+                        </> : null
                     }
                     <td>{item.type}</td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
                     <td> {item.status} </td>
                     <td className="d-flex">
-                    <label
-                      onClick={() => {
-                        getViewCoa(item.id)
-                      }}
+                      <label
+                        onClick={() => {
+                          getViewCoa(item.id)
+                        }}
                       >
-                      <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View"/>
+                        <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
-                          {authorizations.includes("Request:Update") ? (
-                            <>
+                            {authorizations.includes("Request:Update") ? (
+                              <>
                                 <label
-                                onClick={() => {
-                                  getCoa(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                
-                                <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
-                              </label>
-                              <br />
-                            </>
-                          ) : null}
+                                  onClick={() => {
+                                    getCoa(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
 
-                          {authorizations.includes("Request:Approve") ? (
-                            <>
-                              <label
-                              onClick={() => {
-                                approveCoa(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              
-                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
-                            </label> <br />
-                            </>
-                          ) : null}
+                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                </label>
+                                <br />
+                              </>
+                            ) : null}
+
+                            {authorizations.includes("Request:Approve") ? (
+                              <>
+                                <label
+                                  onClick={() => {
+                                    approveCoa(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+
+                                  <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                </label> <br />
+                              </>
+                            ) : null}
 
                             {authorizations.includes("Request:Reject") ? (
-                            <>
-                            <label
-                              onClick={() => {
-                                declineCoa(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              
-                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
-                            </label>
-                            <br />
-                            </>
-                          ) : null}
+                              <>
+                                <label
+                                  onClick={() => {
+                                    declineCoa(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+
+                                  <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                </label>
+                                <br />
+                              </>
+                            ) : null}
                           </>
                           :
                           null
                       }
                       {
-                              item.status == "APPROVED" || item.status == "PENDING" ?
-                                <>
-                                  {authorizations.includes("Request:Update") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          cancelAttendanceReversal(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel"/>
-                                      </label>
-                                      <br />
-                                    </>
-                                  ) : null}
-                                </>
-                                : null
-                            }
+                        item.status == "APPROVED" || item.status == "PENDING" ?
+                          <>
+                            {authorizations.includes("Request:Update") ? (
+                              <>
+                                <label
+                                  onClick={() => {
+                                    cancelAttendanceReversal(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                </label>
+                                <br />
+                              </>
+                            ) : null}
+                          </>
+                          : null
+                      }
                     </td>
                   </tr>
                 )
@@ -462,15 +463,15 @@ export const AttendanceCorrection = (props: any) => {
           </tbody>
         </Table>
         {
-                allCOA &&
-                allCOA.content &&
-                allCOA.content.length == 0 ?
-                <div className="w-100 text-center">
-                  <label htmlFor="">No Records Found</label>
-                </div>
-                : 
-                null
-          }
+          allCOA &&
+            allCOA.content &&
+            allCOA.content.length == 0 ?
+            <div className="w-100 text-center">
+              <label htmlFor="">No Records Found</label>
+            </div>
+            :
+            null
+        }
       </div>
     )
   }, [allCOA])
@@ -495,28 +496,28 @@ export const AttendanceCorrection = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                <Tabs
-                  id="controlled-tab-example"
-                  activeKey={key}
-                  onSelect={(k: any) => {
-                    getAllCOARequest(0, k)
-                    setKey(k)
-                  }}
-                  className="mb-3"
-                >
-                  <Tab eventKey="all" title="All">
-                    {COATable()}
-                  </Tab>
-                  <Tab eventKey="pending" title="Pending">
-                    {COATable()}
-                  </Tab>
-                  <Tab eventKey="APPROVED" title="Approved" >
-                    {COATable()}
-                  </Tab>
-                  <Tab eventKey="declined" title="Rejected/Cancelled">
-                    {COATable()}
-                  </Tab>
-                </Tabs>
+                  <Tabs
+                    id="controlled-tab-example"
+                    activeKey={key}
+                    onSelect={(k: any) => {
+                      getAllCOARequest(0, k)
+                      setKey(k)
+                    }}
+                    className="mb-3"
+                  >
+                    <Tab eventKey="all" title="All">
+                      {COATable()}
+                    </Tab>
+                    <Tab eventKey="pending" title="Pending">
+                      {COATable()}
+                    </Tab>
+                    <Tab eventKey="APPROVED" title="Approved" >
+                      {COATable()}
+                    </Tab>
+                    <Tab eventKey="declined" title="Rejected/Cancelled">
+                      {COATable()}
+                    </Tab>
+                  </Tabs>
                 </div>
               </div>
               <div className="d-flex justify-content-end">
@@ -536,14 +537,14 @@ export const AttendanceCorrection = (props: any) => {
                     renderOnZeroPageCount={null}
                   />
                 </div>
-            </div>
+              </div>
               <div className="d-flex justify-content-end mt-3" >
                 <div>
                   <Button
                     className="mx-2"
                     onClick={() => {
                       setModalShow(true),
-                      handleRemoveAllItems()
+                        handleRemoveAllItems()
                     }}>Request for Attendance Reversal</Button>
                 </div>
               </div>
@@ -563,7 +564,7 @@ export const AttendanceCorrection = (props: any) => {
             setCoaId(null);
             setModalShow(false)
             setShowReason(false);
-           
+
           }}
           dialogClassName="modal-90w"
         >
@@ -577,128 +578,148 @@ export const AttendanceCorrection = (props: any) => {
             <Formik
               innerRef={formRef}
               enableReinitialize={true}
-              initialValues={initialValues} 
+              initialValues={initialValues}
               validationSchema={null}
               onSubmit={(values, actions) => {
                 actions.resetForm();
                 actions.setErrors({});
-              const valuesObj: any = { ...values }
-              valuesObj.coaBd = coaBreakdown
-              if(coaId){
-                console.log(valuesObj)
-                delete valuesObj.userId
-                  RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async(res : any) => {
+                const valuesObj: any = { ...values }
+                let hasError = false
+                coaBreakdown.forEach((element: any, index: any) => {
+                  if (element.coaBdType == ""){
+                    hasError = true
+                  }
+                  if (element.date == ""){
+                    hasError = true
+                  }
+                  if (element.time == ""){
+                    hasError = true
+                  }
+                });
+                if (hasError) {
+                  ErrorSwal.fire(
+                    'Warning!',
+                    'Please fill all the required fields.',
+                    'warning'
+                  )
+                } else {
+                  valuesObj.coaBd = coaBreakdown
+                }
+
+                if(coaId){
+                  delete valuesObj.userId
+                    RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async(res : any) => {
+                      const { status, body = { data: {}, error: {} } }: any = res
+                      if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                          ErrorSwal.fire(
+                            'Error!',
+                            (body.error && body.error.message) || "",
+                            'error'
+                          )
+                        } else {
+                          ErrorSwal.fire(
+                            'Success!',
+                            (body.data) || "",
+                            'success'
+                          )
+                          setCoaBreakdown([])
+                          getAllCOARequest(0, "")
+                          setModalShow(false)
+                          formRef.current?.resetForm()
+                        }
+                      } else {
+                        ErrorSwal.fire(
+                          'Error!',
+                          'Something Error.',
+                          'error'
+                        )
+                      }
+                      setCoaBreakdownCount(0);
+
+                    })
+
+
+                }else {
+                  RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
-                      if (body.error && body.error.message) {
+                      console.log("Response body:", res);
+                      if(body.error && body.error.message) {
                         ErrorSwal.fire(
                           'Error!',
                           (body.error && body.error.message) || "",
                           'error'
                         )
+                        setCoaBreakdown([])
+                          getAllCOARequest(0, "")
+                          setModalShow(false)
+                          formRef.current?.resetForm()
                       } else {
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",
                           'success'
                         )
-                        setCoaBreakdown([])
-                        getAllCOARequest(0, "")
-                        setModalShow(false)
+                        setCoaBreakdown([]);
+                        getAllCOARequest(0, "");
+                        setModalShow(false);
                         formRef.current?.resetForm()
-                      }
-                    } else {
-                      ErrorSwal.fire(
-                        'Error!',
-                        'Something Error.',
-                        'error'
-                      )
-                    }
-                    setCoaBreakdownCount(0);
 
+                      }
+                      setCoaBreakdownCount(0);
+
+                    }
                   })
 
+                }
 
-              }else {
-                RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    console.log("Response body:", res);
-                    if(body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
-                      setCoaBreakdown([])
-                        getAllCOARequest(0, "")
-                        setModalShow(false)
-                        formRef.current?.resetForm()
-                    } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setCoaBreakdown([]);
-                      getAllCOARequest(0, "");
-                      setModalShow(false);
-                      formRef.current?.resetForm()
-                      
-                    }
-                    setCoaBreakdownCount(0);
-                  
-                  }
-                })
-                
-              }
-              
-              
-            }}
+
+              }}
             >
-                 {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-                  return (
-                    <Form
+              {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                return (
+                  <Form
                     noValidate
                     onSubmit={handleSubmit}
                     id="_formid"
                     autoComplete="off"
-                    >
-                       <div>
-                       <label>Type</label>
-                        
-                        <select
-                          className="form-select"
-                          name="type"
-                          id="type"
-                          onChange={(e) => {
-                            setFieldValue('type', e.target.value);
-                            setShowReason(e.target.value === 'Others');
-                          }}
-                          value={values.type}
-                        > 
-                          <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
-                          <option value="Power_Outage">Power Outage</option>
-                          <option value="Others">Others</option>
-                        </select>
-                        <div className="form-group col-md-12 mb-3">
-                            <label>Reason</label>
-                            <textarea
-                              name="reason"
-                              id="reason"
-                              value={values.reason}
-                              className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
-                              style={{ height: "100px" }}
-                              onChange={(e) => {
-                                setFieldValue("reason", e.target.value);
-                              }}
-                            />
-                          </div>
-                          {touched.errors && errors.reason && (
-                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
-                                )}
+                  >
+                    <div>
+                      <label>Type</label>
 
-                        {/* {showReason && (
+                      <select
+                        className="form-select"
+                        name="type"
+                        id="type"
+                        onChange={(e) => {
+                          setFieldValue('type', e.target.value);
+                          setShowReason(e.target.value === 'Others');
+                        }}
+                        value={values.type}
+                      >
+                        <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
+                        <option value="Power_Outage">Power Outage</option>
+                        <option value="Others">Others</option>
+                      </select>
+                      <div className="form-group col-md-12 mb-3">
+                        <label>Reason</label>
+                        <textarea
+                          name="reason"
+                          id="reason"
+                          value={values.reason}
+                          className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                          style={{ height: "100px" }}
+                          onChange={(e) => {
+                            setFieldValue("reason", e.target.value);
+                          }}
+                        />
+                      </div>
+                      {touched.errors && errors.reason && (
+                        <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
+                      )}
+
+                      {/* {showReason && (
                           <div className="form-group col-md-12 mb-3">
                             <label>Reason</label>
                             <textarea
@@ -713,143 +734,143 @@ export const AttendanceCorrection = (props: any) => {
                             />
                           </div>
                         )} */}
-                      </div>
+                    </div>
 
-                      {coaBreakdown.map((values, index) => (
-                        <div key={`coaBreakdown-${index}`}>
-                         <div className="form-group row">
-                            <div className="col-md-4 mb-3">
-                              <label>Date</label>
-                              <input
-                                type="date"
-                                name="date"
-                                value={values.date}
-                                onChange={(e) => {
-                                  const updatedFields = [...coaBreakdown];
-                                  updatedFields[index].date = e.target.value;
-                                  setCoaBreakdown(updatedFields);
-                                }}
-                                className={`form-control ${touched.date && errors.date ? 'is-invalid' : ''}`}
-                              />
-                            </div>
-                          
-                            <div className="col-md-4 mb-3 mt-4">
-                              <select
-                                name="coaBdType"
-                                value={values.coaBdType}
-                                onChange={(e) => {
-                                  const updatedFields = [...coaBreakdown];
-                                  updatedFields[index].coaBdType = e.target.value;
-                                  setCoaBreakdown(updatedFields);
-                                }}
-                                className={`form-control ${touched.coaBdType && errors.coaBdType ? 'is-invalid' : ''}`}
-                              >
-                                {options.map(option => (
-                                  <option key={option.value} value={option.value}>
-                                    {option.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                           
-                            <div className="col-md-4 mb-3">
-                              <label>Time</label>
-                              <input
-                                type="time"
-                                name="time"
-                                value={values.time}
-                                onChange={(e) => {
-                                  const updatedFields = [...coaBreakdown];
-                                  updatedFields[index].time = e.target.value;
-                                  setCoaBreakdown(updatedFields);
-                                }}
-                                className={`form-control ${touched.time && errors.time ? 'is-invalid' : ''}`}
-
-                              />
-                            
-                              
-                            </div>
-                           
-                          </div> 
-                          <div className="form-group row">
-                            <div className="col-md-4 mb-3">
-                              {touched.errors && errors.date && (
-                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
-                                )}
-                            </div>
-                            <div className="col-md-4 mb-3">
-                              {touched.errors && errors.coaBdType && (
-                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
-                                )}
-                            </div>
-                            <div className="col-md-4 mb-3">
-                              {touched.errors && errors.time && (
-                                  <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
-                                )}
-                            </div>
-                         
+                    {coaBreakdown.map((values: any, index: any) => (
+                      <div key={`coaBreakdown-${index}`}>
+                        <div className="form-group row">
+                          <div className="col-md-4 mb-3">
+                            <label>Date *</label>
+                            <input
+                              type="date"
+                              name="date"
+                              value={values.date}
+                              onChange={(e) => {
+                                const updatedFields = [...coaBreakdown];
+                                updatedFields[index].date = e.target.value;
+                                setCoaBreakdown(updatedFields);
+                              }}
+                              className={`form-control ${values.date == "" ? 'is-invalid' : ''}`}
+                            />
                           </div>
-                          
-                          <button
+
+                          <div className="col-md-4 mb-3 mt-4">
+                            <select
+                              name="coaBdType"
+                              value={values.coaBdType}
+                              onChange={(e) => {
+                                const updatedFields = [...coaBreakdown];
+                                updatedFields[index].coaBdType = e.target.value;
+                                setCoaBreakdown(updatedFields);
+                              }}
+                              className={`form-control ${values.coaBdType == "" ? 'is-invalid' : ''}`}
+                            >
+                              {options.map(option => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-md-4 mb-3">
+                            <label>Time *</label>
+                            <input
+                              type="time"
+                              name="time"
+                              value={values.time}
+                              onChange={(e) => {
+                                const updatedFields = [...coaBreakdown];
+                                updatedFields[index].time = e.target.value;
+                                setCoaBreakdown(updatedFields);
+                              }}
+                              className={`form-control ${values.time == "" ? 'is-invalid' : ''}`}
+
+                            />
+
+
+                          </div>
+
+                        </div>
+                        <div className="form-group row">
+                          <div className="col-md-4 mb-3">
+                            {touched.errors && errors.date && (
+                              <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
+                            )}
+                          </div>
+                          <div className="col-md-4 mb-3">
+                            {touched.errors && errors.coaBdType && (
+                              <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
+                            )}
+                          </div>
+                          <div className="col-md-4 mb-3">
+                            {touched.errors && errors.time && (
+                              <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
+                            )}
+                          </div>
+
+                        </div>
+
+                        <button
                           className="btn btn btn-outline-primary me-2 mb-2"
                           onClick={() => handleRemoveItem(index)}>Remove</button>
-                        </div>
-                      ))}
+                      </div>
+                    ))}
 
+                    <div className="d-flex justify-content-end px-5">
+                      <button
+                        type="button"
+                        className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
+                        onClick={handleAddField}
+
+                      >
+                        Add Field
+                      </button>
+                    </div>
+                    <Modal.Footer>
                       <div className="d-flex justify-content-end px-5">
                         <button
-                          type="button"
-                          className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
-                          onClick={handleAddField}
-                          
+                          type="submit"
+                          className="btn btn-primary"
+                          disabled={!coaBreakdown.length}
                         >
-                          Add Field
+                          Save
                         </button>
                       </div>
-                      <Modal.Footer>
-                      <div className="d-flex justify-content-end px-5">
-                          <button
-                              type="submit"
-                              className="btn btn-primary"
-                              disabled={!coaBreakdown.length}
-                              >
-                              Save
-                          </button>
-                      </div>
-                      </Modal.Footer>
-                      
+                    </Modal.Footer>
 
 
-                    </Form>
-                  )
 
-                 }
-                 }
+                  </Form>
+                )
 
-                 
-                
-             
+              }
+              }
+
+
+
+
 
             </Formik>
-           
+
           </Modal.Body>
-         
+
         </Modal>
         {/* End Create User Modal Form */}
 
         {/* start of view dialog */}
 
         <Modal
-        show={modalViewShow}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-          setCoaId(null);
-          setModalViewShow(false)
-        }}
-        dialogClassName="modal-90w"
+          show={modalViewShow}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+          onHide={() => {
+            setCoaId(null);
+            setModalViewShow(false)
+          }}
+          dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -858,22 +879,22 @@ export const AttendanceCorrection = (props: any) => {
           </Modal.Header>
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div className="container">
-                {/* <h4>reason</h4> {{values.reason}} */}
-                    <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
-                    <p>Reason : {initialValues.reason}</p>
-                    <p>Type : {initialValues.type}</p>
-                    <p>Status : {initialValues.status}</p>
+              {/* <h4>reason</h4> {{values.reason}} */}
+              <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+              <p>Reason : {initialValues.reason}</p>
+              <p>Type : {initialValues.type}</p>
+              <p>Status : {initialValues.status}</p>
 
-                    {coaBreakdown.map ((initialValues, index) =>(
-                      <div key={`coaBreakdown-${index}`}>
-                          <p className="bold-text">Set Request {index + 1}:</p>
-                          <p>Type : {initialValues.coaBdType}</p>
-                          <p>Date : {initialValues.date}</p>
-                          <p>Time : {initialValues.time}</p>
+              {coaBreakdown.map((initialValues, index) => (
+                <div key={`coaBreakdown-${index}`}>
+                  <p className="bold-text">Set Request {index + 1}:</p>
+                  <p>Type : {initialValues.coaBdType}</p>
+                  <p>Date : {initialValues.date}</p>
+                  <p>Time : {initialValues.time}</p>
 
-                      </div>
+                </div>
 
-                    ))}
+              ))}
             </div>
           </Modal.Body>
 
