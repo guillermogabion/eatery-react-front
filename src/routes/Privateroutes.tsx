@@ -22,7 +22,8 @@ import {
   SquadUndertime,
   LeaveTypes,
   SquadScheduleAdjustment,
-  MissingLogs
+  MissingLogs,
+  UnApproveRequest
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -60,6 +61,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/request/ot", component: Overtime })
   routes.push({ path: "/request/ut", component: Undertime })
   routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
+  routes.push({ path: "/unapprovedrequests", component: UnApproveRequest })
   routes.push({ path: "/request/coa", component: AttendanceCorrection })
   routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
   routes.push({ path: "/timekeeping/myattendancesummary", component: AttendanceSummary })

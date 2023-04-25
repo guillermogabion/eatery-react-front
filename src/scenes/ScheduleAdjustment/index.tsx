@@ -343,6 +343,7 @@ export const ScheduleAdjustment = (props: any) => {
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
             </tr>
@@ -357,7 +358,7 @@ export const ScheduleAdjustment = (props: any) => {
                     allAdjustments.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                           {
+                          {
                             data.profile.role == 'ADMIN' ?
                             <>
                               <td> {item.lastName}, {item.firstName} </td>
@@ -366,6 +367,7 @@ export const ScheduleAdjustment = (props: any) => {
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
+                          <td> {item.statusChangedBy} </td>
                           <td> {item.status} </td>
                           <td className="d-flex">
                           <label

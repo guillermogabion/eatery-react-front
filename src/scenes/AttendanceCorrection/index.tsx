@@ -357,6 +357,7 @@ export const AttendanceCorrection = (props: any) => {
               }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
             </tr>
@@ -377,6 +378,7 @@ export const AttendanceCorrection = (props: any) => {
                     }
                     <td>{item.type}</td>
                     <td> {item.reason} </td>
+                    <td> {item.statusChangedBy} </td>
                     <td> {item.status} </td>
                     <td className="d-flex">
                     <label

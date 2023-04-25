@@ -28,6 +28,7 @@ export const AttendanceSummary = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const formRef: any = useRef()
+  const deleteformRef: any = useRef()
 
   const { history } = props
   const [importModalShow, setImportModalShow] = React.useState(false);
@@ -36,12 +37,28 @@ export const AttendanceSummary = (props: any) => {
   const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [isSubmit, setIsSubmit] = React.useState(false);
   const [addBioModal, setAddBioModal] = React.useState(false);
+  const [deleteBioModal, setDeleteBioModal] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [filterData, setFilterData] = React.useState([]);
   const [key, setKey] = React.useState('all');
   const [allAttendance, setAllAttendance] = useState<any>([]);
   const [employeeList, setEmployeeList] = useState<any>([]);
   const [userId, setUserId] = useState<any>("");
+  const [updateData, setUpdateData] = useState<any>(null);
+  const [initialValues, setInitialValues] = useState<any>({
+    "userid": 0,
+    "shiftDate": "",
+    "tkDate": "",
+    "tkTime": "",
+    "status": null,
+    "type": ""
+  });
+
+  const [deleteInitialValues, setDeleteInitialValues] = useState<any>({
+    "userid": 0,
+    "shiftDate": "string",
+    "type": "string"
+  });
 
   const downloadExcel = (fromDate: any, toDate: any) => {
     setIsSubmit(true)
@@ -116,7 +133,6 @@ export const AttendanceSummary = (props: any) => {
                 label: d.firstname + " " + d.lastname
               })
             });
-            console.log(tempArray)
             setEmployeeList(tempArray)
           }
         }
@@ -142,7 +158,7 @@ export const AttendanceSummary = (props: any) => {
     }
     if (data.profile.role == 'ADMIN') {
       RequestAPI.getRequest(
-        `${Api.adminAttendanceSummary}?size=10${queryString}&page=${page}`,
+        `${Api.adminAttendanceSummary}?role=${data.profile.role}${queryString}`,
         "",
         {},
         {},
@@ -158,7 +174,7 @@ export const AttendanceSummary = (props: any) => {
       )
     } else {
       RequestAPI.getRequest(
-        `${Api.myAttendanceSummary}?size=10${queryString}&page=${page}`,
+        `${Api.myAttendanceSummary}?role=${data.profile.role}${queryString}`,
         "",
         {},
         {},
@@ -187,6 +203,29 @@ export const AttendanceSummary = (props: any) => {
     getAllAttendance(event.selected)
   };
 
+  const updateLog = (logType: any) => {
+    const valuesObj = { ...updateData }
+    if (logType == 'Time In') {
+      setInitialValues({
+        "userid": valuesObj.userid,
+        "shiftDate": valuesObj.date,
+        "tkDate": valuesObj.firstLogin ? moment(valuesObj.firstLogin, 'YYYY-MM-DD').format('YYYY-MM-DD') : "",
+        "tkTime": valuesObj.firstLogin ? moment(valuesObj.firstLogin, 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss') : "",
+        "status": valuesObj.status,
+        "type": logType,
+      })
+    } else {
+      setInitialValues({
+        "userid": valuesObj.userid,
+        "shiftDate": valuesObj.date,
+        "tkDate": valuesObj.lastLogin ? moment(valuesObj.lastLogin, 'YYYY-MM-DD').format('YYYY-MM-DD') : "",
+        "tkTime": valuesObj.lastLogin ? moment(valuesObj.lastLogin, 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss') : "",
+        "status": valuesObj.status,
+        "type": logType,
+      })
+    }
+  }
+
   const attendanceTable = useCallback(() => {
     return (
       <div>
@@ -198,6 +237,8 @@ export const AttendanceSummary = (props: any) => {
               <th style={{ width: 'auto' }}>Shift Schedule</th>
               <th style={{ width: 'auto' }}>Datetime In</th>
               <th style={{ width: 'auto' }}>Datetime Out</th>
+              <th style={{ width: 'auto' }}>Day Type</th>
+              <th style={{ width: 'auto' }}>Status</th>
               {
                 data.profile.role == 'ADMIN' ?
                   <th style={{ width: 'auto' }}>Action</th>
@@ -222,11 +263,22 @@ export const AttendanceSummary = (props: any) => {
                           <td> {item.schedule} </td>
                           <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
                           <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                          <td> {item.dayType} </td>
+                          <td> {item.status} </td>
                           {
                             data.profile.role == 'ADMIN' ?
                               <td> <label
                                 onClick={() => {
-                                  alert("Ongoing")
+                                  setUpdateData(item)
+                                  setInitialValues({
+                                    "userid": filterData && filterData['userid'],
+                                    "shiftDate": item.date,
+                                    "tkDate": item.firstLogin ? moment(item.firstLogin, 'YYYY-MM-DD').format('YYYY-MM-DD') : "",
+                                    "tkTime": item.firstLogin ? moment(item.firstLogin, 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss') : "",
+                                    "status": item.status,
+                                    "type": 'Time In',
+                                  })
+                                  setAddBioModal(true)
                                 }}
                                 className="text-muted cursor-pointer">
                                 Update
@@ -234,7 +286,12 @@ export const AttendanceSummary = (props: any) => {
                                 <br />
                                 <label
                                   onClick={() => {
-                                    alert("Ongoing")
+                                    setDeleteInitialValues({
+                                      "userid": filterData && filterData['userid'],
+                                      "shiftDate": item.date,
+                                      "type": 'Time In',
+                                    })
+                                    setDeleteBioModal(true)
                                   }}
                                   className="text-muted cursor-pointer">
                                   Delete
@@ -257,7 +314,7 @@ export const AttendanceSummary = (props: any) => {
           </tbody>
 
         </Table>
-       
+
         {
           allAttendance &&
             allAttendance.content &&
@@ -267,29 +324,29 @@ export const AttendanceSummary = (props: any) => {
             </div>
             :
             null
-        } 
-        
+        }
+
 
         <div className="d-flex justify-content-end">
-                <div className="">
-                  <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(allAttendance && allAttendance.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                  />
-                </div>
-              </div>
+          <div className="">
+            <ReactPaginate
+              className="d-flex justify-content-center align-items-center"
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={(allAttendance && allAttendance.totalPages) || 0}
+              previousLabel="<"
+              previousLinkClassName="prev-next-pagination"
+              nextLinkClassName="prev-next-pagination"
+              activeClassName="active-page-link"
+              pageLinkClassName="page-link"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </div>
       </div>
-      
+
     )
   }, [allAttendance])
 
@@ -345,9 +402,9 @@ export const AttendanceSummary = (props: any) => {
                               id="type"
                               value={filterData && filterData['department']}
                               onChange={(e) => makeFilterData(e)}>
-                                <option key={`departmentItem}`} value={""}>
-                                    Select
-                                  </option>
+                              <option key={`departmentItem}`} value={""}>
+                                Select
+                              </option>
                               {masterList &&
                                 masterList.department &&
                                 masterList.department.length &&
@@ -544,14 +601,15 @@ export const AttendanceSummary = (props: any) => {
       {/* End Create User Modal Form */}
 
       <Modal
-        show={addBioModal}
+        show={deleteBioModal}
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         backdrop="static"
         keyboard={false}
         onHide={() => {
-          setAddBioModal(false)
+          setDeleteBioModal(false)
+          deleteformRef.current?.resetForm()
         }}
         dialogClassName="modal-90w"
       >
@@ -560,35 +618,27 @@ export const AttendanceSummary = (props: any) => {
               Request For Leave/Time-off
             </Modal.Title> */}
           <Modal.Title id="contained-modal-title-vcenter">
-            Add Biometric Logs
+            Delete Biometric Logs
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="row w-100 px-5">
           <Formik
-            innerRef={formRef}
-            initialValues={{
-              "userid": 0,
-              "shiftDate": "",
-              "tkDate": "",
-              "tkTime": "",
-              "status": null,
-              "type": ""
-            }}
+            innerRef={deleteformRef}
+            initialValues={deleteInitialValues}
             enableReinitialize={true}
             validationSchema={
               Yup.object().shape({
                 shiftDate: Yup.string().required("Shift date is required !"),
-                tkDate: Yup.string().required("Date logged is required !"),
-                tkTime: Yup.string().required("Time logged is required !"),
                 type: Yup.string().required("Type is required !"),
               })
             }
             onSubmit={(values, actions) => {
               const valuesObj: any = { ...values }
               valuesObj.userid = filterData['userid']
-              RequestAPI.postRequest(Api.addBioLogs, "", valuesObj, {}, async (res: any) => {
+
+              RequestAPI.deleteRequest(`${Api.deleteBioLogs}`, "", valuesObj, async (res: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 || status === 201) {
+                if (status === 200) {
                   if (body.error && body.error.message) {
                     ErrorSwal.fire(
                       'Error!',
@@ -602,21 +652,24 @@ export const AttendanceSummary = (props: any) => {
                       'success'
                     )
                     getAllAttendance(0)
-                    setAddBioModal(false)
+                    setDeleteBioModal(false)
+                    deleteformRef.current?.resetForm()
                   }
                 } else {
+                  //error
                   ErrorSwal.fire(
-                    'Error!',
-                    'Something Error.',
+                    'Failed!',
+                    (body.error && body.error.message) || "",
                     'error'
                   )
                 }
               })
+
             }}>
             {({ values, setFieldValue, handleChange, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
+                  <div className="row w-100 m-0 px-5">
                     <div className="form-group col-md-12 mb-3" >
                       <label>Shift Date</label>
                       <input type="date"
@@ -624,6 +677,166 @@ export const AttendanceSummary = (props: any) => {
                         id="shiftDate"
                         className="form-control"
                         value={values.shiftDate}
+                        disabled={true}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.shiftDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Type</label>
+                      <select
+                        className={`form-select`}
+                        name="type"
+                        id="type"
+                        value={values.type}
+                        onChange={(e) => {
+                          setFieldValue('type', e.target.value);
+                        }}>
+                        <option key={`index`} value={""} disabled selected>
+                          Select
+                        </option>
+                        {masterList &&
+                          masterList.timekeepingType &&
+                          masterList.timekeepingType.length &&
+                          masterList.timekeepingType.map((item: any, index: string) => (
+                            <option key={`${index}_${item}1`} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                      {errors && errors.type && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                      )}
+                    </div>
+                  </div>
+                  <br />
+                  <Modal.Footer className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center px-5">
+                      <button
+                        type="submit"
+                        className="btn btn-primary">
+                        Proceed
+                      </button>
+                    </div>
+                  </Modal.Footer>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={addBioModal}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setAddBioModal(false)
+          setUpdateData(null)
+          formRef.current?.resetForm()
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title id="contained-modal-title-vcenter">
+              Request For Leave/Time-off
+            </Modal.Title> */}
+          <Modal.Title id="contained-modal-title-vcenter">
+            {updateData ? "Update Biometric Logs" : "Add Biometric Logs"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            initialValues={initialValues}
+            enableReinitialize={true}
+            validationSchema={
+              Yup.object().shape({
+                shiftDate: Yup.string().required("Shift date is required !"),
+                tkDate: Yup.string().required("Date logged is required !"),
+                tkTime: Yup.string().required("Time logged is required !"),
+                type: Yup.string().required("Type is required !"),
+              })
+            }
+            onSubmit={(values, actions) => {
+              const valuesObj: any = { ...values }
+              valuesObj.userid = filterData['userid']
+
+              if (updateData) {
+                RequestAPI.putRequest(Api.updateBioLogs, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                      getAllAttendance(0)
+                      setAddBioModal(false)
+                      formRef.current?.resetForm()
+                    }
+                  } else {
+                    ErrorSwal.fire(
+                      'Error!',
+                      'Something Error.',
+                      'error'
+                    )
+                  }
+                })
+              } else {
+                RequestAPI.postRequest(Api.addBioLogs, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                      getAllAttendance(0)
+                      setAddBioModal(false)
+                    }
+                  } else {
+                    ErrorSwal.fire(
+                      'Error!',
+                      'Something Error.',
+                      'error'
+                    )
+                  }
+                })
+              }
+
+            }}>
+            {({ values, setFieldValue, handleChange, handleSubmit, errors, touched }) => {
+              return (
+                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                  <div className="row w-100 m-0 px-5">
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Shift Date</label>
+                      <input type="date"
+                        name="shiftDate"
+                        id="shiftDate"
+                        className="form-control"
+                        value={values.shiftDate}
+                        disabled={updateData ? true : false}
                         onChange={handleChange}
                       />
                       {errors && errors.shiftDate && (
@@ -664,7 +877,10 @@ export const AttendanceSummary = (props: any) => {
                         name="type"
                         id="type"
                         value={values.type}
-                        onChange={handleChange}>
+                        onChange={(e) => {
+                          setFieldValue('type', e.target.value);
+                          updateLog(e.target.value)
+                        }}>
                         <option key={`index`} value={""} disabled selected>
                           Select
                         </option>

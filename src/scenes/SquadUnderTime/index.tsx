@@ -248,6 +248,7 @@ export const SquadUndertime = (props: any) => {
                             <th style={{ width: 'auto' }}>UT End</th>
                             <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Reason</th>
+                            <th style={{ width: 'auto' }}>Action Taken By</th>
                             <th style={{ width: 'auto' }}>Status</th>
                             <th style={{ width: 'auto' }}>Action</th>
                         </tr>
@@ -266,6 +267,7 @@ export const SquadUndertime = (props: any) => {
                                         <td> {item.utEnd.replace('T', ' ')} </td>
                                         <td> {item.fileDate} </td>
                                         <td> {item.reason} </td>
+                                        <td> {item.statusChangedBy} </td>
                                         <td> {item.status} </td>
                                         <td>
                                             {

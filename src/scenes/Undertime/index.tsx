@@ -259,16 +259,17 @@ export const Undertime = (props: any) => {
                     <thead>
                         <tr>
                             {
-                            data.profile.role == 'ADMIN' ?
-                            <>
-                                <th style={{ width: 'auto' }}>Employee Name</th>
-                            </> : null
+                                data.profile.role == 'ADMIN' ?
+                                    <>
+                                        <th style={{ width: 'auto' }}>Employee Name</th>
+                                    </> : null
                             }
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>UT Start</th>
                             <th style={{ width: 'auto' }}>UT End</th>
                             <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Reason</th>
+                            <th style={{ width: 'auto' }}>Action Taken By</th>
                             <th style={{ width: 'auto' }}>Status</th>
                             <th style={{ width: 'auto' }}>Action</th>
                         </tr>
@@ -281,17 +282,18 @@ export const Undertime = (props: any) => {
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                         {
+                                        {
                                             data.profile.role == 'ADMIN' ?
-                                            <>
-                                            <td> {item.lastName}, {item.firstName} </td>
-                                            </> : null
+                                                <>
+                                                    <td> {item.lastName}, {item.firstName} </td>
+                                                </> : null
                                         }
                                         <td> {item.shiftDate} </td>
                                         <td> {item.utStart.replace('T', ' ')} </td>
                                         <td> {item.utEnd.replace('T', ' ')} </td>
                                         <td> {item.fileDate} </td>
                                         <td> {item.reason} </td>
+                                        <td> {item.statusChangedBy} </td>
                                         <td> {item.status} </td>
                                         <td className="d-flex">
                                             {
