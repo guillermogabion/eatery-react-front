@@ -147,7 +147,7 @@ export const Leaves = (props: any) => {
       }
     }
 
-    if (data.profile.role == 'ADMIN') {
+    if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
         `${Api.allRequestLeave}?size=10${queryString}&page=${page}`,
         "",
@@ -406,12 +406,12 @@ export const Leaves = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-            {
-              data.profile.role == 'ADMIN' ?
-              <>
-                <th style={{ width: 'auto' }}>Employee Name</th>
-              </> : null
-            }
+              {
+                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                  <>
+                    <th style={{ width: 'auto' }}>Employee Name</th>
+                  </> : null
+              }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
@@ -432,12 +432,12 @@ export const Leaves = (props: any) => {
                       return (
                         <tr>
                           {
-                            data.profile.role == 'ADMIN' ?
-                            <>
-                              <td> {item.lastName}, {item.firstName} </td>
-                            </> : null
+                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                              <>
+                                <td> {item.lastName}, {item.firstName} </td>
+                              </> : null
                           }
-                          
+
                           <td> {item.type} </td>
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
@@ -565,21 +565,21 @@ export const Leaves = (props: any) => {
               <div className="row">
                 <div className="col-md-6">
                   <h2>Good Day, {userData.data.profile.firstName}!</h2>
-                  <br/>
+                  <br />
                   {data.profile.role !== 'ADMIN' ? (
-  // This code block will be rendered only if the user is an ADMIN
-                      <div>
-                        <h4 className="bold-text">Leave Credits </h4>
-                        {getMyLeaves.map((leave: any) => (
-                          <div key={leave.id}>
-                            <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      // This code block will be rendered for all other users
-                      null
-                    )}
+                    // This code block will be rendered only if the user is an ADMIN
+                    <div>
+                      <h4 className="bold-text">Leave Credits </h4>
+                      {getMyLeaves.map((leave: any) => (
+                        <div key={leave.id}>
+                          <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    // This code block will be rendered for all other users
+                    null
+                  )}
 
                   {/* {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
@@ -938,7 +938,7 @@ export const Leaves = (props: any) => {
                         </Table>
                         {
                           leaveBreakdown &&
-                          leaveBreakdown.length == 0 ?
+                            leaveBreakdown.length == 0 ?
                             <div className="w-100 text-center">
                               <label htmlFor="">No Records Found</label>
                             </div>

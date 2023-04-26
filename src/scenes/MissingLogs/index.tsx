@@ -208,7 +208,7 @@ export const MissingLogs = (props: any) => {
                 <div className="w-100 pt-4">
                   <div className="fieldtext d-flex col-md-12">
                   {
-                      data.profile.role == 'ADMIN' ?
+                      data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                         <>
                           <div className="" style={{ width: 200, marginRight: 10 }}>
                             <label>Employee</label>

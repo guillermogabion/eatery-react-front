@@ -114,7 +114,7 @@ export const AttendanceCorrection = (props: any) => {
       }
     }
 
-    if (data.profile.role == 'ADMIN') {
+    if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
         `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
         "",
@@ -351,7 +351,7 @@ export const AttendanceCorrection = (props: any) => {
           <thead>
             <tr>
               {
-                data.profile.role == 'ADMIN' ?
+                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <>
                     <th style={{ width: 'auto' }}>Employee Name</th>
                   </> : null
@@ -372,7 +372,7 @@ export const AttendanceCorrection = (props: any) => {
                 return (
                   <tr>
                     {
-                      data.profile.role == 'ADMIN' ?
+                      data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                         <>
                           <td> {item.lastName}, {item.firstName} </td>
                         </> : null
@@ -586,13 +586,13 @@ export const AttendanceCorrection = (props: any) => {
                 const valuesObj: any = { ...values }
                 let hasError = false
                 coaBreakdown.forEach((element: any, index: any) => {
-                  if (element.coaBdType == ""){
+                  if (element.coaBdType == "") {
                     hasError = true
                   }
-                  if (element.date == ""){
+                  if (element.date == "") {
                     hasError = true
                   }
-                  if (element.time == ""){
+                  if (element.time == "") {
                     hasError = true
                   }
                 });
@@ -606,55 +606,55 @@ export const AttendanceCorrection = (props: any) => {
                   valuesObj.coaBd = coaBreakdown
                 }
 
-                if(coaId){
+                if (coaId) {
                   delete valuesObj.userId
-                    RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async(res : any) => {
-                      const { status, body = { data: {}, error: {} } }: any = res
-                      if (status === 200 || status === 201) {
-                        if (body.error && body.error.message) {
-                          ErrorSwal.fire(
-                            'Error!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                          )
-                        } else {
-                          ErrorSwal.fire(
-                            'Success!',
-                            (body.data) || "",
-                            'success'
-                          )
-                          setCoaBreakdown([])
-                          getAllCOARequest(0, "")
-                          setModalShow(false)
-                          formRef.current?.resetForm()
-                        }
-                      } else {
+                  RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
                         ErrorSwal.fire(
                           'Error!',
-                          'Something Error.',
+                          (body.error && body.error.message) || "",
                           'error'
                         )
+                      } else {
+                        ErrorSwal.fire(
+                          'Success!',
+                          (body.data) || "",
+                          'success'
+                        )
+                        setCoaBreakdown([])
+                        getAllCOARequest(0, "")
+                        setModalShow(false)
+                        formRef.current?.resetForm()
                       }
-                      setCoaBreakdownCount(0);
+                    } else {
+                      ErrorSwal.fire(
+                        'Error!',
+                        'Something Error.',
+                        'error'
+                      )
+                    }
+                    setCoaBreakdownCount(0);
 
-                    })
+                  })
 
 
-                }else {
-                  RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res:any) => {
+                } else {
+                  RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       console.log("Response body:", res);
-                      if(body.error && body.error.message) {
+                      if (body.error && body.error.message) {
                         ErrorSwal.fire(
                           'Error!',
                           (body.error && body.error.message) || "",
                           'error'
                         )
                         setCoaBreakdown([])
-                          getAllCOARequest(0, "")
-                          setModalShow(false)
-                          formRef.current?.resetForm()
+                        getAllCOARequest(0, "")
+                        setModalShow(false)
+                        formRef.current?.resetForm()
                       } else {
                         ErrorSwal.fire(
                           'Success!',

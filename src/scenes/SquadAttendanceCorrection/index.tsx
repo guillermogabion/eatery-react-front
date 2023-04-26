@@ -114,7 +114,7 @@ export const SquadAttendanceCorrection = (props: any) => {
       }
     }
     
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+    if (data.profile.role == 'EXECUTIVE'){
       RequestAPI.getRequest(
         `${Api.getAllSquadCoa}?size=10${queryString}&page=${page}`,
         "",

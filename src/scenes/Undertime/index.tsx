@@ -73,7 +73,7 @@ export const Undertime = (props: any) => {
                 })
             }
         }
-        if (data.profile.role == 'ADMIN') {
+        if (data.profile.role == 'EXECUTIVE') {
             RequestAPI.getRequest(
                 `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                 "",
@@ -259,7 +259,7 @@ export const Undertime = (props: any) => {
                     <thead>
                         <tr>
                             {
-                                data.profile.role == 'ADMIN' ?
+                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
                                         <th style={{ width: 'auto' }}>Employee Name</th>
                                     </> : null
@@ -283,7 +283,7 @@ export const Undertime = (props: any) => {
                                 return (
                                     <tr>
                                         {
-                                            data.profile.role == 'ADMIN' ?
+                                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
                                                     <td> {item.lastName}, {item.firstName} </td>
                                                 </> : null
