@@ -13,6 +13,7 @@ import {
   ScheduleAdjustment,
   AttendanceCorrection,
   AttendanceSummary,
+  MyAttendanceSummary,
   Report,
   Squad,
   Holiday,
@@ -64,7 +65,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/unapprovedrequests", component: UnApproveRequest })
   routes.push({ path: "/request/coa", component: AttendanceCorrection })
   routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
-  routes.push({ path: "/timekeeping/myattendancesummary", component: AttendanceSummary })
+  routes.push({ path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary })
   routes.push({ path: "/timekeeping/missinglogs", component: MissingLogs })
   routes.push({ path: "/user", component: ChangePassword })
   routes.push({ path: "/report", component: Report })

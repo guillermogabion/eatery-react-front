@@ -156,8 +156,6 @@ export const AttendanceSummary = (props: any) => {
         })
       }
     }
-    if (data.profile.role == 'EXECUTIVE') {
-
       RequestAPI.getRequest(
         `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}`,
         "",
@@ -173,23 +171,6 @@ export const AttendanceSummary = (props: any) => {
           }
         }
       )
-    } else {
-      RequestAPI.getRequest(
-        `${Api.myAttendanceSummary}?size=10${queryString}&page=${page}`,
-        "",
-        {},
-        {},
-        async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 && body) {
-            if (body.error && body.error.message) {
-            } else {
-              setAllAttendance(body.data)
-            }
-          }
-        }
-      )
-    }
 
   }
 

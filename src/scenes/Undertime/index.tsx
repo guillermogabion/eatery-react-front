@@ -311,7 +311,7 @@ export const Undertime = (props: any) => {
                                                                 <br />
                                                             </>
                                                         ) : null}
-                                                        {authorizations.includes("Request:Approve") ? (
+                                                        {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                                             <>
                                                                 <label
                                                                     onClick={() => {
@@ -322,7 +322,7 @@ export const Undertime = (props: any) => {
                                                                 </label> <br />
                                                             </>
                                                         ) : null}
-                                                        {authorizations.includes("Request:Reject") ? (
+                                                        {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                                             <>
                                                                 <label
                                                                     onClick={() => {

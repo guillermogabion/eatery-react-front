@@ -461,7 +461,7 @@ export const Leaves = (props: any) => {
                                     </>
                                   ) : null}
 
-                                  {authorizations.includes("Request:Approve") ? (
+                                  {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
                                         onClick={() => {
@@ -473,7 +473,7 @@ export const Leaves = (props: any) => {
                                     </>
                                   ) : null}
 
-                                  {authorizations.includes("Request:Reject") ? (
+                                  {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
                                         onClick={() => {
@@ -566,7 +566,7 @@ export const Leaves = (props: any) => {
                 <div className="col-md-6">
                   <h2>Good Day, {userData.data.profile.firstName}!</h2>
                   <br />
-                  {data.profile.role !== 'ADMIN' ? (
+                  {data.profile.role !== 'EXECUTIVE' ? (
                     // This code block will be rendered only if the user is an ADMIN
                     <div>
                       <h4 className="bold-text">Leave Credits </h4>

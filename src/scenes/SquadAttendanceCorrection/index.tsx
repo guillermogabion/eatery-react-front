@@ -114,7 +114,7 @@ export const SquadAttendanceCorrection = (props: any) => {
       }
     }
     
-    if (data.profile.role == 'EXECUTIVE'){
+    
       RequestAPI.getRequest(
         `${Api.getAllSquadCoa}?size=10${queryString}&page=${page}`,
         "",
@@ -130,7 +130,7 @@ export const SquadAttendanceCorrection = (props: any) => {
           }
         }
       )
-    }
+    
   }
   const getCoa = (id: any = 0) => {
    

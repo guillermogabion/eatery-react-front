@@ -398,7 +398,7 @@ export const ScheduleAdjustment = (props: any) => {
                                     </>
                                   ) : null}
 
-                                  {authorizations.includes("Request:Approve") ? (
+                                  {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
                                         onClick={() => {
@@ -410,7 +410,7 @@ export const ScheduleAdjustment = (props: any) => {
                                     </>
                                   ) : null}
 
-                                  {authorizations.includes("Request:Reject") ? (
+                                  {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
                                         onClick={() => {
