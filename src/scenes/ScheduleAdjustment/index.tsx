@@ -83,7 +83,7 @@ export const ScheduleAdjustment = (props: any) => {
       }
     }
 
-    if (data.profile.role == 'ADMIN') {
+    if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
         `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}`,
         "",
@@ -335,7 +335,7 @@ export const ScheduleAdjustment = (props: any) => {
           <thead>
             <tr>
               {
-                data.profile.role == 'ADMIN' ?
+                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                 <>
                   <th style={{ width: 'auto' }}>Employee Name</th>
                 </> : null
@@ -359,7 +359,7 @@ export const ScheduleAdjustment = (props: any) => {
                       return (
                         <tr>
                           {
-                            data.profile.role == 'ADMIN' ?
+                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                             <>
                               <td> {item.lastName}, {item.firstName} </td>
                             </> : null

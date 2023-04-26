@@ -156,8 +156,8 @@ export const AttendanceSummary = (props: any) => {
         })
       }
     }
-    if (data.profile.role == 'ADMIN') {
-      
+    if (data.profile.role == 'EXECUTIVE') {
+
       RequestAPI.getRequest(
         `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}`,
         "",
@@ -241,7 +241,7 @@ export const AttendanceSummary = (props: any) => {
               <th style={{ width: 'auto' }}>Day Type</th>
               <th style={{ width: 'auto' }}>Status</th>
               {
-                data.profile.role == 'ADMIN' ?
+                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <th style={{ width: 'auto' }}>Action</th>
                   :
                   null
@@ -267,7 +267,7 @@ export const AttendanceSummary = (props: any) => {
                           <td> {item.dayType} </td>
                           <td> {item.status} </td>
                           {
-                            data.profile.role == 'ADMIN' ?
+                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <td> <label
                                 onClick={() => {
                                   setUpdateData(item)
@@ -382,7 +382,7 @@ export const AttendanceSummary = (props: any) => {
                 <div className="w-100 pt-4">
                   <div className="fieldtext d-flex col-md-12">
                     {
-                      data.profile.role == 'ADMIN' ?
+                      data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                         <>
                           <div className="" style={{ width: 200, marginRight: 10 }}>
                             <label>Employee</label>
@@ -458,7 +458,7 @@ export const AttendanceSummary = (props: any) => {
                       Search
                     </Button>
                     {
-                      data.profile.role == 'ADMIN' ?
+                      data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                         <Button
                           style={{ width: 130 }}
                           onClick={() => setAddBioModal(true)}
@@ -474,7 +474,7 @@ export const AttendanceSummary = (props: any) => {
 
                   {attendanceTable()}
                   {
-                    data.profile.role == 'ADMIN' ?
+                    data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                       <>
                         <div className="d-flex justify-content-end mt-3" >
                           <div>
