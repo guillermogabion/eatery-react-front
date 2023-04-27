@@ -25,6 +25,7 @@ export const AttendanceCorrection = (props: any) => {
   const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
+  const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const { authorizations } = data?.profile
   const [coaBreakdown, setCoaBreakdown] = useState<any>([]);
   const { history } = props
@@ -698,9 +699,14 @@ export const AttendanceCorrection = (props: any) => {
                         }}
                         value={values.type}
                       >
-                        <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
-                        <option value="Power_Outage">Power Outage</option>
-                        <option value="Others">Others</option>
+                        {masterList &&
+                          masterList.coaTypes &&
+                          masterList.coaTypes.length > 0 &&
+                          masterList.coaTypes.map((item: any, index: string) => (
+                            <option key={`${index}_${item}`} value={item}>
+                              {item.replaceAll('_', ' ')}
+                            </option>
+                          ))}
                       </select>
                       <div className="form-group col-md-12 mb-3">
                         <label>Reason</label>
