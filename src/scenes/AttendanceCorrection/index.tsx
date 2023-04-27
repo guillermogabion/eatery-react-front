@@ -80,7 +80,7 @@ export const AttendanceCorrection = (props: any) => {
     'Action',
   ]
   const [initialValues, setInitialValues] = useState<any>({
-    "type": "Biometric_Device_Malfunction",
+    "type": "Forgot_To_Login_Logout",
     "reason": "",
     "coaBd": [
       {
