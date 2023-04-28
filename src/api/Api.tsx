@@ -19,6 +19,7 @@ const Api: any = {
   createLeaveType: process.env.REACT_APP_API_URL + "request/type/create",
   updateLeaveType: process.env.REACT_APP_API_URL + "request/type/update",
   deleteLeaveType: process.env.REACT_APP_API_URL + "request/type/delete",
+  updateCredits: process.env.REACT_APP_API_URL + "request/credits/add",
   
   adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
   adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",

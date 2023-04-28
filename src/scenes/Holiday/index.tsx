@@ -30,7 +30,6 @@ export const Holiday = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const [isSubmit, setIsSubmit] = useState<any>(false);
-  console.log(masterList)
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
@@ -49,7 +48,7 @@ export const Holiday = (props: any) => {
   const formRef: any = useRef()
 
   useEffect(() => {
-    getHolidays()
+    getHolidays(0, "")
   }, [])
 
   const handlePageClick = (event: any) => {
@@ -81,6 +80,7 @@ export const Holiday = (props: any) => {
         })
       }
     }
+
     RequestAPI.getRequest(
       `${Api.allHoliday}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
       "",
@@ -234,7 +234,7 @@ export const Holiday = (props: any) => {
         RequestAPI.deleteRequest(`${Api.deleteHoliday}`, "", { "id": id }, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200) {
-            getHolidays()
+            getHolidays(0,"")
             ErrorSwal.fire(
               'Deleted!',
               (body && body.data) || "",
@@ -280,9 +280,70 @@ export const Holiday = (props: any) => {
                 </div>
               </div>
               <div>
-              <h3>Holiday Tagging</h3>
+                <h3>Holiday Tagging</h3>
                 <div className="w-100 pt-2">
                   <div>
+                    <div className="fieldtext d-flex col-md-12">
+                      <div className="" style={{ width: 200, marginRight: 10 }}>
+                        <label>Holiday Name</label>
+                        <input
+                          name="holidayName"
+                          placeholder="Holiday Name"
+                          type="text"
+                          autoComplete="off"
+                          className="formControl"
+                          maxLength={40}
+                          onChange={(e) => makeFilterData(e)}
+                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        />
+                      </div>
+                      <div className="" style={{ width: 200, marginRight: 10 }}>
+                        <label>Holiday Type</label>
+                        <select
+                          className={`form-select`}
+                          name="holidayType"
+                          id="holidayType"
+                          value={filterData && filterData['holidayType']}
+                          onChange={(e) => makeFilterData(e)}>
+                          <option key={`holidayTypeItem}`} value={""}>
+                            Select
+                          </option>
+                          {masterList.holidayType &&
+                            masterList.holidayType.length > 0 &&
+                            masterList.holidayType.map((item: any, index: string) => (
+                              <option key={`${index}_${item.item}`} value={item.item}>
+                                {item}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                      <div className="" style={{ width: 200, marginRight: 10 }}>
+                        <label>Premium Type</label>
+                        <select
+                          className={`form-select`}
+                          name="premiumType"
+                          id="premiumType"
+                          value={filterData && filterData['premiumType']}
+                          onChange={(e) => makeFilterData(e)}>
+                          <option key={`holidayTypeItem}`} value={""}>
+                            Select
+                          </option>
+                          {masterList.premiumType &&
+                            masterList.premiumType.length > 0 &&
+                            masterList.premiumType.map((item: any, index: string) => (
+                              <option key={`${index}_${item.item}`} value={item.item}>
+                                {item}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                      <Button
+                        style={{ width: 120 }}
+                        onClick={() => getHolidays(0, "")}
+                        className="btn btn-primary mx-2 mt-4">
+                        Search
+                      </Button>
+                    </div>
                     <Table responsive="lg">
                       <thead>
                         <tr>
@@ -393,7 +454,7 @@ export const Holiday = (props: any) => {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              
+
               {holidayId ? 'Update Holiday' : 'Create Holiday'}
 
             </Modal.Title>
@@ -474,7 +535,7 @@ export const Holiday = (props: any) => {
                     setIsSubmit(false)
                   })
                 }
-                
+
               }}>
               {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                 return (

@@ -16,6 +16,7 @@ import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 const ErrorSwal = withReactContent(Swal)
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import SingleSelect from "../../components/Forms/SingleSelect"
 
 export const LeaveTypes = (props: any) => {
     const { history } = props
@@ -32,21 +33,55 @@ export const LeaveTypes = (props: any) => {
     const { data } = useSelector((state: any) => state.rootReducer.userData)
     const { authorizations } = data?.profile
     const [modalShow, setModalShow] = React.useState(false);
+    const [creditModal, setCreditModal] = React.useState(false);
     const [key, setKey] = React.useState('all');
     const [leaveTypes, setLeaveTypes] = useState<any>([]);
     const [allLeaveTypes, setAllLeaveTypes] = useState<any>([]);
     const [leaveTypeId, setLeaveTypeId] = useState<any>("");
     const [otClassification, setOtClassification] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
+    const [employeeList, setEmployeeList] = useState<any>([]);
     const [initialValues, setInitialValues] = useState<any>({
         "name": "",
         "description": ""
     })
+    const [creditInitialValues, setCreditInitialValues] = useState<any>({
+        "userId": "",
+        "leaveTypeId": "",
+        "credits": ""
+    })
     const formRef: any = useRef()
+    const creditformRef: any = useRef()
 
     useEffect(() => {
         getLeaveTypes()
+        getAllEmployee()
     }, [])
+
+    const getAllEmployee = () => {
+        RequestAPI.getRequest(
+            `${Api.employeeList}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.forEach((d: any, i: any) => {
+                            tempArray.push({
+                                value: d.userAccountId,
+                                label: d.firstname + " " + d.lastname
+                            })
+                        });
+                        setEmployeeList(tempArray)
+                    }
+                }
+            }
+        )
+    }
 
     const handlePageClick = (event: any) => {
         getLeaveTypes(event.selected, "")
@@ -78,14 +113,13 @@ export const LeaveTypes = (props: any) => {
             }
         }
         RequestAPI.getRequest(
-            `${Api.leaveTypesList}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
+            `${Api.leaveTypesList}?size=100${queryString}&page=${page}&sort=id&sortDir=desc`,
             "",
             {},
             {},
             async (res: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 && body && body.data) {
-                    console.log(body.data)
                     setAllLeaveTypes(body.data)
                 }
             }
@@ -181,7 +215,7 @@ export const LeaveTypes = (props: any) => {
                                                                             setModalShow(true)
                                                                         }}
                                                                         className="text-muted cursor-pointer">
-                                                                        
+
                                                                         <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                                     </label>
                                                                     <br />
@@ -190,7 +224,7 @@ export const LeaveTypes = (props: any) => {
                                                                             deleteLeaveType(item.id)
                                                                         }}
                                                                         className="text-muted cursor-pointer">
-                                                                        
+
                                                                         <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                                     </label>
                                                                 </td>
@@ -231,26 +265,43 @@ export const LeaveTypes = (props: any) => {
                                     />
                                 </div>
                             </div>
-                            {authorizations.includes("Request:Create") ? (
-                                <>
-                                    <div className="d-flex justify-content-end mt-3" >
-                                        <div>
-                                            <Button
-                                                className="mx-2"
-                                                onClick={() => {
-                                                    setLeaveTypeId("")
-                                                    setInitialValues(initialPayload)
-                                                    setModalShow(true)
-                                                }}>Create Leave Type</Button>
+                            <div className="d-flex justify-content-end">
+                                {authorizations.includes("Request:Create") ? (
+                                    <>
+                                        <div className="d-flex justify-content-end mt-3" >
+                                            <div>
+                                                <Button
+                                                    className="mx-2"
+                                                    onClick={() => {
+                                                        setCreditModal(true)
+                                                    }}>Add Credits to Employee</Button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </>
-                            ) : null}
+                                    </>
+                                ) : null}
+
+                                {authorizations.includes("Request:Create") ? (
+                                    <>
+                                        <div className="d-flex justify-content-end mt-3" >
+                                            <div>
+                                                <Button
+                                                    className="mx-2"
+                                                    onClick={() => {
+                                                        setLeaveTypeId("")
+                                                        setInitialValues(initialPayload)
+                                                        setModalShow(true)
+                                                    }}>Create Leave Type</Button>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : null}
+                            </div>
+
 
                         </div>
                     </div>
                 </div>
-                {/* Create User Modal Form */}
+
                 <Modal
                     show={modalShow}
                     size="lg"
@@ -284,7 +335,7 @@ export const LeaveTypes = (props: any) => {
                                 const valuesObj: any = { ...values }
                                 if (leaveTypeId) {
                                     valuesObj.id = leaveTypeId
-                                    RequestAPI.putRequest(Api.updateLeaveType, "", valuesObj, {}, async (res: any) => {
+                                    RequestAPI.putRequest(Api.updateCredits, "", valuesObj, {}, async (res: any) => {
                                         const { status, body = { data: {}, error: {} } }: any = res
                                         if (status === 200 || status === 201) {
                                             if (body.error && body.error.message) {
@@ -395,7 +446,140 @@ export const LeaveTypes = (props: any) => {
                         </Formik>
                     </Modal.Body>
                 </Modal>
-                {/* End Create User Modal Form */}
+
+
+                <Modal
+                    show={creditModal}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    backdrop="static"
+                    keyboard={false}
+                    onHide={() => setCreditModal(false)}
+                    dialogClassName="modal-90w"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+
+                            Add Credit Leave to Employee
+
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="row w-100 px-5">
+                        <Formik
+                            innerRef={creditformRef}
+                            initialValues={creditInitialValues}
+                            enableReinitialize={true}
+                            validationSchema={
+                                Yup.object().shape({
+                                    userId: Yup.string().required("Employee is required !"),
+                                    leaveTypeId: Yup.string().required("Leave type is required !"),
+                                    credits: Yup.string().required("Credits is required !"),
+                                })
+                            }
+                            onSubmit={(values, actions) => {
+                                const valuesObj: any = { ...values }
+
+                                RequestAPI.putRequest(Api.updateCredits, "", valuesObj, {}, async (res: any) => {
+                                    const { status, body = { data: {}, error: {} } }: any = res
+                                    if (status === 200 || status === 201) {
+                                        if (body.error && body.error.message) {
+                                            ErrorSwal.fire(
+                                                'Error!',
+                                                (body.error && body.error.message) || "",
+                                                'error'
+                                            )
+                                        } else {
+                                            ErrorSwal.fire(
+                                                'Success!',
+                                                (body.data) || "",
+                                                'success'
+                                            )
+                                            setCreditModal(false)
+                                            creditformRef.current?.resetForm()
+                                        }
+                                    } else {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            (body.error && body.error.message) || "Something error!",
+                                            'error'
+                                        )
+                                    }
+                                })
+
+                            }}>
+                            {({ values, setFieldValue, handleSubmit, handleChange, errors, touched }) => {
+                                return (
+                                    <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                        <div className="row w-100 px-5 flex-column">
+                                            <div className="form-group col-md-12 mb-3" >
+                                                <label>Employee</label>
+                                                <SingleSelect
+                                                    type="string"
+                                                    options={employeeList || []}
+                                                    placeholder={"Employee"}
+                                                    onChangeOption={(e: any) => {
+                                                        setFieldValue('userId', e.value)
+                                                    }}
+                                                    name="userId"
+                                                    value={values.userId}
+                                                />
+                                                {errors && errors.userId && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                )}
+                                            </div>
+                                            <div className="form-group col-md-12 mb-3" >
+                                                <label>Leave Type</label>
+                                                <select
+                                                    className={`form-select`}
+                                                    name="leaveTypeId"
+                                                    id="type"
+                                                    value={values.leaveTypeId}
+                                                    onChange={(e) => { setFieldValue('leaveTypeId', e.target.value) }}>
+                                                    <option key={`departmentItem}`} value={""}>
+                                                        Select
+                                                    </option>
+                                                    {allLeaveTypes &&
+                                                        allLeaveTypes.length &&
+                                                        allLeaveTypes.map((item: any, index: string) => (
+                                                            <option key={`${index}_${item.id}`} value={item.id}>
+                                                                {item.name}
+                                                            </option>
+                                                        ))}
+                                                </select>
+                                                {errors && errors.leaveTypeId && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.leaveTypeId}</p>
+                                                )}
+                                            </div>
+                                            <div className="form-group col-md-12 mb-3" >
+                                                <label>Credits</label>
+                                                <input type="text"
+                                                    name="credits"
+                                                    id="credits"
+                                                    className="form-control"
+                                                    value={values.credits}
+                                                    onChange={handleChange}
+                                                />
+                                                {errors && errors.credits && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.credits}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <Modal.Footer>
+                                            <div className="d-flex justify-content-end px-5">
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </Modal.Footer>
+                                    </Form>
+                                )
+                            }}
+                        </Formik>
+                    </Modal.Body>
+                </Modal>
             </div>
         </div>
     )
