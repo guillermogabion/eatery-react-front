@@ -173,7 +173,7 @@ export const Squad = (props: any) => {
                                       <th style={{ width: 'auto' }}>Name</th>
                                       <th style={{ width: 'auto' }}>Employee Type</th>
                                       <th style={{ width: 'auto' }}>Status</th>
-                                    
+                                      <th style={{ width: 'auto' }}>Log-In/Log-Out</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -185,7 +185,10 @@ export const Squad = (props: any) => {
                                         <td>{item.fullname}</td>
                                         <td>{item.empType}</td>
                                         <td>{item.empStatus}</td>
-
+                                        <td>
+                                          {item.todaysTimeIn ? <>{item.todaysTimeIn} - IN <br/> </> : null} 
+                                          {item.todaysTimeOut ? <>{item.todaysTimeOut} - OUT </> : null} 
+                                        </td>
                                       </tr>
                                     ))}
                                   </tbody>
