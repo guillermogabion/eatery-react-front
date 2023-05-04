@@ -38,7 +38,8 @@ export const LeaveTypes = (props: any) => {
     const [leaveTypes, setLeaveTypes] = useState<any>([]);
     const [allLeaveTypes, setAllLeaveTypes] = useState<any>([]);
     const [leaveTypeId, setLeaveTypeId] = useState<any>("");
-    const [userCredits, setUserCredits] = useState<any>("");
+    const [editCredit, setEditCredit] = useState<any>(true);
+
     const [otClassification, setOtClassification] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [employeeList, setEmployeeList] = useState<any>([]);
@@ -515,6 +516,7 @@ export const LeaveTypes = (props: any) => {
                                                 'success'
                                             )
                                             setCreditModal(false)
+                                            setEditCredit(true)
                                             creditformRef.current?.resetForm()
                                         }
                                     } else {
@@ -585,6 +587,7 @@ export const LeaveTypes = (props: any) => {
                                                     name="credits"
                                                     id="credits"
                                                     className="form-control"
+                                                    disabled={editCredit}
                                                     value={values.credits}
                                                     onChange={handleChange}
                                                 />
@@ -596,9 +599,25 @@ export const LeaveTypes = (props: any) => {
                                         <Modal.Footer>
                                             <div className="d-flex justify-content-end px-5">
                                                 <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        if (editCredit){
+                                                            setEditCredit(false)
+                                                        }else{
+                                                            getUserCredits(values.userId, values.leaveTypeId,setFieldValue)
+                                                            setEditCredit(true)
+                                                        }
+                                                    }}
+                                                    
+                                                    className="btn btn-primary mx-1">
+                                                    { !editCredit ? "Cancel" : "Update"}
+                                                </button>
+
+                                                <button
                                                     type="submit"
+                                                    disabled={editCredit}
                                                     className="btn btn-primary">
-                                                    Update
+                                                    SAVE
                                                 </button>
                                             </div>
                                         </Modal.Footer>
