@@ -293,7 +293,7 @@ export const LeaveTypes = (props: any) => {
                                                     className="mx-2"
                                                     onClick={() => {
                                                         setCreditModal(true)
-                                                    }}>Add Credits to Employee</Button>
+                                                    }}>Edit Credits to Employee</Button>
                                             </div>
                                         </div>
                                     </>
@@ -480,7 +480,7 @@ export const LeaveTypes = (props: any) => {
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter">
 
-                            Add Credit Leave to Employee
+                            Edit Credits to Employee
 
                         </Modal.Title>
                     </Modal.Header>
