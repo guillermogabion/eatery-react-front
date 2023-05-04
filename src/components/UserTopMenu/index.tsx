@@ -50,9 +50,13 @@ const UserTopMenu = (props: any) => {
   return (
     <div className="contentRightMain">
       <h1>
-        <a className="logo" href="/">
+        <NavLink to={"/timekeeping"}
+          className="logo"
+          onClick={() => {
+            setCurrentRoutePath("/timekeeping")
+          }}>
           <img src={actimai_logo} alt="Actimai logo" width={80} height={55} />
-        </a>
+        </NavLink>
       </h1>
       <div className="TopHeaderRight">
         {search ? (
@@ -100,7 +104,7 @@ const UserTopMenu = (props: any) => {
               <h3> {userData.data.profile.firstName} {userData.data.profile.lastName}</h3>
               <small>
                 {userData.data.profile.squad}
-                
+
               </small>
             </div>
           </div>
