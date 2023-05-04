@@ -38,6 +38,7 @@ export const LeaveTypes = (props: any) => {
     const [leaveTypes, setLeaveTypes] = useState<any>([]);
     const [allLeaveTypes, setAllLeaveTypes] = useState<any>([]);
     const [leaveTypeId, setLeaveTypeId] = useState<any>("");
+    const [userCredits, setUserCredits] = useState<any>("");
     const [otClassification, setOtClassification] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [employeeList, setEmployeeList] = useState<any>([]);
@@ -77,6 +78,24 @@ export const LeaveTypes = (props: any) => {
                             })
                         });
                         setEmployeeList(tempArray)
+                    }
+                }
+            }
+        )
+    }
+
+    const getUserCredits = (userId: any, typeId: any, setFieldValue: any) => {
+        RequestAPI.getRequest(
+            `${Api.getUserCredits}?userId=${userId}&typeId=${typeId}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        setFieldValue('credits',body.data.credits)
                     }
                 }
             }
@@ -520,6 +539,9 @@ export const LeaveTypes = (props: any) => {
                                                     placeholder={"Employee"}
                                                     onChangeOption={(e: any) => {
                                                         setFieldValue('userId', e.value)
+                                                        if (e.value && values.leaveTypeId){
+                                                            getUserCredits(e.value, values.leaveTypeId, setFieldValue)
+                                                        }
                                                     }}
                                                     name="userId"
                                                     value={values.userId}
@@ -535,7 +557,13 @@ export const LeaveTypes = (props: any) => {
                                                     name="leaveTypeId"
                                                     id="type"
                                                     value={values.leaveTypeId}
-                                                    onChange={(e) => { setFieldValue('leaveTypeId', e.target.value) }}>
+                                                    onChange={(e) => { 
+                                                        if (e.target.value && values.userId){
+                                                            getUserCredits(values.userId, e.target.value,setFieldValue)
+                                                        }
+                                                        setFieldValue('leaveTypeId', e.target.value,)
+                                                        
+                                                        }}>
                                                     <option key={`departmentItem}`} value={""}>
                                                         Select
                                                     </option>
