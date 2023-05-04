@@ -598,7 +598,7 @@ export const LeaveTypes = (props: any) => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary">
-                                                    Save
+                                                    Update
                                                 </button>
                                             </div>
                                         </Modal.Footer>
