@@ -670,7 +670,17 @@ export const ScheduleAdjustment = (props: any) => {
               }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
-                valuesObj.breakdown = adjustmentBreakdown
+                // valuesObj.breakdown = adjustmentBreakdown
+                valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+                  return {
+                      ...item,
+                      startShift: item.startShift + ":00",
+                      startBreak: item.startBreak + ":00",
+                      endBreak: item.endBreak + ":00",
+                      endShift: item.endShift + ":00",
+                    
+                    }
+                  })
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
