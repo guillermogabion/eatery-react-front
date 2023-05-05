@@ -62,7 +62,7 @@ const Api: any = {
   utInformation: process.env.REACT_APP_API_URL + "request/ut/info",
   updateUT: process.env.REACT_APP_API_URL + "request/ut/update",
   downloadTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadExcel",
-  downloadTimeKeepingSquad: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary/squad",
+  downloadTimeKeepingSquad: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadExcel/squad",
   uploadTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/uploadExcel",
 
   // HOLIDAY
