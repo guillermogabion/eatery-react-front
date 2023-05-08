@@ -339,6 +339,7 @@ export const SquadScheduleAdjustment = (props: any) => {
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -358,6 +359,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
+                          <td> {item.fileDate} </td>
                           <td> {item.statusChangedBy} </td>
                           <td> {item.status} </td>
                           <td className="d-flex">

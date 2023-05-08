@@ -452,6 +452,7 @@ export const Employee = (props: any) => {
             employeeType: body.data.employeeType,
             jobTitle: body.data.jobTitle,
             squad: body.data.squad,
+            username : body.data.username
             // lastName : body.data.lastName,
             // // set other properties based on the response data
           };

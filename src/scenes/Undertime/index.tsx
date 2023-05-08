@@ -308,7 +308,6 @@ export const Undertime = (props: any) => {
                                                                     className="text-muted cursor-pointer">
                                                                     <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                                 </label>
-                                                                <br />
                                                             </>
                                                         ) : null}
                                                         {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
@@ -319,7 +318,7 @@ export const Undertime = (props: any) => {
                                                                     }}
                                                                     className="text-muted cursor-pointer">
                                                                     <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
-                                                                </label> <br />
+                                                                </label>
                                                             </>
                                                         ) : null}
                                                         {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
@@ -331,7 +330,7 @@ export const Undertime = (props: any) => {
                                                                     className="text-muted cursor-pointer">
                                                                     <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                                                 </label>
-                                                                <br />
+                                                               
                                                             </>
                                                         ) : null}
                                                     </>
@@ -350,7 +349,7 @@ export const Undertime = (props: any) => {
                                                                     className="text-muted cursor-pointer">
                                                                     <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                                 </label>
-                                                                <br />
+                                                               
                                                             </>
                                                         ) : null}
                                                     </>

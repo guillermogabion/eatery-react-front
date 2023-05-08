@@ -31,7 +31,7 @@ export const ScheduleAdjustment = (props: any) => {
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
-  const [key, setKey] = React.useState('');
+  const [key, setKey] = React.useState('all');
   const [adjustmentBreakdown, setAdjustmentBreakdown] = useState<any>([]);
   const [allAdjustments, setAllAdjustments] = useState<any>([]);
   const [adjustmentId, setAdjustmentId] = useState<any>("");
@@ -66,7 +66,7 @@ export const ScheduleAdjustment = (props: any) => {
       }
     )
   }
-  const getAllAdjustments = (page: any = 0, status: any = "") => {
+  const getAllAdjustments = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
     queryString = "&status=" + status
@@ -167,10 +167,10 @@ export const ScheduleAdjustment = (props: any) => {
           let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
           adjustmentsBreakdown.push({
             "date": new_date_with_counter,
-            "startShift": "09:00:00",
-            "startBreak": "12:00:00",
-            "endBreak": "13:00:00",
-            "endShift": "18:00:00",
+            "startShift": "09:00",
+            "startBreak": "12:00",
+            "endBreak": "13:00",
+            "endShift": "18:00",
             "status": "PENDING"
           })
           dateCounter += 1
@@ -584,7 +584,7 @@ export const ScheduleAdjustment = (props: any) => {
                     }}
                     className="mb-3"
                   >
-                    <Tab eventKey="" title="All">
+                    <Tab eventKey="all" title="All">
                       {adjustmentTable()}
                     </Tab>
                     <Tab eventKey="pending" title="Pending">
@@ -706,6 +706,18 @@ export const ScheduleAdjustment = (props: any) => {
                     }
                   })
                 } else {
+                  const valuesObj: any = { ...values }
+
+                  valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+                    return {
+                        ...item,
+                        startShift: item.startShift + ":00",
+                        startBreak: item.startBreak + ":00",
+                        endBreak: item.endBreak + ":00",
+                        endShift: item.endShift + ":00",
+                      
+                      }
+                    })
                   RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
