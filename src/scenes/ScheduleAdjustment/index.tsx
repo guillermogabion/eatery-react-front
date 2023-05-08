@@ -169,10 +169,10 @@ export const ScheduleAdjustment = (props: any) => {
           let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
           adjustmentsBreakdown.push({
             "date": new_date_with_counter,
-            "startShift": "09:00:00",
-            "startBreak": "12:00:00",
-            "endBreak": "13:00:00",
-            "endShift": "18:00:00",
+            "startShift": "09:00",
+            "startBreak": "12:00",
+            "endBreak": "13:00",
+            "endShift": "18:00",
             "status": "PENDING"
           })
           dateCounter += 1
