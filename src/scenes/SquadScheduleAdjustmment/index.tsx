@@ -169,10 +169,10 @@ export const SquadScheduleAdjustment = (props: any) => {
           let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
           adjustmentsBreakdown.push({
             "date": new_date_with_counter,
-            "startShift": "09:00:00",
-            "startBreak": "12:00:00",
-            "endBreak": "13:00:00",
-            "endShift": "18:00:00",
+            "startShift": "09:00",
+            "startBreak": "12:00",
+            "endBreak": "13:00",
+            "endShift": "18:00",
             "status": "PENDING"
           })
           dateCounter += 1
@@ -655,6 +655,17 @@ export const SquadScheduleAdjustment = (props: any) => {
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = adjustmentBreakdown
+                // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+                 
+                //   return {
+                //     ...item,
+                //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
+                //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
+                //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
+                //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
+                // }
+                //   })
+                
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {

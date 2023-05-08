@@ -828,16 +828,26 @@ export const SquadAttendanceCorrection = (props: any) => {
                     <p>Type : {initialValues.type}</p>
                     <p>Status : {initialValues.status}</p>
 
-                    {coaBreakdown.map ((initialValues, index) =>(
-                      <div key={`coaBreakdown-${index}`}>
-                          <p className="bold-text">Set Request {index + 1}:</p>
-                          <p>Type : {initialValues.coaBdType}</p>
-                          <p>Date : {initialValues.date}</p>
-                          <p>Time : {initialValues.time}</p>
-
-                      </div>
-
-                    ))}
+                    <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                      <thead>
+                        <tr>
+                          <th style={{ width: '100px'}}>Shift Date</th>
+                          <th style={{ width: '100px'}}>Type</th>
+                          <th>Date</th>
+                          <th>Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {coaBreakdown.map((initialValues, index) => (
+                          <tr key={`coaBreakdown-${index}`}>
+                            <td>{initialValues.shiftDate}</td>
+                            <td>{initialValues.coaBdType}</td>
+                            <td>{initialValues.date}</td>
+                            <td>{initialValues.time}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
             </div>
           </Modal.Body>
 

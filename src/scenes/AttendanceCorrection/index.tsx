@@ -52,7 +52,7 @@ export const AttendanceCorrection = (props: any) => {
 
   const handleAddField = () => {
     if (coaBreakdownCount < 2) {
-      setCoaBreakdown([...coaBreakdown, { date: "", coaBdType: "", time: "" }]);
+      setCoaBreakdown([...coaBreakdown, { shiftDate: "", date: "", coaBdType: "", time: "" }]);
       setCoaBreakdownCount(coaBreakdownCount + 1);
     }
   };
@@ -84,6 +84,7 @@ export const AttendanceCorrection = (props: any) => {
     "reason": "",
     "coaBd": [
       {
+        "shiftDate" : "",
         "date": "",
         "coaBdType": "",
         "time": ""
@@ -587,6 +588,9 @@ export const AttendanceCorrection = (props: any) => {
                 const valuesObj: any = { ...values }
                 let hasError = false
                 coaBreakdown.forEach((element: any, index: any) => {
+                  if (element.shiftDate == "") {
+                    hasError = true
+                  }
                   if (element.coaBdType == "") {
                     hasError = true
                   }
@@ -745,7 +749,21 @@ export const AttendanceCorrection = (props: any) => {
                     {coaBreakdown.map((values: any, index: any) => (
                       <div key={`coaBreakdown-${index}`}>
                         <div className="form-group row">
-                          <div className="col-md-4 mb-3">
+                          <div className="col-md-3 mb-3">
+                            <label>Shift Date *</label>
+                              <input
+                                type="date"
+                                name="shiftDate"
+                                value={values.shiftDate}
+                                onChange={(e) => {
+                                  const updatedFields = [...coaBreakdown];
+                                  updatedFields[index].shiftDate = e.target.value;
+                                  setCoaBreakdown(updatedFields);
+                                }}
+                                className={`form-control ${values.shiftDate == "" ? 'is-invalid' : ''}`}
+                              />
+                          </div>
+                          <div className="col-md-3 mb-3">
                             <label>Date *</label>
                             <input
                               type="date"
@@ -760,7 +778,7 @@ export const AttendanceCorrection = (props: any) => {
                             />
                           </div>
 
-                          <div className="col-md-4 mb-3 mt-4">
+                          <div className="col-md-3 mb-3 mt-4">
                             <select
                               name="coaBdType"
                               value={values.coaBdType}
@@ -779,7 +797,7 @@ export const AttendanceCorrection = (props: any) => {
                             </select>
                           </div>
 
-                          <div className="col-md-4 mb-3">
+                          <div className="col-md-3 mb-3">
                             <label>Time *</label>
                             <input
                               type="time"
@@ -799,6 +817,11 @@ export const AttendanceCorrection = (props: any) => {
 
                         </div>
                         <div className="form-group row">
+                          <div className="col-md-4 mb-3">
+                            {touched.errors && errors.shiftDate && (
+                              <p style={{ color: "red", fontSize: "10px" }}>{errors.shiftDate}</p>
+                            )}
+                          </div>
                           <div className="col-md-4 mb-3">
                             {touched.errors && errors.date && (
                               <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
@@ -891,16 +914,26 @@ export const AttendanceCorrection = (props: any) => {
               <p>Type : {initialValues.type}</p>
               <p>Status : {initialValues.status}</p>
 
-              {coaBreakdown.map((initialValues, index) => (
-                <div key={`coaBreakdown-${index}`}>
-                  <p className="bold-text">Set Request {index + 1}:</p>
-                  <p>Type : {initialValues.coaBdType}</p>
-                  <p>Date : {initialValues.date}</p>
-                  <p>Time : {initialValues.time}</p>
-
-                </div>
-
-              ))}
+              <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                <thead>
+                  <tr>
+                    <th style={{ width: '100px'}}>Shift Date</th>
+                    <th style={{ width: '100px'}}>Type</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {coaBreakdown.map((initialValues, index) => (
+                    <tr key={`coaBreakdown-${index}`}>
+                      <td>{initialValues.shiftDate}</td>
+                      <td>{initialValues.coaBdType}</td>
+                      <td>{initialValues.date}</td>
+                      <td>{initialValues.time}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </div>
           </Modal.Body>
 
