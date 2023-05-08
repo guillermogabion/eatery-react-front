@@ -31,7 +31,7 @@ export const ScheduleAdjustment = (props: any) => {
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
-  const [key, setKey] = React.useState('all');
+  const [key, setKey] = React.useState('');
   const [adjustmentBreakdown, setAdjustmentBreakdown] = useState<any>([]);
   const [allAdjustments, setAllAdjustments] = useState<any>([]);
   const [adjustmentId, setAdjustmentId] = useState<any>("");
