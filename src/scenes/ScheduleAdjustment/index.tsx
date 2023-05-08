@@ -670,17 +670,17 @@ export const ScheduleAdjustment = (props: any) => {
               }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
-                // valuesObj.breakdown = adjustmentBreakdown
-                valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
-                  return {
-                      ...item,
-                      startShift: item.startShift + ":00",
-                      startBreak: item.startBreak + ":00",
-                      endBreak: item.endBreak + ":00",
-                      endShift: item.endShift + ":00",
-                    
-                    }
-                  })
+                valuesObj.breakdown = adjustmentBreakdown
+                // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+              
+                //   return {
+                //     ...item,
+                //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
+                //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
+                //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
+                //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
+                // }
+                //   })
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
@@ -713,6 +713,18 @@ export const ScheduleAdjustment = (props: any) => {
                     }
                   })
                 } else {
+                  const valuesObj: any = { ...values }
+
+                  valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+                    return {
+                        ...item,
+                        startShift: item.startShift + ":00",
+                        startBreak: item.startBreak + ":00",
+                        endBreak: item.endBreak + ":00",
+                        endShift: item.endShift + ":00",
+                      
+                      }
+                    })
                   RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {

@@ -655,6 +655,17 @@ export const SquadScheduleAdjustment = (props: any) => {
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = adjustmentBreakdown
+                // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+                 
+                //   return {
+                //     ...item,
+                //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
+                //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
+                //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
+                //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
+                // }
+                //   })
+                
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
