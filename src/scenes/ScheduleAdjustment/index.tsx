@@ -39,6 +39,7 @@ export const ScheduleAdjustment = (props: any) => {
   const [initialValues, setInitialValues] = useState<any>(initialPayload)
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const [userSchedule, setUserSchedule] = useState<any>("");
+  const [requestStatus, setRequestStatus] = useState<any>("");
 
   const formRef: any = useRef()
 
@@ -65,22 +66,20 @@ export const ScheduleAdjustment = (props: any) => {
       }
     )
   }
-  const getAllAdjustments = (page: any = 0, status: any = "All") => {
+  const getAllAdjustments = (page: any = 0, status: any = "") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if (status != "") {
-      queryString = "&status=" + status
-    } else {
-      if (filterDataTemp) {
-        Object.keys(filterDataTemp).forEach((d: any) => {
-          if (filterDataTemp[d]) {
+    queryString = "&status=" + status
+    setRequestStatus(status)
+    if (filterDataTemp) {
+      Object.keys(filterDataTemp).forEach((d: any) => {
+        if (filterDataTemp[d]) {
 
-            queryString += `&${d}=${filterDataTemp[d]}`
-          } else {
-            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-          }
-        })
-      }
+          queryString += `&${d}=${filterDataTemp[d]}`
+        } else {
+          queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+        }
+      })
     }
 
     if (data.profile.role == 'EXECUTIVE') {
@@ -160,7 +159,6 @@ export const ScheduleAdjustment = (props: any) => {
         var added_date = moment(dFrom).add(dateCounter, 'days');
         let new_date = new Date(added_date.format('YYYY-MM-DD'))
 
-
         if (new_date.getDay() == 0 || new_date.getDay() == 6) {
           dateCounter += 1
         } else if (new_date.getDay() == 6) {
@@ -189,6 +187,7 @@ export const ScheduleAdjustment = (props: any) => {
 
     if (adjustmentBreakdown) {
       const valuesObj: any = [...adjustmentBreakdown]
+      value = value + ":00"
       if (valuesObj) {
         if (name == "startShift") {
           valuesObj[index].startShift = value
@@ -230,7 +229,7 @@ export const ScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, "")
+              getAllAdjustments(0, requestStatus)
             }
           } else {
             ErrorSwal.fire(
@@ -270,7 +269,7 @@ export const ScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, "")
+              getAllAdjustments(0, requestStatus)
             }
           } else {
             ErrorSwal.fire(
@@ -305,13 +304,13 @@ export const ScheduleAdjustment = (props: any) => {
                 (body.error && body.error.message) || "",
                 'error'
               )
+              getAllAdjustments(0, requestStatus)
             } else {
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, "")
             }
           } else {
             ErrorSwal.fire(
@@ -340,6 +339,7 @@ export const ScheduleAdjustment = (props: any) => {
                   <th style={{ width: 'auto' }}>Employee Name</th>
                 </> : null
               }
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
@@ -363,7 +363,8 @@ export const ScheduleAdjustment = (props: any) => {
                             <>
                               <td> {item.lastName}, {item.firstName} </td>
                             </> : null
-                          } 
+                          }
+                          <td> {item.fileDate} </td> 
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
@@ -487,7 +488,7 @@ export const ScheduleAdjustment = (props: any) => {
     setFilterData(filterObj)
   }
   const handlePageClick = (event: any) => {
-    getAllAdjustments(event.selected, "")
+    getAllAdjustments(event.selected, requestStatus)
   };
   return (
     <div className="body">
@@ -565,7 +566,7 @@ export const ScheduleAdjustment = (props: any) => {
                     <div>
                       <Button
                         style={{ width: 120 }}
-                        onClick={() => getAllAdjustments(0, "")}
+                        onClick={() => getAllAdjustments(0, requestStatus)}
                         className="btn btn-primary mx-2 mt-4">
                         Search
                       </Button>
@@ -577,12 +578,13 @@ export const ScheduleAdjustment = (props: any) => {
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setAllAdjustments([])
                       getAllAdjustments(0, k)
                       setKey(k)
                     }}
                     className="mb-3"
                   >
-                    <Tab eventKey="all" title="All">
+                    <Tab eventKey="" title="All">
                       {adjustmentTable()}
                     </Tab>
                     <Tab eventKey="pending" title="Pending">
@@ -671,16 +673,7 @@ export const ScheduleAdjustment = (props: any) => {
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = adjustmentBreakdown
-                // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
-              
-                //   return {
-                //     ...item,
-                //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
-                //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
-                //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
-                //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
-                // }
-                //   })
+                
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
@@ -699,7 +692,7 @@ export const ScheduleAdjustment = (props: any) => {
                           'success'
                         )
                         setAdjustmentBreakdown([])
-                        getAllAdjustments(0, "")
+                        getAllAdjustments(0, requestStatus)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -744,7 +737,7 @@ export const ScheduleAdjustment = (props: any) => {
                           'success'
                         )
                         setAdjustmentBreakdown([])
-                        getAllAdjustments(0, "")
+                        getAllAdjustments(0, requestStatus)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -844,11 +837,8 @@ export const ScheduleAdjustment = (props: any) => {
                                         onChange={(e) => {
                                           setDateOption(index, 'startShift', e.target.value)
                                         }}
-                                       
-                                       
-                                      
                                       />
-                                       {errors && errors.startShift && (
+                                      {errors && errors.startShift && (
                           <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
                         )}
                                     </td>
