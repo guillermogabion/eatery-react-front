@@ -31,7 +31,7 @@ export const ScheduleAdjustment = (props: any) => {
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
-  const [key, setKey] = React.useState('');
+  const [key, setKey] = React.useState('all');
   const [adjustmentBreakdown, setAdjustmentBreakdown] = useState<any>([]);
   const [allAdjustments, setAllAdjustments] = useState<any>([]);
   const [adjustmentId, setAdjustmentId] = useState<any>("");
@@ -66,7 +66,7 @@ export const ScheduleAdjustment = (props: any) => {
       }
     )
   }
-  const getAllAdjustments = (page: any = 0, status: any = "") => {
+  const getAllAdjustments = (page: any = 0, status: any = "All") => {
     let queryString = ""
     let filterDataTemp = { ...filterData }
     queryString = "&status=" + status
@@ -584,7 +584,7 @@ export const ScheduleAdjustment = (props: any) => {
                     }}
                     className="mb-3"
                   >
-                    <Tab eventKey="" title="All">
+                    <Tab eventKey="all" title="All">
                       {adjustmentTable()}
                     </Tab>
                     <Tab eventKey="pending" title="Pending">

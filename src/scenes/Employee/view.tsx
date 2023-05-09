@@ -35,6 +35,7 @@
                 <p>Company Email :  {employee.companyEmail}</p>
                 <p>Employee Type :  {employee.employeeType}</p>
                 <p>Job Title :  {employee.jobTitle}</p>
+                <p>Username :  {employee.username}</p>
             </div>
            
         </div>
