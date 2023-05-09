@@ -706,18 +706,6 @@ export const ScheduleAdjustment = (props: any) => {
                     }
                   })
                 } else {
-                  const valuesObj: any = { ...values }
-
-                  valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
-                    return {
-                        ...item,
-                        startShift: item.startShift + ":00",
-                        startBreak: item.startBreak + ":00",
-                        endBreak: item.endBreak + ":00",
-                        endShift: item.endShift + ":00",
-                      
-                      }
-                    })
                   RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
