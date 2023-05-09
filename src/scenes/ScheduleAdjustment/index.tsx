@@ -16,6 +16,7 @@ import { Api, RequestAPI } from "../../api"
 import { eye, action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 const ErrorSwal = withReactContent(Swal)
 
 export const ScheduleAdjustment = (props: any) => {
@@ -44,7 +45,7 @@ export const ScheduleAdjustment = (props: any) => {
   const formRef: any = useRef()
 
   useEffect(() => {
-    getAllAdjustments(0, "")
+    getAllAdjustments(0, key)
     getMySchedule()
   }, [])
 
@@ -66,11 +67,11 @@ export const ScheduleAdjustment = (props: any) => {
       }
     )
   }
-  const getAllAdjustments = (page: any = 0, status: any = "All") => {
+  const getAllAdjustments = (page: any = 0, status: any = "all") => {
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
     queryString = "&status=" + status
-    setRequestStatus(status)
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -118,24 +119,24 @@ export const ScheduleAdjustment = (props: any) => {
     }
   }
   const getViewSchedule = (id: any = 0) => {
-   
+
     RequestAPI.getRequest(
       `${Api.getScheduleAdjustment}?id=${id}`,
       "",
       {},
       {},
       async (res: any) => {
-        console.log("Response:", res); 
-        const { status, body = {data: {}, error: {}}} : any = res
+        console.log("Response:", res);
+        const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
-          
+
           if (body.error && body.error.message) {
-          }else{
+          } else {
             const valueObj: any = body.data
             setInitialValues(valueObj)
             setModalViewShow(true)
 
-          
+
           }
         }
       }
@@ -229,7 +230,7 @@ export const ScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, requestStatus)
+              getAllAdjustments(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -269,7 +270,7 @@ export const ScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, requestStatus)
+              getAllAdjustments(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -304,7 +305,7 @@ export const ScheduleAdjustment = (props: any) => {
                 (body.error && body.error.message) || "",
                 'error'
               )
-              getAllAdjustments(0, requestStatus)
+              getAllAdjustments(0, key)
             } else {
               ErrorSwal.fire(
                 'Success!',
@@ -335,9 +336,9 @@ export const ScheduleAdjustment = (props: any) => {
             <tr>
               {
                 data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                <>
-                  <th style={{ width: 'auto' }}>Employee Name</th>
-                </> : null
+                  <>
+                    <th style={{ width: 'auto' }}>Employee Name</th>
+                  </> : null
               }
               <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Date From</th>
@@ -360,23 +361,23 @@ export const ScheduleAdjustment = (props: any) => {
                         <tr>
                           {
                             data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                            <>
-                              <td> {item.lastName}, {item.firstName} </td>
-                            </> : null
+                              <>
+                                <td> {item.lastName}, {item.firstName} </td>
+                              </> : null
                           }
-                          <td> {item.fileDate} </td> 
+                          <td> {item.fileDate} </td>
                           <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
                           <td> {item.status} </td>
                           <td className="d-flex">
-                          <label
-                            onClick={() => {
-                              getViewSchedule(item.id)
-                            }}
+                            <label
+                              onClick={() => {
+                                getViewSchedule(item.id)
+                              }}
                             >
-                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View"/>
+                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
 
@@ -487,9 +488,18 @@ export const ScheduleAdjustment = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
+
   const handlePageClick = (event: any) => {
-    getAllAdjustments(event.selected, requestStatus)
+    getAllAdjustments(event.selected, key)
   };
+
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
+
   return (
     <div className="body">
       <div className="wraper">
@@ -523,8 +533,22 @@ export const ScheduleAdjustment = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                <div className="fieldtext d-flex col-md-3">
-                  <div>
+                  <div className="fieldtext d-flex col-md-3 w-100">
+                    {
+                      data.profile.role == 'EXECUTIVE' ?
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                          <label>Employee</label>
+                          <EmployeeDropdown
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                          />
+                        </div>
+                        :
+                        null
+                    }
+                    <div>
                       <label>Date From</label>
                       <div>
                         <input
@@ -566,21 +590,20 @@ export const ScheduleAdjustment = (props: any) => {
                     <div>
                       <Button
                         style={{ width: 120 }}
-                        onClick={() => getAllAdjustments(0, requestStatus)}
+                        onClick={() => getAllAdjustments(0, key)}
                         className="btn btn-primary mx-2 mt-4">
                         Search
                       </Button>
                     </div>
-                </div>
-                  
-                  
+                  </div>
+
+
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
                       setAllAdjustments([])
                       getAllAdjustments(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -611,7 +634,8 @@ export const ScheduleAdjustment = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
@@ -667,13 +691,13 @@ export const ScheduleAdjustment = (props: any) => {
                   dateFrom: Yup.string().required("Date from is required !"),
                   dateTo: Yup.string().required("Date to is required !"),
                   reason: Yup.string().required("Reason is required !"),
-                 
+
                 })
               }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = adjustmentBreakdown
-                
+
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
@@ -692,14 +716,14 @@ export const ScheduleAdjustment = (props: any) => {
                           'success'
                         )
                         setAdjustmentBreakdown([])
-                        getAllAdjustments(0, requestStatus)
+                        getAllAdjustments(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
                     } else {
                       ErrorSwal.fire(
                         'Error!',
-                        "Please enter a valid time format" ,
+                        "Please enter a valid time format",
                         // (body.error && body.error.message),
                         'error'
                       )
@@ -716,8 +740,8 @@ export const ScheduleAdjustment = (props: any) => {
                           'error'
                         )
                       }
-                    
-                      
+
+
                       else {
                         ErrorSwal.fire(
                           'Success!',
@@ -725,7 +749,7 @@ export const ScheduleAdjustment = (props: any) => {
                           'success'
                         )
                         setAdjustmentBreakdown([])
-                        getAllAdjustments(0, requestStatus)
+                        getAllAdjustments(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -827,8 +851,8 @@ export const ScheduleAdjustment = (props: any) => {
                                         }}
                                       />
                                       {errors && errors.startShift && (
-                          <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
-                        )}
+                                        <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
+                                      )}
                                     </td>
                                     <td key={index + 'startBreak'} >
                                       <input
@@ -907,19 +931,19 @@ export const ScheduleAdjustment = (props: any) => {
           </Modal.Body>
         </Modal>
         {/* End Create User Modal Form */}
-         {/* start of view dialog */}
+        {/* start of view dialog */}
 
-         <Modal
-        show={modalViewShow}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-        
-          setModalViewShow(false)
-        }}
-        dialogClassName="modal-90w"
+        <Modal
+          show={modalViewShow}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+          onHide={() => {
+
+            setModalViewShow(false)
+          }}
+          dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -928,19 +952,19 @@ export const ScheduleAdjustment = (props: any) => {
           </Modal.Header>
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div className="container">
-                {/* <h4>reason</h4> {{values.reason}} */}
-                    <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
-                    <p>Reason : {initialValues.reason}</p>
-                    <p>Date From : {initialValues.dateFrom}</p>
-                    <p>Date To : {initialValues.dateTo}</p>
-                    <p>Shift Starts : {initialValues.startShift}</p>
-                    <p>Start of Break : {initialValues.startBreak}</p>
-                    <p>End of Break : {initialValues.endBreak}</p>
-                    <p>Shift Ends : {initialValues.endShift}</p>
+              {/* <h4>reason</h4> {{values.reason}} */}
+              <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+              <p>Reason : {initialValues.reason}</p>
+              <p>Date From : {initialValues.dateFrom}</p>
+              <p>Date To : {initialValues.dateTo}</p>
+              <p>Shift Starts : {initialValues.startShift}</p>
+              <p>Start of Break : {initialValues.startBreak}</p>
+              <p>End of Break : {initialValues.endBreak}</p>
+              <p>Shift Ends : {initialValues.endShift}</p>
 
-                    <p>Status : {initialValues.status}</p>
+              <p>Status : {initialValues.status}</p>
 
-                    {/* {adjustmentBreakdown.map ((initialValues, index) =>(
+              {/* {adjustmentBreakdown.map ((initialValues, index) =>(
                       <div key={`adjustmentBreakdown-${index}`}>
                           <p className="bold-text">Set Request {index + 1}:</p>
                           <p>Type : {initialValues.coaBdType}</p>

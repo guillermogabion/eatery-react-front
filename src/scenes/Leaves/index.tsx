@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 export const Leaves = (props: any) => {
   const { history } = props
@@ -126,10 +127,11 @@ export const Leaves = (props: any) => {
   }, [])
 
   useEffect(() => {
-    getAllLeaves(0, "")
+    getAllLeaves(0, key)
   }, [dayTypes])
 
-  const getAllLeaves = (page: any = 0, status: any = "All") => {
+  const getAllLeaves = (page: any = 0, status: any = "all") => {
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
     if (status != "") {
@@ -302,7 +304,7 @@ export const Leaves = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0, "")
+              getAllLeaves(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -342,7 +344,7 @@ export const Leaves = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0, "")
+              getAllLeaves(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -383,7 +385,7 @@ export const Leaves = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0, "")
+              getAllLeaves(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -550,8 +552,15 @@ export const Leaves = (props: any) => {
     setFilterData(filterObj)
   }
   const handlePageClick = (event: any) => {
-    getAllLeaves(event.selected, "")
+    getAllLeaves(event.selected, key)
   };
+
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
   return (
     <div className="body">
       <div className="wraper">
@@ -593,7 +602,21 @@ export const Leaves = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                  <div className="fieldtext d-flex col-md-6">
+                  <div className="fieldtext d-flex col-md-6 w-100">
+                    {
+                      data.profile.role == 'EXECUTIVE' ?
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                          <label>Employee</label>
+                          <EmployeeDropdown
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                          />
+                        </div>
+                        :
+                        null
+                    }
                     <div>
                       <label>Date From</label>
                       <input
@@ -623,7 +646,7 @@ export const Leaves = (props: any) => {
 
                     <Button
                       style={{ width: 120 }}
-                      onClick={() => getAllLeaves(0, "")}
+                      onClick={() => getAllLeaves(0, key)}
                       className="btn btn-primary mx-2 mt-4">
                       Search
                     </Button>
@@ -632,8 +655,8 @@ export const Leaves = (props: any) => {
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setAllLeaves([])
                       getAllLeaves(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -664,7 +687,8 @@ export const Leaves = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
@@ -746,7 +770,7 @@ export const Leaves = (props: any) => {
                           'success'
                         )
                         setLeaveBreakdown([])
-                        getAllLeaves(0, "")
+                        getAllLeaves(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -776,7 +800,7 @@ export const Leaves = (props: any) => {
                           'success'
                         )
                         setLeaveBreakdown([])
-                        getAllLeaves(0, "")
+                        getAllLeaves(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }

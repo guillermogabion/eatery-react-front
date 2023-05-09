@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import ReactPaginate from 'react-paginate';
 import { useSelector, useDispatch } from "react-redux"
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 export const SquadOvertime = (props: any) => {
   const { history } = props
@@ -28,7 +29,7 @@ export const SquadOvertime = (props: any) => {
     "otStart": "",
     "otEnd": ""
   }
-  
+
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const [onSubmit, setOnSubmit] = useState<any>(false);
 
@@ -48,7 +49,7 @@ export const SquadOvertime = (props: any) => {
     "otEnd": ""
   })
   const formRef: any = useRef()
-  
+
 
   const tableHeaders = [
     'Type',
@@ -77,11 +78,11 @@ export const SquadOvertime = (props: any) => {
   }, [])
 
   useEffect(() => {
-    getMyOT(0, "")
+    getMyOT(0, key)
   }, [])
 
   const handlePageClick = (event: any) => {
-    getMyOT(event.selected, "")
+    getMyOT(event.selected, key)
   };
 
   const makeFilterData = (event: any) => {
@@ -91,16 +92,16 @@ export const SquadOvertime = (props: any) => {
     setFilterData(filterObj)
   }
   const getMyOT = (page: any = 0, status: any = "All") => {
-
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if(status != ""){
-      queryString = "&status="+ status
-    }else{
+    if (status != "") {
+      queryString = "&status=" + status
+    } else {
       if (filterDataTemp) {
         Object.keys(filterDataTemp).forEach((d: any) => {
           if (filterDataTemp[d]) {
-            
+
             queryString += `&${d}=${filterDataTemp[d]}`
           } else {
             queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -108,7 +109,7 @@ export const SquadOvertime = (props: any) => {
         })
       }
     }
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
         `${Api.allSquadOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
         "",
@@ -125,7 +126,7 @@ export const SquadOvertime = (props: any) => {
         }
       )
     }
-    
+
   }
 
   const approveOT = (id: any = 0) => {
@@ -149,7 +150,7 @@ export const SquadOvertime = (props: any) => {
                 'error'
               )
             } else {
-              getMyOT(0, "")
+              getMyOT(0, key)
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -193,7 +194,7 @@ export const SquadOvertime = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getMyOT(0, "")
+              getMyOT(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -228,7 +229,7 @@ export const SquadOvertime = (props: any) => {
                 'error'
               )
             } else {
-              getMyOT(0, '')
+              getMyOT(0, key)
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -277,10 +278,10 @@ export const SquadOvertime = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-            {data.profile.role != 'EMPLOYEE' ?
-                       <th style={{ width: 'auto' }}>Employee Name</th> :
-                        null
-                    }
+              {data.profile.role != 'EMPLOYEE' ?
+                <th style={{ width: 'auto' }}>Employee Name</th> :
+                null
+              }
               <th style={{ width: 'auto' }}>Shift Date</th>
               <th style={{ width: 'auto' }}>Classification</th>
               <th style={{ width: 'auto' }}>OT Start</th>
@@ -303,8 +304,8 @@ export const SquadOvertime = (props: any) => {
                   <tr>
                     {/* <td> {item.lastName}, {item.firstName}</td> */}
                     {data.profile.role != 'EMPLOYEE' ?
-                        <td>{item.lastName}, {item.firstName}</td> :
-                        null
+                      <td>{item.lastName}, {item.firstName}</td> :
+                      null
                     }
                     <td> {item.shiftDate} </td>
                     <td> {item.classification} </td>
@@ -319,46 +320,46 @@ export const SquadOvertime = (props: any) => {
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
-                          {authorizations.includes("Request:Update") ? (
-                            <>
-                              <label
-                                onClick={() => {
-                                  getOT(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
-                              </label>
-                            </>
-                          ) : null}
+                            {authorizations.includes("Request:Update") ? (
+                              <>
+                                <label
+                                  onClick={() => {
+                                    getOT(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                </label>
+                              </>
+                            ) : null}
                             {authorizations.includes("Request:Approve") ? (
-                            <>
-                              <label
-                              onClick={() => {
-                                approveOT(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
-                            </label>
-                            </>
-                          ) : null}
-                          {authorizations.includes("Request:Reject") ? (
-                            <>
-                              <label
-                              onClick={() => {
-                                declineOT(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
+                              <>
+                                <label
+                                  onClick={() => {
+                                    approveOT(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                </label>
+                              </>
+                            ) : null}
+                            {authorizations.includes("Request:Reject") ? (
+                              <>
+                                <label
+                                  onClick={() => {
+                                    declineOT(item.id)
+                                  }}
+                                  className="text-muted cursor-pointer">
+                                  <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
 
-                            </label>
-                            </>
-                          ) : null}
-                            
+                                </label>
+                              </>
+                            ) : null}
+
                           </>
                           :
                           null
                       }
-                       {
+                      {
                         item.status == "APPROVED" || item.status == "PENDING" ?
                           <>
                             {authorizations.includes("Request:Update") ? (
@@ -383,14 +384,14 @@ export const SquadOvertime = (props: any) => {
           </tbody>
         </Table>
         {
-              myot &&
-              myot.content &&
-              myot.content.length == 0 ?
-              <div className="w-100 text-center">
-                <label htmlFor="">No Records Found</label>
-              </div>
-              : 
-              null
+          myot &&
+            myot.content &&
+            myot.content.length == 0 ?
+            <div className="w-100 text-center">
+              <label htmlFor="">No Records Found</label>
+            </div>
+            :
+            null
         }
       </div>
     )
@@ -402,6 +403,13 @@ export const SquadOvertime = (props: any) => {
       setFieldValue(name, value)
       setFieldValue("formoutside", true)
     }
+  }
+
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
   }
 
   return (
@@ -424,61 +432,70 @@ export const SquadOvertime = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                <div className="fieldtext d-flex col-md-3">
-                  <div>
+                  <div className="fieldtext d-flex col-md-3 w-100 ">
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                      <label>Employee</label>
+                      <EmployeeDropdown
+                        placeholder={"Employee"}
+                        singleChangeOption={singleChangeOption}
+                        name="userId"
+                        value={filterData && filterData['userId']}
+                      />
+                    </div>
+                    <div>
                       <label>Date From</label>
                       <div>
-                          <input
+                        <input
                           name="dateFrom"
                           type="date"
                           autoComplete="off"
                           className="formControl"
                           onChange={(e) => makeFilterData(e)}
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                          />
+                        />
                       </div>
-                  </div>
-                  <div>
+                    </div>
+                    <div>
                       <label>Date To</label>
                       <div className="input-container">
-                          <input
+                        <input
                           name="dateTo"
                           type="date"
                           autoComplete="off"
                           className="formControl"
                           onChange={(e) => makeFilterData(e)}
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                          />
+                        />
                       </div>
-                  </div>
-                  <div>
+                    </div>
+                    <div>
                       <label>Date Filed</label>
                       <div className="input-container">
-                          <input
+                        <input
                           name="dateFiled"
                           type="date"
                           autoComplete="off"
                           className="formControl"
                           onChange={(e) => makeFilterData(e)}
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                          />
+                        />
                       </div>
-                  </div>
-                  <div>
+                    </div>
+                    <div>
                       <Button
-                      style={{ width: 120}}
-                      onClick={() => getMyOT(0,"")}
-                      className="btn btn-primary mx-2 mt-4">
-                      Search
+                        style={{ width: 120 }}
+                        onClick={() => getMyOT(0, key)}
+                        className="btn btn-primary mx-2 mt-4">
+                        Search
                       </Button>
+                    </div>
                   </div>
-              </div>
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setMyOT([])
                       getMyOT(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -509,22 +526,23 @@ export const SquadOvertime = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
                 </div>
-            </div>
+              </div>
               {authorizations.includes("Request:Create") ? (
                 <>
-                <div className="d-flex justify-content-end mt-3" >
-                  <div>
-                   
+                  <div className="d-flex justify-content-end mt-3" >
+                    <div>
+
+                    </div>
                   </div>
-              </div>
                 </>
               ) : null}
-              
+
             </div>
           </div>
         </div>
@@ -574,7 +592,7 @@ export const SquadOvertime = (props: any) => {
                           'error'
                         )
                       } else {
-                        getMyOT(0, "")
+                        getMyOT(0, key)
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",
@@ -602,7 +620,7 @@ export const SquadOvertime = (props: any) => {
                           'error'
                         )
                       } else {
-                        getMyOT(0, "")
+                        getMyOT(0, key)
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",
@@ -643,8 +661,8 @@ export const SquadOvertime = (props: any) => {
                             ))}
                         </select>
                         {errors && errors.classification && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Shift Date</label>
@@ -658,8 +676,8 @@ export const SquadOvertime = (props: any) => {
                           }}
                         />
                         {errors && errors.shiftDate && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Start</label>
@@ -673,8 +691,8 @@ export const SquadOvertime = (props: any) => {
                           }}
                         />
                         {errors && errors.otStart && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>End</label>
@@ -688,8 +706,8 @@ export const SquadOvertime = (props: any) => {
                           }}
                         />
                         {errors && errors.otEnd && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <label>Indicate Ticket Number (If Applicable) and Reason</label>

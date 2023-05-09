@@ -19,6 +19,7 @@ import * as Yup from "yup";
 import ReactPaginate from 'react-paginate';
 import { useSelector, useDispatch } from "react-redux"
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 
 export const Overtime = (props: any) => {
@@ -78,11 +79,11 @@ export const Overtime = (props: any) => {
   }, [])
 
   useEffect(() => {
-    getMyOT(0, "")
+    getMyOT(0, key)
   }, [])
 
   const handlePageClick = (event: any) => {
-    getMyOT(event.selected, "")
+    getMyOT(event.selected, key)
   };
 
   const makeFilterData = (event: any) => {
@@ -91,8 +92,8 @@ export const Overtime = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
-  const getMyOT = (page: any = 0, status: any = "All") => {
-
+  const getMyOT = (page: any = 0, status: any = "all") => {
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
     if (status != "") {
@@ -166,7 +167,7 @@ export const Overtime = (props: any) => {
                 'error'
               )
             } else {
-              getMyOT(0, "")
+              getMyOT(0, key)
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -206,7 +207,7 @@ export const Overtime = (props: any) => {
                 'error'
               )
             } else {
-              getMyOT(0, '')
+              getMyOT(0, key)
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -251,7 +252,7 @@ export const Overtime = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getMyOT(0, "")
+              getMyOT(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -426,6 +427,13 @@ export const Overtime = (props: any) => {
     }
   }
 
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
+
   return (
     <div className="body">
       <div className="wraper">
@@ -446,7 +454,21 @@ export const Overtime = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                  <div className="fieldtext d-flex col-md-3">
+                  <div className="fieldtext d-flex col-md-3 w-100">
+                    {
+                      data.profile.role == 'EXECUTIVE' ?
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                          <label>Employee</label>
+                          <EmployeeDropdown
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                          />
+                        </div>
+                        :
+                        null
+                    }
                     <div>
                       <label>Date From</label>
                       <div>
@@ -489,7 +511,7 @@ export const Overtime = (props: any) => {
                     <div>
                       <Button
                         style={{ width: 120 }}
-                        onClick={() => getMyOT(0, "")}
+                        onClick={() => getMyOT(0, key)}
                         className="btn btn-primary mx-2 mt-4">
                         Search
                       </Button>
@@ -499,8 +521,8 @@ export const Overtime = (props: any) => {
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setMyOT([])
                       getMyOT(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -531,7 +553,8 @@ export const Overtime = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
@@ -602,7 +625,7 @@ export const Overtime = (props: any) => {
                           'error'
                         )
                       } else {
-                        getMyOT(0, "")
+                        getMyOT(0, key)
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",
@@ -630,7 +653,7 @@ export const Overtime = (props: any) => {
                           'error'
                         )
                       } else {
-                        getMyOT(0, "")
+                        getMyOT(0, key)
                         ErrorSwal.fire(
                           'Success!',
                           (body.data) || "",

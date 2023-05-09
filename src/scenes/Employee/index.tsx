@@ -25,6 +25,7 @@ import FileUpload from "./upload"
 import ViewEmployee from "./view"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
+import SingleSelect from "../../components/Forms/SingleSelect"
 
 interface Employee {
   id: number;
@@ -66,6 +67,7 @@ export const Employee = (props: any) => {
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const [squadList, setSquadList] = React.useState([]);
   const [employeeList, setEmployeeList] = React.useState([]);
+  const [immediateEmployeeList, setImmediateEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [filterData, setFilterData] = React.useState([]);
@@ -244,7 +246,33 @@ export const Employee = (props: any) => {
 
   useEffect(() => {
     getAllEmployee(0)
+    getAllImmediateEmpList()
   }, [])
+
+  const getAllImmediateEmpList = () => {
+    RequestAPI.getRequest(
+      `${Api.employeeList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
+              tempArray.push({
+                value: d.userAccountId,
+                label: d.firstname + " " + d.lastname
+              })
+            });
+            setImmediateEmployeeList(tempArray)
+          }
+        }
+      }
+    )
+  }
 
   const handlePageClick = (event: any) => {
     getAllEmployee(event.selected)
@@ -385,14 +413,14 @@ export const Employee = (props: any) => {
         {},
         async (res) => {
           const { status, body = { data: {}, error: {} } } = res;
-  
+
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               ErrorSwal.fire(
                 "Error!",
                 body.error.message || "",
                 "error"
-                
+
               );
               handleCloseModal();
             } else {
@@ -414,12 +442,12 @@ export const Employee = (props: any) => {
       );
     }
   };
-  
 
-  
-  
 
-   const getEmployeeDetails = (id: number) => {
+
+
+
+  const getEmployeeDetails = (id: number) => {
     RequestAPI.getRequest(
       `${Api.employeeInformation}?body=${id}`,
       "",
@@ -452,7 +480,7 @@ export const Employee = (props: any) => {
             employeeType: body.data.employeeType,
             jobTitle: body.data.jobTitle,
             squad: body.data.squad,
-            username : body.data.username
+            username: body.data.username
             // lastName : body.data.lastName,
             // // set other properties based on the response data
           };
@@ -726,16 +754,16 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
-                {userId ? 
-                
-                <button
+                {userId ?
+
+                  <button
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
-                    >
+                  >
                     Save
-                </button>
-                : null}
+                  </button>
+                  : null}
                 <Button
                   type="submit"
                   className="btn btn-primary">
@@ -851,16 +879,16 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
-                {userId ? 
-                
-                <button
+                {userId ?
+
+                  <button
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
-                    >
+                  >
                     Save
-                </button>
-                : null}
+                  </button>
+                  : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -973,16 +1001,16 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
-                {userId ? 
-                    
-                    <button
-                        type="submit"
-                        className="btn btn-primary mx-2"
-                        onClick={() => handleFormSubmit(values, userId)}
-                        >
-                        Save
-                    </button>
-                    : null}
+                {userId ?
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary mx-2"
+                    onClick={() => handleFormSubmit(values, userId)}
+                  >
+                    Save
+                  </button>
+                  : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -1141,13 +1169,23 @@ export const Employee = (props: any) => {
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Immediate Superior ID</label>
-                <input type="text"
+                <SingleSelect
+                  type="string"
+                  options={immediateEmployeeList || []}
+                  placeholder={"Immediate Supervisor"}
+                  onChangeOption={(e: any) => {
+                    setFieldValue('immediateSuperiorId', e.value)
+                  }}
+                  name="immediateSuperiorId"
+                  value={values.immediateSuperiorId}
+                />
+                {/* <input type="text"
                   name="immediateSuperiorId"
                   id="immediateSuperiorId"
                   className="form-control"
                   value={values.immediateSuperiorId}
                   onChange={(e) => setFormField(e, setFieldValue)}
-                />
+                /> */}
                 {errors && errors.immediateSuperiorId && (
                   <p style={{ color: "red", fontSize: "12px" }}>{errors.immediateSuperiorId}</p>
                 )}
@@ -1630,16 +1668,16 @@ export const Employee = (props: any) => {
             <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
-              {userId ? 
-                
-                <button
+                {userId ?
+
+                  <button
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
-                    >
+                  >
                     Save
-                </button>
-                : null}
+                  </button>
+                  : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -2106,16 +2144,16 @@ export const Employee = (props: any) => {
             </div>
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
-              {userId ? 
-                
-                <button
+                {userId ?
+
+                  <button
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
-                    >
+                  >
                     Save
-                </button>
-                : null}
+                  </button>
+                  : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -2530,7 +2568,8 @@ export const Employee = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />

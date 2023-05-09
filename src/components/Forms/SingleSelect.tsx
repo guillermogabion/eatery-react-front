@@ -30,7 +30,7 @@ const customStyles = {
       minHeight: 40,
       font: "normal normal normal 16px/20px Source Sans Pro, sans-serif",
       "&:hover": {
-        backgroundColor: "rgba(216, 216, 216, 0.2)",
+        backgroundColor: "#7bc0d0",
       },
       ":active": {
         backgroundColor: "rgba(216, 216, 216, 0.2)",
@@ -45,10 +45,10 @@ const customStyles = {
     border:!state.isDisabled ? state.hasValue ? "1px solid #d8d8d8" : "1px solid #d8d8d8" : "1px solid #d8d8d8",
     borderRadius: "5px",
     font: "normal normal normal 16px/20px Source Sans Pro, sans-serif",
-    height: 44,
+    height: 42,
     zIndex: 10,
     "&:hover": {
-      border: "1px solid #97CD4C",
+      border: "1px solid #7bc0d0",
     },
   }),
   menu: (provided: any) => ({

@@ -16,6 +16,7 @@ import { Api, RequestAPI } from "../../api"
 import { eye, action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 const ErrorSwal = withReactContent(Swal)
 
 export const SquadScheduleAdjustment = (props: any) => {
@@ -43,7 +44,7 @@ export const SquadScheduleAdjustment = (props: any) => {
   const formRef: any = useRef()
 
   useEffect(() => {
-    getAllAdjustments(0, "")
+    getAllAdjustments(0, key)
     getMySchedule()
   }, [])
 
@@ -65,7 +66,8 @@ export const SquadScheduleAdjustment = (props: any) => {
       }
     )
   }
-  const getAllAdjustments = (page: any = 0, status: any = "All") => {
+  const getAllAdjustments = (page: any = 0, status: any = "all") => {
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
     if (status != "") {
@@ -119,24 +121,24 @@ export const SquadScheduleAdjustment = (props: any) => {
     }
   }
   const getViewSchedule = (id: any = 0) => {
-   
+
     RequestAPI.getRequest(
       `${Api.getScheduleAdjustment}?id=${id}`,
       "",
       {},
       {},
       async (res: any) => {
-        console.log("Response:", res); 
-        const { status, body = {data: {}, error: {}}} : any = res
+        console.log("Response:", res);
+        const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
-          
+
           if (body.error && body.error.message) {
-          }else{
+          } else {
             const valueObj: any = body.data
             setInitialValues(valueObj)
             setModalViewShow(true)
 
-          
+
           }
         }
       }
@@ -230,7 +232,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, "")
+              getAllAdjustments(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -270,7 +272,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, "")
+              getAllAdjustments(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -311,7 +313,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllAdjustments(0, "")
+              getAllAdjustments(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -334,7 +336,7 @@ export const SquadScheduleAdjustment = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-             
+
               <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
@@ -363,12 +365,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                           <td> {item.statusChangedBy} </td>
                           <td> {item.status} </td>
                           <td className="d-flex">
-                          <label
-                            onClick={() => {
-                              getViewSchedule(item.id)
-                            }}
+                            <label
+                              onClick={() => {
+                                getViewSchedule(item.id)
+                              }}
                             >
-                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View"/>
+                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
 
@@ -479,9 +481,17 @@ export const SquadScheduleAdjustment = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
+
   const handlePageClick = (event: any) => {
-    getAllAdjustments(event.selected, "")
+    getAllAdjustments(event.selected, key)
   };
+
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
   return (
     <div className="body">
       <div className="wraper">
@@ -515,8 +525,17 @@ export const SquadScheduleAdjustment = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                <div className="fieldtext d-flex col-md-3">
-                  <div>
+                  <div className="fieldtext d-flex col-md-3 w-100">
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                      <label>Employee</label>
+                      <EmployeeDropdown
+                        placeholder={"Employee"}
+                        singleChangeOption={singleChangeOption}
+                        name="userId"
+                        value={filterData && filterData['userId']}
+                      />
+                    </div>
+                    <div>
                       <label>Date From</label>
                       <div>
                         <input
@@ -558,20 +577,20 @@ export const SquadScheduleAdjustment = (props: any) => {
                     <div>
                       <Button
                         style={{ width: 120 }}
-                        onClick={() => getAllAdjustments(0, "")}
+                        onClick={() => getAllAdjustments(0, key)}
                         className="btn btn-primary mx-2 mt-4">
                         Search
                       </Button>
                     </div>
-                </div>
-                  
-                  
+                  </div>
+
+
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setAllAdjustments([])
                       getAllAdjustments(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -602,7 +621,8 @@ export const SquadScheduleAdjustment = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
@@ -611,7 +631,7 @@ export const SquadScheduleAdjustment = (props: any) => {
               {authorizations.includes("Request:Create") ? (
                 <div className="d-flex justify-content-end mt-3" >
                   <div>
-                 
+
                   </div>
                 </div>
               ) : null}
@@ -651,14 +671,14 @@ export const SquadScheduleAdjustment = (props: any) => {
                   dateFrom: Yup.string().required("Date from is required !"),
                   dateTo: Yup.string().required("Date to is required !"),
                   reason: Yup.string().required("Reason is required !"),
-                 
+
                 })
               }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = adjustmentBreakdown
                 // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
-                 
+
                 //   return {
                 //     ...item,
                 //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
@@ -667,7 +687,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
                 // }
                 //   })
-                
+
                 if (adjustmentId) {
                   delete valuesObj.userId
                   RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
@@ -686,7 +706,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                           'success'
                         )
                         setAdjustmentBreakdown([])
-                        getAllAdjustments(0, "")
+                        getAllAdjustments(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -710,8 +730,8 @@ export const SquadScheduleAdjustment = (props: any) => {
                           'error'
                         )
                       }
-                    
-                      
+
+
                       else {
                         ErrorSwal.fire(
                           'Success!',
@@ -719,7 +739,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                           'success'
                         )
                         setAdjustmentBreakdown([])
-                        getAllAdjustments(0, "")
+                        getAllAdjustments(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -818,13 +838,13 @@ export const SquadScheduleAdjustment = (props: any) => {
                                         onChange={(e) => {
                                           setDateOption(index, 'startShift', e.target.value)
                                         }}
-                                       
-                                       
-                                      
+
+
+
                                       />
-                                       {errors && errors.startShift && (
-                          <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
-                        )}
+                                      {errors && errors.startShift && (
+                                        <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
+                                      )}
                                     </td>
                                     <td key={index + 'startBreak'} >
                                       <input
@@ -900,19 +920,19 @@ export const SquadScheduleAdjustment = (props: any) => {
           </Modal.Body>
         </Modal>
         {/* End Create User Modal Form */}
-         {/* start of view dialog */}
+        {/* start of view dialog */}
 
-         <Modal
-        show={modalViewShow}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-        
-          setModalViewShow(false)
-        }}
-        dialogClassName="modal-90w"
+        <Modal
+          show={modalViewShow}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop="static"
+          keyboard={false}
+          onHide={() => {
+
+            setModalViewShow(false)
+          }}
+          dialogClassName="modal-90w"
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -921,19 +941,19 @@ export const SquadScheduleAdjustment = (props: any) => {
           </Modal.Header>
           <Modal.Body className="d-flex align-items-center justify-content-center">
             <div className="container">
-                {/* <h4>reason</h4> {{values.reason}} */}
-                    <p>Name : <span>{initialValues.lastName + ' ' +  initialValues.firstName}</span> <span>{}</span></p>
-                    <p>Reason : {initialValues.reason}</p>
-                    <p>Date From : {initialValues.dateFrom}</p>
-                    <p>Date To : {initialValues.dateTo}</p>
-                    <p>Shift Starts : {initialValues.startShift}</p>
-                    <p>Start of Break : {initialValues.startBreak}</p>
-                    <p>End of Break : {initialValues.endBreak}</p>
-                    <p>Shift Ends : {initialValues.endShift}</p>
+              {/* <h4>reason</h4> {{values.reason}} */}
+              <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+              <p>Reason : {initialValues.reason}</p>
+              <p>Date From : {initialValues.dateFrom}</p>
+              <p>Date To : {initialValues.dateTo}</p>
+              <p>Shift Starts : {initialValues.startShift}</p>
+              <p>Start of Break : {initialValues.startBreak}</p>
+              <p>End of Break : {initialValues.endBreak}</p>
+              <p>Shift Ends : {initialValues.endShift}</p>
 
-                    <p>Status : {initialValues.status}</p>
+              <p>Status : {initialValues.status}</p>
 
-                    {/* {adjustmentBreakdown.map ((initialValues, index) =>(
+              {/* {adjustmentBreakdown.map ((initialValues, index) =>(
                       <div key={`adjustmentBreakdown-${index}`}>
                           <p className="bold-text">Set Request {index + 1}:</p>
                           <p>Type : {initialValues.coaBdType}</p>

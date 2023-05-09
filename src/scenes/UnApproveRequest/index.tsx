@@ -174,7 +174,8 @@ export const UnApproveRequest = (props: any) => {
                             previousLabel="<"
                             previousLinkClassName="prev-next-pagination"
                             nextLinkClassName="prev-next-pagination"
-                            activeClassName="active-page-link"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
                             pageLinkClassName="page-link"
                             renderOnZeroPageCount={null}
                         />
@@ -308,7 +309,8 @@ export const UnApproveRequest = (props: any) => {
                             previousLabel="<"
                             previousLinkClassName="prev-next-pagination"
                             nextLinkClassName="prev-next-pagination"
-                            activeClassName="active-page-link"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
                             pageLinkClassName="page-link"
                             renderOnZeroPageCount={null}
                         />
@@ -448,7 +450,8 @@ export const UnApproveRequest = (props: any) => {
                             previousLabel="<"
                             previousLinkClassName="prev-next-pagination"
                             nextLinkClassName="prev-next-pagination"
-                            activeClassName="active-page-link"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
                             pageLinkClassName="page-link"
                             renderOnZeroPageCount={null}
                         />
@@ -588,7 +591,8 @@ export const UnApproveRequest = (props: any) => {
                             previousLabel="<"
                             previousLinkClassName="prev-next-pagination"
                             nextLinkClassName="prev-next-pagination"
-                            activeClassName="active-page-link"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
                             pageLinkClassName="page-link"
                             renderOnZeroPageCount={null}
                         />
@@ -667,7 +671,7 @@ export const UnApproveRequest = (props: any) => {
                     <thead>
                         <tr>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE'?
+                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
                                         <th style={{ width: 'auto' }}>Employee Name</th>
                                     </> : null
@@ -732,7 +736,8 @@ export const UnApproveRequest = (props: any) => {
                             previousLabel="<"
                             previousLinkClassName="prev-next-pagination"
                             nextLinkClassName="prev-next-pagination"
-                            activeClassName="active-page-link"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
                             pageLinkClassName="page-link"
                             renderOnZeroPageCount={null}
                         />
