@@ -303,6 +303,7 @@ export const Overtime = (props: any) => {
               <th style={{ width: 'auto' }}>Classification</th>
               <th style={{ width: 'auto' }}>OT Start</th>
               <th style={{ width: 'auto' }}>OT End</th>
+              <th style={{ width: 'auto' }}>Duration</th>
               <th style={{ width: 'auto' }}>File Date</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
@@ -327,6 +328,7 @@ export const Overtime = (props: any) => {
                     <td> {item.classification} </td>
                     <td> {item.otStart.replace('T', ' ')} </td>
                     <td> {item.otEnd.replace('T', ' ')} </td>
+                    <td> {item.totalDuration} </td>
                     <td> {item.fileDate} </td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
