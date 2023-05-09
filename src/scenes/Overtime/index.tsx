@@ -98,17 +98,16 @@ export const Overtime = (props: any) => {
     let filterDataTemp = { ...filterData }
     if (status != "") {
       queryString = "&status=" + status
-    } else {
-      if (filterDataTemp) {
-        Object.keys(filterDataTemp).forEach((d: any) => {
-          if (filterDataTemp[d]) {
+    }
+    if (filterDataTemp) {
+      Object.keys(filterDataTemp).forEach((d: any) => {
+        if (filterDataTemp[d]) {
 
-            queryString += `&${d}=${filterDataTemp[d]}`
-          } else {
-            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-          }
-        })
-      }
+          queryString += `&${d}=${filterDataTemp[d]}`
+        } else {
+          queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+        }
+      })
     }
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(

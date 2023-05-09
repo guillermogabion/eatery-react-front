@@ -18,6 +18,10 @@ const EmployeeDropdown = (props: any) => {
                     if (body.error && body.error.message) {
                     } else {
                         let tempArray: any = []
+                        tempArray.push({
+                            value: "Select",
+                            label: "Cancel Selection"
+                        })
                         body.data.forEach((d: any, i: any) => {
                             tempArray.push({
                                 value: d.userAccountId,
