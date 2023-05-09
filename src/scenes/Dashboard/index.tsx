@@ -21,12 +21,32 @@ export const Dashboard = (props: any) => {
   const [hasLogout, setHasLogout] = useState<any>(false)
   const [hasTimeIn, setHasTimeIN] = useState<any>(false)
   const [hasTimeOut, setHasTimeOut] = useState<any>(false)
+  const [userSchedule, setUserSchedule] = useState<any>("");
 
 
   useEffect(() => {
     getFetchData(0)
+    getMySchedule()
+
   }, [])
-  
+  const getMySchedule = () => {
+
+    RequestAPI.getRequest(
+      `${Api.mySchedule}?date=${moment().format('YYYY-MM-DD')}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            setUserSchedule(body.data)
+          }
+        }
+      }
+    )
+  }
   const getFetchData = (pagging = 0) => {
     let today = moment().format("YYYY-MM-DD")
     RequestAPI.getRequest(
@@ -168,13 +188,16 @@ export const Dashboard = (props: any) => {
                           <h6 className="bold-text pt-2">Attendance Status:</h6>
                       </div>
                       <div className="" style={{marginLeft:15, textAlign: left}}>
-                          <h6 className="font-weight-bold pt-2">09:00 AM - 06:00 PM</h6>
+                          <h6 className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
+                      
+
                           <h6 className="font-weight-bold pt-2">{ timeInData && timeInData.firstLogin ?  moment(timeInData.firstLogin).format("DD MMMM YYYY h:mm:ss A") : 'n/a'}</h6>
                           <h6 className="font-weight-bold pt-2">{ timeInData && timeInData.lastLogin ?  moment(timeInData.lastLogin).format("DD MMMM YYYY h:mm:ss A") : 'n/a'}</h6>
                           <label 
                             className="font-weight-bold p-2 px-3 text-dark" 
                             style={{background:'#E9E9E9', width: 'auto', borderRadius:5}}>
-                            { (timeInData ) ? "Awaiting time out" : "Awaiting time in"}
+                            {/* { (hasTimeIn == true ) ? "Awaiting time out" : "Awaiting time in"} */}
+                            {((!hasTimeIn && !hasTimeOut) ? "Awaiting log in" : (hasTimeIn && !hasTimeOut) ? "Awaiting log out" : (hasTimeIn && hasTimeOut) ? "Logged out" : "")}
                           </label>
                       </div>
                     </div>
