@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 
 export const SquadLeaves = (props: any) => {
@@ -99,7 +100,7 @@ export const SquadLeaves = (props: any) => {
         if (status === 200 && body && body.data) {
           let tempArray: any = []
           body.data.content.forEach((element: any, index: any) => {
-            if (!tempArray.includes(element.holidayDate)){
+            if (!tempArray.includes(element.holidayDate)) {
               tempArray.push(element.holidayDate)
             }
           });
@@ -109,7 +110,7 @@ export const SquadLeaves = (props: any) => {
     )
   }, [])
 
-  useEffect (() => {
+  useEffect(() => {
     RequestAPI.getRequest(
       `${Api.getMyLeave}`,
       "",
@@ -119,7 +120,7 @@ export const SquadLeaves = (props: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
           setGetMyLeaves(body.data)
-          console.log(body.data); 
+          console.log(body.data);
         } else {
         }
       }
@@ -127,19 +128,20 @@ export const SquadLeaves = (props: any) => {
   }, [])
 
   useEffect(() => {
-    getAllLeaves(0, "")
+    getAllLeaves(0, key)
   }, [dayTypes])
 
-  const getAllLeaves = (page: any = 0, status: any = "All") => {
+  const getAllLeaves = (page: any = 0, status: any = "all") => {
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if(status != ""){
-      queryString = "&status="+ status
-    }else{
+    if (status != "") {
+      queryString = "&status=" + status
+    } else {
       if (filterDataTemp) {
         Object.keys(filterDataTemp).forEach((d: any) => {
           if (filterDataTemp[d]) {
-            
+
             queryString += `&${d}=${filterDataTemp[d]}`
           } else {
             queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -147,8 +149,8 @@ export const SquadLeaves = (props: any) => {
         })
       }
     }
-    
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER'){
+
+    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
         `${Api.getAllSquadLeaves}?size=10${queryString}&page=${page}`,
         "",
@@ -210,15 +212,15 @@ export const SquadLeaves = (props: any) => {
       for (let index = 1; index <= diffInDays; index++) {
         var added_date = moment(dFrom).add(dateCounter, 'days');
         let new_date = new Date(added_date.format('YYYY-MM-DD'))
-        
-        
+
+
         if (new_date.getDay() == 0 || new_date.getDay() == 6) {
           dateCounter += 1
         } else if (new_date.getDay() == 6) {
           dateCounter += 2
         } else {
           let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
-          if (!holidays.includes(new_date_with_counter)){
+          if (!holidays.includes(new_date_with_counter)) {
             leavesBreakdown.push({
               "date": new_date_with_counter,
               "credit": 1,
@@ -287,7 +289,7 @@ export const SquadLeaves = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0, "")
+              getAllLeaves(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -327,7 +329,7 @@ export const SquadLeaves = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0, "")
+              getAllLeaves(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -368,7 +370,7 @@ export const SquadLeaves = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllLeaves(0, "")
+              getAllLeaves(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -387,7 +389,7 @@ export const SquadLeaves = (props: any) => {
   const leaveTable = useCallback(() => {
     return (
       <div>
-       
+
         <Table responsive="lg">
           <thead>
             <tr>
@@ -404,108 +406,108 @@ export const SquadLeaves = (props: any) => {
           <tbody>
             {
               allLeaves &&
-              allLeaves.content &&
-              allLeaves.content.length > 0 ?
-              <>
-              {
-                allLeaves.content.map((item: any, index: any) => {
-                  return (
-                    <tr>
-                      <td> {item.lastName}, {item.firstName} </td>
-                      <td> {item.type} </td>
-                      <td> {item.dateFrom} </td>
-                      <td> {item.dateTo} </td>
-                      <td> {item.reason} </td>
-                      <td> {item.statusChangedBy} </td>
-                      <td> {item.status} </td>
-                      <td>
-                        {
-                          item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
-                            <>
-                            {authorizations.includes("Request:Update") ? (
-                              <>
-                                  <label
-                                  onClick={() => {
-                                    getLeave(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update"/>
+                allLeaves.content &&
+                allLeaves.content.length > 0 ?
+                <>
+                  {
+                    allLeaves.content.map((item: any, index: any) => {
+                      return (
+                        <tr>
+                          <td> {item.lastName}, {item.firstName} </td>
+                          <td> {item.type} </td>
+                          <td> {item.dateFrom} </td>
+                          <td> {item.dateTo} </td>
+                          <td> {item.reason} </td>
+                          <td> {item.statusChangedBy} </td>
+                          <td> {item.status} </td>
+                          <td>
+                            {
+                              item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                                <>
+                                  {authorizations.includes("Request:Update") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          getLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
-                                </label>
-                              </>
-                            ) : null}
-  
-                            {authorizations.includes("Request:Approve") ? (
-                              <>
-                                <label
-                                onClick={() => {
-                                  approveLeave(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve"/>
+                                      </label>
+                                    </>
+                                  ) : null}
 
-                              </label>
-                              </>
-                            ) : null}
-  
-                              {authorizations.includes("Request:Reject") ? (
-                              <>
-                              <label
-                                onClick={() => {
-                                  declineLeave(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline"/>
-                              </label>
-                              
-                              </>
-                            ) : null}
-                            </>
-                            :
-                            null
-                        }
-                        {
-                          item.status == "APPROVED" || item.status == "PENDING" ?
-                          <>
-                          {authorizations.includes("Request:Update") ? (
-                            <>
-                            <label
-                              onClick={() => {
-                                cancelLeave(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel"/>
-                            </label>
-                          
-                            </>
-                          ) : null}
-                          </>
-                          :null
-                        }
-                      </td>
-                    </tr>
-                  )
-                })
-              }
-              
-              </>
-              :
-              null
+                                  {authorizations.includes("Request:Approve") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          approveLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+
+                                      </label>
+                                    </>
+                                  ) : null}
+
+                                  {authorizations.includes("Request:Reject") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          declineLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                      </label>
+
+                                    </>
+                                  ) : null}
+                                </>
+                                :
+                                null
+                            }
+                            {
+                              item.status == "APPROVED" || item.status == "PENDING" ?
+                                <>
+                                  {authorizations.includes("Request:Update") ? (
+                                    <>
+                                      <label
+                                        onClick={() => {
+                                          cancelLeave(item.id)
+                                        }}
+                                        className="text-muted cursor-pointer">
+                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                      </label>
+
+                                    </>
+                                  ) : null}
+                                </>
+                                : null
+                            }
+                          </td>
+                        </tr>
+                      )
+                    })
+                  }
+
+                </>
+                :
+                null
             }
           </tbody>
-          
+
         </Table>
         {
-              allLeaves &&
-              allLeaves.content &&
-              allLeaves.content.length == 0 ?
-              <div className="w-100 text-center">
-                <label htmlFor="">No Records Found</label>
-              </div>
-              : 
-              null
+          allLeaves &&
+            allLeaves.content &&
+            allLeaves.content.length == 0 ?
+            <div className="w-100 text-center">
+              <label htmlFor="">No Records Found</label>
+            </div>
+            :
+            null
         }
-        
+
       </div>
     )
   }, [allLeaves])
@@ -524,9 +526,17 @@ export const SquadLeaves = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
+
   const handlePageClick = (event: any) => {
-    getAllLeaves(event.selected, "")
+    getAllLeaves(event.selected, key)
   };
+
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
   return (
     <div className="body">
       <div className="wraper">
@@ -540,21 +550,21 @@ export const SquadLeaves = (props: any) => {
               <div className="row">
                 <div className="col-md-6">
                   <h2>Good Day, {userData.data.profile.firstName}!</h2>
-                  <br/>
+                  <br />
                   {data.profile.role !== 'ADMIN' ? (
-  // This code block will be rendered only if the user is an ADMIN
-                      <div>
-                        <h4 className="bold-text">Leave Credits </h4>
-                        {getMyLeaves.map((leave: any) => (
-                          <div key={leave.id}>
-                            <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      // This code block will be rendered for all other users
-                      null
-                    )}
+                    // This code block will be rendered only if the user is an ADMIN
+                    <div>
+                      <h4 className="bold-text">Leave Credits </h4>
+                      {getMyLeaves.map((leave: any) => (
+                        <div key={leave.id}>
+                          <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    // This code block will be rendered for all other users
+                    null
+                  )}
 
                   {/* {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
@@ -568,11 +578,33 @@ export const SquadLeaves = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                  <div className="fieldtext d-flex col-md-6">
-                      <div>
-                        <label>Date From</label>
+                  <div className="fieldtext d-flex col-md-6 w-100">
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                      <label>Employee</label>
+                      <EmployeeDropdown
+                        placeholder={"Employee"}
+                        singleChangeOption={singleChangeOption}
+                        name="userId"
+                        value={filterData && filterData['userId']}
+                      />
+                    </div>
+                    <div>
+                      <label>Date From</label>
+                      <input
+                        name="dateFrom"
+                        type="date"
+                        autoComplete="off"
+                        className="formControl"
+                        maxLength={40}
+                        onChange={(e) => makeFilterData(e)}
+                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                      />
+                    </div>
+                    <div>
+                      <label>Date To</label>
+                      <div className="input-container">
                         <input
-                          name="dateFrom"
+                          name="dateTo"
                           type="date"
                           autoComplete="off"
                           className="formControl"
@@ -581,34 +613,21 @@ export const SquadLeaves = (props: any) => {
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                         />
                       </div>
-                      <div>
-                        <label>Date To</label>
-                        <div className="input-container">
-                          <input
-                            name="dateTo"
-                            type="date"
-                            autoComplete="off"
-                            className="formControl"
-                            maxLength={40}
-                            onChange={(e) => makeFilterData(e)}
-                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                          />
-                        </div>
-                      </div>
-                    
+                    </div>
+
                     <Button
-                        style={{ width: 120}}
-                        onClick={() => getAllLeaves(0,"")}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                      </Button>
+                      style={{ width: 120 }}
+                      onClick={() => getAllLeaves(0, key)}
+                      className="btn btn-primary mx-2 mt-4">
+                      Search
+                    </Button>
                   </div>
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setAllLeaves([])
                       getAllLeaves(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -639,20 +658,21 @@ export const SquadLeaves = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
                 </div>
-            </div>
-                  {authorizations.includes("Request:Create") ? (
-                  <div className="d-flex justify-content-end mt-3" >
-                      <div>
-                        
-                      </div>
+              </div>
+              {authorizations.includes("Request:Create") ? (
+                <div className="d-flex justify-content-end mt-3" >
+                  <div>
+
                   </div>
-                ) : null}
-              
+                </div>
+              ) : null}
+
             </div>
           </div>
         </div>
@@ -714,7 +734,7 @@ export const SquadLeaves = (props: any) => {
                           'success'
                         )
                         setLeaveBreakdown([])
-                        getAllLeaves(0, "")
+                        getAllLeaves(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -744,7 +764,7 @@ export const SquadLeaves = (props: any) => {
                           'success'
                         )
                         setLeaveBreakdown([])
-                        getAllLeaves(0, "")
+                        getAllLeaves(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -781,8 +801,8 @@ export const SquadLeaves = (props: any) => {
                             ))}
                         </select>
                         {errors && errors.type && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date From</label>
@@ -799,8 +819,8 @@ export const SquadLeaves = (props: any) => {
                           }}
                         />
                         {errors && errors.dateFrom && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date To</label>
@@ -817,8 +837,8 @@ export const SquadLeaves = (props: any) => {
                           }}
                         />
                         {errors && errors.dateTo && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <label>Reason</label>
@@ -830,8 +850,8 @@ export const SquadLeaves = (props: any) => {
                           onChange={(e) => setFormField(e, setFieldValue)}
                         />
                         {errors && errors.reason && (
-                              <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                          )}
+                          <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        )}
                       </div>
                       <div className="form-group col-md-12 mb-3" >
                         <Table responsive="lg" style={{ maxHeight: '100vh' }}>

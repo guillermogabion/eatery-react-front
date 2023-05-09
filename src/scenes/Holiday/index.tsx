@@ -416,7 +416,8 @@ export const Holiday = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />

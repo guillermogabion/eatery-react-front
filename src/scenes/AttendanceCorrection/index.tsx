@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import * as Yup from "yup";
 import { eye, action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 export const AttendanceCorrection = (props: any) => {
   const [coaBreakdownCount, setCoaBreakdownCount] = useState(0);
@@ -58,7 +59,7 @@ export const AttendanceCorrection = (props: any) => {
   };
 
 
-  const handleRemoveItem = (index) => {
+  const handleRemoveItem = (index: any) => {
     const updatedFields = [...coaBreakdown];
     updatedFields.splice(index, 1);
     setCoaBreakdown(updatedFields);
@@ -95,10 +96,11 @@ export const AttendanceCorrection = (props: any) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    getAllCOARequest(0, "")
+    getAllCOARequest(0, key)
   }, [])
 
-  const getAllCOARequest = (page: any = 0, status: any = "All") => {
+  const getAllCOARequest = (page: any = 0, status: any = "all") => {
+    setKey(status)
     let queryString = ""
     let filterDataTemp = { ...filterData }
     if (status != "") {
@@ -200,7 +202,7 @@ export const AttendanceCorrection = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllCOARequest(0, "")
+              getAllCOARequest(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -240,7 +242,7 @@ export const AttendanceCorrection = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllCOARequest(0, "")
+              getAllCOARequest(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -305,7 +307,7 @@ export const AttendanceCorrection = (props: any) => {
                 (body.data) || "",
                 'success'
               )
-              getAllCOARequest(0, "")
+              getAllCOARequest(0, key)
             }
           } else {
             ErrorSwal.fire(
@@ -337,7 +339,7 @@ export const AttendanceCorrection = (props: any) => {
     { label: "Time Out", value: "TIME_OUT" }
   ];
   const handlePageClick = (event: any) => {
-    getAllCOARequest(event.selected, "")
+    getAllCOARequest(event.selected, key)
   };
   const validationSchema = Yup.object().shape({
     date: Yup.date().required('Date is required'),
@@ -478,6 +480,13 @@ export const AttendanceCorrection = (props: any) => {
     )
   }, [allCOA])
 
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
+
   return (
     <div className="body">
       <div className="wraper">
@@ -498,12 +507,37 @@ export const AttendanceCorrection = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
+                <div className="fieldtext d-flex col-md-3 w-100">
+                    {
+                      data.profile.role == 'EXECUTIVE' ?
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                          <label>Employee</label>
+                          <EmployeeDropdown
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                          />
+                        </div>
+                        :
+                        null
+                    }
+                    
+                    <div>
+                      <Button
+                        style={{ width: 120 }}
+                        onClick={() => getAllCOARequest(0, key)}
+                        className="btn btn-primary mx-2 mt-4">
+                        Search
+                      </Button>
+                    </div>
+                  </div>
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}
                     onSelect={(k: any) => {
+                      setAllCOA([])
                       getAllCOARequest(0, k)
-                      setKey(k)
                     }}
                     className="mb-3"
                   >
@@ -534,7 +568,8 @@ export const AttendanceCorrection = (props: any) => {
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
-                    activeClassName="active-page-link"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
                     pageLinkClassName="page-link"
                     renderOnZeroPageCount={null}
                   />
@@ -629,7 +664,7 @@ export const AttendanceCorrection = (props: any) => {
                           'success'
                         )
                         setCoaBreakdown([])
-                        getAllCOARequest(0, "")
+                        getAllCOARequest(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       }
@@ -657,7 +692,7 @@ export const AttendanceCorrection = (props: any) => {
                           'error'
                         )
                         setCoaBreakdown([])
-                        getAllCOARequest(0, "")
+                        getAllCOARequest(0, key)
                         setModalShow(false)
                         formRef.current?.resetForm()
                       } else {
@@ -667,7 +702,7 @@ export const AttendanceCorrection = (props: any) => {
                           'success'
                         )
                         setCoaBreakdown([]);
-                        getAllCOARequest(0, "");
+                        getAllCOARequest(0, key);
                         setModalShow(false);
                         formRef.current?.resetForm()
 

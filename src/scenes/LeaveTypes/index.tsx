@@ -96,7 +96,7 @@ export const LeaveTypes = (props: any) => {
                 if (status === 200 && body && body.data) {
                     if (body.error && body.error.message) {
                     } else {
-                        setFieldValue('credits',body.data.credits)
+                        setFieldValue('credits', body.data.credits)
                     }
                 }
             }
@@ -279,7 +279,8 @@ export const LeaveTypes = (props: any) => {
                                         previousLabel="<"
                                         previousLinkClassName="prev-next-pagination"
                                         nextLinkClassName="prev-next-pagination"
-                                        activeClassName="active-page-link"
+                                        activeLinkClassName="active-page-link"
+                                        disabledLinkClassName="prev-next-disabled"
                                         pageLinkClassName="page-link"
                                         renderOnZeroPageCount={null}
                                     />
@@ -541,7 +542,7 @@ export const LeaveTypes = (props: any) => {
                                                     placeholder={"Employee"}
                                                     onChangeOption={(e: any) => {
                                                         setFieldValue('userId', e.value)
-                                                        if (e.value && values.leaveTypeId){
+                                                        if (e.value && values.leaveTypeId) {
                                                             getUserCredits(e.value, values.leaveTypeId, setFieldValue)
                                                         }
                                                     }}
@@ -559,13 +560,13 @@ export const LeaveTypes = (props: any) => {
                                                     name="leaveTypeId"
                                                     id="type"
                                                     value={values.leaveTypeId}
-                                                    onChange={(e) => { 
-                                                        if (e.target.value && values.userId){
-                                                            getUserCredits(values.userId, e.target.value,setFieldValue)
+                                                    onChange={(e) => {
+                                                        if (e.target.value && values.userId) {
+                                                            getUserCredits(values.userId, e.target.value, setFieldValue)
                                                         }
                                                         setFieldValue('leaveTypeId', e.target.value,)
-                                                        
-                                                        }}>
+
+                                                    }}>
                                                     <option key={`departmentItem}`} value={""}>
                                                         Select
                                                     </option>
@@ -601,16 +602,16 @@ export const LeaveTypes = (props: any) => {
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        if (editCredit){
+                                                        if (editCredit) {
                                                             setEditCredit(false)
-                                                        }else{
-                                                            getUserCredits(values.userId, values.leaveTypeId,setFieldValue)
+                                                        } else {
+                                                            getUserCredits(values.userId, values.leaveTypeId, setFieldValue)
                                                             setEditCredit(true)
                                                         }
                                                     }}
-                                                    
+
                                                     className="btn btn-primary mx-1">
-                                                    { !editCredit ? "Cancel" : "Update"}
+                                                    {!editCredit ? "Cancel" : "Update"}
                                                 </button>
 
                                                 <button

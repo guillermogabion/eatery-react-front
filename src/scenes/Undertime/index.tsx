@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux"
 import ReactPaginate from 'react-paginate';
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 export const Undertime = (props: any) => {
     const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -42,11 +43,11 @@ export const Undertime = (props: any) => {
     const formRef: any = useRef()
 
     useEffect(() => {
-        getMyUT(0, "")
+        getMyUT(0, key)
     }, [])
 
     const handlePageClick = (event: any) => {
-        getMyUT(event.selected, "")
+        getMyUT(event.selected, key)
     };
     const makeFilterData = (event: any) => {
         const { name, value } = event.target
@@ -55,8 +56,8 @@ export const Undertime = (props: any) => {
         setFilterData(filterObj)
     }
 
-    const getMyUT = (page: any = 0, status: any = "All") => {
-
+    const getMyUT = (page: any = 0, status: any = "all") => {
+        setKey(status)
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (status != "") {
@@ -129,7 +130,7 @@ export const Undertime = (props: any) => {
                                 'error'
                             )
                         } else {
-                            getMyUT(0, "")
+                            getMyUT(0, key)
                             ErrorSwal.fire(
                                 'Success!',
                                 (body.data) || "",
@@ -174,7 +175,7 @@ export const Undertime = (props: any) => {
                                 (body.data) || "",
                                 'success'
                             )
-                            getMyUT(0, "")
+                            getMyUT(0, key)
                         }
                     } else {
                         ErrorSwal.fire(
@@ -209,7 +210,7 @@ export const Undertime = (props: any) => {
                                 'error'
                             )
                         } else {
-                            getMyUT(0, '')
+                            getMyUT(0, key)
                             ErrorSwal.fire(
                                 'Success!',
                                 (body.data) || "",
@@ -330,7 +331,7 @@ export const Undertime = (props: any) => {
                                                                     className="text-muted cursor-pointer">
                                                                     <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                                                 </label>
-                                                               
+
                                                             </>
                                                         ) : null}
                                                     </>
@@ -349,7 +350,7 @@ export const Undertime = (props: any) => {
                                                                     className="text-muted cursor-pointer">
                                                                     <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                                 </label>
-                                                               
+
                                                             </>
                                                         ) : null}
                                                     </>
@@ -382,6 +383,13 @@ export const Undertime = (props: any) => {
             setFieldValue(name, value)
             setFieldValue("formoutside", true)
         }
+    }
+
+    const singleChangeOption = (option: any, name: any) => {
+
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
     }
 
     return (
@@ -417,7 +425,21 @@ export const Undertime = (props: any) => {
                     </div> */}
 
                                 <div className="w-100 pt-2">
-                                    <div className="fieldtext d-flex col-md-3">
+                                    <div className="fieldtext d-flex col-md-3 w-100">
+                                        {
+                                            data.profile.role == 'EXECUTIVE' ?
+                                                <div className="" style={{ width: 200, marginRight: 10 }}>
+                                                    <label>Employee</label>
+                                                    <EmployeeDropdown
+                                                        placeholder={"Employee"}
+                                                        singleChangeOption={singleChangeOption}
+                                                        name="userId"
+                                                        value={filterData && filterData['userId']}
+                                                    />
+                                                </div>
+                                                :
+                                                null
+                                        }
                                         <div>
                                             <label>Date From</label>
                                             <div>
@@ -460,7 +482,7 @@ export const Undertime = (props: any) => {
                                         <div>
                                             <Button
                                                 style={{ width: 120 }}
-                                                onClick={() => getMyUT(0, "")}
+                                                onClick={() => getMyUT(0, key)}
                                                 className="btn btn-primary mx-2 mt-4">
                                                 Search
                                             </Button>
@@ -471,8 +493,8 @@ export const Undertime = (props: any) => {
                                         id="controlled-tab-example"
                                         activeKey={key}
                                         onSelect={(k: any) => {
+                                            setMyUT([])
                                             getMyUT(0, k)
-                                            setKey(k)
                                         }}
                                         className="mb-3"
                                     >
@@ -503,7 +525,8 @@ export const Undertime = (props: any) => {
                                         previousLabel="<"
                                         previousLinkClassName="prev-next-pagination"
                                         nextLinkClassName="prev-next-pagination"
-                                        activeClassName="active-page-link"
+                                        activeLinkClassName="active-page-link"
+                                        disabledLinkClassName="prev-next-disabled"
                                         pageLinkClassName="page-link"
                                         renderOnZeroPageCount={null}
                                     />
@@ -573,7 +596,7 @@ export const Undertime = (props: any) => {
                                                     'error'
                                                 )
                                             } else {
-                                                getMyUT(0, "")
+                                                getMyUT(0, key)
                                                 ErrorSwal.fire(
                                                     'Success!',
                                                     (body.data) || "",
@@ -601,7 +624,7 @@ export const Undertime = (props: any) => {
                                                     'error'
                                                 )
                                             } else {
-                                                getMyUT(0, "")
+                                                getMyUT(0, key)
                                                 ErrorSwal.fire(
                                                     'Success!',
                                                     (body.data) || "",
