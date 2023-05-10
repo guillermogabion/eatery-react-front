@@ -16,6 +16,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useSelector, useDispatch } from "react-redux"
 import ReactPaginate from 'react-paginate';
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 
 
 
@@ -109,6 +110,13 @@ export const Squad = (props: any) => {
     // console.log(download)
   }
 
+  const singleChangeOption = (option: any, name: any) => {
+
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
+
   return (
     <div className="body">
       <div className="wraper">
@@ -132,41 +140,30 @@ export const Squad = (props: any) => {
 
 
                 <div className="w-100 pt-4">
-                  <div className="fieldtext d-flex col-md-6">
-                    <div className="input-container">
-                      <input
-                        name="firstname"
-                        placeholder="First name"
-                        type="text"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                  <div className="fieldtext d-flex col-md-3 w-100">
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                      <label>Employee</label>
+                      <EmployeeDropdown
+                        isOnSubordinates={true}
+                        placeholder={"Employee"}
+                        singleChangeOption={singleChangeOption}
+                        name="userId"
+                        value={filterData && filterData['userId']}
                       />
                     </div>
-
-                    <div className="input-container">
-                      <input
-                        name="lastname"
-                        placeholder="Last name"
-                        type="text"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
-                    <div className="input-container">
+                    <div>
                       <Button
-                        style={{ width: 210 }}
-                        onClick={() => getMember(0, "")}
-                        className="btn btn-primary mx-2">
+                        style={{ width: 120 }}
+                        onClick={() => {
+                          setSquad([])
+                          getMember(0, "")
+                        }}
+                        className="btn btn-primary mx-2 mt-4">
                         Search
                       </Button>
                     </div>
                   </div>
+
                   <table>
                     <thead>
                       <tr>

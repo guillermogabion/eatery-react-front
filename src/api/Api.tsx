@@ -41,6 +41,7 @@ const Api: any = {
   
   
   employeeList: process.env.REACT_APP_API_URL + "employee/list/all", 
+  squadEmployeeList: process.env.REACT_APP_API_URL + "employee/list/squadmemberlist", 
 
   getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
   employeeInformation: process.env.REACT_APP_API_URL + "employee/info",

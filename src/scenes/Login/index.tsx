@@ -267,7 +267,6 @@ export const Login = () => {
   }, [username, password])
 
   const forgotUserPassword = React.useCallback(() => {
-    setForgotIsSubmit(true)
     if (forgotEmail) {
       RequestAPI.putRequest(Api.forgotPassword, "", { "email": forgotEmail }, {}, async (res: any) => {
         const { status, body } = res
@@ -278,6 +277,7 @@ export const Login = () => {
               (body.error && body.error.message) || "",
               'error'
             )
+            setForgotIsSubmit(false)
           } else {
             ErrorSwal.fire(
               'Success!',
@@ -296,7 +296,7 @@ export const Login = () => {
         }
       });
     }
-    setForgotIsSubmit(false)
+
   }, [forgotEmail])
 
   // onCopy
@@ -418,12 +418,26 @@ export const Login = () => {
         <Modal.Header className="reset-header" closeButton>
           <Modal.Title className="header-text">Forgot Password</Modal.Title>
         </Modal.Header>
-        
+
         <div className="modal-input">
-          <Form.Control type="text" value={forgotEmail} onChange={(e) => {setForgotEmail(e.target.value)}} placeholder="Employee Email Address" />
+          <Form.Control type="text" value={forgotEmail} onChange={(e) => { setForgotEmail(e.target.value) }} placeholder="Employee Email Address" />
         </div>
-        <div className="modal-btns">
-          <Button variant="primary" className="modal-btn" disabled={forgotIsSubmit} onClick={() => forgotUserPassword()}>Submit</Button>
+        <div className="modal-btns w-100">
+          <Button variant="primary"
+            className="modal-btn"
+            disabled={forgotIsSubmit}
+            onClick={() => {
+              setForgotIsSubmit(true)
+              forgotUserPassword()
+            }}>
+            {forgotIsSubmit ?
+              <div className="d-flex">
+                <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                Submitting
+              </div>
+              : "Submit"
+            }
+          </Button>
         </div>
       </Modal>
     </>
