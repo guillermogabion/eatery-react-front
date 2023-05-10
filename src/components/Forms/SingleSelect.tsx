@@ -15,7 +15,7 @@ interface RSelectInterface extends FormSelectProps {
   placeholder?: any
   onChangeOption?: any,
   isClearable?: any,
-  menuPortal?:any
+  menuPortal?: any
 }
 
 const customStyles = {
@@ -42,7 +42,7 @@ const customStyles = {
     boxShadow: 0,
     color: "#333333",
     borderStyle: "initial",
-    border:!state.isDisabled ? state.hasValue ? "1px solid #d8d8d8" : "1px solid #d8d8d8" : "1px solid #d8d8d8",
+    border: !state.isDisabled ? state.hasValue ? "1px solid #d8d8d8" : "1px solid #d8d8d8" : "1px solid #d8d8d8",
     borderRadius: "5px",
     font: "normal normal normal 16px/20px Source Sans Pro, sans-serif",
     height: 42,
@@ -69,10 +69,10 @@ const customStyles = {
     width: 98,
   }),
   singleValue: (provided: any, state: any) => {
-    const opacity =  1
+    const opacity = 1
     const transition = "opacity 300ms"
 
-    return { ...provided, opacity, transition,  color: "#000000", }
+    return { ...provided, opacity, transition, color: "#000000", }
   },
   placeholder: (provided: any) => ({
     ...provided,
@@ -81,16 +81,16 @@ const customStyles = {
 }
 
 const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
-  const { placeholder, type, options = [], onChangeOption, name, value, isClearable = false, menuPortal=false } = props
+  const { placeholder, type, options = [], onChangeOption, name, value, isClearable = false, menuPortal = false, defaultValue } = props
   const optionCopy: any = []
   const optionArr = [...options]
   if (type === "string") {
     optionArr.forEach((d: any) => {
-      
+
       const optionObj = { value: "", label: "" }
       if (typeof d === "object") {
         const { id } = d
-        
+
         optionObj.value = d.value
         optionObj.label = d.label
       } else {
@@ -129,12 +129,16 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
       isClearable={isClearable}
       menuPortalTarget={menuPortal ? document.body : null}
       value={
-        optionCopy.filter((option: any) =>
-          option.value === value)
+        optionCopy.filter((option: any) => {
+          if (option.value.toString() === value.toString()) {
+            return { value: 4, label: "test" }
+          }
+        })
       }
-    // menuIsOpen={true}
+      // menuIsOpen={true}
       // value={value}
       closeMenuOnSelect={true}
+      defaultValue={4}
       className="basic-single-select"
       classNamePrefix="Select Status"
       styles={customStyles}
@@ -142,7 +146,7 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
       isSearchable={true}
       placeholder={placeholder || "placeholder"}
       options={optionCopy}
-      onChange={(option:any) => onChangeOption(option, name)}
+      onChange={(option: any) => onChangeOption(option, name)}
       components={{
         IndicatorSeparator: () => null,
       }}
