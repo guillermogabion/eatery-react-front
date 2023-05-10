@@ -128,15 +128,14 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
     <Select
       isClearable={isClearable}
       menuPortalTarget={menuPortal ? document.body : null}
-      value={
+      value={ value ?
         optionCopy.filter((option: any) => {
-          if (value){
             if (option.value.toString() === value.toString()) {
-              return { value: 4, label: "test" }
+              return { value: option.value, label: option.label }
             }
-          }
-          
         })
+        :
+        null
       }
       // menuIsOpen={true}
       // value={value}
