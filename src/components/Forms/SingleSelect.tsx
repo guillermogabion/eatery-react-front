@@ -130,9 +130,12 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
       menuPortalTarget={menuPortal ? document.body : null}
       value={
         optionCopy.filter((option: any) => {
-          if (option.value.toString() === value.toString()) {
-            return { value: 4, label: "test" }
+          if (value){
+            if (option.value.toString() === value.toString()) {
+              return { value: 4, label: "test" }
+            }
           }
+          
         })
       }
       // menuIsOpen={true}
