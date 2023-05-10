@@ -144,7 +144,7 @@ export const Squad = (props: any) => {
                     <div className="" style={{ width: 200, marginRight: 10 }}>
                       <label>Employee</label>
                       <EmployeeDropdown
-                        isOnSubordinates={true}
+                        squad={true}
                         placeholder={"Employee"}
                         singleChangeOption={singleChangeOption}
                         name="userId"

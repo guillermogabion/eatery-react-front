@@ -3,11 +3,11 @@ import { Api, RequestAPI } from "../../api";
 import SingleSelect from "../Forms/SingleSelect";
 
 const EmployeeDropdown = (props: any) => {
-    const { value = "", singleChangeOption, name, placeholder = "", styles, isOnSubordinates } = props
+    const { value = "", singleChangeOption, name, placeholder = "", styles, squad } = props
     const [employeeList, setEmployeeList] = useState<any>([]);
 
     useEffect(() => {
-        if (isOnSubordinates) {
+        if (squad) {
             RequestAPI.getRequest(
                 `${Api.squadEmployeeList}`,
                 "",

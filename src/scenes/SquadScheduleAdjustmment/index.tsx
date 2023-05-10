@@ -72,7 +72,7 @@ export const SquadScheduleAdjustment = (props: any) => {
     let filterDataTemp = { ...filterData }
     if (status != "") {
       queryString = "&status=" + status
-    } 
+    }
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -527,6 +527,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                     <div className="" style={{ width: 200, marginRight: 10 }}>
                       <label>Employee</label>
                       <EmployeeDropdown
+                        squad={true}
                         placeholder={"Employee"}
                         singleChangeOption={singleChangeOption}
                         name="userId"
