@@ -794,6 +794,7 @@ export const AttendanceCorrection = (props: any) => {
                                   setCoaBreakdown(updatedFields);
                                 }}
                                 className={`form-control ${values.shiftDate == "" ? 'is-invalid' : ''}`}
+                              
                               />
                           </div>
                           <div className="col-md-3 mb-3">
