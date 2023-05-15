@@ -47,6 +47,7 @@ export const Leaves = (props: any) => {
 
   const formRef: any = useRef()
 
+
   const tableHeaders = [
     'Type',
     'Date Filed',
@@ -56,6 +57,8 @@ export const Leaves = (props: any) => {
     'Remarks',
     'Action',
   ]
+
+  
 
   useEffect(() => {
     RequestAPI.getRequest(
@@ -251,6 +254,7 @@ export const Leaves = (props: any) => {
     }
   }
 
+
   const setDateOption = (index: any, value: any, dayType: any = null) => {
 
     if (leaveBreakdown) {
@@ -394,6 +398,32 @@ export const Leaves = (props: any) => {
       }
     })
   }
+
+  const getNextWeekday = (date, count) => {
+    let nextWeekday = new Date(date.getTime());
+  
+    for (let i = 0; i < count; i++) {
+      nextWeekday.setDate(nextWeekday.getDate() + 1);
+      while (nextWeekday.getDay() === 0 || nextWeekday.getDay() === 6) {
+        nextWeekday.setDate(nextWeekday.getDate() + 1);
+      }
+    }
+  
+    return nextWeekday;
+  };
+
+  const handleDateFromChange = (e) => {
+    const { value } = e.target;
+    setValues((prevState) => ({ ...prevState, dateFrom: value }));
+  }
+
+  const handleDateToChange = (e) => {
+    const { value } = e.target;
+    setValues((prevState) => ({ ...prevState, dateTo: value }));
+  }
+
+  const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
+
 
 
 
@@ -823,7 +853,14 @@ export const Leaves = (props: any) => {
                           name="type"
                           id="type"
                           value={values.type}
-                          onChange={(e) => setFormField(e, setFieldValue)}>
+                          // onChange={(e) => setFormField(e, setFieldValue)}>
+                          onChange={(e) => {
+                            setFormField(e, setFieldValue);
+                           
+                          }}
+
+                      
+                        >
                           {leaveTypes &&
                             leaveTypes.length &&
                             leaveTypes.map((item: any, index: string) => (
@@ -848,6 +885,8 @@ export const Leaves = (props: any) => {
                             // setDateFrom(e.target.value)
                             dateBreakdown(e.target.value, values.dateTo)
                           }}
+                          min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
+                          max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
                         />
                         {errors && errors.dateFrom && (
                           <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
@@ -861,12 +900,14 @@ export const Leaves = (props: any) => {
                           className="form-control"
                           value={values.dateTo}
                           min={values.dateFrom}
+                          max={values.type == 1 ? getNextWeekday(new Date(), 6).toISOString().split('T')[0] : undefined}
                           onChange={(e) => {
-                            // setDateTo(e.target.value)
                             setFormField(e, setFieldValue)
                             dateBreakdown(values.dateFrom, e.target.value)
                           }}
                         />
+
+                         
                         {errors && errors.dateTo && (
                           <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                         )}
