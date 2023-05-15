@@ -1,17 +1,16 @@
-import React, { useState } from "react"
-import MainLeftMenu from "../../components/MainLeftMenu"
-import UserTopMenu from "../../components/UserTopMenu"
-import { show_password_dark,hide_password_dark, acm_success } from "../../assets/images"
 import { Formik } from "formik"
-import * as Yup from "yup"
-import { Form, Button } from "react-bootstrap"
+import { useState } from "react"
+import { Button, Form } from "react-bootstrap"
+import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
-import { RequestAPI, Api } from "../../api"
-import { Utility } from "./../../utils"
 import withReactContent from "sweetalert2-react-content"
+import * as Yup from "yup"
+import { Api, RequestAPI } from "../../api"
+import { hide_password_dark, show_password_dark } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
-import { useSelector, useDispatch } from "react-redux"
+import UserTopMenu from "../../components/UserTopMenu"
+import { Utility } from "./../../utils"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -210,9 +209,6 @@ export const ChangePassword = (props: any) => {
                   </div>
                 ) : (
                   <div className="ForgotPasswordSucess">
-                    <p>
-                      <img src={acm_success} alt="acm success" />
-                    </p>
                     <h3>Success!</h3>
                     <p>Your password has been changed. You may now re-login with your new password. Thank you.</p>
                     <p>

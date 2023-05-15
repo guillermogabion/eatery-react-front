@@ -1,4 +1,4 @@
-import { RBank_Digital_Logo } from "../../assets/images"
+
 
 export const User = (props: any) => {
   return (
@@ -7,7 +7,7 @@ export const User = (props: any) => {
         <aside className="sidebarMain" id="mobileMenu">
           <div className="sidebar">
             <a className="logo" href="/">
-              <img src={RBank_Digital_Logo} alt="RBank" />
+              <img src={null} alt="RBank" />
             </a>
             <div className="sidebarItems">
               <ul>

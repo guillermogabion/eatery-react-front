@@ -1,31 +1,25 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
-import UserTopMenu from "../../components/UserTopMenu"
-import {
-  show_password_dark,
-  hide_password_dark,
-} from "../../assets/images"
+import { Formik } from "formik"
+import moment from "moment"
+import React, { useEffect, useRef, useState } from "react"
+import { Button, Form, Modal } from "react-bootstrap"
+import Table from 'react-bootstrap/Table'
+import ReactPaginate from 'react-paginate'
+import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import * as Yup from "yup"
+import { Api, RequestAPI } from "../../api"
+import {
+  hide_password_dark,
+  show_password_dark,
+} from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
-const ErrorSwal = withReactContent(Swal)
-import moment from "moment";
-import { left, right } from "@popperjs/core"
-import { Button, Form, Image, Modal } from "react-bootstrap"
-import UserPopup from "../../components/Popup/UserPopup"
-import { RequestAPI, Api } from "../../api"
+import SingleSelect from "../../components/Forms/SingleSelect"
 import TimeDate from "../../components/TimeDate"
-import TableComponent from "../../components/TableComponent"
-import { Formik } from "formik";
-import * as Yup from "yup";
-import Table from 'react-bootstrap/Table';
-import { useSelector, useDispatch } from "react-redux"
-import ReactPaginate from 'react-paginate';
-import { async } from "validate.js"
+import UserTopMenu from "../../components/UserTopMenu"
 import FileUpload from "./upload"
 import ViewEmployee from "./view"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
-import SingleSelect from "../../components/Forms/SingleSelect"
+const ErrorSwal = withReactContent(Swal)
 
 interface Employee {
   id: number;

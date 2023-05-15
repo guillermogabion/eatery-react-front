@@ -3,7 +3,6 @@ import { Route, Switch, Redirect } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import {
   Login,
-  ForgotPassword,
   ChangePassword,
   Dashboard,
   Employee,
@@ -97,7 +96,6 @@ const Privateroutes: React.FunctionComponent = (props) => {
   ) : (
     <>
       <Route exact path="/" component={Login} />
-      <Route exact path="/forgot" component={ForgotPassword} />
       <Route exact path="*" render={() => <Redirect to="/" />} />
     </>
   )
