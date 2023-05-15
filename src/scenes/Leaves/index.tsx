@@ -900,7 +900,7 @@ export const Leaves = (props: any) => {
                           className="form-control"
                           value={values.dateTo}
                           min={values.dateFrom}
-                          max={values.type == 1 ? getNextWeekday(new Date(), 7).toISOString().split('T')[0] : undefined}
+                          max={values.type == 1 ? getNextWeekday(new Date(), 6).toISOString().split('T')[0] : undefined}
                           onChange={(e) => {
                             setFormField(e, setFieldValue)
                             dateBreakdown(values.dateFrom, e.target.value)
