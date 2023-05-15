@@ -1,18 +1,17 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 import UserTopMenu from "../../components/UserTopMenu"
 
+import { left, right } from "@popperjs/core"
+import moment from "moment"
+import { Button } from "react-bootstrap"
+import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
-import DashboardMenu from "../../components/DashboardMenu"
-const ErrorSwal = withReactContent(Swal)
-import moment from "moment";
-import { left, right } from "@popperjs/core"
-import { Button, Card, Image } from "react-bootstrap"
-import UserPopup from "../../components/Popup/UserPopup"
-import { RequestAPI, Api } from "../../api"
-import TimeDate from "../../components/TimeDate"
+import { Api, RequestAPI } from "../../api"
 import { bundy_clock } from "../../assets/images"
-import { useSelector, useDispatch } from "react-redux"
+import DashboardMenu from "../../components/DashboardMenu"
+import TimeDate from "../../components/TimeDate"
+const ErrorSwal = withReactContent(Swal)
 
 export const Dashboard = (props: any) => {
   const { history } = props

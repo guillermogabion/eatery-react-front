@@ -1,25 +1,22 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
-import UserTopMenu from "../../components/UserTopMenu"
+import { Formik } from "formik"
+import moment from "moment"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Button, Form, Modal } from "react-bootstrap"
+import Tab from 'react-bootstrap/Tab'
+import Table from 'react-bootstrap/Table'
+import Tabs from 'react-bootstrap/Tabs'
+import ReactPaginate from 'react-paginate'
+import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import * as Yup from "yup"
+import { Api, RequestAPI } from "../../api"
+import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
-const ErrorSwal = withReactContent(Swal)
-import moment from "moment";
-import { left, right } from "@popperjs/core"
-import { Button, Card, Form, Modal } from "react-bootstrap"
-import UserPopup from "../../components/Popup/UserPopup"
-import { RequestAPI, Api } from "../../api"
-import TimeDate from "../../components/TimeDate"
-import TableComponent from "../../components/TableComponent"
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import Table from 'react-bootstrap/Table';
-import { Formik } from "formik";
-import * as Yup from "yup";
-import ReactPaginate from 'react-paginate';
-import { useSelector, useDispatch } from "react-redux"
-import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
+import TimeDate from "../../components/TimeDate"
+import UserTopMenu from "../../components/UserTopMenu"
+const ErrorSwal = withReactContent(Swal)
 
 
 export const Overtime = (props: any) => {

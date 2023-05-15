@@ -1,26 +1,20 @@
-import React, { useEffect, useState, useRef, useCallback } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import UserTopMenu from "../../components/UserTopMenu"
 
+import { Formik } from "formik"
+import moment from "moment"
+import { Button, Form, Modal, Table } from "react-bootstrap"
+import ReactPaginate from "react-paginate"
+import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
-import DashboardMenu from "../../components/DashboardMenu"
-const ErrorSwal = withReactContent(Swal)
-import moment from "moment";
-import { left, right } from "@popperjs/core"
-import { Button, Card, Form, Image, Modal, Table } from "react-bootstrap"
-import UserPopup from "../../components/Popup/UserPopup"
-import { RequestAPI, Api } from "../../api"
-import TimeDate from "../../components/TimeDate"
-import TableComponent from "../../components/TableComponent"
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import { useSelector, useDispatch } from "react-redux"
-import FileUploadService from "../../services/FileUploadService"
-import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
-import ReactPaginate from "react-paginate"
-import SingleSelect from "../../components/Forms/SingleSelect"
-import { Formik } from "formik"
 import * as Yup from "yup"
+import { Api, RequestAPI } from "../../api"
+import DashboardMenu from "../../components/DashboardMenu"
+import SingleSelect from "../../components/Forms/SingleSelect"
+import TimeDate from "../../components/TimeDate"
+import FileUploadService from "../../services/FileUploadService"
+const ErrorSwal = withReactContent(Swal)
 
 export const AttendanceSummary = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)

@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux"
 import { RequestAPI, Api } from "../../api"
 import { FaCheckCircle } from "react-icons/fa";
 import {
-  Logo,
   show_password_dark,
   hide_password_dark,
   actimai_logo,

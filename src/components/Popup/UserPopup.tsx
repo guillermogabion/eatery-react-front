@@ -1,11 +1,3 @@
-import {
-  success_confirm,
-  icon_plus_add,
-  icon_delete,
-  delete_confirm,
-  delete_all_confirm,
-  am_token_expire,
-} from "../../assets/images"
 
 const UserPopup = (props: any) => {
   const { popupClass = "", title, handleClose, popupType = "success", onConfirm, text = "", iconCustom = '', description= "" } = props
@@ -19,18 +11,10 @@ const UserPopup = (props: any) => {
     </button>
   )
   let midContent = <></>
-  let iconContent = success_confirm
+  let iconContent = null
   if (popupType === "confirm") {
     footerBtn = (
       <>
-        <button type="button" onClick={onConfirm} className="addUser">
-          {props.confirmBut == 'Confirm' ? null : <img src={icon_plus_add} alt="ADD NEW CLIENT" />}
-          {props.confirmBut || "YES DELETE"}
-        </button>
-        <button type="button" onClick={closePopup} className="deletUser">
-          {props.confirmBut == 'Confirm' ? null : <img src={icon_delete} alt="DEACTIVATE CLIENT" />}
-          CANCEL
-        </button>
       </>
     )
     midContent = (
@@ -38,12 +22,12 @@ const UserPopup = (props: any) => {
         <strong>{(props.midContent && props.midContent) || ""}</strong>
       </p>
     )
-    iconContent = delete_confirm
+    iconContent = null
   } else if (popupType === "clear_all") {
     footerBtn = (
       <>
         <button type="button" onClick={onConfirm} className="clearAll">
-          <img src={icon_plus_add} alt="CLEAR ALL" />
+          
           {props.confirmBut || "CLEAR ALL"}
         </button>
         <button type="button" onClick={closePopup} className="cancel">
@@ -56,13 +40,13 @@ const UserPopup = (props: any) => {
         <strong>{props.midContent || props.midContent == "" || "You want to delete this?"}</strong>
       </p>
     )
-    iconContent = delete_all_confirm
+    iconContent = null
   } else if (popupType === "oops") {
-    iconContent = am_token_expire
+    iconContent = null
     midContent = <p>{text}</p>
   }
   else if (popupType === "expire_password") {
-    iconContent = success_confirm
+    iconContent = null
     midContent = <p>{text}</p>
     footerBtn = (
       <button type="button" onClick={onConfirm} className="addUser">

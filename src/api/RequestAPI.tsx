@@ -1,8 +1,8 @@
 import axios from "axios"
-import { Utility } from "../utils"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import UserPopup from "../components/Popup/UserPopup"
+import { Utility } from "../utils"
 const ErrorSwal = withReactContent(Swal)
 
 let logotState = false
