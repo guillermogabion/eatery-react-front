@@ -48,7 +48,6 @@
 body {
   background: #ffffff;
   color: #000000;
-  /* font-family: 'Barlow', sans-serif; */
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   line-height: 1.65;
@@ -62,12 +61,6 @@ img {
   max-width: 100%;
   vertical-align: top;
 }
-
-/* * {
-  box-sizing: border-box;
-} */
-
-
 
 .body {
   min-height: 100vh;
@@ -117,17 +110,6 @@ h1 {
   border-radius: 5px;
   overflow: hidden;
   max-height: 572px;
-
-  
-}
-
-.contentLeft .bannerDekstop {
-  width: 100%;
-  max-height: 572px;
-}
-
-.contentLeft {
-  width: 55%;
 }
 
 .contentRight {
@@ -137,10 +119,6 @@ h1 {
   align-items: center;
   display: flex;
   justify-content: center;
-}
-
-.loginLogo {
-  margin-bottom: 3rem;
 }
 
 .contentForm {
@@ -263,23 +241,6 @@ h1 {
   outline: 0;
   box-shadow: 0 0 0 0 rgb(13 110 253 / 0%) !important;
 }
-/* 
-.loginForm .btn-primary {
-  background: #54e0e8 0% 0% no-repeat padding-box;
-  border-color: #54e0e8;
-  box-shadow: 0px 3px 4px #0000001a;
-  border-radius: 5px;
-  opacity: 1;
-  width: 144px;
-  height: 45px;
-  text-align: center;
-  font: normal normal bold 16px/20px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #ffffff;
-  text-transform: uppercase;
-  float: right;
-  margin-top: 5px;
-} */
 
 .btn-primary:disabled {
   opacity: 0.5;
@@ -298,120 +259,6 @@ h1 {
   text-decoration: none;
 }
 
-.custom_calendar_style {
-  width: 320px !important;
-  line-height: 1em !important;
-  z-index: 100;
-}
-
-.recordnotfound {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.fieldMode,
-.fieldType {
-  width: 150px;
-}
-
-.checkboxField {
-  margin-bottom: 26px;
-}
-
-/* @media (min-width: 768px) and (max-width: 1200px) {
-  .wraper {
-    padding: 0 15px;
-  }
-
-  .loginLogo {
-    max-width: 100px;
-    margin-bottom: 1rem;
-  }
-} */
-
-/* @media (min-width: 768px) {
-
-  .bannerMobile,
-  .mobileLogo {
-    display: none;
-  }
-} */
-
-/* @media (max-width: 767px) {
-
-  .loginLogo,
-  .bannerDekstop {
-    display: none;
-  }
-
-  .logo img {
-    max-width: 205px;
-  }
-
-  .wraper {
-    padding: 15px;
-  }
-
-  .loginbody {
-    max-height: none;
-    border-radius: 30px;
-    padding-bottom: 60px;
-  }
-
-  .contentLeft {
-    width: 100%;
-    position: relative;
-  }
-
-  .contentLeft:before {
-    content: "";
-    background: url(./assets/images/ac_left_curve.png);
-    background-repeat: no-repeat;
-    position: absolute;
-    left: -1px;
-    bottom: 24px;
-    width: 30px;
-    height: 30px;
-  }
-
-  .contentLeft .bannerMobile {
-    width: 100%;
-  }
-
-  .mobileLogo {
-    position: absolute;
-    width: 95px;
-    top: 25px;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-
-  .contentRight {
-    width: 100%;
-    margin: 0;
-    padding: 30px 0 0;
-    margin-top: -30px;
-    background: #f7f7f7;
-    position: relative;
-    border-radius: 0 30px 0 0;
-  }
-
-  .contentForm h3 {
-    margin-bottom: 25px;
-  }
-
-  .loginbody .bannerDekstop2 {
-    max-width: 115%;
-  }
-
-  .loginPage>p {
-    max-width: 100%;
-    left: 0;
-    right: 0;
-  }
-} */
 
 /* ForgotPassword */
 
@@ -435,59 +282,11 @@ h1 {
 }
 
 /* SucessPage */
-.SucessBody {
-  max-width: 260px;
-  margin: auto;
-}
-
-.successLogo {
-  text-align: center;
-}
-
-/* Modal Popup */
-
-/* .modalPopup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(0 0 0 / 80%);
-  z-index: 9999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-} */
 
 .open_root {
   display: flex;
   overflow: hidden;
 }
-
-/* .modalBody {
-  width: 94%;
-  max-width: 674px;
-  min-height: 412px;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 10px;
-  opacity: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-/* .modalmainContent {
-  max-width: 500px;
-  text-align: center;
-  font: normal normal normal 22px/28px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #003139;
-} */
-
-/* .modalmainContent a {
-  color: #1f7888 !important;
-  text-decoration: none;
-} */
 
 .btn-primary {
   color: #fff;
@@ -512,33 +311,6 @@ h1 {
   font-weight: 700;
 }
 
-/* .modalPopup .btn-primary {
-  height: 52px;
-  background: #73bf45 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 4px #0000001a;
-  border-radius: 5px;
-  opacity: 1;
-  padding: 0 45px;
-  border-color: #73bf45;
-  line-height: 44px;
-  color: #ffffff !important;
-  text-decoration: none !important;
-  font-size: 16px;
-  font-weight: 700;
-} */
-
-/* .modalmedia {
-  margin-bottom: 1.5rem;
-} */
-
-/* .modalContent {
-  overflow: auto;
-  padding-right: 10px;
-} */
-
-/* .modalContent p {
-  margin-bottom: 1.5rem;
-} */
 
 /* UserList */
 
@@ -581,69 +353,6 @@ h1 {
   overflow-y: auto;
   overflow-x: hidden;
   min-height: calc(100vh - 450px);
-  padding-right: 30px;
-}
-
-.contentDataSetUserManagement1 {
-  max-height: calc(100vh - 300px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 300px);
-  padding-right: 30px;
-}
-
-.contentDataSetMaker {
-  max-height: calc(100vh - 450px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 450px);
-  padding-right: 30px;
-}
-
-
-.contentDataSetSummeryDpu {
-  max-height: calc(100vh - 280px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 280px);
-  padding-right: 30px;
-}
-
-.contentDataSetUserManagement {
-  max-height: calc(100vh - 230px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 230px);
-  padding-right: 30px;
-}
-
-.contentDataSetCreateRole {
-  max-height: calc(100vh - 180px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 180px);
-  padding-right: 30px;
-}
-
-.contentDatatableReportTable {
-  max-height: calc(100vh - 438px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 438px);
-  padding-right: 30px;
-  margin-top: 15px;
-}
-
-.contentDatatableReportTable2 {
-  max-height: calc(100vh - 305px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 305px);
-  padding-right: 30px;
-  margin-top: 15px;
-}
-
-.contentDataSet3 {
   padding-right: 30px;
 }
 
@@ -1286,95 +995,16 @@ td.rolemob {
   line-height: inherit;
 }
 
-td.actionLabel .active {
-  background: #a2f96f 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-  opacity: 1;
-  display: inline-block;
-  padding: 5px;
-  height: auto;
-
-  text-align: left;
-  font: normal normal 600 12px/10px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #003139;
-  text-transform: uppercase;
-  opacity: 1;
-}
-
-.inactive {
-  text-align: left;
-  font: normal normal 600 12px/10px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #ff6059;
-  background: #f5e5e5 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-  opacity: 1;
-  display: inline-block;
-  padding: 5px 5px;
-  height: auto;
-  text-transform: uppercase;
-}
-
-.lightStatus {
-  text-align: left;
-  font: normal normal 600 12px/10px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  border-radius: 4px;
-  opacity: 1;
-  display: inline-block;
-  padding: 5px 5px;
-  height: auto;
-  text-transform: uppercase;
-}
-
-.greenstatus {
-  text-align: left;
-  font: normal normal 600 12px/10px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #003139;
-  background: #d7edb9 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-  opacity: 1;
-  display: inline-block;
-  padding: 5px 5px;
-  height: auto;
-  text-transform: uppercase;
-}
-
 .action {
   display: flex;
   align-items: center;
   column-gap: 2rem;
 }
 
-.listaction {
-  display: flex;
-  align-items: center;
-  column-gap: 0;
-}
-
-.listaction .btn {
-  /* padding-left: 0; */
-  display: flex;
-  align-items: center;
-}
-
 
 /* User List End */
 
-/* Create User */
-.contentAddUser {
-  padding-right: 50px;
-}
 
-.contentAddUser label {
-  text-align: left;
-  font: normal normal normal 12px/15px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #003139;
-  opacity: 0.7;
-}
 
 .fieldsecect {
   margin-bottom: 15px;
@@ -1383,12 +1013,6 @@ td.actionLabel .active {
 .fieldtext {
   margin-bottom: 15px;
   position: relative;
-}
-
-.personalDetail {
-  margin-top: 30px;
-  display: inline-block;
-  width: 100%;
 }
 
 .generatBtn {
@@ -2135,63 +1759,7 @@ input::-ms-reveal {
   font-size: 12px;
 }
 
-.personalDetail h4 {
-  text-align: left;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0px;
-  color: #003139;
-  text-transform: uppercase;
-  opacity: 1;
-}
 
-.downloadNowBtn {
-  background: #97cd4c url(./assets/images/cm_download_light.svg);
-  color: #ffffff;
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  border-radius: 5px;
-  opacity: 1;
-  height: 42px;
-  border: 0;
-  padding-left: 45px;
-  padding-right: 10px;
-  margin-left: auto;
-}
-
-.downloadNowBtn:disabled {
-  opacity: 0.5;
-}
-
-.uploadNowBtn {
-  background: #97cd4c url(./assets/images/icon_upload_light.svg);
-  color: #ffffff;
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  border-radius: 5px;
-  opacity: 1;
-  height: 42px;
-  border: 0;
-  padding-left: 45px;
-  padding-right: 10px;
-  margin-left: auto;
-}
-
-.uploadNowBtn:disabled {
-  opacity: 0.5;
-}
-
-.uploadNowBtn:hover {
-  background: #97cd4c url(./assets/images/icon_upload_light.svg);
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  color: #ffffff;
-  box-shadow: 0px 3px 4px #daded5;
-}
-
-.contentAddUser label {
-  width: 100%;
-}
 
 .docText {
   color: #888888;
@@ -2327,67 +1895,11 @@ input::-ms-reveal {
   color: #ffffff;
 }
 
-/* .modalBody {
-  position: relative;
-}
-
-.modalBody .modalmainContent .CloseBtn {
-  position: absolute;
-  right: 7px;
-  top: 2px;
-  font-size: 0;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-} */
-
 .swal2-html-contentContainer {
   margin: 0 !important;
 }
 
-/* .modalBody .modalmainContent .CloseBtn:before {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: #000000;
-  position: absolute;
-  right: 15px;
-  top: 8px;
-  transform: rotate(45deg);
-} */
 
-/* .modalBody .modalmainContent .CloseBtn:after {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: #000000;
-  position: absolute;
-  right: 15px;
-  top: 8px;
-  transform: rotate(-45deg);
-} */
-
-.uploadPopup h3 {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.uploadSelectDoc {
-  color: #888888;
-  font-size: 14px;
-}
-
-.uploadSelectDoc p {
-  margin-bottom: 5px !important;
-}
-/* 
-.uploadPopup .modalBody {
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 30px;
-} */
 
 .css-yk16xz-control,
 .css-1pahdxg-control {
@@ -2396,89 +1908,6 @@ input::-ms-reveal {
   box-shadow: none !important;
 }
 
-/* .uploadPopup .modalBody .modalmainContent {
-  width: 100%;
-  text-align: left;
-  max-width: 100%;
-  position: relative;
-} */
-/* 
-.uploadPopup .modalBody .modalmainContent .CloseBtn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 0;
-  width: 32px;
-  height: 32px;
-} */
-
-/* .uploadPopup .modalBody .modalmainContent .CloseBtn:before {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: #000000;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: rotate(45deg);
-} */
-
-/* .uploadPopup .modalBody .modalmainContent .CloseBtn:after {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: #000000;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: rotate(-45deg);
-} */
-
-.uploadtexxt {
-  background: #f7f7f7 0% 0% no-repeat padding-box;
-  border: 1px dashed rgb(0 0 0 / 23%);
-  border-radius: 5px;
-  text-align: center;
-  padding: 20px;
-  font-size: 13px;
-}
-
-/* .uploadPopup .modalTop {
-  margin-bottom: 20px;
-} */
-
-.uploadtexxt p {
-  margin-bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-gap: 5px;
-  line-height: 1.5;
-}
-
-.uploadtexxt i {
-  font-size: 12px;
-  color: rgb(0 0 0 / 50%);
-}
-
-.uploadList {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  font-size: 11px;
-}
-
-.uploadList li {
-  display: flex;
-  align-items: center;
-  line-height: initial;
-  grid-gap: 5px;
-  margin-bottom: 10px;
-}
-
-.uploadicon {
-  width: 30px;
-}
 
 .uploadtitle>span {
   display: inline-block;
@@ -2622,153 +2051,6 @@ input::-ms-reveal {
   padding-right: 15px !important;
 }
 
-/* Review DPU Client */
-.dpuContener {
-  font-family: "Source Sans Pro", sans-serif;
-}
-
-.dpuContentDetail {
-  max-height: calc(100vh - 185px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 60px;
-}
-
-.dpuTitle {
-  display: flex;
-  align-items: center;
-  grid-gap: 15px;
-}
-
-.dpuTitle h3 {
-  margin-bottom: 0;
-  font-size: 22px;
-  font-weight: 600;
-  color: #99cd4a;
-}
-
-.dpuTitle h3 span {
-  display: block;
-  clear: both;
-}
-
-.dpuStatus {
-  margin-top: 30px;
-  background: #f7f7f7 0% 0% no-repeat padding-box;
-  border-radius: 10px;
-  border-top: 10px solid #73bf45;
-  padding: 20px 30px;
-}
-
-.dpuStatus ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.dpuStatus ul li {
-  width: calc(50% - 10px);
-  font-size: 14px;
-  font-weight: 600;
-  color: #000000;
-}
-
-.dpuStatus ul li a {
-  color: #003139 !important;
-  font-size: 12px;
-  text-decoration: none;
-}
-
-.dpuHeader {
-  display: flex;
-  background: rgb(216 216 216 / 20%) 0% 0% no-repeat padding-box;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-
-.dpuHeaderIcon {
-  width: 70px;
-  background: #73bf45 0% 0% no-repeat padding-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dpuHeaderAccountcol {
-  display: flex;
-  align-items: center;
-  column-gap: 20px;
-}
-
-.dpuHeaderDetail {
-  width: 100%;
-  padding: 0;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 90px 1fr;
-}
-
-
-.dpuHeaderDetail p {
-  margin-bottom: 0;
-}
-
-.dpuDetails h3 {
-  color: #1f7888;
-  text-transform: uppercase;
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 40px;
-  margin-bottom: 10px;
-}
-
-.dpuDetails td strong {
-  color: #000000;
-}
-
-.dpuContener>.row {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.dpuContener>.row>.col-md-8 {
-  padding-right: 0;
-}
-
-.dpuContener>.row>.col-md-4 {
-  padding-right: 50px;
-}
-
-.uploadItem {
-  display: flex;
-  align-items: center;
-  line-height: initial;
-  grid-gap: 5px;
-  margin-bottom: 10px;
-}
-
-.uploadItem .uploadtitle {
-  width: calc(100% - 20px);
-  font-size: 12px;
-}
-
-.uploadItem .uploadicon {
-  width: 20px;
-}
-
-.DPUbuttonSet {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  column-gap: 15px;
-  margin-top: 20px;
-}
-
 .sendBack {
   height: 45px;
   background: #ffffff 0% 0% no-repeat padding-box;
@@ -2823,37 +2105,6 @@ input::-ms-reveal {
   align-items: center;
   grid-gap: 10px;
 }
-
-/* .aprovePopup .modalBody {
-  max-width: 360px;
-  padding: 0 15px;
-  min-height: 390px;
-} */
-
-/* .aprovePopup .modalBody .modalmainContent {
-  max-width: 100%;
-}
-
-.aprovePopup .modalBody h3 {
-  font-size: 16px;
-  margin-top: 10px;
-} */
-
-/* .aprovePopup .modalBody textarea {
-  width: 100%;
-  height: 130px;
-  padding: 10px;
-  resize: none;
-} */
-
-/* .aprovePopup .modalBody .modalFooter {
-  text-align: center;
-}
-
-.aprovePopup .modalBody .buttonSet {
-  justify-content: center;
-  margin-top: 1rem;
-} */
 
 .progress-bar {
   height: 2px;
@@ -3262,385 +2513,6 @@ input::-ms-reveal {
   left: calc(var(--bs-gutter-x) * .5);
 }
 
-/* Responsive */
-
-/* @media (min-width: 768px) {
-  .MobileHeader {
-    display: none;
-  }
-
-  .DekstopHide {
-    display: none;
-  }
-} */
-
-/* @media (max-width: 767px) {
-  .MobleHide {
-    display: none;
-  }
-
-  .body {
-    align-items: flex-start;
-  }
-
-  .wraper.loginPage {
-    padding: 30px 15px;
-  }
-
-  .wraper {
-    padding: 0;
-    width: 100%;
-    margin: 0;
-  }
-
-  .sidebarMain {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    z-index: 9;
-    display: none;
-  }
-
-  .sidebar .logo {
-    display: none;
-  }
-
-  .sidebarItems ul {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .sidebarItems ul li {
-    width: 100%;
-  }
-
-  .contentRightSection {
-    width: 100%;
-  }
-
-  .topHeader {
-    padding: 0;
-  }
-
-  .contentRightMain {
-    flex-wrap: wrap;
-  }
-
-  .topHeader h1 {
-    font: normal normal bold 20px/22px "Brandon Text";
-    padding: 15px;
-  }
-
-  .popup_width {
-    width: 96%;
-  }
-
-  .MobileHeader {
-    width: 100%;
-    background-image: linear-gradient(to right, #99cd4a, #68c278);
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    position: relative;
-  }
-
-  .humbergerMenu {
-    width: 32px;
-    height: 30px;
-    border-top: 3px solid #ffffff;
-    position: relative;
-    margin-right: 15px;
-  }
-
-  .humbergerMenu:before {
-    content: "";
-    left: 0;
-    top: 9px;
-    width: 100%;
-    height: 3px;
-    background: #ffffff;
-    position: absolute;
-  }
-
-  .humbergerMenu:after {
-    content: "";
-    left: 0;
-    top: 20px;
-    width: 100%;
-    height: 3px;
-    background: #ffffff;
-    position: absolute;
-  }
-
-  .TopHeaderRight {
-    display: none;
-  }
-
-  .notificationDropdown {
-    width: 100%;
-  }
-
-  .TopHeaderRight .mainSearch {
-    display: none;
-  }
-
-  .filterContainer {
-    display: none;
-  }
-
-  .mobileHeaderRight {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-  }
-
-  .userNotificationIcon {
-    position: relative;
-  }
-
-  .MobileHeader .userNotification {
-    position: static;
-  }
-
-  .MobileHeader .logo img {
-    max-width: 70px;
-  }
-
-  .Pagination {
-    margin-top: 10px;
-    padding-right: 0;
-  }
-
-  .contentContainer {
-    padding: 0 15px;
-    margin-bottom: 15px;
-  }
-
-  .sidebarItems ul li a {
-    height: 64px;
-    text-decoration: none;
-  }
-
-  .sidebarItems ul li a img {
-    max-width: 24px;
-  }
-
-  .sidebarItems ul li a svg {
-    max-width: 24px;
-  }
-
-  .contentbuttonSet button img {
-    display: none;
-  }
-
-  .MobileUserdetailDropDown {
-    position: absolute;
-    right: 15px;
-    top: 100%;
-    width: 180px;
-    background: #ffffff;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 0 3px 1px rgb(51 51 51 / 30%);
-    padding: 15px;
-    display: none;
-  }
-
-  .MobileUserdetail {
-    margin-left: 15px;
-  }
-
-  .MobileUserdetail:hover .MobileUserdetailDropDown {
-    display: block;
-  }
-
-  .MobileUserdetailDropDown ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .MobileUserdetailDropDown ul li {
-    color: #003139;
-    padding: 2px 0;
-  }
-
-  .mobilelogout {
-    border-top: 1px solid #cccccc;
-    margin-top: 5px;
-  }
-
-  .mobilelogout a {
-    color: #1f7888 !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  .mobilelogout a span {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    grid-gap: 10px;
-  }
-
-  .mobilelogout a span span {
-    margin-top: 0;
-  }
-
-  .contentbuttonSet {
-    column-gap: 10px;
-    margin-bottom: 20px;
-    padding-right: 0;
-    flex-wrap: wrap;
-    row-gap: 15px;
-  }
-
-  .addUser,
-  .btn-primary {
-    padding: 0 10px;
-  }
-
-  .documents_section {
-    margin-bottom: 30px;
-  }
-
-  .modalFooter .col-4.buttonSet {
-    width: 100%;
-  }
-
-  .contentDataSet,
-  .contentscrollDiv {
-    padding-right: 0;
-    max-height: max-content;
-    margin-bottom: 15px;
-  }
-
-  .contentDataSet2 {
-    padding-right: 0;
-    max-height: max-content;
-    margin-bottom: 15px;
-  }
-
-  .float-right {
-    margin-top: 15px;
-  }
-
-  .contentAddUser {
-    padding-right: 0;
-  }
-
-  .fieldsecect,
-  .fieldtext {
-    padding-right: 0 !important;
-  }
-
-  table {
-    display: inline-block;
-    overflow-x: auto;
-    white-space: nowrap;
-    max-width: 100%;
-    border: 0;
-  }
-
-  td .listaction .btn {
-    padding: 0 2px !important;
-  }
-
-  .toggle_menu {
-    display: block;
-  }
-
-  .menu_close {
-    background-color: "red";
-    width: 40;
-    height: 40;
-    position: absolute;
-    z-index: 100;
-    right: 12px;
-    top: 11px;
-    display: block;
-  }
-
-  .hover-icon-pointer {
-    cursor: pointer;
-  }
-
-  .view-client .formControl {
-    padding-top: 10px;
-  }
-
-  .padding-top-10 {
-    padding-top: 10px;
-  }
-
-  .MessagePopup h3 {
-    font-size: 27px;
-    color: #003139;
-
-  }
-
-  .basic-single-select .Status__option--is-focused {
-    background-color: rgba(216, 216, 216, 0.2) !important;
-  }
-
-  .basic-single-select .Status__option--is-selected {
-    background-color: rgba(216, 216, 216, 0.2) !important;
-  }
-
-  .txt_overflow {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .justify_center {
-    justify-content: center;
-  }
-
-  .popup_width {
-    width: 41%;
-  }
-
-  .custom_calendar_style {
-    width: 320px !important;
-    line-height: 1em !important;
-    z-index: 100;
-  }
-
-  .menu_close {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    z-index: 100;
-    right: 12px;
-    top: 11px;
-    display: block;
-  }
-
-  .menu_close:before {
-    content: "";
-    width: 32px;
-    height: 2px;
-    background: #ffffff;
-    position: absolute;
-    right: 0;
-    transform: rotate(45deg);
-    top: 15px;
-  }
-
-  .menu_close::after {
-    content: "";
-    width: 32px;
-    height: 2px;
-    background: #ffffff;
-    position: absolute;
-    right: 0;
-    transform: rotate(-45deg);
-    top: 15px;
-  }
-} */
-
 * Create Request */ .fieldDateCommon {
   margin-bottom: 15px;
   padding-right: 15px !important;
@@ -3652,80 +2524,16 @@ input::-ms-reveal {
   background-position: right 8px center;
 }
 
-.informationTable {}
-
-table.informationTable th:first-child {
-  width: auto;
-}
-
-table.informationTable th:last-child {
-  width: 150px;
-}
-
-.informationTable tr:nth-child(even) {
-  background: transparent;
-}
-
-.informationTable tr td {
-  background: #f7f7f7;
-  height: auto;
-}
-
-.informationTable tr th {
-  vertical-align: top;
-}
-
-.informationTable tr td:last-child {
-  background: #ffffff;
-  height: auto;
-  text-align: center;
-}
-
-.informationTable tr td:last-child button {
-  margin: 0 auto;
-}
-
 .sendReq {
   width: 140px;
   height: 52px;
 }
-
-/* .SendRequest .modalBody {
-  max-width: 920px;
-  padding: 30px;
-  align-items: flex-start;
-  justify-content: flex-start;
-} */
-
-/* .SendRequest .modalmainContent {
-  width: 100%;
-  max-width: 100%;
-  text-align: left;
-} */
-
-/* .ModalHeader {
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  margin-bottom: 30px;
-} */
 
 .qtyWrap {
   margin-left: auto;
   display: flex;
   align-items: flex-start;
 }
-
-/* .ModalHeaderLeft {
-  display: flex;
-  align-items: flex-end;
-  column-gap: 50px;
-} */
-/* 
-.ModalHeaderLeft h3 {
-  font-size: 20px;
-  font-weight: 600;
-} */
 
 .qtyfield {
   width: 34px;
@@ -3851,20 +2659,6 @@ table.infoBreakdown th:first-child {
   opacity: 1;
 }
 
-.informationTableView th:first-child {
-  width: auto;
-}
-
-.informationTableView tr th {
-  vertical-align: top;
-}
-
-.informationTableView.valignCenter tr th {
-  vertical-align: middle;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
 .breakdownButton {
   justify-content: flex-end;
   cursor: pointer;
@@ -3881,420 +2675,9 @@ table.infoBreakdown th:first-child {
   color: #ffffff !important;
 }
 
-/* Create Request */
-/* Responsive */
-
-/* @media (min-width: 768px) {
-  .MobileHeader {
-    display: none;
-  }
-
-  .DekstopHide {
-    display: none;
-  }
-} */
-
-/* @media (max-width: 767px) {
-  .MobleHide {
-    display: none;
-  }
-
-  .body {
-    align-items: flex-start;
-  }
-
-  .wraper.loginPage {
-    padding: 30px 15px;
-  }
-
-  .wraper {
-    padding: 0;
-    width: 100%;
-    margin: 0;
-  }
-
-  .sidebarMain {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    z-index: 9;
-    display: none;
-  }
-
-  .sidebar .logo {
-    display: none;
-  }
-
-  .sidebarItems ul {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .sidebarItems ul li {
-    width: 100%;
-  }
-
-  .contentRightSection {
-    width: 100%;
-  }
-
-  .topHeader {
-    padding: 0;
-  }
-
-  .contentRightMain {
-    flex-wrap: wrap;
-  }
-
-  .topHeader h1 {
-    font: normal normal bold 20px/22px "Brandon Text";
-    padding: 15px;
-  }
-
-  .popup_width {
-    width: 96%;
-  }
-
-  .MobileHeader {
-    width: 100%;
-    background-image: linear-gradient(to right, #99cd4a, #68c278);
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    position: relative;
-  }
-
-  .humbergerMenu {
-    width: 32px;
-    height: 30px;
-    border-top: 3px solid #ffffff;
-    position: relative;
-    margin-right: 15px;
-  }
-
-  .humbergerMenu:before {
-    content: "";
-    left: 0;
-    top: 9px;
-    width: 100%;
-    height: 3px;
-    background: #ffffff;
-    position: absolute;
-  }
-
-  .humbergerMenu:after {
-    content: "";
-    left: 0;
-    top: 20px;
-    width: 100%;
-    height: 3px;
-    background: #ffffff;
-    position: absolute;
-  }
-
-  .TopHeaderRight {
-    display: none;
-  }
-
-  .notificationDropdown {
-    width: 100%;
-  }
-
-  .TopHeaderRight .mainSearch {
-    display: none;
-  }
-
-  .filterContainer {
-    display: none;
-  }
-
-  .mobileHeaderRight {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-  }
-
-  .userNotificationIcon {
-    position: relative;
-  }
-
-  .MobileHeader .userNotification {
-    position: static;
-  }
-
-  .MobileHeader .logo img {
-    max-width: 70px;
-  }
-
-  .Pagination {
-    margin-top: 10px;
-    padding-right: 0;
-  }
-
-  .contentContainer {
-    padding: 0 15px;
-    margin-bottom: 15px;
-  }
-
-  .sidebarItems ul li a {
-    height: 64px;
-    text-decoration: none;
-  }
-
-  .sidebarItems ul li a img {
-    max-width: 24px;
-  }
-
-  .sidebarItems ul li a svg {
-    max-width: 24px;
-  }
-
-  .contentbuttonSet button img {
-    display: none;
-  }
-
-  .MobileUserdetailDropDown {
-    position: absolute;
-    right: 15px;
-    top: 100%;
-    width: 180px;
-    background: #ffffff;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 0 3px 1px rgb(51 51 51 / 30%);
-    padding: 15px;
-    display: none;
-  }
-
-  .MobileUserdetail {
-    margin-left: 15px;
-  }
-
-  .MobileUserdetail:hover .MobileUserdetailDropDown {
-    display: block;
-  }
-
-  .MobileUserdetailDropDown ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .MobileUserdetailDropDown ul li {
-    color: #003139;
-    padding: 2px 0;
-  }
-
-  .mobilelogout {
-    border-top: 1px solid #cccccc;
-    margin-top: 5px;
-  }
-
-  .mobilelogout a {
-    color: #1f7888 !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  .mobilelogout a span {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    grid-gap: 10px;
-  }
-
-  .mobilelogout a span span {
-    margin-top: 0;
-  }
-
-  .contentbuttonSet {
-    column-gap: 10px;
-    margin-bottom: 20px;
-    padding-right: 0;
-    flex-wrap: wrap;
-    row-gap: 15px;
-  }
-
-  .addUser,
-  .btn-primary {
-    padding: 0 10px;
-  }
-
-  .documents_section {
-    margin-bottom: 30px;
-  }
-
-  .modalFooter .col-4.buttonSet {
-    width: 100%;
-  }
-
-  .contentDataSet,
-  .contentscrollDiv {
-    padding-right: 0;
-    max-height: max-content;
-    margin-bottom: 15px;
-  }
-
-  .contentDataSet2 {
-    padding-right: 0;
-    max-height: max-content;
-    margin-bottom: 15px;
-  }
-
-  .float-right {
-    margin-top: 15px;
-  }
-
-  .contentAddUser {
-    padding-right: 0;
-  }
-
-  .fieldsecect,
-  .fieldtext {
-    padding-right: 0 !important;
-  }
-
-  table {
-    display: inline-block;
-    overflow-x: auto;
-    white-space: nowrap;
-    max-width: 100%;
-    border: 0;
-  }
-
-  td .listaction .btn {
-    padding: 0 2px !important;
-  }
-} */
-
-/* Review Request */
-table.reviewTable th:first-child {
-  width: auto;
-}
-
-table.reviewTable tfoot {
-  background: #e2fcfc;
-}
-
-table.reviewTable th {
-  vertical-align: text-top;
-}
-
 b,
 strong {
   font-weight: 700;
-}
-
-.send {
-  height: 45px;
-  background: #73bf45 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  padding: 0 15px;
-  opacity: 1;
-  border: 1px solid #73bf45;
-  text-align: center;
-  font: normal normal 700 14px/22px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #ffffff;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-gap: 10px;
-  min-width: 10rem;
-}
-
-/* Notification */
-.notificationTab {
-  padding-right: 50px;
-}
-
-.notificationTab .tab {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  grid-gap: 15px;
-}
-
-.notificationTab .tab .tablinks {
-  border: 0;
-  padding: 0 10px;
-  flex-grow: inherit;
-}
-
-.notificationTab .tab .clearAll {
-  padding: 0;
-  flex-grow: inherit;
-  margin-left: auto;
-  color: #1f7888;
-  text-transform: uppercase;
-  text-decoration: underline;
-}
-
-.notificationTab .tab button:hover {
-  background: transparent;
-  color: inherit;
-}
-
-.notificationTab .tab button.active {
-  color: #1f7888;
-  background: transparent;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
-.notificationTab ul {
-  padding: 0;
-  margin: 0;
-}
-
-.notificationItem {
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  grid-gap: 15px;
-  padding: 10px 15px;
-}
-
-.notificationItem:nth-child(odd) {
-  background: #f7f7f7;
-}
-
-.notificationItemIcon {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-  width: 20px;
-}
-
-.notificationItemContent {
-  width: calc(100% - 70px);
-  color: #003139;
-}
-
-.notificationdeleteIcon button {
-  display: flex;
-  align-items: center;
-  margin-top: 7px;
-  padding: 0px;
-}
-
-.notificationdeleteIcon {
-  width: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 10px;
-}
-
-.notificationItemContent p {
-  margin-bottom: 7px;
-}
-
-.notificationItemContent a {
-  color: #1f7888;
-  text-decoration: none;
 }
 
 .tagIcon {
@@ -4304,60 +2687,6 @@ strong {
   gap: 10px;
 }
 
-.unread .notificationItemContent {
-  font-weight: 700;
-}
-
-.notificationPopup h3 {
-  color: #003139;
-  font-size: 16px;
-  line-height: 22px;
-  max-width: 370px;
-  margin: 30px 0;
-}
-
-/* .notificationPopup .modalFooter .buttonSet {
-  justify-content: center;
-} */
-
-/* .notificationPopup .modalFooter .buttonSet .clearAll {
-  height: 45px;
-  background: #ff6059;
-  border-radius: 5px;
-  padding: 0 20px;
-  opacity: 1;
-  border: 1px solid #ff6059;
-  text-align: center;
-  font: normal normal 600 16px/22px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #ffffff;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  grid-gap: 10px;
-} */
-
-/* .notificationPopup .modalFooter .buttonSet .clearAll img {
-  transform: rotate(45deg);
-}
-
-.notificationPopup .modalFooter .buttonSet .cancel {
-  height: 45px;
-  background: #73bf45 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  padding: 0 30px;
-  opacity: 1;
-  border: 0;
-  text-align: center;
-  font: normal normal 600 16px/22px "Source Sans Pro", sans-serif;
-  letter-spacing: 0px;
-  color: #ffffff;
-  text-transform: uppercase;
-} */
-
-/* .notificationPopup .modalFooter {
-  margin-top: 0;
-} */
 
 .emptyNotification {
   display: flex;
@@ -4378,291 +2707,6 @@ strong {
   text-decoration: none;
   color: #1f7888;
 }
-
-/* Responsive */
-
-/* @media (min-width: 768px) {
-  .MobileHeader {
-    display: none;
-  }
-
-  .DekstopHide {
-    display: none;
-  }
-} */
-
-/* @media (max-width: 767px) {
-  .MobleHide {
-    display: none;
-  }
-
-  .body {
-    align-items: flex-start;
-  }
-
-  .wraper.loginPage {
-    padding: 30px 15px;
-  }
-
-  .wraper {
-    padding: 0;
-    width: 100%;
-    margin: 0;
-  }
-
-  .sidebarMain {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    z-index: 9;
-    display: none;
-  }
-
-  .sidebar .logo {
-    display: none;
-  }
-
-  .sidebarItems ul {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .sidebarItems ul li {
-    width: 100%;
-  }
-
-  .contentRightSection {
-    width: 100%;
-  }
-
-  .topHeader {
-    padding: 0;
-  }
-
-  .contentRightMain {
-    flex-wrap: wrap;
-  }
-
-  .topHeader h1 {
-    font: normal normal bold 20px/22px "Roboto";
-    padding: 15px;
-  }
-
-  .popup_width {
-    width: 96%;
-  }
-
-  .MobileHeader {
-    width: 100%;
-    background-image: linear-gradient(to right, #99cd4a, #68c278);
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    position: relative;
-  }
-
-  .humbergerMenu {
-    width: 32px;
-    height: 30px;
-    border-top: 3px solid #ffffff;
-    position: relative;
-    margin-right: 15px;
-  }
-
-  .humbergerMenu:before {
-    content: "";
-    left: 0;
-    top: 9px;
-    width: 100%;
-    height: 3px;
-    background: #ffffff;
-    position: absolute;
-  }
-
-  .humbergerMenu:after {
-    content: "";
-    left: 0;
-    top: 20px;
-    width: 100%;
-    height: 3px;
-    background: #ffffff;
-    position: absolute;
-  }
-
-  .TopHeaderRight {
-    display: none;
-  }
-
-  .notificationDropdown {
-    width: 100%;
-  }
-
-  .TopHeaderRight .mainSearch {
-    display: none;
-  }
-
-  .filterContainer {
-    display: none;
-  }
-
-  .mobileHeaderRight {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-  }
-
-  .userNotificationIcon {
-    position: relative;
-  }
-
-  .MobileHeader .userNotification {
-    position: static;
-  }
-
-  .MobileHeader .logo img {
-    max-width: 70px;
-  }
-
-  .Pagination {
-    margin-top: 10px;
-    padding-right: 0;
-  }
-
-  .contentContainer {
-    padding: 0 15px;
-    margin-bottom: 15px;
-  }
-
-  .sidebarItems ul li a {
-    height: 64px;
-  }
-
-  .sidebarItems ul li a img {
-    max-width: 24px;
-  }
-
-  .sidebarItems ul li a svg {
-    max-width: 24px;
-  }
-
-  .contentbuttonSet button img {
-    display: none;
-  }
-
-  .MobileUserdetailDropDown {
-    position: absolute;
-    right: 15px;
-    top: 100%;
-    width: 180px;
-    background: #ffffff;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 0 3px 1px rgb(51 51 51 / 30%);
-    padding: 15px;
-    display: none;
-  }
-
-  .MobileUserdetail {
-    margin-left: 15px;
-  }
-
-  .MobileUserdetail:hover .MobileUserdetailDropDown {
-    display: block;
-  }
-
-  .MobileUserdetailDropDown ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .MobileUserdetailDropDown ul li {
-    color: #003139;
-    padding: 2px 0;
-  }
-
-  .mobilelogout {
-    border-top: 1px solid #cccccc;
-    margin-top: 5px;
-  }
-
-  .mobilelogout a {
-    color: #1f7888 !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  .mobilelogout a span {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    grid-gap: 10px;
-  }
-
-  .mobilelogout a span span {
-    margin-top: 0;
-  }
-
-  .contentbuttonSet {
-    column-gap: 10px;
-    margin-bottom: 20px;
-    padding-right: 0;
-    flex-wrap: wrap;
-    row-gap: 15px;
-  }
-
-  .addUser,
-  .btn-primary {
-    padding: 0 10px;
-  }
-
-  .documents_section {
-    margin-bottom: 30px;
-  }
-
-  .modalFooter .col-4.buttonSet {
-    width: 100%;
-  }
-
-  .contentDataSet,
-  .contentscrollDiv {
-    padding-right: 0;
-    max-height: max-content;
-    margin-bottom: 15px;
-  }
-
-  .contentDataSet2 {
-    padding-right: 0;
-    max-height: max-content;
-    margin-bottom: 15px;
-  }
-
-  .float-right {
-    margin-top: 15px;
-  }
-
-  .contentAddUser {
-    padding-right: 0;
-  }
-
-  .fieldsecect,
-  .fieldtext {
-    padding-right: 0 !important;
-  }
-
-  table {
-    display: inline-block;
-    overflow-x: auto;
-    white-space: nowrap;
-    max-width: 100%;
-    border: 0;
-  }
-
-  td .listaction .btn {
-    padding: 0 2px !important;
-  }
-} */
 
 /* Report 25-Dec */
 .fieldAuto {
@@ -4719,35 +2763,6 @@ strong {
   font-weight: 700;
 }
 
-/* .loginForm .btn-primary {
-  line-height: 45px;
-} */
-
-/* .NoticePopup .modalmainContent {
-  padding: 40px;
-  max-width: 600px;
-  text-align: left;
-  font-size: 18px;
-} */
-
-/* .NoticePopup .modalTop {
-  display: flex;
-  align-items: center;
-  grid-gap: 30px;
-  margin-bottom: 30px;
-} */
-
-/* .NoticePopup .modalFooter {
-  text-align: center;
-} */
-
-.NoticePopup .buttonSet {
-  justify-content: center;
-}
-/* 
-.NoticePopup.modalPopup .btn-primary {
-  line-height: 52px;
-} */
 
 .dateInput_calander {
   width: 100%;
@@ -4877,21 +2892,6 @@ strong {
   z-index: 15 !important;
 }
 
-/* .modalContent .fieldtext,
-.modalContent .fieldsecect,
-.modalContent p {
-  margin-bottom: 0 !important;
-  padding-right: 0 !important;
-} */
-/* 
-.aprovePopup .modalBody textarea {
-  margin-top: 15px !important;
-}
-
-.modalBody .formControlSelect {
-  padding-right: 25px;
-} */
-
 .fieldtext p {
   padding: 0;
   margin: 0;
@@ -4904,21 +2904,6 @@ strong {
   font-weight: bold;
 }
 
-.dpuHeaderGrid {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 70px 1fr;
-  grid-gap: 1rem;
-  background: rgb(216 216 216 / 20%) 0% 0% no-repeat padding-box;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-
-.dpuHeaderGrid .dpuHeaderIcon {
-  height: 100%;
-}
 
 .borderBox {
   font-size: 14px;
@@ -4930,61 +2915,6 @@ strong {
   padding: 0.7rem 1.5rem;
   color: #003139;
 }
-
-.TransactionList table th:first-child {
-  width: auto;
-}
-
-.TransactionList {
-  margin-top: 1.5rem;
-}
-
-.dpuHeaderGrid .dpuHeaderDetail {
-  padding: 10px 0;
-  display: flex;
-}
-
-.TransactionList tfoot tr {
-  background: #E2FCFC 0% 0% no-repeat padding-box;
-}
-
-.dpuHeaderDetailRow {
-  padding: 5px 0;
-}
-
-.TransactionListScroll {
-  max-height: calc(100vh - 180px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: calc(100vh - 180px);
-  padding-right: 30px;
-}
-
-.TransactionListPadding {
-
-  padding-right: 60px;
-}
-
-
-/* @media (max-width: 767px) {
-  .dpuContener>.row>.col-md-4 {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .TransactionListScroll {
-    min-height: auto;
-    padding-right: 0;
-    overflow-y: inherit;
-    overflow-x: inherit;
-  }
-
-  .dpuContentDetail {
-    padding-right: 0;
-    margin-top: 1rem;
-  }
-
-} */
 
 .strikes-input {
   color: red;
@@ -5011,246 +2941,7 @@ strong {
   font: normal normal bold 21px/29px "Brandon Text";
 }
 
-.holidaySearch {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  align-items: center;
-  grid-gap: 1rem;
-}
 
-.holidaySearch .fieldtext {
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  margin-bottom: 0;
-  grid-gap: 1rem;
-}
-
-.holidayLists {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.checkboxNormal {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  align-items: center;
-  grid-gap: 15px;
-  margin: 5px 0;
-  position: relative;
-}
-
-.checkboxNormal input {
-  opacity: 0;
-  position: relative;
-  z-index: 99;
-  top: -1px;
-  left: 5px;
-  visibility: visible;
-  cursor: pointer;
-}
-
-.checkboxNormal input:checked+label {
-  font-weight: 700;
-}
-
-.checkboxNormal input+label::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border: 1px solid #d8d8d8;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 4px;
-}
-
-.checkboxNormal input:checked+label::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 1px;
-  display: inline-block;
-  transform: rotate(45deg);
-  height: 12px;
-  width: 6px;
-  border: 0;
-  border-bottom: 2px solid #ffffff;
-  border-right: 2px solid #ffffff;
-  z-index: 9;
-  border-radius: 0;
-}
-
-.checkboxNormal input:checked+label::after {
-  content: "";
-  width: 18px;
-  height: 18px;
-  background: #73bf45 0% 0% no-repeat padding-box;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 4px;
-}
-
-.holidayscrollDiv {
-  max-height: calc(100vh - 205px);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* .uploadPopup .modalBody {
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 30px;
-} */
-
-/* .modalmainContent {
-  position: relative;
-} */
-
-.uploadPopup .modalBody .modalmainContent {
-  width: 100%;
-  text-align: left;
-  max-width: 100%;
-}
-
-/* .modalPopup .CloseBtn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 0;
-  width: 32px;
-  height: 32px;
-} */
-/* 
-.modalPopup .CloseBtn:before {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: #000000;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: rotate(45deg);
-} */
-/* 
-.modalPopup .CloseBtn:after {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: #000000;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: rotate(-45deg);
-} */
-
-.deactivateuser .greentext {
-  color: #1F7888;
-}
-
-/* .deactivateuser .modalContent h3 {
-  font-size: 27px;
-  font-weight: 600;
-  margin-bottom: 0;
-} */
-
-/* .deactivateuser .modalContent p {
-  font-weight: 500;
-  color: #808080;
-  font-size: 15px;
-} */
-
-.deactivateuser .height-90 {
-  height: 90px;
-}
-
-.deactivateuser .fs-12 {
-  font-size: 12px;
-}
-
-.deactivateuser .lh-14 {
-  line-height: 14px;
-}
-
-.deactivateuser .pdflists {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-}
-
-.deactivateuser .pdflists li {
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.deactivateuser .pdflists li .pdficonleft {
-  display: flex;
-  align-items: center;
-}
-
-.deactivateuser .pdflists li .pdficonleft span {
-  display: block;
-  line-height: 14px;
-  margin-left: 8px;
-}
-
-.deactivateuser .pdflists li .pdficonleft span.filename {
-  color: #003139;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.deactivateuser .pdflists li .pdficonleft span.filesize {
-  font-size: 10px;
-  color: #00000080;
-}
-
-.deactivateuser .downloadNowBtn {
-  background: #97CD4C url("assets/images/cm_download_light.svg");
-  color: #ffffff;
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  border-radius: 5px;
-  height: 38px;
-  border: 0;
-  padding-left: 41px;
-  padding-right: 10px;
-  font-size: 13px;
-  margin-left: auto;
-  background-size: 22px;
-}
-
-.deactivateuser .infoalerts {
-  line-height: 12px;
-}
-
-.deactivateuser .infoalerts p {
-  font-size: 11px;
-  margin-bottom: 5px;
-}
-
-.deactivateuser .contentbuttonSet button {
-  width: auto;
-}
-
-.deactivateuser textarea.form-control:focus {
-  box-shadow: none;
-  border: 1px solid #97CD4C;
-}
-
-
-/*new modal*/
-/* 
-.modalmxw-674 {
-  max-width: 674px
-} */
 
 .rounded-10 {
   border-radius: 10px !important;
@@ -5347,16 +3038,7 @@ table.billingTable th:first-child {
   color: #1F7888;
 }
 
-.billingTablescrollDiv {
-  max-height: calc(100vh - 215px);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
 
-td.actionLabel .active {
-  text-align: center;
-  line-height: 1;
-}
 
 td.pendingLabel .active {
   background: #E7F2FC 0% 0% no-repeat padding-box;
@@ -5780,8 +3462,8 @@ td.pendingLabel .active {
 
  /* SCROLL BAR */
 
-/* ::-webkit-scrollbar {
-  width: 7px;
+::-webkit-scrollbar {
+  width: 5px;
   height: 6px;
   background: #e8e8e8;
   border-radius: 0;
@@ -5789,12 +3471,12 @@ td.pendingLabel .active {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #73bf45;
+  background: #604195;
   border-radius: 0;
 }
 
 ::-moz-scrollbar {
-  width: 7px;
+  width: 5px;
   height: 6px;
   background: #e8e8e8;
   border-radius: 0;
@@ -5802,9 +3484,9 @@ td.pendingLabel .active {
 }
 
 ::-moz-scrollbar-thumb {
-  background: #73bf45;
+  background: #604195;
   border-radius: 0;
-}  */
+} 
 
 /* END SCROLL BAR  */
 
