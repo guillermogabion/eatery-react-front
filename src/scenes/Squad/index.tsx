@@ -178,8 +178,15 @@ export const Squad = (props: any) => {
                             <td>{item.empType}</td>
                             <td>{item.empStatus}</td>
                             <td>
-                              {item.todaysTimeIn ? <>{item.todaysTimeIn} - IN <br /> </> : null}
-                              {item.todaysTimeOut ? <>{item.todaysTimeOut} - OUT </> : null}
+                              {
+                                item.status && item.status != "" ?
+                                  <>{item.status}</>
+                                  :
+                                  <>
+                                    {item.todaysTimeIn ? <>{item.todaysTimeIn} - IN <br /> </> : null}
+                                    {item.todaysTimeOut ? <>{item.todaysTimeOut} - OUT </> : null}
+                                  </>
+                              }
                             </td>
                           </tr>
                         ))}
