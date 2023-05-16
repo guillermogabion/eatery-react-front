@@ -41,13 +41,37 @@ export const ScheduleAdjustment = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const [userSchedule, setUserSchedule] = useState<any>("");
   const [requestStatus, setRequestStatus] = useState<any>("");
+  const [holidays, setHolidays] = useState<any>([])
 
   const formRef: any = useRef()
 
   useEffect(() => {
     getAllAdjustments(0, key)
     getMySchedule()
+    getHolidays()
   }, [])
+
+  const getHolidays = () => {
+
+    RequestAPI.getRequest(
+      `${Api.allHoliday}?size=10&sort=id&sortDir=desc&dateBefore=${moment().year() + "-01-01"}&dateAfter=${moment().year() + "-12-31"}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          let tempArray: any = []
+          body.data.content.forEach((element: any, index: any) => {
+            if (!tempArray.includes(element.holidayDate)) {
+              tempArray.push(element.holidayDate)
+            }
+          });
+          setHolidays(tempArray)
+        }
+      }
+    )
+  }
 
   const getMySchedule = () => {
 
@@ -166,14 +190,17 @@ export const ScheduleAdjustment = (props: any) => {
           dateCounter += 2
         } else {
           let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
-          adjustmentsBreakdown.push({
-            "date": new_date_with_counter,
-            "startShift": "09:00:00",
-            "startBreak": "12:00:00",
-            "endBreak": "13:00:00",
-            "endShift": "18:00:00",
-            "status": "PENDING"
-          })
+          if (!holidays.includes(new_date_with_counter)) {
+            adjustmentsBreakdown.push({
+              "date": new_date_with_counter,
+              "startShift": "09:00:00",
+              "startBreak": "12:00:00",
+              "endBreak": "13:00:00",
+              "endShift": "18:00:00",
+              "status": "PENDING"
+            })
+          }
+          
           dateCounter += 1
         }
       }
