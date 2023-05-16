@@ -876,6 +876,7 @@ export const Leaves = (props: any) => {
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date From</label>
                         <input type="date"
+                          onKeyDown={(e) => e.preventDefault()}
                           name="dateFrom"
                           id="dateFrom"
                           className="form-control"
@@ -895,6 +896,7 @@ export const Leaves = (props: any) => {
                       <div className="form-group col-md-6 mb-3" >
                         <label>Date To</label>
                         <input type="date"
+                          onKeyDown={(e) => e.preventDefault()}
                           name="dateTo"
                           id="dateTo"
                           className="form-control"
