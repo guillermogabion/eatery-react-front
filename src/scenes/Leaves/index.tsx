@@ -905,6 +905,7 @@ export const Leaves = (props: any) => {
                           max={values.type == 1 ? getNextWeekday(new Date(), 6).toISOString().split('T')[0] : undefined}
                           onChange={(e) => {
                             setFormField(e, setFieldValue)
+                            
                             dateBreakdown(values.dateFrom, e.target.value)
                           }}
                         />
