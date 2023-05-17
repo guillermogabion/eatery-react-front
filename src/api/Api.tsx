@@ -153,6 +153,10 @@ const Api: any = {
   allSquadSchedule: process.env.REACT_APP_API_URL + "request/schedule-adjustment/squadmembers",
 
 
+  // payroll 
+
+  getAllPayrollList : process.env.REACT_APP_API_URL + "payroll/adjustment/all"
+
 }
 
 export default Api

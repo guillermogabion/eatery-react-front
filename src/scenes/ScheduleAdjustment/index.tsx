@@ -723,6 +723,14 @@ export const ScheduleAdjustment = (props: any) => {
               }
               onSubmit={(values, actions) => {
                 const valuesObj: any = { ...values }
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+               
+                });
                 valuesObj.breakdown = adjustmentBreakdown
 
                 if (adjustmentId) {
@@ -758,6 +766,7 @@ export const ScheduleAdjustment = (props: any) => {
                   })
                 } else {
                   RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
+                    Swal.close()
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       if (body.error && body.error.message) {

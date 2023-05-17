@@ -612,6 +612,14 @@ export const AttendanceCorrection = (props: any) => {
               initialValues={initialValues}
               validationSchema={null}
               onSubmit={(values, actions) => {
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+               
+                });
                 actions.resetForm();
                 actions.setErrors({});
                 const valuesObj: any = { ...values }
@@ -676,6 +684,7 @@ export const AttendanceCorrection = (props: any) => {
 
                 } else {
                   RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
+                    Swal.close()
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       console.log("Response body:", res);
