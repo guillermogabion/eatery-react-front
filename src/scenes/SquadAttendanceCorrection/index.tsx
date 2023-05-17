@@ -188,16 +188,25 @@ export const SquadAttendanceCorrection = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        const loadingSwal = Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.approveCoa, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
                 'error'
               )
             } else {
+              Swal.close()
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -206,6 +215,7 @@ export const SquadAttendanceCorrection = (props: any) => {
               getAllCOARequest(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire(
               'Error!',
               'Something Error.',
@@ -227,16 +237,25 @@ export const SquadAttendanceCorrection = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        const loadingSwal = Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.declineCoa, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
                 'error'
               )
             } else {
+              Swal.close()
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -245,6 +264,7 @@ export const SquadAttendanceCorrection = (props: any) => {
               getAllCOARequest(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire(
               'Error!',
               'Something Error.',
@@ -266,16 +286,25 @@ export const SquadAttendanceCorrection = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        const loadingSwal = Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.cancelCOA, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
                 'error'
               )
             } else {
+              Swal.close()
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -284,6 +313,7 @@ export const SquadAttendanceCorrection = (props: any) => {
               getAllCOARequest(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire(
               'Error!',
               'Something Error.',

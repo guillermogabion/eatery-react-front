@@ -101,10 +101,18 @@ export const SquadUndertime = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
+                const loadingSwal = Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading();
+                    }
+                  });
                 RequestAPI.postRequest(Api.approveUT, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire(
                                 'Error!',
                                 (body.error && body.error.message) || "",
@@ -112,6 +120,7 @@ export const SquadUndertime = (props: any) => {
                             )
                         } else {
                             getMyUT(0, key)
+                            Swal.close()
                             ErrorSwal.fire(
                                 'Success!',
                                 (body.data) || "",
@@ -119,6 +128,7 @@ export const SquadUndertime = (props: any) => {
                             )
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire(
                             'Error!',
                             'Something Error.',
@@ -140,16 +150,25 @@ export const SquadUndertime = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
+                const loadingSwal = Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading();
+                    }
+                  });
                 RequestAPI.postRequest(Api.cancelUndertime, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire(
                                 'Error!',
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
                         } else {
+                            Swal.close()
                             ErrorSwal.fire(
                                 'Success!',
                                 (body.data) || "",
@@ -158,6 +177,7 @@ export const SquadUndertime = (props: any) => {
                             getMyUT(0, key)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire(
                             'Error!',
                             'Something Error.',
@@ -180,16 +200,25 @@ export const SquadUndertime = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
+                const loadingSwal = Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                      Swal.showLoading();
+                    }
+                  });
                 RequestAPI.postRequest(Api.declineUT, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire(
                                 'Error!',
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
                         } else {
+                            Swal.close()
                             getMyUT(0, key)
                             ErrorSwal.fire(
                                 'Success!',
@@ -198,6 +227,7 @@ export const SquadUndertime = (props: any) => {
                             )
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire(
                             'Error!',
                             'Something Error.',

@@ -130,6 +130,8 @@ export const Leaves = (props: any) => {
     getAllLeaves(0, key)
   }, [dayTypes])
 
+
+
   const getAllLeaves = (page: any = 0, status: any = "all") => {
     setKey(status)
     let queryString = ""
@@ -289,6 +291,7 @@ export const Leaves = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+      
         RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
@@ -330,6 +333,7 @@ export const Leaves = (props: any) => {
     }).then((result) => {
       if (result.isConfirmed) {
         RequestAPI.postRequest(Api.declineLeave, "", { "id": id }, {}, async (res: any) => {
+          Swal.close()
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
@@ -357,7 +361,9 @@ export const Leaves = (props: any) => {
       }
     })
   }
-
+ 
+  
+  
 
   const cancelLeave = (id: any = 0) => {
     ErrorSwal.fire({
@@ -370,16 +376,26 @@ export const Leaves = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        const loadingSwal = Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        
         RequestAPI.postRequest(Api.cancelLeave, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
                 'error'
               )
             } else {
+              Swal.close()
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -388,6 +404,7 @@ export const Leaves = (props: any) => {
               getAllLeaves(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire(
               'Error!',
               'Something Error.',
@@ -398,7 +415,7 @@ export const Leaves = (props: any) => {
       }
     })
   }
-
+  
   const getNextWeekday = (date, count) => {
     let nextWeekday = new Date(date.getTime());
   

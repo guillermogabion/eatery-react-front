@@ -323,10 +323,18 @@ export const ScheduleAdjustment = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        const loadingSwal = Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.cancelScheduleAdjustment, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire(
                 'Error!',
                 (body.error && body.error.message) || "",
@@ -334,6 +342,7 @@ export const ScheduleAdjustment = (props: any) => {
               )
               getAllAdjustments(0, key)
             } else {
+              Swal.close()
               ErrorSwal.fire(
                 'Success!',
                 (body.data) || "",
@@ -341,6 +350,7 @@ export const ScheduleAdjustment = (props: any) => {
               )
             }
           } else {
+            Swal.close()
             ErrorSwal.fire(
               'Error!',
               'Something Error.',
