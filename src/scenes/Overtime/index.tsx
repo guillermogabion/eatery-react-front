@@ -608,6 +608,14 @@ export const Overtime = (props: any) => {
               }
               onSubmit={(values, actions) => {
                 setOnSubmit(true)
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+               
+                });
                 const valuesObj: any = { ...values }
                 if (otId) {
                   valuesObj.id = otId
@@ -640,6 +648,7 @@ export const Overtime = (props: any) => {
                   })
                 } else {
                   RequestAPI.postRequest(Api.OTCreate, "", valuesObj, {}, async (res: any) => {
+                    Swal.close();
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       if (body.error && body.error.message) {

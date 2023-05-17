@@ -578,6 +578,14 @@ export const Undertime = (props: any) => {
                                 })
                             }
                             onSubmit={(values, actions) => {
+                                const loadingSwal = Swal.fire({
+                                    title: '',
+                                    allowOutsideClick: false,
+                                    didOpen: () => {
+                                      Swal.showLoading();
+                                    },
+                                 
+                                  });
                                 const valuesObj: any = { ...values }
                                 setOnSubmit(true)
                                 if (utId) {
@@ -611,6 +619,7 @@ export const Undertime = (props: any) => {
                                     })
                                 } else {
                                     RequestAPI.postRequest(Api.UTCreate, "", valuesObj, {}, async (res: any) => {
+                                        Swal.close();
                                         const { status, body = { data: {}, error: {} } }: any = res
                                         if (status === 200 || status === 201) {
                                             if (body.error && body.error.message) {

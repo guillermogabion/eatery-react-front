@@ -424,6 +424,8 @@ export const Leaves = (props: any) => {
 
   const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
 
+  
+
 
 
 
@@ -775,6 +777,14 @@ export const Leaves = (props: any) => {
                 })
               }
               onSubmit={(values, actions) => {
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+               
+                });
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = leaveBreakdown
                 if (leaveId) {
@@ -811,6 +821,7 @@ export const Leaves = (props: any) => {
                   })
                 } else {
                   RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                    Swal.close();
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                       if (body.error && body.error.message) {
@@ -888,6 +899,7 @@ export const Leaves = (props: any) => {
                           }}
                           min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
                           max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
+                          placeholder="dd/mm/yyyy"
                         />
                         {errors && errors.dateFrom && (
                           <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
@@ -905,7 +917,7 @@ export const Leaves = (props: any) => {
                           max={values.type == 1 ? getNextWeekday(new Date(), 6).toISOString().split('T')[0] : undefined}
                           onChange={(e) => {
                             setFormField(e, setFieldValue)
-                            
+
                             dateBreakdown(values.dateFrom, e.target.value)
                           }}
                         />
