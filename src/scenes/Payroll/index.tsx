@@ -28,9 +28,9 @@ export const Payroll = (props: any) => {
         'Employee ID',
         'Employee Name',
         'Amount',
-        'A',
-        'Adjustment Amount',
-        'Remarks',
+        'End Date',
+        'Recurring Name',
+        'Status',
         'Action',
     ];
 
