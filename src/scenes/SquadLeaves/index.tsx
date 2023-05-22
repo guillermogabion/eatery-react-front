@@ -45,6 +45,7 @@ export const SquadLeaves = (props: any) => {
   const [getMyLeaves, setGetMyLeaves] = useState<any>([])
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const [holidays, setHolidays] = useState<any>([])
+  const masterList = useSelector((state: any) => state.rootReducer.masterList)
 
   const formRef: any = useRef()
 
@@ -557,6 +558,12 @@ export const SquadLeaves = (props: any) => {
     getAllLeaves(event.selected, key)
   };
 
+  const [values, setValues] = useState({
+    type: ''
+  });
+  const setFieldValue = (e) => {
+    setValues({ ...values, type: e.target.value });
+  };
   const singleChangeOption = (option: any, name: any) => {
 
     const filterObj: any = { ...filterData }
@@ -640,6 +647,26 @@ export const SquadLeaves = (props: any) => {
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                         />
                       </div>
+                    </div>
+                    <div>
+                      <label>Leave Type</label>
+                      <select
+                        className="form-select"
+                        name="type"
+                        id="type"
+                        value={values.type}
+                        // onChange={(e) => makeFilterData(e)}
+                        onChange={(e) => {
+                          setFieldValue(e)
+                          makeFilterData(e)
+                        }}
+                        >
+                        {leaveTypes.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <Button
