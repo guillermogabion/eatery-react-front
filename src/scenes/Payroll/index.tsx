@@ -25,9 +25,10 @@ export const Payroll = (props: any) => {
 
 
     const tableHeaders = [
+        'Employee ID',
         'Employee Name',
-        'Payroll Type',
-        'Adjustment',
+        'Amount',
+        'A',
         'Adjustment Amount',
         'Remarks',
         'Action',
