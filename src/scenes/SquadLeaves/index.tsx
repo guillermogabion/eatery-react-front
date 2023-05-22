@@ -559,7 +559,7 @@ export const SquadLeaves = (props: any) => {
   };
 
   const [values, setValues] = useState({
-    type: '' // initial value for 'type'
+    type: ''
   });
   const setFieldValue = (e) => {
     setValues({ ...values, type: e.target.value });
