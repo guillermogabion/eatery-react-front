@@ -235,6 +235,7 @@ export const Login = () => {
         if (status === 200) {
           if (body.error && body.error.message) {
             setErrorMessage(body.error.message);
+            setPassword("")
           } else {
             Utility.clearOnLoginTimer()
             const { accessToken, roleId, refreshToken } = body.data
@@ -259,6 +260,7 @@ export const Login = () => {
         } else {
           if (body.error && body.error.message) {
             setErrorMessage(body.error.message);
+            setPassword("")
           }
         }
       });
