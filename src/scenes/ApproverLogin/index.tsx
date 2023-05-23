@@ -33,7 +33,7 @@ export const ApproverLogin = (props: any) => {
     const [newPassword, setNewPassword] = useState<any>("")
     const [confirmPassword, setConfirmPassword] = useState<any>("")
     const [visibile, setVisibile] = useState<any>(false)
-    const [visibile1, setVisibile1] = useState<any>(false)
+    const [isSubmit, setIsSubmit] = useState<any>(false)
     const [visibile2, setVisibile2] = useState<any>(false)
     const [visibile3, setVisibile3] = useState<any>(false)
     const [isForgot, setIsForgot] = useState<any>(false)
@@ -98,7 +98,7 @@ export const ApproverLogin = (props: any) => {
         return api_list[transaction][action]
     }
 
-    const makeActionRequest = () => {
+    const makeActionRequest = (token: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: `You want to ${action} this request.`,
@@ -109,14 +109,16 @@ export const ApproverLogin = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
+                setIsSubmit(true)
                 let payload: any = {
-                    "id": id
+                    "id": parseInt(id)
                 }
                 if (action == "decline" || action == "resend") {
                     payload.reason = reason
                 }
                 let apiURL = getAPI(type, action)
-                RequestAPI.postRequest(apiURL, tempToken, payload, {}, async (res: any) => {
+                
+                RequestAPI.postRequest(apiURL, token, payload, {}, async (res: any) => {
                     const { status, body } = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
@@ -125,12 +127,21 @@ export const ApproverLogin = (props: any) => {
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
+                            setIsSubmit(false)
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "Successful",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success',
+                                text: (body.data) || "",
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                allowOutsideClick: false,
+                                confirmButtonText: 'Go back to login'
+                            }).then((result:any) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "/"
+                                }
+                            })
                         }
                     } else {
                         ErrorSwal.fire(
@@ -138,6 +149,7 @@ export const ApproverLogin = (props: any) => {
                             'Something Error.',
                             'error'
                         )
+                        setIsSubmit(false)
                     }
                 });
             }
@@ -154,11 +166,12 @@ export const ApproverLogin = (props: any) => {
                         setPassword("")
                     } else {
                         const { accessToken } = body.data
-                        setTempToken(accessToken)
+                        
                         if (action == "decline" || action == "resend") {
+                            setTempToken(accessToken)
                             setShowReason(true)
                         } else {
-                            makeActionRequest()
+                            makeActionRequest(accessToken)
                         }
                     }
                 } else {
@@ -211,10 +224,19 @@ export const ApproverLogin = (props: any) => {
                                     <div className="d-flex mt-3">
                                         <Button
                                             style={{ width: '100%' }}
-                                            onClick={() => makeActionRequest()}
+                                            onClick={() => {
+                                                makeActionRequest(tempToken)
+                                            }}
                                             className="btn btn-primary"
-                                            disabled={!reason || reason.length < 10}>
-                                            Proceed
+                                            disabled={!reason || reason.length < 10 || isSubmit}>
+                                            {isSubmit ?
+                                                <div className="d-flex justify-content-center">
+                                                    <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                                    Proceed
+                                                </div>
+                                                : "Proceed"
+                                            }
+
                                         </Button>
                                     </div>
                                     <br /><br />
@@ -284,8 +306,14 @@ export const ApproverLogin = (props: any) => {
                                             style={{ width: '100%' }}
                                             onClick={() => loginRequest()}
                                             className="btn btn-primary"
-                                            disabled={loginAttempts >= 3}>
-                                            Login
+                                            disabled={isSubmit}>
+                                            {isSubmit ?
+                                                <div className="d-flex">
+                                                    <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                                    Proceed
+                                                </div>
+                                                : "Proceed"
+                                            }
                                         </Button>
                                     </div>
                                     <div className="d-flex justify-content-center p-0 ">
