@@ -11,6 +11,8 @@ import user from "./dist/User.png"
 import show_password_dark from "./dist/action/show_password_dark.svg"
 import hide_password_dark from "./dist/action/icon_show_password.svg"
 import eye from "./dist/action/eye.png"
+import actimai_logo_white from "./dist/actimai Logo White.png"
+import actimai_logo_white1 from "./dist/logo1.png"
 
 export {
   eye,
@@ -25,4 +27,6 @@ export {
   user,
   show_password_dark,
   hide_password_dark,
+  actimai_logo_white,
+  actimai_logo_white1
 }

@@ -262,7 +262,7 @@ export const Undertime = (props: any) => {
     const underTimeTable = useCallback(() => {
         return (
             <div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             {

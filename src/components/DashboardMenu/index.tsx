@@ -10,6 +10,7 @@ import Profile from "../../assets/images/dist/menu/Profile.png"
 import ResolutionCenter from "../../assets/images/dist/menu/ResolutionCenter.png"
 import Attendance from "../../assets/images/dist/menu/Attendance.png"
 import Manage from "../../assets/images/dist/menu/Manage.png"
+import { actimai_logo_white1 } from "../../assets/images";
 
 const DashboardMenu = (props: any) => {
     const { search = true } = props
@@ -67,7 +68,16 @@ const DashboardMenu = (props: any) => {
 
     const leftMenu = useCallback((menu_index: any) => {
         return (
-            <div className="col-md-12 col-lg-2 p-0 pt-4" style={{ backgroundColor: "#604195", borderRadius: 0, border: 0 }}>
+            <div className="col-md-12 col-lg-2 col-sm-12 p-0 pt-4" style={{ backgroundColor: "#009FB5", borderRadius: 0, border: 0 }}>
+                <div className="p-3 px-5 mb-3 d-flex justify-content-center align-items-center">
+                    <NavLink to={"/timekeeping"}
+                        className="logo"
+                        onClick={() => {
+                            // setCurrentRoutePath("/timekeeping")
+                        }}>
+                        <img src={actimai_logo_white1} alt="Actimai logo" />
+                    </NavLink>
+                </div>
 
                 <Accordion defaultActiveKey={menu_index} style={{ borderRadius: 0, border: 0 }} >
                     {
@@ -75,16 +85,16 @@ const DashboardMenu = (props: any) => {
                             const { name, menu } = d
 
                             return (
-                                <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#604195" }} >
+                                <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#009FB5" }} >
                                     <Accordion.Header style={{ fontWeight: 'bolder' }}>
                                         <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
                                         {name}
                                     </Accordion.Header>
-                                    <Accordion.Body className="p-0 cursor-pointer " style={{ backgroundColor: '#604195' }}>
+                                    <Accordion.Body className="p-0 cursor-pointer " style={{ backgroundColor: '#009FB5' }}>
                                         {
                                             menu.length > 0 && menu.map((menu_data: any, index: any) => {
                                                 const { label, route } = menu_data
-                                                
+
                                                 return (
                                                     <NavLink
                                                         key={index}

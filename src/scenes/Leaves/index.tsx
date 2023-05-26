@@ -58,7 +58,7 @@ export const Leaves = (props: any) => {
     'Action',
   ]
 
-  
+
 
   useEffect(() => {
     RequestAPI.getRequest(
@@ -291,7 +291,7 @@ export const Leaves = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-      
+
         RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
@@ -361,9 +361,9 @@ export const Leaves = (props: any) => {
       }
     })
   }
- 
-  
-  
+
+
+
 
   const cancelLeave = (id: any = 0) => {
     ErrorSwal.fire({
@@ -383,7 +383,7 @@ export const Leaves = (props: any) => {
             Swal.showLoading();
           }
         });
-        
+
         RequestAPI.postRequest(Api.cancelLeave, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
@@ -415,17 +415,17 @@ export const Leaves = (props: any) => {
       }
     })
   }
-  
+
   const getNextWeekday = (date, count) => {
     let nextWeekday = new Date(date.getTime());
-  
+
     for (let i = 0; i < count; i++) {
       nextWeekday.setDate(nextWeekday.getDate() + 1);
       while (nextWeekday.getDay() === 0 || nextWeekday.getDay() === 6) {
         nextWeekday.setDate(nextWeekday.getDate() + 1);
       }
     }
-  
+
     return nextWeekday;
   };
 
@@ -441,7 +441,7 @@ export const Leaves = (props: any) => {
 
   const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
 
-  
+
 
 
 
@@ -610,75 +610,63 @@ export const Leaves = (props: any) => {
     <div className="body">
       <div className="wraper">
         <div className="w-100">
-          <div className="topHeader">
-            <UserTopMenu />
-          </div>
           <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
             <DashboardMenu />
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2>Good Day, {userData.data.profile.firstName}!</h2>
-                  <br />
-                  {data.profile.role !== 'EXECUTIVE' ? (
-                    // This code block will be rendered only if the user is an ADMIN
-                    <div>
-                      <h4 className="bold-text">Leave Credits </h4>
-                      {getMyLeaves.map((leave: any) => (
-                        <div key={leave.id}>
-                          <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    // This code block will be rendered for all other users
-                    null
-                  )}
+            <div className="col-md-12 col-lg-10 p-0 m-0">
+              <div className="topHeader">
+                <UserTopMenu />
+              </div>
+              <div className="w-100 px-5 py-5">
+                <div className="row">
+                  <div className="col-md-6">
+                    <h2>Good Day, {userData.data.profile.firstName}!</h2>
+                    <br />
+                    {data.profile.role !== 'EXECUTIVE' ? (
+                      // This code block will be rendered only if the user is an ADMIN
+                      <div>
+                        <h4 className="bold-text">Leave Credits </h4>
+                        {getMyLeaves.map((leave: any) => (
+                          <div key={leave.id}>
+                            <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      // This code block will be rendered for all other users
+                      null
+                    )}
 
-                  {/* {getMyLeaves.map((leave: any) => (
+                    {/* {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
                     <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))} */}
+                  </div>
+                  <div className="col-md-6" style={{ textAlign: 'right' }}>
+                    <TimeDate />
+                  </div>
                 </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
-              </div>
-              <div>
-                <div className="w-100 pt-2">
-                  <div className="fieldtext d-flex col-md-6 w-100">
-                    {
-                      data.profile.role == 'EXECUTIVE' ?
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                          <label>Employee</label>
-                          <EmployeeDropdown
-                            placeholder={"Employee"}
-                            singleChangeOption={singleChangeOption}
-                            name="userId"
-                            value={filterData && filterData['userId']}
-                          />
-                        </div>
-                        :
-                        null
-                    }
-                    <div>
-                      <label>Date From</label>
-                      <input
-                        name="dateFrom"
-                        type="date"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
-                    <div>
-                      <label>Date To</label>
-                      <div className="input-container">
+                <div>
+                  <div className="w-100 pt-2">
+                    <div className="fieldtext d-flex col-md-6 w-100">
+                      {
+                        data.profile.role == 'EXECUTIVE' ?
+                          <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <EmployeeDropdown
+                              placeholder={"Employee"}
+                              singleChangeOption={singleChangeOption}
+                              name="userId"
+                              value={filterData && filterData['userId']}
+                            />
+                          </div>
+                          :
+                          null
+                      }
+                      <div>
+                        <label>Date From</label>
                         <input
-                          name="dateTo"
+                          name="dateFrom"
                           type="date"
                           autoComplete="off"
                           className="formControl"
@@ -687,74 +675,89 @@ export const Leaves = (props: any) => {
                           onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                         />
                       </div>
+                      <div>
+                        <label>Date To</label>
+                        <div className="input-container">
+                          <input
+                            name="dateTo"
+                            type="date"
+                            autoComplete="off"
+                            className="formControl"
+                            maxLength={40}
+                            onChange={(e) => makeFilterData(e)}
+                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                          />
+                        </div>
+                      </div>
+
+                      <Button
+                        style={{ width: 120 }}
+                        onClick={() => getAllLeaves(0, key)}
+                        className="btn btn-primary mx-2 mt-4">
+                        Search
+                      </Button>
                     </div>
-
-                    <Button
-                      style={{ width: 120 }}
-                      onClick={() => getAllLeaves(0, key)}
-                      className="btn btn-primary mx-2 mt-4">
-                      Search
-                    </Button>
-                  </div>
-                  <Tabs
-                    id="controlled-tab-example"
-                    activeKey={key}
-                    onSelect={(k: any) => {
-                      setAllLeaves([])
-                      getAllLeaves(0, k)
-                    }}
-                    className="mb-3"
-                  >
-                    <Tab eventKey="all" title="All">
-                      {leaveTable()}
-                    </Tab>
-                    <Tab eventKey="pending" title="Pending">
-                      {leaveTable()}
-                    </Tab>
-                    <Tab eventKey="approved" title="Approved" >
-                      {leaveTable()}
-                    </Tab>
-                    <Tab eventKey="declined" title="Rejected/Cancelled">
-                      {leaveTable()}
-                    </Tab>
-                  </Tabs>
-                </div>
-              </div>
-              <div className="d-flex justify-content-end">
-                <div className="">
-                  <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(allLeaves && allLeaves.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeLinkClassName="active-page-link"
-                    disabledLinkClassName="prev-next-disabled"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                  />
-                </div>
-              </div>
-              {authorizations.includes("Request:Create") ? (
-                <div className="d-flex justify-content-end mt-3" >
-                  <div>
-                    <Button
-                      className="mx-2"
-                      onClick={() => {
-                        setInitialValues(initialPayload)
-                        setLeaveBreakdown([])
-                        setLeaveId("")
-                        setModalShow(true)
-                      }}>Request for Leave/Time-off</Button>
+                    <Tabs
+                      id="controlled-tab-example"
+                      activeKey={key}
+                      onSelect={(k: any) => {
+                        setAllLeaves([])
+                        getAllLeaves(0, k)
+                      }}
+                      className="mb-3"
+                    >
+                      <Tab eventKey="all" title="All">
+                        {leaveTable()}
+                      </Tab>
+                      <Tab eventKey="pending" title="Pending">
+                        {leaveTable()}
+                      </Tab>
+                      <Tab eventKey="approved" title="Approved" >
+                        {leaveTable()}
+                      </Tab>
+                      <Tab eventKey="declined" title="Rejected/Cancelled">
+                        {leaveTable()}
+                      </Tab>
+                    </Tabs>
                   </div>
                 </div>
-              ) : null}
+                <div className="d-flex justify-content-end">
+                  <div className="">
+                    <ReactPaginate
+                      className="d-flex justify-content-center align-items-center"
+                      breakLabel="..."
+                      nextLabel=">"
+                      onPageChange={handlePageClick}
+                      pageRangeDisplayed={5}
+                      pageCount={(allLeaves && allLeaves.totalPages) || 0}
+                      previousLabel="<"
+                      previousLinkClassName="prev-next-pagination"
+                      nextLinkClassName="prev-next-pagination"
+                      activeLinkClassName="active-page-link"
+                      disabledLinkClassName="prev-next-disabled"
+                      pageLinkClassName="page-link"
+                      renderOnZeroPageCount={null}
+                    />
+                  </div>
+                </div>
+                {authorizations.includes("Request:Create") ? (
+                  <div className="d-flex justify-content-end mt-3" >
+                    <div>
+                      <Button
+                        className="mx-2"
+                        onClick={() => {
+                          setInitialValues(initialPayload)
+                          setLeaveBreakdown([])
+                          setLeaveId("")
+                          setModalShow(true)
+                        }}>Request for Leave/Time-off</Button>
+                    </div>
+                  </div>
+                ) : null}
 
+              </div>
             </div>
+
           </div>
         </div>
         {/* Create User Modal Form */}
@@ -800,7 +803,7 @@ export const Leaves = (props: any) => {
                   didOpen: () => {
                     Swal.showLoading();
                   },
-               
+
                 });
                 const valuesObj: any = { ...values }
                 valuesObj.breakdown = leaveBreakdown
@@ -884,10 +887,10 @@ export const Leaves = (props: any) => {
                           // onChange={(e) => setFormField(e, setFieldValue)}>
                           onChange={(e) => {
                             setFormField(e, setFieldValue);
-                           
+
                           }}
 
-                      
+
                         >
                           {leaveTypes &&
                             leaveTypes.length &&
@@ -915,7 +918,7 @@ export const Leaves = (props: any) => {
                             dateBreakdown(e.target.value, values.dateTo)
                           }}
                           // min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
-                          max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
+                          max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined}
 
                           placeholder="dd/mm/yyyy"
                         />
@@ -932,7 +935,7 @@ export const Leaves = (props: any) => {
                           className="form-control"
                           value={values.dateTo}
                           min={values.dateFrom}
-                          max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom ), 6).toISOString().split('T')[0] : undefined}
+                          max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : undefined}
                           onChange={(e) => {
                             setFormField(e, setFieldValue)
 
@@ -940,7 +943,7 @@ export const Leaves = (props: any) => {
                           }}
                         />
 
-                         
+
                         {errors && errors.dateTo && (
                           <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                         )}

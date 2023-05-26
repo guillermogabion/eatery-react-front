@@ -49,7 +49,7 @@ const UserTopMenu = (props: any) => {
 
   return (
     <div className="contentRightMain">
-      <h1>
+      {/* <h1>
         <NavLink to={"/timekeeping"}
           className="logo"
           onClick={() => {
@@ -57,9 +57,9 @@ const UserTopMenu = (props: any) => {
           }}>
           <img src={actimai_logo} alt="Actimai logo" width={80} height={55} />
         </NavLink>
-      </h1>
+      </h1> */}
       <div className="TopHeaderRight">
-        {search ? (
+        {/* {search ? (
           <div className="mainSearch">
             <input
               value={`${searchText}`.trimStart()}
@@ -94,7 +94,7 @@ const UserTopMenu = (props: any) => {
               </p>
             ) : null}
           </div>
-        ) : null}
+        ) : null} */}
         <div className="UserAction">
           <div className="UserdetailWrap">
             <div className="UserIcon">

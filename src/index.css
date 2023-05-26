@@ -850,35 +850,12 @@ tr:nth-child(even) {
   background: #f7f7f7;
 }
 
-table tr:first-child {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background: #ffffff;
-}
-
-table .noSticy thead tr {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background: #ffffff;
-}
-
-table.noSticy tr:first-child {
-  position: static;
-}
 
 .react-date-picker__calendar {
   z-index: 2 !important;
 }
 
-table {
-  width: 100%;
-  text-align: left;
-  table-layout: fixed;
-}
+
 
 table input[type="checkbox"] {
   position: relative;
@@ -2305,51 +2282,6 @@ input::-ms-reveal {
 }
 
 /* Report */
-/* Style the tab */
-.tab {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #97cd4c;
-  border-radius: 5px;
-  overflow: hidden;
-  display: flex;
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 8.5px 15px;
-  transition: 0.3s;
-  font-size: 14px;
-  color: #003139;
-  text-align: center;
-  flex-grow: 4;
-}
-
-.tab button:not(:last-child) {
-  border-right: 1px solid #97cd4c;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #73bf45;
-  color: #ffffff;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #73bf45;
-  color: #ffffff;
-}
-
-/* Style the tab content */
-.tabcontent {
-  /* display: none; */
-  padding: 20px 0 0;
-  border-top: none;
-}
 
 /* Style the close button */
 .topright {
@@ -2633,15 +2565,6 @@ table.infoBreakdown th:first-child {
   vertical-align: top;
   line-height: 1.5;
   padding: 0 15px !important;
-}
-
-.infoBreakdown th:last-child {
-  width: 100px;
-  text-align: center;
-}
-
-.infoBreakdown td:last-child {
-  text-align: center;
 }
 
 .infoBreakdown .formControl,
@@ -3403,10 +3326,11 @@ td.pendingLabel .active {
 /* LEFT MENU CSS */
 .activeMenu{
   font-weight: bold;
-  background-color: #67499b;
+  background-color: #0D88AA;
 }
 .accordionMenu {
   font-weight: 500;
+  font-size: 14px;
 }
 
 .accordionMenu:hover {
@@ -3419,15 +3343,15 @@ td.pendingLabel .active {
 }
 
 .accordion-button{
-  background-color: #67499b !important;
+  background-color: #009FB5 !important;
   color: white;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   /* opacity: .8; */
 }
 
 .accordion-button:not(.collapsed){
-  background-color: #573596 !important;
+  background-color: #0D88AA !important;
   color: white;
   box-shadow: none;
 }
@@ -3627,4 +3551,53 @@ label[for="myCheckbox"] {
   100% {
     transform: rotate(360deg);
   }
+}
+
+
+.contentWrapperContainer{
+  border-radius: 16px 16px;
+  background-color: #FFFFFF;
+  box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.43);
+  -webkit-box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.43);
+  -moz-box-shadow: 1px 5px 5px 0px rgba(0,0,0,0.43);
+  overflow: hidden;
+}
+
+.contentWrapperContainerHeader{
+  background-color: #009FB5;
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  justify-content: space-between;
+  font-size: 18px;
+  padding: 0px 30px;
+  padding-top: 10px;
+  font-weight: 600;
+  color: white;
+  width: 100%;
+}
+
+.contentWrapperContainerContent{
+  width: 100%;
+  height: auto;
+  padding: 13px 25px;
+}
+
+
+
+table {
+  text-align: left;
+  table-layout: auto;
+  overflow-x: auto !important ;
+}
+
+.pointer {
+  cursor: pointer;
+}
+th {
+  color: #2B7E88;
+}
+tr th{
+  width: auto !important;
+  min-width: 130px;
 }
