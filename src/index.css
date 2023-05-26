@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Brandon Text";
   src: url("./assets/fonts/BrandonText-Thin.woff2") format("woff2"),
