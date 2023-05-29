@@ -24,7 +24,7 @@ const ContainerWrapper = (props: any) => {
                             setIsSideBarActive(true)
                         }} />
                     </div>
-                    <div className="bg-[#F2F3FB] overflow-auto h-full relative">
+                    <div className="bg-[#F2F3FB] overflow-auto h-full relative" style={{minHeight: '91vh'}}>
                         {contents}
                     </div>
                 </div>
