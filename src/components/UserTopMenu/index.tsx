@@ -1,16 +1,14 @@
 import { useCallback, useState } from "react"
-import { icon_search_grey, user, actimai_logo, arrow_down } from "../../assets/images"
-import { user_guide } from "../../assets/others"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
-import { Utility } from "../../utils"
-import moment from "moment"
-import { useSelector, useDispatch } from "react-redux"
+import { arrow_down, user } from "../../assets/images"
 import { history } from "../../helpers"
-import UserNotifications from "../UserNotifications"
-import { RequestAPI, Api } from "../../api"
+import { Utility } from "../../utils"
+import { BsFillBellFill, BsGrid3X3GapFill } from "react-icons/bs";
+
 
 const UserTopMenu = (props: any) => {
-  const { search = true } = props
+  const { search = true, onToggle } = props
   const dispatch = useDispatch()
 
   const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -48,71 +46,38 @@ const UserTopMenu = (props: any) => {
   }
 
   return (
-    <div className="contentRightMain">
-      {/* <h1>
-        <NavLink to={"/timekeeping"}
-          className="logo"
-          onClick={() => {
-            setCurrentRoutePath("/timekeeping")
-          }}>
-          <img src={actimai_logo} alt="Actimai logo" width={80} height={55} />
-        </NavLink>
-      </h1> */}
-      <div className="TopHeaderRight">
-        {/* {search ? (
-          <div className="mainSearch">
-            <input
-              value={`${searchText}`.trimStart()}
-              name="name"
-              placeholder="Search"
-              type="text"
-              className="formControl"
-              required
-              onChange={(e) => {
-                setSearchText(e.target.value)
-              }}
-            />
-            <button onClick={() => {
-              dispatch({
-                type: "SET_TOP_SEARCH",
-                payload: `${searchText}`.trimStart(),
-              })
-              searchTop()
-            }}>
-              <img src={icon_search_grey} alt="user" />
-            </button>
-            {errorTopSearch ? (
-              <p
-                style={{
-                  color: "red",
-                  position: "absolute",
-                  width: "100%",
-                  bottom: "-41px",
-                  left: 0,
-                }}>
-                {errorTopSearch}
-              </p>
-            ) : null}
-          </div>
-        ) : null} */}
-        <div className="UserAction">
-          <div className="UserdetailWrap">
-            <div className="UserIcon">
+    <div className="w-full flex justify-content-between m-0 p-0">
+      <div className="flex ">
+        <div className="flex items-center mr-2 pointer dashboardMenuToggle" onClick={onToggle}>
+          <BsGrid3X3GapFill size={25} color={"#292A2D"} />
+        </div>
+        <div className="ml-5 headerMessage">
+            <div className="text-lg font-bold text-primary">
+              Good Day, Francis!
+            </div>
+            <div className="text-md text-muted">
+                Stay up-to-date with the latest HR policies and procedures.
+            </div>
+        </div>
+      </div>
+
+      <div className="flex items-center">
+      
+        <div className="mr-5 flex">
+            <div className="flex items-center bg-[#009FB5] rounded-full  p-[10px] mr-5">
+              <BsFillBellFill size={20} color={"#ffffff"} />
+            </div>
+            <div className="flex items-center mr-5 font-bold">
+              <h3> {userData.data.profile.firstName} {userData.data.profile.lastName}</h3>
+            </div>
+            <div>
               <img src={user} alt="user" />
             </div>
-            <div className="Userdetail">
-              <h3> {userData.data.profile.firstName} {userData.data.profile.lastName}</h3>
-              <small>
-                {userData.data.profile.squad}
-
-              </small>
-            </div>
-          </div>
         </div>
-        <div className="menu-dropdown" onClick={closePopup}>
-          <div className="UserdetailWrap">
+        <div className="menu-dropdown mt-[-8px]" onClick={closePopup}>
+          <div className="">
             <div className="DropdownIcon">
-              <img src={arrow_down} alt="Arrow Down" />
+              <img src={arrow_down} alt="Arrow Down" width={15} />
             </div>
           </div>
           {userAction ?
@@ -135,33 +100,6 @@ const UserTopMenu = (props: any) => {
                 </NavLink>
               </small>
               <br />
-              {/* <small>
-                <NavLink to={"/user/list"}
-                onClick={() => {
-                  setCurrentRoutePath("/user/list")
-                }}>
-                  User Management
-                </NavLink>
-              </small>
-              <br /> */}
-              {/* <small>
-                <NavLink to={"/role/list"}
-                onClick={() => {
-                  setCurrentRoutePath("/role/list")
-                }}>
-                  Role Management
-                </NavLink>
-              </small>
-              <br /> */}
-              {/* <small>
-                <NavLink to={"/useriniatedchangepw"}
-                  onClick={() => {
-                    setCurrentRoutePath("/useriniatedchangepw")
-                  }}>
-                  Profile
-                </NavLink>
-              </small>
-              <br /> */}
               <NavLink
                 activeClassName="active"
                 to={"/logout"}

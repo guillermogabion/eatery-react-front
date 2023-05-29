@@ -315,14 +315,14 @@ export const Login = () => {
 
   return (
     <>
-      <div className="row w-full h-full p-0 m-0   min-h-[100vh]">
+      <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
         <div className="flex justify-center items-center px-4 loginBackground ">
           {!isNewAccount ?
-            <div className="bg-white flex flex-column justify-center items-center rounded-md w-full h-[80%] xl:w-[500px] md:w-[450px]" >
-              <div className="company-logo pb-3">
+            <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full h-[80%] xl:w-[500px] md:w-[450px]">
+              <div className="company-logo pb-3 ">
                 <img src={actimai_logo} alt="Actimai logo" className="w-[80%]" />
               </div>
-              <div className="align-items-center">
+              <div className="align-items-center ">
                 <h5 className="text-[1.7em] color-primary">Employee Portal Login</h5>
               </div>
               <form id="_form" className="w-full px-[15%]" action="#">

@@ -17,6 +17,7 @@ import { action_approve, action_cancel, action_decline, action_edit } from "../.
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
+import ContainerWrapper from "../../components/ContainerWrapper"
 const ErrorSwal = withReactContent(Swal)
 
 export const Undertime = (props: any) => {
@@ -59,7 +60,7 @@ export const Undertime = (props: any) => {
         let filterDataTemp = { ...filterData }
         if (status != "") {
             queryString = "&status=" + status
-        } 
+        }
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp[d]) {
@@ -160,9 +161,9 @@ export const Undertime = (props: any) => {
                     title: '',
                     allowOutsideClick: false,
                     didOpen: () => {
-                      Swal.showLoading();
+                        Swal.showLoading();
                     }
-                  });
+                });
                 RequestAPI.postRequest(Api.cancelUndertime, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -399,350 +400,326 @@ export const Undertime = (props: any) => {
     }
 
     return (
-        <div className="body">
-            <div className="wraper">
-                <div className="w-100">
-                    <div className="topHeader">
-                        <UserTopMenu />
+        <ContainerWrapper contents={<>
+            <div className="w-100 col-md-12 col-lg-10 px-5 py-5">
+                <div className="row">
+                    <div className="col-md-6">
+                        <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
                     </div>
-                    <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-                        <DashboardMenu />
-                        <div className="col-md-12 col-lg-10 px-5 py-5">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                                </div>
-                                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                                    <TimeDate />
-                                </div>
-                            </div>
-                            <div>
-                                {/* <h3>OTs & UTs</h3>
-                    <div className="row p-0 m-0 pt-2">
-                    <div className="col-md-3">
-                        <h5>Monthly Total OTs:</h5>
-                        <h5>Monthly Total UTs:</h5>
+                    <div className="col-md-6" style={{ textAlign: 'right' }}>
+                        <TimeDate />
                     </div>
-                    <div className="col-md-3">
-                        <h5>200 mins</h5>
-                        <h5>150 mins</h5>
-                    </div>
-                    
-                    </div> */}
-
-                                <div className="w-100 pt-2">
-                                    <div className="fieldtext d-flex col-md-3 w-100">
-                                        {
-                                            data.profile.role == 'EXECUTIVE' ?
-                                                <div className="" style={{ width: 200, marginRight: 10 }}>
-                                                    <label>Employee</label>
-                                                    <EmployeeDropdown
-                                                        placeholder={"Employee"}
-                                                        singleChangeOption={singleChangeOption}
-                                                        name="userId"
-                                                        value={filterData && filterData['userId']}
-                                                    />
-                                                </div>
-                                                :
-                                                null
-                                        }
-                                        <div>
-                                            <label>Date From</label>
-                                            <div>
-                                                <input
-                                                    name="dateFrom"
-                                                    type="date"
-                                                    autoComplete="off"
-                                                    className="formControl"
-                                                    onChange={(e) => makeFilterData(e)}
-                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label>Date To</label>
-                                            <div className="input-container">
-                                                <input
-                                                    name="dateTo"
-                                                    type="date"
-                                                    autoComplete="off"
-                                                    className="formControl"
-                                                    onChange={(e) => makeFilterData(e)}
-                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label>Date Filed</label>
-                                            <div className="input-container">
-                                                <input
-                                                    name="dateFiled"
-                                                    type="date"
-                                                    autoComplete="off"
-                                                    className="formControl"
-                                                    onChange={(e) => makeFilterData(e)}
-                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <Button
-                                                style={{ width: 120 }}
-                                                onClick={() => getMyUT(0, key)}
-                                                className="btn btn-primary mx-2 mt-4">
-                                                Search
-                                            </Button>
-                                        </div>
+                </div>
+                <div>
+                    <div className="w-100 pt-2">
+                        <div className="fieldtext d-flex col-md-3 w-100">
+                            {
+                                data.profile.role == 'EXECUTIVE' ?
+                                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                                        <label>Employee</label>
+                                        <EmployeeDropdown
+                                            placeholder={"Employee"}
+                                            singleChangeOption={singleChangeOption}
+                                            name="userId"
+                                            value={filterData && filterData['userId']}
+                                        />
                                     </div>
-
-                                    <Tabs
-                                        id="controlled-tab-example"
-                                        activeKey={key}
-                                        onSelect={(k: any) => {
-                                            setMyUT([])
-                                            getMyUT(0, k)
-                                        }}
-                                        className="mb-3"
-                                    >
-                                        <Tab eventKey="all" title="All">
-                                            {underTimeTable()}
-                                        </Tab>
-                                        <Tab eventKey="pending" title="Pending">
-                                            {underTimeTable()}
-                                        </Tab>
-                                        <Tab eventKey="approved" title="Approved" >
-                                            {underTimeTable()}
-                                        </Tab>
-                                        <Tab eventKey="declined" title="Rejected/Cancelled">
-                                            {underTimeTable()}
-                                        </Tab>
-                                    </Tabs>
-                                </div>
-                            </div>
-                            <div className="d-flex justify-content-end">
-                                <div className="">
-                                    <ReactPaginate
-                                        className="d-flex justify-content-center align-items-center"
-                                        breakLabel="..."
-                                        nextLabel=">"
-                                        onPageChange={handlePageClick}
-                                        pageRangeDisplayed={5}
-                                        pageCount={(myut && myut.totalPages) || 0}
-                                        previousLabel="<"
-                                        previousLinkClassName="prev-next-pagination"
-                                        nextLinkClassName="prev-next-pagination"
-                                        activeLinkClassName="active-page-link"
-                                        disabledLinkClassName="prev-next-disabled"
-                                        pageLinkClassName="page-link"
-                                        renderOnZeroPageCount={null}
+                                    :
+                                    null
+                            }
+                            <div>
+                                <label>Date From</label>
+                                <div>
+                                    <input
+                                        name="dateFrom"
+                                        type="date"
+                                        autoComplete="off"
+                                        className="formControl"
+                                        onChange={(e) => makeFilterData(e)}
+                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                     />
                                 </div>
                             </div>
-                            {authorizations.includes("Request:Create") ? (
-                                <>
-                                    <div className="d-flex justify-content-end mt-3" >
-                                        <div>
-                                            <Button
-                                                className="mx-2"
-                                                onClick={() => {
-                                                    setUtId("")
-                                                    setInitialValues(initialPayload)
-                                                    setModalShow(true)
-                                                }}>Request Undertime</Button>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : null}
-
+                            <div>
+                                <label>Date To</label>
+                                <div className="input-container">
+                                    <input
+                                        name="dateTo"
+                                        type="date"
+                                        autoComplete="off"
+                                        className="formControl"
+                                        onChange={(e) => makeFilterData(e)}
+                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Date Filed</label>
+                                <div className="input-container">
+                                    <input
+                                        name="dateFiled"
+                                        type="date"
+                                        autoComplete="off"
+                                        className="formControl"
+                                        onChange={(e) => makeFilterData(e)}
+                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <Button
+                                    style={{ width: 120 }}
+                                    onClick={() => getMyUT(0, key)}
+                                    className="btn btn-primary mx-2 mt-4">
+                                    Search
+                                </Button>
+                            </div>
                         </div>
+
+                        <Tabs
+                            id="controlled-tab-example"
+                            activeKey={key}
+                            onSelect={(k: any) => {
+                                setMyUT([])
+                                getMyUT(0, k)
+                            }}
+                            className="mb-3"
+                        >
+                            <Tab eventKey="all" title="All">
+                                {underTimeTable()}
+                            </Tab>
+                            <Tab eventKey="pending" title="Pending">
+                                {underTimeTable()}
+                            </Tab>
+                            <Tab eventKey="approved" title="Approved" >
+                                {underTimeTable()}
+                            </Tab>
+                            <Tab eventKey="declined" title="Rejected/Cancelled">
+                                {underTimeTable()}
+                            </Tab>
+                        </Tabs>
                     </div>
                 </div>
-                {/* Create User Modal Form */}
-                <Modal
-                    show={modalShow}
-                    size="xl"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    backdrop="static"
-                    keyboard={false}
-                    onHide={() => setModalShow(false)}
-                    dialogClassName="modal-90w"
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            {/* Request Undertime */}
-                            {utId ? 'Update Undertime Request' : 'Create Undertime Request'}
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="row w-100 px-5">
-                        <Formik
-                            innerRef={formRef}
-                            initialValues={initialValues}
-                            enableReinitialize={true}
-                            validationSchema={
-                                Yup.object().shape({
-                                    shiftDate: Yup.string().required("Shift date is required !"),
-                                    utStart: Yup.string().required("Undertime start is required !"),
-                                    utEnd: Yup.string().required("Undertime end is required !"),
-                                    reason: Yup.string().required("Reason is required !"),
+                <div className="d-flex justify-content-end">
+                    <div className="">
+                        <ReactPaginate
+                            className="d-flex justify-content-center align-items-center"
+                            breakLabel="..."
+                            nextLabel=">"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={(myut && myut.totalPages) || 0}
+                            previousLabel="<"
+                            previousLinkClassName="prev-next-pagination"
+                            nextLinkClassName="prev-next-pagination"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
+                            pageLinkClassName="page-link"
+                            renderOnZeroPageCount={null}
+                        />
+                    </div>
+                </div>
+                {authorizations.includes("Request:Create") ? (
+                    <>
+                        <div className="d-flex justify-content-end mt-3" >
+                            <div>
+                                <Button
+                                    className="mx-2"
+                                    onClick={() => {
+                                        setUtId("")
+                                        setInitialValues(initialPayload)
+                                        setModalShow(true)
+                                    }}>Request Undertime</Button>
+                            </div>
+                        </div>
+                    </>
+                ) : null}
+
+            </div>
+            <Modal
+                show={modalShow}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => setModalShow(false)}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        {/* Request Undertime */}
+                        {utId ? 'Update Undertime Request' : 'Create Undertime Request'}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                    <Formik
+                        innerRef={formRef}
+                        initialValues={initialValues}
+                        enableReinitialize={true}
+                        validationSchema={
+                            Yup.object().shape({
+                                shiftDate: Yup.string().required("Shift date is required !"),
+                                utStart: Yup.string().required("Undertime start is required !"),
+                                utEnd: Yup.string().required("Undertime end is required !"),
+                                reason: Yup.string().required("Reason is required !"),
+                            })
+                        }
+                        onSubmit={(values, actions) => {
+                            const loadingSwal = Swal.fire({
+                                title: '',
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                },
+
+                            });
+                            const valuesObj: any = { ...values }
+                            setOnSubmit(true)
+                            if (utId) {
+                                valuesObj.id = utId
+                                RequestAPI.putRequest(Api.updateUT, "", valuesObj, {}, async (res: any) => {
+                                    const { status, body = { data: {}, error: {} } }: any = res
+                                    if (status === 200 || status === 201) {
+                                        if (body.error && body.error.message) {
+                                            ErrorSwal.fire(
+                                                'Error!',
+                                                (body.error && body.error.message) || "",
+                                                'error'
+                                            )
+                                        } else {
+                                            getMyUT(0, key)
+                                            ErrorSwal.fire(
+                                                'Success!',
+                                                (body.data) || "",
+                                                'success'
+                                            )
+                                            setModalShow(false)
+                                            formRef.current?.resetForm()
+                                        }
+                                    } else {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            (body.error && body.error.message) || "Something error!",
+                                            'error'
+                                        )
+                                    }
+                                })
+                            } else {
+                                RequestAPI.postRequest(Api.UTCreate, "", valuesObj, {}, async (res: any) => {
+                                    Swal.close();
+                                    const { status, body = { data: {}, error: {} } }: any = res
+                                    if (status === 200 || status === 201) {
+                                        if (body.error && body.error.message) {
+                                            ErrorSwal.fire(
+                                                'Error!',
+                                                (body.error && body.error.message) || "",
+                                                'error'
+                                            )
+                                        } else {
+                                            getMyUT(0, key)
+                                            ErrorSwal.fire(
+                                                'Success!',
+                                                (body.data) || "",
+                                                'success'
+                                            )
+                                            setModalShow(false)
+                                            formRef.current?.resetForm()
+                                        }
+                                    } else {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            (body.error && body.error.message) || "Something error!",
+                                            'error'
+                                        )
+                                    }
                                 })
                             }
-                            onSubmit={(values, actions) => {
-                                const loadingSwal = Swal.fire({
-                                    title: '',
-                                    allowOutsideClick: false,
-                                    didOpen: () => {
-                                      Swal.showLoading();
-                                    },
-                                 
-                                  });
-                                const valuesObj: any = { ...values }
-                                setOnSubmit(true)
-                                if (utId) {
-                                    valuesObj.id = utId
-                                    RequestAPI.putRequest(Api.updateUT, "", valuesObj, {}, async (res: any) => {
-                                        const { status, body = { data: {}, error: {} } }: any = res
-                                        if (status === 200 || status === 201) {
-                                            if (body.error && body.error.message) {
-                                                ErrorSwal.fire(
-                                                    'Error!',
-                                                    (body.error && body.error.message) || "",
-                                                    'error'
-                                                )
-                                            } else {
-                                                getMyUT(0, key)
-                                                ErrorSwal.fire(
-                                                    'Success!',
-                                                    (body.data) || "",
-                                                    'success'
-                                                )
-                                                setModalShow(false)
-                                                formRef.current?.resetForm()
-                                            }
-                                        } else {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "Something error!",
-                                                'error'
-                                            )
-                                        }
-                                    })
-                                } else {
-                                    RequestAPI.postRequest(Api.UTCreate, "", valuesObj, {}, async (res: any) => {
-                                        Swal.close();
-                                        const { status, body = { data: {}, error: {} } }: any = res
-                                        if (status === 200 || status === 201) {
-                                            if (body.error && body.error.message) {
-                                                ErrorSwal.fire(
-                                                    'Error!',
-                                                    (body.error && body.error.message) || "",
-                                                    'error'
-                                                )
-                                            } else {
-                                                getMyUT(0, key)
-                                                ErrorSwal.fire(
-                                                    'Success!',
-                                                    (body.data) || "",
-                                                    'success'
-                                                )
-                                                setModalShow(false)
-                                                formRef.current?.resetForm()
-                                            }
-                                        } else {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "Something error!",
-                                                'error'
-                                            )
-                                        }
-                                    })
-                                }
-                                setOnSubmit(false)
-                            }}>
-                            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-                                return (
-                                    <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                                        <div className="row w-100 px-5">
+                            setOnSubmit(false)
+                        }}>
+                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                            return (
+                                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                    <div className="row w-100 px-5">
 
-                                            <div className="form-group col-md-12 mb-3" >
-                                                <label>Date</label>
-                                                <input type="date"
-                                                    name="shiftDate"
-                                                    id="shiftDate"
-                                                    className="form-control"
-                                                    value={values.shiftDate}
-                                                    onChange={(e) => {
-                                                        setFormField(e, setFieldValue)
-                                                    }}
-                                                />
-                                                {errors && errors.shiftDate && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
-                                                )}
-                                            </div>
-                                            <div className="form-group col-md-6 mb-3" >
-                                                <label>Start</label>
-                                                <input type="time"
-                                                    name="utStart"
-                                                    id="utStart"
-                                                    className="form-control"
-                                                    value={values.utStart}
-                                                    onChange={(e) => {
-                                                        setFormField(e, setFieldValue)
-                                                    }}
-                                                />
-                                                {errors && errors.utStart && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
-                                                )}
-                                            </div>
-                                            <div className="form-group col-md-6 mb-3" >
-                                                <label>End</label>
-                                                <input type="time"
-                                                    name="utEnd"
-                                                    id="utEnd"
-                                                    className="form-control"
-                                                    value={values.utEnd}
-                                                    onChange={(e) => {
-                                                        setFormField(e, setFieldValue)
-                                                    }}
-                                                />
-                                                {errors && errors.utEnd && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
-                                                )}
-                                            </div>
-                                            <div className="form-group col-md-12 mb-3" >
-                                                <label>Reason</label>
-                                                <textarea
-                                                    name="reason"
-                                                    id="reason"
-                                                    className="form-control p-2"
-                                                    style={{ minHeight: 100 }}
-                                                    value={values.reason}
-                                                    onChange={(e) => setFormField(e, setFieldValue)}
-                                                />
-                                                {errors && errors.reason && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                                                )}
-                                            </div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Date</label>
+                                            <input type="date"
+                                                name="shiftDate"
+                                                id="shiftDate"
+                                                className="form-control"
+                                                value={values.shiftDate}
+                                                onChange={(e) => {
+                                                    setFormField(e, setFieldValue)
+                                                }}
+                                            />
+                                            {errors && errors.shiftDate && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                            )}
                                         </div>
-                                        <br />
-                                        <Modal.Footer>
-                                            <div className="d-flex justify-content-end px-5">
-                                                <button
-                                                    type="submit"
-                                                    disabled={onSubmit}
-                                                    className="btn btn-primary">
-                                                    Save
-                                                </button>
-                                            </div>
-                                        </Modal.Footer>
-                                    </Form>
-                                )
-                            }}
-                        </Formik>
-                    </Modal.Body>
-                </Modal>
-                {/* End Create User Modal Form */}
-            </div>
-        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Start</label>
+                                            <input type="time"
+                                                name="utStart"
+                                                id="utStart"
+                                                className="form-control"
+                                                value={values.utStart}
+                                                onChange={(e) => {
+                                                    setFormField(e, setFieldValue)
+                                                }}
+                                            />
+                                            {errors && errors.utStart && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                            )}
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>End</label>
+                                            <input type="time"
+                                                name="utEnd"
+                                                id="utEnd"
+                                                className="form-control"
+                                                value={values.utEnd}
+                                                onChange={(e) => {
+                                                    setFormField(e, setFieldValue)
+                                                }}
+                                            />
+                                            {errors && errors.utEnd && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                            )}
+                                        </div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Reason</label>
+                                            <textarea
+                                                name="reason"
+                                                id="reason"
+                                                className="form-control p-2"
+                                                style={{ minHeight: 100 }}
+                                                value={values.reason}
+                                                onChange={(e) => setFormField(e, setFieldValue)}
+                                            />
+                                            {errors && errors.reason && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <Modal.Footer>
+                                        <div className="d-flex justify-content-end px-5">
+                                            <button
+                                                type="submit"
+                                                disabled={onSubmit}
+                                                className="btn btn-primary">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </Modal.Footer>
+                                </Form>
+                            )
+                        }}
+                    </Formik>
+                </Modal.Body>
+            </Modal>
+        </>} />
+
     )
 }

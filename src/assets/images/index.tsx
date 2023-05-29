@@ -13,6 +13,8 @@ import hide_password_dark from "./dist/action/icon_show_password.svg"
 import eye from "./dist/action/eye.png"
 import actimai_logo_white from "./dist/actimai Logo White.png"
 import actimai_logo_white1 from "./dist/logo1.png"
+import actimai_sidebar_bg from "./dist/SidebarBG.png"
+import caret_close from "./dist/menu/caret close.png"
 
 export {
   eye,
@@ -28,5 +30,7 @@ export {
   show_password_dark,
   hide_password_dark,
   actimai_logo_white,
-  actimai_logo_white1
+  actimai_logo_white1,
+  actimai_sidebar_bg,
+  caret_close
 }

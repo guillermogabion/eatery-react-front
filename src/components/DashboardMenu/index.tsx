@@ -11,9 +11,10 @@ import ResolutionCenter from "../../assets/images/dist/menu/ResolutionCenter.png
 import Attendance from "../../assets/images/dist/menu/Attendance.png"
 import Manage from "../../assets/images/dist/menu/Manage.png"
 import { actimai_logo_white1 } from "../../assets/images";
+import { FaRegWindowClose } from "react-icons/fa";
 
 const DashboardMenu = (props: any) => {
-    const { search = true } = props
+    const { search = true, onToggle } = props
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const setCurrentRoutePath = (path: string) => dispatch({ type: "SET_CURENT_ROUTE_PATH", payload: path })
     const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
@@ -68,7 +69,10 @@ const DashboardMenu = (props: any) => {
 
     const leftMenu = useCallback((menu_index: any) => {
         return (
-            <div className="col-md-12 col-lg-2 col-sm-12 p-0 pt-4" style={{ backgroundColor: "#009FB5", borderRadius: 0, border: 0 }}>
+            <div>
+                <div className="w-full flex justify-end p-3 dashboardMenuClose pointer" onClick={onToggle}>
+                    <FaRegWindowClose size={25} color={"#ffffff"}/>
+                </div>
                 <div className="p-3 px-5 mb-3 d-flex justify-content-center align-items-center">
                     <NavLink to={"/timekeeping"}
                         className="logo"

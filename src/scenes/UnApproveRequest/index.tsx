@@ -762,12 +762,12 @@ export const UnApproveRequest = (props: any) => {
         // ContentWrapper component same as container it holds the contents and the contents can also be a component
         <ContainerWrapper contents={<> 
             <div className="row m-0 p-0">
-                <div className="col-md-12 px-5 py-5">
+                <div className="col-md-12 px-3 py-5">
                     <ContentWrapper
                         name={"Test Widget 2"}
                         content={
                             <>
-                                <div className="row">
+                                <div className="row m-0 p-0">
                                     <div className="col-md-6">
                                         <h2>Good Day, {userData.data.profile.firstName}!</h2>
 
@@ -781,7 +781,7 @@ export const UnApproveRequest = (props: any) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="w-100 pt-2">
+                                    <div className=" pt-2">
                                         <Tabs
                                             id="controlled-tab-example"
                                             activeKey={key}

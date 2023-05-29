@@ -10,6 +10,7 @@ import { Api, RequestAPI } from "../../api"
 import DashboardMenu from "../../components/DashboardMenu"
 import TableComponent from "../../components/TableComponent"
 import TimeDate from "../../components/TimeDate"
+import ContainerWrapper from "../../components/ContainerWrapper"
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -42,57 +43,46 @@ export const Report = (props: any) => {
             "",
             "timekeeping.xlsx",
             async (res: any) => {
-                if(res){
+                if (res) {
                     setIsSubmit(false)
                 }
-                
+
             }
         )
         // console.log(download)
     }
 
     return (
-        <div className="body">
-            <div className="wraper">
-                <div className="w-100">
-                    <div className="topHeader">
-                        <UserTopMenu />
+        <ContainerWrapper contents={<>
+            <div className="col-md-12 col-lg-10 px-5 py-5">
+                <div className="row">
+                    <div className="col-md-6">
+                        <h2 className="bold-text">Good Day, {userData.data.profile.firstName}</h2>
                     </div>
-                    <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-                        <DashboardMenu />
-                        <div className="col-md-12 col-lg-10 px-5 py-5">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h2 className="bold-text">Good Day, {userData.data.profile.firstName}</h2>
-                                </div>
-                                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                                    <TimeDate />
-                                </div>
-                            </div>
+                    <div className="col-md-6" style={{ textAlign: 'right' }}>
+                        <TimeDate />
+                    </div>
+                </div>
+                <div>
+                    <h3>Report</h3>
+
+                    <div className="w-100 pt-4">
+                        <TableComponent
+                            tableHeaders={tableHeaders}
+                        />
+                        <div className="d-flex justify-content-end mt-3" >
                             <div>
-                                <h3>Report</h3>
-
-                                <div className="w-100 pt-4">
-                                    <TableComponent
-                                        tableHeaders={tableHeaders}
-                                    />
-                                    <div className="d-flex justify-content-end mt-3" >
-                                        <div>
-                                            <Button
-                                                className="mx-2"
-                                                onClick={() => {
-                                                    setDownloadModalShow(true)
-                                                }}>Download Excel</Button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Button
+                                    className="mx-2"
+                                    onClick={() => {
+                                        setDownloadModalShow(true)
+                                    }}>Download Excel</Button>
                             </div>
-
                         </div>
                     </div>
                 </div>
+
             </div>
-            {/* Create User Modal Form */}
             <Modal
                 show={downloadModalShow}
                 size={'md'}
@@ -109,42 +99,40 @@ export const Report = (props: any) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
-                <div className="form-group col-md-6 mb-3" >
-                <label>Date From</label>
-                <input type="date"
-                    name="fromDate"
-                    id="fromDate"
-                    className="form-control"
-                    value={fromDate}
-                    onChange={(e) => {
-                    setFromDate(e.target.value)
-                    }}
-                />
-                </div>
-                <div className="form-group col-md-6 mb-3" >
-                <label>Date To</label>
-                <input type="date"
-                    name="toDate"
-                    id="toDate"
-                    className="form-control"
-                    value={toDate}
-                    min={fromDate}
-                    onChange={(e) => {
-                    setToDate(e.target.value)
-                    }}
-                />
-                </div>
+                    <div className="form-group col-md-6 mb-3" >
+                        <label>Date From</label>
+                        <input type="date"
+                            name="fromDate"
+                            id="fromDate"
+                            className="form-control"
+                            value={fromDate}
+                            onChange={(e) => {
+                                setFromDate(e.target.value)
+                            }}
+                        />
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                        <label>Date To</label>
+                        <input type="date"
+                            name="toDate"
+                            id="toDate"
+                            className="form-control"
+                            value={toDate}
+                            min={fromDate}
+                            onChange={(e) => {
+                                setToDate(e.target.value)
+                            }}
+                        />
+                    </div>
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center">
-                    <Button 
+                    <Button
                         onClick={() => downloadExcel(fromDate, toDate)}
                         disabled={isSubmit}>
-                            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>: "" } Proceed
+                        {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
                     </Button>
                 </Modal.Footer>
             </Modal>
-            {/* End Create User Modal Form */}
-        </div>
-
+        </>} />
     )
 }

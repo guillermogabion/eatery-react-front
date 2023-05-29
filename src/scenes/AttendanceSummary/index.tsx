@@ -14,6 +14,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import SingleSelect from "../../components/Forms/SingleSelect"
 import TimeDate from "../../components/TimeDate"
 import FileUploadService from "../../services/FileUploadService"
+import ContainerWrapper from "../../components/ContainerWrapper"
 const ErrorSwal = withReactContent(Swal)
 
 export const AttendanceSummary = (props: any) => {
@@ -150,21 +151,21 @@ export const AttendanceSummary = (props: any) => {
         })
       }
     }
-      RequestAPI.getRequest(
-        `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}`,
-        "",
-        {},
-        {},
-        async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 && body) {
-            if (body.error && body.error.message) {
-            } else {
-              setAllAttendance(body.data)
-            }
+    RequestAPI.getRequest(
+      `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            setAllAttendance(body.data)
           }
         }
-      )
+      }
+    )
 
   }
 
@@ -335,155 +336,144 @@ export const AttendanceSummary = (props: any) => {
   }
 
   return (
-    <div className="body">
-      <div className="wraper">
-        <div className="w-100">
-          <div className="topHeader">
-            <UserTopMenu />
+    <ContainerWrapper contents={<>
+      <div className="w-100 px-5 py-5">
+        <div className="row">
+          <div className="col-md-6">
+            <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
           </div>
-          <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-            <DashboardMenu />
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
-              </div>
-              <div>
-                <h3>Attendance Summary</h3>
-
-                <div className="w-100 pt-4">
-                  <div className="fieldtext d-flex col-md-12">
-                    {
-                      data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                        <>
-                          <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Employee</label>
-                            <SingleSelect
-                              type="string"
-                              options={employeeList || []}
-                              placeholder={"Employee"}
-                              onChangeOption={singleChangeOption}
-                              name="userid"
-                              value={filterData && filterData['userid']}
-                            />
-                          </div>
-                          <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Department</label>
-                            <select
-                              className={`form-select`}
-                              name="department"
-                              id="type"
-                              value={filterData && filterData['department']}
-                              onChange={(e) => makeFilterData(e)}>
-                              <option key={`departmentItem}`} value={""}>
-                                Select
-                              </option>
-                              {masterList &&
-                                masterList.department &&
-                                masterList.department.length &&
-                                masterList.department.map((item: any, index: string) => (
-                                  <option key={`${index}_${item}`} value={item}>
-                                    {item}
-                                  </option>
-                                ))}
-                            </select>
-                          </div>
-                        </>
-                        :
-                        null
-                    }
-
-                    <div>
-                      <label>Date From</label>
-                      <input
-                        name="fromDate"
-                        type="date"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        value={filterData["fromDate"]}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
-
-                    <div>
-                      <label>Date To</label>
-                      <div className="input-container">
-                        <input
-                          name="toDate"
-                          type="date"
-                          autoComplete="off"
-                          className="formControl"
-                          maxLength={40}
-                          value={filterData["toDate"]}
-                          onChange={(e) => makeFilterData(e)}
-                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                        />
-                      </div>
-                    </div>
-
-                    <Button
-                      style={{ width: 120 }}
-                      onClick={() => getAllAttendance(0)}
-                      className="btn btn-primary mx-2 mt-4">
-                      Search
-                    </Button>
-                    {
-                      data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                        <Button
-                          style={{ width: 130 }}
-                          onClick={() => setAddBioModal(true)}
-                          disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                          className="btn btn-primary mx-2 mt-4">
-                          Add Bio Log
-                        </Button>
-                        :
-                        null
-                    }
-
-                  </div>
-
-                  {attendanceTable()}
-                  {
-                    data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                      <>
-                        <div className="d-flex justify-content-end mt-3" >
-                          <div>
-                            <Button
-                              className="mx-2"
-                              onClick={() => {
-                                setImportModalShow(true)
-                              }}>Import</Button>
-                            <Button
-                              className="mx-2"
-                              onClick={() => {
-                                setDownloadModalShow(true)
-                              }}>Export</Button>
-                            <Button
-                              className="mx-2"
-                              onClick={
-                                downloadTemplate
-                              }>Download Template</Button>
-                          </div>
-                        </div>
-                      </>
-                      :
-                      null
-                  }
-
-                </div>
-              </div>
-
-            </div>
+          <div className="col-md-6" style={{ textAlign: 'right' }}>
+            <TimeDate />
           </div>
         </div>
+        <div>
+          <h3>Attendance Summary</h3>
+
+          <div className="w-100 pt-4">
+            <div className="fieldtext d-flex col-md-12">
+              {
+                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                  <>
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                      <label>Employee</label>
+                      <SingleSelect
+                        type="string"
+                        options={employeeList || []}
+                        placeholder={"Employee"}
+                        onChangeOption={singleChangeOption}
+                        name="userid"
+                        value={filterData && filterData['userid']}
+                      />
+                    </div>
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                      <label>Department</label>
+                      <select
+                        className={`form-select`}
+                        name="department"
+                        id="type"
+                        value={filterData && filterData['department']}
+                        onChange={(e) => makeFilterData(e)}>
+                        <option key={`departmentItem}`} value={""}>
+                          Select
+                        </option>
+                        {masterList &&
+                          masterList.department &&
+                          masterList.department.length &&
+                          masterList.department.map((item: any, index: string) => (
+                            <option key={`${index}_${item}`} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </>
+                  :
+                  null
+              }
+
+              <div>
+                <label>Date From</label>
+                <input
+                  name="fromDate"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  maxLength={40}
+                  value={filterData["fromDate"]}
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
+              </div>
+
+              <div>
+                <label>Date To</label>
+                <div className="input-container">
+                  <input
+                    name="toDate"
+                    type="date"
+                    autoComplete="off"
+                    className="formControl"
+                    maxLength={40}
+                    value={filterData["toDate"]}
+                    onChange={(e) => makeFilterData(e)}
+                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                  />
+                </div>
+              </div>
+
+              <Button
+                style={{ width: 120 }}
+                onClick={() => getAllAttendance(0)}
+                className="btn btn-primary mx-2 mt-4">
+                Search
+              </Button>
+              {
+                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                  <Button
+                    style={{ width: 130 }}
+                    onClick={() => setAddBioModal(true)}
+                    disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
+                    className="btn btn-primary mx-2 mt-4">
+                    Add Bio Log
+                  </Button>
+                  :
+                  null
+              }
+
+            </div>
+
+            {attendanceTable()}
+            {
+              data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                <>
+                  <div className="d-flex justify-content-end mt-3" >
+                    <div>
+                      <Button
+                        className="mx-2"
+                        onClick={() => {
+                          setImportModalShow(true)
+                        }}>Import</Button>
+                      <Button
+                        className="mx-2"
+                        onClick={() => {
+                          setDownloadModalShow(true)
+                        }}>Export</Button>
+                      <Button
+                        className="mx-2"
+                        onClick={
+                          downloadTemplate
+                        }>Download Template</Button>
+                    </div>
+                  </div>
+                </>
+                :
+                null
+            }
+
+          </div>
+        </div>
+
       </div>
-      {/* Create User Modal Form */}
       <Modal
         show={downloadModalShow}
         size={'md'}
@@ -534,10 +524,6 @@ export const AttendanceSummary = (props: any) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* End Create User Modal Form */}
-
-
-      {/* Create User Modal Form */}
       <Modal
         show={importModalShow}
         size={'md'}
@@ -575,8 +561,6 @@ export const AttendanceSummary = (props: any) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* End Create User Modal Form */}
-
       <Modal
         show={deleteBioModal}
         size="md"
@@ -891,7 +875,7 @@ export const AttendanceSummary = (props: any) => {
           </Formik>
         </Modal.Body>
       </Modal>
-    </div>
+    </>} />
 
   )
 }
