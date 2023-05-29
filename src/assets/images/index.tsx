@@ -14,7 +14,7 @@ import eye from "./dist/action/eye.png"
 import actimai_logo_white from "./dist/logo_white.png"
 import actimai_logo_white1 from "./dist/logo1.png"
 import actimai_sidebar_bg from "./dist/SidebarBG.png"
-import caret_close from "./dist/menu/caret_close.png"
+import caret_close from "./dist/menu/caret close.png"
 
 export {
   eye,
