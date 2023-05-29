@@ -190,7 +190,7 @@ export const LeaveTypes = (props: any) => {
 
     return (
         <ContainerWrapper contents={<>
-            <div className="col-md-12 col-lg-10 px-5 py-5">
+            <div className="w-100 px-5 py-5">
                 <div className="row">
                     <div className="col-md-6">
                         <h2>Good day, {userData.data.profile.firstName}!</h2>
