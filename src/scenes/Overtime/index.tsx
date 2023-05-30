@@ -17,6 +17,7 @@ import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -312,7 +313,7 @@ export const Overtime = (props: any) => {
               <th style={{ width: 'auto' }}>OT Start</th>
               <th style={{ width: 'auto' }}>OT End</th>
               <th style={{ width: 'auto' }}>Duration</th>
-              <th style={{ width: 'auto' }}>File Date</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Reason</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
@@ -333,14 +334,14 @@ export const Overtime = (props: any) => {
                       null
                     }
                     <td> {item.shiftDate} </td>
-                    <td> {item.classification} </td>
+                    <td> { Utility.removeUnderscore(item.classification) } </td>
                     <td> {item.otStart.replace('T', ' ')} </td>
                     <td> {item.otEnd.replace('T', ' ')} </td>
                     <td> {item.totalDuration} </td>
                     <td> {item.fileDate} </td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> {item.status} </td>
+                    <td> { Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?

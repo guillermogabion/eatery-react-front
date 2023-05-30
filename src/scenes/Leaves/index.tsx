@@ -18,6 +18,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const Leaves = (props: any) => {
@@ -30,6 +31,7 @@ export const Leaves = (props: any) => {
     "reason": "",
     "breakdown": []
   }
+
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
@@ -45,9 +47,7 @@ export const Leaves = (props: any) => {
   const [getMyLeaves, setGetMyLeaves] = useState<any>([])
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const [holidays, setHolidays] = useState<any>([])
-
   const formRef: any = useRef()
-
 
   const tableHeaders = [
     'Type',
@@ -58,8 +58,6 @@ export const Leaves = (props: any) => {
     'Remarks',
     'Action',
   ]
-
-
 
   useEffect(() => {
     RequestAPI.getRequest(
@@ -363,9 +361,6 @@ export const Leaves = (props: any) => {
     })
   }
 
-
-
-
   const cancelLeave = (id: any = 0) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
@@ -442,11 +437,6 @@ export const Leaves = (props: any) => {
 
   const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
 
-
-
-
-
-
   const leaveTable = useCallback(() => {
     return (
       <div>
@@ -491,7 +481,7 @@ export const Leaves = (props: any) => {
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> {item.status} </td>
+                          <td> { Utility.removeUnderscore(item.status) } </td>
                           <td className="d-flex">
                             {
                               item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?

@@ -17,6 +17,7 @@ import UserTopMenu from "../../components/UserTopMenu"
 const ErrorSwal = withReactContent(Swal)
 import { action_approve, action_edit, action_cancel, action_decline } from "../../assets/images"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 
 export const Holiday = (props: any) => {
   const { history } = props
@@ -232,8 +233,8 @@ export const Holiday = (props: any) => {
                       return (
                         <tr>
                           <td> {item.holidayName} </td>
-                          <td> {item.holidayType} </td>
-                          <td> {item.premiumType} </td>
+                          <td> { Utility.removeUnderscore(item.holidayType) } </td>
+                          <td> { Utility.removeUnderscore(item.premiumType) } </td>
                           <td> {item.holidayDate} </td>
                           <td className="d-flex">
                             <label

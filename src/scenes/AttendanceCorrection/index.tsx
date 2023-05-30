@@ -17,6 +17,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const AttendanceCorrection = (props: any) => {
@@ -387,10 +388,10 @@ export const AttendanceCorrection = (props: any) => {
                           <td> {item.lastName}, {item.firstName} </td>
                         </> : null
                     }
-                    <td>{item.type}</td>
+                    <td>{Utility.removeUnderscore(item.type) }</td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> {item.status} </td>
+                    <td> {Utility.removeUnderscore(item.status) } </td>
                     <td className="d-flex">
                       <label
                         onClick={() => {
@@ -748,7 +749,7 @@ export const AttendanceCorrection = (props: any) => {
                         masterList.coaTypes.length > 0 &&
                         masterList.coaTypes.map((item: any, index: string) => (
                           <option key={`${index}_${item}`} value={item}>
-                            {item.replaceAll('_', ' ')}
+                            {Utility.removeUnderscore(item)}
                           </option>
                         ))}
                     </select>

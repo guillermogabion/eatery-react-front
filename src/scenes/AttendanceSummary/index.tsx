@@ -15,6 +15,7 @@ import SingleSelect from "../../components/Forms/SingleSelect"
 import TimeDate from "../../components/TimeDate"
 import FileUploadService from "../../services/FileUploadService"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const AttendanceSummary = (props: any) => {
@@ -166,7 +167,21 @@ export const AttendanceSummary = (props: any) => {
         }
       }
     )
+  }
 
+  useEffect(() => {
+    if (filterData) {
+      document.removeEventListener("keydown", keydownFun)
+      document.addEventListener("keydown", keydownFun)
+    }
+    return () => document.removeEventListener("keydown", keydownFun)
+  }, [filterData])
+
+
+  const keydownFun = (event: any) => {
+    if (event.key === "Enter" && filterData['userid'] && filterData['fromDate'] && filterData['toDate']) {
+      getAllAttendance(0)
+    }
   }
 
   const makeFilterData = (event: any) => {
@@ -222,7 +237,6 @@ export const AttendanceSummary = (props: any) => {
                   :
                   null
               }
-
             </tr>
           </thead>
           <tbody>
@@ -240,7 +254,7 @@ export const AttendanceSummary = (props: any) => {
                           <td> {item.schedule} </td>
                           <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
                           <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
-                          <td> {item.dayType} </td>
+                          <td> { Utility.removeUnderscore(item.dayType) } </td>
                           <td> {item.status} </td>
                           {
                             data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
@@ -289,9 +303,7 @@ export const AttendanceSummary = (props: any) => {
                 null
             }
           </tbody>
-
         </Table>
-
         {
           allAttendance &&
             allAttendance.content &&
@@ -365,27 +377,6 @@ export const AttendanceSummary = (props: any) => {
                         value={filterData && filterData['userid']}
                       />
                     </div>
-                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                      <label>Department</label>
-                      <select
-                        className={`form-select`}
-                        name="department"
-                        id="type"
-                        value={filterData && filterData['department']}
-                        onChange={(e) => makeFilterData(e)}>
-                        <option key={`departmentItem}`} value={""}>
-                          Select
-                        </option>
-                        {masterList &&
-                          masterList.department &&
-                          masterList.department.length &&
-                          masterList.department.map((item: any, index: string) => (
-                            <option key={`${index}_${item}`} value={item}>
-                              {item}
-                            </option>
-                          ))}
-                      </select>
-                    </div>
                   </>
                   :
                   null
@@ -430,11 +421,10 @@ export const AttendanceSummary = (props: any) => {
               {
                 data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <Button
-                    style={{ width: 130 }}
                     onClick={() => setAddBioModal(true)}
                     disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                    className="btn btn-primary mx-2 mt-4">
-                    Add Bio Log
+                    className="btn btn-primary mx-2 mt-4 w-auto">
+                    Add Biometric Log
                   </Button>
                   :
                   null
@@ -822,7 +812,6 @@ export const AttendanceSummary = (props: any) => {
                       <input type="time"
                         name="tkTime"
                         id="tkTime"
-                        step={"1"}
                         className="form-control"
                         value={values.tkTime}
                         onChange={handleChange}
@@ -840,7 +829,9 @@ export const AttendanceSummary = (props: any) => {
                         value={values.type}
                         onChange={(e) => {
                           setFieldValue('type', e.target.value);
-                          updateLog(e.target.value)
+                          if (updateData){
+                            updateLog(e.target.value)
+                          }
                         }}>
                         <option key={`index`} value={""} disabled selected>
                           Select

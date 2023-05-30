@@ -53,7 +53,7 @@ const UserTopMenu = (props: any) => {
         </div>
         <div className="ml-5 headerMessage">
             <div className="text-lg font-bold text-primary">
-              Good Day, Francis!
+              Good Day, {userData.data.profile.firstName}!
             </div>
             <div className="text-md text-muted">
                 Stay up-to-date with the latest HR policies and procedures.

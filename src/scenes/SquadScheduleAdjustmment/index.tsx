@@ -18,6 +18,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const SquadScheduleAdjustment = (props: any) => {
@@ -392,7 +393,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                           <td> {item.reason} </td>
                           <td> {item.fileDate} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> {item.status} </td>
+                          <td> { Utility.removeUnderscore(item.status) } </td>
                           <td className="d-flex">
                             <label
                               onClick={() => {
@@ -523,7 +524,7 @@ export const SquadScheduleAdjustment = (props: any) => {
   }
   return (
     <ContainerWrapper contents={<>
-      <div className="col-md-12 col-lg-10 px-5 py-5">
+      <div className="w-100 px-5 py-5">
         <div className="row">
           <div className="col-md-6">
             <h2>Good Day, {userData.data.profile.firstName}!</h2>

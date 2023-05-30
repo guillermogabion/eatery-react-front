@@ -12,6 +12,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -115,7 +116,7 @@ export const Squad = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="col-md-12 col-lg-10 px-5 py-5">
+      <div className="w-100 px-5 py-5">
         <div className="row">
           <div className="col-md-6">
             <h2 className="bold-text">Good Day, {userData.data.profile.firstName}</h2>
@@ -153,7 +154,7 @@ export const Squad = (props: any) => {
               </div>
             </div>
 
-            <table>
+            <table className="w-100">
               <thead>
                 <tr>
                   <th style={{ width: 'auto' }}>Name</th>
@@ -169,7 +170,7 @@ export const Squad = (props: any) => {
                   squad.content.map((item: any, index: any) => (
                     <tr key={item.id}>
                       <td>{item.fullname}</td>
-                      <td>{item.empType}</td>
+                      <td>{Utility.removeUnderscore(item.empType) }</td>
                       <td>{item.empStatus}</td>
                       <td>
                         {

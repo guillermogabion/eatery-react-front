@@ -17,6 +17,7 @@ import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const SquadOvertime = (props: any) => {
@@ -335,14 +336,14 @@ export const SquadOvertime = (props: any) => {
                       null
                     }
                     <td> {item.shiftDate} </td>
-                    <td> {item.classification} </td>
+                    <td> { Utility.removeUnderscore(item.classification) } </td>
                     <td> {item.otStart.replace('T', ' ')} </td>
                     <td> {item.otEnd.replace('T', ' ')} </td>
                     <td> {item.totalDuration} </td>
                     <td> {item.fileDate} </td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> {item.status} </td>
+                    <td> { Utility.removeUnderscore(item.status) } </td>
                     <td>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
@@ -441,7 +442,7 @@ export const SquadOvertime = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="col-md-12 col-lg-10 px-5 py-5">
+      <div className="w-100 px-5 py-5">
         <div className="row">
           <div className="col-md-6">
             <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>

@@ -184,13 +184,13 @@ export const Dashboard = (props: any) => {
               <h6 className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
 
 
-              <h6 className="font-weight-bold pt-2">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("DD MMMM YYYY h:mm:ss A") : 'n/a'}</h6>
-              <h6 className="font-weight-bold pt-2">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("DD MMMM YYYY h:mm:ss A") : 'n/a'}</h6>
+              <h6 className="font-weight-bold pt-2">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("DD MMMM YYYY h:mm:ss A") : 'N/A'}</h6>
+              <h6 className="font-weight-bold pt-2">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("DD MMMM YYYY h:mm:ss A") : 'N/A'}</h6>
               <label
                 className="font-weight-bold p-2 px-3 text-dark"
                 style={{ background: '#E9E9E9', width: 'auto', borderRadius: 5 }}>
                 {/* { (hasTimeIn == true ) ? "Awaiting time out" : "Awaiting time in"} */}
-                {((!hasTimeIn && !hasTimeOut) ? "Awaiting log in" : (hasTimeIn && !hasTimeOut) ? "Awaiting log out" : (hasTimeIn && hasTimeOut) ? "Logged out" : "")}
+                {((!hasTimeIn && !hasTimeOut) ? "Awaiting Log In" : (hasTimeIn && !hasTimeOut) ? "Awaiting Log Out" : (hasTimeIn && hasTimeOut) ? "Logged Out" : "")}
               </label>
             </div>
           </div>

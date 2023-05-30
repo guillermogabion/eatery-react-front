@@ -17,6 +17,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -380,7 +381,7 @@ export const SquadAttendanceCorrection = (props: any) => {
                     <td>{item.type}</td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> {item.status} </td>
+                    <td> {Utility.removeUnderscore(item.status) } </td>
                     <td>
 
                       <label
@@ -480,7 +481,7 @@ export const SquadAttendanceCorrection = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="col-md-12 col-lg-10 px-5 py-5">
+      <div className="w-100 px-5 py-5">
         <div className="row">
           <div className="col-md-6">
             <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>

@@ -18,6 +18,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const ScheduleAdjustment = (props: any) => {
@@ -408,7 +409,7 @@ export const ScheduleAdjustment = (props: any) => {
                           <td> {item.dateTo} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> {item.status} </td>
+                          <td> {Utility.removeUnderscore(item.status) } </td>
                           <td className="d-flex">
                             <label
                               onClick={() => {

@@ -20,6 +20,7 @@ import UserTopMenu from "../../components/UserTopMenu"
 import FileUpload from "./upload"
 import ViewEmployee from "./view"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 interface Employee {
@@ -62,6 +63,7 @@ export const Employee = (props: any) => {
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const [squadList, setSquadList] = React.useState([]);
   const [employeeList, setEmployeeList] = React.useState([]);
+  const [employeeOptionList, setEmployeeOptionList] = React.useState([]);
   const [immediateEmployeeList, setImmediateEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
@@ -244,6 +246,35 @@ export const Employee = (props: any) => {
     getAllImmediateEmpList()
   }, [])
 
+  useEffect(() => {
+    getOptionEmployee()
+  }, [])
+
+  const getOptionEmployee = () => {
+    RequestAPI.getRequest(
+      `${Api.employeeList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
+              tempArray.push({
+                value: d.userAccountId,
+                label: d.firstname + " " + d.lastname
+              })
+            });
+            setEmployeeOptionList(tempArray)
+          }
+        }
+      }
+    )
+  }
+
   const getAllImmediateEmpList = () => {
     RequestAPI.getRequest(
       `${Api.employeeList}`,
@@ -273,6 +304,16 @@ export const Employee = (props: any) => {
     getAllEmployee(event.selected)
   };
 
+  
+
+  useEffect(() => {
+    if (filterData) {
+      document.removeEventListener("keydown", keydownFun)
+      document.addEventListener("keydown", keydownFun)
+    }
+    return () => document.removeEventListener("keydown", keydownFun)
+  }, [filterData])
+
   const makeFilterData = (event: any) => {
     const { name, value } = event.target
     const filterObj: any = { ...filterData }
@@ -280,6 +321,11 @@ export const Employee = (props: any) => {
     setFilterData(filterObj)
   }
 
+  const singleChangeOption = (option: any, name: any) => {
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
 
   const getAllEmployee = (pageNo: any, employeeId?: any) => {
     let queryString = ""
@@ -315,6 +361,12 @@ export const Employee = (props: any) => {
         }
       }
     )
+  }
+
+  const keydownFun = (event: any) => {
+    if (event.key === "Enter" && filterData) {
+      getAllEmployee(0, "")
+    }
   }
 
   const uploadExcel = async (file: any) => {
@@ -2416,7 +2468,23 @@ export const Employee = (props: any) => {
           <div className="w-100">
 
             <div className="fieldtext d-flex col-md-6">
+
               <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <label>Employee</label>
+                  <SingleSelect
+                    type="string"
+                    options={employeeOptionList || []}
+                    placeholder={"Employee"}
+                    onChangeOption={singleChangeOption}
+                    name="userId"
+                    value={filterData && filterData['userId']}
+                  />
+                </div>
+              </div>
+              <div className="input-container w-[200px]">
+
+                <label>Employee ID</label>
                 <input
                   name="employeeId"
                   placeholder="Employee ID"
@@ -2424,42 +2492,21 @@ export const Employee = (props: any) => {
                   autoComplete="off"
                   className="formControl"
                   maxLength={40}
+                  value={filterData["employeeId"]}
                   onChange={(e) => makeFilterData(e)}
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
               <div className="input-container">
-
-                <input
-                  name="firstname"
-                  placeholder="First name"
-                  type="text"
-                  autoComplete="off"
-                  className="formControl"
-                  maxLength={40}
-                  onChange={(e) => makeFilterData(e)}
-                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                />
+                <div className="mt-[22px]">
+                  <Button
+                    style={{ width: 160 }}
+                    onClick={() => getAllEmployee(0, "")}
+                    className="btn btn-primary mx-2">
+                    Search
+                  </Button>
+                </div>
               </div>
-              <div className="input-container">
-
-                <input
-                  name="lastname"
-                  placeholder="Last name"
-                  type="text"
-                  autoComplete="off"
-                  className="formControl"
-                  maxLength={40}
-                  onChange={(e) => makeFilterData(e)}
-                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                />
-              </div>
-              <Button
-                style={{ width: 210 }}
-                onClick={() => getAllEmployee(0, "")}
-                className="btn btn-primary mx-2">
-                Search
-              </Button>
             </div>
             <Table responsive="lg">
               <thead>
@@ -2485,7 +2532,7 @@ export const Employee = (props: any) => {
                     return (
                       <tr>
                         <td> {item.employeeId} </td>
-                        <td> {item.empType} </td>
+                        <td> {Utility.removeUnderscore(item.empType)} </td>
                         <td> {item.empStatus} </td>
                         <td> {item.fullname} </td>
                         <td> {item.hireDate} </td>

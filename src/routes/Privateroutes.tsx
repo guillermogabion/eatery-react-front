@@ -23,7 +23,7 @@ import {
   LeaveTypes,
   SquadScheduleAdjustment,
   MissingLogs,
-  UnApproveRequest,
+  AllRequest,
   Payroll,
   ApproverLogin,
   Page404
@@ -64,7 +64,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/request/ot", component: Overtime })
   routes.push({ path: "/request/ut", component: Undertime })
   routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
-  routes.push({ path: "/unapprovedrequests", component: UnApproveRequest })
+  routes.push({ path: "/allrequest", component: AllRequest })
   routes.push({ path: "/request/coa", component: AttendanceCorrection })
   routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
   routes.push({ path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary })
