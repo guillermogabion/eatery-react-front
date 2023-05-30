@@ -318,9 +318,9 @@ export const Login = () => {
       <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
         <div className="flex justify-center items-center px-4 loginBackground ">
           {!isNewAccount ?
-            <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full h-[80%] xl:w-[500px] md:w-[450px]">
-              <div className="company-logo pb-3 ">
-                <img src={actimai_logo} alt="Actimai logo" className="w-[80%]" />
+            <div className="bg-white relative flex flex-column justify-center items-center rounded-md py-[100px] lg:py-[150px] w-full xl:w-[500px] md:w-[450px]">
+              <div className="company-logo m-0 p-0">
+                <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
               </div>
               <div className="align-items-center ">
                 <h5 className="text-[1.7em] color-primary">Employee Portal Login</h5>
@@ -385,11 +385,9 @@ export const Login = () => {
                     </Alert>
                   )}
                 </div>
-                <br /><br />
-                <br /><br />
-                <br /> <br />
               </form>
-              <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+              <div className="absolute bottom-0" > <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+
               <div className=" mobile">
 
                 <Col className="loginTime" >

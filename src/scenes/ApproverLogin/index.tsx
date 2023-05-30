@@ -117,7 +117,7 @@ export const ApproverLogin = (props: any) => {
                     payload.reason = reason
                 }
                 let apiURL = getAPI(type, action)
-                
+
                 RequestAPI.postRequest(apiURL, token, payload, {}, async (res: any) => {
                     const { status, body } = res
                     if (status === 200 || status === 201) {
@@ -137,7 +137,7 @@ export const ApproverLogin = (props: any) => {
                                 cancelButtonColor: '#d33',
                                 allowOutsideClick: false,
                                 confirmButtonText: 'Go back to login'
-                            }).then((result:any) => {
+                            }).then((result: any) => {
                                 if (result.isConfirmed) {
                                     window.location.href = "/"
                                 }
@@ -165,14 +165,23 @@ export const ApproverLogin = (props: any) => {
                         setErrorMessage(body.error.message)
                         setPassword("")
                     } else {
-                        const { accessToken } = body.data
-                        
-                        if (action == "decline" || action == "resend") {
-                            setTempToken(accessToken)
-                            setShowReason(true)
-                        } else {
-                            makeActionRequest(accessToken)
+                        const { accessToken, profile } = body.data
+                        let approverRoles = ['EXECUTIVE','ADMIN','APPROVER']
+                        if (approverRoles.includes(profile.role)){
+                            if (action == "decline" || action == "resend") {
+                                setTempToken(accessToken)
+                                setShowReason(true)
+                            } else {
+                                makeActionRequest(accessToken)
+                            }
+                        }else{
+                            ErrorSwal.fire(
+                                'Error!',
+                                "Your account is not approver.",
+                                'error'
+                            )
                         }
+                        
                     }
                 } else {
                     if (body.error && body.error.message) {
@@ -198,15 +207,15 @@ export const ApproverLogin = (props: any) => {
 
     return (
         <>
-            <div className="row bg-dark w-100 h-100 p-0 m-0" style={{ minHeight: '100vh', height: '100vh' }}>
-                <Container className="d-flex justify-content-center align-items-center p-0 m-0 loginBackground ">
+            <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
+                <div className="flex justify-center items-center px-4 loginBackground ">
                     {
                         showReason ?
-                            <div className="m-0 bg-white formContainer" >
-                                <div className="company-logo pb-3">
-                                    <img src={actimai_logo} alt="Actimai logo" />
+                            <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full py-[100px] lg:py-[150px] xl:w-[500px] md:w-[450px]">
+                                <div className="company-logo m-0 p-0 ">
+                                    <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
                                 </div>
-                                <div className="align-items-center mt-2">
+                                <div className="align-items-center ">
                                     <label className="color-primary" style={{ fontSize: 20 }}>You are about to {action} this request</label>
                                 </div>
                                 <form className="loginForm mt-2" action="#">
@@ -221,7 +230,7 @@ export const ApproverLogin = (props: any) => {
                                         minLength={10}
                                         onChange={(e) => setReason(e.target.value)}
                                     />
-                                    <div className="d-flex mt-3">
+                                    <div className="d-flex mt-5">
                                         <Button
                                             style={{ width: '100%' }}
                                             onClick={() => {
@@ -239,10 +248,8 @@ export const ApproverLogin = (props: any) => {
 
                                         </Button>
                                     </div>
-                                    <br /><br />
-                                    <br /> <br />
                                 </form>
-                                <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+                                <div className="absolute bottom-0" > <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
                                 <div className=" mobile">
 
                                     <Col className="loginTime" >
@@ -253,14 +260,14 @@ export const ApproverLogin = (props: any) => {
                                 </div>
                             </div>
                             :
-                            <div className="m-0  bg-white formContainer" >
-                                <div className="company-logo pb-3">
-                                    <img src={actimai_logo} alt="Actimai logo" />
+                            <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full py-[100px] lg:py-[150px] xl:w-[500px] md:w-[450px]">
+                                <div className="company-logo m-0 p-0 ">
+                                    <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
                                 </div>
-                                <div className="align-items-center">
-                                    <h5 className="container-text color-primary">Approver Login</h5>
+                                <div className="align-items-center ">
+                                    <h5 className="text-[1.7em] color-primary">Approver Login</h5>
                                 </div>
-                                <form id="_form" className="loginForm" action="#">
+                                <form id="_form" className="loginForm mt-3" action="#">
                                     <input
                                         id="_name"
                                         autoComplete="new-password"
@@ -301,7 +308,7 @@ export const ApproverLogin = (props: any) => {
                                             </span>
                                         </Button>
                                     </div>
-                                    <div className="d-flex">
+                                    <div className="d-flex mt-[50px]">
                                         <Button
                                             style={{ width: '100%' }}
                                             onClick={() => loginRequest()}
@@ -323,11 +330,8 @@ export const ApproverLogin = (props: any) => {
                                             </Alert>
                                         )}
                                     </div>
-                                    <br /><br />
-                                    <br /><br />
-                                    <br /> <br />
                                 </form>
-                                <div className="d-flex justify-content-center pb-4"> <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+                                <div className="absolute bottom-0" > <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
                                 <div className=" mobile">
 
                                     <Col className="loginTime" >
@@ -339,7 +343,7 @@ export const ApproverLogin = (props: any) => {
                             </div>
                     }
 
-                </Container>
+                </div>
             </div>
         </>
     )
