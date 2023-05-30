@@ -318,11 +318,11 @@ export const Login = () => {
       <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
         <div className="flex justify-center items-center px-4 loginBackground ">
           {!isNewAccount ?
-            <div className="bg-white relative flex flex-column justify-center items-center rounded-md py-[100px] lg:py-[150px] w-full xl:w-[500px] md:w-[450px]">
-              <div className="company-logo m-0 p-0">
+            <div className="bg-white relative flex flex-column justify-center items-center rounded-md pb-[180px] w-full xl:w-[500px] md:w-[450px]">
+              <div className="company-logo p-0 m-0 mt-5 ">
                 <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
               </div>
-              <div className="align-items-center ">
+              <div className="align-items-center mt-3">
                 <h5 className="text-[1.7em] color-primary">Employee Portal Login</h5>
               </div>
               <form id="_form" className="w-full px-[15%]" action="#">
