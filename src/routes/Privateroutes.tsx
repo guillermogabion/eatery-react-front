@@ -24,7 +24,9 @@ import {
   SquadScheduleAdjustment,
   MissingLogs,
   UnApproveRequest,
-  Payroll
+  Payroll,
+  Recurring,
+  PayrollSetting
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -81,6 +83,8 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/request/schedule-adjustment/squadmembers", component: SquadScheduleAdjustment})
   routes.push({ path: "/request/type", component: LeaveTypes })
   routes.push({ path: "/payroll/adjustment", component: Payroll })
+  routes.push({ path: "/payroll/recurring", component: Recurring })
+  routes.push({ path: "/payroll/settings", component: PayrollSetting })
 
   return isLogin ? (
     <>

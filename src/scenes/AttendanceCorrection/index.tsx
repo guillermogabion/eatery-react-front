@@ -512,9 +512,10 @@ export const AttendanceCorrection = (props: any) => {
               </div>
               <div>
                 <div className="w-100 pt-2">
-                <div className="fieldtext d-flex col-md-3 w-100">
+              
                     {
                       data.profile.role == 'EXECUTIVE' ?
+                      <div className="fieldtext d-flex col-md-3 w-100">
                         <div className="" style={{ width: 200, marginRight: 10 }}>
                           <label>Employee</label>
                           <EmployeeDropdown
@@ -523,20 +524,23 @@ export const AttendanceCorrection = (props: any) => {
                             name="userId"
                             value={filterData && filterData['userId']}
                           />
+                           
                         </div>
+                        <div>
+                        <Button
+                          style={{ width: 120 }}
+                          onClick={() => getAllCOARequest(0, key)}
+                          className="btn btn-primary mx-2 mt-4">
+                          Search
+                        </Button>
+                        </div>
+                      </div>
+                        
                         :
                         null
                     }
                     
-                    <div>
-                      <Button
-                        style={{ width: 120 }}
-                        onClick={() => getAllCOARequest(0, key)}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                      </Button>
-                    </div>
-                  </div>
+                   
                   <Tabs
                     id="controlled-tab-example"
                     activeKey={key}

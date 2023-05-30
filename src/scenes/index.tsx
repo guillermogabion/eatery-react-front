@@ -20,7 +20,9 @@ export * from "./SquadScheduleAdjustmment"
 export * from "./MissingLogs"
 export * from "./LeaveTypes"
 export * from "./UnApproveRequest"
+export * from "./PayrollRecurring"
 export * from "./Payroll"
+export * from "./PayrollSetting"
 
 
 

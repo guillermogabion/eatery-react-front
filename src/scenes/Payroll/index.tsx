@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import UserTopMenu from "../../components/UserTopMenu"
 
 import moment from "moment"
@@ -9,9 +9,12 @@ import withReactContent from "sweetalert2-react-content"
 import { Api, RequestAPI } from "../../api"
 import DashboardMenu from "../../components/DashboardMenu"
 import Table from 'react-bootstrap/Table'
-
+import ReactPaginate from 'react-paginate'
 import TimeDate from "../../components/TimeDate"
 import { async } from "validate.js"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
+
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -19,18 +22,17 @@ const ErrorSwal = withReactContent(Swal)
 export const Payroll = (props: any) => {
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const { data } = useSelector((state: any) => state.rootReducer.userData)
-
+    const [filterData, setFilterData] = React.useState([]);
     const { history } = props
     const [ payrollList, setPayrollList] = React.useState([]);
-
+    const [ adjustmentTypes, setAdjustmentTypes ] = React.useState<any>([]);
 
     const tableHeaders = [
         'Employee ID',
         'Employee Name',
         'Amount',
-        'End Date',
-        'Recurring Name',
-        'Status',
+        'Adjustment Name',
+        'Payroll Period',
         'Action',
     ];
 
@@ -55,7 +57,50 @@ export const Payroll = (props: any) => {
     }
     useEffect(() => {
         getAllPayrollList(0)
+
+        RequestAPI.getRequest(
+            `${Api.getAdjustmentType}`,
+            "",
+            {},
+            {},
+            async (res:any) => {
+                const { status , body = { data: {}, error: {}}} : any = res
+                if (status === 200 && body && body.data) {
+                    setAdjustmentTypes(body.data)
+                }else {
+                }
+            }
+        )
     }, [])
+
+    const handlePageClick = (event: any) => {
+        getAllPayrollList(event.selected)
+    };
+    
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+            const filterObj: any = { ...filterData }
+            filterObj[name] = name && value !== "Select" ? value : ""
+            setFilterData(filterObj)
+    }
+    const singleChangeOption = (option: any, name: any) => {
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
+    const [values, setValues] = useState({
+        type: ''
+      });
+      const setFieldValue = (e) => {
+        setValues({ ...values, type: e.target.value });
+      };
+      const setFormField = (e: any, setFieldValue: any) => {
+        if (setFieldValue) {
+          const { name, value } = e.target
+          setFieldValue(name, value)
+          setFieldValue("formoutside", true)
+        }
+      }
 
   
     return (
@@ -77,80 +122,128 @@ export const Payroll = (props: any) => {
                                 </div>
                             </div>
                             <div>
-                                <h3>Payroll</h3>
+                                <h3>Adjustments</h3>
 
                                 <div className="w-100 pt-4">
-                                <Table responsive="lg">
-                                    <thead>
-                                    <tr>
+                                <div>
+                                <div className="w-100">
+                                    <div className="fieldtext d-flex col-md-6">
+                                        <div className="input-container">
+                                        <EmployeeDropdown
+                                            placeholder={"Employee"}
+                                            singleChangeOption={singleChangeOption}
+                                            name="userId"
+                                            value={filterData && filterData['userId']}
+                                        />
+                                        </div>
+                                        <div className="input-container">
+
+                                        <input
+                                            name="amount"
+                                            placeholder="Amount"
+                                            type="text"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                        />
+                                        </div>
+                                        <div className="input-container">
+
+                                        <input
+                                            name="deduct"
+                                            placeholder="Add/Deduct"
+                                            type="text"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                        />
+                                        </div>
+                                        <div className="input-container" >
+                                            <select
+                                            placeholder="Adjustment Name"
+                                            className="form-select"
+                                            name="type"
+                                            id="type"
+                                            value={values.type}
+                                            // onChange={(e) => setFormField(e, setFieldValue)}>
+                                            onChange={(e) => {
+                                                setFormField(e, setFieldValue);
+                                            
+                                            }}
+                                            >
+                                             {adjustmentTypes.map((item) => (
+                                                <option key={item.id} value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        {/* <input
+                                            name="deduct"
+                                            placeholder="Add/Deduct"
+                                            type="text"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                        /> */}
+                                        <Button
+                                        style={{ width: 210 }}
+                                        onClick={() => getAllPayrollList(0)}
+                                        className="btn btn-primary mx-2">
+                                        Search
+                                        </Button>
+                                        </div>
+                                    </div>
+
+                                    <Table responsive="lg">
+                                        <thead>
+                                        <tr>
+                                            {
+                                            tableHeaders &&
+                                            tableHeaders.length &&
+                                            tableHeaders.map((item: any, index: any) => {
+                                                return (
+                                                <th style={{ width: 'auto' }}>{item}</th>
+                                                )
+                                            })
+                                            }
+                                        </tr>
+                                        </thead>
+                                        <tbody>
                                         {
-                                        tableHeaders &&
-                                        tableHeaders.length &&
-                                        tableHeaders.map((item: any, index: any) => {
+                                            payrollList &&
+                                            payrollList.content &&
+                                            payrollList.content.length > 0 &&
+                                            payrollList.content.map((item: any, index: any) => {
+
                                             return (
-                                            <th style={{ width: 'auto' }}>{item}</th>
+                                                <tr>
+                                                <td> {item.userId} </td>
+                                                <td> {item.employeeName} </td>
+                                                <td> {item.adjustmentAmount} </td>
+                                                <td> {item.adjustmentName} </td>
+                                                <td>
+                                                <label
+                                                    onClick={() => {
+                                                        // getEmployee(item.id)
+                                                    }}
+                                                    className="text-muted cursor-pointer">
+                                                    Update
+                                                    </label>
+                                                </td>
+                                            
+                                                </tr>
                                             )
-                                        })
+                                            })
                                         }
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        payrollList &&
-                                        payrollList.content &&
-                                        payrollList.content.length > 0 &&
-                                        payrollList.content.map((item: any, index: any) => {
-
-                                        return (
-                                            <tr>
-                                            <td> {item.employeeName} </td>
-                                            <td> {item.payrollTypeName} </td>
-                                            <td> {item.adjustmentName} </td>
-                                            <td> {item.adjustmentAmount} </td>
-                                            <td> {item.remarks} </td>
-                                            <td> {item.adjustmentAction} </td>
-                                            {/* <td>
-                                                <label
-                                                onClick={() => {
-                                                    getEmployee(item.id)
-                                                }}
-                                                className="text-muted cursor-pointer">
-                                                Update
-                                                </label>
-                                                {
-                                                item.acctStatus == 'LOCKED' ?
-                                                    <div>
-                                                    <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
-                                                    </div>
-
-                                                    :
-                                                    null
-                                                }
-                                                <br />
-                                                <label
-                                                onClick={() => {
-                                                    getEmployeeDetails(item.id)
-                                                }}
-                                                className="text-muted cursor-pointer">
-                                                View
-                                                </label>
-                                                <br />
-                                                <label
-                                                onClick={() => {
-                                                    changePassword(item.id)
-                                                }}
-                                                className="text-muted cursor-pointer">
-                                                Change Password
-                                                </label>
-
-                                            </td> */}
-
-                                            </tr>
-                                        )
-                                        })
-                                    }
-                                    </tbody>
-                                </Table>
+                                        </tbody>
+                                    </Table>
                                 {
                                     payrollList &&
                                     payrollList.content &&
@@ -161,22 +254,54 @@ export const Payroll = (props: any) => {
                                     :
                                     null
                                 }
-                                    {/* <div className="d-flex justify-content-end mt-3" >
-                                        <div>
-                                            <Button
-                                                className="mx-2"
-                                                onClick={() => {
-                                                    setDownloadModalShow(true)
-                                                }}>Download Excel</Button>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </div>
-
+                            <div className="d-flex justify-content-end">
+                                <div className="">
+                                <ReactPaginate
+                                    className="d-flex justify-content-center align-items-center"
+                                    breakLabel="..."
+                                    nextLabel=">"
+                                    onPageChange={handlePageClick}
+                                    pageRangeDisplayed={5}
+                                    pageCount={(payrollList && [payrollList].totalPages) || 0}
+                                    previousLabel="<"
+                                    previousLinkClassName="prev-next-pagination"
+                                    nextLinkClassName="prev-next-pagination"
+                                    activeLinkClassName="active-page-link"
+                                    disabledLinkClassName="prev-next-disabled"
+                                    pageLinkClassName="page-link"
+                                    renderOnZeroPageCount={null}
+                                />
+                                </div>
+                            </div>
+                            <div className="d-flex justify-content-end mt-3" >
+                                <div>
+                                <Button className="mx-2"
+                                    onClick={() => {
+                                    // setModalUploadShow(true)
+                                    }}
+                                >Add Adjustment</Button>
+                                <Button
+                                    className="mx-2"
+                                    onClick={() => {
+                                    // setModalShow(true)
+                                    }}>Import Adjustment</Button>
+                                <Button
+                                    className="mx-2"
+                                    onClick={() => {
+                                        // downloadTemplate
+                                        }
+                                    }
+                                >Export Adjustment</Button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
+            
             {/* Create User Modal Form */}
             {/* <Modal
                 show={downloadModalShow}

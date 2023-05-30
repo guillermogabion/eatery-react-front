@@ -152,11 +152,27 @@ const Api: any = {
   allSquadUndertime: process.env.REACT_APP_API_URL + "request/ut/squadmembers",
   allSquadSchedule: process.env.REACT_APP_API_URL + "request/schedule-adjustment/squadmembers",
 
+  // recurring 
+  getAllRecurringList : process.env.REACT_APP_API_URL + "payroll/recurring/all",
+  getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
+  createRecurringTransaction : process.env.REACT_APP_API_URL + "payroll/recurring/create",
+  updateRecurringTransaction : process.env.REACT_APP_API_URL + "payroll/recurring/update",
+  recurringInfo : process.env.REACT_APP_API_URL + "payroll/recurring/info",
+  deleteRecurring : process.env.REACT_APP_API_URL + "payroll/recurring/delete",
 
   // payroll 
 
-  getAllPayrollList : process.env.REACT_APP_API_URL + "payroll/adjustment/all"
+  getAllPayrollList : process.env.REACT_APP_API_URL + "payroll/adjustment/all",
+  getAdjustmentType : process.env.REACT_APP_API_URL + "adjustment/type/all",
 
+
+  // payroll setting 
+  getAllRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
+  createRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/create",
+  updateRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/update",
+  getRecurringTypeInfo : process.env.REACT_APP_API_URL + "payroll/recurring/type/info",
+  deleteRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/delete",
+  
 }
 
 export default Api
