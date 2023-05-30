@@ -9,7 +9,7 @@ const TimeDate = (props: any) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
         setCurrentTime(moment().format("hh:mm:ss A"));
-        setCurrentDate(moment().format("MMMM-DD-YYYY"));
+        setCurrentDate(moment().format("MMMM DD, YYYY"));
         }, 1000);
         
         return () => clearInterval(intervalId);

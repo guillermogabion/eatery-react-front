@@ -16,6 +16,7 @@ import { action_approve, action_cancel, action_decline, action_edit, eye } from 
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
+import ContainerWrapper from "../../components/ContainerWrapper"
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -478,438 +479,397 @@ export const SquadAttendanceCorrection = (props: any) => {
   }
 
   return (
-    <div className="body">
-      <div className="wraper">
-        <div className="w-100">
-          <div className="topHeader">
-            <UserTopMenu />
+    <ContainerWrapper contents={<>
+      <div className="col-md-12 col-lg-10 px-5 py-5">
+        <div className="row">
+          <div className="col-md-6">
+            <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
           </div>
-          <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-            <DashboardMenu />
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
-              </div>
-              <div>
-                <div className="w-100 pt-2">
-                  <div className="fieldtext d-flex col-md-3 w-100">
-                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                      <label>Employee</label>
-                      <EmployeeDropdown
-                        squad={true}
-                        placeholder={"Employee"}
-                        singleChangeOption={singleChangeOption}
-                        name="userId"
-                        value={filterData && filterData['userId']}
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        style={{ width: 120 }}
-                        onClick={() => getAllCOARequest(0, key)}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                      </Button>
-                    </div>
-                  </div>
-                  <Tabs
-                    id="controlled-tab-example"
-                    activeKey={key}
-                    onSelect={(k: any) => {
-                      setAllCOA([])
-                      getAllCOARequest(0, k)
-                    }}
-                    className="mb-3"
-                  >
-                    <Tab eventKey="all" title="All">
-                      {COATable()}
-                    </Tab>
-                    <Tab eventKey="pending" title="Pending">
-                      {COATable()}
-                    </Tab>
-                    <Tab eventKey="APPROVED" title="Approved" >
-                      {COATable()}
-                    </Tab>
-                    <Tab eventKey="declined" title="Rejected/Cancelled">
-                      {COATable()}
-                    </Tab>
-                  </Tabs>
-                </div>
-              </div>
-              <div className="d-flex justify-content-end">
-                <div className="">
-                  <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(allCOA && allCOA.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeLinkClassName="active-page-link"
-                    disabledLinkClassName="prev-next-disabled"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                  />
-                </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3" >
-                <div>
-
-                </div>
-              </div>
-            </div>
+          <div className="col-md-6" style={{ textAlign: 'right' }}>
+            <TimeDate />
           </div>
         </div>
+        <div>
+          <div className="w-100 pt-2">
+            <div className="fieldtext d-flex col-md-3 w-100">
+              <div className="" style={{ width: 200, marginRight: 10 }}>
+                <label>Employee</label>
+                <EmployeeDropdown
+                  squad={true}
+                  placeholder={"Employee"}
+                  singleChangeOption={singleChangeOption}
+                  name="userId"
+                  value={filterData && filterData['userId']}
+                />
+              </div>
+              <div>
+                <Button
+                  style={{ width: 120 }}
+                  onClick={() => getAllCOARequest(0, key)}
+                  className="btn btn-primary mx-2 mt-4">
+                  Search
+                </Button>
+              </div>
+            </div>
+            <Tabs
+              id="controlled-tab-example"
+              activeKey={key}
+              onSelect={(k: any) => {
+                setAllCOA([])
+                getAllCOARequest(0, k)
+              }}
+              className="mb-3"
+            >
+              <Tab eventKey="all" title="All">
+                {COATable()}
+              </Tab>
+              <Tab eventKey="pending" title="Pending">
+                {COATable()}
+              </Tab>
+              <Tab eventKey="APPROVED" title="Approved" >
+                {COATable()}
+              </Tab>
+              <Tab eventKey="declined" title="Rejected/Cancelled">
+                {COATable()}
+              </Tab>
+            </Tabs>
+          </div>
+        </div>
+        <div className="d-flex justify-content-end">
+          <div className="">
+            <ReactPaginate
+              className="d-flex justify-content-center align-items-center"
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={(allCOA && allCOA.totalPages) || 0}
+              previousLabel="<"
+              previousLinkClassName="prev-next-pagination"
+              nextLinkClassName="prev-next-pagination"
+              activeLinkClassName="active-page-link"
+              disabledLinkClassName="prev-next-disabled"
+              pageLinkClassName="page-link"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </div>
+        <div className="d-flex justify-content-end mt-3" >
+          <div>
 
-        {/* Create User Modal Form */}
-        <Modal
-          show={modalShow}
-          size="xl"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => {
-            setCoaId(null);
-            setModalShow(false)
-            setShowReason(false);
+          </div>
+        </div>
+      </div>
+      <Modal
+        show={modalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setCoaId(null);
+          setModalShow(false)
+          setShowReason(false);
 
 
-          }}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Attendance Reversal
-              {/* {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'} */}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="row w-100 px-5">
-            <Formik
-              innerRef={formRef}
-              enableReinitialize={true}
-              initialValues={initialValues}
-              validationSchema={null}
-              onSubmit={(values, actions) => {
-                actions.resetForm();
-                actions.setErrors({});
-                const valuesObj: any = { ...values }
-                valuesObj.coaBd = coaBreakdown
-                if (coaId) {
-                  console.log(valuesObj)
-                  delete valuesObj.userId
-                  RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async (res: any) => {
-                    const { status, body = { data: {}, error: {} } }: any = res
-                    if (status === 200 || status === 201) {
-                      if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                          'Error!',
-                          (body.error && body.error.message) || "",
-                          'error'
-                        )
-                      } else {
-                        ErrorSwal.fire(
-                          'Success!',
-                          (body.data) || "",
-                          'success'
-                        )
-                        setCoaBreakdown([])
-                        getAllCOARequest(0, key)
-                        setModalShow(false)
-                        formRef.current?.resetForm()
-                      }
-                    } else {
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Attendance Reversal
+            {/* {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'} */}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            enableReinitialize={true}
+            initialValues={initialValues}
+            validationSchema={null}
+            onSubmit={(values, actions) => {
+              actions.resetForm();
+              actions.setErrors({});
+              const valuesObj: any = { ...values }
+              valuesObj.coaBd = coaBreakdown
+              if (coaId) {
+                console.log(valuesObj)
+                delete valuesObj.userId
+                RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
                       ErrorSwal.fire(
                         'Error!',
-                        'Something Error.',
+                        (body.error && body.error.message) || "",
                         'error'
                       )
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                      setCoaBreakdown([])
+                      getAllCOARequest(0, key)
+                      setModalShow(false)
+                      formRef.current?.resetForm()
+                    }
+                  } else {
+                    ErrorSwal.fire(
+                      'Error!',
+                      'Something Error.',
+                      'error'
+                    )
+                  }
+                  setCoaBreakdownCount(0);
+
+                })
+
+
+              } else {
+                RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    console.log("Response body:", res);
+                    if (body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+                      setCoaBreakdown([])
+                      getAllCOARequest(0, key)
+                      setModalShow(false)
+                      formRef.current?.resetForm()
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                      setCoaBreakdown([]);
+                      getAllCOARequest(0, key);
+                      setModalShow(false);
+                      formRef.current?.resetForm()
+
                     }
                     setCoaBreakdownCount(0);
 
-                  })
+                  }
+                })
+
+              }
 
 
-                } else {
-                  RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
-                    const { status, body = { data: {}, error: {} } }: any = res
-                    if (status === 200 || status === 201) {
-                      console.log("Response body:", res);
-                      if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                          'Error!',
-                          (body.error && body.error.message) || "",
-                          'error'
-                        )
-                        setCoaBreakdown([])
-                        getAllCOARequest(0, key)
-                        setModalShow(false)
-                        formRef.current?.resetForm()
-                      } else {
-                        ErrorSwal.fire(
-                          'Success!',
-                          (body.data) || "",
-                          'success'
-                        )
-                        setCoaBreakdown([]);
-                        getAllCOARequest(0, key);
-                        setModalShow(false);
-                        formRef.current?.resetForm()
+            }}
+          >
+            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+              return (
+                <Form
+                  noValidate
+                  onSubmit={handleSubmit}
+                  id="_formid"
+                  autoComplete="off"
+                >
+                  <div>
+                    <label>Type</label>
 
-                      }
-                      setCoaBreakdownCount(0);
-
-                    }
-                  })
-
-                }
-
-
-              }}
-            >
-              {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-                return (
-                  <Form
-                    noValidate
-                    onSubmit={handleSubmit}
-                    id="_formid"
-                    autoComplete="off"
-                  >
-                    <div>
-                      <label>Type</label>
-
-                      <select
-                        className="form-select"
-                        name="type"
-                        id="type"
+                    <select
+                      className="form-select"
+                      name="type"
+                      id="type"
+                      onChange={(e) => {
+                        setFieldValue('type', e.target.value);
+                        setShowReason(e.target.value === 'Others');
+                      }}
+                      value={values.type}
+                    >
+                      <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
+                      <option value="Power_Outage">Power Outage</option>
+                      <option value="Others">Others</option>
+                    </select>
+                    <div className="form-group col-md-12 mb-3">
+                      <label>Reason</label>
+                      <textarea
+                        name="reason"
+                        id="reason"
+                        value={values.reason}
+                        className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                        style={{ height: "100px" }}
                         onChange={(e) => {
-                          setFieldValue('type', e.target.value);
-                          setShowReason(e.target.value === 'Others');
+                          setFieldValue("reason", e.target.value);
                         }}
-                        value={values.type}
-                      >
-                        <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
-                        <option value="Power_Outage">Power Outage</option>
-                        <option value="Others">Others</option>
-                      </select>
-                      <div className="form-group col-md-12 mb-3">
-                        <label>Reason</label>
-                        <textarea
-                          name="reason"
-                          id="reason"
-                          value={values.reason}
-                          className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
-                          style={{ height: "100px" }}
-                          onChange={(e) => {
-                            setFieldValue("reason", e.target.value);
-                          }}
-                        />
-                      </div>
-                      {touched.errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
-                      )}
-
-                      {/* {showReason && (
-                          <div className="form-group col-md-12 mb-3">
-                            <label>Reason</label>
-                            <textarea
-                              name="reason"
-                              id="reason"
-                              value={values.reason}
-                              className="form-control"
-                              style={{ height: "200px" }}
-                              onChange={(e) => {
-                                setFieldValue("reason", e.target.value);
-                              }}
-                            />
-                          </div>
-                        )} */}
+                      />
                     </div>
+                    {touched.errors && errors.reason && (
+                      <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
+                    )}
 
-                    {coaBreakdown.map((values, index) => (
-                      <div key={`coaBreakdown-${index}`}>
-                        <div className="form-group row">
-                          <div className="col-md-4 mb-3">
-                            <label>Date</label>
-                            <input
-                              type="date"
-                              name="date"
-                              value={values.date}
-                              onChange={(e) => {
-                                const updatedFields = [...coaBreakdown];
-                                updatedFields[index].date = e.target.value;
-                                setCoaBreakdown(updatedFields);
-                              }}
-                              className={`form-control ${touched.date && errors.date ? 'is-invalid' : ''}`}
-                            />
-                          </div>
+                  </div>
 
-                          <div className="col-md-4 mb-3 mt-4">
-                            <select
-                              name="coaBdType"
-                              value={values.coaBdType}
-                              onChange={(e) => {
-                                const updatedFields = [...coaBreakdown];
-                                updatedFields[index].coaBdType = e.target.value;
-                                setCoaBreakdown(updatedFields);
-                              }}
-                              className={`form-control ${touched.coaBdType && errors.coaBdType ? 'is-invalid' : ''}`}
-                            >
-                              {options.map(option => (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div className="col-md-4 mb-3">
-                            <label>Time</label>
-                            <input
-                              type="time"
-                              name="time"
-                              value={values.time}
-                              onChange={(e) => {
-                                const updatedFields = [...coaBreakdown];
-                                updatedFields[index].time = e.target.value;
-                                setCoaBreakdown(updatedFields);
-                              }}
-                              className={`form-control ${touched.time && errors.time ? 'is-invalid' : ''}`}
-
-                            />
-
-
-                          </div>
-
+                  {coaBreakdown.map((values, index) => (
+                    <div key={`coaBreakdown-${index}`}>
+                      <div className="form-group row">
+                        <div className="col-md-4 mb-3">
+                          <label>Date</label>
+                          <input
+                            type="date"
+                            name="date"
+                            value={values.date}
+                            onChange={(e) => {
+                              const updatedFields = [...coaBreakdown];
+                              updatedFields[index].date = e.target.value;
+                              setCoaBreakdown(updatedFields);
+                            }}
+                            className={`form-control ${touched.date && errors.date ? 'is-invalid' : ''}`}
+                          />
                         </div>
-                        <div className="form-group row">
-                          <div className="col-md-4 mb-3">
-                            {touched.errors && errors.date && (
-                              <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
-                            )}
-                          </div>
-                          <div className="col-md-4 mb-3">
-                            {touched.errors && errors.coaBdType && (
-                              <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
-                            )}
-                          </div>
-                          <div className="col-md-4 mb-3">
-                            {touched.errors && errors.time && (
-                              <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
-                            )}
-                          </div>
+
+                        <div className="col-md-4 mb-3 mt-4">
+                          <select
+                            name="coaBdType"
+                            value={values.coaBdType}
+                            onChange={(e) => {
+                              const updatedFields = [...coaBreakdown];
+                              updatedFields[index].coaBdType = e.target.value;
+                              setCoaBreakdown(updatedFields);
+                            }}
+                            className={`form-control ${touched.coaBdType && errors.coaBdType ? 'is-invalid' : ''}`}
+                          >
+                            {options.map(option => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="col-md-4 mb-3">
+                          <label>Time</label>
+                          <input
+                            type="time"
+                            name="time"
+                            value={values.time}
+                            onChange={(e) => {
+                              const updatedFields = [...coaBreakdown];
+                              updatedFields[index].time = e.target.value;
+                              setCoaBreakdown(updatedFields);
+                            }}
+                            className={`form-control ${touched.time && errors.time ? 'is-invalid' : ''}`}
+
+                          />
+
 
                         </div>
 
-                        <button
-                          className="btn btn btn-outline-primary me-2 mb-2"
-                          onClick={() => handleRemoveItem(index)}>Remove</button>
                       </div>
-                    ))}
+                      <div className="form-group row">
+                        <div className="col-md-4 mb-3">
+                          {touched.errors && errors.date && (
+                            <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
+                          )}
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          {touched.errors && errors.coaBdType && (
+                            <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
+                          )}
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          {touched.errors && errors.time && (
+                            <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
+                          )}
+                        </div>
 
+                      </div>
+
+                      <button
+                        className="btn btn btn-outline-primary me-2 mb-2"
+                        onClick={() => handleRemoveItem(index)}>Remove</button>
+                    </div>
+                  ))}
+
+                  <div className="d-flex justify-content-end px-5">
+                    <button
+                      type="button"
+                      className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
+                      onClick={handleAddField}
+
+                    >
+                      Add Field
+                    </button>
+                  </div>
+                  <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
-                        type="button"
-                        className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
-                        onClick={handleAddField}
-
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={!coaBreakdown.length}
                       >
-                        Add Field
+                        Save
                       </button>
                     </div>
-                    <Modal.Footer>
-                      <div className="d-flex justify-content-end px-5">
-                        <button
-                          type="submit"
-                          className="btn btn-primary"
-                          disabled={!coaBreakdown.length}
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </Modal.Footer>
+                  </Modal.Footer>
+                </Form>
+              )
 
+            }
+            }
+          </Formik>
 
+        </Modal.Body>
 
-                  </Form>
-                )
+      </Modal>
+      <Modal
+        show={modalViewShow}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setCoaId(null);
+          setModalViewShow(false)
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Request Information
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div className="container">
+            {/* <h4>reason</h4> {{values.reason}} */}
+            <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+            <p>Reason : {initialValues.reason}</p>
+            <p>Type : {initialValues.type}</p>
+            <p>Status : {initialValues.status}</p>
 
-              }
-              }
-
-
-
-
-
-            </Formik>
-
-          </Modal.Body>
-
-        </Modal>
-        {/* End Create User Modal Form */}
-
-        {/* start of view modal  */}
-
-        <Modal
-          show={modalViewShow}
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => {
-            setCoaId(null);
-            setModalViewShow(false)
-          }}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Request Information
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex align-items-center justify-content-center">
-            <div className="container">
-              {/* <h4>reason</h4> {{values.reason}} */}
-              <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
-              <p>Reason : {initialValues.reason}</p>
-              <p>Type : {initialValues.type}</p>
-              <p>Status : {initialValues.status}</p>
-
-              <Table responsive="lg" style={{ maxHeight: '100vh' }}>
-                <thead>
-                  <tr>
-                    <th style={{ width: '100px' }}>Shift Date</th>
-                    <th style={{ width: '100px' }}>Type</th>
-                    <th>Date</th>
-                    <th>Time</th>
+            <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+              <thead>
+                <tr>
+                  <th style={{ width: '100px' }}>Shift Date</th>
+                  <th style={{ width: '100px' }}>Type</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {coaBreakdown.map((initialValues, index) => (
+                  <tr key={`coaBreakdown-${index}`}>
+                    <td>{initialValues.shiftDate}</td>
+                    <td>{initialValues.coaBdType}</td>
+                    <td>{initialValues.date}</td>
+                    <td>{initialValues.time}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {coaBreakdown.map((initialValues, index) => (
-                    <tr key={`coaBreakdown-${index}`}>
-                      <td>{initialValues.shiftDate}</td>
-                      <td>{initialValues.coaBdType}</td>
-                      <td>{initialValues.date}</td>
-                      <td>{initialValues.time}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
-          </Modal.Body>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </Modal.Body>
 
-        </Modal>
-      </div>
-
-    </div>
-
+      </Modal>
+    </>} />
   )
 }

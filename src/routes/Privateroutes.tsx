@@ -58,7 +58,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     }
     bootstrapAsync()
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
-
+  
   const routes: any = []
   routes.push({ path: "/request/leave", component: Leaves })
   routes.push({ path: "/request/ot", component: Overtime })

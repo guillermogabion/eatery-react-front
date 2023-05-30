@@ -315,17 +315,17 @@ export const Login = () => {
 
   return (
     <>
-      <div className="row bg-dark w-100 h-100 p-0 m-0" style={{ minHeight: '100vh', height: '100vh' }}>
-        <Container className="d-flex justify-content-center align-items-center p-0 m-0 loginBackground ">
+      <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
+        <div className="flex justify-center items-center px-4 loginBackground ">
           {!isNewAccount ?
-            <div className="m-0  bg-white formContainer" >
-              <div className="company-logo pb-3">
-                <img src={actimai_logo} alt="Actimai logo" />
+            <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full h-[80%] xl:w-[500px] md:w-[450px]">
+              <div className="company-logo pb-3 ">
+                <img src={actimai_logo} alt="Actimai logo" className="w-[80%]" />
               </div>
-              <div className="align-items-center">
-                <h5 className="container-text color-primary">Employee Portal Login</h5>
+              <div className="align-items-center ">
+                <h5 className="text-[1.7em] color-primary">Employee Portal Login</h5>
               </div>
-              <form id="_form" className="loginForm" action="#">
+              <form id="_form" className="w-full px-[15%]" action="#">
                 <input
                   id="_name"
                   autoComplete="new-password"
@@ -413,7 +413,7 @@ export const Login = () => {
               copyHandler={copyHandler}
               cutHandler={cutHandler} />
           }
-        </Container>
+        </div>
       </div>
       <Modal show={showModal} onHide={handleModal} centered >
         <Modal.Header className="reset-header" closeButton>

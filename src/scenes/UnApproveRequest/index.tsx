@@ -16,6 +16,8 @@ import { Api, RequestAPI } from "../../api"
 import { eye, action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
+import ContentWrapper from "../../components/ContentWrapper"
+import ContainerWrapper from "../../components/ContainerWrapper"
 const ErrorSwal = withReactContent(Swal)
 
 export const UnApproveRequest = (props: any) => {
@@ -102,20 +104,20 @@ export const UnApproveRequest = (props: any) => {
 
         return (
             <div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             {
                                 data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
-                                        <th style={{ width: 'auto' }}>Employee Name</th>
+                                        <th>Employee Name</th>
                                     </> : null
                             }
-                            <th style={{ width: 'auto' }}>Type</th>
-                            <th style={{ width: 'auto' }}>Date From</th>
-                            <th style={{ width: 'auto' }}>Date To</th>
-                            <th style={{ width: 'auto' }}>Reason</th>
-                            <th style={{ width: 'auto' }}>Status</th>
+                            <th>Type</th>
+                            <th>Date From</th>
+                            <th>Date To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,6 +164,7 @@ export const UnApproveRequest = (props: any) => {
                         :
                         null
                 }
+                <br />
                 <div className="d-flex justify-content-end">
                     <div className="">
                         <ReactPaginate
@@ -297,6 +300,7 @@ export const UnApproveRequest = (props: any) => {
                         :
                         null
                 }
+                <br />
                 <div className="d-flex justify-content-end">
                     <div className="">
                         <ReactPaginate
@@ -724,8 +728,8 @@ export const UnApproveRequest = (props: any) => {
                         :
                         null
                 }
-                <div className="d-flex justify-content-end">
-                    <div className="">
+                <div className="d-flex justify-content-end mt-2">
+                    <div className="pt-5">
                         <ReactPaginate
                             className="d-flex justify-content-center align-items-center"
                             breakLabel="..."
@@ -754,60 +758,61 @@ export const UnApproveRequest = (props: any) => {
 
 
     return (
-        <div className="body">
-            <div className="wraper">
-                <div className="w-100">
-                    <div className="topHeader">
-                        <UserTopMenu />
-                    </div>
-                    <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-                        <DashboardMenu />
-                        <div className="col-md-12 col-lg-10 px-5 py-5">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h2>Good Day, {userData.data.profile.firstName}!</h2>
+        // ContainerWrapper component Holds the Sidebar and the Topbar each naka component na
+        // ContentWrapper component same as container it holds the contents and the contents can also be a component
+        <ContainerWrapper contents={<> 
+            <div className="row m-0 p-0">
+                <div className="col-md-12 px-3 py-5">
+                    <ContentWrapper
+                        name={"Test Widget 2"}
+                        content={
+                            <>
+                                <div className="row m-0 p-0">
+                                    <div className="col-md-6">
+                                        <h2>Good Day, {userData.data.profile.firstName}!</h2>
 
-                                    <br />
-                                    <br />
-                                    <h2><b>Unapproved Requests</b></h2>
-                                    <br />
+                                        <br />
+                                        <br />
+                                        <h2><b>Unapproved Requests</b></h2>
+                                        <br />
+                                    </div>
+                                    <div className="col-md-6" style={{ textAlign: 'right' }}>
+                                        <TimeDate />
+                                    </div>
                                 </div>
-                                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                                    <TimeDate />
+                                <div>
+                                    <div className=" pt-2">
+                                        <Tabs
+                                            id="controlled-tab-example"
+                                            activeKey={key}
+                                            onSelect={(k: any) => {
+                                                setKey(k)
+                                            }}
+                                            className="mb-3"
+                                        >
+                                            <Tab eventKey="leaves" title="Leaves">
+                                                <Leaves />
+                                            </Tab>
+                                            <Tab eventKey="attendance reversal" title="Attendance Reversal">
+                                                <AttendanceReversal />
+                                            </Tab>
+                                            <Tab eventKey="overtime" title="Overtime" >
+                                                <Overtime />
+                                            </Tab>
+                                            <Tab eventKey="undertime" title="Undertime">
+                                                <Undertime />
+                                            </Tab>
+                                            <Tab eventKey="schedule adjustment" title="Schedule Adjustment">
+                                                <ScheduleAdjustment />
+                                            </Tab>
+                                        </Tabs>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div className="w-100 pt-2">
-                                    <Tabs
-                                        id="controlled-tab-example"
-                                        activeKey={key}
-                                        onSelect={(k: any) => {
-                                            setKey(k)
-                                        }}
-                                        className="mb-3"
-                                    >
-                                        <Tab eventKey="leaves" title="Leaves">
-                                            <Leaves />
-                                        </Tab>
-                                        <Tab eventKey="attendance reversal" title="Attendance Reversal">
-                                            <AttendanceReversal />
-                                        </Tab>
-                                        <Tab eventKey="overtime" title="Overtime" >
-                                            <Overtime />
-                                        </Tab>
-                                        <Tab eventKey="undertime" title="Undertime">
-                                            <Undertime />
-                                        </Tab>
-                                        <Tab eventKey="schedule adjustment" title="Schedule Adjustment">
-                                            <ScheduleAdjustment />
-                                        </Tab>
-                                    </Tabs>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </>
+                        } />
                 </div>
             </div>
-        </div>
+
+        </>} />
     )
 }
