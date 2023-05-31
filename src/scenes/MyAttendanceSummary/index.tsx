@@ -152,7 +152,7 @@ export const MyAttendanceSummary = (props: any) => {
             }
         }
         RequestAPI.getRequest(
-            `${Api.myAttendanceSummary}?size=10${queryString}&page=${page}`,
+            `${Api.myAttendanceSummary}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
             "",
             {},
             {},

@@ -111,7 +111,7 @@ export const ScheduleAdjustment = (props: any) => {
 
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
-        `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}`,
+        `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
@@ -128,7 +128,7 @@ export const ScheduleAdjustment = (props: any) => {
       )
     } else {
       RequestAPI.getRequest(
-        `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}`,
+        `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
@@ -152,7 +152,6 @@ export const ScheduleAdjustment = (props: any) => {
       {},
       {},
       async (res: any) => {
-        console.log("Response:", res);
         const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
 

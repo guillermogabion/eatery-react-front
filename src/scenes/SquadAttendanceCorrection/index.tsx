@@ -115,7 +115,7 @@ export const SquadAttendanceCorrection = (props: any) => {
 
 
     RequestAPI.getRequest(
-      `${Api.getAllSquadCoa}?size=10${queryString}&page=${page}`,
+      `${Api.getAllSquadCoa}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
       "",
       {},
       {},

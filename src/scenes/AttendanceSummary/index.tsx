@@ -153,7 +153,7 @@ export const AttendanceSummary = (props: any) => {
       }
     }
     RequestAPI.getRequest(
-      `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}`,
+      `${Api.adminAttendanceSummary}?size=1000${queryString}&page=${page}&sort=id&sortDir=desc`,
       "",
       {},
       {},

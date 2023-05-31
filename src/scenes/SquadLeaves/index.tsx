@@ -151,7 +151,7 @@ export const SquadLeaves = (props: any) => {
 
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
-        `${Api.getAllSquadLeaves}?size=10${queryString}&page=${page}`,
+        `${Api.getAllSquadLeaves}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},

@@ -116,7 +116,7 @@ export const AttendanceCorrection = (props: any) => {
     }
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
-        `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
+        `${Api.getAllCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
@@ -132,7 +132,7 @@ export const AttendanceCorrection = (props: any) => {
       )
     } else {
       RequestAPI.getRequest(
-        `${Api.allMyCOA}?size=10${queryString}&page=${page}`,
+        `${Api.allMyCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
