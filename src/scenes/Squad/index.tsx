@@ -11,6 +11,8 @@ import { Api, RequestAPI } from "../../api"
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
+import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -113,137 +115,122 @@ export const Squad = (props: any) => {
   }
 
   return (
-    <div className="body">
-      <div className="wraper">
-        <div className="w-100">
-          <div className="topHeader">
-            <UserTopMenu />
-          </div>
-          <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-            <DashboardMenu />
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2 className="bold-text">Good Day, {userData.data.profile.firstName}</h2>
-                </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
+    <ContainerWrapper contents={<>
+      <div className="w-100 px-5 py-5">
+        <div>
+          
+          {
+              data.profile.role == 'EMPLOYEE' ?
+                <h3>Colleagues</h3> 
+                :
+                <h3>Subordinates</h3>
+            }
+          <div className="w-100 pt-4">
+            <div className="fieldtext d-flex col-md-3 w-100">
+              <div className="" style={{ width: 200, marginRight: 10 }}>
+                <label>Employee</label>
+                <EmployeeDropdown
+                  squad={true}
+                  placeholder={"Employee"}
+                  singleChangeOption={singleChangeOption}
+                  name="userId"
+                  value={filterData && filterData['userId']}
+                />
               </div>
               <div>
-                <h3>Subordinates</h3>
-
-
-                <div className="w-100 pt-4">
-                  <div className="fieldtext d-flex col-md-3 w-100">
-                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                      <label>Employee</label>
-                      <EmployeeDropdown
-                        squad={true}
-                        placeholder={"Employee"}
-                        singleChangeOption={singleChangeOption}
-                        name="userId"
-                        value={filterData && filterData['userId']}
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        style={{ width: 120 }}
-                        onClick={() => {
-                          setSquad([])
-                          getMember(0, "")
-                        }}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                      </Button>
-                    </div>
-                  </div>
-
-                  <table>
-                    <thead>
-                      <tr>
-                        <th style={{ width: 'auto' }}>Name</th>
-                        <th style={{ width: 'auto' }}>Employee Type</th>
-                        <th style={{ width: 'auto' }}>Status</th>
-                        <th style={{ width: 'auto' }}>Log-In/Log-Out</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {squad &&
-                        squad.content &&
-                        squad.content.length > 0 &&
-                        squad.content.map((item: any, index: any) => (
-                          <tr key={item.id}>
-                            <td>{item.fullname}</td>
-                            <td>{item.empType}</td>
-                            <td>{item.empStatus}</td>
-                            <td>
-                              {
-                                item.status && item.status != "" ?
-                                  <>{item.status}</>
-                                  :
-                                  <>
-                                    {item.todaysTimeIn ? <>{item.todaysTimeIn} - IN <br /> </> : null}
-                                    {item.todaysTimeOut ? <>{item.todaysTimeOut} - OUT </> : null}
-                                  </>
-                              }
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                  <div className="d-flex justify-content-end">
-                    <div className="">
-                      <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(squad && squad.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                      />
-                    </div>
-                  </div>
-
-                  {
-                    squad &&
-                      squad.content &&
-                      squad.content.length == 0 ?
-                      <div className="w-100 text-center">
-                        <label htmlFor="">No Records Found</label>
-                      </div>
-                      :
-                      null
-                  }
-                  {
-                    data.profile.role != 'EMPLOYEE' && data.profile.role != 'EXECUTIVE' ?
-                      <div className="d-flex justify-content-end mt-3" >
-                        <div>
-                          <Button
-                            className="mx-2"
-                            onClick={() => {
-                              setDownloadModalShow(true)
-                            }}>Download Excel</Button>
-                        </div>
-                      </div>
-                      :
-                      null
-                  }
-                </div>
+                <Button
+                  style={{ width: 120 }}
+                  onClick={() => {
+                    setSquad([])
+                    getMember(0, "")
+                  }}
+                  className="btn btn-primary mx-2 mt-4">
+                  Search
+                </Button>
               </div>
-
             </div>
+
+            <table className="w-100">
+              <thead>
+                <tr>
+                  <th style={{ width: 'auto' }}>Name</th>
+                  <th style={{ width: 'auto' }}>Employee Type</th>
+                  <th style={{ width: 'auto' }}>Status</th>
+                  <th style={{ width: 'auto' }}>Log-In/Log-Out</th>
+                </tr>
+              </thead>
+              <tbody>
+                {squad &&
+                  squad.content &&
+                  squad.content.length > 0 &&
+                  squad.content.map((item: any, index: any) => (
+                    <tr key={item.id}>
+                      <td>{item.fullname}</td>
+                      <td>{Utility.removeUnderscore(item.empType) }</td>
+                      <td>{item.empStatus}</td>
+                      <td>
+                        {
+                          item.status && item.status != "" ?
+                            <>{item.status}</>
+                            :
+                            <>
+                              {item.todaysTimeIn ? <>{item.todaysTimeIn} - IN <br /> </> : null}
+                              {item.todaysTimeOut ? <>{item.todaysTimeOut} - OUT </> : null}
+                            </>
+                        }
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            <div className="d-flex justify-content-end">
+              <div className="">
+                <ReactPaginate
+                  className="d-flex justify-content-center align-items-center"
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={(squad && squad.totalPages) || 0}
+                  previousLabel="<"
+                  previousLinkClassName="prev-next-pagination"
+                  nextLinkClassName="prev-next-pagination"
+                  activeLinkClassName="active-page-link"
+                  disabledLinkClassName="prev-next-disabled"
+                  pageLinkClassName="page-link"
+                  renderOnZeroPageCount={null}
+                />
+              </div>
+            </div>
+
+            {
+              squad &&
+                squad.content &&
+                squad.content.length == 0 ?
+                <div className="w-100 text-center">
+                  <label htmlFor="">No Records Found</label>
+                </div>
+                :
+                null
+            }
+            {
+              data.profile.role != 'EMPLOYEE' && data.profile.role != 'EXECUTIVE' ?
+                <div className="d-flex justify-content-end mt-3" >
+                  <div>
+                    <Button
+                      className="mx-2"
+                      onClick={() => {
+                        setDownloadModalShow(true)
+                      }}>Download Excel</Button>
+                  </div>
+                </div>
+                :
+                null
+            }
           </div>
         </div>
+
       </div>
-      {/* Create User Modal Form */}
       <Modal
         show={downloadModalShow}
         size={'md'}
@@ -296,8 +283,6 @@ export const Squad = (props: any) => {
         </Modal.Footer>
 
       </Modal>
-      {/* End Create User Modal Form */}
-    </div>
-
+    </>} />
   )
 }

@@ -162,8 +162,8 @@ export const Utility = {
         const { status, body } = res;
         isFetch = true
         if (status === 200) {
-          if (body.error && body.error.message){
-          }else{
+          if (body.error && body.error.message) {
+          } else {
             const { data } = body
             const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
             window.sessionStorage.setItem("_setSessionLoginTimer", sessionDateTime)
@@ -200,11 +200,28 @@ export const Utility = {
       : "0"
   },
   isFirstZero(num: any) {
-    if(num.length == 1){
-      if(num[0] == 0){
+    if (num.length == 1) {
+      if (num[0] == 0) {
         return false
       }
     }
     return true
   },
+  removeUnderscore(str: any) {
+    return str.replaceAll('_', ' ')
+  },
+  formatDate(strDate: any, format: any, isTime: any = false) {
+    try {
+      if (isTime){
+        return moment(strDate, 'YYYY-MM-DD hh:mm A').format(format)
+      }
+      return moment(strDate, 'YYYY-MM-DD').format(format)
+    } catch (error) {
+      return strDate
+    }
+    
+  },
+  capitalizeFirstLetter(string:any) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 }

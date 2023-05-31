@@ -23,10 +23,14 @@ import {
   LeaveTypes,
   SquadScheduleAdjustment,
   MissingLogs,
-  UnApproveRequest,
+  // UnApproveRequest,
   Payroll,
   Recurring,
-  PayrollSetting
+  PayrollSetting,
+  AllRequest,
+  // Payroll,
+  ApproverLogin,
+  Page404
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -58,13 +62,13 @@ const Privateroutes: React.FunctionComponent = (props) => {
     }
     bootstrapAsync()
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
-
+  
   const routes: any = []
   routes.push({ path: "/request/leave", component: Leaves })
   routes.push({ path: "/request/ot", component: Overtime })
   routes.push({ path: "/request/ut", component: Undertime })
   routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
-  routes.push({ path: "/unapprovedrequests", component: UnApproveRequest })
+  routes.push({ path: "/allrequest", component: AllRequest })
   routes.push({ path: "/request/coa", component: AttendanceCorrection })
   routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
   routes.push({ path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary })
@@ -85,6 +89,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/payroll/adjustment", component: Payroll })
   routes.push({ path: "/payroll/recurring", component: Recurring })
   routes.push({ path: "/payroll/settings", component: PayrollSetting })
+  
 
   return isLogin ? (
     <>
@@ -101,8 +106,10 @@ const Privateroutes: React.FunctionComponent = (props) => {
     </>
   ) : (
     <>
+      
       <Route exact path="/" component={Login} />
-      <Route exact path="*" render={() => <Redirect to="/" />} />
+      <Route exact path="/login/:id/:action/:type" component={ApproverLogin} />
+      {/* <Route path="*" render={() => <Redirect to="/" />} /> */}
     </>
   )
 }

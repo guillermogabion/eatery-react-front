@@ -13,6 +13,8 @@ import { Api, RequestAPI } from "../../api"
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import FileUploadService from "../../services/FileUploadService"
+import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const MyAttendanceSummary = (props: any) => {
@@ -234,11 +236,11 @@ export const MyAttendanceSummary = (props: any) => {
                                             return (
                                                 <tr>
                                                     <td> {item.lastName}, {item.firstName} </td>
-                                                    <td> {item.date} </td>
+                                                    <td> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
                                                     <td> {item.schedule} </td>
                                                     <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
                                                     <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
-                                                    <td> {item.dayType} </td>
+                                                    <td> { Utility.removeUnderscore(item.dayType) } </td>
                                                     <td> {item.status} </td>
                                                     {
                                                         data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
@@ -334,89 +336,70 @@ export const MyAttendanceSummary = (props: any) => {
     }
 
     return (
-        <div className="body">
-            <div className="wraper">
-                <div className="w-100">
-                    <div className="topHeader">
-                        <UserTopMenu />
-                    </div>
-                    <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-                        <DashboardMenu />
-                        <div className="col-md-12 col-lg-10 px-5 py-5">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                                </div>
-                                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                                    <TimeDate />
-                                </div>
-                            </div>
+        <ContainerWrapper contents={<>
+            <div className="w-100 px-5 py-5">
+                <div>
+                    <h3>Attendance Summary</h3>
+
+                    <div className="w-100 pt-4">
+                        <div className="fieldtext d-flex col-md-12">
                             <div>
-                                <h3>Attendance Summary</h3>
+                                <label>Date From</label>
+                                <input
+                                    name="fromDate"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    maxLength={40}
+                                    value={filterData["fromDate"]}
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
+                            </div>
 
-                                <div className="w-100 pt-4">
-                                    <div className="fieldtext d-flex col-md-12">
-                                        <div>
-                                            <label>Date From</label>
-                                            <input
-                                                name="fromDate"
-                                                type="date"
-                                                autoComplete="off"
-                                                className="formControl"
-                                                maxLength={40}
-                                                value={filterData["fromDate"]}
-                                                onChange={(e) => makeFilterData(e)}
-                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label>Date To</label>
-                                            <div className="input-container">
-                                                <input
-                                                    name="toDate"
-                                                    type="date"
-                                                    autoComplete="off"
-                                                    className="formControl"
-                                                    maxLength={40}
-                                                    value={filterData["toDate"]}
-                                                    onChange={(e) => makeFilterData(e)}
-                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <Button
-                                            style={{ width: 120 }}
-                                            onClick={() => getAllAttendance(0)}
-                                            className="btn btn-primary mx-2 mt-4">
-                                            Search
-                                        </Button>
-                                        {
-                                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                <Button
-                                                    style={{ width: 130 }}
-                                                    onClick={() => setAddBioModal(true)}
-                                                    disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                                                    className="btn btn-primary mx-2 mt-4">
-                                                    Add Bio Log
-                                                </Button>
-                                                :
-                                                null
-                                        }
-
-                                    </div>
-
-                                    {attendanceTable()}
-
+                            <div>
+                                <label>Date To</label>
+                                <div className="input-container">
+                                    <input
+                                        name="toDate"
+                                        type="date"
+                                        autoComplete="off"
+                                        className="formControl"
+                                        maxLength={40}
+                                        value={filterData["toDate"]}
+                                        onChange={(e) => makeFilterData(e)}
+                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                    />
                                 </div>
                             </div>
+
+                            <Button
+                                style={{ width: 120 }}
+                                onClick={() => getAllAttendance(0)}
+                                className="btn btn-primary mx-2 mt-4">
+                                Search
+                            </Button>
+                            {
+                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                    <Button
+                                        style={{ width: 130 }}
+                                        onClick={() => setAddBioModal(true)}
+                                        disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
+                                        className="btn btn-primary mx-2 mt-4">
+                                        Add Bio Log
+                                    </Button>
+                                    :
+                                    null
+                            }
 
                         </div>
+
+                        {attendanceTable()}
+
                     </div>
                 </div>
+
             </div>
-            {/* Create User Modal Form */}
             <Modal
                 show={downloadModalShow}
                 size={'md'}
@@ -467,10 +450,6 @@ export const MyAttendanceSummary = (props: any) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            {/* End Create User Modal Form */}
-
-
-            {/* Create User Modal Form */}
             <Modal
                 show={importModalShow}
                 size={'md'}
@@ -508,8 +487,6 @@ export const MyAttendanceSummary = (props: any) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            {/* End Create User Modal Form */}
-
             <Modal
                 show={deleteBioModal}
                 size="md"
@@ -637,7 +614,6 @@ export const MyAttendanceSummary = (props: any) => {
                     </Formik>
                 </Modal.Body>
             </Modal>
-
             <Modal
                 show={addBioModal}
                 size="md"
@@ -824,7 +800,6 @@ export const MyAttendanceSummary = (props: any) => {
                     </Formik>
                 </Modal.Body>
             </Modal>
-        </div>
-
+        </>} />
     )
 }

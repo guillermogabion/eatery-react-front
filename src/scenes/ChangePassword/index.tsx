@@ -119,14 +119,6 @@ export const ChangePassword = (props: any) => {
             <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
             <DashboardMenu />
             <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
-              </div>
               <div className="ForgotPassword mt-5">
                 {!isSuccess ? (
                   <div className="contentForm">

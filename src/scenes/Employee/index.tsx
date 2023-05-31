@@ -19,6 +19,9 @@ import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 import FileUpload from "./upload"
 import ViewEmployee from "./view"
+import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 const ErrorSwal = withReactContent(Swal)
 
 interface Employee {
@@ -61,6 +64,7 @@ export const Employee = (props: any) => {
   const masterList = useSelector((state: any) => state.rootReducer.masterList)
   const [squadList, setSquadList] = React.useState([]);
   const [employeeList, setEmployeeList] = React.useState([]);
+  const [employeeOptionList, setEmployeeOptionList] = React.useState([]);
   const [immediateEmployeeList, setImmediateEmployeeList] = React.useState([]);
   const [userId, setUserId] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
@@ -243,6 +247,35 @@ export const Employee = (props: any) => {
     getAllImmediateEmpList()
   }, [])
 
+  useEffect(() => {
+    getOptionEmployee()
+  }, [])
+
+  const getOptionEmployee = () => {
+    RequestAPI.getRequest(
+      `${Api.employeeList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
+              tempArray.push({
+                value: d.userAccountId,
+                label: d.firstname + " " + d.lastname
+              })
+            });
+            setEmployeeOptionList(tempArray)
+          }
+        }
+      }
+    )
+  }
+
   const getAllImmediateEmpList = () => {
     RequestAPI.getRequest(
       `${Api.employeeList}`,
@@ -272,6 +305,16 @@ export const Employee = (props: any) => {
     getAllEmployee(event.selected)
   };
 
+  
+
+  useEffect(() => {
+    if (filterData) {
+      document.removeEventListener("keydown", keydownFun)
+      document.addEventListener("keydown", keydownFun)
+    }
+    return () => document.removeEventListener("keydown", keydownFun)
+  }, [filterData])
+
   const makeFilterData = (event: any) => {
     const { name, value } = event.target
     const filterObj: any = { ...filterData }
@@ -279,6 +322,11 @@ export const Employee = (props: any) => {
     setFilterData(filterObj)
   }
 
+  const singleChangeOption = (option: any, name: any) => {
+    const filterObj: any = { ...filterData }
+    filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+    setFilterData(filterObj)
+  }
 
   const getAllEmployee = (pageNo: any, employeeId?: any) => {
     let queryString = ""
@@ -314,6 +362,12 @@ export const Employee = (props: any) => {
         }
       }
     )
+  }
+
+  const keydownFun = (event: any) => {
+    if (event.key === "Enter" && filterData) {
+      getAllEmployee(0, "")
+    }
   }
 
   const uploadExcel = async (file: any) => {
@@ -2401,440 +2455,392 @@ export const Employee = (props: any) => {
   )
 
   return (
-    <div className="body">
-      <div className="wraper">
-        <div className="w-100">
-          <div className="topHeader">
-            <UserTopMenu />
-          </div>
-          <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-            <DashboardMenu />
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2 className="bold-text">Good Day, HR Admin!</h2>
-                </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
-              </div>
-              <div>
-                <div className="w-100">
+    <ContainerWrapper contents={<>
+      <div className="w-100 px-5 py-5">
+        <div>
+          <div className="w-100">
 
-                  <div className="fieldtext d-flex col-md-6">
-                    <div className="input-container">
-                      <input
-                        name="employeeId"
-                        placeholder="Employee ID"
-                        type="text"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
-                    <div className="input-container">
+            <div className="fieldtext d-flex col-md-6">
 
-                      <input
-                        name="firstname"
-                        placeholder="First name"
-                        type="text"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
-                    <div className="input-container">
-
-                      <input
-                        name="lastname"
-                        placeholder="Last name"
-                        type="text"
-                        autoComplete="off"
-                        className="formControl"
-                        maxLength={40}
-                        onChange={(e) => makeFilterData(e)}
-                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                      />
-                    </div>
-                    <Button
-                      style={{ width: 210 }}
-                      onClick={() => getAllEmployee(0, "")}
-                      className="btn btn-primary mx-2">
-                      Search
-                    </Button>
-                  </div>
-                  <Table responsive="lg">
-                    <thead>
-                      <tr>
-                        {
-                          tableHeaders &&
-                          tableHeaders.length &&
-                          tableHeaders.map((item: any, index: any) => {
-                            return (
-                              <th style={{ width: 'auto' }}>{item}</th>
-                            )
-                          })
-                        }
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        employeeList &&
-                        employeeList.content &&
-                        employeeList.content.length > 0 &&
-                        employeeList.content.map((item: any, index: any) => {
-
-                          return (
-                            <tr>
-                              <td> {item.employeeId} </td>
-                              <td> {item.empType} </td>
-                              <td> {item.empStatus} </td>
-                              <td> {item.fullname} </td>
-                              <td> {item.hireDate} </td>
-                              <td> {item.acctStatus} </td>
-                              <td>
-                                <label
-                                  onClick={() => {
-                                    getEmployee(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  Update
-                                </label>
-                                {
-                                  item.acctStatus == 'LOCKED' ?
-                                    <div>
-                                      <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
-                                    </div>
-
-                                    :
-                                    null
-                                }
-                                <br />
-                                <label
-                                  onClick={() => {
-                                    getEmployeeDetails(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  View
-                                </label>
-                                <br />
-                                <label
-                                  onClick={() => {
-                                    changePassword(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  Change Password
-                                </label>
-
-                              </td>
-
-                            </tr>
-                          )
-                        })
-                      }
-                    </tbody>
-                  </Table>
-                  {
-                    employeeList &&
-                      employeeList.content &&
-                      employeeList.content.length == 0 ?
-                      <div className="w-100 text-center">
-                        <label htmlFor="">No Records Found</label>
-                      </div>
-                      :
-                      null
-                  }
+              <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <label>Employee</label>
+                  <EmployeeDropdown
+                      placeholder={"Employee"}
+                      singleChangeOption={singleChangeOption}
+                      name="userId"
+                      value={filterData && filterData['userId']}
+                      withEmployeeID={true}
+                    />
                 </div>
               </div>
-              <div className="d-flex justify-content-end">
-                <div className="">
-                  <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(employeeList && employeeList.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeLinkClassName="active-page-link"
-                    disabledLinkClassName="prev-next-disabled"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                  />
-                </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3" >
-                <div>
-                  <Button className="mx-2"
-                    onClick={() => {
-                      setModalUploadShow(true)
-                    }}
-                  >Import</Button>
+              <div className="input-container">
+                <div className="mt-[22px]">
                   <Button
-                    className="mx-2"
-                    onClick={() => {
-                      setModalShow(true)
-                    }}>Add New</Button>
-                  <Button
-                    className="mx-2"
-                    onClick={downloadTemplate}
-                  >Download Excel Template</Button>
+                    style={{ width: 160 }}
+                    onClick={() => getAllEmployee(0, "")}
+                    className="btn btn-primary mx-2">
+                    Search
+                  </Button>
                 </div>
               </div>
             </div>
+            <Table responsive="lg">
+              <thead>
+                <tr>
+                  {
+                    tableHeaders &&
+                    tableHeaders.length &&
+                    tableHeaders.map((item: any, index: any) => {
+                      return (
+                        <th style={{ width: 'auto' }}>{item}</th>
+                      )
+                    })
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  employeeList &&
+                  employeeList.content &&
+                  employeeList.content.length > 0 &&
+                  employeeList.content.map((item: any, index: any) => {
+
+                    return (
+                      <tr>
+                        <td> {item.employeeId} </td>
+                        <td> {Utility.removeUnderscore(item.empType)} </td>
+                        <td> {item.empStatus} </td>
+                        <td> {item.fullname} </td>
+                        <td> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
+                        <td> {item.acctStatus} </td>
+                        <td>
+                          <label
+                            onClick={() => {
+                              getEmployee(item.id)
+                            }}
+                            className="text-muted cursor-pointer">
+                            Update
+                          </label>
+                          {
+                            item.acctStatus == 'LOCKED' ?
+                              <div>
+                                <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
+                              </div>
+
+                              :
+                              null
+                          }
+                          <br />
+                          <label
+                            onClick={() => {
+                              getEmployeeDetails(item.id)
+                            }}
+                            className="text-muted cursor-pointer">
+                            View
+                          </label>
+                          <br />
+                          <label
+                            onClick={() => {
+                              changePassword(item.id)
+                            }}
+                            className="text-muted cursor-pointer">
+                            Change Password
+                          </label>
+
+                        </td>
+
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </Table>
+            {
+              employeeList &&
+                employeeList.content &&
+                employeeList.content.length == 0 ?
+                <div className="w-100 text-center">
+                  <label htmlFor="">No Records Found</label>
+                </div>
+                :
+                null
+            }
           </div>
         </div>
+        <div className="d-flex justify-content-end">
+          <div className="">
+            <ReactPaginate
+              className="d-flex justify-content-center align-items-center"
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={(employeeList && employeeList.totalPages) || 0}
+              previousLabel="<"
+              previousLinkClassName="prev-next-pagination"
+              nextLinkClassName="prev-next-pagination"
+              activeLinkClassName="active-page-link"
+              disabledLinkClassName="prev-next-disabled"
+              pageLinkClassName="page-link"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </div>
+        <div className="d-flex justify-content-end mt-3" >
+          <div>
+            <Button className="mx-2"
+              onClick={() => {
+                setModalUploadShow(true)
+              }}
+            >Import</Button>
+            <Button
+              className="mx-2"
+              onClick={() => {
+                setModalShow(true)
+              }}>Add New</Button>
+            <Button
+              className="mx-2"
+              onClick={downloadTemplate}
+            >Download Excel Template</Button>
+          </div>
+        </div>
+      </div>
+      <Modal
+        show={modalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {/* Create New Employee */}
+            {userId ? 'Update Employee' : 'Create New Employee'}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 p-0 m-0" >
+          <div className="emp-modal-body">
 
-        {/* Create User Modal Form */}
-        <Modal
-          show={modalShow}
-          size="xl"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => setModalShow(false)}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              {/* Create New Employee */}
-              {userId ? 'Update Employee' : 'Create New Employee'}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="row w-100 p-0 m-0" >
-            <div className="emp-modal-body">
+            {tabIndex == 1 ? information : null}
+            {tabIndex == 2 ? addressInformation : null}
+            {tabIndex == 3 ? emergencyContacts : null}
+            {tabIndex == 4 ? otherInformation : null}
+            {tabIndex == 5 ? scheduleInformation : null}
+            {tabIndex == 6 ? payrollInformation : null}
 
-              {tabIndex == 1 ? information : null}
-              {tabIndex == 2 ? addressInformation : null}
-              {tabIndex == 3 ? emergencyContacts : null}
-              {tabIndex == 4 ? otherInformation : null}
-              {tabIndex == 5 ? scheduleInformation : null}
-              {tabIndex == 6 ? payrollInformation : null}
+          </div>
+        </Modal.Body>
 
-            </div>
-          </Modal.Body>
+      </Modal>
+      <Modal
+        show={modalUploadShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalUploadShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Upload Excel File
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div>
+            <FileUpload onCloseModal={handleCloseModal} />
+          </div>
 
-        </Modal>
-        {/* End Create User Modal Form */}
-        {/* start of upload modal  */}
+        </Modal.Body>
 
-        <Modal
-          show={modalUploadShow}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => setModalUploadShow(false)}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Upload Excel File
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex align-items-center justify-content-center">
-            <div>
-              <FileUpload onCloseModal={handleCloseModal} />
-            </div>
-
-          </Modal.Body>
-
-        </Modal>
-        {/* start of view  */}
-        <Modal show={modalViewShow}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => setModalViewShow(false)}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Employee Information
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex align-items-center justify-content-center">
-            <div >
-              {employee && <ViewEmployee employee={employee} />}
-            </div>
+      </Modal>
+      <Modal show={modalViewShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalViewShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Employee Information
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div >
+            {employee && <ViewEmployee employee={employee} />}
+          </div>
 
 
 
-          </Modal.Body>
+        </Modal.Body>
 
 
-        </Modal>
-        <Modal show={modalPasswordShow}
-          size={"md"}
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => {
-            setModalPasswordShow(false);
-            setPassword("");
-          }}
+      </Modal>
+      <Modal show={modalPasswordShow}
+        size={"md"}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setModalPasswordShow(false);
+          setPassword("");
+        }}
 
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Change Password
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex align-items-center justify-content-center">
-            <div className="w-100 px-5">
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Change Password
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div className="w-100 px-5">
 
-              <div className="input-group w-100 ">
-                <Formik initialValues={{
-                  password: "",
-                  confirmPassword: ""
-                }} enableReinitialize={true}
-                  validationSchema={Yup.object().shape({
-                    password: Yup.string().required('New password is required')
-                      .min(8, "Must Contain 8 Characters")
-                      .matches(/^(?=.*[a-z])/, "Must Contain One LowerCase")
-                      .matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase")
-                      .matches(/^(?=.*[0-9])/, "Must Contain One Number ")
-                      .matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
-                    confirmPassword: Yup.string().required('Confirm password is required').oneOf([Yup.ref('password'), null], "Password not match")
-                  })} onSubmit={(values: any, actions: any) => {
-                    const valuesObj = { ...values }
-                    valuesObj.id = userId
+            <div className="input-group w-100 ">
+              <Formik initialValues={{
+                password: "",
+                confirmPassword: ""
+              }} enableReinitialize={true}
+                validationSchema={Yup.object().shape({
+                  password: Yup.string().required('New password is required')
+                    .min(8, "Must Contain 8 Characters")
+                    .matches(/^(?=.*[a-z])/, "Must Contain One LowerCase")
+                    .matches(/^(?=.*[A-Z])/, "Must Contain One Uppercase")
+                    .matches(/^(?=.*[0-9])/, "Must Contain One Number ")
+                    .matches(/^(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain Special Case Character"),
+                  confirmPassword: Yup.string().required('Confirm password is required').oneOf([Yup.ref('password'), null], "Password not match")
+                })} onSubmit={(values: any, actions: any) => {
+                  const valuesObj = { ...values }
+                  valuesObj.id = userId
 
-                    RequestAPI.putRequest(
-                      Api.employeeChangePassword,
-                      "",
-                      valuesObj,
-                      {},
-                      async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 || status === 201) {
-                          if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                              'Error!',
-                              (body.error && body.error.message) || "",
-                              'error'
-                            )
-                          } else {
-                            getAllEmployee(0)
-                            ErrorSwal.fire(
-                              'Success!',
-                              (body.data) || "",
-                              'success'
-                            )
-                            setModalPasswordShow(false)
-                            setPassword("")
-                            setShowPassword(false)
-                          }
-                        } else {
+                  RequestAPI.putRequest(
+                    Api.employeeChangePassword,
+                    "",
+                    valuesObj,
+                    {},
+                    async (res: any) => {
+                      const { status, body = { data: {}, error: {} } }: any = res
+                      if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
                           ErrorSwal.fire(
                             'Error!',
-                            'Something Error.',
+                            (body.error && body.error.message) || "",
                             'error'
                           )
+                        } else {
+                          getAllEmployee(0)
+                          ErrorSwal.fire(
+                            'Success!',
+                            (body.data) || "",
+                            'success'
+                          )
                           setModalPasswordShow(false)
+                          setPassword("")
+                          setShowPassword(false)
                         }
+                      } else {
+                        ErrorSwal.fire(
+                          'Error!',
+                          'Something Error.',
+                          'error'
+                        )
+                        setModalPasswordShow(false)
                       }
-                    )
-                  }}>
-                  {({
-                    values,
-                    setFieldValue,
-                    handleSubmit,
-                    handleChange,
-                    errors,
-                    touched
-                  }) => {
-                    return <Form noValidate onSubmit={handleSubmit} id="_formid" className="w-100" autoComplete="off">
-                      <div className="passwordField w-100">
-                        <input
-                          id="_password"
-                          autoComplete="new-password"
-                          style={{ marginBottom: "5px" }}
-                          name="password"
-                          value={values.password}
-                          type={showPassword ? "text" : "password"}
-                          className="form-control w-100 admin-change-password-field"
-                          required
-                          placeholder="New Password"
-                          onChange={e => setFieldValue('password', e.target.value)}
-                        />
-                        <Button
-                          variant="link"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="passwordicon"
-                          style={{ paddingTop: 10, paddingBottom: 0, marginBottom: 0 }}
-                          disabled={!values.password}>
-                          <span className="showpass">
-                            <img src={show_password_dark} alt="Show" />
-                          </span>
-                          <span className="hidepass">
-                            <img src={hide_password_dark} alt="Hide" />
-                          </span>
-                        </Button>
-                        {errors && errors.password && <p style={{
-                          color: "red",
-                          fontSize: "12px"
-                        }}>{errors.password}</p>}
-                      </div>
-                      <div className="passwordField w-100">
-                        <input
-                          id="_confirmpassword"
-                          autoComplete="confirm-password"
-                          style={{ marginBottom: "5px" }}
-                          name="confirmPassword"
-                          value={values.confirmPassword}
-                          type={showConfirmPassword ? "text" : "password"}
-                          className="form-control w-100 admin-change-password-field"
-                          required
-                          placeholder="Confirm Password"
-                          onChange={e => setFieldValue('confirmPassword', e.target.value)}
-                        />
-                        <Button
-                          variant="link"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="passwordicon"
-                          style={{ paddingTop: 10 }}
-                          disabled={!values.confirmPassword}>
-                          <span className="showpass">
-                            <img src={show_password_dark} alt="Show" />
-                          </span>
-                          <span className="hidepass">
-                            <img src={hide_password_dark} alt="Hide" />
-                          </span>
-                        </Button>
-                        {errors && errors.confirmPassword && <p style={{
-                          color: "red",
-                          fontSize: "12px"
-                        }}>{errors.confirmPassword}</p>}
-                      </div>
-                      <br />
-                      <div className="d-flex justify-content-center">
-                        <Button type="submit" className=" btn btn-primary" style={{ width: 200 }}>
-                          Submit
-                        </Button>
-                      </div>
-                    </Form>;
-                  }}
-                </Formik>
-              </div>
+                    }
+                  )
+                }}>
+                {({
+                  values,
+                  setFieldValue,
+                  handleSubmit,
+                  handleChange,
+                  errors,
+                  touched
+                }) => {
+                  return <Form noValidate onSubmit={handleSubmit} id="_formid" className="w-100" autoComplete="off">
+                    <div className="passwordField w-100">
+                      <input
+                        id="_password"
+                        autoComplete="new-password"
+                        style={{ marginBottom: "5px" }}
+                        name="password"
+                        value={values.password}
+                        type={showPassword ? "text" : "password"}
+                        className="form-control w-100 admin-change-password-field"
+                        required
+                        placeholder="New Password"
+                        onChange={e => setFieldValue('password', e.target.value)}
+                      />
+                      <Button
+                        variant="link"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="passwordicon"
+                        style={{ paddingTop: 10, paddingBottom: 0, marginBottom: 0 }}
+                        disabled={!values.password}>
+                        <span className="showpass">
+                          <img src={show_password_dark} alt="Show" />
+                        </span>
+                        <span className="hidepass">
+                          <img src={hide_password_dark} alt="Hide" />
+                        </span>
+                      </Button>
+                      {errors && errors.password && <p style={{
+                        color: "red",
+                        fontSize: "12px"
+                      }}>{errors.password}</p>}
+                    </div>
+                    <div className="passwordField w-100">
+                      <input
+                        id="_confirmpassword"
+                        autoComplete="confirm-password"
+                        style={{ marginBottom: "5px" }}
+                        name="confirmPassword"
+                        value={values.confirmPassword}
+                        type={showConfirmPassword ? "text" : "password"}
+                        className="form-control w-100 admin-change-password-field"
+                        required
+                        placeholder="Confirm Password"
+                        onChange={e => setFieldValue('confirmPassword', e.target.value)}
+                      />
+                      <Button
+                        variant="link"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="passwordicon"
+                        style={{ paddingTop: 10 }}
+                        disabled={!values.confirmPassword}>
+                        <span className="showpass">
+                          <img src={show_password_dark} alt="Show" />
+                        </span>
+                        <span className="hidepass">
+                          <img src={hide_password_dark} alt="Hide" />
+                        </span>
+                      </Button>
+                      {errors && errors.confirmPassword && <p style={{
+                        color: "red",
+                        fontSize: "12px"
+                      }}>{errors.confirmPassword}</p>}
+                    </div>
+                    <br />
+                    <div className="d-flex justify-content-center">
+                      <Button type="submit" className=" btn btn-primary" style={{ width: 200 }}>
+                        Submit
+                      </Button>
+                    </div>
+                  </Form>;
+                }}
+              </Formik>
             </div>
-          </Modal.Body>
-        </Modal>
-
-      </div>
-
-    </div>
-
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>} />
   )
 }

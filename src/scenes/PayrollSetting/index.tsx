@@ -13,6 +13,7 @@ import Recurring from "./recurring"
 import Adjustment from "./adjustment"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
+import ContainerWrapper from "../../components/ContainerWrapper"
 
 
 
@@ -54,50 +55,28 @@ export const PayrollSetting = (props: any) => {
     }
 
     return (
-        <div className="body">
-            <div className="wraper">
-                <div className="w-100">
-                    <div className="topHeader">
-                        <UserTopMenu />
-                    </div>
-                    <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-                        <DashboardMenu />
-                        <div className="col-md-12 col-lg-10 px-5 py-5">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <h2 className="bold-text">Good Day, {userData.data.profile.firstName}</h2>
-                                </div>
-                                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                                    <TimeDate />
-                                </div>
-                            </div>
-                            <div>
-                                <h3>Payroll Settings</h3>
-
-                                <div className="w-100 pt-4">
-
-                                <Tabs defaultActiveKey="tab1" id="my-tabs">
-                                    <Tab eventKey="tab1" title="Mandatories">
-                                        <p>Content for Tab 1</p>
-                                    </Tab>
-                                    <Tab eventKey="tab2" title="Adjustments">
-                                        <Adjustment/>
-                                    </Tab>
-                                    <Tab eventKey="tab3" title="Recurring">
-                                        <Recurring/>
-                                    </Tab>
-                                    <Tab eventKey="tab4" title="New Record">
-                                        <p>Content for Tab 3</p>
-                                    </Tab>
-                                </Tabs>
-                                </div>
-                            </div>
-
-                        </div>
+        <ContainerWrapper contents={<>
+            <div className="w-100 px-5 py-5">
+              <div>
+                <div className="w-100 pt-2">
+                    <Tabs defaultActiveKey="tab1" id="my-tabs">
+                        <Tab eventKey="tab1" title="Mandatories">
+                            <p>Content for Tab 1</p>
+                        </Tab>
+                        <Tab eventKey="tab2" title="Adjustments">
+                            <Adjustment/>
+                        </Tab>
+                        <Tab eventKey="tab3" title="Recurring">
+                            <Recurring/>
+                        </Tab>
+                        <Tab eventKey="tab4" title="New Record">
+                            <p>Content for Tab 3</p>
+                        </Tab>
+                    </Tabs>
                     </div>
                 </div>
-            </div>
-        </div>
 
+            </div>
+        </>} />        
     )
 }

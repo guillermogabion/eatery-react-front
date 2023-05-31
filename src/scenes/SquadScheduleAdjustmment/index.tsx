@@ -17,6 +17,8 @@ import { eye, action_approve, action_cancel, action_decline, action_edit } from 
 import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
+import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const SquadScheduleAdjustment = (props: any) => {
@@ -386,12 +388,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                       return (
                         <tr>
                           <td> {item.lastName}, {item.firstName} </td>
-                          <td> {item.dateFrom} </td>
-                          <td> {item.dateTo} </td>
+                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
-                          <td> {item.fileDate} </td>
+                          <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> {item.status} </td>
+                          <td> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
                               onClick={() => {
@@ -521,468 +523,450 @@ export const SquadScheduleAdjustment = (props: any) => {
     setFilterData(filterObj)
   }
   return (
-    <div className="body">
-      <div className="wraper">
-        <div className="w-100">
-          <div className="topHeader">
-            <UserTopMenu />
-          </div>
-          <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-            <DashboardMenu />
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="row">
-                <div className="col-md-6">
-                  <h2>Good Day, {userData.data.profile.firstName}!</h2>
-
-                  <br />
-                  <br />
-                  <h2><b>Adjustment of Schedule</b></h2>
-                  <div className="row p-0 m-0 pt-4 ">
-                    <div className="col-md-4">
-                      <h5>Current Work Schedule:</h5>
-                    </div>
-                    <div className="col-md-8">
-                      <h5>{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
-                    </div>
-
-                  </div>
-                </div>
-                <div className="col-md-6" style={{ textAlign: 'right' }}>
-                  <TimeDate />
-                </div>
+    <ContainerWrapper contents={<>
+      <div className="w-100 px-5 py-5">
+        <div className="row">
+          <div className="col-md-12">
+            <h2><b>Adjustment of Schedule</b></h2>
+            <div className="row p-0 m-0 pt-4 ">
+              <div className="col-md-4">
+                <h5>Current Work Schedule:</h5>
               </div>
-              <div>
-                <div className="w-100 pt-2">
-                  <div className="fieldtext d-flex col-md-3 w-100">
-                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                      <label>Employee</label>
-                      <EmployeeDropdown
-                        squad={true}
-                        placeholder={"Employee"}
-                        singleChangeOption={singleChangeOption}
-                        name="userId"
-                        value={filterData && filterData['userId']}
-                      />
-                    </div>
-                    <div>
-                      <label>Date From</label>
-                      <div>
-                        <input
-                          name="dateFrom"
-                          type="date"
-                          autoComplete="off"
-                          className="formControl"
-                          onChange={(e) => makeFilterData(e)}
-                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label>Date To</label>
-                      <div className="input-container">
-                        <input
-                          name="dateTo"
-                          type="date"
-                          autoComplete="off"
-                          className="formControl"
-                          onChange={(e) => makeFilterData(e)}
-                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label>Date Filed</label>
-                      <div className="input-container">
-                        <input
-                          name="dateFiled"
-                          type="date"
-                          autoComplete="off"
-                          className="formControl"
-                          onChange={(e) => makeFilterData(e)}
-                          onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Button
-                        style={{ width: 120 }}
-                        onClick={() => getAllAdjustments(0, key)}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                      </Button>
-                    </div>
-                  </div>
-
-
-                  <Tabs
-                    id="controlled-tab-example"
-                    activeKey={key}
-                    onSelect={(k: any) => {
-                      setAllAdjustments([])
-                      getAllAdjustments(0, k)
-                    }}
-                    className="mb-3"
-                  >
-                    <Tab eventKey="all" title="All">
-                      {adjustmentTable()}
-                    </Tab>
-                    <Tab eventKey="pending" title="Pending">
-                      {adjustmentTable()}
-                    </Tab>
-                    <Tab eventKey="approved" title="Approved" >
-                      {adjustmentTable()}
-                    </Tab>
-                    <Tab eventKey="declined" title="Rejected/Cancelled">
-                      {adjustmentTable()}
-                    </Tab>
-                  </Tabs>
-                </div>
+              <div className="col-md-8">
+                <h5>{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
               </div>
-              <div className="d-flex justify-content-end">
-                <div className="">
-                  <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(allAdjustments && allAdjustments.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeLinkClassName="active-page-link"
-                    disabledLinkClassName="prev-next-disabled"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                  />
-                </div>
-              </div>
-              {authorizations.includes("Request:Create") ? (
-                <div className="d-flex justify-content-end mt-3" >
-                  <div>
-
-                  </div>
-                </div>
-              ) : null}
 
             </div>
           </div>
         </div>
-        {/* Create User Modal Form */}
-        <Modal
-          show={modalShow}
-          size="xl"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => {
-            setAdjustmentId(null);
-            setModalShow(false)
-          }}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            {/* <Modal.Title id="contained-modal-title-vcenter">
+        <div>
+          <div className="w-100 pt-2">
+            <div className="fieldtext d-flex col-md-3 w-100">
+              <div className="" style={{ width: 200, marginRight: 10 }}>
+                <label>Employee</label>
+                <EmployeeDropdown
+                  squad={true}
+                  placeholder={"Employee"}
+                  singleChangeOption={singleChangeOption}
+                  name="userId"
+                  value={filterData && filterData['userId']}
+                />
+              </div>
+              <div>
+                <label>Date From</label>
+                <div>
+                  <input
+                    name="dateFrom"
+                    type="date"
+                    autoComplete="off"
+                    className="formControl"
+                    onChange={(e) => makeFilterData(e)}
+                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                  />
+                </div>
+              </div>
+              <div>
+                <label>Date To</label>
+                <div className="input-container">
+                  <input
+                    name="dateTo"
+                    type="date"
+                    autoComplete="off"
+                    className="formControl"
+                    onChange={(e) => makeFilterData(e)}
+                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                  />
+                </div>
+              </div>
+              <div>
+                <label>Date Filed</label>
+                <div className="input-container">
+                  <input
+                    name="dateFiled"
+                    type="date"
+                    autoComplete="off"
+                    className="formControl"
+                    onChange={(e) => makeFilterData(e)}
+                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                  />
+                </div>
+              </div>
+              <div>
+                <Button
+                  style={{ width: 120 }}
+                  onClick={() => getAllAdjustments(0, key)}
+                  className="btn btn-primary mx-2 mt-4">
+                  Search
+                </Button>
+              </div>
+            </div>
+
+
+            <Tabs
+              id="controlled-tab-example"
+              activeKey={key}
+              onSelect={(k: any) => {
+                setAllAdjustments([])
+                getAllAdjustments(0, k)
+              }}
+              className="mb-3"
+            >
+              <Tab eventKey="all" title="All">
+                {adjustmentTable()}
+              </Tab>
+              <Tab eventKey="pending" title="Pending">
+                {adjustmentTable()}
+              </Tab>
+              <Tab eventKey="approved" title="Approved" >
+                {adjustmentTable()}
+              </Tab>
+              <Tab eventKey="declined" title="Rejected/Cancelled">
+                {adjustmentTable()}
+              </Tab>
+            </Tabs>
+          </div>
+        </div>
+        <div className="d-flex justify-content-end">
+          <div className="">
+            <ReactPaginate
+              className="d-flex justify-content-center align-items-center"
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={(allAdjustments && allAdjustments.totalPages) || 0}
+              previousLabel="<"
+              previousLinkClassName="prev-next-pagination"
+              nextLinkClassName="prev-next-pagination"
+              activeLinkClassName="active-page-link"
+              disabledLinkClassName="prev-next-disabled"
+              pageLinkClassName="page-link"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </div>
+        {authorizations.includes("Request:Create") ? (
+          <div className="d-flex justify-content-end mt-3" >
+            <div>
+
+            </div>
+          </div>
+        ) : null}
+
+      </div>
+
+      <Modal
+        show={modalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setAdjustmentId(null);
+          setModalShow(false)
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title id="contained-modal-title-vcenter">
               Request For Leave/Time-off
             </Modal.Title> */}
-            <Modal.Title id="contained-modal-title-vcenter">
-              {adjustmentId ? 'Edit Schedule Adjustment Request' : 'Request For Schedule Adjustment'}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="row w-100 px-5">
-            <Formik
-              innerRef={formRef}
-              initialValues={initialValues}
-              enableReinitialize={true}
-              validationSchema={
-                Yup.object().shape({
-                  dateFrom: Yup.string().required("Date from is required !"),
-                  dateTo: Yup.string().required("Date to is required !"),
-                  reason: Yup.string().required("Reason is required !"),
+          <Modal.Title id="contained-modal-title-vcenter">
+            {adjustmentId ? 'Edit Schedule Adjustment Request' : 'Request For Schedule Adjustment'}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            initialValues={initialValues}
+            enableReinitialize={true}
+            validationSchema={
+              Yup.object().shape({
+                dateFrom: Yup.string().required("Date from is required !"),
+                dateTo: Yup.string().required("Date to is required !"),
+                reason: Yup.string().required("Reason is required !"),
 
+              })
+            }
+            onSubmit={(values, actions) => {
+              const valuesObj: any = { ...values }
+              valuesObj.breakdown = adjustmentBreakdown
+              // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
+
+              //   return {
+              //     ...item,
+              //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
+              //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
+              //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
+              //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
+              // }
+              //   })
+
+              if (adjustmentId) {
+                delete valuesObj.userId
+                RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+                    } else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                      setAdjustmentBreakdown([])
+                      getAllAdjustments(0, key)
+                      setModalShow(false)
+                      formRef.current?.resetForm()
+                    }
+                  } else {
+                    ErrorSwal.fire(
+                      'Error!',
+                      body.error && body.error.message,
+                      // (body.error && body.error.message),
+                      'error'
+                    )
+                  }
+                })
+              } else {
+                RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
+                      ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                      )
+                    }
+
+
+                    else {
+                      ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                      )
+                      setAdjustmentBreakdown([])
+                      getAllAdjustments(0, key)
+                      setModalShow(false)
+                      formRef.current?.resetForm()
+                    }
+                  } else {
+                    ErrorSwal.fire(
+                      'Error!',
+                      // 'Something Error.',
+                      body.error && body.error.message,
+                      'error'
+                    )
+                  }
                 })
               }
-              onSubmit={(values, actions) => {
-                const valuesObj: any = { ...values }
-                valuesObj.breakdown = adjustmentBreakdown
-                // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
-
-                //   return {
-                //     ...item,
-                //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
-                //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
-                //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
-                //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
-                // }
-                //   })
-
-                if (adjustmentId) {
-                  delete valuesObj.userId
-                  RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
-                    const { status, body = { data: {}, error: {} } }: any = res
-                    if (status === 200 || status === 201) {
-                      if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                          'Error!',
-                          (body.error && body.error.message) || "",
-                          'error'
-                        )
-                      } else {
-                        ErrorSwal.fire(
-                          'Success!',
-                          (body.data) || "",
-                          'success'
-                        )
-                        setAdjustmentBreakdown([])
-                        getAllAdjustments(0, key)
-                        setModalShow(false)
-                        formRef.current?.resetForm()
-                      }
-                    } else {
-                      ErrorSwal.fire(
-                        'Error!',
-                        body.error && body.error.message,
-                        // (body.error && body.error.message),
-                        'error'
-                      )
-                    }
-                  })
-                } else {
-                  RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
-                    const { status, body = { data: {}, error: {} } }: any = res
-                    if (status === 200 || status === 201) {
-                      if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                          'Error!',
-                          (body.error && body.error.message) || "",
-                          'error'
-                        )
-                      }
-
-
-                      else {
-                        ErrorSwal.fire(
-                          'Success!',
-                          (body.data) || "",
-                          'success'
-                        )
-                        setAdjustmentBreakdown([])
-                        getAllAdjustments(0, key)
-                        setModalShow(false)
-                        formRef.current?.resetForm()
-                      }
-                    } else {
-                      ErrorSwal.fire(
-                        'Error!',
-                        // 'Something Error.',
-                        body.error && body.error.message,
-                        'error'
-                      )
-                    }
-                  })
-                }
 
 
 
-              }}>
-              {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-                return (
-                  <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                    <div className="row w-100 px-5">
-                      <div className="form-group col-md-6 mb-3" >
-                        <label>Date From</label>
-                        <input type="date"
-                          name="dateFrom"
-                          id="dateFrom"
-                          className="form-control"
-                          value={values.dateFrom}
-                          onChange={(e) => {
-                            setFormField(e, setFieldValue)
-                            dateBreakdown(e.target.value, values.dateTo)
-                          }}
-                        />
-                        {errors && errors.dateFrom && (
-                          <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
-                        )}
-                      </div>
-                      <div className="form-group col-md-6 mb-3" >
-                        <label>Date To</label>
-                        <input type="date"
-                          name="dateTo"
-                          id="dateTo"
-                          className="form-control"
-                          value={values.dateTo}
-                          min={values.dateFrom}
-                          onChange={(e) => {
-                            setFormField(e, setFieldValue)
-                            dateBreakdown(values.dateFrom, e.target.value)
-                          }}
-                        />
-                        {errors && errors.dateTo && (
-                          <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
-                        )}
-                      </div>
-                      <div className="form-group col-md-12 mb-3" >
-                        <label>Reason</label>
-                        <input type="text"
-                          name="reason"
-                          id="reason"
-                          className="form-control"
-                          value={values.reason}
-                          onChange={(e) => setFormField(e, setFieldValue)}
-                        />
-                        {errors && errors.reason && (
-                          <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                        )}
-                      </div>
-                      <div className="form-group col-md-12 mb-3" >
-                        <Table responsive="lg" style={{ maxHeight: '100vh' }}>
-                          <thead>
-                            <tr>
-                              <th style={{ width: 'auto' }}>Date</th>
-                              <th style={{ width: 'auto' }}>Start Shift</th>
-                              <th style={{ width: 'auto' }}>Start Break</th>
-                              <th style={{ width: 'auto' }}>End Break</th>
-                              <th style={{ width: 'auto' }}>End Shift</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
-                              adjustmentBreakdown &&
-                              adjustmentBreakdown.length > 0 &&
-                              adjustmentBreakdown.map((item: any, index: any) => {
-                                const { date } = item
-                                return (
-                                  <tr>
-                                    <td key={index + 'date'} >{date}</td>
-                                    <td key={index + 'startShift'} >
-                                      <input
-                                        type="time"
-                                        name={"startShift" + index.toString()}
-                                        id={"startShift" + index.toString()}
-                                        key={"startShift" + index.toString()}
-                                        value={item.startShift}
-                                        step={"1"}
-                                        onChange={(e) => {
-                                          setDateOption(index, 'startShift', e.target.value)
-                                        }}
-
-
-
-                                      />
-                                      {errors && errors.startShift && (
-                                        <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
-                                      )}
-                                    </td>
-                                    <td key={index + 'startBreak'} >
-                                      <input
-                                        type="time"
-                                        name={"startBreak" + index.toString()}
-                                        id={"startBreak" + index.toString()}
-                                        key={"startBreak" + index.toString()}
-                                        step={"1"}
-                                        value={item.startBreak}
-                                        onChange={(e) => {
-                                          setDateOption(index, 'startBreak', e.target.value)
-                                        }}
-                                      />
-                                    </td>
-                                    <td key={index + 'endBreak'} >
-                                      <input
-                                        type="time"
-                                        name={"endBreak" + index.toString()}
-                                        id={"endBreak" + index.toString()}
-                                        key={"endBreak" + index.toString()}
-                                        step={"1"}
-                                        value={item.endBreak}
-                                        onChange={(e) => {
-                                          setDateOption(index, 'endBreak', e.target.value)
-                                        }}
-                                      />
-                                    </td>
-                                    <td key={index + 'endShift'} >
-                                      <input
-                                        type="time"
-                                        name={"endShift" + index.toString()}
-                                        id={"endShift" + index.toString()}
-                                        key={"endShift" + index.toString()}
-                                        step={"1"}
-                                        value={item.endShift}
-                                        onChange={(e) => {
-                                          setDateOption(index, 'endShift', e.target.value)
-                                        }}
-                                      />
-                                    </td>
-
-                                  </tr>
-                                )
-                              })
-                            }
-                          </tbody>
-                        </Table>
-                        {
-                          adjustmentBreakdown &&
-                            adjustmentBreakdown.length == 0 ?
-                            <div className="w-100 text-center">
-                              <label htmlFor="">No Records Found</label>
-                            </div>
-                            :
-                            null
-                        }
-                      </div>
+            }}>
+            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+              return (
+                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                  <div className="row w-100 px-5">
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Date From</label>
+                      <input type="date"
+                        name="dateFrom"
+                        id="dateFrom"
+                        className="form-control"
+                        value={values.dateFrom}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                          dateBreakdown(e.target.value, values.dateTo)
+                        }}
+                      />
+                      {errors && errors.dateFrom && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                      )}
                     </div>
-                    <br />
-                    <Modal.Footer>
-                      <div className="d-flex justify-content-end px-5">
-                        <button
-                          type="submit"
-                          className="btn btn-primary">
-                          Save
-                        </button>
-                      </div>
-                    </Modal.Footer>
-                  </Form>
-                )
-              }}
-            </Formik>
-          </Modal.Body>
-        </Modal>
-        {/* End Create User Modal Form */}
-        {/* start of view dialog */}
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Date To</label>
+                      <input type="date"
+                        name="dateTo"
+                        id="dateTo"
+                        className="form-control"
+                        value={values.dateTo}
+                        min={values.dateFrom}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                          dateBreakdown(values.dateFrom, e.target.value)
+                        }}
+                      />
+                      {errors && errors.dateTo && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Reason</label>
+                      <input type="text"
+                        name="reason"
+                        id="reason"
+                        className="form-control"
+                        value={values.reason}
+                        onChange={(e) => setFormField(e, setFieldValue)}
+                      />
+                      {errors && errors.reason && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                        <thead>
+                          <tr>
+                            <th style={{ width: 'auto' }}>Date</th>
+                            <th style={{ width: 'auto' }}>Start Shift</th>
+                            <th style={{ width: 'auto' }}>Start Break</th>
+                            <th style={{ width: 'auto' }}>End Break</th>
+                            <th style={{ width: 'auto' }}>End Shift</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            adjustmentBreakdown &&
+                            adjustmentBreakdown.length > 0 &&
+                            adjustmentBreakdown.map((item: any, index: any) => {
+                              const { date } = item
+                              return (
+                                <tr>
+                                  <td key={index + 'date'} >{date}</td>
+                                  <td key={index + 'startShift'} >
+                                    <input
+                                      type="time"
+                                      name={"startShift" + index.toString()}
+                                      id={"startShift" + index.toString()}
+                                      key={"startShift" + index.toString()}
+                                      value={item.startShift}
+                                      step={"1"}
+                                      onChange={(e) => {
+                                        setDateOption(index, 'startShift', e.target.value)
+                                      }}
 
-        <Modal
-          show={modalViewShow}
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop="static"
-          keyboard={false}
-          onHide={() => {
 
-            setModalViewShow(false)
-          }}
-          dialogClassName="modal-90w"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Request Information
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="d-flex align-items-center justify-content-center">
-            <div className="container">
-              {/* <h4>reason</h4> {{values.reason}} */}
-              <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
-              <p>Reason : {initialValues.reason}</p>
-              <p>Date From : {initialValues.dateFrom}</p>
-              <p>Date To : {initialValues.dateTo}</p>
-              <p>Shift Starts : {initialValues.startShift}</p>
-              <p>Start of Break : {initialValues.startBreak}</p>
-              <p>End of Break : {initialValues.endBreak}</p>
-              <p>Shift Ends : {initialValues.endShift}</p>
 
-              <p>Status : {initialValues.status}</p>
+                                    />
+                                    {errors && errors.startShift && (
+                                      <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
+                                    )}
+                                  </td>
+                                  <td key={index + 'startBreak'} >
+                                    <input
+                                      type="time"
+                                      name={"startBreak" + index.toString()}
+                                      id={"startBreak" + index.toString()}
+                                      key={"startBreak" + index.toString()}
+                                      step={"1"}
+                                      value={item.startBreak}
+                                      onChange={(e) => {
+                                        setDateOption(index, 'startBreak', e.target.value)
+                                      }}
+                                    />
+                                  </td>
+                                  <td key={index + 'endBreak'} >
+                                    <input
+                                      type="time"
+                                      name={"endBreak" + index.toString()}
+                                      id={"endBreak" + index.toString()}
+                                      key={"endBreak" + index.toString()}
+                                      step={"1"}
+                                      value={item.endBreak}
+                                      onChange={(e) => {
+                                        setDateOption(index, 'endBreak', e.target.value)
+                                      }}
+                                    />
+                                  </td>
+                                  <td key={index + 'endShift'} >
+                                    <input
+                                      type="time"
+                                      name={"endShift" + index.toString()}
+                                      id={"endShift" + index.toString()}
+                                      key={"endShift" + index.toString()}
+                                      step={"1"}
+                                      value={item.endShift}
+                                      onChange={(e) => {
+                                        setDateOption(index, 'endShift', e.target.value)
+                                      }}
+                                    />
+                                  </td>
 
-              {/* {adjustmentBreakdown.map ((initialValues, index) =>(
+                                </tr>
+                              )
+                            })
+                          }
+                        </tbody>
+                      </Table>
+                      {
+                        adjustmentBreakdown &&
+                          adjustmentBreakdown.length == 0 ?
+                          <div className="w-100 text-center">
+                            <label htmlFor="">No Records Found</label>
+                          </div>
+                          :
+                          null
+                      }
+                    </div>
+                  </div>
+                  <br />
+                  <Modal.Footer>
+                    <div className="d-flex justify-content-end px-5">
+                      <button
+                        type="submit"
+                        className="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                  </Modal.Footer>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={modalViewShow}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+
+          setModalViewShow(false)
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Request Information
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div className="container">
+            {/* <h4>reason</h4> {{values.reason}} */}
+            <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+            <p>Reason : {initialValues.reason}</p>
+            <p>Date From : {Utility.formatDate(initialValues.dateFrom, 'MM-DD-YYYY')}</p>
+            <p>Date To : {Utility.formatDate(initialValues.dateTo, 'MM-DD-YYYY')}</p>
+            <p>Shift Starts : {initialValues.startShift}</p>
+            <p>Start of Break : {initialValues.startBreak}</p>
+            <p>End of Break : {initialValues.endBreak}</p>
+            <p>Shift Ends : {initialValues.endShift}</p>
+
+            <p>Status : {initialValues.status}</p>
+
+            {/* {adjustmentBreakdown.map ((initialValues, index) =>(
                       <div key={`adjustmentBreakdown-${index}`}>
                           <p className="bold-text">Set Request {index + 1}:</p>
                           <p>Type : {initialValues.coaBdType}</p>
@@ -992,11 +976,10 @@ export const SquadScheduleAdjustment = (props: any) => {
                       </div>
 
                     ))} */}
-            </div>
-          </Modal.Body>
+          </div>
+        </Modal.Body>
 
-        </Modal>
-      </div>
-    </div>
+      </Modal>
+    </>} />
   )
 }

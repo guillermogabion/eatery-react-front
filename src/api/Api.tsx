@@ -34,6 +34,7 @@ const Api: any = {
   getLeave: process.env.REACT_APP_API_URL + "request/leave",
   approveLeave: process.env.REACT_APP_API_URL + "request/leave/approve",
   declineLeave: process.env.REACT_APP_API_URL + "request/leave/decline",
+  resendLeave: process.env.REACT_APP_API_URL + "request/leave/resend",
   cancelLeave: process.env.REACT_APP_API_URL + "request/leave/cancel",
   cancelCOA: process.env.REACT_APP_API_URL + "request/coa/cancel",
   cancelOvertime: process.env.REACT_APP_API_URL + "request/ot/cancel",  
@@ -52,6 +53,7 @@ const Api: any = {
   allOvertime: process.env.REACT_APP_API_URL + "request/ot/all",
   approveOT: process.env.REACT_APP_API_URL + "request/ot/approve",
   declineOT: process.env.REACT_APP_API_URL + "request/ot/decline",
+  resendOT: process.env.REACT_APP_API_URL + "request/ot/resend",
   otInformation: process.env.REACT_APP_API_URL + "request/ot/info",
   updateOT: process.env.REACT_APP_API_URL + "request/ot/update",
 
@@ -60,6 +62,7 @@ const Api: any = {
   UTCreate: process.env.REACT_APP_API_URL + "request/ut/create",
   approveUT: process.env.REACT_APP_API_URL + "request/ut/approve",
   declineUT: process.env.REACT_APP_API_URL + "request/ut/decline",
+  resendUT: process.env.REACT_APP_API_URL + "request/ut/resend",
   utInformation: process.env.REACT_APP_API_URL + "request/ut/info",
   updateUT: process.env.REACT_APP_API_URL + "request/ut/update",
   downloadTimeKeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadExcel",
@@ -79,6 +82,7 @@ const Api: any = {
   createScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/create",
   updateScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/update",
   declineScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/decline",
+  resendScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/resend",
   approveScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/approve",
   cancelScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/cancel",
 
@@ -131,6 +135,7 @@ const Api: any = {
   getCoaInfo : process.env.REACT_APP_API_URL + "request/coa/info",
   approveCoa :  process.env.REACT_APP_API_URL + "request/coa/approve",
   declineCoa :  process.env.REACT_APP_API_URL + "request/coa/decline",
+  resendCoa :  process.env.REACT_APP_API_URL + "request/coa/resend",
   deleteCoa :  process.env.REACT_APP_API_URL + "request/coa/delete",
 
 
