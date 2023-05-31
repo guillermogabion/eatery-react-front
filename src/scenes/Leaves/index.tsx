@@ -154,7 +154,7 @@ export const Leaves = (props: any) => {
 
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
-        `${Api.allRequestLeave}?size=10${queryString}&page=${page}`,
+        `${Api.allRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
@@ -170,7 +170,7 @@ export const Leaves = (props: any) => {
       )
     } else {
       RequestAPI.getRequest(
-        `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}`,
+        `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},

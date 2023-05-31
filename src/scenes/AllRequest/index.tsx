@@ -70,7 +70,7 @@ export const AllRequest = (props: any) => {
 
             if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
-                    `${Api.allRequestLeave}?size=10${queryString}&page=${page}`,
+                    `${Api.allRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -87,7 +87,7 @@ export const AllRequest = (props: any) => {
             } else {
 
                 RequestAPI.getRequest(
-                    `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}`,
+                    `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -302,7 +302,7 @@ export const AllRequest = (props: any) => {
 
             if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
-                    `${Api.getAllCOA}?size=10${queryString}&page=${page}`,
+                    `${Api.getAllCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -318,7 +318,7 @@ export const AllRequest = (props: any) => {
                 )
             } else {
                 RequestAPI.getRequest(
-                    `${Api.allMyCOA}?size=10${queryString}&page=${page}`,
+                    `${Api.allMyCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -970,7 +970,7 @@ export const AllRequest = (props: any) => {
 
             if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
-                    `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}`,
+                    `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -986,7 +986,7 @@ export const AllRequest = (props: any) => {
                 )
             } else {
                 RequestAPI.getRequest(
-                    `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}`,
+                    `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},

@@ -71,7 +71,7 @@ export const Squad = (props: any) => {
       }
     }
     RequestAPI.getRequest(
-      `${Api.getSquadMember}?size=10&page=${page}${queryString}`,
+      `${Api.getSquadMember}?size=10&page=${page}${queryString}&sort=id&sortDir=desc`,
       "",
       {},
       {},

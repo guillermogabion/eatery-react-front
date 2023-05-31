@@ -87,7 +87,7 @@ export const SquadScheduleAdjustment = (props: any) => {
     }
     if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
-        `${Api.allSquadSchedule}?size=10${queryString}&page=${page}`,
+        `${Api.allSquadSchedule}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
@@ -104,7 +104,7 @@ export const SquadScheduleAdjustment = (props: any) => {
       )
     } else {
       RequestAPI.getRequest(
-        `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}`,
+        `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
         {},
         {},
