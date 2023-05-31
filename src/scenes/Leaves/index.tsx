@@ -915,7 +915,9 @@ export const Leaves = (props: any) => {
                             dateBreakdown(e.target.value, values.dateTo)
                           }}
                           // min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
-                          max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
+                          // max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
+                          // max={values.type == 1 ? getNextWeekday(Date.now()).toISOString().split("T")[0] : undefined} 
+                          max={values.type == 1 ? getNextWeekday(new Date(new Date(Date.now()).toISOString().split("T")[0] ), 6).toISOString().split('T')[0] : undefined}
 
                           placeholder="dd/mm/yyyy"
                         />

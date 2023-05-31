@@ -10,6 +10,7 @@ import { Api, RequestAPI } from "../../api"
 import DashboardMenu from "../../components/DashboardMenu"
 import TableComponent from "../../components/TableComponent"
 import Recurring from "./recurring"
+import Adjustment from "./adjustment"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
 
@@ -80,7 +81,7 @@ export const PayrollSetting = (props: any) => {
                                         <p>Content for Tab 1</p>
                                     </Tab>
                                     <Tab eventKey="tab2" title="Adjustments">
-                                        <p>Content for Tab 2</p>
+                                        <Adjustment/>
                                     </Tab>
                                     <Tab eventKey="tab3" title="Recurring">
                                         <Recurring/>

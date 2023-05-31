@@ -154,7 +154,8 @@ const Api: any = {
 
   // recurring 
   getAllRecurringList : process.env.REACT_APP_API_URL + "payroll/recurring/all",
-  getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
+  getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/list",
+  // getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
   createRecurringTransaction : process.env.REACT_APP_API_URL + "payroll/recurring/create",
   updateRecurringTransaction : process.env.REACT_APP_API_URL + "payroll/recurring/update",
   recurringInfo : process.env.REACT_APP_API_URL + "payroll/recurring/info",
@@ -163,7 +164,9 @@ const Api: any = {
   // payroll 
 
   getAllPayrollList : process.env.REACT_APP_API_URL + "payroll/adjustment/all",
-  getAdjustmentType : process.env.REACT_APP_API_URL + "adjustment/type/all",
+  getAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/list",
+  payrollAdjustmentCreate : process.env.REACT_APP_API_URL + "payroll/adjustment/create",
+  getPayrollAdjustmentInfo : process.env.REACT_APP_API_URL + "payroll/adjustment/info",
 
 
   // payroll setting 
@@ -172,6 +175,12 @@ const Api: any = {
   updateRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/update",
   getRecurringTypeInfo : process.env.REACT_APP_API_URL + "payroll/recurring/type/info",
   deleteRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/delete",
+  
+  getAllAdjustmentSetting : process.env.REACT_APP_API_URL + "payroll/adjustment/type/all",
+  getAdjustmentTypeInfo : process.env.REACT_APP_API_URL + "payroll/adjustment/type/info",
+  addAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/create",
+  editAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/update",
+  deleteAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/delete",
   
 }
 

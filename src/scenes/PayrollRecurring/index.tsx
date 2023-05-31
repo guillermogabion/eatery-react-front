@@ -32,6 +32,7 @@ export const Recurring = (props: any) => {
 
 
 
+
     const [initialValues, setInitialValues] = useState<any>({
        
         recurring : [
@@ -43,7 +44,12 @@ export const Recurring = (props: any) => {
                 "active": "",
             }
            
-        ]
+        ],
+        "userId": "",
+        "recurringTypeId": "",
+        "adjustmentAmount": "",
+        "endDate": "",
+        "active": "",
                
            
    
@@ -82,8 +88,20 @@ export const Recurring = (props: any) => {
     }
 
     const getAllRecurringList = (pageNo: any) => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+            if (filterDataTemp[d]) {
+
+            queryString += `&${d}=${filterDataTemp[d]}`
+            } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+            }
+        })
+        }
         RequestAPI.getRequest(
-            `${Api.getAllRecurringList}?size=10&page${pageNo}`,
+            `${Api.getAllRecurringList}?size=10&page${pageNo}${queryString}`,
             "",
             {},
             {},
@@ -110,9 +128,21 @@ export const Recurring = (props: any) => {
             async (res: any) => {
               const { status, body = { data: {}, error: {} } }: any = res
               if (status === 200 && body && body.data) {
-                  setRecurringTypes(body.data)
-              } else {
-                setRecurringTypes([]);
+                if (body.error && body.error.message) {
+                } else {
+                    let tempArray: any = []
+                    body.data.forEach((d: any, i: any) => {
+                        tempArray.push({
+                            recurringTypeId: d.id,
+                            recurringName: d.name,
+                            // deduction : d.deduction
+                        })
+                    });
+                    setRecurringTypes(tempArray)
+                    // setRecurringTypes([])
+
+                    
+                }
               }
             }
           )
@@ -166,18 +196,24 @@ export const Recurring = (props: any) => {
             {},
             async (res: any) => {
                 console.log("Response:", res);
-                const { status, body = { data: {}, error: {} } }: any = res
+                const { status, body = { data: {}, error: {} } }: any = res;
                 if (status === 200 && body && body.data) {
-                if (body.error && body.error.message) {
-                } else {
-                    const valueObj: any = body.data
-                    setInitialValues(valueObj)
-                    setModalShow(true)
-                }
+                    if (body.error && body.error.message) {
+                        // Handle error
+                    } else {
+                        const valueObj: any = body.data;
+                        setInitialValues(valueObj);
+                        setModalShow(true);
+                    }
                 }
             }
-        )
+        );
+        
+        // Return statement
+       
+       
     }
+    
 
     const deleteRecurring = (id : any = 0) => {
         ErrorSwal.fire({
@@ -230,6 +266,30 @@ export const Recurring = (props: any) => {
           })
 
     }
+
+    const handleModalHide = useCallback(() => {
+        setModalShow(false);
+        formRef.current?.resetForm();
+        setInitialValues({
+            recurring : [
+                {
+                    "userId": "",
+                    "recurringTypeId": "",
+                    "adjustmentAmount": "",
+                    "endDate": "",
+                    "active": "",
+                }
+               
+            ],
+            "userId": "",
+            "recurringTypeId": "",
+            "adjustmentAmount": "",
+            "endDate": "",
+            "active": "",
+                   
+        });
+      }, []);
+
    
 
 
@@ -260,11 +320,15 @@ export const Recurring = (props: any) => {
                                         <div className="w-100">
                                             <div className="fieldtext d-flex col-md-6">
                                                 <div className="input-container">
-                                                    <EmployeeDropdown
-                                                        placeholder={"Employee"}
-                                                        singleChangeOption={singleChangeOption}
-                                                        name="userId"
-                                                        value={filterData && filterData['userId']}
+                                                <input
+                                                        name="name"
+                                                        placeholder="employeeName"
+                                                        type="text"
+                                                        autoComplete="off"
+                                                        className="formControl"
+                                                        maxLength={40}
+                                                        onChange={(e) => makeFilterData(e)}
+                                                        // onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                                     />
                                                 </div>
                                                 <div className="input-container">
@@ -291,38 +355,6 @@ export const Recurring = (props: any) => {
                                                         onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                                     />
                                                 </div>
-                                                {/* <div className="input-container" >
-                                                    <select
-                                                    placeholder="Recurring Name"
-                                                    className="form-select"
-                                                    name="type"
-                                                    id="type"
-                                                    value={values.name}
-                                                    // onChange={(e) => setFormField(e, setFieldValue)}>
-                                                    onChange={(e) => {
-                                                        setFormField(e, setFieldValue);
-                                                    
-                                                    }}
-                                                    >
-                                                    {recurringTypes &&
-                                                        recurringTypes.length &&
-                                                        recurringTypes.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.id}`} value={item.id}>
-                                                            {item.name}
-                                                        </option>
-                                                        ))}
-                                                    </select>
-                                                </div> */}
-                                                {/* <input
-                                                    name="deduct"
-                                                    placeholder="Add/Deduct"
-                                                    type="text"
-                                                    autoComplete="off"
-                                                    className="formControl"
-                                                    maxLength={40}
-                                                    onChange={(e) => makeFilterData(e)}
-                                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                                /> */}
                                                 <Button
                                                 style={{ width: 210 }}
                                                 onClick={() => getAllRecurringList(0)}
@@ -356,7 +388,7 @@ export const Recurring = (props: any) => {
                                                 <tr>
                                                 <td> {item.employeeId} </td>
                                                 <td> {item.employeeName} </td>
-                                                <td> {item.amount} </td>
+                                                <td> {item.adjustmentAmount} </td>
                                                 <td> {item.recurringName} </td>
                                                 <td>
                                                 <label
@@ -449,9 +481,9 @@ export const Recurring = (props: any) => {
                 backdrop="static"
                 keyboard={false}
                 dialogClassName="modal-90w"
-                onHide={() => {
-                    setModalShow(false)
-                }}
+                onHide={
+                    handleModalHide
+                }
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
@@ -490,11 +522,12 @@ export const Recurring = (props: any) => {
                         };
 
 
-                        if(userId){
+                        if(values.userId){
+                            const valuesObj : any = {...values}
                             RequestAPI.putRequest(
                                 Api.updateRecurringTransaction,
                                 "",
-                                payload,
+                                valuesObj,
                                 {},
                                 async (res) => {
                                     const { status, body = { data: {}, error: {} } } = res;
@@ -509,6 +542,7 @@ export const Recurring = (props: any) => {
                                         );
                                         // handleCloseModal();
                                       } else {
+                                        setModalShow(false)
                                         ErrorSwal.fire(
                                           "Updated Successfully!",
                                           body.data || "",
@@ -540,6 +574,7 @@ export const Recurring = (props: any) => {
                                     // setRecurring([]);
                               
                                 } else {
+                                    setModalShow(false)
                                     ErrorSwal.fire(
                                     'Success!',
                                     (body.data) || "",
@@ -569,181 +604,344 @@ export const Recurring = (props: any) => {
                                 id="_formid"
                                 autoComplete="off"
                                 >
-                                    {recurring.map((values: any, index: any)=> (
-                                    <div key={`recurring-${index}`}>
-                                        <div className="form-group row">
-                                        <div className="col-md-2 mb-3">
-                                        <label>Employee ID</label>
+
+                                    { values.userId ? (
+                                        <div>
+                                        {/* with userId  */}
+
+                                        {/* <div className="col-md-2 mb-3">
+                                            <label>Amount</label>
                                             <input
-                                            readOnly
-                                            className="formControl"
-                                            name="userId"
-                                            value={values.userId ? values.userId : ''}
+                                            className="form-control"
+                                            name="adjustmentAmount"
+                                            value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
                                             onChange={(e) => {
-                                                const updatedFields = [...recurring];
-                                                updatedFields[index].userId = e.target.value;
-                                                setRecurring(updatedFields);
-                                                setFormField(e, setFieldValue)
+                                                setFieldValue('adjustmentAmount', e.target.value);
                                             }}
                                             />
-                                            </div>
-                                            <div className="col-md-3 mb-3">
-                                            <label>Employee Name *</label>
-                                            <select
-                                                placeholder="Employee Name"
-                                                className="form-select"
-                                                value={values.userId}
+                                        </div> */}
+                                    <div className="form-group row">
+                                        <div className="col-md-2 mb-3">
+                                            <label>Employee ID</label>
+                                                <input
+                                                readOnly
+                                                className="formControl"
+                                                name="userId"
+                                                value={values.userId ? values.userId : ''}
                                                 onChange={(e) => {
-                                                const selectedValue = e.target.value;
-                                                const updatedFields = [...recurring];
-                                                updatedFields[index].userId = selectedValue;
-                                                setRecurring(updatedFields);
-                                                setFormField(e, setFieldValue)
-
-                                                // Update the employee ID field with the selected employee's userId
-                                                const selectedEmployee = employee.find(
-                                                    (item) => item.userId === selectedValue
-                                                );
-                                                const employeeIdField = document.getElementsByName('userId')[0];
-                                                if (selectedEmployee) {
-                                                    employeeIdField.value = selectedEmployee.userId;
-                                                } else {
-                                                    employeeIdField.value = '';
-                                                }
+                                                    setFieldValue('userId', e.target.value);
+                                                }}
+                                                />
+                                        </div>
+                                        <div className="col-md-3 mb-3">
+                                        <label>Employee Name *</label>
+                                        <select
+                                            disabled
+                                            placeholder="Employee Name"
+                                            className="form-select"
+                                            value={values.userId}
+                                            onChange={(e) => {
+                                            const selectedValue = e.target.value;
+                                            setFieldValue('userId', e.target.value);
+                                            const selectedEmployee = employee.find(
+                                                (item) => item.userId === selectedValue
+                                            );
+                                            const employeeIdField = document.getElementsByName('userId')[0];
+                                            if (selectedEmployee) {
+                                                employeeIdField.value = selectedEmployee.userId;
+                                            } else {
+                                                employeeIdField.value = '';
+                                            }
+                                            }}
+                                        >
+                                            <option value="" disabled selected>
+                                            Select Employee
+                                            </option>
+                                            {employee &&
+                                            employee.length &&
+                                            employee.map((item: any, index: string) => (
+                                                <option key={`${index}_${item.userId}`} value={item.userId}>
+                                                {item.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        </div>
+                                        <div className="col-md-3 mb-3 mt-4">
+                                            <select
+                                                placeholder="Recurring Name"
+                                                className="form-select"
+                                                name="recurringTypeId"
+                                                id="type"
+                                                value={values.deduction}
+                                                onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    setFieldValue('deduction', e.target.value);
+                                                    const selectedType = recurringTypes.content.find(
+                                                        item => item.id === selectedValue);
+                                                    const isDeductionField = document.getElementsByName('isDeduction')[0];
+                                                    if (selectedType) {
+                                                        isDeductionField.value = selectedType.deduction;
+                                                    } else {
+                                                        isDeductionField.value = '';
+                                                    }
                                                 }}
                                             >
-                                                <option value="" disabled selected>
-                                                Select Employee
-                                                </option>
-                                                {employee &&
-                                                employee.length &&
-                                                employee.map((item: any, index: string) => (
-                                                    <option key={`${index}_${item.userId}`} value={item.userId}>
-                                                    {item.label}
+                                            <option value="" disabled selected>
+                                                Select Recurring Name
+                                            </option>
+                                                {recurringTypes &&
+                                                recurringTypes.content &&
+                                                recurringTypes.content.length &&
+                                                recurringTypes.content.map((item: any, index: string) => (
+                                                    <option key={`${index}_${item.id}`} value={item.deduction}>
+                                                    {item.name}
                                                     </option>
                                                 ))}
                                             </select>
-                                            </div>
-
-
-                                            <div className="col-md-3 mb-3 mt-4">
-                                                <select
-                                                    placeholder="Recurring Name"
-                                                    className="form-select"
-                                                    name="recurringTypeId"
-                                                    id="type"
-                                                    value={values.description}
-                                                    onChange={(e) => {
-                                                        const selectedValue = e.target.value;
-                                                        const updatedFields = [...recurring];
-                                                        updatedFields[index].recurringTypeId = selectedValue; // Update the recurringTypeId for the specific item
-                                                        setRecurring(updatedFields);
-                                                        setFieldValue(`recurring[${index}].recurringTypeId`, selectedValue); // Update the corresponding value in Formik's state
-                                                        const selectedType = recurringTypes.content.find(item => item.id === selectedValue);
-                                                        const isDeductionField = document.getElementsByName('isDeduction')[0];
-                                                        if (selectedType) {
-                                                            isDeductionField.value = selectedType.value;
-                                                        } else {
-                                                            isDeductionField.value = '';
-                                                        }
-                                                    }}
-                                                >
-                                                   <option value="" disabled={!index} selected={!index}>
-                                                    Select Recurring Name
-                                                    </option>
-                                                    {recurringTypes &&
-                                                    recurringTypes.content &&
-                                                    recurringTypes.content.length &&
-                                                    recurringTypes.content.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.id}`} value={item.id}>
-                                                        {item.name}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                            <div className="col-md-1 mb-3">
-                                                <label>Deduct/Add</label>
-                                                <input
-                                                readOnly
-                                                name="isDeduction"
-                                                className="formControl"
-                                                value={values.deduction ? 'Deduction' : 'Add'}
-                                                onChange={(e) => {
-                                                    const updatedFields = [...recurring];
-                                                    updatedFields[index].deduction = e.target.value;
-                                                    setRecurring(updatedFields);
-                                                }}
-                                                />
-                                            </div>
-                                            <div className="col-md-2 mb-3">
-                                                <label>Amount</label>
-                                                <input
-                                                className="form-control"
-                                                name="adjustmentAmount"
-                                                value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
-                                                onChange={(e) => {
-                                                    setFieldValue('adjustmentAmount', e.target.value);
-                                                    const updatedFields = [...recurring];
-                                                    updatedFields[index].adjustmentAmount = e.target.value;
-                                                    setRecurring(updatedFields);
-                                                }}
-                                                />
-                                            </div>
-                                            <div className="col-md-2 mb-3">
-                                                <label>End Date</label>
-                                                <input
-                                                type="date"
-                                                className="formControl"
-                                                name="endDate"
-                                                value={values.endDate}
-                                                onChange={(e) => {
-                                                    setFieldValue('endDate', e.target.value);
-                                                    const updatedFields = [...recurring];
-                                                    updatedFields[index].endDate = e.target.value;
-                                                    setRecurring(updatedFields);
-                                                }}
-                                                />
-                                            </div>
-                                            <div className="col-md-2 mb-3">
+                                        </div>
+                                        <div className="col-md-1 mb-3">
+                                            <label>Deduct/Add</label>
+                                            <input
+                                            readOnly
+                                            name="isDeduction"
+                                            className="formControl"
+                                            value={values.deduction === true ? 'Deduction' : 'Add'}
+                                            onChange={(e) => {
+                                                setFieldValue('deduction', e.target.value);
+                                            }}
+                                            />
+                                        </div>
+                                        <div className="col-md-2 mb-3">
+                                            <label>Amount</label>
+                                            <input
+                                            className="form-control"
+                                            name="adjustmentAmount"
+                                            value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
+                                            onChange={(e) => {
+                                                setFieldValue('adjustmentAmount', e.target.value);
+                                            }}
+                                            />
+                                        </div>
+                                        <div className="col-md-2 mb-3">
+                                            <label>End Date</label>
+                                            <input
+                                            type="date"
+                                            className="formControl"
+                                            name="endDate"
+                                            value={values.endDate}
+                                            onChange={(e) => {
+                                                setFieldValue('endDate', e.target.value);
+                                            }}
+                                            />
+                                        </div>
+                                        <div className="col-md-2 mb-3">
                                             <label>Status</label>
                                             <select
                                                 name="active"
                                                 className="formControl"
                                                 value={values.active}
                                                 onChange={(e) => {
-                                                const selectedValue = e.target.value === 'true';
-                                                setFieldValue('active', selectedValue);
-                                                const updatedFields = [...recurring];
-                                                updatedFields[index].active = e.target.value;
-                                                setRecurring(updatedFields);
+                                                setFieldValue('active', e.target.value);
                                                 }}
-                                            ><option value="" disabled={!index} selected={!index}>
+                                            ><option value="" disabled selected>
                                             Status
                                             </option>
                                                 <option value={true}>Active</option>
                                                 <option value={false}>Inactive</option>
                                             </select>
-                                            </div>
-
-                                            {values.employeeId}
-                                           
-                                            {recurring.length > 1 && (
-                                                <div className="col-md-3 mb-3">
-                                                    <label>&nbsp;</label>
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-danger"
-                                                        onClick={() => handleRemoveField(index)}
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            )}
                                         </div>
                                     </div>
-                                    ))} 
+                                    
+                                    </div>
+                                    
+                                    ) :
+                                    
+                                    <div>
+                                        {recurring.map((values: any, index: any)=> {
+                                        return (
+                                            <div key={`recurring-${index}`}>
+                                                <div className="form-group row">
+                                                <div className="col-md-2 mb-3">
+                                                <label>Employee ID</label>
+                                                    <input
+                                                    readOnly
+                                                    className="formControl"
+                                                    name="userId"
+                                                    value={values.userId ? values.userId : ''}
+                                                    onChange={(e) => {
+                                                        const updatedFields = [...recurring];
+                                                        updatedFields[index].userId = e.target.value;
+                                                        setRecurring(updatedFields);
+                                                        setFormField(e, setFieldValue)
+                                                    }}
+                                                    />
+                                                    </div>
+                                                    <div className="col-md-3 mb-3">
+                                                    <label>Employee Name *</label>
+                                                    <select
+                                                        placeholder="Employee Name"
+                                                        className="form-select"
+                                                        value={values.userId}
+                                                        onChange={(e) => {
+                                                        const selectedValue = e.target.value;
+                                                        const updatedFields = [...recurring];
+                                                        updatedFields[index].userId = selectedValue;
+                                                        setRecurring(updatedFields);
+                                                        setFormField(e, setFieldValue)
+
+                                                        // Update the employee ID field with the selected employee's userId
+                                                        const selectedEmployee = employee.find(
+                                                            (item) => item.userId === selectedValue
+                                                        );
+                                                        const employeeIdField = document.getElementsByName('userId')[0];
+                                                        if (selectedEmployee) {
+                                                            employeeIdField.value = selectedEmployee.userId;
+                                                        } else {
+                                                            employeeIdField.value = '';
+                                                        }
+                                                        }}
+                                                    >
+                                                        <option value="" disabled selected>
+                                                        Select Employee
+                                                        </option>
+                                                        {employee &&
+                                                        employee.length &&
+                                                        employee.map((item: any, index: string) => (
+                                                            <option key={`${index}_${item.userId}`} value={item.userId}>
+                                                            {item.label}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    </div>
+
+
+                                                    <div className="col-md-3 mb-3 mt-4">
+                                                        <select
+                                                            placeholder="Recurring Name"
+                                                            className="form-select"
+                                                            name="recurringTypeId"
+                                                            id="type"
+                                                            value={values.deduction}
+                                                            onChange={(e) => {
+                                                                const selectedValue = e.target.value;
+                                                                const updatedFields = [...recurring];
+                                                                updatedFields[index].recurringTypeId = selectedValue; // Update the recurringTypeId for the specific item
+                                                                setRecurring(updatedFields);
+                                                                setFieldValue(`recurring[${index}].recurringTypeId`, selectedValue); // Update the corresponding value in Formik's state
+                                                                const selectedType = recurringTypes.find(item => item.recurringTypeId === selectedValue);
+                                                                const isDeductionField = document.getElementsByName('isDeduction')[0];
+                                                                if (selectedType) {
+                                                                    isDeductionField.value = selectedType.deduction;
+                                                                } else {
+                                                                    isDeductionField.value = '';
+                                                                }
+                                                            }}
+                                                        >
+                                                        <option value="" disabled={!index} selected={!index}>
+                                                            Select Recurring Name
+                                                            </option>
+                                                            {recurringTypes &&
+                                                            recurringTypes.length &&
+                                                            recurringTypes.map((item: any, index: string) => (
+                                                                <option key={`${index}_${item.recurringTypeId}`} value={item.recurringTypeId}>
+                                                                {item.recurringName}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-1 mb-3">
+                                                        <label>Deduct/Add</label>
+                                                        <input
+                                                        readOnly
+                                                        name="isDeduction"
+                                                        className="formControl"
+                                                        value={values.deduction == true ? "Deduction" : "Add"}
+                                                        onChange={(e) => {
+                                                            const updatedFields = [...recurring];
+                                                            updatedFields[index].deduction = e.target.value;
+                                                            setRecurring(updatedFields);
+                                                            setFormField(e, setFieldValue)
+                                                        }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2 mb-3">
+                                                        <label>Amount</label>
+                                                        <input
+                                                        className="form-control"
+                                                        name="adjustmentAmount"
+                                                        value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
+                                                        onChange={(e) => {
+                                                            setFieldValue('adjustmentAmount', e.target.value);
+                                                            const updatedFields = [...recurring];
+                                                            updatedFields[index].adjustmentAmount = e.target.value;
+                                                            setRecurring(updatedFields);
+                                                        }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2 mb-3">
+                                                        <label>End Date</label>
+                                                        <input
+                                                        type="date"
+                                                        className="formControl"
+                                                        name="endDate"
+                                                        value={values.endDate}
+                                                        onChange={(e) => {
+                                                            setFieldValue('endDate', e.target.value);
+                                                            const updatedFields = [...recurring];
+                                                            updatedFields[index].endDate = e.target.value;
+                                                            setRecurring(updatedFields);
+                                                        }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2 mb-3">
+                                                    <label>Status</label>
+                                                    <select
+                                                        name="active"
+                                                        className="formControl"
+                                                        value={values.active}
+                                                        onChange={(e) => {
+                                                        const selectedValue = e.target.value === 'true';
+                                                        setFieldValue('active', selectedValue);
+                                                        const updatedFields = [...recurring];
+                                                        updatedFields[index].active = e.target.value;
+                                                        setRecurring(updatedFields);
+                                                        }}
+                                                    ><option value="" disabled={!index} selected={!index}>
+                                                    Status
+                                                    </option>
+                                                        <option value={true}>Active</option>
+                                                        <option value={false}>Inactive</option>
+                                                    </select>
+                                                    </div>
+
+                                                    {values.employeeId}
+                                                
+                                                    {recurring.length > 1 && (
+                                                        <div className="col-md-3 mb-3">
+                                                            <label>&nbsp;</label>
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger"
+                                                                onClick={() => handleRemoveField(index)}
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                    
+                                    
+                                    )
+                                    } 
+                                    </div>
+                                    }
+                                    
+                                    
                                     <div className="d-flex justify-content-end px-5">
-                                    {!userId ? (
+                                    {values.userId ? null:  (
                                         <button
                                         type="button"
                                         className="btn btn btn-outline-primary me-2 mb-2 mt-2"
@@ -751,7 +949,7 @@ export const Recurring = (props: any) => {
                                         >
                                         Add Field
                                         </button>
-                                    ) : null}
+                                    ) }
                                     </div>
                                     <Modal.Footer>
                                         <button
