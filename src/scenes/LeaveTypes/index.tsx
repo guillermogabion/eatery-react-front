@@ -191,14 +191,6 @@ export const LeaveTypes = (props: any) => {
     return (
         <ContainerWrapper contents={<>
             <div className="w-100 px-5 py-5">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h2>Good day, {userData.data.profile.firstName}!</h2>
-                    </div>
-                    <div className="col-md-6" style={{ textAlign: 'right' }}>
-                        <TimeDate />
-                    </div>
-                </div>
                 <div>
                     <h3>Leave Types</h3>
                     <div className="w-100 pt-2">

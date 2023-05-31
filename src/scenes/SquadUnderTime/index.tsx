@@ -291,10 +291,10 @@ export const SquadUndertime = (props: any) => {
                                 return (
                                     <tr>
                                         <td> {item.lastName}, {item.firstName}</td>
-                                        <td> {item.shiftDate} </td>
-                                        <td> {item.utStart.replace('T', ' ')} </td>
-                                        <td> {item.utEnd.replace('T', ' ')} </td>
-                                        <td> {item.fileDate} </td>
+                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.statusChangedBy} </td>
                                         <td> { Utility.removeUnderscore(item.status) } </td>
@@ -400,28 +400,7 @@ export const SquadUndertime = (props: any) => {
     return (
         <ContainerWrapper contents={<>
             <div className="w-100 px-5 py-5">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                    </div>
-                    <div className="col-md-6" style={{ textAlign: 'right' }}>
-                        <TimeDate />
-                    </div>
-                </div>
                 <div>
-                    {/* <h3>OTs & UTs</h3>
-                    <div className="row p-0 m-0 pt-2">
-                    <div className="col-md-3">
-                        <h5>Monthly Total OTs:</h5>
-                        <h5>Monthly Total UTs:</h5>
-                    </div>
-                    <div className="col-md-3">
-                        <h5>200 mins</h5>
-                        <h5>150 mins</h5>
-                    </div>
-                    
-                    </div> */}
-
                     <div className="w-100 pt-2">
                         <div className="fieldtext d-flex col-md-3 w-100">
                             <div className="" style={{ width: 200, marginRight: 10 }}>

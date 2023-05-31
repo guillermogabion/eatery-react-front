@@ -444,8 +444,8 @@ export const SquadLeaves = (props: any) => {
                         <tr>
                           <td> {item.lastName}, {item.firstName} </td>
                           <td> {item.type} </td>
-                          <td> {item.dateFrom} </td>
-                          <td> {item.dateTo} </td>
+                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
                           <td> { Utility.removeUnderscore(item.status) } </td>
@@ -576,9 +576,7 @@ export const SquadLeaves = (props: any) => {
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
         <div className="row">
-          <div className="col-md-6">
-            <h2>Good Day, {userData.data.profile.firstName}!</h2>
-            <br />
+          <div className="col-md-12">
             {data.profile.role !== 'ADMIN' ? (
               // This code block will be rendered only if the user is an ADMIN
               <div>
@@ -599,9 +597,6 @@ export const SquadLeaves = (props: any) => {
                     <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))} */}
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
           </div>
         </div>
         <div>

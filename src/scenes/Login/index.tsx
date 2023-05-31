@@ -318,8 +318,8 @@ export const Login = () => {
       <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
         <div className="flex justify-center items-center px-4 loginBackground ">
           {!isNewAccount ?
-            <div className="bg-white relative flex flex-column justify-center items-center rounded-md pb-[180px] w-full xl:w-[500px] md:w-[450px]">
-              <div className="company-logo p-0 m-0 mt-5 ">
+            <div className="bg-white relative flex flex-column justify-center items-center rounded-md pb-[180px] pt-[80px] w-full xl:w-[500px] md:w-[450px]">
+              <div className="company-logo p-0 m-0">
                 <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
               </div>
               <div className="align-items-center mt-3">

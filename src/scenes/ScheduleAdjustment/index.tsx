@@ -404,12 +404,12 @@ export const ScheduleAdjustment = (props: any) => {
                                 <td> {item.lastName}, {item.firstName} </td>
                               </> : null
                           }
-                          <td> {item.fileDate} </td>
-                          <td> {item.dateFrom} </td>
-                          <td> {item.dateTo} </td>
+                          <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> {Utility.removeUnderscore(item.status) } </td>
+                          <td> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
                               onClick={() => {
@@ -543,11 +543,7 @@ export const ScheduleAdjustment = (props: any) => {
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
         <div className="row">
-          <div className="col-md-6">
-            <h2>Good Day, {userData.data.profile.firstName}!</h2>
-
-            <br />
-            <br />
+          <div className="col-md-12">
             <h3><b>Adjustment of Schedule</b></h3>
             <div className="row p-0 m-0 pt-4 ">
               <div className="col-md-4">
@@ -558,9 +554,6 @@ export const ScheduleAdjustment = (props: any) => {
               </div>
 
             </div>
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
           </div>
         </div>
         <div>
@@ -991,8 +984,8 @@ export const ScheduleAdjustment = (props: any) => {
             {/* <h4>reason</h4> {{values.reason}} */}
             <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
             <p>Reason : {initialValues.reason}</p>
-            <p>Date From : {initialValues.dateFrom}</p>
-            <p>Date To : {initialValues.dateTo}</p>
+            <p>Date From : {Utility.formatDate(initialValues.dateFrom, 'MM-DD-YYYY')}</p>
+            <p>Date To : {Utility.formatDate(initialValues.dateTo, 'MM-DD-YYYY')}</p>
             <p>Shift Starts : {initialValues.startShift}</p>
             <p>Start of Break : {initialValues.startBreak}</p>
             <p>End of Break : {initialValues.endBreak}</p>

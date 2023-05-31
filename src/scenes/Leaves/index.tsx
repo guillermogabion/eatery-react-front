@@ -477,11 +477,11 @@ export const Leaves = (props: any) => {
                           }
 
                           <td> {item.type} </td>
-                          <td> {item.dateFrom} </td>
-                          <td> {item.dateTo} </td>
+                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> { Utility.removeUnderscore(item.status) } </td>
+                          <td> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             {
                               item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
@@ -602,8 +602,6 @@ export const Leaves = (props: any) => {
       <div className="w-100 px-5 py-5">
         <div className="row">
           <div className="col-md-6">
-            <h2>Good Day, {userData.data.profile.firstName}!</h2>
-            <br />
             {data.profile.role !== 'EXECUTIVE' ? (
               // This code block will be rendered only if the user is an ADMIN
               <div>
@@ -624,9 +622,6 @@ export const Leaves = (props: any) => {
                     <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))} */}
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
           </div>
         </div>
         <div>

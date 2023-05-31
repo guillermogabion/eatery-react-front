@@ -141,14 +141,6 @@ export const Holiday = (props: any) => {
   return (
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h2>Good day, {userData.data.profile.firstName}!</h2>
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
-          </div>
-        </div>
         <div>
           <h3>Holiday Tagging</h3>
           <div className="w-100 pt-2">
@@ -233,9 +225,9 @@ export const Holiday = (props: any) => {
                       return (
                         <tr>
                           <td> {item.holidayName} </td>
-                          <td> { Utility.removeUnderscore(item.holidayType) } </td>
-                          <td> { Utility.removeUnderscore(item.premiumType) } </td>
-                          <td> {item.holidayDate} </td>
+                          <td> {Utility.removeUnderscore(item.holidayType)} </td>
+                          <td> {Utility.removeUnderscore(item.premiumType)} </td>
+                          <td> {Utility.formatDate(item.holidayDate, 'MM-DD-YYYY')} </td>
                           <td className="d-flex">
                             <label
                               onClick={() => {

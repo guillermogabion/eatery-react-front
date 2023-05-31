@@ -210,8 +210,16 @@ export const Utility = {
   removeUnderscore(str: any) {
     return str.replaceAll('_', ' ')
   },
-  formatDate(strDate: any, format: any) {
-    return moment(strDate, 'YYYY-MM-DD').format(format)
+  formatDate(strDate: any, format: any, isTime: any = false) {
+    try {
+      if (isTime){
+        return moment(strDate, 'YYYY-MM-DD hh:mm A').format(format)
+      }
+      return moment(strDate, 'YYYY-MM-DD').format(format)
+    } catch (error) {
+      return strDate
+    }
+    
   },
   capitalizeFirstLetter(string:any) {
     return string.charAt(0).toUpperCase() + string.slice(1);

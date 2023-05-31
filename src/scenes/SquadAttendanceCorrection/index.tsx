@@ -378,10 +378,10 @@ export const SquadAttendanceCorrection = (props: any) => {
                 return (
                   <tr>
                     <td> {item.lastName}, {item.firstName}</td>
-                    <td>{item.type}</td>
+                    <td>{Utility.removeUnderscore(item.type)}</td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> {Utility.removeUnderscore(item.status) } </td>
+                    <td> {Utility.removeUnderscore(item.status)} </td>
                     <td>
 
                       <label
@@ -482,14 +482,6 @@ export const SquadAttendanceCorrection = (props: any) => {
   return (
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
-          </div>
-        </div>
         <div>
           <div className="w-100 pt-2">
             <div className="fieldtext d-flex col-md-3 w-100">
@@ -859,9 +851,9 @@ export const SquadAttendanceCorrection = (props: any) => {
               <tbody>
                 {coaBreakdown.map((initialValues, index) => (
                   <tr key={`coaBreakdown-${index}`}>
-                    <td>{initialValues.shiftDate}</td>
+                    <td>{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
                     <td>{initialValues.coaBdType}</td>
-                    <td>{initialValues.date}</td>
+                    <td>{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
                     <td>{initialValues.time}</td>
                   </tr>
                 ))}

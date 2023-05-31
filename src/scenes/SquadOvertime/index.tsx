@@ -335,15 +335,15 @@ export const SquadOvertime = (props: any) => {
                       <td>{item.lastName}, {item.firstName}</td> :
                       null
                     }
-                    <td> {item.shiftDate} </td>
-                    <td> { Utility.removeUnderscore(item.classification) } </td>
-                    <td> {item.otStart.replace('T', ' ')} </td>
-                    <td> {item.otEnd.replace('T', ' ')} </td>
+                    <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                    <td> {Utility.removeUnderscore(item.classification)} </td>
+                    <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                    <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
                     <td> {item.totalDuration} </td>
-                    <td> {item.fileDate} </td>
+                    <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> { Utility.removeUnderscore(item.status) } </td>
+                    <td> {Utility.removeUnderscore(item.status)} </td>
                     <td>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
@@ -443,14 +443,6 @@ export const SquadOvertime = (props: any) => {
   return (
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
-          </div>
-        </div>
         <div>
           <div className="w-100 pt-2">
             <div className="fieldtext d-flex col-md-3 w-100 ">

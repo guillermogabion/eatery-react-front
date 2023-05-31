@@ -21,6 +21,7 @@ import FileUpload from "./upload"
 import ViewEmployee from "./view"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import { Utility } from "../../utils"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
 const ErrorSwal = withReactContent(Swal)
 
 interface Employee {
@@ -2456,14 +2457,6 @@ export const Employee = (props: any) => {
   return (
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h2 className="bold-text">Good Day, HR Admin!</h2>
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
-          </div>
-        </div>
         <div>
           <div className="w-100">
 
@@ -2472,30 +2465,14 @@ export const Employee = (props: any) => {
               <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee</label>
-                  <SingleSelect
-                    type="string"
-                    options={employeeOptionList || []}
-                    placeholder={"Employee"}
-                    onChangeOption={singleChangeOption}
-                    name="userId"
-                    value={filterData && filterData['userId']}
-                  />
+                  <EmployeeDropdown
+                      placeholder={"Employee"}
+                      singleChangeOption={singleChangeOption}
+                      name="userId"
+                      value={filterData && filterData['userId']}
+                      withEmployeeID={true}
+                    />
                 </div>
-              </div>
-              <div className="input-container w-[200px]">
-
-                <label>Employee ID</label>
-                <input
-                  name="employeeId"
-                  placeholder="Employee ID"
-                  type="text"
-                  autoComplete="off"
-                  className="formControl"
-                  maxLength={40}
-                  value={filterData["employeeId"]}
-                  onChange={(e) => makeFilterData(e)}
-                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                />
               </div>
               <div className="input-container">
                 <div className="mt-[22px]">
@@ -2535,7 +2512,7 @@ export const Employee = (props: any) => {
                         <td> {Utility.removeUnderscore(item.empType)} </td>
                         <td> {item.empStatus} </td>
                         <td> {item.fullname} </td>
-                        <td> {item.hireDate} </td>
+                        <td> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
                         <td> {item.acctStatus} </td>
                         <td>
                           <label

@@ -297,10 +297,10 @@ export const Undertime = (props: any) => {
                                                     <td> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td> {item.shiftDate} </td>
-                                        <td> {item.utStart.replace('T', ' ')} </td>
-                                        <td> {item.utEnd.replace('T', ' ')} </td>
-                                        <td> {item.fileDate} </td>
+                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.statusChangedBy} </td>
                                         <td> {Utility.removeUnderscore(item.status) } </td>
@@ -403,14 +403,6 @@ export const Undertime = (props: any) => {
     return (
         <ContainerWrapper contents={<>
             <div className="w-100 col-md-12 col-lg-10 px-5 py-5">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                    </div>
-                    <div className="col-md-6" style={{ textAlign: 'right' }}>
-                        <TimeDate />
-                    </div>
-                </div>
                 <div>
                     <div className="w-100 pt-2">
                         <div className="fieldtext d-flex col-md-3 w-100">

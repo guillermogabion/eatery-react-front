@@ -117,18 +117,14 @@ export const Squad = (props: any) => {
   return (
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
-        <div className="row">
-          <div className="col-md-6">
-            <h2 className="bold-text">Good Day, {userData.data.profile.firstName}</h2>
-          </div>
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <TimeDate />
-          </div>
-        </div>
         <div>
-          <h3>Subordinates</h3>
-
-
+          
+          {
+              data.profile.role == 'EMPLOYEE' ?
+                <h3>Colleagues</h3> 
+                :
+                <h3>Subordinates</h3>
+            }
           <div className="w-100 pt-4">
             <div className="fieldtext d-flex col-md-3 w-100">
               <div className="" style={{ width: 200, marginRight: 10 }}>

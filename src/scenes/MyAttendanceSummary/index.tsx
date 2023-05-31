@@ -14,6 +14,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TimeDate from "../../components/TimeDate"
 import FileUploadService from "../../services/FileUploadService"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const MyAttendanceSummary = (props: any) => {
@@ -235,11 +236,11 @@ export const MyAttendanceSummary = (props: any) => {
                                             return (
                                                 <tr>
                                                     <td> {item.lastName}, {item.firstName} </td>
-                                                    <td> {item.date} </td>
+                                                    <td> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
                                                     <td> {item.schedule} </td>
                                                     <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
                                                     <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
-                                                    <td> {item.dayType} </td>
+                                                    <td> { Utility.removeUnderscore(item.dayType) } </td>
                                                     <td> {item.status} </td>
                                                     {
                                                         data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
@@ -336,15 +337,7 @@ export const MyAttendanceSummary = (props: any) => {
 
     return (
         <ContainerWrapper contents={<>
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h2 className="bold-text">Good Day, {userData.data.profile.firstName}!</h2>
-                    </div>
-                    <div className="col-md-6" style={{ textAlign: 'right' }}>
-                        <TimeDate />
-                    </div>
-                </div>
+            <div className="w-100 px-5 py-5">
                 <div>
                     <h3>Attendance Summary</h3>
 

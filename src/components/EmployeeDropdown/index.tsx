@@ -3,7 +3,7 @@ import { Api, RequestAPI } from "../../api";
 import SingleSelect from "../Forms/SingleSelect";
 
 const EmployeeDropdown = (props: any) => {
-    const { value = "", singleChangeOption, name, placeholder = "", styles, squad } = props
+    const { value = "", singleChangeOption, name, placeholder = "", styles, squad, withEmployeeID = false } = props
     const [employeeList, setEmployeeList] = useState<any>([]);
 
     useEffect(() => {
@@ -20,10 +20,17 @@ const EmployeeDropdown = (props: any) => {
                         } else {
                             let tempArray: any = []
                             body.data.forEach((d: any, i: any) => {
-                                tempArray.push({
-                                    value: d.userAccountId,
-                                    label: d.firstname + " " + d.lastname
-                                })
+                                if (withEmployeeID){
+                                    tempArray.push({
+                                        value: d.userAccountId,
+                                        label: d.firstname + " " + d.lastname + ` - ${d.employeeId ? d.employeeId: ""}`
+                                    })
+                                }else{
+                                    tempArray.push({
+                                        value: d.userAccountId,
+                                        label: d.firstname + " " + d.lastname
+                                    })
+                                }
                             });
                             setEmployeeList(tempArray)
                         }
@@ -43,10 +50,17 @@ const EmployeeDropdown = (props: any) => {
                         } else {
                             let tempArray: any = []
                             body.data.forEach((d: any, i: any) => {
-                                tempArray.push({
-                                    value: d.userAccountId,
-                                    label: d.firstname + " " + d.lastname
-                                })
+                                if (withEmployeeID){
+                                    tempArray.push({
+                                        value: d.userAccountId,
+                                        label: d.firstname + " " + d.lastname + ` - ${d.employeeId ? d.employeeId: ""}`
+                                    })
+                                }else{
+                                    tempArray.push({
+                                        value: d.userAccountId,
+                                        label: d.firstname + " " + d.lastname
+                                    })
+                                }
                             });
                             setEmployeeList(tempArray)
                         }

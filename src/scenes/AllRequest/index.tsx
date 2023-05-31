@@ -223,10 +223,10 @@ export const AllRequest = (props: any) => {
                                                             </> : null
                                                     }
                                                     <td> {item.type} </td>
-                                                    <td> {item.dateFrom} </td>
-                                                    <td> {item.dateTo} </td>
+                                                    <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                    <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                     <td> {item.reason} </td>
-                                                    <td> { Utility.removeUnderscore(item.status) } </td>
+                                                    <td> {Utility.removeUnderscore(item.status)} </td>
                                                 </tr>
                                             )
                                         })
@@ -448,9 +448,9 @@ export const AllRequest = (props: any) => {
                                                     <td> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td>{ Utility.removeUnderscore(item.type) }</td>
+                                        <td>{Utility.removeUnderscore(item.type)}</td>
                                         <td> {item.reason} </td>
-                                        <td> { Utility.removeUnderscore(item.status) } </td>
+                                        <td> {Utility.removeUnderscore(item.status)} </td>
                                     </tr>
                                 )
                             })
@@ -505,7 +505,7 @@ export const AllRequest = (props: any) => {
 
             let queryString = ""
             let filterDataTemp = { ...filterData }
-            if (!filterDataTemp.status){
+            if (!filterDataTemp.status) {
                 queryString = "&status=" + status
             }
 
@@ -669,13 +669,13 @@ export const AllRequest = (props: any) => {
                                             <td>{item.lastName}, {item.firstName}</td> :
                                             null
                                         }
-                                        <td> {item.shiftDate} </td>
-                                        <td> { Utility.removeUnderscore(item.classification) } </td>
-                                        <td> {item.otStart.replace('T', ' ')} </td>
-                                        <td> {item.otEnd.replace('T', ' ')} </td>
-                                        <td> {item.fileDate} </td>
+                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td> {Utility.removeUnderscore(item.classification)} </td>
+                                        <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
-                                        <td> { Utility.removeUnderscore(item.status) } </td>
+                                        <td> {Utility.removeUnderscore(item.status)} </td>
                                     </tr>
                                 )
                             })
@@ -729,8 +729,8 @@ export const AllRequest = (props: any) => {
 
             let queryString = ""
             let filterDataTemp = { ...filterData }
-            
-            if (!filterDataTemp.status){
+
+            if (!filterDataTemp.status) {
                 queryString = "&status=" + status
             }
 
@@ -895,12 +895,12 @@ export const AllRequest = (props: any) => {
                                                     <td> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td> {item.shiftDate} </td>
-                                        <td> {item.utStart.replace('T', ' ')} </td>
-                                        <td> {item.utEnd.replace('T', ' ')} </td>
-                                        <td> {item.fileDate} </td>
+                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
-                                        <td> { Utility.removeUnderscore(item.status) } </td>
+                                        <td> {Utility.removeUnderscore(item.status)} </td>
                                     </tr>
                                 )
                             })
@@ -954,7 +954,7 @@ export const AllRequest = (props: any) => {
             let queryString = ""
             let filterDataTemp = { ...filterData }
 
-            if (!filterDataTemp.status){
+            if (!filterDataTemp.status) {
                 queryString = "&status=" + status
             }
 
@@ -1120,10 +1120,10 @@ export const AllRequest = (props: any) => {
                                                                 <td> {item.lastName}, {item.firstName} </td>
                                                             </> : null
                                                     }
-                                                    <td> {item.dateFrom} </td>
-                                                    <td> {item.dateTo} </td>
+                                                    <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                    <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                     <td> {item.reason} </td>
-                                                    <td> { Utility.removeUnderscore(item.status) } </td>
+                                                    <td> {Utility.removeUnderscore(item.status)} </td>
                                                 </tr>
                                             )
                                         })
@@ -1207,21 +1207,8 @@ export const AllRequest = (props: any) => {
         // ContentWrapper component same as container it holds the contents and the contents can also be a component
         <ContainerWrapper contents={<>
             <div className="row m-0 p-0">
-                <div className="col-md-12 px-3 py-5">
+                <div className="col-md-12 px-5 py-5">
                     <>
-                        <div className="row m-0 p-0">
-                            <div className="col-md-6">
-                                <h2>Good Day, {userData.data.profile.firstName}!</h2>
-
-                                <br />
-                                <br />
-                                <h2><b>All Requests</b></h2>
-                                <br />
-                            </div>
-                            <div className="col-md-6" style={{ textAlign: 'right' }}>
-                                <TimeDate />
-                            </div>
-                        </div>
                         <div>
                             <div className=" pt-2">
                                 <Tabs
