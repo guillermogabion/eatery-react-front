@@ -503,6 +503,7 @@ export const AttendanceCorrection = (props: any) => {
               {
                 data.profile.role == 'EXECUTIVE' ?
                   <div className="" style={{ width: 200, marginRight: 10 }}>
+                    <div>
                     <label>Employee</label>
                     <EmployeeDropdown
                       placeholder={"Employee"}
@@ -510,18 +511,25 @@ export const AttendanceCorrection = (props: any) => {
                       name="userId"
                       value={filterData && filterData['userId']}
                     />
+                    </div>
                   </div>
                   :
                   null
               }
 
               <div>
-                <Button
-                  style={{ width: 120 }}
-                  onClick={() => getAllCOARequest(0, key)}
-                  className="btn btn-primary mx-2 mt-4">
-                  Search
-                </Button>
+                {
+                   data.profile.role == 'EXECUTIVE' ?
+                   <Button
+                   style={{ width: 120 }}
+                   onClick={() => getAllCOARequest(0, key)}
+                   className="btn btn-primary mx-2 mt-4">
+                   Search
+                 </Button>
+                 :
+                 null
+                }
+               
               </div>
             </div>
             <Tabs
