@@ -14,19 +14,19 @@ import { async } from "validate.js"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import { Utility } from "../../utils"
 
 const ErrorSwal = withReactContent(Swal)
 
-export const Payroll = (props: any) => {
+export const Recurring = (props: any) => {
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const { data } = useSelector((state: any) => state.rootReducer.userData)
-    const [ adjustmentList, setAdjustmentList] = React.useState([]);
+    const [ recurringList, setRecurringList] = React.useState([]);
     const formRef: any = useRef()
     const [modalShow, setModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
-    const [adjustment, setAdjustment] = useState<any>([]);
-    const [periodMonths, setPeriodMonths] = useState<any>([]);
-    const [ adjustmentTypes, setAdjustmentTypes ] = useState<any>([]);
+    const [recurring, setRecurring] = useState<any>([]);
+    const [ recurringTypes, setRecurringTypes ] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
 
@@ -37,21 +37,21 @@ export const Payroll = (props: any) => {
 
     const [initialValues, setInitialValues] = useState<any>({
        
-        adjustments : [
+        recurring : [
             {
                 "userId": "",
-                "adjustmentTypeId": "",
+                "recurringTypeId": "",
                 "adjustmentAmount": "",
-                "periodMonth": "",
-                "periodYear": "",
+                "endDate": "",
+                "active": "",
             }
            
         ],
         "userId": "",
-        "adjustmentTypeId": "",
+        "recurringTypeId": "",
         "adjustmentAmount": "",
-        "periodMonth": "",
-        "periodYear": "",
+        "endDate": "",
+        "active": "",
                
            
    
@@ -61,60 +61,12 @@ export const Payroll = (props: any) => {
         'Employee ID',
         'Employee Name',
         'Amount',
-        'Adjustment Name',
-        'Payroll Period',
+        'Recurring Name',
+       
         'Action',
     ];
-    const monthMap = {
-    January: 1,
-    February: 2,
-    March: 3,
-    April: 4,
-    May: 5,
-    June: 6,
-    July: 7,
-    August: 8,
-    September: 9,
-    October: 10,
-    November: 11,
-    December: 12
-    };
-    function getMonthName(monthNumber) {
-        const monthMap = {
-            1: "January",
-            2: "February",
-            3: "March",
-            4: "April",
-            5: "May",
-            6: "June",
-            7: "July",
-            8: "August",
-            9: "September",
-            10: "October",
-            11: "November",
-            12: "December"
-        };
-    
-        return monthMap[monthNumber];
-    }
-
-    function generateYearOptions() {
-        const currentYear = new Date().getFullYear();
-        const startYear = currentYear - 3;
-        const endYear = currentYear + 3;
-        const yearOptions = [];
-        for (let year = startYear; year <= endYear; year++) {
-            yearOptions.push(year);
-        }
-        return yearOptions;
-    }
-    const handleInputChange = (e) => {
-    const monthName = e.target.value;
-    const monthNumber = monthMap[monthName];
-    setPeriodMonths(monthNumber);
-    };
     const handleAddField = () => {
-        setAdjustment([...adjustment, {}])
+        setRecurring([...recurring, {}])
     }
     const setFormField = (e: any, setFieldValue: any) => {
         const { name, value } = e.target
@@ -125,19 +77,19 @@ export const Payroll = (props: any) => {
     
     useEffect(() => {
     if (modalShow) {
-        setAdjustment([{}]);
+        setRecurring([{}]);
     }
     }, [modalShow]);
     const handleRemoveField = (index: number) => {
-        if (adjustment.length === 1) {
+        if (recurring.length === 1) {
             return; // Do not remove the only field row
         }
-        const updatedFields = [...adjustment];
+        const updatedFields = [...recurring];
         updatedFields.splice(index, 1);
-        setAdjustment(updatedFields);
+        setRecurring(updatedFields);
     }
 
-    const getAllAdjustmentList = (pageNo: any) => {
+    const getAllRecurringList = (pageNo: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -151,7 +103,7 @@ export const Payroll = (props: any) => {
         })
         }
         RequestAPI.getRequest(
-            `${Api.getAllPayrollList}?size=10&page${pageNo}${queryString}`,
+            `${Api.getAllRecurringList}?size=10&page${pageNo}${queryString}`,
             "",
             {},
             {},
@@ -159,7 +111,7 @@ export const Payroll = (props: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 && body && body.data) {
                 if (body.data.content) {
-                    setAdjustmentList(body.data)
+                    setRecurringList(body.data)
                 }
                 } else {
 
@@ -169,9 +121,9 @@ export const Payroll = (props: any) => {
         )
     }
     useEffect(() => {
-        getAllAdjustmentList(0)
+        getAllRecurringList(0)
         RequestAPI.getRequest(
-            `${Api.getAdjustmentType}`,
+            `${Api.getAllRecurringType}`,
             "",
             {},
             {},
@@ -183,12 +135,12 @@ export const Payroll = (props: any) => {
                     let tempArray: any = []
                     body.data.forEach((d: any, i: any) => {
                         tempArray.push({
-                            adjustmentTypeId: d.id,
-                            adjustmentName: d.name,
+                            recurringTypeId: d.id,
+                            recurringName: d.name,
                             // deduction : d.deduction
                         })
                     });
-                    setAdjustmentTypes(tempArray)
+                    setRecurringTypes(tempArray)
                     // setRecurringTypes([])
 
                     
@@ -223,7 +175,7 @@ export const Payroll = (props: any) => {
     }, [])
 
     const handlePageClick = (event: any) => {
-        getAllAdjustmentList(event.selected)
+        getAllRecurringList(event.selected)
     };
 
     const makeFilterData = (event: any) => {
@@ -238,9 +190,9 @@ export const Payroll = (props: any) => {
         setFilterData(filterObj)
     }
 
-    const getAdjustment = (id: any = 0) => {
+    const getRecurring = (id: any = 0) => {
         RequestAPI.getRequest(
-            `${Api.getPayrollAdjustmentInfo}?id=${id}`,
+            `${Api.recurringInfo}?id=${id}`,
             "",
             {},
             {},
@@ -296,7 +248,7 @@ export const Payroll = (props: any) => {
                     );
                   } else {
                     Swal.close();
-                    getAllAdjustmentList(0);
+                    getAllRecurringList(0);
                     ErrorSwal.fire(
                       'Success!',
                       body.data || "",
@@ -321,21 +273,21 @@ export const Payroll = (props: any) => {
         setModalShow(false);
         formRef.current?.resetForm();
         setInitialValues({
-            adjustments : [
+            recurring : [
                 {
                     "userId": "",
-                    "adjustmentTypeId": "",
+                    "recurringTypeId": "",
                     "adjustmentAmount": "",
-                    "periodMonth": "",
-                    "periodYear": "",
+                    "endDate": "",
+                    "active": "",
                 }
                
             ],
             "userId": "",
-            "adjustmentTypeId": "",
+            "recurringTypeId": "",
             "adjustmentAmount": "",
-            "periodMonth": "",
-            "periodYear": "",
+            "endDate": "",
+            "active": "",
                    
         });
       }, []);
@@ -387,7 +339,7 @@ export const Payroll = (props: any) => {
                         </div>
                         <Button
                         style={{ width: 210 }}
-                        onClick={() => getAllAdjustmentList(0)}
+                        onClick={() => getAllRecurringList(0)}
                         className="btn btn-primary mx-2">
                         Search
                         </Button>
@@ -409,22 +361,21 @@ export const Payroll = (props: any) => {
                 </thead>
                 <tbody>
                 {
-                    adjustmentList &&
-                    adjustmentList.content &&
-                    adjustmentList.content.length > 0 &&
-                    adjustmentList.content.map((item: any, index: any) => {
+                    recurringList &&
+                    recurringList.content &&
+                    recurringList.content.length > 0 &&
+                    recurringList.content.map((item: any, index: any) => {
 
                     return (
                         <tr>
                         <td> {item.employeeId} </td>
                         <td> {item.employeeName} </td>
-                        <td> {item.amount} </td>
-                        <td> {item.adjustmentName} </td>
-                        <td> {getMonthName(item.payrollMonth)} {item.payrollYear} </td>
+                        <td> {item.adjustmentAmount} </td>
+                        <td> {item.recurringName} </td>
                         <td>
                         <label
                         onClick={() => {
-                            getAdjustment(item.id)
+                            getRecurring(item.id)
                         }}
                         className="text-muted cursor-pointer">
                         Update
@@ -445,16 +396,16 @@ export const Payroll = (props: any) => {
                 }
                 </tbody>
             </Table>
-        {
-            adjustmentList &&
-            adjustmentList.content &&
-            adjustmentList.content.length == 0 ?
-            <div className="w-100 text-center">
-                <label htmlFor="">No Records Found</label>
-            </div>
-            :
-            null
-        }
+                {
+                    recurringList &&
+                    recurringList.content &&
+                    recurringList.content.length == 0 ?
+                    <div className="w-100 text-center">
+                        <label htmlFor="">No Records Found</label>
+                    </div>
+                    :
+                    null
+                }
             </div>
         </div>
         <div className="d-flex justify-content-end">
@@ -465,7 +416,7 @@ export const Payroll = (props: any) => {
                     nextLabel=">"
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={5}
-                    pageCount={(adjustmentList && adjustmentList.totalPages) || 0}
+                    pageCount={(recurringList && recurringList.totalPages) || 0}
                     previousLabel="<"
                     previousLinkClassName="prev-next-pagination"
                     nextLinkClassName="prev-next-pagination"
@@ -477,29 +428,27 @@ export const Payroll = (props: any) => {
             </div>
         </div>
         <div className="d-flex justify-content-end mt-3" >
-        <div>
-        <Button className="mx-2"
-            onClick={() => {
-            // setModalUploadShow(true)
-            setModalShow(true)
-            }}
-        >Add Adjustment</Button>
-        <Button
-            className="mx-2"
-            onClick={() => {
-            // setModalShow(true)
-            }}>Import Adjustment</Button>
-        <Button
-            className="mx-2"
-            onClick={() => {
-                // downloadTemplate
-                }
-            }
-        >Export Adjustment</Button>
+            <div>
+                <Button className="mx-2"
+                    onClick={() => {
+                    // setModalUploadShow(true)
+                    setModalShow(true)
+                    }}
+                >Add Recurring</Button>
+                <Button
+                    className="mx-2"
+                    onClick={() => {
+                    // setModalShow(true)
+                    }}>Import Recurring</Button>
+                <Button
+                    className="mx-2"
+                    onClick={() => {
+                        // downloadTemplate
+                        }
+                    }
+                >Export Recurring</Button>
+            </div>
         </div>
-    </div>
-
-                           
         <Modal
             show={modalShow}
             size="xl"
@@ -514,7 +463,7 @@ export const Payroll = (props: any) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-v-center">
-                    Create Adjustment
+                    Create Recurring
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="row w-100 px-5">
@@ -536,61 +485,58 @@ export const Payroll = (props: any) => {
                     
 
                     
-                    const adjustmentTransactions = adjustment.map((item) => ({
+                    const recurringTransactions = recurring.map((item) => ({
                         userId: item.userId,
-                        adjustmentTypeId: item.adjustmentTypeId,
+                        recurringTypeId: item.recurringTypeId,
                         adjustmentAmount: item.adjustmentAmount,
-                        // endDate: item.endDate,
-                        periodMonth: item.periodMonth,
-                        periodYear: item.periodYear,
+                        endDate: item.endDate,
                         active: item.active
                     }));
 
                     const payload = {
-                        adjustments: adjustmentTransactions
+                        recurring: recurringTransactions
                     };
 
 
                     if(values.userId){
                         const valuesObj : any = {...values}
-                        console.log(valuesObj)
-                        // RequestAPI.putRequest(
-                        //     Api.updateRecurringTransaction,
-                        //     "",
-                        //     valuesObj,
-                        //     {},
-                        //     async (res) => {
-                        //         const { status, body = { data: {}, error: {} } } = res;
+                        RequestAPI.putRequest(
+                            Api.updateRecurringTransaction,
+                            "",
+                            valuesObj,
+                            {},
+                            async (res) => {
+                                const { status, body = { data: {}, error: {} } } = res;
                         
-                        //         if (status === 200 || status === 201) {
-                        //             if (body.error && body.error.message) {
-                        //             ErrorSwal.fire(
-                        //                 "Error!",
-                        //                 body.error.message || "",
-                        //                 "error"
+                                if (status === 200 || status === 201) {
+                                    if (body.error && body.error.message) {
+                                    ErrorSwal.fire(
+                                        "Error!",
+                                        body.error.message || "",
+                                        "error"
                         
-                        //             );
-                        //             // handleCloseModal();
-                        //             } else {
-                        //             setModalShow(false)
-                        //             ErrorSwal.fire(
-                        //                 "Updated Successfully!",
-                        //                 body.data || "",
-                        //                 "success"
-                        //             ).then((result) => {
-                        //                 if (result.isConfirmed) {
-                        //                 location.reload();
-                        //                 }
-                        //             });
-                        //             // handleCloseModal();
-                        //             }
-                        //         } else {
-                        //             ErrorSwal.fire("Error!", "Something Error.", "error");
-                        //         }
-                        //         }
-                        // );
+                                    );
+                                    // handleCloseModal();
+                                    } else {
+                                    setModalShow(false)
+                                    ErrorSwal.fire(
+                                        "Updated Successfully!",
+                                        body.data || "",
+                                        "success"
+                                    ).then((result) => {
+                                        if (result.isConfirmed) {
+                                        location.reload();
+                                        }
+                                    });
+                                    // handleCloseModal();
+                                    }
+                                } else {
+                                    ErrorSwal.fire("Error!", "Something Error.", "error");
+                                }
+                                }
+                        );
                     }else {
-                        RequestAPI.postRequest(Api.payrollAdjustmentCreate, "", payload, {}, async (res:any) => {
+                        RequestAPI.postRequest(Api.createRecurringTransaction, "", payload, {}, async (res:any) => {
                             Swal.close();
                             const { status, body = { data: {}, error: {} } }: any = res
 
@@ -698,16 +644,16 @@ export const Payroll = (props: any) => {
                                     </div>
                                     <div className="col-md-3 mb-3 mt-4">
                                         <select
-                                            placeholder="Adjustment Name"
+                                            placeholder="Recurring Name"
                                             className="form-select"
-                                            name="adjustmentTypeId"
+                                            name="recurringTypeId"
                                             id="type"
-                                            value={values.adjustmentTypeId}
+                                            value={values.deduction}
                                             onChange={(e) => {
                                                 const selectedValue = e.target.value;
-                                                setFieldValue('adjustmentTypeId', e.target.value);
-                                                const selectedType = adjustmentTypes.find(
-                                                        item => item.id === selectedValue);
+                                                setFieldValue('deduction', e.target.value);
+                                                const selectedType = recurringTypes.content.find(
+                                                    item => item.id === selectedValue);
                                                 const isDeductionField = document.getElementsByName('isDeduction')[0];
                                                 if (selectedType) {
                                                     isDeductionField.value = selectedType.deduction;
@@ -717,14 +663,14 @@ export const Payroll = (props: any) => {
                                             }}
                                         >
                                         <option value="" disabled selected>
-                                            Select Adjustment Name
+                                            Select Recurring Name
                                         </option>
-                                            {adjustmentTypes &&
-                                            adjustmentTypes &&
-                                            adjustmentTypes.length &&
-                                            adjustmentTypes.map((item: any, index: string) => (
-                                                <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                {item.adjustmentName}
+                                            {recurringTypes &&
+                                            recurringTypes.content &&
+                                            recurringTypes.content.length &&
+                                            recurringTypes.content.map((item: any, index: string) => (
+                                                <option key={`${index}_${item.id}`} value={item.deduction}>
+                                                {item.name}
                                                 </option>
                                             ))}
                                         </select>
@@ -752,53 +698,34 @@ export const Payroll = (props: any) => {
                                         }}
                                         />
                                     </div>
-                                    <div className="col-md-3 mb-3 mt-4">
-                                            <select
-                                                placeholder="Month"
-                                                className="form-select"
-                                                name="periodMonth"
-                                                id="type"
-                                                value={values.periodMonth}
-                                                onChange={(e) => {
-                                                    setFieldValue('periodMonth', e.target.value); // Update the corresponding value in Formik's state
-                                                }}
-                                            >
-                                                <option value="" disabled selected >
-                                                    Select Month
-                                                </option>
-                                                {Object.entries(monthMap).map(([month, value]) => (
-                                                    <option key={value} value={value}>
-                                                        {month}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                        
-                                        <div className="col-md-3 mb-3 mt-4">
-                                            <select
-                                                placeholder="Year"
-                                                className="form-select"
-                                                name="periodYear"
-                                                id="type"
-                                                value={values.periodYear}
-                                                onChange={(e) => {
-                                                    setFieldValue('periodYear', e.target.value);
-                                                    // Update the corresponding value in Formik's state
-                                                }}
-                                            >
-                                                <option value="" disabled selected >
-                                                    Select Year
-                                                </option>
-                                                {generateYearOptions().map((year) => (
-                                                    <option key={year} value={year}>
-                                                        {year}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                    
+                                    <div className="col-md-2 mb-3">
+                                        <label>End Date</label>
+                                        <input
+                                        type="date"
+                                        className="formControl"
+                                        name="endDate"
+                                        value={values.endDate}
+                                        onChange={(e) => {
+                                            setFieldValue('endDate', e.target.value);
+                                        }}
+                                        />
+                                    </div>
+                                    <div className="col-md-2 mb-3">
+                                        <label>Status</label>
+                                        <select
+                                            name="active"
+                                            className="formControl"
+                                            value={values.active}
+                                            onChange={(e) => {
+                                            setFieldValue('active', e.target.value);
+                                            }}
+                                        ><option value="" disabled selected>
+                                        Status
+                                        </option>
+                                            <option value={true}>Active</option>
+                                            <option value={false}>Inactive</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 
                                 </div>
@@ -806,9 +733,9 @@ export const Payroll = (props: any) => {
                                 ) :
                                 
                                 <div>
-                                    {adjustment.map((values: any, index: any)=> {
+                                    {recurring.map((values: any, index: any)=> {
                                     return (
-                                        <div key={`adjsutment-${index}`}>
+                                        <div key={`recurring-${index}`}>
                                             <div className="form-group row">
                                             <div className="col-md-2 mb-3">
                                             <label>Employee ID</label>
@@ -818,9 +745,9 @@ export const Payroll = (props: any) => {
                                                 name="userId"
                                                 value={values.userId ? values.userId : ''}
                                                 onChange={(e) => {
-                                                    const updatedFields = [...adjustment];
+                                                    const updatedFields = [...recurring];
                                                     updatedFields[index].userId = e.target.value;
-                                                    setAdjustment(updatedFields);
+                                                    setRecurring(updatedFields);
                                                     setFormField(e, setFieldValue)
                                                 }}
                                                 />
@@ -833,9 +760,9 @@ export const Payroll = (props: any) => {
                                                     value={values.userId}
                                                     onChange={(e) => {
                                                     const selectedValue = e.target.value;
-                                                    const updatedFields = [...adjustment];
+                                                    const updatedFields = [...recurring];
                                                     updatedFields[index].userId = selectedValue;
-                                                    setAdjustment(updatedFields);
+                                                    setRecurring(updatedFields);
                                                     setFormField(e, setFieldValue)
 
                                                     // Update the employee ID field with the selected employee's userId
@@ -866,18 +793,18 @@ export const Payroll = (props: any) => {
 
                                                 <div className="col-md-3 mb-3 mt-4">
                                                     <select
-                                                        placeholder="Adjustment Name"
+                                                        placeholder="Recurring Name"
                                                         className="form-select"
-                                                        name="adjustmentTypeId"
+                                                        name="recurringTypeId"
                                                         id="type"
                                                         value={values.deduction}
                                                         onChange={(e) => {
                                                             const selectedValue = e.target.value;
-                                                            const updatedFields = [...adjustment];
-                                                            updatedFields[index].adjustmentTypeId = selectedValue; // Update the recurringTypeId for the specific item
-                                                            setAdjustment(updatedFields);
-                                                            setFieldValue(`adjustment[${index}].adjustmentTypeId`, selectedValue); // Update the corresponding value in Formik's state
-                                                            const selectedType = adjustmentTypes.find(item => item.id === selectedValue);
+                                                            const updatedFields = [...recurring];
+                                                            updatedFields[index].recurringTypeId = selectedValue; // Update the recurringTypeId for the specific item
+                                                            setRecurring(updatedFields);
+                                                            setFieldValue(`recurring[${index}].recurringTypeId`, selectedValue); // Update the corresponding value in Formik's state
+                                                            const selectedType = recurringTypes.find(item => item.recurringTypeId === selectedValue);
                                                             const isDeductionField = document.getElementsByName('isDeduction')[0];
                                                             if (selectedType) {
                                                                 isDeductionField.value = selectedType.deduction;
@@ -887,13 +814,13 @@ export const Payroll = (props: any) => {
                                                         }}
                                                     >
                                                     <option value="" disabled={!index} selected={!index}>
-                                                        Select Adjustment Name
+                                                        Select Recurring Name
                                                         </option>
-                                                        {adjustmentTypes &&
-                                                        adjustmentTypes.length &&
-                                                        adjustmentTypes.map((item: any, index: string) => (
-                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                            {item.adjustmentName}
+                                                        {recurringTypes &&
+                                                        recurringTypes.length &&
+                                                        recurringTypes.map((item: any, index: string) => (
+                                                            <option key={`${index}_${item.recurringTypeId}`} value={item.recurringTypeId}>
+                                                            {item.recurringName}
                                                             </option>
                                                         ))}
                                                     </select>
@@ -906,9 +833,9 @@ export const Payroll = (props: any) => {
                                                     className="formControl"
                                                     value={values.deduction == true ? "Deduction" : "Add"}
                                                     onChange={(e) => {
-                                                        const updatedFields = [...adjustment];
+                                                        const updatedFields = [...recurring];
                                                         updatedFields[index].deduction = e.target.value;
-                                                        setAdjustment(updatedFields);
+                                                        setRecurring(updatedFields);
                                                         setFormField(e, setFieldValue)
                                                     }}
                                                     />
@@ -921,69 +848,51 @@ export const Payroll = (props: any) => {
                                                     value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
                                                     onChange={(e) => {
                                                         setFieldValue('adjustmentAmount', e.target.value);
-                                                        const updatedFields = [...adjustment];
+                                                        const updatedFields = [...recurring];
                                                         updatedFields[index].adjustmentAmount = e.target.value;
-                                                        setAdjustment(updatedFields);
+                                                        setRecurring(updatedFields);
                                                     }}
                                                     />
                                                 </div>
-                                                <div className="col-md-3 mb-3 mt-4">
-                                                    <select
-                                                        placeholder="Month"
-                                                        className="form-select"
-                                                        name="periodMonth"
-                                                        id="type"
-                                                        value={values.periodMonth}
-                                                        onChange={(e) => {
-                                                            const selectedValue = e.target.value;
-                                                            const updatedFields = [...adjustment];
-                                                            updatedFields[index].periodMonth = selectedValue; // Update the recurringTypeId for the specific item
-                                                            setAdjustment(updatedFields);
-                                                            setFieldValue(`adjustment[${index}].periodMonth`, selectedValue); // Update the corresponding value in Formik's state
-                                                        }}
-                                                    >
-                                                        <option value="" disabled={!index} selected={!index}>
-                                                            Select Month
-                                                        </option>
-                                                        {Object.entries(monthMap).map(([month, value]) => (
-                                                            <option key={value} value={value}>
-                                                                {month}
-                                                            </option>
-                                                        ))}
-                                                    </select>
+                                                <div className="col-md-2 mb-3">
+                                                    <label>End Date</label>
+                                                    <input
+                                                    type="date"
+                                                    className="formControl"
+                                                    name="endDate"
+                                                    value={values.endDate}
+                                                    onChange={(e) => {
+                                                        setFieldValue('endDate', e.target.value);
+                                                        const updatedFields = [...recurring];
+                                                        updatedFields[index].endDate = e.target.value;
+                                                        setRecurring(updatedFields);
+                                                    }}
+                                                    />
+                                                </div>
+                                                <div className="col-md-2 mb-3">
+                                                <label>Status</label>
+                                                <select
+                                                    name="active"
+                                                    className="formControl"
+                                                    value={values.active}
+                                                    onChange={(e) => {
+                                                    const selectedValue = e.target.value === 'true';
+                                                    setFieldValue('active', selectedValue);
+                                                    const updatedFields = [...recurring];
+                                                    updatedFields[index].active = e.target.value;
+                                                    setRecurring(updatedFields);
+                                                    }}
+                                                ><option value="" disabled={!index} selected={!index}>
+                                                Status
+                                                </option>
+                                                    <option value={true}>Active</option>
+                                                    <option value={false}>Inactive</option>
+                                                </select>
                                                 </div>
 
-                                                
-                                                <div className="col-md-3 mb-3 mt-4">
-                                                    <select
-                                                        placeholder="Year"
-                                                        className="form-select"
-                                                        name="periodYear"
-                                                        id="type"
-                                                        value={values.periodYear}
-                                                        onChange={(e) => {
-                                                            const selectedValue = e.target.value;
-                                                            const updatedFields = [...adjustment];
-                                                            updatedFields[index].periodYear = selectedValue; // Update the periodYear for the specific item
-                                                            setAdjustment(updatedFields);
-                                                            setFieldValue(`adjustment[${index}].periodYear`, selectedValue); // Update the corresponding value in Formik's state
-                                                        }}
-                                                    >
-                                                        <option value="" disabled={!index} selected={!index}>
-                                                            Select Year
-                                                        </option>
-                                                        {generateYearOptions().map((year) => (
-                                                            <option key={year} value={year}>
-                                                                {year}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-
-                                            
                                                 {values.employeeId}
                                             
-                                                {adjustment.length > 1 && (
+                                                {recurring.length > 1 && (
                                                     <div className="col-md-3 mb-3">
                                                         <label>&nbsp;</label>
                                                         <button
@@ -1030,14 +939,9 @@ export const Payroll = (props: any) => {
                         )
                     }}
                 </Formik>
-                
             </Modal.Body>
-            
-
         </Modal>
-
-        </>} />
-
+    </>} />
     )
 }
 
