@@ -488,11 +488,14 @@ export const Leaves = (props: any) => {
                           }
 
                           <td> {item.type} </td>
-                          <td> {item.dateFrom} </td>
-                          <td> {item.dateTo} </td>
+                          {/* <td> {item.dateFrom} </td>
+                          <td> {item.dateTo} </td> */}
+                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> {item.status} </td>
+                          {/* <td> {item.status} </td> */}
+                          <td> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             {
                               item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
