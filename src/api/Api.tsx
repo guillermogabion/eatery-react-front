@@ -172,7 +172,7 @@ const Api: any = {
   getAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/list",
   payrollAdjustmentCreate : process.env.REACT_APP_API_URL + "payroll/adjustment/create",
   getPayrollAdjustmentInfo : process.env.REACT_APP_API_URL + "payroll/adjustment/info",
-
+  editPayrollAdjustment : process.env.REACT_APP_API_URL + "payroll/adjustment/update",
 
   // payroll setting 
   getAllRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
@@ -187,6 +187,19 @@ const Api: any = {
   editAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/update",
   deleteAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/delete",
   
+
+  // hdmf
+
+  getHdmf :  process.env.REACT_APP_API_URL + "payroll/hdmf/info",
+  updateHDMF : process.env.REACT_APP_API_URL + "payroll/hdmf/update",
+  getPH :  process.env.REACT_APP_API_URL + "payroll/ph/info",
+  updatePH :  process.env.REACT_APP_API_URL + "payroll/ph/update",
+
+
+
+  // timekeeping ++ 
+
+  recalculate : process.env.REACT_APP_API_URL + "timekeeping/perday/recalculate",
 }
 
 export default Api
