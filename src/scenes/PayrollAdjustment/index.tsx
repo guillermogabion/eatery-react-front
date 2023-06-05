@@ -185,7 +185,7 @@ export const PayrollAdjustment = (props: any) => {
                         tempArray.push({
                             adjustmentTypeId: d.id,
                             adjustmentName: d.name,
-                            // deduction : d.deduction
+                            adjustmentDeduction : d.deduction
                         })
                     });
                     setAdjustmentTypes(tempArray)
@@ -651,7 +651,7 @@ export const PayrollAdjustment = (props: any) => {
                                         />
                                     </div> */}
                                 <div className="form-group row">
-                                    <div className="col-md-2 mb-3">
+                                    <div className="col-md-3 mb-3">
                                         <label>Employee ID</label>
                                             <input
                                             readOnly
@@ -698,6 +698,7 @@ export const PayrollAdjustment = (props: any) => {
                                     </div>
                                     <div className="col-md-3 mb-3 mt-4">
                                         <select
+                                            disabled
                                             placeholder="Adjustment Name"
                                             className="form-select"
                                             name="adjustmentTypeId"
@@ -729,19 +730,42 @@ export const PayrollAdjustment = (props: any) => {
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="col-md-1 mb-3">
-                                        <label>Deduct/Add</label>
-                                        <input
-                                        readOnly
-                                        name="isDeduction"
-                                        className="formControl"
-                                        value={values.deduction === true ? 'Deduction' : 'Add'}
-                                        onChange={(e) => {
-                                            setFieldValue('deduction', e.target.value);
-                                        }}
-                                        />
+                                    <div className="col-md-3 mb-3 mt-4">
+                                        <select
+                                            disabled
+                                            placeholder="Adjustment Name"
+                                            className="form-select"
+                                            name="adjustmentTypeId"
+                                            id="type"
+                                            value={values.adjustmentTypeId}
+                                            onChange={(e) => {
+                                                const selectedValue = e.target.value;
+                                                setFieldValue('adjustmentTypeId', e.target.value);
+                                                const selectedType = adjustmentTypes.find(
+                                                        item => item.id === selectedValue);
+                                                const isDeductionField = document.getElementsByName('isDeduction')[0];
+                                                if (selectedType) {
+                                                    isDeductionField.value = selectedType.deduction;
+                                                } else {
+                                                    isDeductionField.value = '';
+                                                }
+                                            }}
+                                        >
+                                        <option value="" disabled selected>
+                                            Select Adjustment Name
+                                        </option>
+                                            {adjustmentTypes &&
+                                            adjustmentTypes &&
+                                            adjustmentTypes.length &&
+                                            adjustmentTypes.map((item: any, index: string) => (
+                                                <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                {item.adjustmentDeduction == true ? "Deduct" : "Add"}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
-                                    <div className="col-md-2 mb-3">
+                                    
+                                    <div className="col-md-4 mb-3">
                                         <label>Amount</label>
                                         <input
                                         className="form-control"
@@ -752,7 +776,7 @@ export const PayrollAdjustment = (props: any) => {
                                         }}
                                         />
                                     </div>
-                                    <div className="col-md-3 mb-3 mt-4">
+                                    <div className="col-md-4 mb-3 mt-4">
                                             <select
                                                 placeholder="Month"
                                                 className="form-select"
@@ -775,7 +799,7 @@ export const PayrollAdjustment = (props: any) => {
                                         </div>
 
                                         
-                                        <div className="col-md-3 mb-3 mt-4">
+                                        <div className="col-md-4 mb-3 mt-4">
                                             <select
                                                 placeholder="Year"
                                                 className="form-select"
@@ -810,7 +834,7 @@ export const PayrollAdjustment = (props: any) => {
                                     return (
                                         <div key={`adjsutment-${index}`}>
                                             <div className="form-group row">
-                                            <div className="col-md-2 mb-3">
+                                            <div className="col-md-3 mb-3">
                                             <label>Employee ID</label>
                                                 <input
                                                 readOnly
@@ -898,22 +922,43 @@ export const PayrollAdjustment = (props: any) => {
                                                         ))}
                                                     </select>
                                                 </div>
-                                                <div className="col-md-1 mb-3">
-                                                    <label>Deduct/Add</label>
-                                                    <input
-                                                    readOnly
-                                                    name="isDeduction"
-                                                    className="formControl"
-                                                    value={values.deduction == true ? "Deduction" : "Add"}
-                                                    onChange={(e) => {
-                                                        const updatedFields = [...adjustment];
-                                                        updatedFields[index].deduction = e.target.value;
-                                                        setAdjustment(updatedFields);
-                                                        setFormField(e, setFieldValue)
-                                                    }}
-                                                    />
+                                                <div className="col-md-3 mb-3 mt-4">
+                                                    <select
+                                                        disabled
+                                                        placeholder="Adjustment Name"
+                                                        className="form-select"
+                                                        name="adjustmentTypeId"
+                                                        id="type"
+                                                        value={values.deduction}
+                                                        onChange={(e) => {
+                                                            const selectedValue = e.target.value;
+                                                            const updatedFields = [...adjustment];
+                                                            updatedFields[index].adjustmentTypeId = selectedValue; // Update the recurringTypeId for the specific item
+                                                            setAdjustment(updatedFields);
+                                                            setFieldValue(`adjustment[${index}].adjustmentTypeId`, selectedValue); // Update the corresponding value in Formik's state
+                                                            const selectedType = adjustmentTypes.find(item => item.id === selectedValue);
+                                                            const isDeductionField = document.getElementsByName('isDeduction')[0];
+                                                            if (selectedType) {
+                                                                isDeductionField.value = selectedType.deduction;
+                                                            } else {
+                                                                isDeductionField.value = '';
+                                                            }
+                                                        }}
+                                                    >
+                                                    <option value="" disabled={!index} selected={!index}>
+                                                        Select Adjustment Name
+                                                        </option>
+                                                        {adjustmentTypes &&
+                                                        adjustmentTypes.length &&
+                                                        adjustmentTypes.map((item: any, index: string) => (
+                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                                {item.adjustmentDeduction == true ? "Deduct" : "Add"}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                                 </div>
-                                                <div className="col-md-2 mb-3">
+                                                
+                                                <div className="col-md-4 mb-3">
                                                     <label>Amount</label>
                                                     <input
                                                     className="form-control"
@@ -927,7 +972,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     }}
                                                     />
                                                 </div>
-                                                <div className="col-md-3 mb-3 mt-4">
+                                                <div className="col-md-4 mb-3 mt-4">
                                                     <select
                                                         placeholder="Month"
                                                         className="form-select"
@@ -954,7 +999,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 </div>
 
                                                 
-                                                <div className="col-md-3 mb-3 mt-4">
+                                                <div className="col-md-4 mb-3 mt-4">
                                                     <select
                                                         placeholder="Year"
                                                         className="form-select"
@@ -988,7 +1033,7 @@ export const PayrollAdjustment = (props: any) => {
                                                         <label>&nbsp;</label>
                                                         <button
                                                             type="button"
-                                                            className="btn btn-danger"
+                                                            className="btn btn-outline-danger"
                                                             onClick={() => handleRemoveField(index)}
                                                         >
                                                             Remove
