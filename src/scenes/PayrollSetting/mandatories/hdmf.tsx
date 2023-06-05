@@ -238,7 +238,9 @@ const hdmf = (props: any) => {
                                 Swal.showLoading();
                             }
                         });
-                        const valuesObj : any = {...values}
+                        const valuesObj : any = {amount}
+
+                        console.log(valuesObj)
                         RequestAPI.postRequest(Api.updateHDMF, "" , valuesObj, {}, async (res: any) => {
                           Swal.close()
                           const { status, body = {data: {}, error: {}}}: any = res

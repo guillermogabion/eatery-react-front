@@ -23,12 +23,11 @@ import {
   LeaveTypes,
   SquadScheduleAdjustment,
   MissingLogs,
-  // UnApproveRequest,
-  Payroll,
+  PayrollAdjustment,
   Recurring,
   PayrollSetting,
   AllRequest,
-  // Payroll,
+  Payroll,
   ApproverLogin,
   Page404
 } from "../scenes"
@@ -86,7 +85,8 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/request/Ut/squadmembers", component: SquadUndertime})
   routes.push({ path: "/request/schedule-adjustment/squadmembers", component: SquadScheduleAdjustment})
   routes.push({ path: "/request/type", component: LeaveTypes })
-  routes.push({ path: "/payroll/adjustment", component: Payroll })
+  routes.push({ path: "/payroll", component: Payroll })
+  routes.push({ path: "/payroll/adjustment", component: PayrollAdjustment })
   routes.push({ path: "/payroll/recurring", component: Recurring })
   routes.push({ path: "/payroll/settings", component: PayrollSetting })
   
