@@ -31,6 +31,7 @@ export const AttendanceSummary = (props: any) => {
   const [downloadModalShow, setDownloadModalShow] = React.useState(false);
   const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
+  const [ userid, setUserid] =  useState<any>(null)
   const [isSubmit, setIsSubmit] = React.useState(false);
   const [addBioModal, setAddBioModal] = React.useState(false);
   const [deleteBioModal, setDeleteBioModal] = React.useState(false);
@@ -41,6 +42,7 @@ export const AttendanceSummary = (props: any) => {
   const [employeeList, setEmployeeList] = useState<any>([]);
   const [userId, setUserId] = useState<any>("");
   const [updateData, setUpdateData] = useState<any>(null);
+  
   const [initialValues, setInitialValues] = useState<any>({
     "userid": 0,
     "shiftDate": "",
@@ -49,6 +51,9 @@ export const AttendanceSummary = (props: any) => {
     "status": null,
     "type": ""
   });
+
+  const [recalculateModal, setRecalculateModal] = React.useState(false)
+  const [employee, setEmployee] = useState<any>([]);
 
   const [deleteInitialValues, setDeleteInitialValues] = useState<any>({
     "userid": 0,
@@ -82,6 +87,39 @@ export const AttendanceSummary = (props: any) => {
     )
   };
 
+  const recalculate = (fromDate: any, toDate: any, userid : any) => {
+    setIsSubmit(true)
+
+    let queryString = ""
+    let filterDataTemp = { ...filterData }
+    if (filterDataTemp) {
+      Object.keys(filterDataTemp).forEach((d: any) => {
+        if (filterDataTemp[d]) {
+
+          queryString += `&${d}=${filterDataTemp[d]}`
+        } else {
+          queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+        }
+      })
+    }
+    RequestAPI.putRequest(
+      `${Api.recalculate}?fromDate=${fromDate}&toDate=${toDate}`,
+      "",
+      "",
+      {},
+      async (res: any) => {
+        if (res) {
+          setIsSubmit(false)
+        }
+
+      }
+    )
+
+  console.log('DateFrom:', fromDate);
+  console.log('DateTo:', toDate);
+  console.log('userid:', userid);
+  }
+
   const uploadExcel = () => {
     if (selectedFile != null && selectedFile != "") {
       FileUploadService.uploadTimeKeeping(selectedFile, (event: any) => {
@@ -109,6 +147,28 @@ export const AttendanceSummary = (props: any) => {
   useEffect(() => {
     getAllAttendance(0)
     getAllEmployee()
+    RequestAPI.getRequest(
+      `${Api.employeeList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 && body && body.data) {
+              if (body.error && body.error.message) {
+              } else {
+                  let tempArray: any = []
+                  body.data.forEach((d: any, i: any) => {
+                      tempArray.push({
+                          userId: d.userAccountId,
+                          label: d.firstname + " " + d.lastname
+                      })
+                  });
+                  setEmployee(tempArray)
+              }
+        }
+      }
+    )
   }, [])
 
   const getAllEmployee = () => {
@@ -217,6 +277,14 @@ export const AttendanceSummary = (props: any) => {
       })
     }
   }
+
+  const setFormField = (e: any, setFieldValue: any) => {
+    const { name, value } = e.target
+    if (setFieldValue) {
+      setFieldValue(name, value)
+    }   
+}
+ 
 
   const attendanceTable = useCallback(() => {
     return (
@@ -440,6 +508,11 @@ export const AttendanceSummary = (props: any) => {
                         onClick={() => {
                           setDownloadModalShow(true)
                         }}>Export</Button>
+                      <Button
+                        className="mx-2"
+                        onClick={() => {
+                          setRecalculateModal(true)
+                        }}>Recalculate</Button>
                       <Button
                         className="mx-2"
                         onClick={
@@ -857,6 +930,79 @@ export const AttendanceSummary = (props: any) => {
             }}
           </Formik>
         </Modal.Body>
+      </Modal>
+      <Modal
+        show={recalculateModal}
+        size={'md'}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setRecalculateModal(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Recalculate
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date From</label>
+            <input type="date"
+              name="fromDate"
+              id="fromDate"
+              className="form-control"
+              value={fromDate}
+              onChange={(e) => {
+                setFromDate(e.target.value)
+              }}
+            />
+          </div>
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date To</label>
+            <input type="date"
+              name="toDate"
+              id="toDate"
+              className="form-control"
+              value={toDate}
+              min={fromDate}
+              onChange={(e) => {
+                setToDate(e.target.value)
+              }}
+            />
+          </div>
+          <div className="form-group col-md-12 mb-3" >
+            <label>Employee Name *</label>
+            <select
+                className="form-select"
+                value={filterData && filterData['userid']}
+                onChange={(e) => {
+                  setUserid(e.target.value)
+                }}
+               
+            >
+                <option value="" disabled selected>
+                Select Employee
+                </option>
+                {employee &&
+                employee.length &&
+                employee.map((item: any, index: string) => (
+                    <option key={`${index}_${item.userId}`} value={item.userId}>
+                    {item.label}
+                    </option>
+                ))}
+            </select>
+          </div>
+          
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button
+            onClick={() => recalculate(fromDate, toDate, userid)}
+            disabled={isSubmit}>
+            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>} />
 

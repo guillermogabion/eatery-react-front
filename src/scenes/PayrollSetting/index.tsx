@@ -14,8 +14,7 @@ import Adjustment from "./adjustment"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
 import ContainerWrapper from "../../components/ContainerWrapper"
-
-
+import Mandatory from "./mandatories"
 
 export const PayrollSetting = (props: any) => {
     const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -61,7 +60,7 @@ export const PayrollSetting = (props: any) => {
                 <div className="w-100 pt-2">
                     <Tabs defaultActiveKey="tab1" id="my-tabs">
                         <Tab eventKey="tab1" title="Mandatories">
-                            <p>Content for Tab 1</p>
+                            <Mandatory />
                         </Tab>
                         <Tab eventKey="tab2" title="Adjustments">
                             <Adjustment/>
