@@ -90,7 +90,6 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/payroll/recurring", component: Recurring })
   routes.push({ path: "/payroll/settings", component: PayrollSetting })
   
-
   return isLogin ? (
     <>
       <Switch>
