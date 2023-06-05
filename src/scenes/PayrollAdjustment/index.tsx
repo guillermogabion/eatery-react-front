@@ -1050,8 +1050,6 @@ export const PayrollAdjustment = (props: any) => {
                                 } 
                                 </div>
                                 }
-                                
-                                
                                 <div className="d-flex justify-content-end px-5">
                                 {values.userId ? null:  (
                                     <button
