@@ -236,7 +236,18 @@ export const Employee = (props: any) => {
       async (res: any) => {
         const { status, body = { data: {}, error: {} } }: any = res
         if (status === 200 && body && body.data) {
-          setSquadList(body.data)
+          if (body.error && body.error.message) {
+
+          }else {
+            let tempArray : any = []
+            body.data.forEach((d: any, i:any) => {
+              tempArray.push({
+                squadId : d.id,
+                squadName : d.name
+              })
+            });
+            setSquadList(tempArray)
+          }
         }
       }
     )
@@ -321,6 +332,7 @@ export const Employee = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
+ 
 
   const singleChangeOption = (option: any, name: any) => {
     const filterObj: any = { ...filterData }
@@ -603,6 +615,8 @@ export const Employee = (props: any) => {
 
 
   };
+
+  
   const information = (
     <Formik
       initialValues={initialValues}
@@ -2472,6 +2486,53 @@ export const Employee = (props: any) => {
                       value={filterData && filterData['userId']}
                       withEmployeeID={true}
                     />
+                </div>
+              </div>
+              <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <label>Squad Name</label>
+                  <select
+                      className="form-select"
+                      name="squadId"
+                      value={filterData && filterData['squadId']}
+                      onChange={(e) => {
+                        makeFilterData(e)
+                      // setFieldValue('squadId', e.target.value);
+                    
+                      }}
+                  >
+                      <option value="" disabled selected>
+                      Select Squad Name
+                      </option>
+                      {squadList &&
+                      squadList.length &&
+                      squadList.map((item: any, index: string) => (
+                          <option key={`${index}_${item.squadId}`} value={item.squadId}>
+                          {item.squadName}
+                          </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <label>Gender</label>
+                  <select
+                      className="form-select"
+                      name="gender"
+                      value={filterData && filterData['gender']}
+                      onChange={(e) => {
+                        makeFilterData(e)
+                      // setFieldValue('squadId', e.target.value);
+                    
+                      }}
+                  >
+                      <option value="" disabled selected>
+                      Select Gender
+                      </option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                  </select>
                 </div>
               </div>
               <div className="input-container">

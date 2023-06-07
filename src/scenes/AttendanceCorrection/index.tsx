@@ -353,6 +353,21 @@ export const AttendanceCorrection = (props: any) => {
     time: Yup.date().required('Time is required'),
   });
 
+  const handleModalHide = useCallback(() => {
+    setInitialValues({
+      "type": "Forgot_To_Login_Logout",
+      "reason": "",
+      "coaBd": [
+        {
+          "shiftDate": "",
+          "date": "",
+          "coaBdType": "",
+          "time": ""
+        }
+      ]
+    })
+  }, [])
+
 
 
   const COATable = useCallback(() => {
@@ -598,7 +613,7 @@ export const AttendanceCorrection = (props: any) => {
           setCoaId(null);
           setModalShow(false)
           setShowReason(false);
-
+          handleModalHide()
         }}
         dialogClassName="modal-90w"
       >
