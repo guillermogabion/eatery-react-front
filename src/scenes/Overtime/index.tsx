@@ -741,6 +741,44 @@ export const Overtime = (props: any) => {
                         <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
                       )}
                     </div>
+                    <div className="form-group col-md-6 mb-3">
+                      <label>Work Type</label>
+                      <select
+                        className="form-select"
+                        value={values.location}
+                        name="location"
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      >
+                        <option value="" disabled selected>
+                          Select Work Type
+                        </option>
+                        <option value="ON_SITE">On Site</option>
+                        <option value="WORK_FROM_HOME">Work From Home</option>
+                      </select>
+                    </div>
+                    <div className="form-group col-md-6 mb-3">
+                      <label>Breaktime Duration</label>
+                      <select
+                        className="form-select"
+                        value={values.breaktimeDuration}
+                        name="breaktimeDuration"
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      >
+                        <option value="" disabled selected>
+                          Select Breaktime Duration
+                        </option>
+                        <option value="0">0</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>
+                      </select>
+                    </div>
+                    <div className="form-group col-md-6 mb-3"></div>
                     <div className="form-group col-md-12 mb-3" >
                       <label>Indicate Ticket Number (If Applicable) and Reason</label>
                       <textarea
