@@ -203,6 +203,7 @@ export const AllRequest = (props: any) => {
                             <th>Date From</th>
                             <th>Date To</th>
                             <th>Reason</th>
+                            <th>Date Filed</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -226,6 +227,7 @@ export const AllRequest = (props: any) => {
                                                     <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                     <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                     <td> {item.reason} </td>
+                                                    <td> {item.fileDate} </td>
                                                     <td> {Utility.removeUnderscore(item.status)} </td>
                                                 </tr>
                                             )
@@ -431,6 +433,7 @@ export const AllRequest = (props: any) => {
                             }
                             <th style={{ width: 'auto' }}>Type</th>
                             <th style={{ width: 'auto' }}>Reason</th>
+                            <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Status</th>
                         </tr>
                     </thead>
@@ -450,6 +453,7 @@ export const AllRequest = (props: any) => {
                                         }
                                         <td>{Utility.removeUnderscore(item.type)}</td>
                                         <td> {item.reason} </td>
+                                        <td> {item.fileDate} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
                                     </tr>
                                 )
@@ -1101,6 +1105,7 @@ export const AllRequest = (props: any) => {
                             <th style={{ width: 'auto' }}>Date From</th>
                             <th style={{ width: 'auto' }}>Date To</th>
                             <th style={{ width: 'auto' }}>Reason</th>
+                            <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Status</th>
                         </tr>
                     </thead>
@@ -1123,6 +1128,7 @@ export const AllRequest = (props: any) => {
                                                     <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                     <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                     <td> {item.reason} </td>
+                                                    <td> {item.fileDate} </td>
                                                     <td> {Utility.removeUnderscore(item.status)} </td>
                                                 </tr>
                                             )
