@@ -337,7 +337,8 @@ export const Overtime = (props: any) => {
                     <td> { Utility.removeUnderscore(item.classification) } </td>
                     <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
                     <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
-                    <td> {item.totalDuration} </td>
+                    {/* <td> {item.totalDuration} </td> */}
+                    <td> {item.totalDuration.split(':').map(value => value.padStart(2, '0')).slice(0, 2).join(':')}</td>
                     <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>

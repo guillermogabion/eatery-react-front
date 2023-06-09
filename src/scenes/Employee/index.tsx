@@ -2534,6 +2534,26 @@ export const Employee = (props: any) => {
                       <option value="female">Female</option>
                   </select>
                 </div>
+              {/* <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <label>Position</label>
+                  <select
+                      className="form-select"
+                      name="gender"
+                      value={filterData && filterData['position']}
+                      onChange={(e) => {
+                        makeFilterData(e)
+                      // setFieldValue('squadId', e.target.value);
+                    
+                      }}
+                  >
+                      <option value="" disabled selected>
+                      Select Employee Position
+                      </option>
+                      <option value="MANAGER">Manager</option>
+                      <option value="RANK_AND_FILE">Rank and FIle</option>
+                  </select>
+                </div> */}
               </div>
               <div className="input-container">
                 <div className="mt-[22px]">
