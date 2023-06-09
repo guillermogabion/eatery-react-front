@@ -384,6 +384,7 @@ export const AttendanceCorrection = (props: any) => {
               }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -405,6 +406,7 @@ export const AttendanceCorrection = (props: any) => {
                     }
                     <td>{Utility.removeUnderscore(item.type) }</td>
                     <td> {item.reason} </td>
+                    <td> {item.fileDate} </td>
                     <td> {item.statusChangedBy} </td>
                     <td> {Utility.removeUnderscore(item.status) } </td>
                     <td className="d-flex">
