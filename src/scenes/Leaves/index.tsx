@@ -900,7 +900,7 @@ export const Leaves = (props: any) => {
                           // min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
                           // max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
                           // max={values.type == 1 ? getNextWeekday(Date.now()).toISOString().split("T")[0] : undefined} 
-                          max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom ), 6).toISOString().split('T')[0] : undefined}
+                          max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom ), 6).toISOString().split('T')[0] : values.dateTo}
 
                           placeholder="dd/mm/yyyy"
                         />
@@ -1029,11 +1029,23 @@ export const Leaves = (props: any) => {
                     <br />
                     <Modal.Footer>
                       <div className="d-flex justify-content-end px-5">
-                        <button
-                          type="submit"
-                          className="btn btn-primary">
-                          Save
-                        </button>
+
+                          {
+                            leaveBreakdown && leaveBreakdown.length == 0 ? 
+
+                          <button
+                            disabled
+                            type="submit"
+                            className="btn btn-primary">
+                            Save
+                          </button> :
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            >
+                            Save
+                          </button>
+                          }
                       </div>
                     </Modal.Footer>
                   </Form>
