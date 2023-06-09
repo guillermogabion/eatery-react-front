@@ -948,11 +948,22 @@ export const ScheduleAdjustment = (props: any) => {
                   <br />
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
-                      <button
+
+                      { adjustmentBreakdown && adjustmentBreakdown.length == 0 ?
+                         <button
+                         disabled
+                         type="submit"
+                         className="btn btn-primary">
+                         Save
+                       </button> : 
+                        <button
                         type="submit"
                         className="btn btn-primary">
                         Save
                       </button>
+                    
+                      }
+                     
                     </div>
                   </Modal.Footer>
                 </Form>
