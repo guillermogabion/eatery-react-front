@@ -7,7 +7,8 @@ import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
 import { Api, RequestAPI } from "../../api"
 import { hide_password_dark, show_password_dark } from "../../assets/images"
-import DashboardMenu from "../../components/DashboardMenu"
+import ContainerWrapper from "../../components/ContainerWrapper"
+
 import TimeDate from "../../components/TimeDate"
 import UserTopMenu from "../../components/UserTopMenu"
 import { Utility } from "./../../utils"
@@ -110,14 +111,10 @@ export const ChangePassword = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
 
   return (
-    <div className="body" >
-      <div className="wraper">
-        <div className="w-100">
-            <div className="topHeader">
-              <UserTopMenu title={`Change Password`} />
-            </div>
-            <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
-            <DashboardMenu />
+    <ContainerWrapper contents={<>
+      <div className="w-100 px-5 py-5">
+        <div>
+          <div className="w-100 pt-2">
             <div className="col-md-12 col-lg-10 px-5 py-5">
               <div className="ForgotPassword mt-5">
                 {!isSuccess ? (
@@ -221,6 +218,6 @@ export const ChangePassword = (props: any) => {
           </div>
         </div>
       </div>
-    </div>
+      </>} />
   )
 }
