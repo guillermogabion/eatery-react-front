@@ -99,7 +99,7 @@ export default function GeneratePayroll(props: any) {
     const downloadPayrollRegister = () => {
         setIsSubmit(true)
         RequestAPI.getFileAsync(
-            `${Api.downloadPayrollRegister}?id=${payroll.id}`,
+            `${Api.downloadPayrollRegister}?Id=${payroll.id}`,
             "",
             "PayrollRegister.xlsx",
             async (res: any) => {
@@ -113,7 +113,7 @@ export default function GeneratePayroll(props: any) {
     const downloadBankTransmittal = () => {
         setIsSubmit(true)
         RequestAPI.getFileAsync(
-            `${Api.downloadBankUpload}?id=${payroll.id}`,
+            `${Api.downloadBankUpload}?Id=${payroll.id}`,
             "",
             "BankUpload.txt",
             async (res: any) => {
