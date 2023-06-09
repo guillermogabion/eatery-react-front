@@ -194,10 +194,10 @@ export const Utility = {
   },
   formatToCurrency(amount: any) {
     return amount
-      ? Number(amount)
+      ? "₱" + Number(amount)
         .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,")
-      : "0"
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,").toString()
+      : "₱0.00"
   },
   isFirstZero(num: any) {
     if (num.length == 1) {
@@ -210,18 +210,44 @@ export const Utility = {
   removeUnderscore(str: any) {
     return str.replaceAll('_', ' ')
   },
-  formatDate(strDate: any, format: any, isTime: any = false) {
+  formatDate(strDate: any, format: any = "MM-DD-YYYY", isTime: any = false) {
     try {
-      if (isTime){
+      if (isTime) {
         return moment(strDate, 'YYYY-MM-DD hh:mm A').format(format)
       }
       return moment(strDate, 'YYYY-MM-DD').format(format)
     } catch (error) {
       return strDate
     }
-    
+
   },
-  capitalizeFirstLetter(string:any) {
+  capitalizeFirstLetter(string: any) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  },
+  getMonths() {
+    return [
+      { "name": "January", "value": 1 },
+      { "name": "February", "value": 2 },
+      { "name": "March", "value": 3 },
+      { "name": "April", "value": 4 },
+      { "name": "May", "value": 5 },
+      { "name": "June", "value": 6 },
+      { "name": "July", "value": 7 },
+      { "name": "August", "value": 8 },
+      { "name": "September", "value": 9 },
+      { "name": "October", "value": 10 },
+      { "name": "November", "value": 11 },
+      { "name": "December", "value": 12 }
+    ]
+  },
+  getYears() {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const yearRange = [];
+    for (let i = currentYear - 5; i <= currentYear + 5; i++) {
+      yearRange.push({ year: i });
+    }
+    
+    return yearRange;
+  },
 }

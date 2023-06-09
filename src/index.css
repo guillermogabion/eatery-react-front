@@ -49,6 +49,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300&family=Roboto:wght@300&display=swap');
 
+*{
+  box-sizing: border-box;
+}
 body {
   background: #ffffff;
   color: #000000;
@@ -3537,7 +3540,7 @@ th {
 
 table {
   text-align: left;
-  table-layout: fixed;
+  table-layout: auto;
   overflow-x: auto !important ;
 }
 table tbody tr td {
@@ -3601,4 +3604,18 @@ table thead tr th{
 
 .btn-close {
   background: transparent url(data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23000%27%3e%3cpath d=%27M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z%27/%3e%3c/svg%3e) center/1em auto no-repeat !important;
+}
+
+.tableOverflow {  
+  display: table !important;
+  caption-side: bottom !important;
+  border-collapse: collapse !important;
+  text-indent: 0 !important;
+  overflow-x: auto !important;
+}
+
+.daysInMonth{
+  min-width: 150px !important;
+  white-space: normal;
+  text-align: left;
 }

@@ -173,6 +173,12 @@ const Api: any = {
   payrollAdjustmentCreate : process.env.REACT_APP_API_URL + "payroll/adjustment/create",
   getPayrollAdjustmentInfo : process.env.REACT_APP_API_URL + "payroll/adjustment/info",
   editPayrollAdjustment : process.env.REACT_APP_API_URL + "payroll/adjustment/update",
+  payrollList: process.env.REACT_APP_API_URL + "payroll/list",
+  payrollTimekeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/all/totalhours",
+  generatePayroll: process.env.REACT_APP_API_URL + "payroll/generate",
+  downloadPayrollRegister: process.env.REACT_APP_API_URL + "payroll/payollregister",
+  downloadBankUpload: process.env.REACT_APP_API_URL + "payroll/bankupload",
+  
 
   // payroll setting 
   getAllRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",

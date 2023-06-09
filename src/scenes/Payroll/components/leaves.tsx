@@ -8,6 +8,7 @@ import { Utility } from "../../../utils";
 import EmployeeDropdown from "../../../components/EmployeeDropdown";
 
 export default function Leaves(props: any) {
+    const { payrollData } = props
     const [allLeaves, setAllLeaves] = useState<any>([]);
 
     const { data } = useSelector((state: any) => state.rootReducer.userData)
@@ -24,29 +25,33 @@ export default function Leaves(props: any) {
     ])
 
     useEffect(() => {
-        getAllLeaves(0, "all")
+        if (payrollData){
+            let data = { ...payrollData }
+            let from = data.from
+            let to = data.to
+            const filterObj: any = { ...filterData }        
+            filterObj["dateFrom"] = from
+            filterObj["dateTo"] = to
+            setFilterData(filterObj)
+        }
+        
     }, [])
 
     useEffect(() => {
         if (filterData){
-            let status = filterData['status'] || ""
-            getAllLeaves(0, status)
+            getAllLeaves(0)
         }
         
     }, [filterData])
     
 
     const handlePageClick = (event: any) => {
-        getAllLeaves(event.selected, "all")
+        getAllLeaves(event.selected)
     };
 
-    const getAllLeaves = (page: any = 0, status: any = "all") => {
+    const getAllLeaves = (page: any = 0) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
-
-        if (!filterDataTemp.status) {
-            queryString = "&status=" + status
-        }
 
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
@@ -60,7 +65,7 @@ export default function Leaves(props: any) {
 
         if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
             RequestAPI.getRequest(
-                `${Api.allRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
+                `${Api.allRequestLeave}?size=10${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
                 "",
                 {},
                 {},
@@ -165,7 +170,7 @@ export default function Leaves(props: any) {
                             />
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <label className="ml-[10px]">Status</label>
                         <div className="input-container">
                             <select
@@ -183,7 +188,7 @@ export default function Leaves(props: any) {
                                     ))}
                             </select>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <Table responsive>

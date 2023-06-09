@@ -13,10 +13,14 @@ import TimeDate from "../../components/TimeDate"
 import { async } from "validate.js"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
+import * as Yup from "yup"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import Leaves from "./components/leaves"
 import Recurring from "./components/recurring"
 import { Adjustment } from "./components/adjustments"
+import Timekeeping from "./components/timekeeping"
+import GeneratePayroll from "./components/generatepayroll"
+import { Utility } from "../../utils"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -28,23 +32,53 @@ export const Payroll = (props: any) => {
     const [payrollPeriodModal, setPayrollPeriodModal] = React.useState(false);
     const [isCreatePayroll, setIsCreatePayroll] = useState<any>(false);
     const [key, setKey] = React.useState('timekeeping');
-    const [adjustment, setAdjustment] = useState<any>([]);
+    const [payrolls, setPayrolls] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [adjustmentTypes, setAdjustmentTypes] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
+    const [payrollData, setPayrollData] = React.useState({});
+
     const tableHeaders = [
         'Year',
-        'MOnth',
-        'Period',
-        'Description',
-        'Transaction Date',
-        'Status',
+        'Month',
+        'FROM',
+        'TO',
         'Action',
     ];
+    const [initialValues, setInitialValues] = useState<any>({
+        "payrollMonth": "",
+        "payrollYear": "",
+        "from": "",
+        "to": "",
+        "userIds": []
+    })
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
 
     const handlePageClick = (event: any) => {
     };
+
+    useEffect(() => {
+        RequestAPI.getRequest(
+            `${Api.payrollList}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        setPayrolls(body.data)
+                    }
+                }
+            }
+        )
+
+    }, [])
+
 
     return (
         <ContainerWrapper contents={<>
@@ -61,6 +95,7 @@ export const Payroll = (props: any) => {
                                     </Button>
                                     <Button
                                         onClick={() => alert('Ongoing')}
+                                        disabled={true}
                                         className="btn btn-primary mx-2">
                                         Export Payroll
                                     </Button>
@@ -80,13 +115,58 @@ export const Payroll = (props: any) => {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {
+                                            payrolls &&
+                                                payrolls.length > 0 ?
+                                                <>
+                                                    {
+                                                        payrolls.map((item: any, index: any) => {
+                                                            return (
+                                                                <tr>
+                                                                    <td> {item.periodYear} </td>
+                                                                    <td> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
+                                                                    <td>{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
+                                                                    <td>{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                                    <td>
+                                                                        <label
+                                                                            onClick={() => {
+                                                                                setIsCreatePayroll(true)
+                                                                                setPayrollData({
+                                                                                    "payrollMonth": item.periodMonth,
+                                                                                    "payrollYear": item.periodYear,
+                                                                                    "from": item.dateFrom,
+                                                                                    "to": item.dateTo,
+                                                                                    "userIds": [],
+                                                                                    "id": item.id
+                                                                                })
+                                                                            }}
+                                                                            className="text-muted cursor-pointer">
+                                                                            Update
+                                                                        </label>
+                                                                        <br />
+                                                                        <label
+                                                                            onClick={() => {
+                                                                                // setInitialValues(item)
+                                                                                // setModalShow(true)
+                                                                            }}
+                                                                            className="text-muted cursor-pointer">
+                                                                            Audit
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
 
+                                                </>
+                                                :
+                                                null
+                                        }
                                     </tbody>
                                 </Table>
                                 {
-                                    adjustmentList &&
-                                        adjustmentList.content &&
-                                        adjustmentList.content.length == 0 ?
+                                    payrolls &&
+                                        payrolls.length == 0 ?
                                         <div className="w-100 text-center">
                                             <label htmlFor="">No Records Found</label>
                                         </div>
@@ -116,27 +196,27 @@ export const Payroll = (props: any) => {
                         </div>
                     </>
                     :
-                    <div className="w-100 px-5 py-5 pt-5">
+                    <div className="px-5 py-5 pt-5 w-full ">
                         <Tabs
                             id="controlled-tab-example"
                             activeKey={key}
                             onSelect={(k: any) => {
                                 setKey(k)
                             }}
-                            className="mb-3"
+                            className="mb-3 w-100 lg:w-[80vw]"
                         >
-                            <Tab eventKey="timekeeping" title="Timekeeping">
+                            <Tab eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
                                 {
-                                    key == 'timekeeping' ?
-                                        <Leaves />
+                                    key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
+                                        <Timekeeping payrollData={payrollData} />
                                         :
                                         null
                                 }
                             </Tab>
                             <Tab eventKey="employee request" title="Employee Request">
                                 {
-                                    key == 'employee request' ?
-                                        <Leaves />
+                                    key == 'employee request' && Object.keys(payrollData).length != 0 ?
+                                        <Leaves payrollData={payrollData} />
                                         :
                                         null
                                 }
@@ -159,8 +239,8 @@ export const Payroll = (props: any) => {
                             </Tab>
                             <Tab eventKey="payroll" title="Payroll">
                                 {
-                                    key == 'payroll' ?
-                                        <Leaves />
+                                    key == 'payroll' && Object.keys(payrollData).length != 0 ?
+                                        <GeneratePayroll payrollData={payrollData} />
                                         :
                                         null
                                 }
@@ -190,12 +270,20 @@ export const Payroll = (props: any) => {
                 <Modal.Body className="row w-100 m-0 px-">
                     <Formik
                         innerRef={formRef}
-                        initialValues={{}}
+                        initialValues={initialValues}
                         enableReinitialize={true}
-                        validationSchema={null}
+                        validationSchema={
+                            Yup.object().shape({
+                                payrollMonth: Yup.string().required("Payroll month is required!"),
+                                payrollYear: Yup.string().required("Payroll year to is required!"),
+                                from: Yup.string().required("Date from is required!"),
+                                to: Yup.string().required("Date to is required!"),
+                            })
+                        }
                         onSubmit={(values, actions) => {
                             setIsCreatePayroll(true)
                             setPayrollPeriodModal(false)
+                            setPayrollData(values)
                         }}>
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (
@@ -203,47 +291,68 @@ export const Payroll = (props: any) => {
                                     <div className="row w-100 m-0 mb-[20px]">
                                         <div className="form-group col-lg-6 col-md-12 mb-2" >
                                             <label>Year</label>
-                                            <input type="text"
-                                                name="reason"
-                                                id="reason"
-                                                className="form-control"
-                                                value={""}
-                                                onChange={(e) => { }}
-                                            />
-                                        </div>
-                                        <div className="form-group col-lg-6 col-md-12 mb-2" >
-                                            <label>Transaction Date</label>
-                                            <input type="date"
-                                                name="dateFrom"
-                                                id="dateFrom"
-                                                className="form-control"
-                                                value={""}
-                                                onChange={(e) => { }}
-                                                placeholder="dd/mm/yyyy"
-                                            />
+                                            <select
+                                                className={`form-select`}
+                                                name="payrollYear"
+                                                id="payrollYear"
+                                                value={values.payrollYear}
+                                                onChange={(e) => setFieldValue('payrollYear', e.target.value)}>
+                                                <option key={`defaultYear`} value={""} selected={true}>
+                                                    Select Month
+                                                </option>
+                                                {
+                                                    Utility.getYears().map((item: any, index: string) => {
+                                                        return (
+                                                            <option key={`${index}_${item.year}`} value={item.year}>
+                                                                {item.year}
+                                                            </option>
+                                                        )
+                                                    })
+                                                }
+                                            </select>
+                                            {errors && errors.payrollYear && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollYear}</p>
+                                            )}
                                         </div>
                                         <div className="form-group col-lg-6 col-md-12 mb-2" >
                                             <label>Month</label>
-                                            <input type="text"
-                                                name="reason"
-                                                id="reason"
-                                                className="form-control"
-                                                value={""}
-                                                onChange={(e) => { }}
-                                            />
+                                            <select
+                                                className={`form-select`}
+                                                name="payrollMonth"
+                                                id="payrollMonth"
+                                                value={values.payrollMonth}
+                                                onChange={(e) => setFieldValue('payrollMonth', e.target.value)}>
+                                                <option key={`defaultMonth`} value={""} selected={true}>
+                                                    Select Month
+                                                </option>
+                                                {
+                                                    Utility.getMonths().map((item: any, index: string) => {
+                                                        return (
+                                                            <option key={`${index}_${item.value}`} value={item.value}>
+                                                                {item.name}
+                                                            </option>
+                                                        )
+                                                    })}
+                                            </select>
+                                            {errors && errors.payrollMonth && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollMonth}</p>
+                                            )}
                                         </div>
                                         <div className="form-group col-lg-6 col-md-12 mb-2" >
                                             <label>From</label>
                                             <input type="date"
-                                                name="dateFrom"
-                                                id="dateFrom"
+                                                name="from"
+                                                id="from"
                                                 className="form-control"
-                                                value={""}
-                                                onChange={(e) => { }}
+                                                value={values.from}
+                                                onChange={(e) => { setFieldValue('from', e.target.value) }}
                                                 placeholder="dd/mm/yyyy"
                                             />
+                                            {errors && errors.from && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.from}</p>
+                                            )}
                                         </div>
-                                        <div className="form-group col-lg-6 col-md-12 mb-2" >
+                                        {/* <div className="form-group col-lg-6 col-md-12 mb-2" >
                                             <label>Period</label>
                                             <input type="text"
                                                 name="reason"
@@ -252,19 +361,23 @@ export const Payroll = (props: any) => {
                                                 value={""}
                                                 onChange={(e) => { }}
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="form-group col-lg-6 col-md-12 mb-2" >
                                             <label>To</label>
                                             <input type="date"
-                                                name="dateFrom"
-                                                id="dateFrom"
+                                                name="to"
+                                                id="to"
                                                 className="form-control"
-                                                value={""}
-                                                onChange={(e) => { }}
+                                                value={values.to}
+                                                min={values.from}
+                                                onChange={(e) => { setFieldValue('to', e.target.value) }}
                                                 placeholder="dd/mm/yyyy"
                                             />
+                                            {errors && errors.to && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.to}</p>
+                                            )}
                                         </div>
-                                        <div className="form-group col-md-12 mb-3">
+                                        {/* <div className="form-group col-md-12 mb-3">
                                             <label>Description</label>
                                             <textarea
                                                 name="reason"
@@ -274,16 +387,15 @@ export const Payroll = (props: any) => {
                                                 style={{ height: "100px" }}
                                                 onChange={(e) => { }}
                                             />
-                                        </div>
-                                        <div className="w-full d-flex justify-content-end ">
+                                        </div> */}
+                                        <div className="w-full mt-5 d-flex justify-content-center ">
                                             <button
                                                 type="submit"
-                                                className="btn btn-primary">
+                                                className="btn btn-primary px-5">
                                                 Save
                                             </button>
                                         </div>
                                     </div>
-
                                 </Form>
                             )
                         }}
