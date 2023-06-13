@@ -2534,6 +2534,7 @@ export const Employee = (props: any) => {
                       <option value="female">Female</option>
                   </select>
                 </div>
+                </div>
               {/* <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Position</label>
@@ -2554,6 +2555,39 @@ export const Employee = (props: any) => {
                       <option value="RANK_AND_FILE">Rank and FIle</option>
                   </select>
                 </div> */}
+              <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <label>Employee Status</label>
+                  <select
+                      className="form-select"
+                      name="employmentStatus"
+                      value={filterData && filterData['employmentStatus']}
+                      onChange={(e) => {
+                        makeFilterData(e)
+                      // setFieldValue('squadId', e.target.value);
+                    
+                      }}
+                  >
+                      <option value="" disabled selected>
+                      Select Employee Status
+                      </option>
+                      <option value="Regular">Regular</option>
+                      <option value="Maternity">Maternity</option>
+                      <option value="Paternity">Paternity</option>
+                      <option value="Sabbatical">Sabbatical</option>
+                      <option value="Terminated">Terminated</option>
+                      <option value="Resigned">Resigned</option>
+                      <option value="AWOL">AWOL</option>
+                      <option value="Probationary">Probationary</option>
+                      <option value="PartTime">Part Time</option>
+                      <option value="Extended_PartTime">Extended Part Time</option>
+                      <option value="Contructual_Project_Based">Contractual/Project Based</option>
+                      <option value="OJT">OJT</option>
+                      <option value="ON_PIP">ON PIP</option>
+                      <option value="End_of_Contract">End of Contract</option>
+                      <option value="OJT_Ended">OJT Ended</option>
+                  </select>
+                </div>
               </div>
               <div className="input-container">
                 <div className="mt-[22px]">
