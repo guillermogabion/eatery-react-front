@@ -721,6 +721,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Start</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="time"
                         name="otStart"
                         id="otStart"
