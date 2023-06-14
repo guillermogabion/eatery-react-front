@@ -27,7 +27,9 @@ export const Overtime = (props: any) => {
     "shiftDate": moment().format("YYYY-MM-DD"),
     "classification": "NORMAL_OT",
     "otStart": "",
-    "otEnd": ""
+    "otEnd": "",
+    "location": "",
+    "breaktimeDuration":""
   }
 
   const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -599,6 +601,9 @@ export const Overtime = (props: any) => {
                 classification: Yup.string().required("Classification is required !"),
                 otStart: Yup.string().required("OT Start is required !"),
                 otEnd: Yup.string().required("OT End is required !"),
+                location: Yup.string().required("Location is required !"),
+                breaktimeDuration: Yup.string().required("Breaktime Duration is required !"),
+                reason: Yup.string().required("Reason is required !"),
               })
             }
             onSubmit={(values, actions) => {
@@ -678,7 +683,8 @@ export const Overtime = (props: any) => {
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                   <div className="row w-100 px-5">
                     <div className="form-group col-md-6 mb-3 " >
-                      <label>OT Classification</label>
+                      <label>OT Classification </label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         name="classification"
@@ -699,6 +705,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Shift Date</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="date"
                         name="shiftDate"
                         id="shiftDate"
@@ -729,6 +736,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>End</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="time"
                         name="otEnd"
                         id="otEnd"
@@ -744,6 +752,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Work Type</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         value={values.location}
@@ -758,9 +767,13 @@ export const Overtime = (props: any) => {
                         <option value="ON_SITE">On Site</option>
                         <option value="WORK_FROM_HOME">Work From Home</option>
                       </select>
+                      {errors && errors.location && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
+                      )}
                     </div>
                     <div className="form-group col-md-6 mb-3">
-                      <label>Breaktime Duration</label>
+                      <label>Breaktime Duration (minutes)</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         value={values.breaktimeDuration}
@@ -778,10 +791,14 @@ export const Overtime = (props: any) => {
                         <option value="45">45</option>
                         <option value="60">60</option>
                       </select>
+                      {errors && errors.breaktimeDuration && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
+                      )}
                     </div>
                     <div className="form-group col-md-6 mb-3"></div>
                     <div className="form-group col-md-12 mb-3" >
                       <label>Indicate Ticket Number (If Applicable) and Reason</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <textarea
                         name="reason"
                         id="reason"
@@ -790,6 +807,9 @@ export const Overtime = (props: any) => {
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
+                      {errors && errors.reason && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                      )}
                     </div>
                   </div>
                   <br />
