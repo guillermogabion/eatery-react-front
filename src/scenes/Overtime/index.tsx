@@ -27,7 +27,9 @@ export const Overtime = (props: any) => {
     "shiftDate": moment().format("YYYY-MM-DD"),
     "classification": "NORMAL_OT",
     "otStart": "",
-    "otEnd": ""
+    "otEnd": "",
+    "location": "",
+    "breaktimeDuration":""
   }
 
   const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -37,6 +39,7 @@ export const Overtime = (props: any) => {
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
+  const [actionable, setIsActionable] = React.useState(false);
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
   const [myot, setMyOT] = useState<any>([]);
   const [otId, setOtId] = useState<any>("");
@@ -91,13 +94,20 @@ export const Overtime = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
-  const getMyOT = (page: any = 0, status: any = "all") => {
+
+  const getMyOT = (page: any = 0, status: any = "all", isActionable:any = false) => {
     setKey(status)
+    setIsActionable(isActionable)
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if (status != "") {
+
+    if (status == 'actionable'){
+      queryString = "&status=all" 
+    }
+    else if (status != "") {
       queryString = "&status=" + status
     }
+
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -108,6 +118,11 @@ export const Overtime = (props: any) => {
         }
       })
     }
+
+    if (isActionable){
+      queryString += '&actionableOnly=true'
+    }
+
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
         `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
@@ -505,7 +520,7 @@ export const Overtime = (props: any) => {
               <div>
                 <Button
                   style={{ width: 120 }}
-                  onClick={() => getMyOT(0, key)}
+                  onClick={() => getMyOT(0, key, actionable)}
                   className="btn btn-primary mx-2 mt-4">
                   Search
                 </Button>
@@ -516,7 +531,12 @@ export const Overtime = (props: any) => {
               activeKey={key}
               onSelect={(k: any) => {
                 setMyOT([])
-                getMyOT(0, k)
+
+                if (k == 'actionable'){
+                  getMyOT(0, k, true)
+                }else{
+                  getMyOT(0, k)
+                }
               }}
               className="mb-3"
             >
@@ -532,6 +552,14 @@ export const Overtime = (props: any) => {
               <Tab eventKey="declined" title="Rejected/Cancelled">
                 {overTimeTable()}
               </Tab>
+              {
+                data.profile.role == 'EXECUTIVE' &&
+                (
+                  <Tab eventKey="actionable" title="Actionable">
+                    {overTimeTable()}
+                  </Tab>
+                )
+              }
             </Tabs>
           </div>
         </div>
@@ -599,6 +627,9 @@ export const Overtime = (props: any) => {
                 classification: Yup.string().required("Classification is required !"),
                 otStart: Yup.string().required("OT Start is required !"),
                 otEnd: Yup.string().required("OT End is required !"),
+                location: Yup.string().required("Location is required !"),
+                breaktimeDuration: Yup.string().required("Breaktime Duration is required !"),
+                reason: Yup.string().required("Reason is required !"),
               })
             }
             onSubmit={(values, actions) => {
@@ -678,7 +709,8 @@ export const Overtime = (props: any) => {
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                   <div className="row w-100 px-5">
                     <div className="form-group col-md-6 mb-3 " >
-                      <label>OT Classification</label>
+                      <label>OT Classification </label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         name="classification"
@@ -689,7 +721,7 @@ export const Overtime = (props: any) => {
                           otClassification.length &&
                           otClassification.map((item: any, index: string) => (
                             <option key={`${index}_${item.item}`} value={item.item}>
-                              {item}
+                              {Utility.removeUnderscore(item)}
                             </option>
                           ))}
                       </select>
@@ -699,6 +731,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Shift Date</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="date"
                         name="shiftDate"
                         id="shiftDate"
@@ -714,6 +747,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Start</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="time"
                         name="otStart"
                         id="otStart"
@@ -729,6 +763,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>End</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="time"
                         name="otEnd"
                         id="otEnd"
@@ -744,6 +779,7 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Work Type</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         value={values.location}
@@ -758,9 +794,13 @@ export const Overtime = (props: any) => {
                         <option value="ON_SITE">On Site</option>
                         <option value="WORK_FROM_HOME">Work From Home</option>
                       </select>
+                      {errors && errors.location && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
+                      )}
                     </div>
                     <div className="form-group col-md-6 mb-3">
-                      <label>Breaktime Duration</label>
+                      <label>Breaktime Duration (minutes)</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         value={values.breaktimeDuration}
@@ -778,10 +818,14 @@ export const Overtime = (props: any) => {
                         <option value="45">45</option>
                         <option value="60">60</option>
                       </select>
+                      {errors && errors.breaktimeDuration && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
+                      )}
                     </div>
                     <div className="form-group col-md-6 mb-3"></div>
                     <div className="form-group col-md-12 mb-3" >
                       <label>Indicate Ticket Number (If Applicable) and Reason</label>
+                      <span className="text-danger ml-2 text-md">*</span>
                       <textarea
                         name="reason"
                         id="reason"
@@ -790,6 +834,9 @@ export const Overtime = (props: any) => {
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
+                      {errors && errors.reason && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                      )}
                     </div>
                   </div>
                   <br />

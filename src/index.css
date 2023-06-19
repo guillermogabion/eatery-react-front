@@ -3625,3 +3625,7 @@ table thead tr th{
   white-space: normal;
   text-align: left;
 }
+
+.tab-content{
+  overflow: auto;
+}

@@ -35,6 +35,7 @@ export const Leaves = (props: any) => {
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
+  const [actionable, setIsActionable] = React.useState(false);
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
   const [leaveDayTypes, setLeaveDayTypes] = useState<any>([]);
   const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
@@ -134,13 +135,19 @@ export const Leaves = (props: any) => {
 
 
 
-  const getAllLeaves = (page: any = 0, status: any = "all") => {
+  const getAllLeaves = (page: any = 0, status: any = "all", isActionable:any = false) => {
     setKey(status)
+    setIsActionable(isActionable)
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if (status != "") {
+
+    if (status == 'actionable'){
+      queryString = "&status=all" 
+    }
+    else if (status != "") {
       queryString = "&status=" + status
     }
+    
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -150,6 +157,10 @@ export const Leaves = (props: any) => {
           queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
         }
       })
+    }
+
+    if (isActionable){
+      queryString += '&actionableOnly=true'
     }
 
     if (data.profile.role == 'EXECUTIVE') {
@@ -676,7 +687,7 @@ export const Leaves = (props: any) => {
 
               <Button
                 style={{ width: 120 }}
-                onClick={() => getAllLeaves(0, key)}
+                onClick={() => getAllLeaves(0, key, actionable)}
                 className="btn btn-primary mx-2 mt-4">
                 Search
               </Button>
@@ -686,7 +697,12 @@ export const Leaves = (props: any) => {
               activeKey={key}
               onSelect={(k: any) => {
                 setAllLeaves([])
-                getAllLeaves(0, k)
+                if (k == 'actionable'){
+                  getAllLeaves(0, k, true)
+                }else{
+                  getAllLeaves(0, k)
+                }
+                
               }}
               className="mb-3"
             >
@@ -702,6 +718,15 @@ export const Leaves = (props: any) => {
               <Tab eventKey="declined" title="Rejected/Cancelled">
                 {leaveTable()}
               </Tab>
+              
+              {
+                data.profile.role == 'EXECUTIVE' &&
+                (
+                  <Tab eventKey="actionable" title="Actionable">
+                    {leaveTable()}
+                  </Tab>
+                )
+              }
             </Tabs>
           </div>
         </div>
