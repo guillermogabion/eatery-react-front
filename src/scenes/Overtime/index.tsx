@@ -39,6 +39,7 @@ export const Overtime = (props: any) => {
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
+  const [actionable, setIsActionable] = React.useState(false);
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
   const [myot, setMyOT] = useState<any>([]);
   const [otId, setOtId] = useState<any>("");
@@ -93,13 +94,20 @@ export const Overtime = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
-  const getMyOT = (page: any = 0, status: any = "all") => {
+
+  const getMyOT = (page: any = 0, status: any = "all", isActionable:any = false) => {
     setKey(status)
+    setIsActionable(isActionable)
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if (status != "") {
+
+    if (status == 'actionable'){
+      queryString = "&status=all" 
+    }
+    else if (status != "") {
       queryString = "&status=" + status
     }
+
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -110,6 +118,11 @@ export const Overtime = (props: any) => {
         }
       })
     }
+
+    if (isActionable){
+      queryString += '&actionableOnly=true'
+    }
+
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
         `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
@@ -507,7 +520,7 @@ export const Overtime = (props: any) => {
               <div>
                 <Button
                   style={{ width: 120 }}
-                  onClick={() => getMyOT(0, key)}
+                  onClick={() => getMyOT(0, key, actionable)}
                   className="btn btn-primary mx-2 mt-4">
                   Search
                 </Button>
@@ -518,7 +531,12 @@ export const Overtime = (props: any) => {
               activeKey={key}
               onSelect={(k: any) => {
                 setMyOT([])
-                getMyOT(0, k)
+
+                if (k == 'actionable'){
+                  getMyOT(0, k, true)
+                }else{
+                  getMyOT(0, k)
+                }
               }}
               className="mb-3"
             >
@@ -534,6 +552,14 @@ export const Overtime = (props: any) => {
               <Tab eventKey="declined" title="Rejected/Cancelled">
                 {overTimeTable()}
               </Tab>
+              {
+                data.profile.role == 'EXECUTIVE' &&
+                (
+                  <Tab eventKey="actionable" title="Actionable">
+                    {overTimeTable()}
+                  </Tab>
+                )
+              }
             </Tabs>
           </div>
         </div>

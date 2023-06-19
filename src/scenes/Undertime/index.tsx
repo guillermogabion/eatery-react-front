@@ -28,6 +28,7 @@ export const Undertime = (props: any) => {
     const { authorizations } = data?.profile
     const [modalShow, setModalShow] = React.useState(false);
     const [key, setKey] = React.useState('all');
+    const [actionable, setIsActionable] = React.useState(false);
     const [myut, setMyUT] = useState<any>([]);
     const [utId, setUtId] = useState<any>("");
     const [onSubmit, setOnSubmit] = useState<any>(false);
@@ -55,13 +56,19 @@ export const Undertime = (props: any) => {
         setFilterData(filterObj)
     }
 
-    const getMyUT = (page: any = 0, status: any = "all") => {
+    const getMyUT = (page: any = 0, status: any = "all", isActionable: any = false) => {
         setKey(status)
+        setIsActionable(isActionable)
+
         let queryString = ""
         let filterDataTemp = { ...filterData }
-        if (status != "") {
+        if (status == 'actionable') {
+            queryString = "&status=all"
+        }
+        else if (status != "") {
             queryString = "&status=" + status
         }
+
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp[d]) {
@@ -72,6 +79,11 @@ export const Undertime = (props: any) => {
                 }
             })
         }
+
+        if (isActionable) {
+            queryString += '&actionableOnly=true'
+        }
+
         if (data.profile.role == 'EXECUTIVE') {
             RequestAPI.getRequest(
                 `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
@@ -303,7 +315,7 @@ export const Undertime = (props: any) => {
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.statusChangedBy} </td>
-                                        <td> {Utility.removeUnderscore(item.status) } </td>
+                                        <td> {Utility.removeUnderscore(item.status)} </td>
                                         <td className="d-flex">
                                             {
                                                 item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
@@ -462,7 +474,7 @@ export const Undertime = (props: any) => {
                             <div>
                                 <Button
                                     style={{ width: 120 }}
-                                    onClick={() => getMyUT(0, key)}
+                                    onClick={() => getMyUT(0, key, actionable)}
                                     className="btn btn-primary mx-2 mt-4">
                                     Search
                                 </Button>
@@ -474,7 +486,12 @@ export const Undertime = (props: any) => {
                             activeKey={key}
                             onSelect={(k: any) => {
                                 setMyUT([])
-                                getMyUT(0, k)
+
+                                if (k == 'actionable') {
+                                    getMyUT(0, k, true)
+                                } else {
+                                    getMyUT(0, k)
+                                }
                             }}
                             className="mb-3"
                         >
@@ -490,6 +507,14 @@ export const Undertime = (props: any) => {
                             <Tab eventKey="declined" title="Rejected/Cancelled">
                                 {underTimeTable()}
                             </Tab>
+                            {
+                                data.profile.role == 'EXECUTIVE' &&
+                                (
+                                    <Tab eventKey="actionable" title="Actionable">
+                                        {underTimeTable()}
+                                    </Tab>
+                                )
+                            }
                         </Tabs>
                     </div>
                 </div>
