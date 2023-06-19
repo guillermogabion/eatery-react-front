@@ -35,6 +35,7 @@ export const ScheduleAdjustment = (props: any) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
+  const [actionable, setIsActionable] = React.useState(false);
   const [adjustmentBreakdown, setAdjustmentBreakdown] = useState<any>([]);
   const [allAdjustments, setAllAdjustments] = useState<any>([]);
   const [adjustmentId, setAdjustmentId] = useState<any>("");
@@ -93,11 +94,20 @@ export const ScheduleAdjustment = (props: any) => {
       }
     )
   }
-  const getAllAdjustments = (page: any = 0, status: any = "all") => {
+  const getAllAdjustments = (page: any = 0, status: any = "all", isActionable: any = false) => {
     setKey(status)
+    setIsActionable(isActionable)
+
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    queryString = "&status=" + status
+
+    if (status == 'actionable') {
+      queryString = "&status=all"
+    }
+    else if (status != "") {
+      queryString = "&status=" + status
+    }
+
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -107,6 +117,10 @@ export const ScheduleAdjustment = (props: any) => {
           queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
         }
       })
+    }
+
+    if (isActionable) {
+      queryString += '&actionableOnly=true'
     }
 
     if (data.profile.role == 'EXECUTIVE') {
@@ -614,7 +628,7 @@ export const ScheduleAdjustment = (props: any) => {
               <div>
                 <Button
                   style={{ width: 120 }}
-                  onClick={() => getAllAdjustments(0, key)}
+                  onClick={() => getAllAdjustments(0, key, actionable)}
                   className="btn btn-primary mx-2 mt-4">
                   Search
                 </Button>
@@ -627,7 +641,12 @@ export const ScheduleAdjustment = (props: any) => {
               activeKey={key}
               onSelect={(k: any) => {
                 setAllAdjustments([])
-                getAllAdjustments(0, k)
+
+                if (k == 'actionable') {
+                  getAllAdjustments(0, k, true)
+                } else {
+                  getAllAdjustments(0, k)
+                }
               }}
               className="mb-3"
             >
@@ -643,6 +662,14 @@ export const ScheduleAdjustment = (props: any) => {
               <Tab eventKey="declined" title="Rejected/Cancelled">
                 {adjustmentTable()}
               </Tab>
+              {
+                data.profile.role == 'EXECUTIVE' &&
+                (
+                  <Tab eventKey="actionable" title="Actionable">
+                    {adjustmentTable()}
+                  </Tab>
+                )
+              }
             </Tabs>
           </div>
         </div>
@@ -949,21 +976,21 @@ export const ScheduleAdjustment = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
 
-                      { adjustmentBreakdown && adjustmentBreakdown.length == 0 ?
-                         <button
-                         disabled
-                         type="submit"
-                         className="btn btn-primary">
-                         Save
-                       </button> : 
+                      {adjustmentBreakdown && adjustmentBreakdown.length == 0 ?
                         <button
-                        type="submit"
-                        className="btn btn-primary">
-                        Save
-                      </button>
-                    
+                          disabled
+                          type="submit"
+                          className="btn btn-primary">
+                          Save
+                        </button> :
+                        <button
+                          type="submit"
+                          className="btn btn-primary">
+                          Save
+                        </button>
+
                       }
-                     
+
                     </div>
                   </Modal.Footer>
                 </Form>

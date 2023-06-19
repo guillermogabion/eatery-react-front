@@ -31,6 +31,7 @@ export const AttendanceCorrection = (props: any) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
+  const [actionable, setIsActionable] = React.useState(false);
   const [allCOA, setAllCOA] = useState<any>([]);
   const [filterData, setFilterData] = React.useState([]);
   const [coaId, setCoaId] = useState<any>("");
@@ -97,13 +98,19 @@ export const AttendanceCorrection = (props: any) => {
     getAllCOARequest(0, key)
   }, [])
 
-  const getAllCOARequest = (page: any = 0, status: any = "all") => {
+  const getAllCOARequest = (page: any = 0, status: any = "all", isActionable:any = false) => {
     setKey(status)
+    setIsActionable(isActionable)
     let queryString = ""
     let filterDataTemp = { ...filterData }
-    if (status != "") {
+
+    if (status == 'actionable'){
+      queryString = "&status=all" 
+    }
+    else if (status != "") {
       queryString = "&status=" + status
     }
+
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
@@ -114,6 +121,11 @@ export const AttendanceCorrection = (props: any) => {
         }
       })
     }
+
+    if (isActionable){
+      queryString += '&actionableOnly=true'
+    }
+
     if (data.profile.role == 'EXECUTIVE') {
       RequestAPI.getRequest(
         `${Api.getAllCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
@@ -539,7 +551,7 @@ export const AttendanceCorrection = (props: any) => {
                    data.profile.role == 'EXECUTIVE' ?
                    <Button
                    style={{ width: 120 }}
-                   onClick={() => getAllCOARequest(0, key)}
+                   onClick={() => getAllCOARequest(0, key, actionable)}
                    className="btn btn-primary mx-2 mt-4">
                    Search
                  </Button>
@@ -554,7 +566,11 @@ export const AttendanceCorrection = (props: any) => {
               activeKey={key}
               onSelect={(k: any) => {
                 setAllCOA([])
-                getAllCOARequest(0, k)
+                if (k == 'actionable'){
+                  getAllCOARequest(0, k, true)
+                }else{
+                  getAllCOARequest(0, k)
+                }
               }}
               className="mb-3"
             >
@@ -570,6 +586,14 @@ export const AttendanceCorrection = (props: any) => {
               <Tab eventKey="declined" title="Rejected/Cancelled">
                 {COATable()}
               </Tab>
+              {
+                data.profile.role == 'EXECUTIVE' &&
+                (
+                  <Tab eventKey="actionable" title="Actionable">
+                    {COATable()}
+                  </Tab>
+                )
+              }
             </Tabs>
           </div>
         </div>
