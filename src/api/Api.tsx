@@ -206,6 +206,13 @@ const Api: any = {
   // timekeeping ++ 
 
   recalculate : process.env.REACT_APP_API_URL + "timekeeping/perday/recalculate",
+
+
+  // email sending 
+  payrollPayList :  process.env.REACT_APP_API_URL + "payroll/list",
+  generatedList : process.env.REACT_APP_API_URL + "payroll/generated/list",
+  sendIndividual : process.env.REACT_APP_API_URL + "payroll/sendpayslip",
+  sendAll : process.env.REACT_APP_API_URL + "payroll/sendpayslip/all",
 }
 
 export default Api

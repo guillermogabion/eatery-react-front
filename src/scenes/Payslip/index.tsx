@@ -13,23 +13,24 @@ import TimeDate from "../../components/TimeDate"
 import { async } from "validate.js"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import EmployeeDropdown from "../../components/EmployeeDropdown"
+
 const ErrorSwal = withReactContent(Swal)
 
 export const Payslip = (props: any) => {
-    const userData = useSelector((state: any) => state.rootReducer.userData)
-    const { data } = useSelector((state: any) => state.rootReducer.userData)
-    const [ adjustmentList, setAdjustmentList] = React.useState([]);
     const formRef: any = useRef()
     const [modalShow, setModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
-    const [adjustment, setAdjustment] = useState<any>([]);
+    const [payroll, setPayroll] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
-    // const [ adjustmentTypes, setAdjustmentTypes ] = useState<any>([]);
     const [ payrollList, setPayrollList ] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
-
     const [initialValues, setInitialValues] = useState<any>({});
+    
+
+    const { emailData } = props
+    const email = { ...emailData }
 
     const tableHeaders = [
         'Payroll Period',
@@ -75,7 +76,7 @@ export const Payslip = (props: any) => {
         };
     useEffect(() => {
         RequestAPI.getRequest(
-            `${Api.payrollPayslipList}`,
+            `${Api.payrollPayList}`,
             "",
             {},
             {},
@@ -102,8 +103,28 @@ export const Payslip = (props: any) => {
             }
           )
 
+        //   RequestAPI.getRequest(
+        //     `${Api.generatedList}`,
+        //     "",
+        //     {},
+        //     {},
+        //     async (res: any) => {
+        //         const { status, body = { data: {}, error: {} } }: any = res
+        //         if (status === 200 && body && body.data) {
+        //             if (body.error && body.error.message) {
+        //             } else {
+        //                 let tempArray = [...body.data]
+        //                 body.data.forEach((d: any, i: any) => {
+        //                     d.isCheck = false
+        //                 });
+        //                 setEmployee(tempArray)
+        //             }
+        //       }
+        //     }
+        //   )
+
           RequestAPI.getRequest(
-            `${Api.employeeList}`,
+            `${Api.payrollPayList}`,
             "",
             {},
             {},
@@ -115,122 +136,168 @@ export const Payslip = (props: any) => {
                         let tempArray: any = []
                         body.data.forEach((d: any, i: any) => {
                             tempArray.push({
-                                userId: d.userAccountId,
-                                label: d.firstname + " " + d.lastname
+                                id: d.id,
+                                label1: d.periodMonth,
+                                label2: d.periodYear,
+                                label3: d.dateFrom,
+                                label4: d.dateTo,
                             })
                         });
-                        setEmployee(tempArray)
+                        setPayroll(tempArray)
                     }
-              }
+              } 
             }
           )
        
     }, [])
+    const getPayrollList = ( id = 0) => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+        Object.keys(filterDataTemp).forEach((d: any) => {
+            if (filterDataTemp[d]) {
 
-    const handlePageClick = (event: any) => {
-        getAllAdjustmentList(event.selected)
-    };
+            queryString += `&${d}=${filterDataTemp[d]}`
+            } else {
+            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+            }
+        })
+        }
+        RequestAPI.getRequest(
+            `${Api.generatedList}?${queryString}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray = [...body.data]
+                        body.data.forEach((d: any, i: any) => {
+                            d.isCheck = false
+                        });
+                        setEmployee(tempArray)
+                    }
+                }
+            }
+        )
+    }
+    // const sendEmailIndividual = () => {
+    //     const valuesObj: any = { ...props.emailData }
+    //     let userIds: any = []
+    //     const tempArray: any = [ ...employee]
+    //     tempArray.forEach((data: any, index: any) => {
+    //         if (data.isCheck) {
+    //             userIds.push(data.userAccountId)
 
+    //             console.log(userIds)
+    //         }
+    //     });
+
+    //     valuesObj.id = userIds
+    //     RequestAPI.getRequest(
+    //         `${Api.sendIndividual}?id=${valuesObj.id}`,
+    //         "",
+    //         valuesObj,
+    //         {},
+    //         async (res: any) => {
+    //             const { status, body = { data: {}, error: {} } }: any = res
+    //             if (status === 200 && body) {
+    //                 if (body.error && body.error.message) {
+    //                 } else {
+                     
+    //                 }
+    //             }
+    //         }
+    //     )
+
+
+    // }
+
+    const sendEmailIndividual = async () => {
+        const valuesObj: any = { ...props.emailData };
+        let payslipIds: any = [];
+       
+        const tempArray: any = [...employee]
+        tempArray.forEach((data: any, index: any) => {
+            if (data.isCheck) {
+                payslipIds.push(data.id)
+            }
+        });
+        valuesObj.ids = payslipIds;
+
+        console.log(valuesObj.ids)
+
+        const payload = {
+            "ids" : valuesObj.ids
+        }
+        
+        const loadingSwal = Swal.fire({
+            title: '',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        RequestAPI.postRequest(
+            `${Api.sendIndividual}`,
+            "",
+            payload,
+            {},
+            async(res) => {
+              const { status, body = { data: {}, error: {} } }: any = res;
+              console.log(valuesObj.ids)
+              if (status === 200 && body) {
+                if (body.error && body.error.message) {
+                    Swal.fire('Error', 
+                        body.error.message, 
+                        'error'
+                        );
+                } else {
+                    Swal.fire(
+                        'Success', 
+                        'Email sent successfully!', 
+                        'success'
+                        );
+                    handleModalHide()
+                   
+                }
+              }
+            }
+          );    
+      };
+      
+ 
+
+    const handleModalHide = useCallback(() => {
+        setModalShow(false);  
+        const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
+        setEmployee(updatedEmployee);
+      }, []);
+    const [values, setValues] = useState({
+    userId: [] // Initialize with an empty array
+    });
+    const [selectedEmployees, setSelectedEmployees] = useState([]);
+    const onChangeCheckbox = (index: any, boolCheck: any) => {
+        const valuesObj: any = [...employee]
+        valuesObj[index].isCheck = boolCheck
+        setEmployee([...valuesObj])
+    }
+    const selectAllEmployees = (boolCheck: any) => {
+        const valuesObj: any = [...employee]
+        valuesObj.forEach((data: any, index: any) => {
+            data.isCheck = boolCheck
+        });
+        setEmployee([...valuesObj])
+    }
     const makeFilterData = (event: any) => {
         const { name, value } = event.target
             const filterObj: any = { ...filterData }
             filterObj[name] = name && value !== "Select" ? value : ""
             setFilterData(filterObj)
     }
-    const singleChangeOption = (option: any, name: any) => {
-        const filterObj: any = { ...filterData }
-        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-        setFilterData(filterObj)
-    }
-
-    const getAdjustment = (id: any = 0) => {
-        RequestAPI.getRequest(
-            `${Api.getPayrollAdjustmentInfo}?id=${id}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-                console.log("Response:", res);
-                const { status, body = { data: {}, error: {} } }: any = res;
-                if (status === 200 && body && body.data) {
-                    if (body.error && body.error.message) {
-                        // Handle error
-                    } else {
-                        const valueObj: any = body.data;
-                        setInitialValues(valueObj);
-                        setModalShow(true);
-                    }
-                }
-            }
-        );
-        
-        // Return statement
-       
-       
-    }
-    
-
-    const deleteRecurring = (id : any = 0) => {
-        ErrorSwal.fire({
-            title: 'Are you sure?',
-            text: "You want to cancel this transaction.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              const loadingSwal = Swal.fire({
-                title: '',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                }
-              });
-              
-              RequestAPI.putRequest(`${Api.deleteRecurring}?id=${id}`, "", { "id": id }, {}, async (res) => {
-                const { status, body = { data: {}, error: {} } } = res;
-                if (status === 200 || status === 201) {
-                  if (body.error && body.error.message) {
-                    Swal.close();
-                    ErrorSwal.fire(
-                      'Error!',
-                      body.error.message,
-                      'error'
-                    );
-                  } else {
-                    Swal.close();
-                    getAllAdjustmentList(0);
-                    ErrorSwal.fire(
-                      'Success!',
-                      body.data || "",
-                      'success'
-                    );
-                  }
-                } else {
-                  Swal.close();
-                  ErrorSwal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                  );
-                }
-              })
-            }
-          })
-
-    }
-
-    const handleModalHide = useCallback(() => {
-        setModalShow(false);  
-      }, []);
-    const [values, setValues] = useState({
-    userId: [] // Initialize with an empty array
-    });
-    const [selectedEmployees, setSelectedEmployees] = useState([]);
-   
-
 
     return (
         <ContainerWrapper contents={<>
@@ -276,7 +343,7 @@ export const Payslip = (props: any) => {
                         </div>
                         <Button
                         style={{ width: 210 }}
-                        onClick={() => getAllAdjustmentList(0)}
+                        onClick={() => getPayrollList(0)}
                         className="btn btn-primary mx-2">
                         Search
                         </Button>
@@ -369,136 +436,112 @@ export const Payslip = (props: any) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="row w-100 px-5">
-            <Formik
-                            innerRef={formRef}
-                            enableReinitialize={true}
-                            validationSchema={null}
-                            initialValues={initialValues}
-                            onSubmit={(values, actions) => {
+            <div className="px-3 h-[60vh] overflow-auto">
+            <div className="w-100 pt-2 row">
+                <div className="col-md-6">
+                    <label> Payroll List</label>
+                    <select 
+                        className="form-select"
+                        name="id"
+                        id="type"
+                        autoComplete="off"
+                        onChange={(e) => makeFilterData(e)}
+                    >
+                        <option value="" disabled selected>
+                            Select Payroll
+                        </option>
+                        {payroll && payroll.length &&
+                        payroll.map((item: any, index: string) => (
+                            <option value={item.id} key={`${index}_${item.id}`}>
+                            {getMonthName(item.label1)}, {item.label2} From: {item.label3} - To: { item.label4 }
+                            </option>
+                        ))}
 
-                                
-                                const loadingSwal = Swal.fire({
-                                    title: '',
-                                    allowOutsideClick: false,
-                                    didOpen: () => {
-                                        Swal.showLoading();
-                                    }
-                                });
-                                
-
-                                
-                            }}
-                            >
-
-                                
-
-                                {({ values, setFieldValue, handleSubmit, errors, touched})=> {
-                                    return (
-                                        <Form
-                                        noValidate
-                                        onSubmit={handleSubmit}
-                                        id="_formid"
-                                        autoComplete="off"
-                                        >
-
-                                            <div className="form-group row">
-                                                <div className="col-md-3 mb-3">
-                                                <label>Employee Name *</label>
-                                                {/* <select
-                                                    className="form-select"
-                                                    value={values.userId}
-                                                    onChange={(e) => {
-                                                    const selectedValue = e.target.value;
-                                                    setFieldValue('userId', e.target.value);
-                                                
-                                                    }}
-                                                >
-                                                    <option value="" disabled selected>
-                                                    Select Employee
-                                                    </option>
-                                                    {employee &&
-                                                    employee.length &&
-                                                    employee.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.userId}`} value={item.userId}>
-                                                        {item.label}
-                                                        </option>
-                                                    ))}
-                                                </select> */}
-
-                                                    {/* {employee &&
-                                                    employee.length &&
-                                                    employee.map((item, index) => (
-                                                        <div key={`${index}_${item.userId}`}>
-                                                        <input
-                                                            type="checkbox"
-                                                            className="form-check-input"
-                                                            name="userId"
-                                                            id={`employee_${index}`}
-                                                            value={item.userId}
-                                                            checked={item.userId === values.userId}
-                                                            onChange={(e) => {
-                                                            const selectedValue = e.target.value;
-                                                            // Add your logic here based on the checkbox value change
-                                                            }}
-                                                        />
-                                                        <label htmlFor={`employee_${index}`} className="form-check-label">
-                                                            {item.label}
-                                                        </label>
-                                                        </div>
-                                                    ))} */}
-                                                  {employee &&
-                                                    employee.length &&
-                                                    employee.map((item, index) => (
-                                                        <div key={`${index}_${item.userId}`} className="form-check">
+                    </select>
+                </div>
+                <div className="col-md-2 pt-4">
+                <Button
+                        style={{ width: 210 }}
+                        onClick={() => getPayrollList()}
+                        className="btn btn-primary mx-2">
+                        Search
+                        </Button>
+                </div>
+               
+            </div>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th style={{ width: 10 }}>
+                                <Form.Check
+                                    type="checkbox"
+                                    id="Select All"
+                                    label="Select All"
+                                    onChange={(e) => {
+                                        selectAllEmployees(e.target.checked)
+                                    }}
+                                />
+                            </th>
+                            <th>Employee ID</th>
+                            <th>Employee Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            employee &&
+                                employee.length > 0 ?
+                                <>
+                                    {
+                                        employee.map((item: any, index: any) => {
+                                            return (
+                                                <tr>
+                                                    <td>
                                                         <Form.Check
                                                             type="checkbox"
-                                                            id={`employee_${index}`}
-                                                            name="userId"
-                                                            label={item.label}
-                                                            value={item.userId}
-                                                            checked={Array.isArray(values.userId) && values.userId.includes(item.userId)}
+                                                            label=""
+                                                            checked={item.isCheck}
                                                             onChange={(e) => {
-                                                            const selectedValue = e.target.value;
+                                                                onChangeCheckbox(index, e.target.checked)
                                                             }}
                                                         />
-                                                        </div>
-                                                    ))}
+                                                    </td>
+                                                    <td>{item.id}</td>
+                                                    <td>{item.employeeName}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
 
+                                </>
+                                :
+                                null
+                        }
+                    </tbody>
 
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                            
-                                            </div>
-                                            
-                                            </div>
-                                            
-                                            
+                </Table>
+                {
+                    employee &&
+                        employee.length == 0 ?
+                        <div className="w-100 text-center">
+                            <label htmlFor="">No Records Found</label>
+                        </div>
+                        :
+                        null
+                }
 
-                                                
-                                            
-                                            
-                                            <div className="d-flex justify-content-end px-5">
-                                                <button
-                                                type="button"
-                                                className="btn btn btn-outline-primary me-2 mb-2 mt-2"
-                                                // onClick={handleAddField}
-                                                >
-                                                Add Field
-                                                </button>
-                                            </div>
-                                            <Modal.Footer>
-                                                <button
-                                                type="submit"
-                                                className="btn btn-primary">
-                                                Save
-                                                </button>
-                                            </Modal.Footer>
-
-                                        </Form>
-                                    )
-                                }}
-                            </Formik>
-                
+              
+            </div>
+            <div className="d-flex justify-content-end">
+                <Button
+                style={{ width: 210 }}
+                onClick={() => {
+                    sendEmailIndividual()
+                }}
+                className="btn btn-primary mx-2">
+                Send
+                </Button>
+            </div>
+            
             </Modal.Body>
             </Modal>
 

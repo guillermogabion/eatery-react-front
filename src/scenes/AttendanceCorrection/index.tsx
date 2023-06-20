@@ -955,6 +955,7 @@ export const AttendanceCorrection = (props: any) => {
 
       </Modal>
       <Modal
+        size="lg"
         show={modalViewShow}
         aria-labelledby="contained-modal-title-vcenter"
         centered

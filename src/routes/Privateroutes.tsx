@@ -28,6 +28,7 @@ import {
   PayrollSetting,
   AllRequest,
   Payroll,
+  Payslip,
   ApproverLogin,
   Page404
 } from "../scenes"
@@ -89,6 +90,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   routes.push({ path: "/payroll/adjustment", component: PayrollAdjustment })
   routes.push({ path: "/payroll/recurring", component: Recurring })
   routes.push({ path: "/payroll/settings", component: PayrollSetting })
+  routes.push({ path: "/payroll/payslip", component: Payslip })
   
   return isLogin ? (
     <>

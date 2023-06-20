@@ -25,6 +25,7 @@ export * from "./PayrollAdjustment"
 export * from "./PayrollSetting"
 export * from "./AllRequest"
 export * from "./PayrollAdjustment"
+export * from "./Payslip"
 export * from "./ApproverLogin"
 export * from "./Page404"
 
