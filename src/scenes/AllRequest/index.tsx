@@ -675,8 +675,8 @@ export const AllRequest = (props: any) => {
                                         }
                                         <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
                                         <td> {Utility.removeUnderscore(item.classification)} </td>
-                                        <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
-                                        <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
@@ -900,8 +900,8 @@ export const AllRequest = (props: any) => {
                                                 </> : null
                                         }
                                         <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
-                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
