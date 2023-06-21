@@ -21,6 +21,7 @@ import { Adjustment } from "./components/adjustments"
 import Timekeeping from "./components/timekeeping"
 import GeneratePayroll from "./components/generatepayroll"
 import { Utility } from "../../utils"
+import Audit from "./components/audit"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -31,6 +32,7 @@ export const Payroll = (props: any) => {
     const formRef: any = useRef()
     const [payrollPeriodModal, setPayrollPeriodModal] = React.useState(false);
     const [isCreatePayroll, setIsCreatePayroll] = useState<any>(false);
+    const [isAudit, setIsAudit] = useState<any>(false);
     const [key, setKey] = React.useState('timekeeping');
     const [payrolls, setPayrolls] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
@@ -44,6 +46,7 @@ export const Payroll = (props: any) => {
         'Month',
         'FROM',
         'TO',
+        'Description',
         'Action',
     ];
     const [initialValues, setInitialValues] = useState<any>({
@@ -62,7 +65,7 @@ export const Payroll = (props: any) => {
 
     useEffect(() => {
         RequestAPI.getRequest(
-            `${Api.payrollList}`,
+            `${Api.payrollAll}?size=10&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -117,56 +120,64 @@ export const Payroll = (props: any) => {
                                     <tbody>
                                         {
                                             payrolls &&
-                                                payrolls.length > 0 ?
-                                                <>
-                                                    {
-                                                        payrolls.map((item: any, index: any) => {
-                                                            return (
-                                                                <tr>
-                                                                    <td> {item.periodYear} </td>
-                                                                    <td> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
-                                                                    <td>{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
-                                                                    <td>{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                                    <td>
-                                                                        <label
-                                                                            onClick={() => {
-                                                                                setIsCreatePayroll(true)
-                                                                                setPayrollData({
-                                                                                    "payrollMonth": item.periodMonth,
-                                                                                    "payrollYear": item.periodYear,
-                                                                                    "from": item.dateFrom,
-                                                                                    "to": item.dateTo,
-                                                                                    "userIds": [],
-                                                                                    "id": item.id
-                                                                                })
-                                                                            }}
-                                                                            className="text-muted cursor-pointer">
-                                                                            Update
-                                                                        </label>
-                                                                        <br />
-                                                                        <label
-                                                                            onClick={() => {
-                                                                                // setInitialValues(item)
-                                                                                // setModalShow(true)
-                                                                            }}
-                                                                            className="text-muted cursor-pointer">
-                                                                            Audit
-                                                                        </label>
-                                                                    </td>
-                                                                </tr>
-                                                            )
-                                                        })
-                                                    }
-
-                                                </>
-                                                :
-                                                null
+                                            payrolls.content &&
+                                            payrolls.content.length > 0 && (
+                                                payrolls.content.map((item: any, index: any) => {
+                                                    return (
+                                                        <tr>
+                                                            <td> {item.periodYear} </td>
+                                                            <td> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
+                                                            <td>{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
+                                                            <td>{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                            <td>{item.description} </td>
+                                                            <td>
+                                                                <label
+                                                                    onClick={() => {
+                                                                        setIsCreatePayroll(true)
+                                                                        setPayrollData({
+                                                                            "payrollMonth": item.periodMonth,
+                                                                            "payrollYear": item.periodYear,
+                                                                            "from": item.dateFrom,
+                                                                            "to": item.dateTo,
+                                                                            "userIds": [],
+                                                                            "id": item.id,
+                                                                            "isUpdate": true,
+                                                                        })
+                                                                    }}
+                                                                    className="text-muted cursor-pointer">
+                                                                    Update
+                                                                </label>
+                                                                <br />
+                                                                <label
+                                                                    onClick={() => {
+                                                                        setIsCreatePayroll(true)
+                                                                        setPayrollData({
+                                                                            "payrollMonth": item.periodMonth,
+                                                                            "payrollYear": item.periodYear,
+                                                                            "from": item.dateFrom,
+                                                                            "to": item.dateTo,
+                                                                            "userIds": [],
+                                                                            "id": item.id,
+                                                                            "isUpdate": false,
+                                                                        })
+                                                                        setIsAudit(true)
+                                                                        
+                                                                    }}
+                                                                    className="text-muted cursor-pointer">
+                                                                    Audit
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            )
                                         }
                                     </tbody>
                                 </Table>
                                 {
                                     payrolls &&
-                                        payrolls.length == 0 ?
+                                        payrolls.content &&
+                                        payrolls.content.length == 0 ?
                                         <div className="w-100 text-center">
                                             <label htmlFor="">No Records Found</label>
                                         </div>
@@ -175,7 +186,7 @@ export const Payroll = (props: any) => {
                                 }
                             </div>
                         </div>
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-end px-4">
                             <div className="">
                                 <ReactPaginate
                                     className="d-flex justify-content-center align-items-center"
@@ -183,7 +194,7 @@ export const Payroll = (props: any) => {
                                     nextLabel=">"
                                     onPageChange={handlePageClick}
                                     pageRangeDisplayed={5}
-                                    pageCount={(adjustmentList && adjustmentList.totalPages) || 0}
+                                    pageCount={(payrolls && payrolls.totalPages) || 0}
                                     previousLabel="<"
                                     previousLinkClassName="prev-next-pagination"
                                     nextLinkClassName="prev-next-pagination"
@@ -196,57 +207,69 @@ export const Payroll = (props: any) => {
                         </div>
                     </>
                     :
-                    <div className="px-5 py-5 pt-5 w-full ">
-                        <Tabs
-                            id="controlled-tab-example"
-                            activeKey={key}
-                            onSelect={(k: any) => {
-                                setKey(k)
-                            }}
-                            className="mb-3 w-100 lg:w-[80vw]"
-                        >
-                            <Tab eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
-                                {
-                                    key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
-                                        <Timekeeping payrollData={payrollData} />
-                                        :
-                                        null
-                                }
-                            </Tab>
-                            <Tab eventKey="employee request" title="Employee Request">
-                                {
-                                    key == 'employee request' && Object.keys(payrollData).length != 0 ?
-                                        <Leaves payrollData={payrollData} />
-                                        :
-                                        null
-                                }
-                            </Tab>
-                            <Tab eventKey="recurring" title="Recurring" >
-                                {
-                                    key == 'recurring' ?
-                                        <Recurring />
-                                        :
-                                        null
-                                }
-                            </Tab>
-                            <Tab eventKey="adjustment" title="Adjustment">
-                                {
-                                    key == 'adjustment' ?
-                                        <Adjustment />
-                                        :
-                                        null
-                                }
-                            </Tab>
-                            <Tab eventKey="payroll" title="Payroll">
-                                {
-                                    key == 'payroll' && Object.keys(payrollData).length != 0 ?
-                                        <GeneratePayroll payrollData={payrollData} />
-                                        :
-                                        null
-                                }
-                            </Tab>
-                        </Tabs>
-                    </div>
+                    <>
+                        {
+                            isAudit ? <>
+                            <Audit payrollData={payrollData} goBack={()=>{
+                                setIsCreatePayroll(false)
+                                setIsAudit(false)
+                            }} />
+                            </>
+                                :
+                                <div className="px-5 py-5 pt-5 w-full ">
+                                    <Tabs
+                                        id="controlled-tab-example"
+                                        activeKey={key}
+                                        onSelect={(k: any) => {
+                                            setKey(k)
+                                        }}
+                                        className="mb-3 w-100 lg:w-[80vw]"
+                                    >
+                                        <Tab eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
+                                            {
+                                                key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
+                                                    <Timekeeping payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                        <Tab eventKey="employee request" title="Employee Request">
+                                            {
+                                                key == 'employee request' && Object.keys(payrollData).length != 0 ?
+                                                    <Leaves payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                        <Tab eventKey="recurring" title="Recurring" >
+                                            {
+                                                key == 'recurring' ?
+                                                    <Recurring payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                        <Tab eventKey="adjustment" title="Adjustment">
+                                            {
+                                                key == 'adjustment' ?
+                                                    <Adjustment payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                        <Tab eventKey="payroll" title="Payroll">
+                                            {
+                                                key == 'payroll' && Object.keys(payrollData).length != 0 ?
+                                                    <GeneratePayroll payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                    </Tabs>
+                                </div>
+                        }
+                    </>
+
             }
 
 
@@ -278,12 +301,47 @@ export const Payroll = (props: any) => {
                                 payrollYear: Yup.string().required("Payroll year to is required!"),
                                 from: Yup.string().required("Date from is required!"),
                                 to: Yup.string().required("Date to is required!"),
+                                description: Yup.string().required("Description is required!"),
                             })
                         }
                         onSubmit={(values, actions) => {
-                            setIsCreatePayroll(true)
-                            setPayrollPeriodModal(false)
-                            setPayrollData(values)
+                            RequestAPI.postRequest(Api.createPayroll, "", values, {}, async (res: any) => {
+                                const { status, body } = res
+                                if (status === 200 || status === 201) {
+                                    if (body.error && body.error.message) {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            (body.error && body.error.message) || "",
+                                            'error'
+                                        )
+                                    } else {
+                                        ErrorSwal.fire({
+                                            title: 'Success',
+                                            text: (body.message) || "",
+                                            icon: 'success',
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            allowOutsideClick: false,
+                                            confirmButtonText: 'Proceed'
+                                        }).then((result: any) => {
+                                            if (result.isConfirmed) {
+                                                setIsCreatePayroll(true)
+                                                setPayrollPeriodModal(false)
+                                                let valuesObj: any = { ...values }
+                                                valuesObj.id = body.id
+                                                valuesObj.isUpdate = false
+                                                setPayrollData(valuesObj)
+                                            }
+                                        })
+                                    }
+                                } else {
+                                    ErrorSwal.fire(
+                                        'Error!',
+                                        'Something Error.',
+                                        'error'
+                                    )
+                                }
+                            });
                         }}>
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (
@@ -377,17 +435,21 @@ export const Payroll = (props: any) => {
                                                 <p style={{ color: "red", fontSize: "12px" }}>{errors.to}</p>
                                             )}
                                         </div>
-                                        {/* <div className="form-group col-md-12 mb-3">
+                                        <div className="form-group col-md-12 mb-3">
                                             <label>Description</label>
                                             <textarea
-                                                name="reason"
-                                                id="reason"
-                                                value={""}
+                                                name="description"
+                                                id="description"
+                                                value={values.description}
                                                 className={`form-control py-1`}
                                                 style={{ height: "100px" }}
-                                                onChange={(e) => { }}
+                                                maxLength={1024}
+                                                onChange={(e) => { setFieldValue('description', e.target.value) }}
                                             />
-                                        </div> */}
+                                            {errors && errors.description && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                            )}
+                                        </div>
                                         <div className="w-full mt-5 d-flex justify-content-center ">
                                             <button
                                                 type="submit"

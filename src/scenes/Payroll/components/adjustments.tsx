@@ -13,6 +13,7 @@ import withReactContent from "sweetalert2-react-content"
 const ErrorSwal = withReactContent(Swal)
 
 export const Adjustment = (props: any) => {
+    const { payrollData } = props
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const { data } = useSelector((state: any) => state.rootReducer.userData)
     const [adjustmentList, setAdjustmentList] = React.useState([]);
@@ -251,6 +252,7 @@ export const Adjustment = (props: any) => {
                         initialValues={initialValues}
                         onSubmit={(values, actions) => {
                             const valuesObj: any = { ...values }
+                            valuesObj.payrollId = payrollData.id
                             RequestAPI.putRequest(
                                 Api.editPayrollAdjustment,
                                 "",

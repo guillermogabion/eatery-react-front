@@ -54,7 +54,7 @@ export default function GeneratePayroll(props: any) {
         setEmployeeList([...valuesObj])
     }
 
-    const generatePayroll = () => {
+    const generatePayroll = (isRegenerate: any = false) => {
         const valuesObj: any = { ...props.payrollData }
         let userIds: any = []
         const tempArray: any = [...employeeList]
@@ -63,9 +63,14 @@ export default function GeneratePayroll(props: any) {
                 userIds.push(data.userAccountId)
             }
         });
+        valuesObj.payrollId = payrollData.id
         valuesObj.userIds = userIds
+        let endpoint = Api.generatePayroll
+        if (isRegenerate){
+            endpoint = Api.reGeneratePayroll
+        }
         RequestAPI.postRequest(
-            Api.generatePayroll,
+            endpoint,
             "",
             valuesObj,
             {},
@@ -190,18 +195,24 @@ export default function GeneratePayroll(props: any) {
             </div>
             <div className="px-3 mt-5 flex">
                 {
-                    payroll.id ?
+                    payroll.isUpdate ?
                         <Button
                             onClick={() => {
-
+                                generatePayroll(true)
                             }}
-                            className="btn btn-primary mr-3"
-                            disabled={true}>
-                            Regenerate Payroll
+                            className="btn btn-primary mr-3">
+                            {isSubmit ?
+                                <div className="d-flex justify-content-center">
+                                    <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                    Regenerating Payroll
+                                </div>
+                                : "Regenerate Payroll"
+                            }
+                            
                         </Button> :
                         <Button
                             onClick={() => {
-                                generatePayroll()
+                                generatePayroll(false)
                             }}
                             className="btn btn-primary mr-3"
                             disabled={isSubmit}>
@@ -216,7 +227,7 @@ export default function GeneratePayroll(props: any) {
                 }
 
                 {
-                    payroll.id ?
+                    payroll.isUpdate ?
                         <>
                             <Button
                                 onClick={() => {

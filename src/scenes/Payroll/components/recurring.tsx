@@ -12,6 +12,7 @@ import { Utility } from "../../../utils"
 import EmployeeDropdown from "../../../components/EmployeeDropdown"
 
 export default function Recurring(props: any) {
+    const { payrollData } = props
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const { data } = useSelector((state: any) => state.rootReducer.userData)
     const [recurringList, setRecurringList] = React.useState([]);
@@ -311,6 +312,8 @@ export default function Recurring(props: any) {
                         initialValues={initialValues}
                         onSubmit={(values, actions) => {
                             const valuesObj: any = { ...values }
+                            valuesObj.payrollId = payrollData.id
+                            
                             RequestAPI.putRequest(
                                 Api.updateRecurringTransaction,
                                 "",

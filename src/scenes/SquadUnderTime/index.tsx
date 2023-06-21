@@ -292,8 +292,8 @@ export const SquadUndertime = (props: any) => {
                                     <tr>
                                         <td> {item.lastName}, {item.firstName}</td>
                                         <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
-                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:ss A', true)} </td>
+                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.statusChangedBy} </td>
