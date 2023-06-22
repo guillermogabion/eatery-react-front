@@ -213,6 +213,7 @@ const Api: any = {
 
   // email sending 
   payrollPayList :  process.env.REACT_APP_API_URL + "payroll/list",
+  payrollPayListAll :  process.env.REACT_APP_API_URL + "payroll/all",
   generatedList : process.env.REACT_APP_API_URL + "payroll/generated/list",
   sendIndividual : process.env.REACT_APP_API_URL + "payroll/sendpayslip",
   sendAll : process.env.REACT_APP_API_URL + "payroll/sendpayslip/all",

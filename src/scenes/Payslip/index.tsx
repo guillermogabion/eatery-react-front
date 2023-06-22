@@ -74,35 +74,38 @@ export const Payslip = (props: any) => {
         const monthNumber = monthMap[monthName];
         setPeriodMonths(monthNumber);
         };
-    useEffect(() => {
-        RequestAPI.getRequest(
-            `${Api.payrollPayList}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-              const { status, body = { data: {}, error: {} } }: any = res
-              if (status === 200 && body && body.data) {
-                if (body.error && body.error.message) {
-                } else {
-                    let tempArray: any = []
-                    body.data.forEach((d: any, i: any) => {
-                        tempArray.push({
-                            id: d.id,
-                            periodMonth: d.periodMonth,
-                            periodYear : d.periodYear,
-                            isGenerated : d.isGenerated
-                        })
-                    });
-                    setPayrollList(tempArray)
-                    // setRecurringTypes([])
-    
-                    
+        const getAllPayroll = (pageNo : any ) => {
+            RequestAPI.getRequest(
+                `${Api.payrollPayListAll}?size=10&page=${pageNo}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                  const { status, body = { data: {}, error: {} } }: any = res
+                  if (status === 200 && body && body.data.content) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.content.forEach((d: any, i: any) => {
+                            tempArray.push({
+                                id: d.id,
+                                periodMonth: d.periodMonth,
+                                periodYear : d.periodYear,
+                                isGenerated : d.isGenerated
+                            })
+                        });
+                        setPayrollList(tempArray)
+                        // setRecurringTypes([])
+        
+                        
+                    }
+                  }
                 }
-              }
-            }
-          )
-
+              )
+        }
+    useEffect(() => {
+       
+        getAllPayroll(0)
         //   RequestAPI.getRequest(
         //     `${Api.generatedList}`,
         //     "",
@@ -298,6 +301,10 @@ export const Payslip = (props: any) => {
             filterObj[name] = name && value !== "Select" ? value : ""
             setFilterData(filterObj)
     }
+    const handlePageClick = (event: any) => {
+        getAllEmployee(event.selected)
+      };
+    
 
     return (
         <ContainerWrapper contents={<>
@@ -405,6 +412,25 @@ export const Payslip = (props: any) => {
 
         
         </div>
+        <div className="d-flex justify-content-end">
+          <div className="">
+            <ReactPaginate
+              className="d-flex justify-content-center align-items-center"
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={(payrollList && payrollList.totalPages) || 0}
+              previousLabel="<"
+              previousLinkClassName="prev-next-pagination"
+              nextLinkClassName="prev-next-pagination"
+              activeLinkClassName="active-page-link"
+              disabledLinkClassName="prev-next-disabled"
+              pageLinkClassName="page-link"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </div>
         <div className="d-flex justify-content-end mt-3" >
         <div>
             <Button className="mx-2"
@@ -482,7 +508,7 @@ export const Payslip = (props: any) => {
                                     }}
                                 />
                             </th>
-                            <th>Employee ID</th>
+                            <th>Employee Payroll ID</th>
                             <th>Employee Name</th>
                         </tr>
                     </thead>
