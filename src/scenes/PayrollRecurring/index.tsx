@@ -15,6 +15,8 @@ import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import { Utility } from "../../utils"
+import * as Yup from "yup"
+
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -103,7 +105,7 @@ export const Recurring = (props: any) => {
         })
         }
         RequestAPI.getRequest(
-            `${Api.getAllRecurringList}?size=10&page${pageNo}${queryString}`,
+            `${Api.getAllRecurringList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -294,7 +296,24 @@ export const Recurring = (props: any) => {
         });
       }, []);
 
+      
+      const validationSchema = Yup.object().shape({
+        endDate: Yup.date().required('Date is required'),
+        time: Yup.date().required('Time is required'),
+        userId : Yup.string().required('Employee is Required'),
+        recurringTypeId:Yup.string().required('Adjustment is Required'),
+        adjustmentAmount: Yup.string().required('Amount is Required'),
+        periodMonth: Yup.string().required('Select a month'),
+        periodYear: Yup.string().required('Select a Year'),
+        payrollMonth: Yup.string().required('Select a Month'),
+        payrollYear: Yup.string().required('Select a Year'),
+        amount: Yup.string().required('Amount is Required'),
+        active: Yup.string().required('Select Status'),
+
+
+      });
    
+
 
 
     return (
@@ -302,49 +321,41 @@ export const Recurring = (props: any) => {
             <div className="w-100 px-5 py-5">
               <div>
                 <div className="w-100 pt-2">
-                    <div className="fieldtext d-flex col-md-6">
-                        <div className="input-container">
-                        <input
-                                name="name"
-                                placeholder="employeeName"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                // onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    <div className="fieldtext d-flex">
+                        <div className="input-container col-md-2">
+                        <EmployeeDropdown
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                            withEmployeeID={true}
                             />
                         </div>
-                        <div className="input-container">
-                            <input
-                                name="amount"
-                                placeholder="Amount"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
+                        <div className="input-container col-md-3">
+                        <select
+                            placeholder="Recurring Name"
+                            className="form-select"
+                            name="isDeduction"
+                            id="type"
+                            onChange={(e) =>
+                                makeFilterData(e)}
+                        >
+                            <option value="" disabled selected>
+                            Recurring Type
+                            </option>
+                            <option value="true">Deduct</option>
+                            <option value="false">Add</option>
+                          
+                        </select>
                         </div>
-                        <div className="input-container">
-                            <input
-                                name="deduct"
-                                placeholder="Add/Deduct"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
+                        <div className="input-container col-md-3">
+                            <Button
+                            style={{ width: 210 }}
+                            onClick={() => getAllRecurringList(0)}
+                            className="btn btn-primary mx-2">
+                            Search
+                            </Button>
                         </div>
-                        <Button
-                        style={{ width: 210 }}
-                        onClick={() => getAllRecurringList(0)}
-                        className="btn btn-primary mx-2">
-                        Search
-                        </Button>
                     </div>
                 </div>
                 <Table responsive="lg">
@@ -473,7 +484,7 @@ export const Recurring = (props: any) => {
                 <Formik
                 innerRef={formRef}
                 enableReinitialize={true}
-                validationSchema={null}
+                validationSchema={validationSchema}
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
 
@@ -698,13 +709,17 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-4 mb-3">
                                         <label>Amount</label>
                                         <input
-                                        className="form-control"
+                                        type="number"
+                                        className={`form-control ${touched.adjustmentAmount && errors.adjustmentAmount ? 'is-invalid' : ''}`}
                                         name="adjustmentAmount"
                                         value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
                                         onChange={(e) => {
                                             setFieldValue('adjustmentAmount', e.target.value);
                                         }}
                                         />
+                                          {errors && errors.adjustmentAmount && (
+                                            <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
+                                            )}
                                     </div>
                                     <div className="col-md-4 mb-3">
                                         <label>End Date</label>
@@ -728,9 +743,7 @@ export const Recurring = (props: any) => {
                                             onChange={(e) => {
                                             setFieldValue('active', e.target.value);
                                             }}
-                                        ><option value="" disabled selected>
-                                        Status
-                                        </option>
+                                        >
                                             <option value={true}>Active</option>
                                             <option value={false}>Inactive</option>
                                         </select>
@@ -750,7 +763,7 @@ export const Recurring = (props: any) => {
                                             <label>Employee ID</label>
                                                 <input
                                                 readOnly
-                                                className="formControl"
+                                                className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                 name="userId"
                                                 value={values.userId ? values.userId : ''}
                                                 onChange={(e) => {
@@ -765,7 +778,7 @@ export const Recurring = (props: any) => {
                                                 <label>Employee Name *</label>
                                                 <select
                                                     placeholder="Employee Name"
-                                                    className="form-select"
+                                                    className={`form-select ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                     value={values.userId}
                                                     onChange={(e) => {
                                                     const selectedValue = e.target.value;
@@ -797,6 +810,9 @@ export const Recurring = (props: any) => {
                                                         </option>
                                                     ))}
                                                 </select>
+                                                {errors && errors.userId && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                )}
                                                 </div>
 
 
@@ -804,7 +820,8 @@ export const Recurring = (props: any) => {
                                                     <label>Recurring Name *</label>
                                                     <select
                                                         placeholder="Recurring Name"
-                                                        className="form-select"
+                                                        className={`form-select ${touched.recurringTypeId && errors.recurringTypeId ? 'is-invalid' : ''}`}
+
                                                         name="recurringTypeId"
                                                         id="type"
                                                         value={values.recurringTypeId}
@@ -836,6 +853,9 @@ export const Recurring = (props: any) => {
                                                             </option>
                                                         ))}
                                                     </select>
+                                                    {errors && errors.recurringTypeId && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.recurringTypeId}</p>
+                                                    )}
                                                     </div>
 
                                                     {/* start of test  */}
@@ -881,8 +901,9 @@ export const Recurring = (props: any) => {
                                                 <div className="col-md-4 mb-3">
                                                     <label>Amount</label>
                                                     <input
-                                                    className="form-control"
+                                                    type="number"
                                                     name="adjustmentAmount"
+                                                    className={`form-control ${touched.adjustmentAmount && errors.adjustmentAmount ? 'is-invalid' : ''}`}
                                                     value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
                                                     onChange={(e) => {
                                                         setFieldValue('adjustmentAmount', e.target.value);
@@ -891,12 +912,15 @@ export const Recurring = (props: any) => {
                                                         setRecurring(updatedFields);
                                                     }}
                                                     />
+                                                     {errors && errors.adjustmentAmount && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
+                                                    )}
                                                 </div>
                                                 <div className="col-md-4 mb-3">
                                                     <label>End Date</label>
                                                     <input
                                                     type="date"
-                                                    className="formControl"
+                                                    className={`form-control ${touched.endDate && errors.endDate ? 'is-invalid' : ''}`}
                                                     name="endDate"
                                                     value={values.endDate}
                                                     onChange={(e) => {
@@ -906,12 +930,15 @@ export const Recurring = (props: any) => {
                                                         setRecurring(updatedFields);
                                                     }}
                                                     />
+                                                    {errors && errors.endDate && (
+                                                        <p style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
+                                                    )}
                                                 </div>
                                                 <div className="col-md-4 mb-3">
                                                 <label>Status</label>
                                                 <select
                                                     name="active"
-                                                    className="formControl"
+                                                    className={`form-select ${touched.active && errors.active ? 'is-invalid' : ''}`}
                                                     value={values.active}
                                                     onChange={(e) => {
                                                     const selectedValue = e.target.value === 'true';
@@ -920,12 +947,13 @@ export const Recurring = (props: any) => {
                                                     updatedFields[index].active = e.target.value;
                                                     setRecurring(updatedFields);
                                                     }}
-                                                ><option value="" disabled={!index} selected={!index}>
-                                                Status
-                                                </option>
+                                                >
                                                     <option value={true}>Active</option>
                                                     <option value={false}>Inactive</option>
                                                 </select>
+                                                    {errors && errors.active && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.active}</p>
+                                                    )}
                                                 </div>
 
                                                 {values.employeeId}

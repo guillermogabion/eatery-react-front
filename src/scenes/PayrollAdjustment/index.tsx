@@ -14,6 +14,7 @@ import { async } from "validate.js"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import * as Yup from "yup"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -29,6 +30,7 @@ export const PayrollAdjustment = (props: any) => {
     const [ adjustmentTypes, setAdjustmentTypes ] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
+    const [selectedMonth, setSelectedMonth] = useState('');
 
 
 
@@ -151,7 +153,7 @@ export const PayrollAdjustment = (props: any) => {
         })
         }
         RequestAPI.getRequest(
-            `${Api.getAllPayrollList}?size=10&page${pageNo}${queryString}`,
+            `${Api.getAllPayrollList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -339,7 +341,26 @@ export const PayrollAdjustment = (props: any) => {
                    
         });
       }, []);
+      const handleChange = (e) => {
+        const selectedValue = e.target.value;
+        console.log('Selected value:', selectedValue);
+        setSelectedMonth(selectedValue);
+      };
 
+      const validationSchema = Yup.object().shape({
+        date: Yup.date().required('Date is required'),
+        time: Yup.date().required('Time is required'),
+        userId : Yup.string().required('Employee is Required'),
+        adjustmentTypeId:Yup.string().required('Adjustment is Required'),
+        adjustmentAmount: Yup.string().required('Amount is Required'),
+        periodMonth: Yup.string().required('Select a month'),
+        periodYear: Yup.string().required('Select a Year'),
+        payrollMonth: Yup.string().required('Select a Month'),
+        payrollYear: Yup.string().required('Select a Year'),
+        amount: Yup.string().required('Amount is Required'),
+
+
+      });
    
 
 
@@ -349,40 +370,13 @@ export const PayrollAdjustment = (props: any) => {
               <div>
                 <div className="w-100 pt-2">
                     <div className="fieldtext d-flex col-md-6">
-                        <div className="input-container">
-                        <input
-                                name="name"
-                                placeholder="employeeName"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                // onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-                        <div className="input-container">
-                            <input
-                                name="amount"
-                                placeholder="Amount"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-                        <div className="input-container">
-                            <input
-                                name="deduct"
-                                placeholder="Add/Deduct"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                        <div className="input-container col-md-4">
+                        <EmployeeDropdown
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                            withEmployeeID={true}
                             />
                         </div>
                         <Button
@@ -521,7 +515,7 @@ export const PayrollAdjustment = (props: any) => {
                 <Formik
                 innerRef={formRef}
                 enableReinitialize={true}
-                validationSchema={null}
+                validationSchema={validationSchema}
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
 
@@ -553,42 +547,49 @@ export const PayrollAdjustment = (props: any) => {
 
                     if(values.userId){
                         const valuesObj : any = {...values}
-                        console.log(valuesObj)
-                        // RequestAPI.putRequest(
-                        //     Api.updateRecurringTransaction,
-                        //     "",
-                        //     valuesObj,
-                        //     {},
-                        //     async (res) => {
-                        //         const { status, body = { data: {}, error: {} } } = res;
+                        valuesObj.periodMonth = valuesObj.payrollMonth
+                        valuesObj.periodYear = valuesObj.payrollYear
+                        valuesObj.adjustmentAmount = valuesObj.amount
+                        delete valuesObj.payrollMonth;
+                        delete valuesObj.payrollYear;
+                        delete valuesObj.amount;
+
+                        console.log(valuesObj.payrollMonth)
+                        RequestAPI.putRequest(
+                            Api.editPayrollAdjustment,
+                            "",
+                            valuesObj,
+                            {},
+                            async (res) => {
+                                const { status, body = { data: {}, error: {} } } = res;
                         
-                        //         if (status === 200 || status === 201) {
-                        //             if (body.error && body.error.message) {
-                        //             ErrorSwal.fire(
-                        //                 "Error!",
-                        //                 body.error.message || "",
-                        //                 "error"
+                                if (status === 200 || status === 201) {
+                                    if (body.error && body.error.message) {
+                                    ErrorSwal.fire(
+                                        "Error!",
+                                        body.error.message || "",
+                                        "error"
                         
-                        //             );
-                        //             // handleCloseModal();
-                        //             } else {
-                        //             setModalShow(false)
-                        //             ErrorSwal.fire(
-                        //                 "Updated Successfully!",
-                        //                 body.data || "",
-                        //                 "success"
-                        //             ).then((result) => {
-                        //                 if (result.isConfirmed) {
-                        //                 location.reload();
-                        //                 }
-                        //             });
-                        //             // handleCloseModal();
-                        //             }
-                        //         } else {
-                        //             ErrorSwal.fire("Error!", "Something Error.", "error");
-                        //         }
-                        //         }
-                        // );
+                                    );
+                                    // handleCloseModal();
+                                    } else {
+                                    setModalShow(false)
+                                    ErrorSwal.fire(
+                                        "Updated Successfully!",
+                                        body.data || "",
+                                        "success"
+                                    ).then((result) => {
+                                        if (result.isConfirmed) {
+                                        location.reload();
+                                        }
+                                    });
+                                    // handleCloseModal();
+                                    }
+                                } else {
+                                    ErrorSwal.fire("Error!", "Something Error.", "error");
+                                }
+                                }
+                        );
                     }else {
                         RequestAPI.postRequest(Api.payrollAdjustmentCreate, "", payload, {}, async (res:any) => {
                             Swal.close();
@@ -655,7 +656,7 @@ export const PayrollAdjustment = (props: any) => {
                                         <label>Employee ID</label>
                                             <input
                                             readOnly
-                                            className="formControl"
+                                            className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                             name="userId"
                                             value={values.userId ? values.userId : ''}
                                             onChange={(e) => {
@@ -695,6 +696,11 @@ export const PayrollAdjustment = (props: any) => {
                                             </option>
                                         ))}
                                     </select>
+                                    <div className="col-md-4 mb-3">
+                                        {touched.errors && errors.userId && (
+                                            <p style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
+                                        )}
+                                    </div>
                                     </div>
                                     <div className="col-md-3 mb-3 mt-4">
                                         <select
@@ -768,34 +774,41 @@ export const PayrollAdjustment = (props: any) => {
                                     <div className="col-md-4 mb-3">
                                         <label>Amount</label>
                                         <input
-                                        className="form-control"
-                                        name="adjustmentAmount"
-                                        value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
+                                        type="number"
+                                        className={`form-control ${touched.amount && errors.amount ? 'is-invalid' : ''}`}
+                                        name="amount"
+                                        value={values.amount}
                                         onChange={(e) => {
-                                            setFieldValue('adjustmentAmount', e.target.value);
+                                            setFieldValue('amount', e.target.value);
                                         }}
                                         />
+                                        {errors && errors.amount && (
+                                        <p style={{ color: "red", fontSize: "12px" }}>{errors.amount}</p>
+                                        )}
                                     </div>
                                     <div className="col-md-4 mb-3 mt-4">
-                                            <select
-                                                placeholder="Month"
-                                                className="form-select"
-                                                name="periodMonth"
-                                                id="type"
-                                                value={values.periodMonth}
-                                                onChange={(e) => {
-                                                    setFieldValue('periodMonth', e.target.value); // Update the corresponding value in Formik's state
-                                                }}
-                                            >
-                                                <option value="" disabled selected >
-                                                    Select Month
-                                                </option>
-                                                {Object.entries(monthMap).map(([month, value]) => (
-                                                    <option key={value} value={value}>
-                                                        {month}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                        
+                                    <select
+                                        placeholder="Month"
+                                        className="form-select"
+                                        name="payrollMonth"
+                                        id="type"
+                                        value={values.payrollMonth}
+                                        onChange={(e) => {
+                                            setFieldValue('payrollMonth', e.target.value);
+                                            // Update the corresponding value in Formik's state
+                                        }}
+                                    >
+                                        <option value="" disabled>
+                                            Select Month
+                                        </option>
+                                        {Object.entries(monthMap).map(([month, value]) => (
+                                            <option key={value} value={value}>
+                                                {month}
+                                            </option>
+                                        ))}
+                                    </select>
+                                        
                                         </div>
 
                                         
@@ -803,11 +816,11 @@ export const PayrollAdjustment = (props: any) => {
                                             <select
                                                 placeholder="Year"
                                                 className="form-select"
-                                                name="periodYear"
+                                                name="payrollYear"
                                                 id="type"
-                                                value={values.periodYear}
+                                                value={values.payrollYear}
                                                 onChange={(e) => {
-                                                    setFieldValue('periodYear', e.target.value);
+                                                    setFieldValue('payrollYear', e.target.value);
                                                     // Update the corresponding value in Formik's state
                                                 }}
                                             >
@@ -838,7 +851,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <label>Employee ID</label>
                                                 <input
                                                 readOnly
-                                                className="formControl"
+                                                className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                 name="userId"
                                                 value={values.userId ? values.userId : ''}
                                                 onChange={(e) => {
@@ -853,7 +866,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 <label>Employee Name *</label>
                                                 <select
                                                     placeholder="Employee Name"
-                                                    className="form-select"
+                                                    className={`form-select ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                     value={values.userId}
                                                     onChange={(e) => {
                                                     const selectedValue = e.target.value;
@@ -885,13 +898,16 @@ export const PayrollAdjustment = (props: any) => {
                                                         </option>
                                                     ))}
                                                 </select>
+                                                {errors && errors.userId && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                )}
                                                 </div>
 
 
                                                 <div className="col-md-3 mb-3 mt-4">
                                                     <select
                                                         placeholder="Adjustment Name"
-                                                        className="form-select"
+                                                        className={`form-select ${touched.adjustmentTypeId && errors.adjustmentTypeId ? 'is-invalid' : ''}`}
                                                         name="adjustmentTypeId"
                                                         id="type"
                                                         value={values.deduction}
@@ -921,6 +937,9 @@ export const PayrollAdjustment = (props: any) => {
                                                             </option>
                                                         ))}
                                                     </select>
+                                                    {errors && errors.adjustmentTypeId && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentTypeId}</p>
+                                                    )}
                                                 </div>
                                                 <div className="col-md-3 mb-3 mt-4">
                                                     <select
@@ -961,7 +980,8 @@ export const PayrollAdjustment = (props: any) => {
                                                 <div className="col-md-4 mb-3">
                                                     <label>Amount</label>
                                                     <input
-                                                    className="form-control"
+                                                    type="number"
+                                                    className={`form-control ${touched.adjustmentAmount && errors.adjustmentAmount ? 'is-invalid' : ''}`}
                                                     name="adjustmentAmount"
                                                     value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
                                                     onChange={(e) => {
@@ -971,11 +991,14 @@ export const PayrollAdjustment = (props: any) => {
                                                         setAdjustment(updatedFields);
                                                     }}
                                                     />
+                                                     {errors && errors.adjustmentAmount && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
+                                                    )}
                                                 </div>
                                                 <div className="col-md-4 mb-3 mt-4">
                                                     <select
                                                         placeholder="Month"
-                                                        className="form-select"
+                                                        className={`form-select ${touched.periodMonth && errors.periodMonth ? 'is-invalid' : ''}`}
                                                         name="periodMonth"
                                                         id="type"
                                                         value={values.periodMonth}
@@ -996,13 +1019,16 @@ export const PayrollAdjustment = (props: any) => {
                                                             </option>
                                                         ))}
                                                     </select>
+                                                    {errors && errors.periodMonth && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.periodMonth}</p>
+                                                    )}
                                                 </div>
 
                                                 
                                                 <div className="col-md-4 mb-3 mt-4">
                                                     <select
                                                         placeholder="Year"
-                                                        className="form-select"
+                                                        className={`form-select ${touched.periodYear && errors.periodYear ? 'is-invalid' : ''}`}
                                                         name="periodYear"
                                                         id="type"
                                                         value={values.periodYear}
@@ -1023,6 +1049,9 @@ export const PayrollAdjustment = (props: any) => {
                                                             </option>
                                                         ))}
                                                     </select>
+                                                    {errors && errors.periodYear && (
+                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.periodYear}</p>
+                                                    )}
                                                 </div>
 
                                             
