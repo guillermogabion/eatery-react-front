@@ -297,21 +297,141 @@ export const Recurring = (props: any) => {
       }, []);
 
       
-      const validationSchema = Yup.object().shape({
-        endDate: Yup.date().required('Date is required'),
-        time: Yup.date().required('Time is required'),
-        userId : Yup.string().required('Employee is Required'),
-        recurringTypeId:Yup.string().required('Adjustment is Required'),
-        adjustmentAmount: Yup.string().required('Amount is Required'),
-        periodMonth: Yup.string().required('Select a month'),
-        periodYear: Yup.string().required('Select a Year'),
-        payrollMonth: Yup.string().required('Select a Month'),
-        payrollYear: Yup.string().required('Select a Year'),
-        amount: Yup.string().required('Amount is Required'),
-        active: Yup.string().required('Select Status'),
+      const executeSubmit = ( values , actions) => {
+
+        const loadingSwal = Swal.fire({
+            title: '',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        const recurringTransactions = recurring.map((item) => ({
+            userId: item.userId,
+            recurringTypeId: item.recurringTypeId,
+            adjustmentAmount: item.adjustmentAmount,
+            endDate: item.endDate,
+            active: item.active
+        }));
+
+        const payload = {
+            recurring: recurringTransactions
+        };
 
 
-      });
+        let hasError = false
+
+        if(!values.userId) {
+           payload.recurring.forEach((element: any, index : any) => {
+                if(element.userId == undefined) {
+                    hasError = true
+                }
+                if(element.recurringTypeId == undefined) {
+                    hasError = true
+                }
+                if(element.adjustmentAmount == undefined) {
+                    hasError = true
+                }
+                if(element.endDate == undefined) {
+                    hasError = true
+                }
+                if(element.active == undefined) {
+                    hasError = true
+                }
+           });
+           
+           if (hasError) {
+            ErrorSwal.fire(
+                'Warning!',
+                'Please fill all the required fields',
+                'warning'
+            )
+           }else{
+                RequestAPI.postRequest(Api.createRecurringTransaction, "", payload, {}, async (res:any) => {
+                    Swal.close();
+                    const { status, body = { data: {}, error: {} } }: any = res
+
+                    if (status === 200 || status === 201) {
+                    if (body.error && body.error.message) {
+                        ErrorSwal.fire(
+                        'Error!',
+                        (body.error && body.error.message) || "",
+                        'error'
+                        )
+                        // setRecurring([]);
+                    
+                    } else {
+                        setModalShow(false)
+                        ErrorSwal.fire(
+                        'Success!',
+                        (body.data) || "",
+                        'success'
+                        )
+                        
+                    }
+                    } else {
+                    ErrorSwal.fire(
+                        'Error!',
+                        'Something Error.',
+                        'error'
+                    )
+                    }
+                })
+
+           }
+        }else {
+            const valuesObj : any = {...values}
+            if (valuesObj.adjustmentAmount == undefined || valuesObj.adjustmentAmount == "" ) {
+                hasError = true
+            }
+
+            if(hasError) {
+                ErrorSwal.fire(
+                    'Warning!',
+                    'Please Enter a valid Amount',
+                    'warning'
+                )
+            }else{
+                RequestAPI.putRequest(
+                    Api.updateRecurringTransaction,
+                    "",
+                    valuesObj,
+                    {},
+                    async (res) => {
+                        const { status, body = { data: {}, error: {} } } = res;
+                
+                        if (status === 200 || status === 201) {
+                            if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                "Error!",
+                                body.error.message || "",
+                                "error"
+                
+                            );
+                            // handleCloseModal();
+                            } else {
+                            setModalShow(false)
+                            ErrorSwal.fire(
+                                "Updated Successfully!",
+                                body.data || "",
+                                "success"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                location.reload();
+                                }
+                            });
+                            // handleCloseModal();
+                            }
+                        } else {
+                            ErrorSwal.fire("Error!", "Something Error.", "error");
+                        }
+                        }
+                );
+            }
+        }
+
+      }
    
 
 
@@ -484,104 +604,9 @@ export const Recurring = (props: any) => {
                 <Formik
                 innerRef={formRef}
                 enableReinitialize={true}
-                validationSchema={validationSchema}
+                validationSchema={null}
                 initialValues={initialValues}
-                onSubmit={(values, actions) => {
-
-                    
-                    const loadingSwal = Swal.fire({
-                        title: '',
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                    
-
-                    
-                    const recurringTransactions = recurring.map((item) => ({
-                        userId: item.userId,
-                        recurringTypeId: item.recurringTypeId,
-                        adjustmentAmount: item.adjustmentAmount,
-                        endDate: item.endDate,
-                        active: item.active
-                    }));
-
-                    const payload = {
-                        recurring: recurringTransactions
-                    };
-
-
-                    if(values.userId){
-                        const valuesObj : any = {...values}
-                        RequestAPI.putRequest(
-                            Api.updateRecurringTransaction,
-                            "",
-                            valuesObj,
-                            {},
-                            async (res) => {
-                                const { status, body = { data: {}, error: {} } } = res;
-                        
-                                if (status === 200 || status === 201) {
-                                    if (body.error && body.error.message) {
-                                    ErrorSwal.fire(
-                                        "Error!",
-                                        body.error.message || "",
-                                        "error"
-                        
-                                    );
-                                    // handleCloseModal();
-                                    } else {
-                                    setModalShow(false)
-                                    ErrorSwal.fire(
-                                        "Updated Successfully!",
-                                        body.data || "",
-                                        "success"
-                                    ).then((result) => {
-                                        if (result.isConfirmed) {
-                                        location.reload();
-                                        }
-                                    });
-                                    // handleCloseModal();
-                                    }
-                                } else {
-                                    ErrorSwal.fire("Error!", "Something Error.", "error");
-                                }
-                                }
-                        );
-                    }else {
-                        RequestAPI.postRequest(Api.createRecurringTransaction, "", payload, {}, async (res:any) => {
-                            Swal.close();
-                            const { status, body = { data: {}, error: {} } }: any = res
-
-                            if (status === 200 || status === 201) {
-                            if (body.error && body.error.message) {
-                                ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                                )
-                                // setRecurring([]);
-                            
-                            } else {
-                                setModalShow(false)
-                                ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                                )
-                                
-                            }
-                            } else {
-                            ErrorSwal.fire(
-                                'Error!',
-                                'Something Error.',
-                                'error'
-                            )
-                            }
-                        })
-                    }
-                }}
+                onSubmit={executeSubmit}
                 >
 
                     
@@ -716,10 +741,13 @@ export const Recurring = (props: any) => {
                                         onChange={(e) => {
                                             setFieldValue('adjustmentAmount', e.target.value);
                                         }}
+                                        onKeyPress={(e) => {
+                                            if (e.key === '-' || e.key === '+') {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                         />
-                                          {errors && errors.adjustmentAmount && (
-                                            <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
-                                            )}
+                                         
                                     </div>
                                     <div className="col-md-4 mb-3">
                                         <label>End Date</label>
@@ -821,7 +849,6 @@ export const Recurring = (props: any) => {
                                                     <select
                                                         placeholder="Recurring Name"
                                                         className={`form-select ${touched.recurringTypeId && errors.recurringTypeId ? 'is-invalid' : ''}`}
-
                                                         name="recurringTypeId"
                                                         id="type"
                                                         value={values.recurringTypeId}
@@ -911,6 +938,11 @@ export const Recurring = (props: any) => {
                                                         updatedFields[index].adjustmentAmount = e.target.value;
                                                         setRecurring(updatedFields);
                                                     }}
+                                                    onKeyPress={(e) => {
+                                                        if (e.key === '-' || e.key === '+') {
+                                                            e.preventDefault();
+                                                        }
+                                                    }}
                                                     />
                                                      {errors && errors.adjustmentAmount && (
                                                     <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
@@ -948,6 +980,9 @@ export const Recurring = (props: any) => {
                                                     setRecurring(updatedFields);
                                                     }}
                                                 >
+                                                    <option value="" disabled={!index} selected={!index}>
+                                                        Status
+                                                    </option>
                                                     <option value={true}>Active</option>
                                                     <option value={false}>Inactive</option>
                                                 </select>
