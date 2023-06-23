@@ -505,7 +505,7 @@ export const Leaves = (props: any) => {
                           <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
-                          <td> {item.fileDate} </td>
+                          <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td> {item.statusChangedBy} </td>
                           {/* <td> {item.status} </td> */}
                           <td> {Utility.removeUnderscore(item.status)} </td>
