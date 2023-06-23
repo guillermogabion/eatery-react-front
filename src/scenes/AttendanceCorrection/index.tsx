@@ -98,14 +98,14 @@ export const AttendanceCorrection = (props: any) => {
     getAllCOARequest(0, key)
   }, [])
 
-  const getAllCOARequest = (page: any = 0, status: any = "all", isActionable:any = false) => {
+  const getAllCOARequest = (page: any = 0, status: any = "all", isActionable: any = false) => {
     setKey(status)
     setIsActionable(isActionable)
     let queryString = ""
     let filterDataTemp = { ...filterData }
 
-    if (status == 'actionable'){
-      queryString = "&status=all" 
+    if (status == 'actionable') {
+      queryString = "&status=all"
     }
     else if (status != "") {
       queryString = "&status=" + status
@@ -122,7 +122,7 @@ export const AttendanceCorrection = (props: any) => {
       })
     }
 
-    if (isActionable){
+    if (isActionable) {
       queryString += '&actionableOnly=true'
     }
 
@@ -416,11 +416,11 @@ export const AttendanceCorrection = (props: any) => {
                           <td> {item.lastName}, {item.firstName} </td>
                         </> : null
                     }
-                    <td>{Utility.removeUnderscore(item.type) }</td>
+                    <td>{Utility.removeUnderscore(item.type)}</td>
                     <td> {item.reason} </td>
                     <td> {item.fileDate} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> {Utility.removeUnderscore(item.status) } </td>
+                    <td> {Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
                       <label
                         onClick={() => {
@@ -533,13 +533,13 @@ export const AttendanceCorrection = (props: any) => {
                 data.profile.role == 'EXECUTIVE' ?
                   <div className="" style={{ width: 200, marginRight: 10 }}>
                     <div>
-                    <label>Employee</label>
-                    <EmployeeDropdown
-                      placeholder={"Employee"}
-                      singleChangeOption={singleChangeOption}
-                      name="userId"
-                      value={filterData && filterData['userId']}
-                    />
+                      <label>Employee</label>
+                      <EmployeeDropdown
+                        placeholder={"Employee"}
+                        singleChangeOption={singleChangeOption}
+                        name="userId"
+                        value={filterData && filterData['userId']}
+                      />
                     </div>
                   </div>
                   :
@@ -548,17 +548,17 @@ export const AttendanceCorrection = (props: any) => {
 
               <div>
                 {
-                   data.profile.role == 'EXECUTIVE' ?
-                   <Button
-                   style={{ width: 120 }}
-                   onClick={() => getAllCOARequest(0, key, actionable)}
-                   className="btn btn-primary mx-2 mt-4">
-                   Search
-                 </Button>
-                 :
-                 null
+                  data.profile.role == 'EXECUTIVE' ?
+                    <Button
+                      style={{ width: 120 }}
+                      onClick={() => getAllCOARequest(0, key, actionable)}
+                      className="btn btn-primary mx-2 mt-4">
+                      Search
+                    </Button>
+                    :
+                    null
                 }
-               
+
               </div>
             </div>
             <Tabs
@@ -566,9 +566,9 @@ export const AttendanceCorrection = (props: any) => {
               activeKey={key}
               onSelect={(k: any) => {
                 setAllCOA([])
-                if (k == 'actionable'){
+                if (k == 'actionable') {
                   getAllCOARequest(0, k, true)
-                }else{
+                } else {
                   getAllCOARequest(0, k)
                 }
               }}
@@ -656,14 +656,7 @@ export const AttendanceCorrection = (props: any) => {
             initialValues={initialValues}
             validationSchema={null}
             onSubmit={(values, actions) => {
-              const loadingSwal = Swal.fire({
-                title: '',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                },
 
-              });
               actions.resetForm();
               actions.setErrors({});
               const valuesObj: any = { ...values }
@@ -689,79 +682,79 @@ export const AttendanceCorrection = (props: any) => {
                   'warning'
                 )
               } else {
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+                });
+
                 valuesObj.coaBd = coaBreakdown
-              }
-
-              if (coaId) {
-                delete valuesObj.userId
-                RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                if (coaId) {
+                  delete valuesObj.userId
+                  RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async (res: any) => {
+                    Swal.close()
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire(
+                          'Error!',
+                          (body.error && body.error.message) || "",
+                          'error'
+                        )
+                      } else {
+                        ErrorSwal.fire(
+                          'Success!',
+                          (body.data) || "",
+                          'success'
+                        )
+                        setCoaBreakdown([])
+                        getAllCOARequest(0, key)
+                        setModalShow(false)
+                        formRef.current?.resetForm()
+                      }
                     } else {
                       ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setCoaBreakdown([])
-                      getAllCOARequest(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      'Something Error.',
-                      'error'
-                    )
-                  }
-                  setCoaBreakdownCount(0);
-
-                })
-
-
-              } else {
-                RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
-                  Swal.close()
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    console.log("Response body:", res);
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
                         'Error!',
-                        (body.error && body.error.message) || "",
+                        'Something Error.',
                         'error'
                       )
-                      setCoaBreakdown([])
-                      getAllCOARequest(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setCoaBreakdown([]);
-                      getAllCOARequest(0, key);
-                      setModalShow(false);
-                      formRef.current?.resetForm()
-
                     }
                     setCoaBreakdownCount(0);
-
-                  }
-                })
-
+                  })
+                } else {
+                  RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
+                    Swal.close()
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                      console.log("Response body:", res);
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire(
+                          'Error!',
+                          (body.error && body.error.message) || "",
+                          'error'
+                        )
+                        setCoaBreakdown([])
+                        getAllCOARequest(0, key)
+                        setModalShow(false)
+                        formRef.current?.resetForm()
+                      } else {
+                        ErrorSwal.fire(
+                          'Success!',
+                          (body.data) || "",
+                          'success'
+                        )
+                        setCoaBreakdown([]);
+                        getAllCOARequest(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm()
+                      }
+                      setCoaBreakdownCount(0);
+                    }
+                  })
+                }
               }
-
-
             }}
           >
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {

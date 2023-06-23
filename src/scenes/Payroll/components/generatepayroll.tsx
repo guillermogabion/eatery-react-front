@@ -16,6 +16,8 @@ export default function GeneratePayroll(props: any) {
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const [employeeList, setEmployeeList] = useState<any>([])
     const [isSubmit, setIsSubmit] = useState<any>(false)
+    const [isDownloadingPayrollRegister, setIsDownloadingPayrollRegister] = useState<any>(false)
+    const [isDownloadBankTrans, setIsDownloadBankTrans] = useState<any>(false)
     const payroll = { ...payrollData }
 
     useEffect(() => {
@@ -55,6 +57,7 @@ export default function GeneratePayroll(props: any) {
     }
 
     const generatePayroll = (isRegenerate: any = false) => {
+        setIsSubmit(true)
         const valuesObj: any = { ...props.payrollData }
         let userIds: any = []
         const tempArray: any = [...employeeList]
@@ -66,7 +69,7 @@ export default function GeneratePayroll(props: any) {
         valuesObj.payrollId = payrollData.id
         valuesObj.userIds = userIds
         let endpoint = Api.generatePayroll
-        if (isRegenerate){
+        if (isRegenerate) {
             endpoint = Api.reGeneratePayroll
         }
         RequestAPI.postRequest(
@@ -76,6 +79,7 @@ export default function GeneratePayroll(props: any) {
             {},
             async (res) => {
                 const { status, body = { data: {}, error: {} } } = res;
+                setIsSubmit(false)
                 if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
                         ErrorSwal.fire(
@@ -102,28 +106,28 @@ export default function GeneratePayroll(props: any) {
     }
 
     const downloadPayrollRegister = () => {
-        setIsSubmit(true)
+        setIsDownloadingPayrollRegister(true)
         RequestAPI.getFileAsync(
             `${Api.downloadPayrollRegister}?Id=${payroll.id}`,
             "",
             "PayrollRegister.xlsx",
             async (res: any) => {
                 if (res) {
-                    setIsSubmit(false)
+                    setIsDownloadingPayrollRegister(false)
                 }
             }
         )
     }
 
     const downloadBankTransmittal = () => {
-        setIsSubmit(true)
+        setIsDownloadBankTrans(true)
         RequestAPI.getFileAsync(
             `${Api.downloadBankUpload}?Id=${payroll.id}`,
             "",
             "BankUpload.txt",
             async (res: any) => {
                 if (res) {
-                    setIsSubmit(false)
+                    setIsDownloadBankTrans(false)
                 }
             }
         )
@@ -208,7 +212,7 @@ export default function GeneratePayroll(props: any) {
                                 </div>
                                 : "Regenerate Payroll"
                             }
-                            
+
                         </Button> :
                         <Button
                             onClick={() => {
@@ -233,16 +237,32 @@ export default function GeneratePayroll(props: any) {
                                 onClick={() => {
                                     downloadPayrollRegister()
                                 }}
+                                disabled={isDownloadingPayrollRegister}
                                 className="btn btn-primary mr-3">
-                                Download Payroll Register
+                                {isDownloadingPayrollRegister ?
+                                    <div className="d-flex justify-content-center">
+                                        <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                        Downloading Payroll Register
+                                    </div>
+                                    : "Download Payroll Register"
+                                }
+
                             </Button>
 
                             <Button
                                 onClick={() => {
                                     downloadBankTransmittal()
                                 }}
+                                disabled={isDownloadBankTrans}
                                 className="btn btn-primary mr-3">
-                                Download for Bank Transmittal
+                                {isDownloadBankTrans ?
+                                    <div className="d-flex justify-content-center">
+                                        <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                        Downloading for Bank Transmittal
+                                    </div>
+                                    : "Download for Bank Transmittal"
+                                }
+
                             </Button>
                         </> :
                         null
