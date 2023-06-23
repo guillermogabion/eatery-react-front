@@ -367,7 +367,11 @@ export const Recurring = (props: any) => {
                         'Success!',
                         (body.data) || "",
                         'success'
-                        )
+                        ).then((result) => {
+                            if (result.isConfirmed) {
+                            location.reload();
+                            }
+                        });
                         
                     }
                     } else {
@@ -622,19 +626,6 @@ export const Recurring = (props: any) => {
 
                                 { values.userId ? (
                                     <div>
-                                    {/* with userId  */}
-
-                                    {/* <div className="col-md-2 mb-3">
-                                        <label>Amount</label>
-                                        <input
-                                        className="form-control"
-                                        name="adjustmentAmount"
-                                        value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
-                                        onChange={(e) => {
-                                            setFieldValue('adjustmentAmount', e.target.value);
-                                        }}
-                                        />
-                                    </div> */}
                                 <div className="form-group row">
                                     <div className="col-md-3 mb-3">
                                         <label>Employee ID</label>
