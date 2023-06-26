@@ -320,8 +320,8 @@ export const AttendanceSummary = (props: any) => {
                           <td> {item.lastName}, {item.firstName} </td>
                           <td> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
                           <td> {item.schedule} </td>
-                          <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
-                          <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                          <td> {item.firstLogin ? moment(item.firstLogin).format('MM-DD-YYYY hh:mm A') : "No Time In"} </td>
+                          <td> {item.lastLogin ? moment(item.lastLogin).format('MM-DD-YYYY hh:mm A') : "No Time Out"} </td>
                           <td> { Utility.removeUnderscore(item.dayType) } </td>
                           <td> {item.status} </td>
                           {
