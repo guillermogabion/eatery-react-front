@@ -467,8 +467,8 @@ export const Recurring = (props: any) => {
                             <option value="" disabled selected>
                             Recurring Type
                             </option>
-                            <option value="true">Deduct</option>
-                            <option value="false">Add</option>
+                            <option value={true}>Add</option>
+                            <option value={false}>Deduct</option>
                           
                         </select>
                         </div>
