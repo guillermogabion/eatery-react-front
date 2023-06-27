@@ -18,6 +18,8 @@ const Adjustment = (props: any) => {
     const formRef: any = useRef()
     const [ modalShow, setModalShow ] = React.useState(false);
     const [id, setId] = useState(null);
+    const [filterData, setFilterData] = React.useState([]);
+
     const [initialValues, setInitialValues] = useState<any>({
             "name" : "",
             "description": "",
@@ -26,7 +28,7 @@ const Adjustment = (props: any) => {
     })
     const tableHeaders = [
         'Adjustment Name',
-        'Adjusment Description',
+        'Adjustment Description',
         'Type',
         'Add/Deduct',
         // 'Gross Salary Affected',
@@ -34,8 +36,19 @@ const Adjustment = (props: any) => {
     ];
 
     const getAllAdjustmentType = (pageNo: any) => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp [d]) {
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                }else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
         RequestAPI.getRequest(
-            `${Api.getAllAdjustmentSetting}?size=10&page${pageNo}`,
+            `${Api.getAllAdjustmentSetting}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -52,6 +65,17 @@ const Adjustment = (props: any) => {
 
         )
     }
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+            const filterObj: any = { ...filterData }
+            filterObj[name] = name && value !== "Select" ? value : ""
+            setFilterData(filterObj)
+    }
+    
+    const handlePageClick = (event: any) => {
+        getAllAdjustmentType(event.selected)
+    };
+
 
     useEffect(() => {
         getAllAdjustmentType(0)
@@ -129,7 +153,27 @@ const Adjustment = (props: any) => {
 
     return (
         <div>
-
+            <div className="w-100 pt-2">
+                <div className="fieldtext d-flex">
+                    <div className="input-container col-md-3">
+                        <input 
+                        type="text"
+                        className="formControl"
+                        name="name"
+                        id="type"
+                        onChange={(e) => makeFilterData(e)}
+                        />
+                    </div>
+                    <div className="input-container col-md-3">
+                        <Button
+                        style={{ width: 210 }}
+                        onClick={() => getAllAdjustmentType(0)}
+                        className="btn btn-primary mx-2">
+                        Search
+                        </Button>
+                    </div>
+                </div>
+            </div>
             <Table responsive="lg">
                 <thead>
                     <tr>
@@ -179,6 +223,25 @@ const Adjustment = (props: any) => {
                     }
                 </tbody>
             </Table>
+            <div className="d-flex justify-content-end">
+                <div className="">
+                    <ReactPaginate
+                        className="d-flex justify-content-center align-items-center"
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={(adjustmentType && adjustmentType.totalPages) || 0}
+                        previousLabel="<"
+                        previousLinkClassName="prev-next-pagination"
+                        nextLinkClassName="prev-next-pagination"
+                        activeLinkClassName="active-page-link"
+                        disabledLinkClassName="prev-next-disabled"
+                        pageLinkClassName="page-link"
+                        renderOnZeroPageCount={null}
+                    />
+                </div>
+            </div>
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button

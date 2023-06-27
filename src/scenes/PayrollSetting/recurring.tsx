@@ -18,23 +18,38 @@ const Recurring = (props: any) => {
     const formRef: any = useRef()
     const [ modalShow, setModalShow ] = React.useState(false);
     const [id, setId] = useState(null);
+    const [filterData, setFilterData] = React.useState([]);
+
     const [initialValues, setInitialValues] = useState<any>({
             "name" : "",
             "description": "",
-            "type": "",
-            "deduction": true
+            "type": "Taxable",
+            "deduction": true,
+            "affectsGross" : true
     })
     const tableHeaders = [
         'Recurring Name',
         'Recurring Description',
         'Type',
         'Add/Deduct',
+        'Gross Salary Affected',
         'Action',
     ];
 
     const getAllRecurringType = (pageNo: any) => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp [d]) {
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                }else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
         RequestAPI.getRequest(
-            `${Api.getAllRecurringTypeSetting}?size=10&page${pageNo}`,
+            `${Api.getAllRecurringTypeSetting}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -51,6 +66,15 @@ const Recurring = (props: any) => {
 
         )
     }
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+            const filterObj: any = { ...filterData }
+            filterObj[name] = name && value !== "Select" ? value : ""
+            setFilterData(filterObj)
+    }
+    const handlePageClick = (event: any) => {
+        getAllRecurringType(event.selected)
+    };
 
     useEffect(() => {
         getAllRecurringType(0)
@@ -128,6 +152,27 @@ const Recurring = (props: any) => {
 
     return (
         <div>
+            <div className="w-100 pt-2">
+                <div className="fieldtext d-flex">
+                    <div className="input-container col-md-3">
+                        <input 
+                        type="text"
+                        className="formControl"
+                        name="name"
+                        id="type"
+                        onChange={(e) => makeFilterData(e)}
+                        />
+                    </div>
+                    <div className="input-container col-md-3">
+                        <Button
+                        style={{ width: 210 }}
+                        onClick={() => getAllRecurringType(0)}
+                        className="btn btn-primary mx-2">
+                        Search
+                        </Button>
+                    </div>
+                </div>
+            </div>
 
             <Table responsive="lg">
                 <thead>
@@ -155,6 +200,7 @@ const Recurring = (props: any) => {
                                     <td> {item.description}</td>
                                     <td> {item.type}</td>
                                     <td> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
                                         onClick={() => {
@@ -178,6 +224,25 @@ const Recurring = (props: any) => {
                     }
                 </tbody>
             </Table>
+            <div className="d-flex justify-content-end">
+                <div className="">
+                    <ReactPaginate
+                        className="d-flex justify-content-center align-items-center"
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={(recurringType && recurringType.totalPages) || 0}
+                        previousLabel="<"
+                        previousLinkClassName="prev-next-pagination"
+                        nextLinkClassName="prev-next-pagination"
+                        activeLinkClassName="active-page-link"
+                        disabledLinkClassName="prev-next-disabled"
+                        pageLinkClassName="page-link"
+                        renderOnZeroPageCount={null}
+                    />
+                </div>
+            </div>
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
@@ -219,71 +284,93 @@ const Recurring = (props: any) => {
                             }
                         });
                         const valuesObj : any = {...values}
-                        if(values.id) {
-                            RequestAPI.putRequest(Api.updateRecurringTypeSetting, "" , valuesObj, {}, async (res: any) => {
-                                Swal.close()
-                                const { status, body = {data: {}, error: {}}}: any = res
 
-                                if (status === 200 || status === 201) {
-                                    console.log("update")
+                        let hasError = false;
+
+                       
+                        if(!values.name || values.name.trim() === "") {
+                            hasError = true
+                        }
+                        if(!values.description || values.description.trim() === "") {
+                            hasError = true
+                        }
+
+                        if (hasError) {
+                            ErrorSwal.fire(
+                                'Warning!',
+                                'Please fill all the required fields',
+                                'warning'
+                            )
+                           }else{
+
+                            if(values.id) {
+                         
+                                RequestAPI.putRequest(Api.updateRecurringTypeSetting, "" , valuesObj, {}, async (res: any) => {
+                                    Swal.close()
+                                    const { status, body = {data: {}, error: {}}}: any = res
+
+                                    if (status === 200 || status === 201) {
+                                        console.log("update")
+                                        if (body.error && body.error.message) {
+                                            ErrorSwal.fire(
+                                                'Error!',
+                                                (body.error && body.error.message) || "",
+                                                'error'
+                                            )
+                                            } else {
+                                            ErrorSwal.fire(
+                                                'Updated Successfully!',
+                                                (body.data || ""),
+                                                'success'
+                                            )
+                                            setModalShow(false)
+                                            getAllRecurringType(0)
+                                            values.id = null
+                                            }
+                                    }else {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            'Something Error.',
+                                            'error'
+                                            )
+                                    }
+                                })
+                        }else{
+                           
+                                RequestAPI.postRequest(Api.createRecurringTypeSetting, "", valuesObj, {}, async (res: any) => {
+                                    const { status, body = { data: {}, error: {} } }: any = res
+                                    console.log("create")
+
+                                    if (status === 200 || status === 201) {
                                     if (body.error && body.error.message) {
                                         ErrorSwal.fire(
-                                          'Error!',
-                                          (body.error && body.error.message) || "",
-                                          'error'
+                                        'Error!',
+                                        (body.error && body.error.message) || "",
+                                        'error'
                                         )
-                                      } else {
+                                    } else {
                                         ErrorSwal.fire(
-                                          'Updated Successfully!',
-                                          (body.data || ""),
-                                          'success'
-                                        )
-                                        setModalShow(false)
+                                            'Success!',
+                                            (body.data) || "",
+                                            'success'
+                                            )
                                         getAllRecurringType(0)
-                                        values.id = null
+                                        setModalShow(false)
 
-
-                        
-                                      }
-                                }else {
+                                    }
+                                    } else {
                                     ErrorSwal.fire(
                                         'Error!',
                                         'Something Error.',
                                         'error'
-                                      )
-                                }
-                            })
-                        }else{
-                            RequestAPI.postRequest(Api.createRecurringTypeSetting, "", valuesObj, {}, async (res: any) => {
-                                const { status, body = { data: {}, error: {} } }: any = res
-                                console.log("create")
-
-                                if (status === 200 || status === 201) {
-                                if (body.error && body.error.message) {
-                                    ErrorSwal.fire(
-                                    'Error!',
-                                    (body.error && body.error.message) || "",
-                                    'error'
                                     )
-                                } else {
-                                    ErrorSwal.fire(
-                                        'Success!',
-                                        (body.data) || "",
-                                        'success'
-                                        )
-                                    getAllRecurringType(0)
-                                    setModalShow(false)
+                                    }
+                                })
+                            }
 
-                                }
-                                } else {
-                                ErrorSwal.fire(
-                                    'Error!',
-                                    'Something Error.',
-                                    'error'
-                                )
-                                }
-                            })
-                        }
+
+                           }
+                        
                     }}
                     >
                     {({ values, setFieldValue, handleSubmit, errors, touched}) => {
@@ -315,16 +402,8 @@ const Recurring = (props: any) => {
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                         <label>Type</label>
-                                        {/* <input type="text"
-                                            name="type"
-                                            id="type"
-                                            className="form-control"
-                                            value={values.type}
-                                            onChange={(e) => setFormField(e, setFieldValue)}
-                                            /> */}
-
                                             <select 
                                             name="type" 
                                             id="type"
@@ -332,15 +411,12 @@ const Recurring = (props: any) => {
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             className="formControl"
                                             >
-                                                <option value="" disabled selected>
-                                                    Type
-                                                </option>
                                                 <option value="Taxable">Taxable</option>
                                                 <option value="Non_Taxable">Non-Taxable</option>
                                                 <option value="Gross_up">Gross Up</option>
                                             </select>
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                         <label>Action</label>
                                         <select
                                             name="deduction"
@@ -354,6 +430,19 @@ const Recurring = (props: any) => {
                                                 </option>
                                                 <option value={true}>Deduct</option>
                                                 <option value={false}>Add</option>
+                                            </select>
+                                    </div>
+                                    <div className="form-group col-md-4 mb-3">
+                                        <label>Gross Affected</label>
+                                        <select
+                                            name="affectsGross"
+                                            id="deduction"
+                                            className="form-control"
+                                            value={values.deduction }
+                                            onChange={(e) => setFormField(e, setFieldValue)}
+                                            >
+                                                <option value={true}>Yes</option>
+                                                <option value={false}>No</option>
                                             </select>
                                     </div>
                                 </div>

@@ -45,7 +45,7 @@ export const Recurring = (props: any) => {
                 "recurringTypeId": "",
                 "adjustmentAmount": "",
                 "endDate": "",
-                "active": "",
+                "active": true,
             }
            
         ],
@@ -53,7 +53,7 @@ export const Recurring = (props: any) => {
         "recurringTypeId": "",
         "adjustmentAmount": "",
         "endDate": "",
-        "active": "",
+        "active": true,
                
            
    
@@ -334,9 +334,6 @@ export const Recurring = (props: any) => {
                     hasError = true
                 }
                 if(element.endDate == undefined) {
-                    hasError = true
-                }
-                if(element.active == undefined) {
                     hasError = true
                 }
            });
@@ -971,9 +968,6 @@ export const Recurring = (props: any) => {
                                                     setRecurring(updatedFields);
                                                     }}
                                                 >
-                                                    <option value="" disabled={!index} selected={!index}>
-                                                        Status
-                                                    </option>
                                                     <option value={true}>Active</option>
                                                     <option value={false}>Inactive</option>
                                                 </select>
