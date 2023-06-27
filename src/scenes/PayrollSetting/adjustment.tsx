@@ -9,6 +9,8 @@ import TimeDate from "../../components/TimeDate"
 import { Formik } from "formik"
 import { User } from "../User"
 import { async } from "validate.js"
+import * as Yup from "yup"
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -34,6 +36,12 @@ const Adjustment = (props: any) => {
         // 'Gross Salary Affected',
         'Action',
     ];
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        description: Yup.string().required("Description is required"),
+        type: Yup.string().required("Type is required"),
+        deduction: Yup.string().required("Action is required"),
+      });
 
     const getAllAdjustmentType = (pageNo: any) => {
         let queryString = ""
@@ -41,7 +49,7 @@ const Adjustment = (props: any) => {
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp [d]) {
-                    queryString += `&${d}=${filterDataTemp[d]}`
+                    queryString += `%&${d}=${filterDataTemp[d]}`
                 }else {
                     queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
                 }
@@ -223,6 +231,16 @@ const Adjustment = (props: any) => {
                     }
                 </tbody>
             </Table>
+            {
+                adjustmentType &&
+                adjustmentType.content &&
+                adjustmentType.content.length == 0 ?
+                <div className="w-100 text-center">
+                    <label htmlFor="">No Records Found</label>
+                </div>
+            :
+            null
+            }
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate
@@ -272,7 +290,7 @@ const Adjustment = (props: any) => {
                     <Formik
                     innerRef={formRef}
                     enableReinitialize={true}
-                    validationSchema={null}
+                    validationSchema={validationSchema}
                     initialValues={initialValues}
                     onSubmit={(values, actions) => {
                         const loadingSwal = Swal.fire({
@@ -283,74 +301,94 @@ const Adjustment = (props: any) => {
                             }
                         });
                         const valuesObj : any = {...values}
-                        if(values.id) {
-                            RequestAPI.putRequest(Api.editAdjustmentType, "" , valuesObj, {}, async (res: any) => {
-                                Swal.close()
-                                const { status, body = {data: {}, error: {}}}: any = res
 
-                                if (status === 200 || status === 201) {
-                                    console.log("update")
+                        let hasError = false;
+
+                       
+                        if(!values.name || values.name.trim() === "") {
+                            hasError = true
+                        }
+                        if(!values.description || values.description.trim() === "") {
+                            hasError = true
+                        }
+
+                        if (hasError) {
+                            ErrorSwal.fire(
+                                'Warning!',
+                                'Please fill all the required fields',
+                                'warning'
+                            )
+                           }else{
+                            if(values.id) {
+                                RequestAPI.putRequest(Api.editAdjustmentType, "" , valuesObj, {}, async (res: any) => {
+                                    Swal.close()
+                                    const { status, body = {data: {}, error: {}}}: any = res
+    
+                                    if (status === 200 || status === 201) {
+                                        console.log("update")
+                                        if (body.error && body.error.message) {
+                                            ErrorSwal.fire(
+                                              'Error!',
+                                              (body.error && body.error.message) || "",
+                                              'error'
+                                            )
+                                          } else {
+                                            ErrorSwal.fire(
+                                              'Updated Successfully!',
+                                              (body.data || ""),
+                                              'success'
+                                            )
+                                            setModalShow(false)
+                                            getAllAdjustmentType(0)
+                                            values.id = null
+    
+    
+                            
+                                          }
+                                    }else {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            'Something Error.',
+                                            'error'
+                                          )
+                                    }
+                                })
+                            }else{
+                                RequestAPI.postRequest(Api.addAdjustmentType, "", valuesObj, {}, async (res: any) => {
+                                    const { status, body = { data: {}, error: {} } }: any = res
+                                    console.log("create")
+    
+                                    if (status === 200 || status === 201) {
                                     if (body.error && body.error.message) {
                                         ErrorSwal.fire(
-                                          'Error!',
-                                          (body.error && body.error.message) || "",
-                                          'error'
+                                        'Error!',
+                                        (body.error && body.error.message) || "",
+                                        'error'
                                         )
-                                      } else {
+                                    } else {
                                         ErrorSwal.fire(
-                                          'Updated Successfully!',
-                                          (body.data || ""),
-                                          'success'
-                                        )
-                                        setModalShow(false)
+                                            'Success!',
+                                            (body.data) || "",
+                                            'success'
+                                            )
                                         getAllAdjustmentType(0)
-                                        values.id = null
-
-
-                        
-                                      }
-                                }else {
+                                        setModalShow(false)
+    
+                                    }
+                                    } else {
                                     ErrorSwal.fire(
                                         'Error!',
                                         'Something Error.',
                                         'error'
-                                      )
-                                }
-                            })
-                        }else{
-                            RequestAPI.postRequest(Api.addAdjustmentType, "", valuesObj, {}, async (res: any) => {
-                                const { status, body = { data: {}, error: {} } }: any = res
-                                console.log("create")
-
-                                if (status === 200 || status === 201) {
-                                if (body.error && body.error.message) {
-                                    ErrorSwal.fire(
-                                    'Error!',
-                                    (body.error && body.error.message) || "",
-                                    'error'
                                     )
-                                } else {
-                                    ErrorSwal.fire(
-                                        'Success!',
-                                        (body.data) || "",
-                                        'success'
-                                        )
-                                    getAllAdjustmentType(0)
-                                    setModalShow(false)
-
-                                }
-                                } else {
-                                ErrorSwal.fire(
-                                    'Error!',
-                                    'Something Error.',
-                                    'error'
-                                )
-                                }
-                            })
-                        }
+                                    }
+                                })
+                            }
+                           }
+                        
                     }}
                     >
-                    {({ values, setFieldValue, handleSubmit, errors, touched}) => {
+                    {({ values, setFieldValue, handleSubmit, errors, touched, isValid}) => {
                         return (
                             <Form
                                 noValidate
@@ -368,6 +406,9 @@ const Adjustment = (props: any) => {
                                             value={values.name}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
+                                            {errors.name && touched.name && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-6 mb-3">
                                         <label>Description</label>
@@ -378,6 +419,9 @@ const Adjustment = (props: any) => {
                                             value={values.description}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
+                                            {errors.description && touched.description && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-6 mb-3">
                                         <label>Type</label>
@@ -403,6 +447,9 @@ const Adjustment = (props: any) => {
                                                 <option value="Non_Taxable">Non-Taxable</option>
                                                 <option value="Gross_up">Gross Up</option>
                                             </select>
+                                            {errors.type && touched.type && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-6 mb-3">
                                         <label>Action</label>
@@ -419,12 +466,16 @@ const Adjustment = (props: any) => {
                                                 <option value={true}>Deduct</option>
                                                 <option value={false}>Add</option>
                                             </select>
+                                            {errors.deduction && touched.deduction && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
+                                            )}
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end px-5">
                                     <button
                                         type="submit"
                                         className="btn btn-primary mx-2"
+                                        disabled={!isValid}
                                     >
                                         Save
                                     </button>
