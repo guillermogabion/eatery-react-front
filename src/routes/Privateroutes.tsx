@@ -78,6 +78,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/timekeeping/missinglogs", component: MissingLogs },
     { path: "/user", component: ChangePassword },
     { path: "/report", component: Report },
+    { path: "/", component: Dashboard },
     { path: "/dashboard", component: Dashboard },
     { path: "/timekeeping", component: Dashboard },
     { path: "/employee", component: Employee },
@@ -108,7 +109,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     const pathRegex = new RegExp(`^${path.replace(/:[^\s/]+/g, '[^/]+')}$`);
     return pathRegex.test(currentPath);
   });
-
+  
   return isLogin ? (
     <>
       <Switch>
