@@ -5,18 +5,32 @@ import withReactContent from "sweetalert2-react-content";
 import {
     actimai_logo
 } from "../../assets/images";
+import { useDispatch, useSelector } from "react-redux"
+import { NavLink } from "react-router-dom";
 const ErrorSwal = withReactContent(Swal);
 const CryptoJS = require("crypto-js")
 
 
 export const Page404 = () => {
+    const dispatch = useDispatch()
+    const setCurrentRoutePath = (path: string) => dispatch({ type: "SET_CURENT_ROUTE_PATH", payload: path })
     return (
         <>
-            <div className="row bg-dark w-100 h-100 p-0 m-0" style={{ minHeight: '100vh', height: '100vh' }}>
-                <Container className="d-flex flex-column text-white justify-content-center align-items-center p-0 m-0 loginBackground ">
-                    <label className="mb-5 text-white" style={{fontSize: '6em'}}>404</label> <br />
-                    <label className="text-white" style={{fontSize: '2em'}}>Page not found</label>
-                </Container>
+            <div className="w-full bg-light h-[100vh] flex justify-center items-center">
+                <div className="">
+                    <div id="notfound" className="text-center ">
+                        <h1 className="text-[50px]">😮</h1>
+                        <h2 className="text-[20px] mt-[20px] font-bold">Oops! Page Not Be Found</h2>
+                        <p>Sorry but the page you are looking for does not exist.</p>
+                        <NavLink to={"/timekeeping"}
+                            className="text-[#007BFF]"
+                            onClick={() => {
+                                setCurrentRoutePath('/timekeeping')
+                            }}>
+                                Back to homepage
+                        </NavLink>
+                    </div>
+                </div>
             </div>
         </>
     )

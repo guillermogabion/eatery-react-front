@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Route, Switch, Redirect } from "react-router-dom"
+import { Route, Switch, Redirect, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import {
   Login,
@@ -39,11 +39,13 @@ const CryptoJS = require("crypto-js")
 
 const Privateroutes: React.FunctionComponent = (props) => {
   const dispatch = useDispatch()
-  const { data } = useSelector((state: any) => state.rootReducer.userData) 
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
   let menu: any = []
   if (data) {
     menu = data.profile.menus
   }
+  let pathList: any = []
+  const currentPath = location.pathname;
 
   const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
   const isLogin = useSelector((state: any) => state.rootReducer.isLogin)
@@ -62,55 +64,73 @@ const Privateroutes: React.FunctionComponent = (props) => {
     }
     bootstrapAsync()
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
-  
-  const routes: any = []
-  routes.push({ path: "/request/leave", component: Leaves })
-  routes.push({ path: "/request/ot", component: Overtime })
-  routes.push({ path: "/request/ut", component: Undertime })
-  routes.push({ path: "/request/schedule-adjustment", component: ScheduleAdjustment })
-  routes.push({ path: "/allrequest", component: AllRequest })
-  routes.push({ path: "/request/coa", component: AttendanceCorrection })
-  routes.push({ path: "/timekeeping/attendancesummary", component: AttendanceSummary })
-  routes.push({ path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary })
-  routes.push({ path: "/timekeeping/missinglogs", component: MissingLogs })
-  routes.push({ path: "/user", component: ChangePassword })
-  routes.push({ path: "/report", component: Report })
-  routes.push({ path: "/dashboard", component: Dashboard })
-  routes.push({ path: "/timekeeping", component: Dashboard })
-  routes.push({ path: "/employee", component: Employee })
-  routes.push({ path: "/holiday", component: Holiday })
-  routes.push({ path: "/request", component: Squad })
-  routes.push({ path: "/request/leave/squadmembers", component: SquadLeaves})
-  routes.push({ path: "/request/coa/squadmembers", component: SquadAttendanceCorrection})
-  routes.push({ path: "/request/ot/squadmembers", component: SquadOvertime})
-  routes.push({ path: "/request/Ut/squadmembers", component: SquadUndertime})
-  routes.push({ path: "/request/schedule-adjustment/squadmembers", component: SquadScheduleAdjustment})
-  routes.push({ path: "/request/type", component: LeaveTypes })
-  routes.push({ path: "/payroll", component: Payroll })
-  routes.push({ path: "/payroll/adjustment", component: PayrollAdjustment })
-  routes.push({ path: "/payroll/recurring", component: Recurring })
-  routes.push({ path: "/payroll/settings", component: PayrollSetting })
-  routes.push({ path: "/payroll/payslip", component: Payslip })
-  
+
+  const routes: any = [
+    { path: "/page/404", component: Page404 },
+    { path: "/request/leave", component: Leaves },
+    { path: "/request/ot", component: Overtime },
+    { path: "/request/ut", component: Undertime },
+    { path: "/request/schedule-adjustment", component: ScheduleAdjustment },
+    { path: "/allrequest", component: AllRequest },
+    { path: "/request/coa", component: AttendanceCorrection },
+    { path: "/timekeeping/attendancesummary", component: AttendanceSummary },
+    { path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary },
+    { path: "/timekeeping/missinglogs", component: MissingLogs },
+    { path: "/user", component: ChangePassword },
+    { path: "/report", component: Report },
+    { path: "/dashboard", component: Dashboard },
+    { path: "/timekeeping", component: Dashboard },
+    { path: "/employee", component: Employee },
+    { path: "/holiday", component: Holiday },
+    { path: "/request", component: Squad },
+    { path: "/request/leave/squadmembers", component: SquadLeaves },
+    { path: "/request/coa/squadmembers", component: SquadAttendanceCorrection },
+    { path: "/request/ot/squadmembers", component: SquadOvertime },
+    { path: "/request/Ut/squadmembers", component: SquadUndertime },
+    { path: "/request/schedule-adjustment/squadmembers", component: SquadScheduleAdjustment },
+    { path: "/request/type", component: LeaveTypes },
+    { path: "/payroll", component: Payroll },
+    { path: "/payroll/adjustment", component: PayrollAdjustment },
+    { path: "/payroll/recurring", component: Recurring },
+    { path: "/payroll/settings", component: PayrollSetting },
+    { path: "/payroll/payslip", component: Payslip },
+  ]
+
+  if (isLogin) {
+    const loginedPath = routes.map((item: any) => item.path);
+    pathList = loginedPath
+  } else {
+    const loginPath = ['/login/:id/:action/:type']
+    pathList = loginPath
+  }
+
+  const isCurrentPathInList = pathList.some((path: any) => {
+    const pathRegex = new RegExp(`^${path.replace(/:[^\s/]+/g, '[^/]+')}$`);
+    return pathRegex.test(currentPath);
+  });
+
   return isLogin ? (
     <>
       <Switch>
         {routes.map((d: any) => (
           <Route key={d.path} exact path={d.path} component={d.component} />
         ))}
-        {currentRoutePath || (menu && menu.length > 1) ? (
-          <Route path="*" render={() => <Redirect to={currentRoutePath || "/timekeeping"} />} />
+        {(currentRoutePath || (menu && menu.length > 1)) && isCurrentPathInList ? (
+          <Route path="*" render={() => <Redirect to={currentPath || "/timekeeping"} />} />
         ) : (
-          <Route path="*" render={() => <Redirect to="/" />} />
+          <Route path="*" render={() => <Redirect to="/page/404" />} />
         )}
       </Switch>
     </>
   ) : (
     <>
-      
       <Route exact path="/" component={Login} />
       <Route exact path="/login/:id/:action/:type" component={ApproverLogin} />
-      {/* <Route path="*" render={() => <Redirect to="/" />} /> */}
+      {isCurrentPathInList ? (
+        <Route path="*" render={() => <Redirect to={currentPath} />} />
+      ) : (
+        <Route path="*" render={() => <Redirect to="/" />} />
+      )}
     </>
   )
 }
