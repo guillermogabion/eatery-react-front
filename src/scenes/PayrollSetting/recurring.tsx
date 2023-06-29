@@ -10,6 +10,7 @@ import { Formik } from "formik"
 import { User } from "../User"
 import { async } from "validate.js"
 import * as Yup from "yup"
+import { Utility } from "../../utils"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -239,7 +240,7 @@ const Recurring = (props: any) => {
                                 <tr>
                                     <td> {item.name} </td>
                                     <td> {item.description}</td>
-                                    <td> {item.type}</td>
+                                    <td> {Utility.removeUnderscore(item.type)}</td>
                                     <td> {item.deduction == true ? "Deduct" : "Add" }</td>
                                     <td> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
