@@ -178,7 +178,7 @@ const Recurring = (props: any) => {
                     <div className="input-container col-md-2">
                         <label> Type </label>
                         <select 
-                            name="type" 
+                            name="typeType" 
                             id="type"
                             onChange={(e) => makeFilterData(e)}
                             className="formControl"
@@ -193,7 +193,7 @@ const Recurring = (props: any) => {
                     <div className="input-container col-md-2">
                     <label>Action</label>
                     <select
-                        name="deduction"
+                        name="isDeduction"
                         id="deduction"
                         className="form-control"
                         onChange={(e) => makeFilterData(e)}
