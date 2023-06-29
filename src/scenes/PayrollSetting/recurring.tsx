@@ -9,6 +9,8 @@ import TimeDate from "../../components/TimeDate"
 import { Formik } from "formik"
 import { User } from "../User"
 import { async } from "validate.js"
+import * as Yup from "yup"
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -35,6 +37,14 @@ const Recurring = (props: any) => {
         'Gross Salary Affected',
         'Action',
     ];
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        description: Yup.string().required("Description is required"),
+        type: Yup.string().required("Type is required"),
+        deduction: Yup.string().required("Action is required"),
+        affectsGross: Yup.string().required("Gross Affected is required"),
+      });
 
     const getAllRecurringType = (pageNo: any) => {
         let queryString = ""
@@ -224,6 +234,17 @@ const Recurring = (props: any) => {
                     }
                 </tbody>
             </Table>
+
+            {
+                recurringType &&
+                recurringType.content &&
+                recurringType.content.length == 0 ?
+                <div className="w-100 text-center">
+                    <label htmlFor="">No Records Found</label>
+                </div>
+            :
+            null
+            }
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate
@@ -273,7 +294,7 @@ const Recurring = (props: any) => {
                     <Formik
                     innerRef={formRef}
                     enableReinitialize={true}
-                    validationSchema={null}
+                    validationSchema={validationSchema}
                     initialValues={initialValues}
                     onSubmit={(values, actions) => {
                         const loadingSwal = Swal.fire({
@@ -373,7 +394,7 @@ const Recurring = (props: any) => {
                         
                     }}
                     >
-                    {({ values, setFieldValue, handleSubmit, errors, touched}) => {
+                    {({ values, setFieldValue, handleSubmit, errors, touched, isValid}) => {
                         return (
                             <Form
                                 noValidate
@@ -391,6 +412,9 @@ const Recurring = (props: any) => {
                                             value={values.name}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
+                                             {errors.name && touched.name && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-6 mb-3">
                                         <label>Description</label>
@@ -401,6 +425,9 @@ const Recurring = (props: any) => {
                                             value={values.description}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
+                                             {errors.description && touched.description && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
                                         <label>Type</label>
@@ -415,6 +442,9 @@ const Recurring = (props: any) => {
                                                 <option value="Non_Taxable">Non-Taxable</option>
                                                 <option value="Gross_up">Gross Up</option>
                                             </select>
+                                            {errors.type && touched.type && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
                                         <label>Action</label>
@@ -431,6 +461,9 @@ const Recurring = (props: any) => {
                                                 <option value={true}>Deduct</option>
                                                 <option value={false}>Add</option>
                                             </select>
+                                            {errors.deduction && touched.deduction && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
+                                            )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
                                         <label>Gross Affected</label>
@@ -438,18 +471,22 @@ const Recurring = (props: any) => {
                                             name="affectsGross"
                                             id="deduction"
                                             className="form-control"
-                                            value={values.deduction }
+                                            value={values.affectsGross}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             >
                                                 <option value={true}>Yes</option>
                                                 <option value={false}>No</option>
                                             </select>
+                                            {errors.affectsGross && touched.affectsGross && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.affectsGross}</p>
+                                            )}
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end px-5">
                                     <button
                                         type="submit"
                                         className="btn btn-primary mx-2"
+                                        disabled={!isValid}
                                     >
                                         Save
                                     </button>
