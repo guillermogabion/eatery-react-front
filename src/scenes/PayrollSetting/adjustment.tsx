@@ -10,6 +10,8 @@ import { Formik } from "formik"
 import { User } from "../User"
 import { async } from "validate.js"
 import * as Yup from "yup"
+import { Utility } from "../../utils"
+
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -26,14 +28,15 @@ const Adjustment = (props: any) => {
             "name" : "",
             "description": "",
             "type": "",
-            "deduction": true
+            "deduction": true,
+            "affectsGross": true
     })
     const tableHeaders = [
         'Adjustment Name',
         'Adjustment Description',
         'Type',
         'Add/Deduct',
-        // 'Gross Salary Affected',
+        'Gross Salary Affected',
         'Action',
     ];
     const validationSchema = Yup.object().shape({
@@ -163,7 +166,8 @@ const Adjustment = (props: any) => {
         <div>
             <div className="w-100 pt-2">
                 <div className="fieldtext d-flex">
-                    <div className="input-container col-md-3">
+                    <div className="input-container col-md-2">
+                        <label>Adjustment Name</label>
                         <input 
                         type="text"
                         className="formControl"
@@ -172,11 +176,41 @@ const Adjustment = (props: any) => {
                         onChange={(e) => makeFilterData(e)}
                         />
                     </div>
+                    <div className="input-container col-md-2">
+                        <label> Type </label>
+                        <select 
+                            name="type" 
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            className="formControl"
+                            >
+                                <option value="" disabled selected>
+                                    Type
+                                </option>
+                                <option value="Taxable">Taxable</option>
+                                <option value="Non_Taxable">Non-Taxable</option>
+                            </select>
+                    </div>
+                    <div className="input-container col-md-2">
+                    <label>Action</label>
+                    <select
+                        name="deduction"
+                        id="deduction"
+                        className="form-control"
+                        onChange={(e) => makeFilterData(e)}
+                        >
+                            <option value="" disabled selected>
+                                Action
+                            </option>
+                            <option value={true}>Deduct</option>
+                            <option value={false}>Add</option>
+                        </select>
+                    </div>
                     <div className="input-container col-md-3">
                         <Button
                         style={{ width: 210 }}
                         onClick={() => getAllAdjustmentType(0)}
-                        className="btn btn-primary mx-2">
+                        className="btn btn-primary mx-2 mt-4">
                         Search
                         </Button>
                     </div>
@@ -206,8 +240,9 @@ const Adjustment = (props: any) => {
                                 <tr>
                                     <td> {item.name} </td>
                                     <td> {item.description}</td>
-                                    <td> {item.type}</td>
+                                    <td> {Utility.removeUnderscore(item.type)}</td>
                                     <td> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
                                         onClick={() => {
@@ -423,7 +458,7 @@ const Adjustment = (props: any) => {
                                                 <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
                                             )}
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                         <label>Type</label>
                                         {/* <input type="text"
                                             name="type"
@@ -445,13 +480,12 @@ const Adjustment = (props: any) => {
                                                 </option>
                                                 <option value="Taxable">Taxable</option>
                                                 <option value="Non_Taxable">Non-Taxable</option>
-                                                <option value="Gross_up">Gross Up</option>
                                             </select>
                                             {errors.type && touched.type && (
                                                 <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                                             )}
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                         <label>Action</label>
                                         <select
                                             name="deduction"
@@ -468,6 +502,22 @@ const Adjustment = (props: any) => {
                                             </select>
                                             {errors.deduction && touched.deduction && (
                                                 <p style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
+                                            )}
+                                    </div>
+                                    <div className="form-group col-md-4 mb-3">
+                                        <label>Gross Affected</label>
+                                        <select
+                                            name="affectsGross"
+                                            id="deduction"
+                                            className="form-control"
+                                            value={values.affectsGross}
+                                            onChange={(e) => setFormField(e, setFieldValue)}
+                                            >
+                                                <option value={true}>Yes</option>
+                                                <option value={false}>No</option>
+                                            </select>
+                                            {errors.affectsGross && touched.affectsGross && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.affectsGross}</p>
                                             )}
                                     </div>
                                 </div>
