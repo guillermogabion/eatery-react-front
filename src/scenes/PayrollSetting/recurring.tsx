@@ -10,6 +10,7 @@ import { Formik } from "formik"
 import { User } from "../User"
 import { async } from "validate.js"
 import * as Yup from "yup"
+import { Utility } from "../../utils"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -164,7 +165,8 @@ const Recurring = (props: any) => {
         <div>
             <div className="w-100 pt-2">
                 <div className="fieldtext d-flex">
-                    <div className="input-container col-md-3">
+                    <div className="input-container col-md-2">
+                        <label>Recurring Name</label>
                         <input 
                         type="text"
                         className="formControl"
@@ -173,11 +175,41 @@ const Recurring = (props: any) => {
                         onChange={(e) => makeFilterData(e)}
                         />
                     </div>
+                    <div className="input-container col-md-2">
+                        <label> Type </label>
+                        <select 
+                            name="typeType" 
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            className="formControl"
+                            >
+                                <option value="" disabled selected>
+                                    Type
+                                </option>
+                                <option value="Taxable">Taxable</option>
+                                <option value="Non_Taxable">Non-Taxable</option>
+                            </select>
+                    </div>
+                    <div className="input-container col-md-2">
+                    <label>Action</label>
+                    <select
+                        name="isDeduction"
+                        id="deduction"
+                        className="form-control"
+                        onChange={(e) => makeFilterData(e)}
+                        >
+                            <option value="" disabled selected>
+                                Action
+                            </option>
+                            <option value={true}>Deduct</option>
+                            <option value={false}>Add</option>
+                        </select>
+                    </div>
                     <div className="input-container col-md-3">
                         <Button
                         style={{ width: 210 }}
                         onClick={() => getAllRecurringType(0)}
-                        className="btn btn-primary mx-2">
+                        className="btn btn-primary mx-2 mt-4">
                         Search
                         </Button>
                     </div>
@@ -208,7 +240,7 @@ const Recurring = (props: any) => {
                                 <tr>
                                     <td> {item.name} </td>
                                     <td> {item.description}</td>
-                                    <td> {item.type}</td>
+                                    <td> {Utility.removeUnderscore(item.type)}</td>
                                     <td> {item.deduction == true ? "Deduct" : "Add" }</td>
                                     <td> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
@@ -440,7 +472,6 @@ const Recurring = (props: any) => {
                                             >
                                                 <option value="Taxable">Taxable</option>
                                                 <option value="Non_Taxable">Non-Taxable</option>
-                                                <option value="Gross_up">Gross Up</option>
                                             </select>
                                             {errors.type && touched.type && (
                                                 <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>

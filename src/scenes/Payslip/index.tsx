@@ -74,9 +74,22 @@ export const Payslip = (props: any) => {
         const monthNumber = monthMap[monthName];
         setPeriodMonths(monthNumber);
         };
+       
         const getAllPayroll = (pageNo : any ) => {
+            let queryString = ""
+            let filterDataTemp = { ...filterData }
+            if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+    
+                queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+            }
             RequestAPI.getRequest(
-                `${Api.payrollPayListAll}?size=10&page=${pageNo}`,
+                `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}`,
                 "",
                 {},
                 {},
@@ -313,45 +326,61 @@ export const Payslip = (props: any) => {
                 <div className="w-100 pt-2">
                     <div className="fieldtext d-flex col-md-6">
                         <div className="input-container">
-                        <input
-                                name="name"
-                                // placeholder="employeeName"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                // onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
+                        <label> Month </label>
+                        <select 
+                            name="payrollMonth" 
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            className="formControl"
+                            >
+                                <option value="" disabled selected>
+                                    Month
+                                </option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            </div>
                         <div className="input-container">
+                            <label>Year</label>
                             <input
-                                name="amount"
+                                name="payrollYear"
                                 // placeholder="Amount"
-                                type="text"
+                                type="number"
                                 autoComplete="off"
                                 className="formControl"
                                 maxLength={40}
                                 onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                             />
                         </div>
                         <div className="input-container">
-                            <input
-                                name="deduct"
-                                // placeholder="Add/Deduct"
-                                type="text"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
+                        <label> Status </label>
+                        <select 
+                            name="type" 
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            className="formControl"
+                            >
+                                <option value="" disabled selected>
+                                    Status
+                                </option>
+                                <option value="complted">Completed</option>
+                                <option value="incomplete">Incomplete</option>
+                            </select>
                         </div>
                         <Button
                         style={{ width: 210 }}
-                        onClick={() => getPayrollList(0)}
-                        className="btn btn-primary mx-2">
+                        onClick={() => getAllPayroll(0)}
+                        className="btn btn-primary mx-2 mt-4">
                         Search
                         </Button>
                     </div>
