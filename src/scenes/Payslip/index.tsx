@@ -365,7 +365,7 @@ export const Payslip = (props: any) => {
                         <div className="input-container">
                         <label> Status </label>
                         <select 
-                            name="type" 
+                            name="status" 
                             id="type"
                             onChange={(e) => makeFilterData(e)}
                             className="formControl"
@@ -373,7 +373,7 @@ export const Payslip = (props: any) => {
                                 <option value="" disabled selected>
                                     Status
                                 </option>
-                                <option value="complted">Completed</option>
+                                <option value="completed">Completed</option>
                                 <option value="incomplete">Incomplete</option>
                             </select>
                         </div>

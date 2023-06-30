@@ -188,7 +188,7 @@ const Adjustment = (props: any) => {
                                     Type
                                 </option>
                                 <option value="Taxable">Taxable</option>
-                                <option value="Non_Taxable">Non-Taxable</option>
+                                <option value="NonTaxable">Non-Taxable</option>
                             </select>
                     </div>
                     <div className="input-container col-md-2">
