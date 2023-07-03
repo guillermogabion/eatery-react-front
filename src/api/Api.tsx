@@ -205,6 +205,14 @@ const Api: any = {
   updatePH :  process.env.REACT_APP_API_URL + "payroll/ph/update",
 
 
+  // SSS 
+
+  getSSS :  process.env.REACT_APP_API_URL + "payroll/sss/info",
+  downloadTemplateSSS :  process.env.REACT_APP_API_URL + "payroll/sss/downloadTemplate",
+  uploadSSSTable :  process.env.REACT_APP_API_URL + "payroll/sss/uploadExcel",
+
+
+
 
   // timekeeping ++ 
 
