@@ -205,6 +205,24 @@ const Api: any = {
   updatePH :  process.env.REACT_APP_API_URL + "payroll/ph/update",
 
 
+  // SSS 
+
+  getSSS :  process.env.REACT_APP_API_URL + "payroll/sss/info",
+  downloadTemplateSSS :  process.env.REACT_APP_API_URL + "payroll/sss/downloadTemplate",
+  uploadSSSTable :  process.env.REACT_APP_API_URL + "payroll/sss/uploadExcel",
+
+  // tax 
+
+  getMonthTax : process.env.REACT_APP_API_URL + "payroll/tax/view/monthly",
+  getYearTax : process.env.REACT_APP_API_URL + "payroll/tax/view/yearly",
+
+  uploadTaxMonthly :  process.env.REACT_APP_API_URL + "payroll/tax/uploadExcel/monthly",
+  uploadTaxYearly :  process.env.REACT_APP_API_URL + "payroll/tax/uploadExcel/annual",
+  
+  downloadTaxMonthly :  process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/monthly",
+  downloadTaxYearly :  process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/annual",
+
+
 
   // timekeeping ++ 
 

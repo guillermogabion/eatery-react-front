@@ -3629,3 +3629,17 @@ table thead tr th{
 .tab-content{
   overflow: auto;
 }
+.tax-table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.tax-sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+.hide-x {
+  overflow-x: hidden;
+}

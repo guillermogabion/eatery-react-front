@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink, useHistory } from 'react-router-dom';
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Button, Modal, Form } from "react-bootstrap"
 import HDMF from './hdmf';
 import PH from './philhealth';
+import SSS from './sss';
+import Tax from './tax';
 import { Tab, Tabs } from 'react-bootstrap';
 
 const HFMDPage = () => {
@@ -15,18 +17,17 @@ const HFMDPage = () => {
 
 const SSSPage = () => {
   return (
-    <div className='p-3'>
-      <h1>Ongoing</h1>
-      {/* Rest of the content */}
+    <div>
+        <SSS/>
     </div>
+    
   );
 };
 
 const TaxPage = () => {
   return (
-    <div className='p-3'>
-      <h1>Ongoing</h1>
-      {/* Rest of the content */}
+    <div>
+        <Tax/>
     </div>
   );
 };
@@ -43,7 +44,7 @@ const Mandatory = () => {
 
   return (
     <div className='p-3'>
-      <Tabs defaultActiveKey="tab1" id="my-tabs"
+      <Tabs defaultActiveKey="sss" id="sss"
         onSelect={(k: any) => {
           setKey(k)
         }}>
