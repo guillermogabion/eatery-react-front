@@ -104,7 +104,7 @@ const sss = (props: any) => {
                                         if(item === 'Range of Compensation') {
                                             return (
                                                 <>
-                                                    <th colSpan={4} className="subheader-cell  bg-primary" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>Range of Compensation</th>
+                                                    <th colSpan={4} className="subheader-cell  bg-grey" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>Range of Compensation</th>
                                                 </>
                                                 
                                             );
@@ -112,7 +112,7 @@ const sss = (props: any) => {
                                         if(item === 'Monthly Salary Credit') {
                                             return (
                                                 <>
-                                                    <th colSpan={6} className="subheader-cell  bg-primary" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>Monthly Salary Credit</th>
+                                                    <th colSpan={6} className="subheader-cell  bg-grey" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>Monthly Salary Credit</th>
                                                 </>
                                                 
                                             );
@@ -120,7 +120,7 @@ const sss = (props: any) => {
                                         if(item === 'Regular SSS') {
                                             return (
                                                 <>
-                                                    <th colSpan={6} className="subheader-cell  bg-primary" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>Regular SSS</th>
+                                                    <th colSpan={6} className="subheader-cell  bg-grey" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>Regular SSS</th>
                                                 </>
                                                 
                                             );
@@ -128,7 +128,7 @@ const sss = (props: any) => {
                                         if(item === 'EC') {
                                             return (
                                                 <>
-                                                    <th colSpan={6} className="subheader-cell  bg-primary" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>EC</th>
+                                                    <th colSpan={6} className="subheader-cell  bg-grey" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto' }}>EC</th>
                                                 </>
                                                 
                                             );
@@ -136,7 +136,7 @@ const sss = (props: any) => {
                                         if(item === 'WISP') {
                                             return (
                                                 <>
-                                                    <th colSpan={6} className="subheader-cell  bg-primary" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto'  }}>WISP</th>
+                                                    <th colSpan={6} className="subheader-cell  bg-grey" style={{ color: 'black', backgroundColor: '#009FB5', width: 'auto'  }}>WISP</th>
                                                 </>
                                                 
                                             );
@@ -144,7 +144,7 @@ const sss = (props: any) => {
                                         if(item === 'Total') {
                                             return (
                                                 <>
-                                                    <th colSpan={6} className="subheader-cell  bg-primary" style={{ color: 'black', background: '#009FB5', width: 'auto' }}>TOTAL</th>
+                                                    <th colSpan={6} className="subheader-cell  bg-grey" style={{ color: 'black', background: '#009FB5', width: 'auto' }}>TOTAL</th>
                                                 </>
                                                 
                                             );
@@ -238,7 +238,6 @@ const sss = (props: any) => {
                                 sss.map((item: any, index: any) => {
                                     return (
                                     <tr>
-                                        {/* Access the corresponding data based on the second header */}
                                         {
                                         tableHeaders &&
                                         tableHeaders.length &&

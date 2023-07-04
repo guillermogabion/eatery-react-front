@@ -4,7 +4,7 @@ import { Button, Modal, Form } from "react-bootstrap"
 import HDMF from './hdmf';
 import PH from './philhealth';
 import SSS from './sss';
-import SSSBtn from './sssbutton';
+import Tax from './tax';
 import { Tab, Tabs } from 'react-bootstrap';
 
 const HFMDPage = () => {
@@ -26,9 +26,8 @@ const SSSPage = () => {
 
 const TaxPage = () => {
   return (
-    <div className='p-3'>
-      <h1>Ongoing</h1>
-      {/* Rest of the content */}
+    <div>
+        <Tax/>
     </div>
   );
 };
@@ -52,9 +51,6 @@ const Mandatory = () => {
         <Tab eventKey="sss" title="SSS">
           <SSSPage />
         </Tab>
-        <div>
-          i am button
-        </div>
         <Tab eventKey="tax" title="Tax">
           <TaxPage />
         </Tab>
