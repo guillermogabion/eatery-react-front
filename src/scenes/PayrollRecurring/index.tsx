@@ -1,21 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import UserTopMenu from "../../components/UserTopMenu"
-import moment from "moment"
 import { Button, Modal, Form } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { Api, RequestAPI } from "../../api"
-import DashboardMenu from "../../components/DashboardMenu"
 import Table from 'react-bootstrap/Table'
 import ReactPaginate from 'react-paginate'
-import TimeDate from "../../components/TimeDate"
-import { async } from "validate.js"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
-import { Utility } from "../../utils"
-import * as Yup from "yup"
+import Select from 'react-select';
+
+
+
+
+
 
 
 const ErrorSwal = withReactContent(Swal)
@@ -31,6 +30,7 @@ export const Recurring = (props: any) => {
     const [ recurringTypes, setRecurringTypes ] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
+    const [selectedOption, setSelectedOption] = useState(null);
 
 
 
@@ -67,6 +67,20 @@ export const Recurring = (props: any) => {
        
         'Action',
     ];
+
+    const options = [
+        { value: false, label: 'Add' },
+        { value: true, label: 'Deduct' },
+      ];
+    const handleOptionChange = (selected) => {
+    setSelectedOption(selected);
+    makeFilterData(selected);
+    };
+
+    const handleClearSelection = () => {
+        setSelectedOption(null);
+      };
+
     const handleAddField = () => {
         setRecurring([...recurring, {}])
     }
@@ -464,10 +478,33 @@ export const Recurring = (props: any) => {
                             <option value="" disabled selected>
                             Recurring Type
                             </option>
-                            <option value={true}>Add</option>
-                            <option value={false}>Deduct</option>
+                            <option value={false}>Add
+                            </option>
+                            <option value={true}>Deduct
+                            </option>
                           
                         </select>
+                        
+
+
+                        </div>
+                        <div className="input-container col-md-3">
+                        <Select
+                            placeholder="Recurring Type"
+                            className="form-select"
+                            options={options}
+                            value={selectedOption}
+                            
+                            onChange={handleOptionChange}
+                        />
+
+                        {selectedOption && (
+                            <span className="clear-icon" onClick={handleClearSelection}>
+                            &#10006; {/* Unicode character for the "X" icon */}
+                            </span>
+                        )}
+
+
                         </div>
                         <div className="input-container col-md-3">
                             <Button
