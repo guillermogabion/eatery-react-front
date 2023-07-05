@@ -11,6 +11,7 @@ import DashboardMenu from "../../components/DashboardMenu"
 import TableComponent from "../../components/TableComponent"
 import Recurring from "./recurring"
 import Adjustment from "./adjustment"
+import Overtime from "./overtime"
 import TimeDate from "../../components/TimeDate"
 const ErrorSwal = withReactContent(Swal)
 import ContainerWrapper from "../../components/ContainerWrapper"
@@ -68,8 +69,8 @@ export const PayrollSetting = (props: any) => {
                         <Tab eventKey="tab3" title="Recurring">
                             <Recurring/>
                         </Tab>
-                        <Tab eventKey="tab4" title="New Record">
-                            <p>Content for Tab 3</p>
+                        <Tab eventKey="tab4" title="Overtime Setting">
+                            <Overtime />
                         </Tab>
                     </Tabs>
                     </div>

@@ -52,7 +52,7 @@ const Adjustment = (props: any) => {
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp [d]) {
-                    queryString += `%&${d}=${filterDataTemp[d]}`
+                    queryString += `&${d}=${filterDataTemp[d]}`
                 }else {
                     queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
                 }

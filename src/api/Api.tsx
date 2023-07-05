@@ -222,6 +222,9 @@ const Api: any = {
   downloadTaxMonthly :  process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/monthly",
   downloadTaxYearly :  process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/annual",
 
+//  overtime setting 
+  getOvertimeSetting : process.env.REACT_APP_API_URL + "payroll/ot/info",
+  updateOvertimeSetting : process.env.REACT_APP_API_URL + "payroll/ot/update",
 
 
   // timekeeping ++ 
