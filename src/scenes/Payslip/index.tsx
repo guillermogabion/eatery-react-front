@@ -13,7 +13,8 @@ import TimeDate from "../../components/TimeDate"
 import { async } from "validate.js"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
-import EmployeeDropdown from "../../components/EmployeeDropdown"
+import { Utility } from "../../utils"
+
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -27,6 +28,14 @@ export const Payslip = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
     const [initialValues, setInitialValues] = useState<any>({});
+    const selectRef = useRef(null);
+    const [showButtonMonth, setShowButtonMonth] = useState(false);
+    const [showButtonYear, setShowButtonYear] = useState(false);
+    const [showButtonStatus, setShowButtonStatus] = useState(false);
+    const [payrollMonth, setPayrollMonth] = useState("");
+    const [payrollYear, setPayrollYear] = useState("");
+    const [status, setStatus] = useState("");
+
     
 
     const { emailData } = props
@@ -119,26 +128,6 @@ export const Payslip = (props: any) => {
     useEffect(() => {
        
         getAllPayroll(0)
-        //   RequestAPI.getRequest(
-        //     `${Api.generatedList}`,
-        //     "",
-        //     {},
-        //     {},
-        //     async (res: any) => {
-        //         const { status, body = { data: {}, error: {} } }: any = res
-        //         if (status === 200 && body && body.data) {
-        //             if (body.error && body.error.message) {
-        //             } else {
-        //                 let tempArray = [...body.data]
-        //                 body.data.forEach((d: any, i: any) => {
-        //                     d.isCheck = false
-        //                 });
-        //                 setEmployee(tempArray)
-        //             }
-        //       }
-        //     }
-        //   )
-
           RequestAPI.getRequest(
             `${Api.payrollPayList}`,
             "",
@@ -199,38 +188,6 @@ export const Payslip = (props: any) => {
             }
         )
     }
-    // const sendEmailIndividual = () => {
-    //     const valuesObj: any = { ...props.emailData }
-    //     let userIds: any = []
-    //     const tempArray: any = [ ...employee]
-    //     tempArray.forEach((data: any, index: any) => {
-    //         if (data.isCheck) {
-    //             userIds.push(data.userAccountId)
-
-    //             console.log(userIds)
-    //         }
-    //     });
-
-    //     valuesObj.id = userIds
-    //     RequestAPI.getRequest(
-    //         `${Api.sendIndividual}?id=${valuesObj.id}`,
-    //         "",
-    //         valuesObj,
-    //         {},
-    //         async (res: any) => {
-    //             const { status, body = { data: {}, error: {} } }: any = res
-    //             if (status === 200 && body) {
-    //                 if (body.error && body.error.message) {
-    //                 } else {
-                     
-    //                 }
-    //             }
-    //         }
-    //     )
-
-
-    // }
-
     const sendEmailIndividual = async () => {
         const valuesObj: any = { ...props.emailData };
         let payslipIds: any = [];
@@ -317,6 +274,37 @@ export const Payslip = (props: any) => {
     const handlePageClick = (event: any) => {
         getAllEmployee(event.selected)
       };
+
+      const resetMonth = () => {
+        
+        setPayrollMonth("");
+        const selectElement = document.getElementById("month");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonMonth(false);
+
+      }
+      const resetYear = () => {
+        
+        setPayrollYear("");
+        const selectElement = document.getElementById("year");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonYear(false);
+
+      }
+      const resetStatus = () => {
+        
+        setStatus("");
+        const selectElement = document.getElementById("status");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonStatus(false);
+
+      }
     
 
     return (
@@ -324,16 +312,19 @@ export const Payslip = (props: any) => {
             <div className="w-100 px-5 py-5">
               <div>
                 <div className="w-100 pt-2">
-                    <div className="fieldtext d-flex col-md-6">
-                        <div className="input-container">
+                    <div className="fieldtext d-flex ">
+                        <div className="input-container clearable-select col-md-2">
                         <label> Month </label>
                         <select 
                             name="payrollMonth" 
-                            id="type"
-                            onChange={(e) => makeFilterData(e)}
+                            id="month"
+                            onChange={(e) => { makeFilterData(e)
+                                setShowButtonMonth(e.target.value !== 'default')
+                            }}
                             className="formControl"
+                            ref={selectRef}
                             >
-                                <option value="" disabled selected>
+                                <option value="default" disabled selected>
                                     Month
                                 </option>
                                 <option value="1">January</option>
@@ -349,33 +340,64 @@ export const Payslip = (props: any) => {
                                 <option value="11">November</option>
                                 <option value="12">December</option>
                             </select>
+                            {showButtonMonth && (
+                                <span className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
+                                X
+                                </span>
+                            )}
                             </div>
-                        <div className="input-container">
-                            <label>Year</label>
-                            <input
+                        <div className="input-container clearable-select col-md-2">
+                        <label>Year</label>
+                            <select
+                                className={`form-select`}
                                 name="payrollYear"
-                                // placeholder="Amount"
-                                type="number"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                            />
+                                id="year"
+                                onChange={(e) => {makeFilterData(e)
+                                    setShowButtonYear(e.target.value !== 'default')
+                                    
+                                }}
+                                ref={selectRef}
+                                >
+                                <option key={`defaultYear`} value="default" selected disabled>
+                                    Select Year
+                                </option>
+                                {
+                                    Utility.getYears().map((item: any, index: string) => {
+                                        return (
+                                            <option key={`${index}_${item.year}`} value={item.year}>
+                                                {item.year}
+                                            </option>
+                                        )
+                                    })
+                                }
+                            </select>
+                            {showButtonYear && (
+                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
+                                X
+                                </span>
+                            )}
                         </div>
-                        <div className="input-container">
+                        <div className="input-container clearable-select col-md-2">
                         <label> Status </label>
                         <select 
                             name="status" 
-                            id="type"
-                            onChange={(e) => makeFilterData(e)}
+                            id="status"
+                            onChange={(e) => { makeFilterData(e)
+                                setShowButtonStatus(e.target.value !== 'default')
+                            }}
                             className="formControl"
                             >
-                                <option value="" disabled selected>
+                                <option value="default" disabled selected>
                                     Status
                                 </option>
                                 <option value="completed">Completed</option>
                                 <option value="incomplete">Incomplete</option>
                             </select>
+                            {showButtonStatus && (
+                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
+                                X
+                                </span>
+                            )}
                         </div>
                         <Button
                         style={{ width: 210 }}

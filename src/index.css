@@ -3643,3 +3643,20 @@ table thead tr th{
 .hide-x {
   overflow-x: hidden;
 }
+
+.clearable-select {
+  position: relative;
+  display: inline-block;
+}
+
+.clearable-select select {
+  padding-right: 24px;
+}
+
+.clearable-select .clear-icon {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

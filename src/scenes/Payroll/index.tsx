@@ -60,12 +60,10 @@ export const Payroll = (props: any) => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
 
-    const handlePageClick = (event: any) => {
-    };
 
-    useEffect(() => {
+    const getPayroll = (pageNo: any) => {
         RequestAPI.getRequest(
-            `${Api.payrollAll}?size=10&sort=id&sortDir=desc`,
+            `${Api.payrollAll}?size=10&page=${pageNo}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -79,7 +77,15 @@ export const Payroll = (props: any) => {
                 }
             }
         )
+    }
+    const handlePageClick = (event: any) => {
+        getPayroll(event.selected)
 
+    };
+    
+
+    useEffect(() => {
+       getPayroll(0)
     }, [])
 
 
@@ -356,7 +362,7 @@ export const Payroll = (props: any) => {
                                                 value={values.payrollYear}
                                                 onChange={(e) => setFieldValue('payrollYear', e.target.value)}>
                                                 <option key={`defaultYear`} value={""} selected={true}>
-                                                    Select Month
+                                                    Select Year
                                                 </option>
                                                 {
                                                     Utility.getYears().map((item: any, index: string) => {

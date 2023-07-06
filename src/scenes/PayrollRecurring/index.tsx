@@ -9,7 +9,6 @@ import ReactPaginate from 'react-paginate'
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
-import Select from 'react-select';
 
 
 
@@ -31,7 +30,10 @@ export const Recurring = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
     const [selectedOption, setSelectedOption] = useState(null);
-
+    const [isDeduction, setIsDeduction] = useState("");
+    const [selectedValue, setSelectedValue] = useState('');
+    const selectRef = useRef(null);
+    const [showButton, setShowButton] = useState(false);
 
 
 
@@ -137,6 +139,10 @@ export const Recurring = (props: any) => {
         )
     }
     useEffect(() => {
+        const selectElement = selectRef.current;
+        if (selectElement) {
+        setShowButton(selectElement.selectedIndex !== 0);
+        }
         getAllRecurringList(0)
         RequestAPI.getRequest(
             `${Api.getAllRecurringType}`,
@@ -447,7 +453,16 @@ export const Recurring = (props: any) => {
         }
 
       }
-   
+      const reset = () => {
+        
+        setIsDeduction("");
+        const selectElement = document.getElementById("type");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButton(false);
+
+      }
 
 
 
@@ -466,46 +481,38 @@ export const Recurring = (props: any) => {
                             withEmployeeID={true}
                             />
                         </div>
-                        <div className="input-container col-md-3">
-                        <select
-                            placeholder="Recurring Name"
-                            className="form-select"
-                            name="isDeduction"
-                            id="type"
-                            onChange={(e) =>
-                                makeFilterData(e)}
-                        >
-                            <option value="" disabled selected>
-                            Recurring Type
-                            </option>
-                            <option value={false}>Add
-                            </option>
-                            <option value={true}>Deduct
-                            </option>
-                          
-                        </select>
+                        <div className="input-container col-md-3 clearable-select">
+                            <select
+                                placeholder="Recurring Name"
+                                className="form-select"
+                                name="isDeduction"
+                                id="type"
+                                onChange={(e) => {
+                                    makeFilterData(e);
+                                    setShowButton(e.target.value !== 'default')
+                                  }}
+                                ref={selectRef}
+                            >
+                                <option value="default" disabled selected>
+                                Recurring Type
+                                </option>
+                                <option value={false}>Add
+                                </option>
+                                <option value={true}>Deduct
+                                </option>
+                            
+                            </select>
+                            {showButton && (
+                                <span className="clear-icon" onClick={reset}>
+                                X
+                                </span>
+                            )}
+                      
                         
 
 
                         </div>
-                        <div className="input-container col-md-3">
-                        <Select
-                            placeholder="Recurring Type"
-                            className="form-select"
-                            options={options}
-                            value={selectedOption}
-                            
-                            onChange={handleOptionChange}
-                        />
-
-                        {selectedOption && (
-                            <span className="clear-icon" onClick={handleClearSelection}>
-                            &#10006; {/* Unicode character for the "X" icon */}
-                            </span>
-                        )}
-
-
-                        </div>
+                        
                         <div className="input-container col-md-3">
                             <Button
                             style={{ width: 210 }}
