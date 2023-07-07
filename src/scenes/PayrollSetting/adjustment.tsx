@@ -23,6 +23,11 @@ const Adjustment = (props: any) => {
     const [ modalShow, setModalShow ] = React.useState(false);
     const [id, setId] = useState(null);
     const [filterData, setFilterData] = React.useState([]);
+    const [isDeduction, setIsDeduction] = useState("");
+    const [typeType, setTypetype] = useState("");
+    const [showButtonIsDeduction, setShowButtonIsDeduction] = useState(false);
+    const [showButtonTypetype, setShowButtonTypetype] = useState(false);
+
 
     const [initialValues, setInitialValues] = useState<any>({
             "name" : "",
@@ -161,6 +166,27 @@ const Adjustment = (props: any) => {
           deduction: true,
         });
       }, []);
+      const resetIsDeduction = () => {
+        
+        setIsDeduction("");
+        const selectElement = document.getElementById("deduction");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonIsDeduction(false);
+
+      }
+      const resetTypetype = () => {
+        
+        setTypetype("");
+        const selectElement = document.getElementById("typeType");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonTypetype(false);
+
+      }
+      
 
     return (
         <div>
@@ -176,35 +202,49 @@ const Adjustment = (props: any) => {
                         onChange={(e) => makeFilterData(e)}
                         />
                     </div>
-                    <div className="input-container col-md-2">
+                    <div className="input-container col-md-2 clearable-select">
                         <label> Type </label>
                         <select 
                             name="typeType" 
-                            id="type"
-                            onChange={(e) => makeFilterData(e)}
+                            id="typeType"
+                            onChange={(e) => { makeFilterData(e)
+                                setShowButtonTypetype(e.target.value !== 'default')    
+                            }}
                             className="formControl"
                             >
-                                <option value="" disabled selected>
+                                <option value="default" disabled selected>
                                     Type
                                 </option>
                                 <option value="Taxable">Taxable</option>
                                 <option value="NonTaxable">Non-Taxable</option>
                             </select>
+                            {showButtonTypetype && (
+                                <span className="clear-icon" style={{paddingTop: '15%', paddingRight: '5%'}} onClick={resetTypetype}>
+                                X
+                                </span>
+                            )}
                     </div>
-                    <div className="input-container col-md-2">
+                    <div className="input-container col-md-2 clearable-select">
                     <label>Action</label>
                     <select
                         name="isDeduction"
                         id="deduction"
                         className="form-control"
-                        onChange={(e) => makeFilterData(e)}
+                        onChange={(e) => {makeFilterData(e)
+                                setShowButtonIsDeduction(e.target.value !== 'default')
+                        }}
                         >
-                            <option value="" disabled selected>
+                            <option value="default" disabled selected>
                                 Action
                             </option>
                             <option value={true}>Deduct</option>
                             <option value={false}>Add</option>
                         </select>
+                        {showButtonIsDeduction && (
+                                <span className="clear-icon" style={{paddingTop: '15%', paddingRight: '5%'}} onClick={resetIsDeduction}>
+                                X
+                                </span>
+                            )}
                     </div>
                     <div className="input-container col-md-3">
                         <Button
