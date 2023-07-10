@@ -303,7 +303,7 @@ export const Recurring = (props: any) => {
                     "recurringTypeId": "",
                     "adjustmentAmount": "",
                     "endDate": "",
-                    "active": "",
+                    "active": "true",
                 }
                
             ],
@@ -356,6 +356,10 @@ export const Recurring = (props: any) => {
                 if(element.endDate == undefined) {
                     hasError = true
                 }
+                if(element.active === undefined) {
+                    element.active = true
+                }
+               
            });
            
            if (hasError) {
@@ -365,9 +369,11 @@ export const Recurring = (props: any) => {
                 'warning'
             )
            }else{
+           
                 RequestAPI.postRequest(Api.createRecurringTransaction, "", payload, {}, async (res:any) => {
                     Swal.close();
                     const { status, body = { data: {}, error: {} } }: any = res
+                    console.log(payload)
 
                     if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
@@ -421,7 +427,6 @@ export const Recurring = (props: any) => {
                     {},
                     async (res) => {
                         const { status, body = { data: {}, error: {} } } = res;
-                
                         if (status === 200 || status === 201) {
                             if (body.error && body.error.message) {
                             ErrorSwal.fire(
@@ -1002,10 +1007,10 @@ export const Recurring = (props: any) => {
                                                 <label>Status</label>
                                                 <select
                                                     name="active"
-                                                    className={`form-select ${touched.active && errors.active ? 'is-invalid' : ''}`}
-                                                    value={values.active}
+                                                    className="form-select"
+                                                    value={values.active === undefined ? true : false}
                                                     onChange={(e) => {
-                                                    const selectedValue = e.target.value === 'true';
+                                                    const selectedValue = e.target.value;
                                                     setFieldValue('active', selectedValue);
                                                     const updatedFields = [...recurring];
                                                     updatedFields[index].active = e.target.value;
@@ -1015,9 +1020,7 @@ export const Recurring = (props: any) => {
                                                     <option value={true}>Active</option>
                                                     <option value={false}>Inactive</option>
                                                 </select>
-                                                    {errors && errors.active && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.active}</p>
-                                                    )}
+                                                
                                                 </div>
 
                                                 {values.employeeId}

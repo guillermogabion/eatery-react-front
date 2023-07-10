@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Api, RequestAPI } from "../../../api";
 import SingleSelect from "../../../components/Forms/SingleSelect";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { Utility } from "../../../utils";
 import EmployeeDropdown from "../../../components/EmployeeDropdown";
@@ -63,7 +63,7 @@ export default function Leaves(props: any) {
             })
         }
 
-        if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
+        if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
             RequestAPI.getRequest(
                 `${Api.allRequestLeave}?size=10${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
                 "",
@@ -117,7 +117,7 @@ export default function Leaves(props: any) {
             <div className="w-100">
                 <div className="fieldtext d-flex col-md-12">
                     {
-                        data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                             <>
                                 <div className="" style={{ width: 200, marginRight: 10 }}>
                                     <label>Employee</label>
@@ -189,14 +189,24 @@ export default function Leaves(props: any) {
                             </select>
                         </div>
                     </div> */}
+                    <div className="input-container col-md-3 pt-4">
+                        <Button
+                        style={{ width: 210 }}
+                        onClick={() => getAllLeaves(0)}
+                        className="btn btn-primary mx-2">
+                        Search
+                        </Button>
+                    </div>
                 </div>
+              
             </div>
             <Table responsive>
                 <thead>
                     <tr>
                         {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
+                                    <th>Employee ID</th>
                                     <th>Employee Name</th>
                                 </> : null
                         }
@@ -217,8 +227,9 @@ export default function Leaves(props: any) {
                                     allLeaves.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
+                                                <td>{item.userId}</td>
                                                 {
-                                                    data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                                    data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                         <>
                                                             <td> {item.lastName}, {item.firstName} </td>
                                                         </> : null

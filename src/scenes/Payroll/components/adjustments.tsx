@@ -47,7 +47,8 @@ export const Adjustment = (props: any) => {
         'Employee Name',
         'Amount',
         'Adjustment Name',
-        'Payroll Period',
+        'Type',
+        'Deduct',
         'Action',
     ];
 
@@ -170,7 +171,8 @@ export const Adjustment = (props: any) => {
                                             <td> {item.employeeName} </td>
                                             <td> {Utility.formatToCurrency(item.amount)} </td>
                                             <td> {item.adjustmentName} </td>
-                                            <td> {moment().month(item.payrollMonth -1).format('MMM.')} {item.payrollYear} </td>
+                                            <td> {Utility.removeUnderscore(item.type)} </td>
+                                            <td> {item.deduc ? "YES" : "NO"} </td>
                                             <td>
                                                 <label
                                                     onClick={() => {
