@@ -42,6 +42,8 @@ export default function Recurring(props: any) {
         'Employee Name',
         'Amount',
         'Recurring Name',
+        'Type',
+        'Deduct',
         'Action',
     ];
 
@@ -243,6 +245,8 @@ export default function Recurring(props: any) {
                                             <td> {item.employeeName} </td>
                                             <td> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
                                             <td> {item.recurringName} </td>
+                                            <td>{Utility.removeUnderscore(item.typeAction)}</td>
+                                            <td>{item.typeIsDeduction ? "YES" : "NO" }</td>
                                             <td>
                                                 <label
                                                     onClick={() => {
@@ -381,6 +385,14 @@ export default function Recurring(props: any) {
                                                 className="formControl"
                                                 name="userId"
                                                 value={values.recurringName}
+                                            />
+                                        </div>
+                                        <div className="w-full mb-3">
+                                            <label>Recurring Type</label>
+                                            <input
+                                                disabled
+                                                className="formControl"
+                                                value={Utility.removeUnderscore(values.typeAction)}
                                             />
                                         </div>
                                         <div className="w-fll mb-3">

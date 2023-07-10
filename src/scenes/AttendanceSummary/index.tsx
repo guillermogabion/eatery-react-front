@@ -424,7 +424,7 @@ export const AttendanceSummary = (props: any) => {
           <div className="w-100 pt-4">
             <div className="fieldtext d-flex col-md-12">
               {
-                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <>
                     <div className="" style={{ width: 200, marginRight: 10 }}>
                       <label>Employee</label>
@@ -479,7 +479,7 @@ export const AttendanceSummary = (props: any) => {
                 Search
               </Button>
               {
-                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <Button
                     onClick={() => setAddBioModal(true)}
                     disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
@@ -494,7 +494,7 @@ export const AttendanceSummary = (props: any) => {
 
             {attendanceTable()}
             {
-              data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+              data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                 <>
                   <div className="d-flex justify-content-end mt-3" >
                     <div>
