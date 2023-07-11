@@ -46,13 +46,13 @@ const Privateroutes: React.FunctionComponent = (props) => {
     menu = data.profile.menus
   }
   let pathList: any = []
-  const currentPath = location.pathname;
+  let currentPath = "";
 
   const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
   const isLogin = useSelector((state: any) => state.rootReducer.isLogin)
   const originalUser = CryptoJS.AES.decrypt(sessionStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
   const decoded: any = originalUser ? jwt_decode(originalUser) : {}
-
+  
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
@@ -65,7 +65,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     }
     bootstrapAsync()
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
-
+  
   const routes: any = [
     { path: "/page/404", component: Page404 },
     { path: "/request/leave", component: Leaves },
@@ -79,7 +79,6 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/timekeeping/missinglogs", component: MissingLogs },
     { path: "/user", component: ChangePassword },
     { path: "/report", component: Report },
-    { path: "/", component: Dashboard },
     { path: "/dashboard", component: Dashboard },
     { path: "/timekeeping", component: Dashboard },
     { path: "/employee", component: Employee },
@@ -99,6 +98,16 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/payroll/payslip", component: Payslip },
   ]
 
+  if (location.pathname != "/"){
+    currentPath = location.pathname 
+  }else {
+    if (currentRoutePath != ""){
+      currentPath = currentRoutePath
+    }else {
+      currentPath = "/dashboard"
+    }
+  }
+  
   if (isLogin) {
     const loginedPath = routes.map((item: any) => item.path);
     pathList = loginedPath
