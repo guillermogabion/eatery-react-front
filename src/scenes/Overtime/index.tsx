@@ -319,7 +319,7 @@ export const Overtime = (props: any) => {
         <Table responsive="lg">
           <thead>
             <tr>
-              {data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+              {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                 <th style={{ width: 'auto' }}>Employee Name</th> :
                 null
               }

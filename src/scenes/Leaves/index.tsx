@@ -467,7 +467,7 @@ export const Leaves = (props: any) => {
           <thead>
             <tr>
               {
-                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <>
                     <th style={{ width: 'auto' }}>Employee Name</th>
                   </> : null
@@ -493,7 +493,7 @@ export const Leaves = (props: any) => {
                       return (
                         <tr>
                           {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <>
                                 <td> {item.lastName}, {item.firstName} </td>
                               </> : null

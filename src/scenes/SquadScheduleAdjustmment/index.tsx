@@ -85,7 +85,7 @@ export const SquadScheduleAdjustment = (props: any) => {
         }
       })
     }
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
+    if (data.profile.role == 'HR ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
         `${Api.allSquadSchedule}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",

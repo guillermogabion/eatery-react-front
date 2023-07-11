@@ -574,14 +574,14 @@ export const PayrollAdjustment = (props: any) => {
                         className="text-muted cursor-pointer">
                         Update
                         </label>
-                        <br />
+                        {/* <br />
                         <label
                             onClick={() => {
                                 deleteRecurring(item.id)
                             }}
                             className="text-muted cursor-pointer">
                             Delete
-                        </label>
+                        </label> */}
                         </td>
                     
                         </tr>
