@@ -297,70 +297,61 @@ export const SquadUndertime = (props: any) => {
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {item.statusChangedBy} </td>
-                                        <td> { Utility.removeUnderscore(item.status) } </td>
+                                        <td> {Utility.removeUnderscore(item.status)} </td>
                                         <td>
-                                            {
-                                                item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                                            <>
+                                                {authorizations.includes("Request:Update") && item.status == "APPROVED" ? (
                                                     <>
-                                                        {authorizations.includes("Request:Update") ? (
-                                                            <>
-                                                                <label
-                                                                    onClick={() => {
-                                                                        getUT(item.id)
-                                                                    }}
-                                                                    className="text-muted cursor-pointer">
-                                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                        <label
+                                                            onClick={() => {
+                                                                getUT(item.id)
+                                                            }}
+                                                            className="text-muted cursor-pointer">
+                                                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
-                                                                </label>
-                                                            </>
-                                                        ) : null}
-                                                        {authorizations.includes("Request:Approve") ? (
-                                                            <>
-                                                                <label
-                                                                    onClick={() => {
-                                                                        approveUT(item.id)
-                                                                    }}
-                                                                    className="text-muted cursor-pointer">
-                                                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
-
-                                                                </label>
-                                                            </>
-                                                        ) : null}
-                                                        {authorizations.includes("Request:Reject") ? (
-                                                            <>
-                                                                <label
-                                                                    onClick={() => {
-                                                                        declineUT(item.id)
-                                                                    }}
-                                                                    className="text-muted cursor-pointer">
-                                                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-
-                                                                </label>
-
-                                                            </>
-                                                        ) : null}
+                                                        </label>
                                                     </>
-                                                    :
-                                                    null
-                                            }
-                                            {
-                                                item.status == "APPROVED" || item.status == "PENDING" ?
+                                                ) : null}
+                                                {authorizations.includes("Request:Approve") && item.status == "APPROVED" ? (
                                                     <>
-                                                        {authorizations.includes("Request:Update") ? (
-                                                            <>
-                                                                <label
-                                                                    onClick={() => {
-                                                                        cancelUndertime(item.id)
-                                                                    }}
-                                                                    className="text-muted cursor-pointer">
-                                                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
-                                                                </label>
+                                                        <label
+                                                            onClick={() => {
+                                                                approveUT(item.id)
+                                                            }}
+                                                            className="text-muted cursor-pointer">
+                                                            <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
 
-                                                            </>
-                                                        ) : null}
+                                                        </label>
                                                     </>
-                                                    : null
-                                            }
+                                                ) : null}
+                                                {authorizations.includes("Request:Reject") && item.status == "APPROVED" ? (
+                                                    <>
+                                                        <label
+                                                            onClick={() => {
+                                                                declineUT(item.id)
+                                                            }}
+                                                            className="text-muted cursor-pointer">
+                                                            <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+
+                                                        </label>
+
+                                                    </>
+                                                ) : null}
+                                            </>
+                                            <>
+                                                {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
+                                                    <>
+                                                        <label
+                                                            onClick={() => {
+                                                                cancelUndertime(item.id)
+                                                            }}
+                                                            className="text-muted cursor-pointer">
+                                                            <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                        </label>
+
+                                                    </>
+                                                ) : null}
+                                            </>
                                         </td>
                                     </tr>
                                 )

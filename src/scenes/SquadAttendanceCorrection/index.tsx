@@ -392,65 +392,56 @@ export const SquadAttendanceCorrection = (props: any) => {
                         <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
-                      {
-                        item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                      <>
+                        {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                           <>
-                            {authorizations.includes("Request:Update") ? (
-                              <>
-                                <label
-                                  onClick={() => {
-                                    getCoa(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
-                                </label>
-                              </>
-                            ) : null}
-
-                            {authorizations.includes("Request:Approve") ? (
-                              <>
-                                <label
-                                  onClick={() => {
-                                    approveCoa(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
-                                </label>
-                              </>
-                            ) : null}
-
-                            {authorizations.includes("Request:Reject") ? (
-                              <>
-                                <label
-                                  onClick={() => {
-                                    declineCoa(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-                                </label>
-                              </>
-                            ) : null}
+                            <label
+                              onClick={() => {
+                                getCoa(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                            </label>
                           </>
-                          :
-                          null
-                      }
-                      {
-                        item.status == "APPROVED" || item.status == "PENDING" ?
+                        ) : null}
+
+                        {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                           <>
-                            {authorizations.includes("Request:Update") ? (
-                              <>
-                                <label
-                                  onClick={() => {
-                                    cancelAttendanceReversal(item.id)
-                                  }}
-                                  className="text-muted cursor-pointer">
-                                  <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
-                                </label>
-                              </>
-                            ) : null}
+                            <label
+                              onClick={() => {
+                                approveCoa(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                            </label>
                           </>
-                          : null
-                      }
+                        ) : null}
+
+                        {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
+                          <>
+                            <label
+                              onClick={() => {
+                                declineCoa(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                            </label>
+                          </>
+                        ) : null}
+                      </>
+                      <>
+                        {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
+                          <>
+                            <label
+                              onClick={() => {
+                                cancelAttendanceReversal(item.id)
+                              }}
+                              className="text-muted cursor-pointer">
+                              <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                            </label>
+                          </>
+                        ) : null}
+                      </>
                     </td>
                   </tr>
                 )

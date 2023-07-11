@@ -403,72 +403,62 @@ export const SquadScheduleAdjustment = (props: any) => {
                               <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
-
-                            {
-                              item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                            <>
+                              {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
-                                  {authorizations.includes("Request:Update") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          setInitialValues(item)
-                                          setAdjustmentBreakdown(item.breakdown)
-                                          setAdjustmentId(item.id)
-                                          setModalShow(true)
-                                        }}
-                                        className="cursor-pointer">
-                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
-                                      </label>
-                                      <br />
-                                    </>
-                                  ) : null}
-
-                                  {authorizations.includes("Request:Approve") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          approveAdjustment(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
-                                      </label> <br />
-                                    </>
-                                  ) : null}
-
-                                  {authorizations.includes("Request:Reject") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          declineAdjustment(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-                                      </label>
-                                      <br />
-                                    </>
-                                  ) : null}
+                                  <label
+                                    onClick={() => {
+                                      setInitialValues(item)
+                                      setAdjustmentBreakdown(item.breakdown)
+                                      setAdjustmentId(item.id)
+                                      setModalShow(true)
+                                    }}
+                                    className="cursor-pointer">
+                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                  </label>
+                                  <br />
                                 </>
-                                :
-                                null
-                            }
-                            {
-                              item.status == "APPROVED" || item.status == "PENDING" ?
+                              ) : null}
+
+                              {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
-                                  {authorizations.includes("Request:Update") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          cancelAdjustment(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
-                                      </label>
-                                      <br />
-                                    </>
-                                  ) : null}
+                                  <label
+                                    onClick={() => {
+                                      approveAdjustment(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                  </label> <br />
                                 </>
-                                : null
-                            }
+                              ) : null}
+
+                              {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
+                                <>
+                                  <label
+                                    onClick={() => {
+                                      declineAdjustment(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                  </label>
+                                  <br />
+                                </>
+                              ) : null}
+                            </>
+                            <>
+                              {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
+                                <>
+                                  <label
+                                    onClick={() => {
+                                      cancelAdjustment(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                  </label>
+                                  <br />
+                                </>
+                              ) : null}
+                            </>
                           </td>
                         </tr>
                       )

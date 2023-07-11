@@ -448,71 +448,62 @@ export const SquadLeaves = (props: any) => {
                           <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td> {item.reason} </td>
                           <td> {item.statusChangedBy} </td>
-                          <td> { Utility.removeUnderscore(item.status) } </td>
+                          <td> {Utility.removeUnderscore(item.status)} </td>
                           <td>
-                            {
-                              item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                            <>
+                              {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
-                                  {authorizations.includes("Request:Update") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          getLeave(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                  <label
+                                    onClick={() => {
+                                      getLeave(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
-                                      </label>
-                                    </>
-                                  ) : null}
-
-                                  {authorizations.includes("Request:Approve") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          approveLeave(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
-
-                                      </label>
-                                    </>
-                                  ) : null}
-
-                                  {authorizations.includes("Request:Reject") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          declineLeave(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-                                      </label>
-
-                                    </>
-                                  ) : null}
+                                  </label>
                                 </>
-                                :
-                                null
-                            }
-                            {
-                              item.status == "APPROVED" || item.status == "PENDING" ?
+                              ) : null}
+
+                              {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
-                                  {authorizations.includes("Request:Update") ? (
-                                    <>
-                                      <label
-                                        onClick={() => {
-                                          cancelLeave(item.id)
-                                        }}
-                                        className="text-muted cursor-pointer">
-                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
-                                      </label>
+                                  <label
+                                    onClick={() => {
+                                      approveLeave(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
 
-                                    </>
-                                  ) : null}
+                                  </label>
                                 </>
-                                : null
-                            }
+                              ) : null}
+
+                              {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
+                                <>
+                                  <label
+                                    onClick={() => {
+                                      declineLeave(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                  </label>
+
+                                </>
+                              ) : null}
+                            </>
+                            <>
+                              {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
+                                <>
+                                  <label
+                                    onClick={() => {
+                                      cancelLeave(item.id)
+                                    }}
+                                    className="text-muted cursor-pointer">
+                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                  </label>
+
+                                </>
+                              ) : null}
+                            </>
                           </td>
                         </tr>
                       )
