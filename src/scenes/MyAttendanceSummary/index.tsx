@@ -217,7 +217,7 @@ export const MyAttendanceSummary = (props: any) => {
                             <th style={{ width: 'auto' }}>Day Type</th>
                             <th style={{ width: 'auto' }}>Status</th>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <th style={{ width: 'auto' }}>Action</th>
                                     :
                                     null
@@ -243,7 +243,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                     <td> { Utility.removeUnderscore(item.dayType) } </td>
                                                     <td> {item.status} </td>
                                                     {
-                                                        data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <td> <label
                                                                 onClick={() => {
                                                                     setUpdateData(item)
@@ -380,7 +380,7 @@ export const MyAttendanceSummary = (props: any) => {
                                 Search
                             </Button>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <Button
                                         style={{ width: 130 }}
                                         onClick={() => setAddBioModal(true)}

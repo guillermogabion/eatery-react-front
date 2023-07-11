@@ -166,7 +166,7 @@ export const ApproverLogin = (props: any) => {
                         setPassword("")
                     } else {
                         const { accessToken, profile } = body.data
-                        let approverRoles = ['EXECUTIVE','ADMIN','APPROVER']
+                        let approverRoles = ['EXECUTIVE','ADMIN','APPROVER', 'HR ADMIN']
                         if (approverRoles.includes(profile.role)){
                             if (action == "decline" || action == "resend") {
                                 setTempToken(accessToken)

@@ -27,7 +27,7 @@ export const Recurring = (props: any) => {
     const [employee, setEmployee] = useState<any>([]);
     const [recurring, setRecurring] = useState<any>([]);
     const [ recurringTypes, setRecurringTypes ] = useState<any>([]);
-    const [filterData, setFilterData] = React.useState([]);
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [userId, setUserId] = React.useState("");
     const [selectedOption, setSelectedOption] = useState(null);
     const [isDeduction, setIsDeduction] = useState("");
@@ -466,6 +466,11 @@ export const Recurring = (props: any) => {
             selectElement.selectedIndex = 0;
             }
             setShowButton(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.isDeduction;
+                return filterObj;
+              });
 
       }
 
@@ -563,14 +568,14 @@ export const Recurring = (props: any) => {
                         className="text-muted cursor-pointer">
                         Update
                         </label>
-                        <br />
+                        {/* <br />
                         <label
                             onClick={() => {
                                 deleteRecurring(item.id)
                             }}
                             className="text-muted cursor-pointer">
                             Delete
-                        </label>
+                        </label> */}
                         </td>
                     
                         </tr>
@@ -801,7 +806,6 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-4 mb-3">
                                         <label>Status</label>
                                         <select
-                                            disabled
                                             name="active"
                                             className="formControl"
                                             value={values.active}

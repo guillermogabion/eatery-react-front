@@ -107,7 +107,7 @@ export const SquadOvertime = (props: any) => {
         }
       })
     }
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
+    if (data.profile.role == 'HR ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
         `${Api.allSquadOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
         "",

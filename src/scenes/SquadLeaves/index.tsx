@@ -149,7 +149,7 @@ export const SquadLeaves = (props: any) => {
       })
     }
 
-    if (data.profile.role == 'ADMIN' || data.profile.role == 'APPROVER') {
+    if (data.profile.role == 'HR ADMIN' || data.profile.role == 'APPROVER') {
       RequestAPI.getRequest(
         `${Api.getAllSquadLeaves}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
         "",
@@ -568,7 +568,7 @@ export const SquadLeaves = (props: any) => {
       <div className="w-100 px-5 py-5">
         <div className="row">
           <div className="col-md-12">
-            {data.profile.role !== 'ADMIN' ? (
+            {data.profile.role !== 'HR ADMIN' ? (
               // This code block will be rendered only if the user is an ADMIN
               <div>
                 <h4 className="bold-text">Leave Credits </h4>

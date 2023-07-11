@@ -21,7 +21,7 @@ const Recurring = (props: any) => {
     const formRef: any = useRef()
     const [ modalShow, setModalShow ] = React.useState(false);
     const [id, setId] = useState(null);
-    const [filterData, setFilterData] = React.useState([]);
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [isDeduction, setIsDeduction] = useState("");
     const [typeType, setTypetype] = useState("");
     const [showButtonIsDeduction, setShowButtonIsDeduction] = useState(false);
@@ -173,6 +173,11 @@ const Recurring = (props: any) => {
             selectElement.selectedIndex = 0;
             }
             setShowButtonIsDeduction(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.isDeduction;
+                return filterObj;
+              });
 
       }
       const resetTypetype = () => {
@@ -183,6 +188,11 @@ const Recurring = (props: any) => {
             selectElement.selectedIndex = 0;
             }
             setShowButtonTypetype(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.typeType;
+                return filterObj;
+              });
 
       }
     return (
@@ -216,7 +226,7 @@ const Recurring = (props: any) => {
                                 <option value="NonTaxable">Non-Taxable</option>
                             </select>
                             {showButtonTypetype && (
-                                <span className="clear-icon" style={{paddingTop: '15%', paddingRight: '5%'}} onClick={resetTypetype}>
+                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetTypetype}>
                                 X
                                 </span>
                             )}
@@ -238,7 +248,7 @@ const Recurring = (props: any) => {
                             <option value={false}>Add</option>
                         </select>
                         {showButtonIsDeduction && (
-                                <span className="clear-icon" style={{paddingTop: '15%', paddingRight: '5%'}} onClick={resetIsDeduction}>
+                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
                                 X
                                 </span>
                             )}

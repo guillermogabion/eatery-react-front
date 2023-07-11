@@ -68,7 +68,7 @@ export const AllRequest = (props: any) => {
                 })
             }
 
-            if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
+            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
                     `${Api.allRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
@@ -122,7 +122,7 @@ export const AllRequest = (props: any) => {
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
                         {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
@@ -194,7 +194,7 @@ export const AllRequest = (props: any) => {
                     <thead>
                         <tr>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
                                         <th>Employee Name</th>
                                     </> : null
@@ -218,7 +218,7 @@ export const AllRequest = (props: any) => {
                                             return (
                                                 <tr>
                                                     {
-                                                        data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <>
                                                                 <td> {item.lastName}, {item.firstName} </td>
                                                             </> : null
@@ -302,7 +302,7 @@ export const AllRequest = (props: any) => {
                 })
             }
 
-            if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
+            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
                     `${Api.getAllCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
@@ -354,7 +354,7 @@ export const AllRequest = (props: any) => {
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
                         {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
@@ -426,7 +426,7 @@ export const AllRequest = (props: any) => {
                     <thead>
                         <tr>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
                                         <th style={{ width: 'auto' }}>Employee Name</th>
                                     </> : null
@@ -446,7 +446,7 @@ export const AllRequest = (props: any) => {
                                 return (
                                     <tr>
                                         {
-                                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
                                                     <td> {item.lastName}, {item.firstName} </td>
                                                 </> : null
@@ -522,7 +522,7 @@ export const AllRequest = (props: any) => {
                     }
                 })
             }
-            if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
+            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
                     `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                     "",
@@ -576,7 +576,7 @@ export const AllRequest = (props: any) => {
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
                         {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
@@ -647,7 +647,7 @@ export const AllRequest = (props: any) => {
                 <Table responsive="lg">
                     <thead>
                         <tr>
-                            {data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <th style={{ width: 'auto' }}>Employee Name</th> :
                                 null
                             }
@@ -669,7 +669,7 @@ export const AllRequest = (props: any) => {
                                 return (
                                     <tr>
                                         {/* <td> {item.lastName}, {item.firstName}</td> */}
-                                        {data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                        {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                             <td>{item.lastName}, {item.firstName}</td> :
                                             null
                                         }
@@ -747,7 +747,7 @@ export const AllRequest = (props: any) => {
                     }
                 })
             }
-            if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
+            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
                     `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
                     "",
@@ -800,7 +800,7 @@ export const AllRequest = (props: any) => {
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
                         {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
@@ -872,7 +872,7 @@ export const AllRequest = (props: any) => {
                     <thead>
                         <tr>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
                                         <th style={{ width: 'auto' }}>Employee Name</th>
                                     </> : null
@@ -894,7 +894,7 @@ export const AllRequest = (props: any) => {
                                 return (
                                     <tr>
                                         {
-                                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
                                                     <td> {item.lastName}, {item.firstName} </td>
                                                 </> : null
@@ -972,7 +972,7 @@ export const AllRequest = (props: any) => {
                 })
             }
 
-            if (data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE') {
+            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
                 RequestAPI.getRequest(
                     `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                     "",
@@ -1025,7 +1025,7 @@ export const AllRequest = (props: any) => {
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
                         {
-                            data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
@@ -1097,7 +1097,7 @@ export const AllRequest = (props: any) => {
                     <thead>
                         <tr>
                             {
-                                data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <>
                                         <th style={{ width: 'auto' }}>Employee Name</th>
                                     </> : null
@@ -1120,7 +1120,7 @@ export const AllRequest = (props: any) => {
                                             return (
                                                 <tr>
                                                     {
-                                                        data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <>
                                                                 <td> {item.lastName}, {item.firstName} </td>
                                                             </> : null
