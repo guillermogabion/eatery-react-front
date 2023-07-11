@@ -72,7 +72,7 @@ export const Adjustment = (props: any) => {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getAllPayrollList}?size=10&page${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllPayrollList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
