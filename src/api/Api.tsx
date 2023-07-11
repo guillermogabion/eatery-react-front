@@ -12,8 +12,8 @@ const Api: any = {
   refreshToken: process.env.REACT_APP_API_URL + "user/auth/refresh",
   leaveTypes: process.env.REACT_APP_API_URL + "request/getTypes",
   leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
-  uploadExcelFile : process.env.REACT_APP_API_URL + "employee/uploadExcel",
-  getMyLeave : process.env.REACT_APP_API_URL + "employee/myleavecreds",
+  uploadExcelFile: process.env.REACT_APP_API_URL + "employee/uploadExcel",
+  getMyLeave: process.env.REACT_APP_API_URL + "employee/myleavecreds",
 
   leaveTypesList: process.env.REACT_APP_API_URL + "request/getTypeList",
   createLeaveType: process.env.REACT_APP_API_URL + "request/type/create",
@@ -21,12 +21,12 @@ const Api: any = {
   deleteLeaveType: process.env.REACT_APP_API_URL + "request/type/delete",
   updateCredits: process.env.REACT_APP_API_URL + "request/credits/add",
   getUserCredits: process.env.REACT_APP_API_URL + "request/type/creds",
-  
-  
+
+
   adminAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary",
   adminMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
-  
-  
+
+
   requestLeaveCreate: process.env.REACT_APP_API_URL + "request/leave/create",
   requestLeaveUpdate: process.env.REACT_APP_API_URL + "request/leave/update",
   allMyRequestLeave: process.env.REACT_APP_API_URL + "request/leave/myleaves",
@@ -37,12 +37,12 @@ const Api: any = {
   resendLeave: process.env.REACT_APP_API_URL + "request/leave/resend",
   cancelLeave: process.env.REACT_APP_API_URL + "request/leave/cancel",
   cancelCOA: process.env.REACT_APP_API_URL + "request/coa/cancel",
-  cancelOvertime: process.env.REACT_APP_API_URL + "request/ot/cancel",  
-  cancelUndertime: process.env.REACT_APP_API_URL + "request/ut/cancel", 
-  
-  
-  employeeList: process.env.REACT_APP_API_URL + "employee/list/all", 
-  squadEmployeeList: process.env.REACT_APP_API_URL + "employee/list/squadmemberlist", 
+  cancelOvertime: process.env.REACT_APP_API_URL + "request/ot/cancel",
+  cancelUndertime: process.env.REACT_APP_API_URL + "request/ut/cancel",
+
+
+  employeeList: process.env.REACT_APP_API_URL + "employee/list/all",
+  squadEmployeeList: process.env.REACT_APP_API_URL + "employee/list/squadmemberlist",
 
   getAllSquad: process.env.REACT_APP_API_URL + "squad/all",
   employeeInformation: process.env.REACT_APP_API_URL + "employee/info",
@@ -74,7 +74,7 @@ const Api: any = {
   saveHoliday: process.env.REACT_APP_API_URL + "holiday/save",
   allHoliday: process.env.REACT_APP_API_URL + "holiday/all",
   deleteHoliday: process.env.REACT_APP_API_URL + "holiday/delete",
-  
+
   // Schedule Adjustment
   myScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/myrequests",
   allScheduleAdjustment: process.env.REACT_APP_API_URL + "request/schedule-adjustment/all",
@@ -92,11 +92,11 @@ const Api: any = {
   updateBioLogs: process.env.REACT_APP_API_URL + "timekeeping/updateLog",
   deleteBioLogs: process.env.REACT_APP_API_URL + "timekeeping/deleteLog",
 
-  mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",  
+  mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",
   myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
   getMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
-  
-  
+
+
   // /request/ot/classifications
 
   USERS: process.env.REACT_APP_API_URL + "users",
@@ -104,7 +104,7 @@ const Api: any = {
   USERDESIGNATIONS: process.env.REACT_APP_API_URL + "userDesignations",
   UNITS: process.env.REACT_APP_API_URL + "units",
   ROLES: process.env.REACT_APP_API_URL + "roles",
-  
+
   ACCESS: process.env.REACT_APP_API_URL + "access",
   USERS_DELETE: process.env.REACT_APP_API_URL + "users/delete",
   MASTERLIST: process.env.REACT_APP_API_URL + "lists/client",
@@ -115,7 +115,7 @@ const Api: any = {
   NOTIFICATIONS: process.env.REACT_APP_API_URL + "users/notifications",
   NOTIFICATIONS_DELETE: process.env.REACT_APP_API_URL + "users/notifications/delete",
   NOTIFICATIONS_DELETE_ALL: process.env.REACT_APP_API_URL + "users/notifications/deleteAll",
-  NOTIFICATIONS_MARK_READ: process.env.REACT_APP_API_URL + "users/notifications", 
+  NOTIFICATIONS_MARK_READ: process.env.REACT_APP_API_URL + "users/notifications",
   GET_USER_MASTER_LIST: process.env.REACT_APP_API_URL + "lists/user",
   USER: process.env.REACT_APP_API_URL + "user",
   GET_PASSWORD_EXPIRY_NOTIFICATION: process.env.REACT_APP_API_URL + "users/notifications/passwordExpiry",
@@ -131,48 +131,48 @@ const Api: any = {
   CreateCOA: process.env.REACT_APP_API_URL + "request/coa/create",
   UpdateCOA: process.env.REACT_APP_API_URL + "request/coa/update",
   getAllCOA: process.env.REACT_APP_API_URL + "request/coa/all",
-  allMyCOA :  process.env.REACT_APP_API_URL + "request/coa/mycoa",
-  getCoaInfo : process.env.REACT_APP_API_URL + "request/coa/info",
-  approveCoa :  process.env.REACT_APP_API_URL + "request/coa/approve",
-  declineCoa :  process.env.REACT_APP_API_URL + "request/coa/decline",
-  resendCoa :  process.env.REACT_APP_API_URL + "request/coa/resend",
-  deleteCoa :  process.env.REACT_APP_API_URL + "request/coa/delete",
+  allMyCOA: process.env.REACT_APP_API_URL + "request/coa/mycoa",
+  getCoaInfo: process.env.REACT_APP_API_URL + "request/coa/info",
+  approveCoa: process.env.REACT_APP_API_URL + "request/coa/approve",
+  declineCoa: process.env.REACT_APP_API_URL + "request/coa/decline",
+  resendCoa: process.env.REACT_APP_API_URL + "request/coa/resend",
+  deleteCoa: process.env.REACT_APP_API_URL + "request/coa/delete",
 
 
   // employee 
 
-  employeeChangePassword : process.env.REACT_APP_API_URL + "employee/changepassword",
+  employeeChangePassword: process.env.REACT_APP_API_URL + "employee/changepassword",
 
 
 
-  downloadExcelTemplate : process.env.REACT_APP_API_URL + "employee/downloadTemplate",
-  downloadExcelTimekeepingTemplate : process.env.REACT_APP_API_URL + "timekeeping/perday/downloadTemplate",
+  downloadExcelTemplate: process.env.REACT_APP_API_URL + "employee/downloadTemplate",
+  downloadExcelTimekeepingTemplate: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadTemplate",
 
   // squad 
 
-  getSquadMember : process.env.REACT_APP_API_URL + "employee/squadmembers",
-  getAllSquadLeaves: process.env.REACT_APP_API_URL + "request/leave/squadmembers",  
+  getSquadMember: process.env.REACT_APP_API_URL + "employee/squadmembers",
+  getAllSquadLeaves: process.env.REACT_APP_API_URL + "request/leave/squadmembers",
   getAllSquadCoa: process.env.REACT_APP_API_URL + "request/coa/squadmembers",
   allSquadOvertime: process.env.REACT_APP_API_URL + "request/ot/squadmembers",
   allSquadUndertime: process.env.REACT_APP_API_URL + "request/ut/squadmembers",
   allSquadSchedule: process.env.REACT_APP_API_URL + "request/schedule-adjustment/squadmembers",
 
   // recurring 
-  getAllRecurringList : process.env.REACT_APP_API_URL + "payroll/recurring/all",
-  getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/list",
+  getAllRecurringList: process.env.REACT_APP_API_URL + "payroll/recurring/all",
+  getAllRecurringType: process.env.REACT_APP_API_URL + "payroll/recurring/type/list",
   // getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
-  createRecurringTransaction : process.env.REACT_APP_API_URL + "payroll/recurring/create",
-  updateRecurringTransaction : process.env.REACT_APP_API_URL + "payroll/recurring/update",
-  recurringInfo : process.env.REACT_APP_API_URL + "payroll/recurring/info",
-  deleteRecurring : process.env.REACT_APP_API_URL + "payroll/recurring/delete",
+  createRecurringTransaction: process.env.REACT_APP_API_URL + "payroll/recurring/create",
+  updateRecurringTransaction: process.env.REACT_APP_API_URL + "payroll/recurring/update",
+  recurringInfo: process.env.REACT_APP_API_URL + "payroll/recurring/info",
+  deleteRecurring: process.env.REACT_APP_API_URL + "payroll/recurring/delete",
 
   // payroll 
 
-  getAllPayrollList : process.env.REACT_APP_API_URL + "payroll/adjustment/all",
-  getAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/list",
-  payrollAdjustmentCreate : process.env.REACT_APP_API_URL + "payroll/adjustment/create",
-  getPayrollAdjustmentInfo : process.env.REACT_APP_API_URL + "payroll/adjustment/info",
-  editPayrollAdjustment : process.env.REACT_APP_API_URL + "payroll/adjustment/update",
+  getAllPayrollList: process.env.REACT_APP_API_URL + "payroll/adjustment/all",
+  getAdjustmentType: process.env.REACT_APP_API_URL + "payroll/adjustment/type/list",
+  payrollAdjustmentCreate: process.env.REACT_APP_API_URL + "payroll/adjustment/create",
+  getPayrollAdjustmentInfo: process.env.REACT_APP_API_URL + "payroll/adjustment/info",
+  editPayrollAdjustment: process.env.REACT_APP_API_URL + "payroll/adjustment/update",
   payrollAll: process.env.REACT_APP_API_URL + "payroll/all",
   payrollTimekeeping: process.env.REACT_APP_API_URL + "timekeeping/perday/all/totalhours",
   generatePayroll: process.env.REACT_APP_API_URL + "payroll/generate",
@@ -181,63 +181,68 @@ const Api: any = {
   auditPayroll: process.env.REACT_APP_API_URL + "payroll/audit",
   downloadPayrollRegister: process.env.REACT_APP_API_URL + "payroll/payollregister",
   downloadBankUpload: process.env.REACT_APP_API_URL + "payroll/bankupload",
-  
+
 
   // payroll setting 
-  getAllRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
-  createRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/create",
-  updateRecurringTypeSetting : process.env.REACT_APP_API_URL + "payroll/recurring/type/update",
-  getRecurringTypeInfo : process.env.REACT_APP_API_URL + "payroll/recurring/type/info",
-  deleteRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/delete",
-  
-  getAllAdjustmentSetting : process.env.REACT_APP_API_URL + "payroll/adjustment/type/all",
-  getAdjustmentTypeInfo : process.env.REACT_APP_API_URL + "payroll/adjustment/type/info",
-  addAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/create",
-  editAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/update",
-  deleteAdjustmentType : process.env.REACT_APP_API_URL + "payroll/adjustment/type/delete",
-  
+  getAllRecurringTypeSetting: process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
+  createRecurringTypeSetting: process.env.REACT_APP_API_URL + "payroll/recurring/type/create",
+  updateRecurringTypeSetting: process.env.REACT_APP_API_URL + "payroll/recurring/type/update",
+  getRecurringTypeInfo: process.env.REACT_APP_API_URL + "payroll/recurring/type/info",
+  deleteRecurringType: process.env.REACT_APP_API_URL + "payroll/recurring/type/delete",
+
+  getAllAdjustmentSetting: process.env.REACT_APP_API_URL + "payroll/adjustment/type/all",
+  getAdjustmentTypeInfo: process.env.REACT_APP_API_URL + "payroll/adjustment/type/info",
+  addAdjustmentType: process.env.REACT_APP_API_URL + "payroll/adjustment/type/create",
+  editAdjustmentType: process.env.REACT_APP_API_URL + "payroll/adjustment/type/update",
+  deleteAdjustmentType: process.env.REACT_APP_API_URL + "payroll/adjustment/type/delete",
+
 
   // hdmf
 
-  getHdmf :  process.env.REACT_APP_API_URL + "payroll/hdmf/info",
-  updateHDMF : process.env.REACT_APP_API_URL + "payroll/hdmf/update",
-  getPH :  process.env.REACT_APP_API_URL + "payroll/ph/info",
-  updatePH :  process.env.REACT_APP_API_URL + "payroll/ph/update",
+  getHdmf: process.env.REACT_APP_API_URL + "payroll/hdmf/info",
+  updateHDMF: process.env.REACT_APP_API_URL + "payroll/hdmf/update",
+  getPH: process.env.REACT_APP_API_URL + "payroll/ph/info",
+  updatePH: process.env.REACT_APP_API_URL + "payroll/ph/update",
 
 
   // SSS 
 
-  getSSS :  process.env.REACT_APP_API_URL + "payroll/sss/info",
-  downloadTemplateSSS :  process.env.REACT_APP_API_URL + "payroll/sss/downloadTemplate",
-  uploadSSSTable :  process.env.REACT_APP_API_URL + "payroll/sss/uploadExcel",
+  getSSS: process.env.REACT_APP_API_URL + "payroll/sss/info",
+  downloadTemplateSSS: process.env.REACT_APP_API_URL + "payroll/sss/downloadTemplate",
+  uploadSSSTable: process.env.REACT_APP_API_URL + "payroll/sss/uploadExcel",
 
   // tax 
 
-  getMonthTax : process.env.REACT_APP_API_URL + "payroll/tax/view/monthly",
-  getYearTax : process.env.REACT_APP_API_URL + "payroll/tax/view/yearly",
+  getMonthTax: process.env.REACT_APP_API_URL + "payroll/tax/view/monthly",
+  getYearTax: process.env.REACT_APP_API_URL + "payroll/tax/view/yearly",
 
-  uploadTaxMonthly :  process.env.REACT_APP_API_URL + "payroll/tax/uploadExcel/monthly",
-  uploadTaxYearly :  process.env.REACT_APP_API_URL + "payroll/tax/uploadExcel/annual",
-  
-  downloadTaxMonthly :  process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/monthly",
-  downloadTaxYearly :  process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/annual",
+  uploadTaxMonthly: process.env.REACT_APP_API_URL + "payroll/tax/uploadExcel/monthly",
+  uploadTaxYearly: process.env.REACT_APP_API_URL + "payroll/tax/uploadExcel/annual",
 
-//  overtime setting 
-  getOvertimeSetting : process.env.REACT_APP_API_URL + "payroll/ot/info",
-  updateOvertimeSetting : process.env.REACT_APP_API_URL + "payroll/ot/update",
+  downloadTaxMonthly: process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/monthly",
+  downloadTaxYearly: process.env.REACT_APP_API_URL + "payroll/tax/downloadTemplate/annual",
+
+  //  overtime setting 
+  getOvertimeSetting: process.env.REACT_APP_API_URL + "payroll/ot/info",
+  updateOvertimeSetting: process.env.REACT_APP_API_URL + "payroll/ot/update",
 
 
   // timekeeping ++ 
 
-  recalculate : process.env.REACT_APP_API_URL + "timekeeping/perday/recalculate",
+  recalculate: process.env.REACT_APP_API_URL + "timekeeping/perday/recalculate",
 
 
   // email sending 
-  payrollPayList :  process.env.REACT_APP_API_URL + "payroll/list",
-  payrollPayListAll :  process.env.REACT_APP_API_URL + "payroll/all",
-  generatedList : process.env.REACT_APP_API_URL + "payroll/generated/list",
-  sendIndividual : process.env.REACT_APP_API_URL + "payroll/sendpayslip",
-  sendAll : process.env.REACT_APP_API_URL + "payroll/sendpayslip/all",
+  payrollPayList: process.env.REACT_APP_API_URL + "payroll/list",
+  payrollPayListAll: process.env.REACT_APP_API_URL + "payroll/all",
+  generatedList: process.env.REACT_APP_API_URL + "payroll/generated/list",
+  sendIndividual: process.env.REACT_APP_API_URL + "payroll/sendpayslip",
+  sendAll: process.env.REACT_APP_API_URL + "payroll/sendpayslip/all",
+
+  // Last Pay
+  lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",
+  generateLastPay: process.env.REACT_APP_API_URL + "lastpay/generate",
+
 }
 
 export default Api

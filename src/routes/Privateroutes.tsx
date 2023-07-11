@@ -28,6 +28,7 @@ import {
   PayrollSetting,
   AllRequest,
   Payroll,
+  LastPay,
   Payslip,
   ApproverLogin,
   Page404
@@ -91,6 +92,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/request/schedule-adjustment/squadmembers", component: SquadScheduleAdjustment },
     { path: "/request/type", component: LeaveTypes },
     { path: "/payroll", component: Payroll },
+    { path: "/payroll/last-pay", component: LastPay },
     { path: "/payroll/adjustment", component: PayrollAdjustment },
     { path: "/payroll/recurring", component: Recurring },
     { path: "/payroll/settings", component: PayrollSetting },
@@ -109,7 +111,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     const pathRegex = new RegExp(`^${path.replace(/:[^\s/]+/g, '[^/]+')}$`);
     return pathRegex.test(currentPath);
   });
-  
+
   return isLogin ? (
     <>
       <Switch>

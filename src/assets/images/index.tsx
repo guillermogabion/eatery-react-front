@@ -15,6 +15,7 @@ import actimai_logo_white from "./dist/logo_white.png"
 import actimai_logo_white1 from "./dist/logo1.png"
 import actimai_sidebar_bg from "./dist/SidebarBG.png"
 import caret_close from "./dist/menu/caret close.png"
+import regenerate from "./dist/action/regenerate.png"
 
 export {
   eye,
@@ -32,5 +33,6 @@ export {
   actimai_logo_white,
   actimai_logo_white1,
   actimai_sidebar_bg,
-  caret_close
+  caret_close,
+  regenerate
 }
