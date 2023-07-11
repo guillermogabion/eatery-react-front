@@ -806,7 +806,6 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-4 mb-3">
                                         <label>Status</label>
                                         <select
-                                            disabled
                                             name="active"
                                             className="formControl"
                                             value={values.active}
