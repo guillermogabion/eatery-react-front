@@ -20,7 +20,7 @@ export const Page404 = () => {
                 <div className="">
                     <div id="notfound" className="text-center ">
                         <h1 className="text-[50px]">😮</h1>
-                        <h2 className="text-[20px] mt-[20px] font-bold">Oops! Page Not Be Found</h2>
+                        <h2 className="text-[20px] mt-[20px] font-bold">Oops! Page Not Found</h2>
                         <p>Sorry but the page you are looking for does not exist.</p>
                         <NavLink to={"/timekeeping"}
                             className="text-[#007BFF]"

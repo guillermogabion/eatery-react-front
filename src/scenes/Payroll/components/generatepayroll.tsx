@@ -18,6 +18,7 @@ export default function GeneratePayroll(props: any) {
     const [isSubmit, setIsSubmit] = useState<any>(false)
     const [isDownloadingPayrollRegister, setIsDownloadingPayrollRegister] = useState<any>(false)
     const [isDownloadBankTrans, setIsDownloadBankTrans] = useState<any>(false)
+    const [isSelectAll, setIsSelectAll] = useState<any>(false)
     const payroll = { ...payrollData }
 
     useEffect(() => {
@@ -94,7 +95,9 @@ export default function GeneratePayroll(props: any) {
                             "success"
                         ).then((result) => {
                             if (result.isConfirmed) {
-                                location.reload()
+                                // item.isCheck
+                                selectAllEmployees(false)
+                                setIsSelectAll(false)
                             }
                         });
                     }
@@ -145,7 +148,9 @@ export default function GeneratePayroll(props: any) {
                                     type="checkbox"
                                     id="Select All"
                                     label="Select All"
+                                    checked={isSelectAll}
                                     onChange={(e) => {
+                                        setIsSelectAll(e.target.checked)
                                         selectAllEmployees(e.target.checked)
                                     }}
                                 />
