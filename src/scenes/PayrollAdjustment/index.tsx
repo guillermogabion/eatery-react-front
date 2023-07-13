@@ -15,7 +15,7 @@ import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import * as Yup from "yup"
-
+import Upload from './upload'
 const ErrorSwal = withReactContent(Swal)
 
 export const PayrollAdjustment = (props: any) => {
@@ -24,13 +24,26 @@ export const PayrollAdjustment = (props: any) => {
     const [ adjustmentList, setAdjustmentList] = React.useState([]);
     const formRef: any = useRef()
     const [modalShow, setModalShow] = React.useState(false);
+    const [uploadModalShow, setUploadModalShow] = React.useState(false);
+    const [downloadModalShow, setDownloadModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
     const [adjustment, setAdjustment] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [ adjustmentTypes, setAdjustmentTypes ] = useState<any>([]);
-    const [filterData, setFilterData] = React.useState([]);
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [userId, setUserId] = React.useState("");
     const [selectedMonth, setSelectedMonth] = useState('');
+    const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
+    const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
+    const [isSubmit, setIsSubmit] = React.useState(false);
+    const [showButtonAdjustment, setShowButtonAdjustment] = useState(false);
+    const [showButton, setShowButton] = useState(false);
+    const [showButtonMonth, setShowButtonMonth] = useState(false);
+    const [showButtonYear, setShowButtonYear] = useState(false);
+    const [isDeduction, setIsDeduction] = useState("");
+    const [adjustmentTypeName, setAdjustmentTypeName] = useState<any>([]);
+    const [month, setMonth] = useState<any>([]);
+    const [year, setYear] = useState<any>([]);
 
     const [values, setValues] = useState({
         userId: '',
@@ -234,6 +247,29 @@ export const PayrollAdjustment = (props: any) => {
                             })
                         });
                         setEmployee(tempArray)
+                    }
+              }
+            }
+          )
+
+          RequestAPI.getRequest(
+            `${Api.getAdjustmentType}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.forEach((d: any, i: any) => {
+                            tempArray.push({
+                                name: d.name,
+                                label: d.name
+                            })
+                        });
+                        setAdjustmentTypeName(tempArray)
                     }
               }
             }
@@ -512,7 +548,80 @@ export const PayrollAdjustment = (props: any) => {
             }
     }
     
-  // Perform form validation
+    const handleCloseModal = () => {
+        setUploadModalShow(false)
+    }
+    const resetAdjustment = () => {
+        
+        // setAdjustmentTypeName("");
+        const selectElement = document.getElementById("typeName");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonAdjustment(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.adjustmentTypeName;
+                return filterObj;
+              });
+
+      }
+      const reset = () => {
+        
+        setIsDeduction("");
+        const selectElement = document.getElementById("type");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButton(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.isDeduction;
+                return filterObj;
+              });
+
+      }
+      const resetMonth = () => {
+        
+        setMonth("");
+        const selectElement = document.getElementById("month");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonMonth(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.periodMonth;
+                return filterObj;
+              });
+
+      }
+      const resetYear = () => {
+        
+        setYear("");
+        const selectElement = document.getElementById("year");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonYear(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.periodYear;
+                return filterObj;
+              });
+
+      }
+      const downloadTemplate = () => {
+        RequestAPI.getFileAsync(
+          `${Api.templateRecurring}`,
+          "",
+          "adjustmentexceltemplate.xlsx",
+          async (res: any) => {
+            if (res) {
+            }
+          }
+        )
+      };
  
     
     return (
@@ -530,12 +639,130 @@ export const PayrollAdjustment = (props: any) => {
                             withEmployeeID={true}
                             />
                         </div>
-                        <Button
-                        style={{ width: 210 }}
-                        onClick={() => getAllAdjustmentList(0)}
-                        className="btn btn-primary mx-2">
-                        Search
-                        </Button>
+                        <div className="input-container col-md-3 clearable-select">
+                            <select
+                                className="form-select"
+                                name="adjustmentTypeName"
+                                id="typeName"
+                                onChange={(e) => {
+                                    makeFilterData(e)
+                                    setShowButtonAdjustment(e.target.value !== 'default')
+                                }}
+                                >
+                                <option value="" disabled selected>
+                                Adjustment Name
+                                </option>
+                                {adjustmentTypeName &&
+                                adjustmentTypeName.length &&
+                                adjustmentTypeName.map((item: any, index: string) => (
+                                    <option key={`${index}_${item.name}`} value={item.name}>
+                                    {item.name}
+                                    </option>
+                                ))}
+                                </select>
+                                {showButtonAdjustment && (
+                                    <span className="clear-icon" onClick={resetAdjustment}>
+                                    X
+                                    </span>
+                                )}
+                        </div>
+                        
+                        <div className="input-container col-md-2">
+                            <input type="text" 
+                            className="form-control"
+                            name="amount"
+                            placeholder="Amount"
+                            onChange={(e)=> makeFilterData(e)}
+                            />
+                        </div>
+                        <div className="input-container clearable-select col-md-2">
+                            <select
+                                className="form-select"
+                                name="isDeduction"
+                                id="type"
+                                onChange={(e) => {
+                                    makeFilterData(e);
+                                    setShowButton(e.target.value !== 'default')
+                                }}
+                            >
+                                <option value="default" disabled selected>
+                                Type
+                                </option>
+                                <option value={false}>Add
+                                </option>
+                                <option value={true}>Deduct
+                                </option>
+                            
+                            </select>
+                            {showButton && (
+                                <span className="clear-icon" onClick={reset}>
+                                X
+                                </span>
+                            )}
+                      
+                        
+
+
+                        </div>
+                        <div className="input-container clearable-select col-md-2">
+                            <select
+                                placeholder="Month"
+                                className="form-control"
+                                name="periodMonth"
+                                id="month"
+                                onChange={(e) => {
+                                    makeFilterData(e)
+                                    setShowButtonMonth(e.target.value !== 'default')
+                                }}
+                            >
+                                <option value="" disabled selected>
+                                    Select Month
+                                </option>
+                                {Object.entries(monthMap).map(([month, value]) => (
+                                    <option key={value} value={value}>
+                                        {month}
+                                    </option>
+                                ))}
+                            </select>
+                            {showButtonMonth && (
+                                    <span className="clear-icon" onClick={resetMonth}>
+                                    X
+                                    </span>
+                                )}
+                        </div>
+                        <div className="input-container clearable-select col-md-2">
+                        <select
+                            className="form-control"
+                            name="periodYear"
+                            id="year"
+                            onChange={(e) => {
+                                makeFilterData(e)
+                                setShowButtonYear(e.target.value !== 'default')
+                            }}
+                        >
+                            <option value="" disabled selected>
+                                Year
+                            </option>
+                            {generateYearOptions().map((year) => (
+                                <option key={year} value={year}>
+                                    {year}
+                                </option>
+                            ))}
+                        </select>
+                        {showButtonYear && (
+                            <span className="clear-icon" onClick={resetYear}>
+                            X
+                            </span>
+                        )}
+                        </div>
+                        <div className="input-container col-md-2">
+                            <Button
+                            style={{ width: 210 }}
+                            onClick={() => getAllAdjustmentList(0)}
+                            className="btn btn-primary mx-2">
+                            Search
+                            </Button>
+                        </div>
                     </div>
                 </div>
                 <Table responsive="lg">
@@ -632,15 +859,21 @@ export const PayrollAdjustment = (props: any) => {
         <Button
             className="mx-2"
             onClick={() => {
-            // setModalShow(true)
+                setUploadModalShow(true)
             }}>Import Adjustment</Button>
         <Button
             className="mx-2"
             onClick={() => {
-                // downloadTemplate
+               setDownloadModalShow(true)
                 }
             }
         >Export Adjustment</Button>
+         <Button
+            className="mx-2"
+            onClick={
+                downloadTemplate
+            }
+        >Download Recurring Template</Button>
         </div>
     </div>
 
@@ -1139,6 +1372,79 @@ export const PayrollAdjustment = (props: any) => {
             
 
         </Modal>
+        <Modal
+        show={uploadModalShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setUploadModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Upload Excel File
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div>
+            <Upload onCloseModal={handleCloseModal} />
+          </div>
+
+        </Modal.Body>
+
+      </Modal>
+      <Modal
+        show={downloadModalShow}
+        size={'md'}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setDownloadModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Export
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date From</label>
+            <input type="date"
+              name="fromDate"
+              id="fromDate"
+              className="form-control"
+              value={fromDate}
+              onChange={(e) => {
+                setFromDate(e.target.value)
+              }}
+            />
+          </div>
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date To</label>
+            <input type="date"
+              name="toDate"
+              id="toDate"
+              className="form-control"
+              value={toDate}
+              min={fromDate}
+              onChange={(e) => {
+                setToDate(e.target.value)
+              }}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button
+            onClick={() => downloadExcel(fromDate, toDate)}
+            disabled={isSubmit}>
+            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
         </>} />
 
