@@ -7,8 +7,11 @@ import { Api, RequestAPI } from "../../api"
 import Table from 'react-bootstrap/Table'
 import ReactPaginate from 'react-paginate'
 import EmployeeDropdown from "../../components/EmployeeDropdown"
+import Upload from "./upload"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
+import moment from "moment"
+
 
 
 
@@ -19,21 +22,31 @@ import ContainerWrapper from "../../components/ContainerWrapper"
 const ErrorSwal = withReactContent(Swal)
 
 export const Recurring = (props: any) => {
+    
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const { data } = useSelector((state: any) => state.rootReducer.userData)
     const [ recurringList, setRecurringList] = React.useState([]);
     const formRef: any = useRef()
     const [modalShow, setModalShow] = React.useState(false);
+    const [uploadModalShow, setUploadModalShow] = React.useState(false);
+    const [downloadModalShow, setDownloadModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
+    const [recurringName, setRecurringName] = useState<any>([]);
     const [recurring, setRecurring] = useState<any>([]);
     const [ recurringTypes, setRecurringTypes ] = useState<any>([]);
     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [userId, setUserId] = React.useState("");
     const [selectedOption, setSelectedOption] = useState(null);
     const [isDeduction, setIsDeduction] = useState("");
+    const [status, setStatus] = useState("");
     const [selectedValue, setSelectedValue] = useState('');
     const selectRef = useRef(null);
     const [showButton, setShowButton] = useState(false);
+    const [showButtonStatus, setShowButtonStatus] = useState(false);
+    const [showButtonRecurring, setShowButtonRecurring] = useState(false);
+    const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
+    const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
+    const [isSubmit, setIsSubmit] = React.useState(false);
 
 
 
@@ -65,8 +78,9 @@ export const Recurring = (props: any) => {
         'Employee ID',
         'Employee Name',
         'Amount',
+        'End Date',
         'Recurring Name',
-       
+        'Status',
         'Action',
     ];
 
@@ -189,6 +203,28 @@ export const Recurring = (props: any) => {
                             })
                         });
                         setEmployee(tempArray)
+                    }
+              }
+            }
+          )
+          RequestAPI.getRequest(
+            `${Api.getAllRecurringType}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.forEach((d: any, i: any) => {
+                            tempArray.push({
+                                name: d.name,
+                                label: d.name
+                            })
+                        });
+                        setRecurringName(tempArray)
                     }
               }
             }
@@ -357,7 +393,9 @@ export const Recurring = (props: any) => {
                     hasError = true
                 }
                 if(element.active === undefined) {
-                    element.active = true
+                    element.active == true
+                }else{
+                    element.active == false
                 }
                
            });
@@ -473,6 +511,64 @@ export const Recurring = (props: any) => {
               });
 
       }
+      const resetStatus = () => {
+        
+        setStatus("");
+        const selectElement = document.getElementById("status1");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonStatus(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.status;
+                return filterObj;
+              });
+
+      }
+      const resetRecurring = () => {
+        
+        setRecurring("");
+        const selectElement = document.getElementById("typeName");
+            if (selectElement) {
+            selectElement.selectedIndex = 0;
+            }
+            setShowButtonRecurring(false);
+            setFilterData(prevFilterData => {
+                const filterObj = { ...prevFilterData };
+                delete filterObj.recurringTypeName;
+                return filterObj;
+              });
+
+      }
+      const handleCloseModal = () => {
+        setUploadModalShow(false)
+      }
+      const downloadExcel = (fromDate: any, toDate: any) => {
+        setIsSubmit(true)
+        RequestAPI.getFileAsync(
+          `${Api.exportRecurring}?fromDate=${fromDate}&toDate=${toDate}`,
+          "",
+          "recurringtransaction.xlsx",
+          async (res: any) => {
+            if (res) {
+              setIsSubmit(false)
+            }
+    
+          }
+        )
+      }
+      const downloadTemplate = () => {
+        RequestAPI.getFileAsync(
+          `${Api.templateRecurring}`,
+          "",
+          "recurringexceltemplate.xlsx",
+          async (res: any) => {
+            if (res) {
+            }
+          }
+        )
+      };
 
 
 
@@ -480,9 +576,9 @@ export const Recurring = (props: any) => {
         <ContainerWrapper contents={<>
             <div className="w-100 px-5 py-5">
               <div>
-                <div className="w-100 pt-2">
+                <div className="w-100">
                     <div className="fieldtext d-flex">
-                        <div className="input-container col-md-2">
+                        <div className="input-container col-md-1">
                         <EmployeeDropdown
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
@@ -491,20 +587,27 @@ export const Recurring = (props: any) => {
                             withEmployeeID={true}
                             />
                         </div>
-                        <div className="input-container col-md-3 clearable-select">
+                        <div className="input-container col-md-1">
+                            <input type="text" 
+                            className="form-control"
+                            name="adjustmentAmount"
+                            placeholder="Amount"
+                            onChange={(e)=> makeFilterData(e)}
+                            />
+                        </div>
+                        <div className="input-container clearable-select col-md-1">
                             <select
-                                placeholder="Recurring Name"
                                 className="form-select"
                                 name="isDeduction"
                                 id="type"
                                 onChange={(e) => {
                                     makeFilterData(e);
                                     setShowButton(e.target.value !== 'default')
-                                  }}
+                                }}
                                 ref={selectRef}
                             >
                                 <option value="default" disabled selected>
-                                Recurring Type
+                                Type
                                 </option>
                                 <option value={false}>Add
                                 </option>
@@ -522,8 +625,73 @@ export const Recurring = (props: any) => {
 
 
                         </div>
+                        <div className="input-container col-md-1 clearable-select">
+                        <select
+                            className="form-select"
+                            name="recurringTypeName"
+                            id="typeName"
+                            onChange={(e) => {
+                                makeFilterData(e)
+                                setShowButtonRecurring(e.target.value !== 'default')
+                            }}
+                            >
+                            <option value="" disabled selected>
+                            Select Recurring Name
+                            </option>
+                            {recurringName &&
+                            recurringName.length &&
+                            recurringName.map((item: any, index: string) => (
+                                <option key={`${index}_${item.name}`} value={item.name}>
+                                {item.name}
+                                </option>
+                            ))}
+                            </select>
+                            {showButtonRecurring && (
+                                <span className="clear-icon" onClick={resetRecurring}>
+                                X
+                                </span>
+                            )}
+                        </div>
+                        <div className="input-container col-md-1">
+                            <input type="date" 
+                            className="form-control"
+                            name="endDate"
+                            placeholder="End Date"
+                            onChange={(e)=> makeFilterData(e)}
+                            />
+                        </div>
+                        <div className="input-container clearable-select col-md-1">
+                            <select
+                                className="form-select"
+                                name="status"
+                                id="status1"
+                                onChange={(e) => {
+                                    makeFilterData(e);
+                                    setShowButtonStatus(e.target.value !== 'default')
+                                }}
+                                ref={selectRef}
+                            >
+                                <option value="default" disabled selected>
+                                Status
+                                </option>
+                                <option value="active">Active
+                                </option>
+                                <option value="inactive">Inactive
+                                </option>
+                            
+                            </select>
+                            {showButtonStatus && (
+                                <span className="clear-icon" onClick={resetStatus}>
+                                X
+                                </span>
+                            )}
+                      
                         
-                        <div className="input-container col-md-3">
+
+
+                        </div>
+                       
+                        <div className="input-container col-md-2">
                             <Button
                             style={{ width: 210 }}
                             onClick={() => getAllRecurringList(0)}
@@ -559,7 +727,10 @@ export const Recurring = (props: any) => {
                         <td> {item.employeeId} </td>
                         <td> {item.employeeName} </td>
                         <td> {item.adjustmentAmount} </td>
+                        <td> {item.endDate} </td>
                         <td> {item.recurringName} </td>
+                        <td> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
+
                         <td>
                         <label
                         onClick={() => {
@@ -626,15 +797,21 @@ export const Recurring = (props: any) => {
                 <Button
                     className="mx-2"
                     onClick={() => {
-                    // setModalShow(true)
+                        setUploadModalShow(true)
                     }}>Import Recurring</Button>
                 <Button
                     className="mx-2"
                     onClick={() => {
-                        // downloadTemplate
+                        setDownloadModalShow(true)
                         }
                     }
                 >Export Recurring</Button>
+                <Button
+                    className="mx-2"
+                    onClick={
+                       downloadTemplate
+                    }
+                >Download Recurring Template</Button>
             </div>
         </div>
         <Modal
@@ -1078,6 +1255,79 @@ export const Recurring = (props: any) => {
                 </Formik>
             </Modal.Body>
         </Modal>
+        <Modal
+        show={uploadModalShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setUploadModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Upload Excel File
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex align-items-center justify-content-center">
+          <div>
+            <Upload onCloseModal={handleCloseModal} />
+          </div>
+
+        </Modal.Body>
+
+      </Modal>
+      <Modal
+        show={downloadModalShow}
+        size={'md'}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setDownloadModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Export
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date From</label>
+            <input type="date"
+              name="fromDate"
+              id="fromDate"
+              className="form-control"
+              value={fromDate}
+              onChange={(e) => {
+                setFromDate(e.target.value)
+              }}
+            />
+          </div>
+          <div className="form-group col-md-6 mb-3" >
+            <label>Date To</label>
+            <input type="date"
+              name="toDate"
+              id="toDate"
+              className="form-control"
+              value={toDate}
+              min={fromDate}
+              onChange={(e) => {
+                setToDate(e.target.value)
+              }}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer className="d-flex justify-content-center">
+          <Button
+            onClick={() => downloadExcel(fromDate, toDate)}
+            disabled={isSubmit}>
+            {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>} />
     )
 }

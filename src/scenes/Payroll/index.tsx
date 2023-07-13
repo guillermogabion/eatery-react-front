@@ -46,7 +46,9 @@ export const Payroll = (props: any) => {
         'Month',
         'FROM',
         'TO',
+        // 'Transaction Date',
         'Description',
+        'Status',
         'Action',
     ];
     const [initialValues, setInitialValues] = useState<any>({
@@ -135,7 +137,9 @@ export const Payroll = (props: any) => {
                                                             <td> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
                                                             <td>{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
                                                             <td>{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                            {/* <td>{item.transactionDate.split("T")[0]} </td> */}
                                                             <td>{item.description} </td>
+                                                            <td>{item.isGenerated == true ? "Processed" : "Locked"} </td>
                                                             <td>
                                                                 <label
                                                                     onClick={() => {

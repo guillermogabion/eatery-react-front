@@ -160,6 +160,16 @@ const Api: any = {
   // recurring 
   getAllRecurringList: process.env.REACT_APP_API_URL + "payroll/recurring/all",
   getAllRecurringType: process.env.REACT_APP_API_URL + "payroll/recurring/type/list",
+  importRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/uploadExcel",
+  exportRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/exportExcel",
+  templateRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/downloadTemplate",
+
+
+  // adjustment 
+  // importAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/uploadExcel",
+  // exportAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
+
+
   // getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
   createRecurringTransaction: process.env.REACT_APP_API_URL + "payroll/recurring/create",
   updateRecurringTransaction: process.env.REACT_APP_API_URL + "payroll/recurring/update",
@@ -242,6 +252,11 @@ const Api: any = {
   // Last Pay
   lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",
   generateLastPay: process.env.REACT_APP_API_URL + "lastpay/generate",
+
+  // AccessRights 
+
+  getRoles : process.env.REACT_APP_API_URL + "role/authority/all-roles",
+  getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role"
 
 }
 

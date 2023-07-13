@@ -31,6 +31,7 @@ import {
   LastPay,
   Payslip,
   ApproverLogin,
+  Access,
   Page404
 } from "../scenes"
 
@@ -96,6 +97,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/payroll/recurring", component: Recurring },
     { path: "/payroll/settings", component: PayrollSetting },
     { path: "/payroll/payslip", component: Payslip },
+    { path: "/manage/user-access", component: Access },
   ]
 
   if (location.pathname != "/"){
