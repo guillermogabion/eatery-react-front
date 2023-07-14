@@ -166,8 +166,9 @@ const Api: any = {
 
 
   // adjustment 
-  // importAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/uploadExcel",
-  // exportAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
+  importAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/uploadExcel",
+  exportAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
+  downloadTemplateAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/downloadTemplate",
 
 
   // getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
@@ -248,6 +249,8 @@ const Api: any = {
   generatedList: process.env.REACT_APP_API_URL + "payroll/generated/list",
   sendIndividual: process.env.REACT_APP_API_URL + "payroll/sendpayslip",
   sendAll: process.env.REACT_APP_API_URL + "payroll/sendpayslip/all",
+  failedEmail : process.env.REACT_APP_API_URL + "payroll/failedemail",
+  resendEmail : process.env.REACT_APP_API_URL + "payroll/resendpayslip",
 
   // Last Pay
   lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",

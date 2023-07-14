@@ -213,8 +213,6 @@ export default function Leaves(props: any) {
                         <th>Type</th>
                         <th>Date From</th>
                         <th>Date To</th>
-                        <th>Reason</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -237,8 +235,6 @@ export default function Leaves(props: any) {
                                                 <td> {item.type} </td>
                                                 <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                 <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                <td> {item.reason} </td>
-                                                <td> {Utility.removeUnderscore(item.status)} </td>
                                             </tr>
                                         )
                                     })

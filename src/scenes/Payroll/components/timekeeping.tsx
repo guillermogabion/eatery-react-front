@@ -34,7 +34,7 @@ export default function Timekeeping(props: any) {
         let currentDate = startDate;
 
         while (currentDate <= endDate) {
-            dateRange.push(moment(new Date(currentDate)).format('MMMM. DD'));
+            dateRange.push(moment(new Date(currentDate)).format('MMMM DD'));
             currentDate.setDate(currentDate.getDate() + 1);
         }
         setDaysInMonth(dateRange)
@@ -112,6 +112,7 @@ export default function Timekeeping(props: any) {
                             timekeeping.length > 0 ?
                             <>
                                 <tr>
+                                    <td className="daysInMonth">Employee ID</td>
                                     <td className="daysInMonth">Employee Name</td>
                                     {
                                         daysInMonth.map((data: any, i: any) => {
@@ -129,6 +130,7 @@ export default function Timekeeping(props: any) {
                                         return (
                                             <>
                                                 <tr>
+                                                    <td className="timeKeepingDates">{data.empId}</td>
                                                     <td className="timeKeepingDates">{data.empName}</td>
                                                     {
                                                         data.dateList && data.dateList.length > 0 &&
