@@ -193,14 +193,14 @@ const hdmf = (props: any) => {
               Update
             </label>
             <br />
-            <label
+            {/* <label
               onClick={() => {
                 setModalShow(true);
               }}
               className="text-muted cursor-pointer"
             >
               Delete
-            </label>
+            </label> */}
           </td>
         </tr>
       );
