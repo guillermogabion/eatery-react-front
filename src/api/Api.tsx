@@ -259,8 +259,9 @@ const Api: any = {
   // AccessRights 
 
   getRoles : process.env.REACT_APP_API_URL + "role/authority/all-roles",
-  getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role"
-
+  getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
+  deleteRoleAuth : process.env.REACT_APP_API_URL + "role/authority/delete",
+  addRoleAuth : process.env.REACT_APP_API_URL + "role/authority/add",
 }
 
 export default Api

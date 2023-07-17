@@ -211,6 +211,7 @@ export default function Leaves(props: any) {
                                 </> : null
                         }
                         <th>Type</th>
+                        <th>With Pay</th>
                         <th>Date From</th>
                         <th>Date To</th>
                     </tr>
@@ -233,6 +234,7 @@ export default function Leaves(props: any) {
                                                         </> : null
                                                 }
                                                 <td> {item.type} </td>
+                                                <td> {item.withPay = true ? "YES" : "NO"} </td>
                                                 <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                 <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                             </tr>

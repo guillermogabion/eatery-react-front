@@ -303,13 +303,13 @@ const Adjustment = (props: any) => {
                                         Update
                                         </label>
                                         <br />
-                                        <label
+                                        {/* <label
                                         onClick={() => {
                                             deleteRecurringData(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
                                         Delete
-                                        </label>
+                                        </label> */}
                                     </td>
                                 </tr>
                             )
