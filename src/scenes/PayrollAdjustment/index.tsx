@@ -613,7 +613,7 @@ export const PayrollAdjustment = (props: any) => {
       }
       const downloadTemplate = () => {
         RequestAPI.getFileAsync(
-          `${Api.templateRecurring}`,
+          `${Api.downloadTemplateAdjustment}`,
           "",
           "adjustmentexceltemplate.xlsx",
           async (res: any) => {
@@ -622,6 +622,25 @@ export const PayrollAdjustment = (props: any) => {
           }
         )
       };
+      const downloadExcel = (fromDate: any, toDate: any) => {
+       
+        setIsSubmit(true)
+        RequestAPI.getFileAsync(
+          `${Api.exportAdjustment}?fromDate=${fromDate}&toDate=${toDate}`,
+          "",
+          "recurringtransaction.xlsx",
+          async (res: any) => {
+            if (res) {
+              setIsSubmit(false)
+             
+
+            }else{
+               
+            }
+    
+          }
+        )
+      }
  
     
     return (
@@ -873,7 +892,7 @@ export const PayrollAdjustment = (props: any) => {
             onClick={
                 downloadTemplate
             }
-        >Download Recurring Template</Button>
+        >Download Adjustment Template</Button>
         </div>
     </div>
 
