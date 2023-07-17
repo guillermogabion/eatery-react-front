@@ -11,7 +11,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
 import { Api, RequestAPI } from "../../api"
-import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
@@ -35,6 +35,7 @@ export const SquadOvertime = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
+  const [viewModalShow, setViewModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
   const [myot, setMyOT] = useState<any>([]);
@@ -300,6 +301,30 @@ export const SquadOvertime = (props: any) => {
     )
   }
 
+  const viewOT = (id: any = 0) => {
+    RequestAPI.getRequest(
+      `${Api.otInformation}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.error && body.error.message) {
+          } else {
+            const valueObj: any = body.data
+            valueObj.otStart = moment(valueObj.otStart).format("HH:mm")
+            valueObj.otEnd = moment(valueObj.otEnd).format("HH:mm")
+            setInitialValues(valueObj)
+            // the value of valueObj.id is null - API issue for temp fixing I set ID directly
+            setOtId(id)
+            setViewModalShow(true)
+          }
+        }
+      }
+    )
+  }
+
   const overTimeTable = useCallback(() => {
     return (
       <div>
@@ -345,6 +370,14 @@ export const SquadOvertime = (props: any) => {
                     <td> {item.statusChangedBy} </td>
                     <td> {Utility.removeUnderscore(item.status)} </td>
                     <td>
+                      <label
+                        onClick={() => {
+                          viewOT(item.id)
+                        }}
+                      >
+                        <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                      </label>
                       <>
                         {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                           <>
@@ -734,6 +767,129 @@ export const SquadOvertime = (props: any) => {
                       </button>
                     </div>
                   </Modal.Footer>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={viewModalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setViewModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            View Overtime
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            initialValues={initialValues}
+            enableReinitialize={true}
+            validationSchema={
+              Yup.object().shape({
+                shiftDate: Yup.string().required("Shift date is required !"),
+                classification: Yup.string().required("Classification is required !"),
+                otStart: Yup.string().required("OT Start is required !"),
+                otEnd: Yup.string().required("OT End is required !"),
+              })
+            }
+            onSubmit={(values, actions) => {
+            }}>
+            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+              return (
+                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                  <div className="row w-100 px-5">
+                    <div className="form-group col-md-6 mb-3 " >
+                      <label>OT Classification</label>
+                      <select
+                        className="form-select"
+                        name="classification"
+                        id="classification"
+                        value={values.classification}
+                        disabled={true}
+                        onChange={(e) => setFormField(e, setFieldValue)}>
+                        {otClassification &&
+                          otClassification.length &&
+                          otClassification.map((item: any, index: string) => (
+                            <option key={`${index}_${item.item}`} value={item.item}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                      {errors && errors.classification && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Shift Date</label>
+                      <input type="date"
+                        name="shiftDate"
+                        id="shiftDate"
+                        className="form-control"
+                        value={values.shiftDate}
+                        disabled={true}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      />
+                      {errors && errors.shiftDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Start</label>
+                      <input type="time"
+                        name="otStart"
+                        id="otStart"
+                        className="form-control"
+                        value={values.otStart}
+                        disabled={true}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      />
+                      {errors && errors.otStart && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>End</label>
+                      <input type="time"
+                        name="otEnd"
+                        id="otEnd"
+                        className="form-control"
+                        value={values.otEnd}
+                        disabled={true}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      />
+                      {errors && errors.otEnd && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Indicate Ticket Number (If Applicable) and Reason</label>
+                      <textarea
+                        name="reason"
+                        id="reason"
+                        className="form-control p-2"
+                        style={{ minHeight: 100 }}
+                        disabled={true}
+                        value={values.reason}
+                        onChange={(e) => setFormField(e, setFieldValue)}
+                      />
+                    </div>
+                  </div>
                 </Form>
               )
             }}
