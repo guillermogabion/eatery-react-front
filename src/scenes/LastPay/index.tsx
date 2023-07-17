@@ -16,6 +16,7 @@ import { Formik } from "formik"
 import * as Yup from "yup"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import { regenerate, eye } from "../../assets/images"
+import { Utility } from "../../utils"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -34,6 +35,7 @@ export const LastPay = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
     const [payrollData, setPayrollData] = React.useState({});
+    const [modalShow, setModalShow] = React.useState(false);
 
     const tableHeaders = [
         'Employee ID',
@@ -53,7 +55,6 @@ export const LastPay = (props: any) => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
 
-
     const getLastPay = (pageNo: any) => {
         RequestAPI.getRequest(
             `${Api.lastPayList}?size=10&page=${pageNo}&sort=id&sortDir=desc`,
@@ -71,6 +72,25 @@ export const LastPay = (props: any) => {
             }
         )
     }
+
+    const getLastPayInfo = (id: any) => {
+        RequestAPI.getRequest(
+            `${Api.lastPayInfo}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        console.log(body)
+                    }
+                }
+            }
+        )
+    }
+
     const handlePageClick = (event: any) => {
         getLastPay(event.selected)
 
@@ -93,19 +113,19 @@ export const LastPay = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
-                
+
                 RequestAPI.postRequest(Api.generateLastPay, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            
+
                             ErrorSwal.fire(
                                 'Error!',
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
                         } else {
-                            
+
                             ErrorSwal.fire(
                                 'Success!',
                                 (body.data) || "",
@@ -114,7 +134,7 @@ export const LastPay = (props: any) => {
                             getLastPay(0)
                         }
                     } else {
-                       
+
                         ErrorSwal.fire(
                             'Error!',
                             'Something Error.',
@@ -148,18 +168,20 @@ export const LastPay = (props: any) => {
                             <tbody>
                                 {
                                     lastPayList &&
-                                    lastPayList &&
-                                    lastPayList.length > 0 && (
-                                        lastPayList.map((item: any, index: any) => {
+                                    lastPayList.content &&
+                                    lastPayList.content.length > 0 && (
+                                        lastPayList.content.map((item: any, index: any) => {
                                             return (
                                                 <tr>
                                                     <td> {item.employeeId} </td>
-                                                    <td> {item.name} </td>
+                                                    <td> {item.employeeName} </td>
                                                     <td>  {Utility.formatDate(item.seperationDate, 'MM-DD-YYYY')} </td>
                                                     <td> {item.lastPayExist ? "Yes" : "No"} </td>
                                                     <td>
                                                         <label
                                                             onClick={() => {
+                                                                // setModalShow(true)
+                                                                getLastPayInfo(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
                                                             <img src={eye} width={20} className="hover-icon-pointer mx-1" title="Update" />
@@ -210,6 +232,27 @@ export const LastPay = (props: any) => {
                         />
                     </div>
                 </div>
+
+                <Modal
+                    show={modalShow}
+                    size="xl"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    backdrop="static"
+                    keyboard={false}
+                    onHide={() => {
+                        setModalShow(false)
+                    }}
+                    dialogClassName="modal-90w"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="row w-100 px-5">
+                    </Modal.Body>
+                </Modal>
             </>
         </>} />
 

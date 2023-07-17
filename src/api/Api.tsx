@@ -255,13 +255,33 @@ const Api: any = {
   // Last Pay
   lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",
   generateLastPay: process.env.REACT_APP_API_URL + "lastpay/generate",
+  lastPayInfo: process.env.REACT_APP_API_URL + "lastpay/info",
+
+  getDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/info",
+  updateDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/update",
+  
+  getDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/info",
+  updateDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/update",
+  
+  getDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/info",
+  updateDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/update",
+  
+  getHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/info",
+  updateHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/update",
+
 
   // AccessRights 
 
   getRoles : process.env.REACT_APP_API_URL + "role/authority/all-roles",
+<<<<<<< Updated upstream
   getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
   deleteRoleAuth : process.env.REACT_APP_API_URL + "role/authority/delete",
   addRoleAuth : process.env.REACT_APP_API_URL + "role/authority/add",
+=======
+  getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role"
+
+  
+>>>>>>> Stashed changes
 }
 
 export default Api
