@@ -192,12 +192,16 @@ export const Utility = {
     document.addEventListener("scroll", Utility.startTokenProcess, true)
     Utility.userActiveTimerFun()
   },
-  formatToCurrency(amount: any) {
+  formatToCurrency(amount: any, hasSign = true) {
+    let sign = ""
+    if (hasSign) {
+      sign = "₱"
+    }
     return amount
-      ? "₱" + Number(amount)
+      ? sign + Number(amount)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,").toString()
-      : "₱0.00"
+      : sign + "0.00"
   },
   isFirstZero(num: any) {
     if (num.length == 1) {
@@ -247,7 +251,7 @@ export const Utility = {
     for (let i = currentYear - 5; i <= currentYear + 5; i++) {
       yearRange.push({ year: i });
     }
-    
+
     return yearRange;
   },
 }

@@ -5,6 +5,7 @@ import Adjustment from "./adjustment"
 import Overtime from "./overtime"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import Mandatory from "./mandatories"
+import Settings from "./settings"
 
 export const PayrollSetting = (props: any) => {
     return (
@@ -24,6 +25,9 @@ export const PayrollSetting = (props: any) => {
                         </Tab>
                         <Tab eventKey="tab4" title="Overtime Setting">
                             <Overtime />
+                        </Tab>
+                        <Tab eventKey="tab5" title="Settings">
+                            <Settings />
                         </Tab>
                     </Tabs>
                     </div>
