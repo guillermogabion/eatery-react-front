@@ -13,7 +13,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
 import { Api, RequestAPI } from "../../api"
-import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
@@ -35,6 +35,7 @@ export const SquadLeaves = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
+  const [viewModalShow, setViewModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
   const [leaveDayTypes, setLeaveDayTypes] = useState<any>([]);
@@ -189,6 +190,33 @@ export const SquadLeaves = (props: any) => {
             setLeaveBreakdown(valueObj.breakdown)
             setLeaveId(valueObj.id)
             setModalShow(true)
+          }
+        }
+      }
+    )
+  }
+
+  const viewLeave = (id: any = 0) => {
+    RequestAPI.getRequest(
+      `${Api.getLeave}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.error && body.error.message) {
+          } else {
+            const valueObj: any = body.data
+            leaveTypes.forEach((element: any, index: any) => {
+              if (element.name == valueObj.type) {
+                valueObj.type = element.id
+              }
+            });
+            setInitialValues(valueObj)
+            setLeaveBreakdown(valueObj.breakdown)
+            setLeaveId(valueObj.id)
+            setViewModalShow(true)
           }
         }
       }
@@ -450,6 +478,14 @@ export const SquadLeaves = (props: any) => {
                           <td> {item.statusChangedBy} </td>
                           <td> {Utility.removeUnderscore(item.status)} </td>
                           <td>
+                            <label
+                              onClick={() => {
+                                viewLeave(item.id)
+                              }}
+                            >
+                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                            </label>
                             <>
                               {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
@@ -969,6 +1005,206 @@ export const SquadLeaves = (props: any) => {
                       </button>
                     </div>
                   </Modal.Footer>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={viewModalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => {
+          setLeaveId(null);
+          setViewModalShow(false)
+        }}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          {/* <Modal.Title id="contained-modal-title-vcenter">
+              Request For Leave/Time-off
+            </Modal.Title> */}
+          <Modal.Title id="contained-modal-title-vcenter">
+            View Leave/Time-off Request
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            initialValues={initialValues}
+            enableReinitialize={true}
+            validationSchema={
+              Yup.object().shape({
+                dateFrom: Yup.string().required("Date from is required !"),
+                dateTo: Yup.string().required("Date to is required !"),
+                reason: Yup.string().required("Reason is required !"),
+                status: Yup.string().required("Status is required !"),
+                type: Yup.string().required("Status is required !"),
+              })
+            }
+            onSubmit={(values, actions) => {
+              
+            }}>
+            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+              return (
+                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                  <div className="row w-100 px-5">
+                    <div className="form-group col-md-12 mb-3 " >
+                      <label>Leave Type</label>
+                      <select
+                        className="form-select"
+                        name="type"
+                        id="type"
+                        value={values.type}
+                        disabled={true}
+                        onChange={(e) => setFormField(e, setFieldValue)}>
+                        {leaveTypes &&
+                          leaveTypes.length &&
+                          leaveTypes.map((item: any, index: string) => (
+                            <option key={`${index}_${item.id}`} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                      </select>
+                      {errors && errors.type && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Date From</label>
+                      <input type="date"
+                        name="dateFrom"
+                        id="dateFrom"
+                        className="form-control"
+                        value={values.dateFrom}
+                        disabled={true}
+                        min={moment().format("YYYY-MM-DD")}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                          // setDateFrom(e.target.value)
+                          dateBreakdown(e.target.value, values.dateTo)
+                        }}
+                      />
+                      {errors && errors.dateFrom && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Date To</label>
+                      <input type="date"
+                        name="dateTo"
+                        id="dateTo"
+                        className="form-control"
+                        value={values.dateTo}
+                        min={values.dateFrom}
+                        disabled={true}
+                        onChange={(e) => {
+                          // setDateTo(e.target.value)
+                          setFormField(e, setFieldValue)
+                          dateBreakdown(values.dateFrom, e.target.value)
+                        }}
+                      />
+                      {errors && errors.dateTo && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Reason</label>
+                      <input type="text"
+                        name="reason"
+                        id="reason"
+                        className="form-control"
+                        disabled={true}
+                        value={values.reason}
+                        onChange={(e) => setFormField(e, setFieldValue)}
+                      />
+                      {errors && errors.reason && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                        <thead>
+                          <tr>
+                            <th style={{ width: 'auto' }}>Date Breakdown</th>
+                            <th style={{ width: 'auto' }}>Options</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            leaveBreakdown &&
+                            leaveBreakdown.length &&
+                            leaveBreakdown.map((item: any, index: any) => {
+                              const { date } = item
+                              return (
+                                <tr>
+                                  <td key={index + 'date'} >{date}</td>
+                                  <td key={index} >
+                                    <input
+                                      type="radio"
+                                      name={"leaveCredit" + index.toString()}
+                                      id={"leaveCreditWhole" + index.toString()}
+                                      checked={item.credit == 1}
+                                      disabled={true}
+                                      onChange={() => {
+                                        setDateOption(index, 1, 'WHOLEDAY')
+                                      }}
+                                    />
+                                    <label htmlFor={"leaveCreditWhole" + index.toString()}
+                                      style={{ marginRight: 10 }}>Whole Day</label>
+                                    <input
+                                      type="radio"
+                                      name={"leaveCredit" + index.toString()}
+                                      id={"leaveCreditDay" + index.toString()}
+                                      checked={item.credit == 0.5}
+                                      disabled={true}
+                                      onChange={() => {
+                                        setDateOption(index, .5, "FIRST_HALF")
+                                      }}
+                                    /> <label htmlFor={"leaveCreditDay" + index.toString()}
+                                      style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
+                                    {
+                                      item.dayType != 'WHOLEDAY' ?
+                                        <>
+                                          <br />
+                                          <input
+                                            type="radio"
+                                            name={"dayTypes" + index.toString()}
+                                            id={"leaveCreditWhole1" + index.toString()}
+                                            checked={item.dayType == 'FIRST_HALF'}
+                                            disabled={true}
+                                            onChange={() => setDateOption(index, .5, "FIRST_HALF")}
+                                          />
+                                          <label htmlFor={"leaveCreditWhole1" + index.toString()}
+                                            style={{ marginRight: 10 }}>First Half</label>
+                                          <input
+                                            type="radio"
+                                            name={"dayTypes" + index.toString()}
+                                            checked={item.dayType == 'SECOND_HALF'}
+                                            id={"leaveCreditDay1" + index.toString()}
+                                            disabled={true}
+                                            onChange={() => setDateOption(index, .5, "SECOND_HALF")}
+                                          />
+                                          <label htmlFor={"leaveCreditDay1" + index.toString()}
+                                            style={{ paddingTop: -10 }}>Second Half</label>
+                                        </>
+                                        :
+                                        null
+                                    }
+                                  </td>
+                                </tr>
+                              )
+                            })
+                          }
+                        </tbody>
+                      </Table>
+                    </div>
+                  </div>
                 </Form>
               )
             }}

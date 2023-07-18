@@ -947,6 +947,7 @@ export const AttendanceCorrection = (props: any) => {
         </Modal.Body>
 
       </Modal>
+      
       <Modal
         size="lg"
         show={modalViewShow}

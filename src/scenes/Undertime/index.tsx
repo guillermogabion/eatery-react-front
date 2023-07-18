@@ -13,7 +13,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
 import { Api, RequestAPI } from "../../api"
-import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
@@ -27,6 +27,7 @@ export const Undertime = (props: any) => {
     const { data } = useSelector((state: any) => state.rootReducer.userData)
     const { authorizations } = data?.profile
     const [modalShow, setModalShow] = React.useState(false);
+    const [viewModalShow, setViewModalShow] = React.useState(false);
     const [key, setKey] = React.useState('all');
     const [actionable, setIsActionable] = React.useState(false);
     const [myut, setMyUT] = useState<any>([]);
@@ -273,6 +274,30 @@ export const Undertime = (props: any) => {
         )
     }
 
+    const viewUT = (id: any = 0) => {
+        RequestAPI.getRequest(
+            `${Api.utInformation}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        const valueObj: any = body.data
+                        valueObj.utStart = moment(valueObj.utStart).format("HH:mm")
+                        valueObj.utEnd = moment(valueObj.utEnd).format("HH:mm")
+                        setInitialValues(valueObj)
+                        // the value of valueObj.id is null - API issue for temp fixing I set ID directly
+                        setUtId(id)
+                        setViewModalShow(true)
+                    }
+                }
+            }
+        )
+    }
+
     const underTimeTable = useCallback(() => {
         return (
             <div>
@@ -317,6 +342,14 @@ export const Undertime = (props: any) => {
                                         <td> {item.statusChangedBy} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
                                         <td className="d-flex">
+                                            <label
+                                                onClick={() => {
+                                                    viewUT(item.id)
+                                                }}
+                                            >
+                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                                            </label>
                                             {
                                                 item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                                                     <>
@@ -731,6 +764,113 @@ export const Undertime = (props: any) => {
                                             </button>
                                         </div>
                                     </Modal.Footer>
+                                </Form>
+                            )
+                        }}
+                    </Formik>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={viewModalShow}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => setViewModalShow(false)}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        View Undertime
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                    <Formik
+                        innerRef={formRef}
+                        initialValues={initialValues}
+                        enableReinitialize={true}
+                        validationSchema={
+                            Yup.object().shape({
+                                shiftDate: Yup.string().required("Shift date is required !"),
+                                utStart: Yup.string().required("Undertime start is required !"),
+                                utEnd: Yup.string().required("Undertime end is required !"),
+                                reason: Yup.string().required("Reason is required !"),
+                            })
+                        }
+                        onSubmit={(values, actions) => {
+                            
+                        }}>
+                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                            return (
+                                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                    <div className="row w-100 px-5">
+
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Date</label>
+                                            <input type="date"
+                                                name="shiftDate"
+                                                id="shiftDate"
+                                                disabled={true}
+                                                className="form-control"
+                                                value={values.shiftDate}
+                                                onChange={(e) => {
+                                                    setFormField(e, setFieldValue)
+                                                }}
+                                            />
+                                            {errors && errors.shiftDate && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                            )}
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Start</label>
+                                            <input type="time"
+                                                name="utStart"
+                                                id="utStart"
+                                                disabled={true}
+                                                className="form-control"
+                                                value={values.utStart}
+                                                onChange={(e) => {
+                                                    setFormField(e, setFieldValue)
+                                                }}
+                                            />
+                                            {errors && errors.utStart && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                            )}
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>End</label>
+                                            <input type="time"
+                                                name="utEnd"
+                                                id="utEnd"
+                                                disabled={true}
+                                                className="form-control"
+                                                value={values.utEnd}
+                                                onChange={(e) => {
+                                                    setFormField(e, setFieldValue)
+                                                }}
+                                            />
+                                            {errors && errors.utEnd && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                            )}
+                                        </div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Reason</label>
+                                            <textarea
+                                                name="reason"
+                                                id="reason"
+                                                disabled={true}
+                                                className="form-control p-2"
+                                                style={{ minHeight: 100 }}
+                                                value={values.reason}
+                                                onChange={(e) => setFormField(e, setFieldValue)}
+                                            />
+                                            {errors && errors.reason && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                            )}
+                                        </div>
+                                    </div>
                                 </Form>
                             )
                         }}

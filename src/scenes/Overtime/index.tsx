@@ -11,7 +11,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import * as Yup from "yup"
 import { Api, RequestAPI } from "../../api"
-import { action_approve, action_cancel, action_decline, action_edit } from "../../assets/images"
+import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
 import DashboardMenu from "../../components/DashboardMenu"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
@@ -29,7 +29,7 @@ export const Overtime = (props: any) => {
     "otStart": "",
     "otEnd": "",
     "location": "",
-    "breaktimeDuration":""
+    "breaktimeDuration": ""
   }
 
   const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -38,6 +38,7 @@ export const Overtime = (props: any) => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
   const [modalShow, setModalShow] = React.useState(false);
+  const [viewModalShow, setViewModalShow] = React.useState(false);
   const [key, setKey] = React.useState('all');
   const [actionable, setIsActionable] = React.useState(false);
   const [leaveTypes, setLeaveTypes] = useState<any>([]);
@@ -95,14 +96,14 @@ export const Overtime = (props: any) => {
     setFilterData(filterObj)
   }
 
-  const getMyOT = (page: any = 0, status: any = "all", isActionable:any = false) => {
+  const getMyOT = (page: any = 0, status: any = "all", isActionable: any = false) => {
     setKey(status)
     setIsActionable(isActionable)
     let queryString = ""
     let filterDataTemp = { ...filterData }
 
-    if (status == 'actionable'){
-      queryString = "&status=all" 
+    if (status == 'actionable') {
+      queryString = "&status=all"
     }
     else if (status != "") {
       queryString = "&status=" + status
@@ -119,7 +120,7 @@ export const Overtime = (props: any) => {
       })
     }
 
-    if (isActionable){
+    if (isActionable) {
       queryString += '&actionableOnly=true'
     }
 
@@ -313,6 +314,30 @@ export const Overtime = (props: any) => {
     )
   }
 
+  const viewOT = (id: any = 0) => {
+    RequestAPI.getRequest(
+      `${Api.otInformation}?id=${id}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.error && body.error.message) {
+          } else {
+            const valueObj: any = body.data
+            valueObj.otStart = moment(valueObj.otStart).format("HH:mm")
+            valueObj.otEnd = moment(valueObj.otEnd).format("HH:mm")
+            setInitialValues(valueObj)
+            // the value of valueObj.id is null - API issue for temp fixing I set ID directly
+            setOtId(id)
+            setViewModalShow(true)
+          }
+        }
+      }
+    )
+  }
+
   const overTimeTable = useCallback(() => {
     return (
       <div>
@@ -349,7 +374,7 @@ export const Overtime = (props: any) => {
                       null
                     }
                     <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                    <td> { Utility.removeUnderscore(item.classification) } </td>
+                    <td> {Utility.removeUnderscore(item.classification)} </td>
                     <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td> {item.totalDuration} </td>
@@ -357,8 +382,16 @@ export const Overtime = (props: any) => {
                     <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td> {item.reason} </td>
                     <td> {item.statusChangedBy} </td>
-                    <td> { Utility.removeUnderscore(item.status)} </td>
+                    <td> {Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
+                      <label
+                        onClick={() => {
+                          viewOT(item.id)
+                        }}
+                      >
+                        <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                      </label>
                       {
                         item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
                           <>
@@ -532,9 +565,9 @@ export const Overtime = (props: any) => {
               onSelect={(k: any) => {
                 setMyOT([])
 
-                if (k == 'actionable'){
+                if (k == 'actionable') {
                   getMyOT(0, k, true)
-                }else{
+                } else {
                   getMyOT(0, k)
                 }
               }}
@@ -850,6 +883,189 @@ export const Overtime = (props: any) => {
                       </button>
                     </div>
                   </Modal.Footer>
+                </Form>
+              )
+            }}
+          </Formik>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={viewModalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setViewModalShow(false)}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            View Overtime
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+          <Formik
+            innerRef={formRef}
+            initialValues={initialValues}
+            enableReinitialize={true}
+            validationSchema={
+              Yup.object().shape({
+                shiftDate: Yup.string().required("Shift date is required !"),
+                classification: Yup.string().required("Classification is required !"),
+                otStart: Yup.string().required("OT Start is required !"),
+                otEnd: Yup.string().required("OT End is required !"),
+                location: Yup.string().required("Location is required !"),
+                breaktimeDuration: Yup.string().required("Breaktime Duration is required !"),
+                reason: Yup.string().required("Reason is required !"),
+              })
+            }
+            onSubmit={(values, actions) => {
+              
+            }}>
+            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+              return (
+                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                  <div className="row w-100 px-5">
+                    <div className="form-group col-md-6 mb-3 " >
+                      <label>OT Classification </label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <select
+                        className="form-select"
+                        name="classification"
+                        id="classification"
+                        value={values.classification}
+                        disabled={true}
+                        onChange={(e) => setFormField(e, setFieldValue)}>
+                        {otClassification &&
+                          otClassification.length &&
+                          otClassification.map((item: any, index: string) => (
+                            <option key={`${index}_${item.item}`} value={item.item}>
+                              {Utility.removeUnderscore(item)}
+                            </option>
+                          ))}
+                      </select>
+                      {errors && errors.classification && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Shift Date</label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <input type="date"
+                        name="shiftDate"
+                        id="shiftDate"
+                        className="form-control"
+                        disabled={true}
+                        value={values.shiftDate}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      />
+                      {errors && errors.shiftDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>Start</label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <input type="time"
+                        name="otStart"
+                        id="otStart"
+                        className="form-control"
+                        disabled={true}
+                        value={values.otStart}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      />
+                      {errors && errors.otStart && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                      <label>End</label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <input type="time"
+                        name="otEnd"
+                        id="otEnd"
+                        className="form-control"
+                        disabled={true}
+                        value={values.otEnd}
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      />
+                      {errors && errors.otEnd && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3">
+                      <label>Work Type</label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <select
+                        className="form-select"
+                        value={values.location}
+                        disabled={true}
+                        name="location"
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      >
+                        <option value="" disabled selected>
+                          Select Work Type
+                        </option>
+                        <option value="ON_SITE">On Site</option>
+                        <option value="WORK_FROM_HOME">Work From Home</option>
+                      </select>
+                      {errors && errors.location && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3">
+                      <label>Breaktime Duration (minutes)</label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <select
+                        className="form-select"
+                        value={values.breaktimeDuration}
+                        disabled={true}
+                        name="breaktimeDuration"
+                        onChange={(e) => {
+                          setFormField(e, setFieldValue)
+                        }}
+                      >
+                        <option value="" disabled selected>
+                          Select Breaktime Duration
+                        </option>
+                        <option value="0">0</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>
+                      </select>
+                      {errors && errors.breaktimeDuration && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-6 mb-3"></div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Indicate Ticket Number (If Applicable) and Reason</label>
+                      <span className="text-danger ml-2 text-md">*</span>
+                      <textarea
+                        name="reason"
+                        id="reason"
+                        className="form-control p-2"
+                        disabled={true}
+                        style={{ minHeight: 100 }}
+                        value={values.reason}
+                        onChange={(e) => setFormField(e, setFieldValue)}
+                      />
+                      {errors && errors.reason && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                      )}
+                    </div>
+                  </div>
                 </Form>
               )
             }}
