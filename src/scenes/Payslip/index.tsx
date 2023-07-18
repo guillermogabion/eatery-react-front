@@ -157,7 +157,7 @@ export const Payslip = (props: any) => {
         })
         }
         RequestAPI.getRequest(
-            `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}`,
+            `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}&sortDir=desc`,
             "",
             {},
             {},

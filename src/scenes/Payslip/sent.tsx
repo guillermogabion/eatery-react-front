@@ -73,43 +73,34 @@ const sent = (props : any ) => {
             setPeriodMonths(monthNumber);
             };
            
-            const getAllPayroll = (pageNo : any ) => {
-                let queryString = ""
-                let filterDataTemp = { ...filterData }
-                if (filterDataTemp) {
-                Object.keys(filterDataTemp).forEach((d: any) => {
-                    if (filterDataTemp[d]) {
-        
-                    queryString += `&${d}=${filterDataTemp[d]}`
-                    } else {
-                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-                    }
-                })
+        const getAllPayroll = (pageNo : any ) => {
+            let queryString = ""
+            let filterDataTemp = { ...filterData }
+            if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+    
+                queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
                 }
-                RequestAPI.getRequest(
-                    `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                      const { status, body = { data: {}, error: {} } }: any = res
-                      if (status === 200 && body && body.data.content) {
-                        if (body.error && body.error.message) {
-                        } else {
-                            let tempArray: any = []
-                            body.data.content.forEach((d: any, i: any) => {
-                                tempArray.push({
-                                    id: d.id,
-                                    periodMonth: d.periodMonth,
-                                    periodYear : d.periodYear,
-                                    isGenerated : d.isGenerated
-                                })
-                            });
-                            setPayrollList(tempArray)
-                        }
-                      }
+            })
+            }
+            RequestAPI.getRequest(
+                `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body && body.data.content) {
+                    if (body.error && body.error.message) {
+                    } else {
+                       setPayrollList(body.data)
                     }
-                  )
+                    }
+                }
+                )
             }
 
             useEffect(() => {
@@ -299,8 +290,9 @@ const sent = (props : any ) => {
                         <tbody>
                         {
                             payrollList &&
-                            payrollList.length > 0 &&
-                            payrollList.map((item: any, index: any) => {
+                            payrollList.content &&
+                            payrollList.content.length > 0 &&
+                            payrollList.content.map((item: any, index: any) => {
         
                             return (
                                 <tr>
@@ -339,21 +331,22 @@ const sent = (props : any ) => {
                 
                 <div className="d-flex justify-content-end">
                   <div className="">
-                    <ReactPaginate
-                      className="d-flex justify-content-center align-items-center"
-                      breakLabel="..."
-                      nextLabel=">"
-                      onPageChange={handlePageClick}
-                      pageRangeDisplayed={5}
-                      pageCount={(payrollList && payrollList.totalPages) || 0}
-                      previousLabel="<"
-                      previousLinkClassName="prev-next-pagination"
-                      nextLinkClassName="prev-next-pagination"
-                      activeLinkClassName="active-page-link"
-                      disabledLinkClassName="prev-next-disabled"
-                      pageLinkClassName="page-link"
-                      renderOnZeroPageCount={null}
-                    />
+                    
+                     <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(payrollList && payrollList.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                />
                   </div>
                 </div>
                 <div className="d-flex justify-content-end mt-3" >

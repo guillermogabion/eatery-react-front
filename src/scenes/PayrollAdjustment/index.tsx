@@ -650,6 +650,7 @@ export const PayrollAdjustment = (props: any) => {
                 <div className="w-100 pt-2">
                     <div className="fieldtext d-flex col-md-6">
                         <div className="input-container col-md-4">
+                        <label>Employee</label>
                         <EmployeeDropdown
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
@@ -659,6 +660,7 @@ export const PayrollAdjustment = (props: any) => {
                             />
                         </div>
                         <div className="input-container col-md-3 clearable-select">
+                            <label>Adjustment Name</label>
                             <select
                                 className="form-select"
                                 name="adjustmentTypeName"
@@ -687,6 +689,7 @@ export const PayrollAdjustment = (props: any) => {
                         </div>
                         
                         <div className="input-container col-md-2">
+                            <label>Amount</label>
                             <input type="text" 
                             className="form-control"
                             name="amount"
@@ -695,6 +698,7 @@ export const PayrollAdjustment = (props: any) => {
                             />
                         </div>
                         <div className="input-container clearable-select col-md-2">
+                            <label>Type</label>
                             <select
                                 className="form-select"
                                 name="isDeduction"
@@ -724,6 +728,7 @@ export const PayrollAdjustment = (props: any) => {
 
                         </div>
                         <div className="input-container clearable-select col-md-2">
+                            <label>Select Month</label>
                             <select
                                 placeholder="Month"
                                 className="form-control"
@@ -750,6 +755,7 @@ export const PayrollAdjustment = (props: any) => {
                                 )}
                         </div>
                         <div className="input-container clearable-select col-md-2">
+                        <label>Select Year</label>
                         <select
                             className="form-control"
                             name="periodYear"
@@ -774,7 +780,7 @@ export const PayrollAdjustment = (props: any) => {
                             </span>
                         )}
                         </div>
-                        <div className="input-container col-md-2">
+                        <div className="input-container col-md-2 pt-4">
                             <Button
                             style={{ width: 210 }}
                             onClick={() => getAllAdjustmentList(0)}
