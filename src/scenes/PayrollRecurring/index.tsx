@@ -584,6 +584,7 @@ export const Recurring = (props: any) => {
                 <div className="w-100">
                     <div className="fieldtext d-flex">
                         <div className="input-container col-md-1">
+                            <label>Employee</label>
                         <EmployeeDropdown
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
@@ -593,6 +594,7 @@ export const Recurring = (props: any) => {
                             />
                         </div>
                         <div className="input-container col-md-1">
+                            <label>Amount</label>
                             <input type="text" 
                             className="form-control"
                             name="adjustmentAmount"
@@ -601,6 +603,7 @@ export const Recurring = (props: any) => {
                             />
                         </div>
                         <div className="input-container clearable-select col-md-1">
+                            <label>Type</label>
                             <select
                                 className="form-select"
                                 name="isDeduction"
@@ -631,6 +634,7 @@ export const Recurring = (props: any) => {
 
                         </div>
                         <div className="input-container col-md-1 clearable-select">
+                        <label>Recurring Name</label>
                         <select
                             className="form-select"
                             name="recurringTypeName"
@@ -658,6 +662,7 @@ export const Recurring = (props: any) => {
                             )}
                         </div>
                         <div className="input-container col-md-1">
+                            <label>End Date</label>
                             <input type="date" 
                             className="form-control"
                             name="endDate"
@@ -666,6 +671,7 @@ export const Recurring = (props: any) => {
                             />
                         </div>
                         <div className="input-container clearable-select col-md-1">
+                            <label>Status</label>
                             <select
                                 className="form-select"
                                 name="status"
@@ -696,7 +702,7 @@ export const Recurring = (props: any) => {
 
                         </div>
                        
-                        <div className="input-container col-md-2">
+                        <div className="input-container col-md-2 pt-4">
                             <Button
                             style={{ width: 210 }}
                             onClick={() => getAllRecurringList(0)}

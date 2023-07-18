@@ -351,7 +351,7 @@ export const Undertime = (props: any) => {
 
                                             </label>
                                             {
-                                                item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" ?
+                                                item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" && item.status != "CANCELLED" ?
                                                     <>
                                                         {authorizations.includes("Request:Update") ? (
                                                             <>

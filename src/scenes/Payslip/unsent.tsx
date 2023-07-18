@@ -87,7 +87,7 @@ const unsent = (props : any ) => {
                 })
                 }
                 RequestAPI.getRequest(
-                    `${Api.failedEmail}?size=10&page=${pageNo}${queryString}`,
+                    `${Api.failedEmail}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -96,7 +96,7 @@ const unsent = (props : any ) => {
                       if (status === 200 && body && body.data.content) {
                         if (body.error && body.error.message) {
                         } else {
-                           setFailedPayslipList(body.data.content)
+                           setFailedPayslipList(body.data)
             
                             
                         }
@@ -339,8 +339,9 @@ const unsent = (props : any ) => {
                         <tbody>
                         {
                             failedPayslipList &&
-                            failedPayslipList.length > 0 &&
-                            failedPayslipList.map((item: any, index: any) => {
+                            failedPayslipList.content &&
+                            failedPayslipList.content.length > 0 &&
+                            failedPayslipList.content.map((item: any, index: any) => {
         
                             return (
                                 <tr>
@@ -384,7 +385,7 @@ const unsent = (props : any ) => {
                             nextLabel=">"
                             onPageChange={handlePageClick}
                             pageRangeDisplayed={5}
-                            // pageCount={(payrollList && payrollList.totalPages) || 0}
+                            pageCount={(failedPayslipList && failedPayslipList.totalPages) || 0}
                             previousLabel="<"
                             previousLinkClassName="prev-next-pagination"
                             nextLinkClassName="prev-next-pagination"
