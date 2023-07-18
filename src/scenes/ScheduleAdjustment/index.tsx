@@ -174,8 +174,6 @@ export const ScheduleAdjustment = (props: any) => {
             const valueObj: any = body.data
             setInitialValues(valueObj)
             setModalViewShow(true)
-
-
           }
         }
       }

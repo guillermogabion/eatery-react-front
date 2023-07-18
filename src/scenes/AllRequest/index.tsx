@@ -30,6 +30,12 @@ export const AllRequest = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const [employeeList, setEmployeeList] = useState<any>([])
+
+    const [viewLeaveModalShow, setViewLeaveModalShow] = React.useState(false);
+    const [viewOTModalShow, setViewOTModalShow] = React.useState(false);
+    const [viewUTModalShow, setViewUTModalShow] = React.useState(false);
+    const [viewSchedAdjustmentModalShow, setViewSchedAdjustmentUTModalShow] = React.useState(false);
+    const [viewCOAModalShow, setViewCOAModalShow] = React.useState(false);
     const [statusList, setStatusList] = useState<any>([
         'all',
         'pending',
@@ -38,6 +44,180 @@ export const AllRequest = (props: any) => {
     ])
 
     const formRef: any = useRef()
+
+
+    const [leaveBreakdown, setLeaveBreakdown] = useState<any>([]);
+    const [leaveTypes, setLeaveTypes] = useState<any>([]);
+    const [leaveInitialValues, setLeaveInitialValues] = useState<any>({
+        "dateFrom": "",
+        "dateTo": "",
+        "type": 1,
+        "status": "PENDING",
+        "reason": "",
+        "breakdown": []
+    })
+    const [OTInitialValues, setOTInitialValues] = useState<any>({})
+    const [UTInitialValues, setUTInitialValues] = useState<any>({})
+    const [SchedAdjustmentInitialValues, setSchedAdjustmentInitialValues] = useState<any>({})
+    const [COAInitialValues, setCOAInitialValues] = useState<any>({})
+    const [coaBreakdown, setCoaBreakdown] = useState<any>([]);
+
+    useEffect(() => {
+        RequestAPI.getRequest(
+            `${Api.leaveTypes}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    setLeaveTypes(body.data)
+                } else {
+                }
+            }
+        )
+    }, [])
+
+    const [dayTypes, setDayTypes] = useState<any>([]);
+
+
+    const viewLeave = (id: any = 0) => {
+        RequestAPI.getRequest(
+            `${Api.getLeave}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        const valueObj: any = body.data
+                        leaveTypes.forEach((element: any, index: any) => {
+                            if (element.name == valueObj.type) {
+                                valueObj.type = element.id
+                            }
+                        });
+                        setLeaveInitialValues(valueObj)
+                        setLeaveBreakdown(valueObj.breakdown)
+                        setViewLeaveModalShow(true)
+                    }
+                }
+            }
+        )
+    }
+
+    const viewOT = (id: any = 0) => {
+        RequestAPI.getRequest(
+            `${Api.otInformation}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        const valueObj: any = body.data
+                        valueObj.otStart = moment(valueObj.otStart).format("HH:mm")
+                        valueObj.otEnd = moment(valueObj.otEnd).format("HH:mm")
+                        setOTInitialValues(valueObj)
+                        setViewOTModalShow(true)
+                    }
+                }
+            }
+        )
+    }
+
+    const viewUT = (id: any = 0) => {
+        RequestAPI.getRequest(
+            `${Api.utInformation}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        const valueObj: any = body.data
+                        valueObj.utStart = moment(valueObj.utStart).format("HH:mm")
+                        valueObj.utEnd = moment(valueObj.utEnd).format("HH:mm")
+                        setUTInitialValues(valueObj)
+                        setViewUTModalShow(true)
+                    }
+                }
+            }
+        )
+    }
+
+    const getViewSchedule = (id: any = 0) => {
+
+        RequestAPI.getRequest(
+            `${Api.getScheduleAdjustment}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+
+                    if (body.error && body.error.message) {
+                    } else {
+                        const valueObj: any = body.data
+                        setSchedAdjustmentInitialValues(valueObj)
+                        setViewSchedAdjustmentUTModalShow(true)
+                    }
+                }
+            }
+        )
+    }
+
+    const getViewCoa = (id: any = 0) => {
+
+        RequestAPI.getRequest(
+            `${Api.getCoaInfo}?id=${id}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+
+                    if (body.error && body.error.message) {
+                    } else {
+                        const valueObj: any = body.data
+                        setCOAInitialValues(valueObj)
+                        setCoaBreakdown(valueObj.breakdown)
+                        setViewCOAModalShow(true)
+                    }
+                }
+            }
+        )
+    }
+
+    const setDateOption = (index: any, value: any, dayType: any = null) => {
+
+        if (leaveBreakdown) {
+            const valuesObj: any = { ...leaveBreakdown }
+
+            if (valuesObj) {
+                valuesObj[index].credit = value
+                valuesObj[index].dayType = dayType
+            }
+
+            const valuesObjDayType: any = { ...dayTypes }
+            if (valuesObjDayType) {
+                if (value == .5) {
+                    valuesObjDayType[index] = true
+                }
+                else {
+                    valuesObjDayType[index] = false
+                }
+                setDayTypes(valuesObjDayType)
+            }
+        }
+    }
 
     function Leaves(props: any) {
         const [allLeaves, setAllLeaves] = useState<any>([]);
@@ -116,6 +296,7 @@ export const AllRequest = (props: any) => {
             filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
             setFilterData(filterObj)
         }
+
 
         return (
             <div>
@@ -205,6 +386,7 @@ export const AllRequest = (props: any) => {
                             <th>Reason</th>
                             <th>Date Filed</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -229,6 +411,16 @@ export const AllRequest = (props: any) => {
                                                     <td> {item.reason} </td>
                                                     <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                                     <td> {Utility.removeUnderscore(item.status)} </td>
+                                                    <td>
+                                                        <label
+                                                            onClick={() => {
+                                                                viewLeave(item.id)
+                                                            }}
+                                                        >
+                                                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                                                        </label>
+                                                    </td>
                                                 </tr>
                                             )
                                         })
@@ -271,6 +463,7 @@ export const AllRequest = (props: any) => {
                         />
                     </div>
                 </div>
+
             </div>);
     }
 
@@ -435,6 +628,7 @@ export const AllRequest = (props: any) => {
                             <th style={{ width: 'auto' }}>Reason</th>
                             <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Status</th>
+                            <th style={{ width: 'auto' }}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -455,6 +649,16 @@ export const AllRequest = (props: any) => {
                                         <td> {item.reason} </td>
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
+                                        <td>
+                                            <label
+                                                onClick={() => {
+                                                    getViewCoa(item.id)
+                                                }}
+                                            >
+                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                                            </label>
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -658,6 +862,7 @@ export const AllRequest = (props: any) => {
                             <th style={{ width: 'auto' }}>File Date</th>
                             <th style={{ width: 'auto' }}>Reason</th>
                             <th style={{ width: 'auto' }}>Status</th>
+                            <th style={{ width: 'auto' }}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -680,6 +885,17 @@ export const AllRequest = (props: any) => {
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
+                                        <td>
+
+                                            <label
+                                                onClick={() => {
+                                                    viewOT(item.id)
+                                                }}
+                                            >
+                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                                            </label>
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -883,6 +1099,7 @@ export const AllRequest = (props: any) => {
                             <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Reason</th>
                             <th style={{ width: 'auto' }}>Status</th>
+                            <th style={{ width: 'auto' }}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -905,6 +1122,16 @@ export const AllRequest = (props: any) => {
                                         <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td> {item.reason} </td>
                                         <td> {Utility.removeUnderscore(item.status)} </td>
+                                        <td>
+                                            <label
+                                                onClick={() => {
+                                                    viewUT(item.id)
+                                                }}
+                                            >
+                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                                            </label>
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -1107,6 +1334,7 @@ export const AllRequest = (props: any) => {
                             <th style={{ width: 'auto' }}>Reason</th>
                             <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Status</th>
+                            <th style={{ width: 'auto' }}>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1130,6 +1358,16 @@ export const AllRequest = (props: any) => {
                                                     <td> {item.reason} </td>
                                                     <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                                     <td> {Utility.removeUnderscore(item.status)} </td>
+                                                    <td>
+                                                        <label
+                                                            onClick={() => {
+                                                                getViewSchedule(item.id)
+                                                            }}
+                                                        >
+                                                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+
+                                                        </label>
+                                                    </td>
                                                 </tr>
                                             )
                                         })
@@ -1271,7 +1509,480 @@ export const AllRequest = (props: any) => {
                     </>
                 </div>
             </div>
+            <Modal
+                show={viewLeaveModalShow}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => {
+                    setViewLeaveModalShow(false)
+                }}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    {/* <Modal.Title id="contained-modal-title-vcenter">
+              Request For Leave/Time-off
+            </Modal.Title> */}
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        View Leave/Time-off Request
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                    <Formik
+                        innerRef={formRef}
+                        initialValues={leaveInitialValues}
+                        enableReinitialize={true}
+                        validationSchema={
+                            Yup.object().shape({
+                                dateFrom: Yup.string().required("Date from is required !"),
+                                dateTo: Yup.string().required("Date to is required !"),
+                                reason: Yup.string().required("Reason is required !"),
+                                status: Yup.string().required("Status is required !"),
+                                type: Yup.string().required("Status is required !"),
+                            })
+                        }
+                        onSubmit={(values, actions) => {
 
+                        }}>
+                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                            return (
+                                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                    <div className="row w-100 px-5">
+                                        <div className="form-group col-md-12 mb-3 " >
+                                            <label>Leave Type</label>
+                                            <select
+                                                className="form-select"
+                                                name="type"
+                                                id="type"
+                                                value={values.type}
+                                                // onChange={(e) => setFormField(e, setFieldValue)}>
+                                                disabled={true}
+                                            >
+                                                {leaveTypes &&
+                                                    leaveTypes.length &&
+                                                    leaveTypes.map((item: any, index: string) => (
+                                                        <option key={`${index}_${item.id}`} value={item.id}>
+                                                            {item.name}
+                                                        </option>
+                                                    ))}
+                                            </select>
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Date From</label>
+                                            <input type="date"
+                                                onKeyDown={(e) => e.preventDefault()}
+                                                name="dateFrom"
+                                                id="dateFrom"
+                                                className="form-control"
+                                                disabled={true}
+                                                value={values.dateFrom}
+                                                placeholder="dd/mm/yyyy"
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Date To</label>
+                                            <input type="date"
+                                                disabled={true}
+                                                onKeyDown={(e) => e.preventDefault()}
+                                                name="dateTo"
+                                                id="dateTo"
+                                                className="form-control"
+                                                value={values.dateTo}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Reason</label>
+                                            <input type="text"
+                                                disabled={true}
+                                                name="reason"
+                                                id="reason"
+                                                className="form-control"
+                                                value={values.reason}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                                                <thead>
+                                                    <tr>
+                                                        <th style={{ width: 'auto' }}>Date Breakdown</th>
+                                                        <th style={{ width: 'auto' }}>Options</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        leaveBreakdown &&
+                                                        leaveBreakdown.length > 0 &&
+                                                        leaveBreakdown.map((item: any, index: any) => {
+                                                            const { date } = item
+                                                            return (
+                                                                <tr>
+                                                                    <td key={index + 'date'} >{date}</td>
+                                                                    <td key={index} >
+                                                                        <input
+                                                                            type="radio"
+                                                                            name={"leaveCredit" + index.toString()}
+                                                                            id={"leaveCreditWhole" + index.toString()}
+                                                                            checked={item.credit == 1}
+                                                                            disabled={true}
+                                                                            onChange={() => {
+                                                                                setDateOption(index, 1, 'WHOLEDAY')
+                                                                            }}
+                                                                        />
+                                                                        <label htmlFor={"leaveCreditWhole" + index.toString()}
+                                                                            style={{ marginRight: 10 }}>Whole Day</label>
+                                                                        <input
+                                                                            type="radio"
+                                                                            name={"leaveCredit" + index.toString()}
+                                                                            id={"leaveCreditDay" + index.toString()}
+                                                                            checked={item.credit == 0.5}
+                                                                            disabled={true}
+                                                                            onChange={() => {
+                                                                                setDateOption(index, .5, "FIRST_HALF")
+                                                                            }}
+                                                                        /> <label htmlFor={"leaveCreditDay" + index.toString()}
+                                                                            style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
+                                                                        {
+                                                                            item.dayType != 'WHOLEDAY' ?
+                                                                                <>
+                                                                                    <br />
+                                                                                    <input
+                                                                                        type="radio"
+                                                                                        name={"dayTypes" + index.toString()}
+                                                                                        id={"leaveCreditWhole1" + index.toString()}
+                                                                                        checked={item.dayType == 'FIRST_HALF'}
+                                                                                        disabled={true}
+                                                                                        onChange={() => setDateOption(index, .5, "FIRST_HALF")}
+                                                                                    />
+                                                                                    <label htmlFor={"leaveCreditWhole1" + index.toString()}
+                                                                                        style={{ marginRight: 10 }}>First Half</label>
+                                                                                    <input
+                                                                                        type="radio"
+                                                                                        name={"dayTypes" + index.toString()}
+                                                                                        checked={item.dayType == 'SECOND_HALF'}
+                                                                                        id={"leaveCreditDay1" + index.toString()}
+                                                                                        disabled={true}
+                                                                                        onChange={() => setDateOption(index, .5, "SECOND_HALF")}
+                                                                                    />
+                                                                                    <label htmlFor={"leaveCreditDay1" + index.toString()}
+                                                                                        style={{ paddingTop: -10 }}>Second Half</label>
+                                                                                </>
+                                                                                :
+                                                                                null
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </tbody>
+                                            </Table>
+                                            {
+                                                leaveBreakdown &&
+                                                    leaveBreakdown.length == 0 ?
+                                                    <div className="w-100 text-center">
+                                                        <label htmlFor="">No Records Found</label>
+                                                    </div>
+                                                    :
+                                                    null
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                </Form>
+                            )
+                        }}
+                    </Formik>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={viewOTModalShow}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => setViewOTModalShow(false)}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        View Overtime
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                    <Formik
+                        innerRef={formRef}
+                        initialValues={OTInitialValues}
+                        enableReinitialize={true}
+                        validationSchema={null}
+                        onSubmit={(values, actions) => {
+
+                        }}>
+                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                            return (
+                                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                    <div className="row w-100 px-5">
+                                        <div className="form-group col-md-6 mb-3 " >
+                                            <label>OT Classification </label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <input
+                                                className="form-select"
+                                                name="classification"
+                                                id="classification"
+                                                value={values.classification}
+                                                disabled={true}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Shift Date</label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <input type="date"
+                                                name="shiftDate"
+                                                id="shiftDate"
+                                                className="form-control"
+                                                disabled={true}
+                                                value={values.shiftDate}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Start</label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <input type="time"
+                                                name="otStart"
+                                                id="otStart"
+                                                className="form-control"
+                                                disabled={true}
+                                                value={values.otStart}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>End</label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <input type="time"
+                                                name="otEnd"
+                                                id="otEnd"
+                                                className="form-control"
+                                                disabled={true}
+                                                value={values.otEnd}
+                                            />
+                                            {errors && errors.otEnd && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                                            )}
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3">
+                                            <label>Work Type</label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <select
+                                                className="form-select"
+                                                value={values.location}
+                                                disabled={true}
+                                                name="location"
+                                            >
+                                                <option value="" disabled selected>
+                                                    Select Work Type
+                                                </option>
+                                                <option value="ON_SITE">On Site</option>
+                                                <option value="WORK_FROM_HOME">Work From Home</option>
+                                            </select>
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3">
+                                            <label>Breaktime Duration (minutes)</label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <input
+                                                className="form-select"
+                                                value={values.breaktimeDuration}
+                                                disabled={true}
+                                                name="breaktimeDuration"
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3"></div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Indicate Ticket Number (If Applicable) and Reason</label>
+                                            <span className="text-danger ml-2 text-md">*</span>
+                                            <textarea
+                                                name="reason"
+                                                id="reason"
+                                                className="form-control p-2"
+                                                disabled={true}
+                                                style={{ minHeight: 100 }}
+                                                value={values.reason}
+                                            />
+                                        </div>
+                                    </div>
+                                </Form>
+                            )
+                        }}
+                    </Formik>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={viewUTModalShow}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => setViewUTModalShow(false)}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        View Undertime
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                    <Formik
+                        innerRef={formRef}
+                        initialValues={UTInitialValues}
+                        enableReinitialize={true}
+                        validationSchema={null}
+                        onSubmit={(values, actions) => {
+
+                        }}>
+                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                            return (
+                                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                    <div className="row w-100 px-5">
+
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Date</label>
+                                            <input type="date"
+                                                name="shiftDate"
+                                                id="shiftDate"
+                                                disabled={true}
+                                                className="form-control"
+                                                value={values.shiftDate}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>Start</label>
+                                            <input type="time"
+                                                name="utStart"
+                                                id="utStart"
+                                                disabled={true}
+                                                className="form-control"
+                                                value={values.utStart}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-6 mb-3" >
+                                            <label>End</label>
+                                            <input type="time"
+                                                name="utEnd"
+                                                id="utEnd"
+                                                disabled={true}
+                                                className="form-control"
+                                                value={values.utEnd}
+                                            />
+                                        </div>
+                                        <div className="form-group col-md-12 mb-3" >
+                                            <label>Reason</label>
+                                            <textarea
+                                                name="reason"
+                                                id="reason"
+                                                disabled={true}
+                                                className="form-control p-2"
+                                                style={{ minHeight: 100 }}
+                                                value={values.reason}
+                                            />
+                                        </div>
+                                    </div>
+                                </Form>
+                            )
+                        }}
+                    </Formik>
+                </Modal.Body>
+            </Modal>
+
+            <Modal
+                show={viewSchedAdjustmentModalShow}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => {
+
+                    setViewSchedAdjustmentUTModalShow(false)
+                }}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Request Information
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="d-flex align-items-center justify-content-center">
+                    <div className="container">
+                        {/* <h4>reason</h4> {{values.reason}} */}
+                        <p>Name : <span>{SchedAdjustmentInitialValues.lastName + ' ' + SchedAdjustmentInitialValues.firstName}</span> <span>{ }</span></p>
+                        <p>Reason : {SchedAdjustmentInitialValues.reason}</p>
+                        <p>Date From : {Utility.formatDate(SchedAdjustmentInitialValues.dateFrom, 'MM-DD-YYYY')}</p>
+                        <p>Date To : {Utility.formatDate(SchedAdjustmentInitialValues.dateTo, 'MM-DD-YYYY')}</p>
+                        <p>Shift Starts : {SchedAdjustmentInitialValues.startShift}</p>
+                        <p>Start of Break : {SchedAdjustmentInitialValues.startBreak}</p>
+                        <p>End of Break : {SchedAdjustmentInitialValues.endBreak}</p>
+                        <p>Shift Ends : {SchedAdjustmentInitialValues.endShift}</p>
+
+                        <p>Status : {SchedAdjustmentInitialValues.status}</p>
+                    </div>
+                </Modal.Body>
+
+            </Modal>
+
+            <Modal
+                size="lg"
+                show={viewCOAModalShow}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => {
+                    setViewCOAModalShow(false)
+                }}
+                dialogClassName="modal-90w"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Request Information
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="d-flex align-items-center justify-content-center">
+                    <div className="container">
+                        {/* <h4>reason</h4> {{values.reason}} */}
+                        <p>Name : <span>{COAInitialValues.lastName + ' ' + COAInitialValues.firstName}</span> <span>{ }</span></p>
+                        <p>Reason : {COAInitialValues.reason}</p>
+                        <p>Type : {COAInitialValues.type}</p>
+                        <p>Status : {COAInitialValues.status}</p>
+
+                        <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '100px' }}>Shift Date</th>
+                                    <th style={{ width: '100px' }}>Type</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {coaBreakdown.map((initialValues: any, index: any) => (
+                                    <tr key={`coaBreakdown-${index}`}>
+                                        <td>{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
+                                        <td>{initialValues.coaBdType}</td>
+                                        <td>{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
+                                        <td>{initialValues.time}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                </Modal.Body>
+
+            </Modal>
         </>} />
+
+
     )
 }

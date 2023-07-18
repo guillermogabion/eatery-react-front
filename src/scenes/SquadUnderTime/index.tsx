@@ -334,7 +334,7 @@ export const SquadUndertime = (props: any) => {
 
                                             </label>
                                             <>
-                                                {authorizations.includes("Request:Update") && item.status == "APPROVED" ? (
+                                                {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
                                                             onClick={() => {
@@ -346,7 +346,7 @@ export const SquadUndertime = (props: any) => {
                                                         </label>
                                                     </>
                                                 ) : null}
-                                                {authorizations.includes("Request:Approve") && item.status == "APPROVED" ? (
+                                                {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
                                                             onClick={() => {
@@ -358,7 +358,7 @@ export const SquadUndertime = (props: any) => {
                                                         </label>
                                                     </>
                                                 ) : null}
-                                                {authorizations.includes("Request:Reject") && item.status == "APPROVED" ? (
+                                                {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
                                                             onClick={() => {
