@@ -70,7 +70,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   
   const routes: any = [
     { path: "/page/404", component: Page404 },
-    { path: "/request/leave", component: LastPay },
+    { path: "/request/leave", component: Leaves },
     { path: "/request/ot", component: Overtime },
     { path: "/request/ut", component: Undertime },
     { path: "/request/schedule-adjustment", component: ScheduleAdjustment },
@@ -82,7 +82,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/user", component: ChangePassword },
     { path: "/report", component: Report },
     { path: "/dashboard", component: Dashboard },
-    { path: "/timekeeping", component: Reimbursement },
+    { path: "/timekeeping", component: Dashboard },
     { path: "/employee", component: Employee },
     { path: "/holiday", component: Holiday },
     { path: "/request", component: Squad },
