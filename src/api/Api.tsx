@@ -256,6 +256,7 @@ const Api: any = {
   lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",
   generateLastPay: process.env.REACT_APP_API_URL + "lastpay/generate",
   lastPayInfo: process.env.REACT_APP_API_URL + "lastpay/info",
+  lastPayBankUpload: process.env.REACT_APP_API_URL + "lastpay/bankupload",
 
   getDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/info",
   updateDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/update",
@@ -276,6 +277,10 @@ const Api: any = {
   getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
   deleteRoleAuth : process.env.REACT_APP_API_URL + "role/authority/delete",
   addRoleAuth : process.env.REACT_APP_API_URL + "role/authority/add",
+
+
+  // Reimbursement
+  getAllReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/all",
 }
 
 export default Api

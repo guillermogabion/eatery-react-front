@@ -32,7 +32,8 @@ import {
   Payslip,
   ApproverLogin,
   Access,
-  Page404
+  Page404,
+  Reimbursement
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -69,7 +70,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
   
   const routes: any = [
     { path: "/page/404", component: Page404 },
-    { path: "/request/leave", component: Leaves },
+    { path: "/request/leave", component: LastPay },
     { path: "/request/ot", component: Overtime },
     { path: "/request/ut", component: Undertime },
     { path: "/request/schedule-adjustment", component: ScheduleAdjustment },
@@ -81,7 +82,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/user", component: ChangePassword },
     { path: "/report", component: Report },
     { path: "/dashboard", component: Dashboard },
-    { path: "/timekeeping", component: Dashboard },
+    { path: "/timekeeping", component: Reimbursement },
     { path: "/employee", component: Employee },
     { path: "/holiday", component: Holiday },
     { path: "/request", component: Squad },
@@ -93,6 +94,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/request/type", component: LeaveTypes },
     { path: "/payroll", component: Payroll },
     { path: "/payroll/last-pay", component: LastPay },
+    { path: "/payroll/reimbursement", component: Reimbursement },
     { path: "/payroll/adjustment", component: PayrollAdjustment },
     { path: "/payroll/recurring", component: Recurring },
     { path: "/payroll/settings", component: PayrollSetting },
