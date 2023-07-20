@@ -168,7 +168,7 @@ export const Access = (props: any) => {
                       {tableHeaders &&
                         tableHeaders.length &&
                         tableHeaders.map((item: any, index: any) => {
-                          return <th style={{ width: "auto" }}>{item}</th>;
+                          return <th id={"accessrights_"+item+"_header"} style={{ width: "auto" }}>{item}</th>;
                         })}
                     </tr>
                   </thead>
@@ -178,17 +178,17 @@ export const Access = (props: any) => {
                       roleList.map((item: any, index: any) => {
                         return (
                           <tr>
-                            <td> {item.roleId}</td>
-                            <td> {item.name}</td>
-                            <td>
-                              <label
+                            <td id="accessrights_roleid_data"> {item.roleId}</td>
+                            <td id="accessrights_name_data"> {item.name}</td>
+                            <td id="accessrights_labels_data">
+                              <label id="accessrights_roleid_label"
                                 onClick={() => {
                                   getRoleInfo(item.roleId, 0);
                                 }}
                               >
                                 Manage
                               </label>
-                              <label
+                              <label id="accessrights_roleid_label"
                                 onClick={() => {
                                   addAccess(item.roleId);
                                 }}
@@ -211,6 +211,7 @@ export const Access = (props: any) => {
                 keyboard={false}
                 onHide={() => setManageModalShow(false)}
                 dialogClassName="modal-90w"
+                id="accessrights_authlist_modal"
               >
                 <Modal.Header closeButton>
                   <Modal.Title id="contained-modal-title-vcenter">
@@ -225,7 +226,7 @@ export const Access = (props: any) => {
                           {tableRoleAuth &&
                             tableRoleAuth.length &&
                             tableRoleAuth.map((item: any, index: any) => {
-                              return <th style={{ width: "auto" }}>{item}</th>;
+                              return <th id={"accessrights_"+item+"_mheader"} style={{ width: "auto" }}>{item}</th>;
                             })}
                         </tr>
                       </thead>
@@ -236,10 +237,10 @@ export const Access = (props: any) => {
                           roleAuthList.content.map((item: any, index: any, roleId: any) => {
                             return (
                               <tr>  
-                                <td> {item.authorityId}</td>
-                                <td> {item.name}</td>
-                                <td>
-                                  <label
+                                <td id="accessrights_authorityid_data"> {item.authorityId}</td>
+                                <td id="accessrights_authname_data"> {item.name}</td>
+                                <td id="accessrights_labels_mdata">
+                                  <label id="accessrights_delete_label"
                                     onClick={() => {
                                       deleteAccess(item.id,selectedRoleId, roleAuthList.pageable.pageNumber);
                                     }}

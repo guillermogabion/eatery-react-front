@@ -65,6 +65,7 @@ export const Report = (props: any) => {
                         <div className="d-flex justify-content-end mt-3" >
                             <div>
                                 <Button
+                                    id="report_downloadexcel_btn"
                                     className="mx-2"
                                     onClick={() => {
                                         setDownloadModalShow(true)
@@ -119,6 +120,7 @@ export const Report = (props: any) => {
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center">
                     <Button
+                        id="report_downloadexcel_modalbtn"
                         onClick={() => downloadExcel(fromDate, toDate)}
                         disabled={isSubmit}>
                         {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed

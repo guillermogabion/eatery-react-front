@@ -100,11 +100,13 @@ export const Payroll = (props: any) => {
                             <div>
                                 <div className="w-100 flex mb-[10px]">
                                     <Button
+                                        id="payroll_createpayroll_btn"
                                         onClick={() => setPayrollPeriodModal(true)}
                                         className="btn btn-primary mx-2">
                                         Create Payroll
                                     </Button>
                                     <Button
+                                        id="payroll_exportpayroll_btn"
                                         onClick={() => alert('Ongoing')}
                                         disabled={true}
                                         className="btn btn-primary mx-2">
@@ -133,15 +135,16 @@ export const Payroll = (props: any) => {
                                                 payrolls.content.map((item: any, index: any) => {
                                                     return (
                                                         <tr>
-                                                            <td> {item.periodYear} </td>
-                                                            <td> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
-                                                            <td>{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
-                                                            <td>{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                            <td id="payroll_periodyear_payrollsdata"> {item.periodYear} </td>
+                                                            <td id="payroll_periodmonth_payrollsdata"> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
+                                                            <td id="payroll_datefrom_payrollsdata">{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
+                                                            <td id="payroll_dateto_payrollsdata">{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                             {/* <td>{item.transactionDate.split("T")[0]} </td> */}
-                                                            <td>{item.description} </td>
-                                                            <td>{item.isGenerated == true ? "Processed" : "Locked"} </td>
+                                                            <td id="payroll_description_payrollsdata">{item.description} </td>
+                                                            <td id="payroll_isgenerated_payrollsdata">{item.isGenerated == true ? "Processed" : "Locked"} </td>
                                                             <td>
                                                                 <label
+                                                                    id="payroll_update_payrollslabel"
                                                                     onClick={() => {
                                                                         setIsCreatePayroll(true)
                                                                         setPayrollData({
@@ -159,6 +162,7 @@ export const Payroll = (props: any) => {
                                                                 </label>
                                                                 <br />
                                                                 <label
+                                                                    id="payroll_audit_payrollslabel"
                                                                     onClick={() => {
                                                                         setIsCreatePayroll(true)
                                                                         setPayrollData({
@@ -235,7 +239,7 @@ export const Payroll = (props: any) => {
                                         }}
                                         className="mb-3 w-100 lg:w-[80vw]"
                                     >
-                                        <Tab eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
+                                        <Tab id="payroll_timekeeping_audittabs" eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
                                             {
                                                 key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
                                                     <Timekeeping payrollData={payrollData} />
@@ -243,7 +247,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab eventKey="employee request" title="Employee Request">
+                                        <Tab id="payroll_employeerequest_audittabs" eventKey="employee request" title="Employee Request">
                                             {
                                                 key == 'employee request' && Object.keys(payrollData).length != 0 ?
                                                     <Leaves payrollData={payrollData} />
@@ -251,7 +255,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab eventKey="recurring" title="Recurring" >
+                                        <Tab id="payroll_recurring_audittabs" eventKey="recurring" title="Recurring" >
                                             {
                                                 key == 'recurring' ?
                                                     <Recurring payrollData={payrollData} />
@@ -259,7 +263,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab eventKey="adjustment" title="Adjustment">
+                                        <Tab id="payroll_adjustment_audittabs" eventKey="adjustment" title="Adjustment">
                                             {
                                                 key == 'adjustment' ?
                                                     <Adjustment payrollData={payrollData} />
@@ -267,7 +271,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab eventKey="payroll" title="Payroll">
+                                        <Tab id="payroll_payroll_audittabs" eventKey="payroll" title="Payroll">
                                             {
                                                 key == 'payroll' && Object.keys(payrollData).length != 0 ?
                                                     <GeneratePayroll payrollData={payrollData} />
@@ -403,7 +407,7 @@ export const Payroll = (props: any) => {
                                                     })}
                                             </select>
                                             {errors && errors.payrollMonth && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollMonth}</p>
+                                                <p id="payroll_payrollmonth_payrollmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.payrollMonth}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-lg-6 col-md-12 mb-2" >
@@ -417,7 +421,7 @@ export const Payroll = (props: any) => {
                                                 placeholder="dd/mm/yyyy"
                                             />
                                             {errors && errors.from && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.from}</p>
+                                                <p id="payroll_from_payrollmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.from}</p>
                                             )}
                                         </div>
                                         {/* <div className="form-group col-lg-6 col-md-12 mb-2" >
@@ -442,7 +446,7 @@ export const Payroll = (props: any) => {
                                                 placeholder="dd/mm/yyyy"
                                             />
                                             {errors && errors.to && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.to}</p>
+                                                <p id="payroll_to_payrollmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.to}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3">
@@ -457,11 +461,12 @@ export const Payroll = (props: any) => {
                                                 onChange={(e) => { setFieldValue('description', e.target.value) }}
                                             />
                                             {errors && errors.description && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                                <p id="payroll_description_payrollmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
                                             )}
                                         </div>
                                         <div className="w-full mt-5 d-flex justify-content-center ">
                                             <button
+                                                id="payroll_save_payrollmodalbtn"
                                                 type="submit"
                                                 className="btn btn-primary px-5">
                                                 Save

@@ -230,7 +230,7 @@ const Adjustment = (props: any) => {
                                 <option value="NonTaxable">Non-Taxable</option>
                             </select>
                             {showButtonTypetype && (
-                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetTypetype}>
+                                <span id="payrollsettingadjustment_closetype_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetTypetype}>
                                 X
                                 </span>
                             )}
@@ -252,13 +252,14 @@ const Adjustment = (props: any) => {
                             <option value={false}>Add</option>
                         </select>
                         {showButtonIsDeduction && (
-                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
+                                <span id="payrollsettingadjustment_closeaction_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
                                 X
                                 </span>
                             )}
                     </div>
                     <div className="input-container col-md-3">
                         <Button
+                        id="payrollsettingadjustment_search_btn"
                         style={{ width: 210 }}
                         onClick={() => getAllAdjustmentType(0)}
                         className="btn btn-primary mx-2 mt-4">
@@ -289,13 +290,14 @@ const Adjustment = (props: any) => {
                         adjustmentType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
-                                    <td> {item.name} </td>
-                                    <td> {item.description}</td>
-                                    <td> {Utility.removeUnderscore(item.type)}</td>
-                                    <td> {item.deduction == true ? "Deduct" : "Add" }</td>
-                                    <td> {item.affectsGross == true ? "YES" : "NO" }</td>
+                                    <td id="payrollsettingadjustment_name_adjtypedata"> {item.name} </td>
+                                    <td id="payrollsettingadjustment_description_adjtypedata"> {item.description}</td>
+                                    <td id="payrollsettingadjustment_type_adjtypedata"> {Utility.removeUnderscore(item.type)}</td>
+                                    <td id="payrollsettingadjustment_deduction_adjtypedata"> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td id="payrollsettingadjustment_affectsgross_adjtypedata"> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
+                                        id="payrollsettingadjustment_update_adjtypelabel"
                                         onClick={() => {
                                             getAdjustmentData(item.id)
                                         }}
@@ -349,6 +351,7 @@ const Adjustment = (props: any) => {
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
+                        id="payrollsettingadjustment_addadjustment_adjtypebtn"
                         className="mx-2"
                         onClick={() => {
                             setModalShow(true)
@@ -493,7 +496,7 @@ const Adjustment = (props: any) => {
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                             {errors.name && touched.name && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
+                                                <p id="payrollsettingadjustment_errorname_formp" style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-6 mb-3">
@@ -506,7 +509,7 @@ const Adjustment = (props: any) => {
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                             {errors.description && touched.description && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                                <p id="payrollsettingadjustment_errordescription_formp" style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
@@ -533,7 +536,7 @@ const Adjustment = (props: any) => {
                                                 <option value="Non_Taxable">Non-Taxable</option>
                                             </select>
                                             {errors.type && touched.type && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                                                <p id="payrollsettingadjustment_errortype_formp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
@@ -552,7 +555,7 @@ const Adjustment = (props: any) => {
                                                 <option value={false}>Add</option>
                                             </select>
                                             {errors.deduction && touched.deduction && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
+                                                <p id="payrollsettingadjustment_erroraction_formp" style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
@@ -568,12 +571,13 @@ const Adjustment = (props: any) => {
                                                 <option value={false}>No</option>
                                             </select>
                                             {errors.affectsGross && touched.affectsGross && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.affectsGross}</p>
+                                                <p id="payrollsettingadjustmentent_errorgaffectsgross_formp" style={{ color: "red", fontSize: "12px" }}>{errors.affectsGross}</p>
                                             )}
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end px-5">
                                     <button
+                                        id="payrollsettingadjustment_save_formbtn"
                                         type="submit"
                                         className="btn btn-primary mx-2"
                                         disabled={!isValid}

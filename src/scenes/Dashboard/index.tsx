@@ -167,18 +167,19 @@ export const Dashboard = (props: any) => {
           <h3 className="bold-text">Time Card</h3>
           <div className="d-flex">
             <div className="" style={{ width: 200, textAlign: left }}>
-              <h6 className="bold-text pt-2">Shift Schedule:</h6>
-              <h6 className="bold-text pt-2">First login:</h6>
-              <h6 className="bold-text pt-2">Last logout:</h6>
-              <h6 className="bold-text pt-2">Attendance Status:</h6>
+              <h6 id="dashboard_shiftschedule_label" className="bold-text pt-2">Shift Schedule:</h6>
+              <h6 id="dashboard_firstlogin_label" className="bold-text pt-2">First login:</h6>
+              <h6 id="dashboard_lastlogout_label" className="bold-text pt-2">Last logout:</h6>
+              <h6 id="dashboard_attendancestatus_label" className="bold-text pt-2">Attendance Status:</h6>
             </div>
             <div className="" style={{ marginLeft: 15, textAlign: left }}>
-              <h6 className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
+              <h6 id="dashboard_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
 
 
-              <h6 className="font-weight-bold pt-2">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
-              <h6 className="font-weight-bold pt-2">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
+              <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-2">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
+              <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-2">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
               <label
+                id="dashboard_attendancestatus_value"
                 className="font-weight-bold p-2 px-3 text-dark mt-1"
                 style={{ background: '#E9E9E9', width: 'auto', borderRadius: 5 }}>
                 {/* { (hasTimeIn == true ) ? "Awaiting time out" : "Awaiting time in"} */}
@@ -191,14 +192,14 @@ export const Dashboard = (props: any) => {
         <div className="d-flex" style={{ justifyContent: right, marginTop: 230 }}>
           <div>
             <div className="d-flex justify-content-center">
-              <img src={bundy_clock} className="Bundy Clock" />
+              <img id="dashboard_bundyclock_img" src={bundy_clock} className="Bundy Clock" />
             </div>
             <div className="row mt-3">
-              <Button className={hasTimeIn ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
+              <Button id="dashboard_timein_img" className={hasTimeIn ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
                 style={{ width: 120 }}
                 onClick={() => makeAttendance('time in')}
               >Time in</Button>
-              <Button className={hasTimeOut ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
+              <Button id="dashboard_timeout_img" className={hasTimeOut ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
                 style={{ width: 120 }}
                 onClick={() => makeAttendance('time out')}>Time out</Button>
             </div>

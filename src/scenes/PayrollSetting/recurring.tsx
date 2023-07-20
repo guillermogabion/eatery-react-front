@@ -255,6 +255,7 @@ const Recurring = (props: any) => {
                     </div>
                     <div className="input-container col-md-3">
                         <Button
+                        id="payrollsettingrecurring_search_btn"
                         style={{ width: 210 }}
                         onClick={() => getAllRecurringType(0)}
                         className="btn btn-primary mx-2 mt-4">
@@ -286,13 +287,14 @@ const Recurring = (props: any) => {
                         recurringType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
-                                    <td> {item.name} </td>
-                                    <td> {item.description}</td>
-                                    <td> {Utility.removeUnderscore(item.type)}</td>
-                                    <td> {item.deduction == true ? "Deduct" : "Add" }</td>
-                                    <td> {item.affectsGross == true ? "YES" : "NO" }</td>
+                                    <td id="payrollsettingrecurring_name_recurringtypedata"> {item.name} </td>
+                                    <td id="payrollsettingrecurring_description_recurringtypedata"> {item.description}</td>
+                                    <td id="payrollsettingrecurring_type_recurringtypedata"> {Utility.removeUnderscore(item.type)}</td>
+                                    <td id="payrollsettingrecurring_deduction_recurringtypedata"> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td id="payrollsettingrecurring_affectgross_recurringtypedata"> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
+                                        id="payrollsettingrecurring_update_recurringtypelabel"
                                         onClick={() => {
                                             getRecurringData(item.id)
                                         }}
@@ -347,6 +349,7 @@ const Recurring = (props: any) => {
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
+                        id="payrollsettingrecurring_addrecurring_recurringtypebtn"
                         className="mx-2"
                         onClick={() => {
                             setModalShow(true)
@@ -493,7 +496,7 @@ const Recurring = (props: any) => {
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                              {errors.name && touched.name && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
+                                                <p id="payrollsettingrecurring_errorname_formp" style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-6 mb-3">
@@ -506,7 +509,7 @@ const Recurring = (props: any) => {
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                              {errors.description && touched.description && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                                <p id="payrollsettingrecurring_errordescription_formp" style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
@@ -522,7 +525,7 @@ const Recurring = (props: any) => {
                                                 <option value="Non_Taxable">Non-Taxable</option>
                                             </select>
                                             {errors.type && touched.type && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                                                <p id="payrollsettingrecurring_errotype_formp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
@@ -541,7 +544,7 @@ const Recurring = (props: any) => {
                                                 <option value={false}>Add</option>
                                             </select>
                                             {errors.deduction && touched.deduction && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
+                                                <p id="payrollsettingrecurring_errordeduction_formp" style={{ color: "red", fontSize: "12px" }}>{errors.deduction}</p>
                                             )}
                                     </div>
                                     <div className="form-group col-md-4 mb-3">
@@ -557,12 +560,13 @@ const Recurring = (props: any) => {
                                                 <option value={false}>No</option>
                                             </select>
                                             {errors.affectsGross && touched.affectsGross && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.affectsGross}</p>
+                                                <p id="payrollsettingrecurring_erroraffectedgross_formp" style={{ color: "red", fontSize: "12px" }}>{errors.affectsGross}</p>
                                             )}
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-end px-5">
                                     <button
+                                        id="payrollsettingrecurring_save_formbtn"
                                         type="submit"
                                         className="btn btn-primary mx-2"
                                         disabled={!isValid}

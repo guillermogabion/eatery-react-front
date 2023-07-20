@@ -284,10 +284,10 @@ export const Payslip = (props: any) => {
             <div className="w-100 px-5 py-5">
                 <div className="w-100 pt-2">
                     <Tabs defaultActiveKey="tab1" id="my-tabs">
-                        <Tab eventKey="tab1" title="Sent">
+                        <Tab id="payslip_sent_tab" eventKey="tab1" title="Sent">
                             <Sent />
                         </Tab>
-                        <Tab eventKey="tab2" title="Unsent">
+                        <Tab id="payslip_unsent_tab" eventKey="tab2" title="Unsent">
                             <Unsent/>
                         </Tab>
                     </Tabs>
@@ -296,12 +296,14 @@ export const Payslip = (props: any) => {
                 <div className="d-flex justify-content-end mt-3" >
                     <div>
                         <Button className="mx-2"
+                            id="payslip_exportpayslip_btn"
                             onClick={() => {
                             // setModalUploadShow(true)
                             // setModalShow(true)
                             }}
                         >Export Payslip</Button>
                         <Button
+                            id="payslip_emailpayslip_btn"
                             className="mx-2"
                             onClick={() => {
                             setModalShow(true)
@@ -351,6 +353,7 @@ export const Payslip = (props: any) => {
                     <div className="input-container col-md-3">
                         <label>Employee Name</label>
                             <EmployeeDropdown
+                                id="payslip_employeename_modaldropdown"
                                 placeholder={"Employee"}
                                 singleChangeOption={singleChangeOption}
                                 name="userId"
@@ -360,6 +363,7 @@ export const Payslip = (props: any) => {
                     </div>
                     <div className="col-md-2 pt-4">
                         <Button
+                            id="payslip_search_modalbtn"
                             style={{ width: 210 }}
                             onClick={() => getPayrollList()}
                             className="btn btn-primary mx-2">
@@ -396,6 +400,7 @@ export const Payslip = (props: any) => {
                                                     <tr>
                                                         <td>
                                                             <Form.Check
+                                                                id="payslip_check_formdata"
                                                                 type="checkbox"
                                                                 label=""
                                                                 checked={item.isCheck}
@@ -404,8 +409,8 @@ export const Payslip = (props: any) => {
                                                                 }}
                                                             />
                                                         </td>
-                                                        <td>{item.id}</td>
-                                                        <td>{item.employeeName}</td>
+                                                        <td id="payslip_id_formdata">{item.id}</td>
+                                                        <td id="payslip_employeename_formdata">{item.employeeName}</td>
                                                     </tr>
                                                 )
                                             })
@@ -432,6 +437,7 @@ export const Payslip = (props: any) => {
                 </div>
                 <div className="d-flex justify-content-end">
                     <Button
+                    id="payslip_send_formbtn"
                     style={{ width: 210 }}
                     onClick={() => {
                         sendEmailIndividual()

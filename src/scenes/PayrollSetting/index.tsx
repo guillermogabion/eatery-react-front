@@ -14,19 +14,19 @@ export const PayrollSetting = (props: any) => {
               <div>
                 <div className="w-100 pt-2">
                     <Tabs defaultActiveKey="tab1" id="my-tabs">
-                        <Tab eventKey="tab1" title="Mandatories">
+                        <Tab id="payrollsetting_mandatories_tab" eventKey="tab1" title="Mandatories">
                             <Mandatory />
                         </Tab>
-                        <Tab eventKey="tab2" title="Adjustments">
+                        <Tab id="payrollsetting_adjustments_tab" eventKey="tab2" title="Adjustments">
                             <Adjustment/>
                         </Tab>
-                        <Tab eventKey="tab3" title="Recurring">
+                        <Tab id="payrollsetting_recurring_tab" eventKey="tab3" title="Recurring">
                             <Recurring/>
                         </Tab>
-                        <Tab eventKey="tab4" title="Overtime Setting">
+                        <Tab id="payrollsetting_overtimesetting_tab" eventKey="tab4" title="Overtime Setting">
                             <Overtime />
                         </Tab>
-                        <Tab eventKey="tab5" title="Settings">
+                        <Tab id="payrollsetting_settings_tab" eventKey="tab5" title="Settings">
                             <Settings />
                         </Tab>
                     </Tabs>

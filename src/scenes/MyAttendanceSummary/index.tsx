@@ -235,16 +235,17 @@ export const MyAttendanceSummary = (props: any) => {
                                         allAttendance.content.map((item: any, index: any) => {
                                             return (
                                                 <tr>
-                                                    <td> {item.lastName}, {item.firstName} </td>
-                                                    <td> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
-                                                    <td> {item.schedule} </td>
-                                                    <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
-                                                    <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
-                                                    <td> { Utility.removeUnderscore(item.dayType) } </td>
-                                                    <td> {item.status} </td>
+                                                    <td id="myattendancesummary_name_allattendancedata"> {item.lastName}, {item.firstName} </td>
+                                                    <td id="myattendancesummary_date_allattendancedata"> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
+                                                    <td id="myattendancesummary_schedule_allattendancedata"> {item.schedule} </td>
+                                                    <td id="myattendancesummary_firstlogin_allattendancedata"> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
+                                                    <td id="myattendancesummary_lastlogin_allattendancedata"> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                                                    <td id="myattendancesummary_daytype_allattendancedata"> { Utility.removeUnderscore(item.dayType) } </td>
+                                                    <td id="myattendancesummary_status_allattendancedata"> {item.status} </td>
                                                     {
                                                         data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <td> <label
+                                                                id="myattendancesummary_update_allattendancelabel"
                                                                 onClick={() => {
                                                                     setUpdateData(item)
                                                                     setInitialValues({
@@ -262,6 +263,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                             </label>
                                                                 <br />
                                                                 <label
+                                                                    id="myattendancesummary_delete_allattendancelabel"
                                                                     onClick={() => {
                                                                         setDeleteInitialValues({
                                                                             "userid": filterData && filterData['userid'],
@@ -346,6 +348,7 @@ export const MyAttendanceSummary = (props: any) => {
                             <div>
                                 <label>Date From</label>
                                 <input
+                                    id="myattendancesummary_datefrom_attendancesummaryinput"
                                     name="fromDate"
                                     type="date"
                                     autoComplete="off"
@@ -361,6 +364,7 @@ export const MyAttendanceSummary = (props: any) => {
                                 <label>Date To</label>
                                 <div className="input-container">
                                     <input
+                                        id="myattendancesummary_dateto_attendancesummaryinput"
                                         name="toDate"
                                         type="date"
                                         autoComplete="off"
@@ -374,6 +378,7 @@ export const MyAttendanceSummary = (props: any) => {
                             </div>
 
                             <Button
+                                id="myattendancesummary_search_attendancesummarybtn"
                                 style={{ width: 120 }}
                                 onClick={() => getAllAttendance(0)}
                                 className="btn btn-primary mx-2 mt-4">
@@ -382,6 +387,7 @@ export const MyAttendanceSummary = (props: any) => {
                             {
                                 data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <Button
+                                        id="myattendancesummary_addbiolog_attendancesummarybtn"
                                         style={{ width: 130 }}
                                         onClick={() => setAddBioModal(true)}
                                         disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
@@ -444,6 +450,7 @@ export const MyAttendanceSummary = (props: any) => {
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center">
                     <Button
+                        id="myattendancesummary_downloadexcel_attendancesummarybtn"
                         onClick={() => downloadExcel(fromDate, toDate)}
                         disabled={isSubmit}>
                         {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
@@ -469,6 +476,7 @@ export const MyAttendanceSummary = (props: any) => {
                     <div className="form-group col-md-12 mb-3" >
                         <label>File</label>
                         <input
+                            id="myattendancesummary_import_attendancesummaryinput"
                             type="file"
                             accept=".xlsx"
                             className="file-input-style w-100"
@@ -481,6 +489,7 @@ export const MyAttendanceSummary = (props: any) => {
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center">
                     <Button
+                        id="myattendancesummary_uploadexcel_attendancesummarybtn"
                         onClick={() => uploadExcel()}
                         disabled={isSubmit}>
                         {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
@@ -568,7 +577,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                 onChange={handleChange}
                                             />
                                             {errors && errors.shiftDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                <p id="myattendancesummary_errorshiftdate_deletelogp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -594,7 +603,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                     ))}
                                             </select>
                                             {errors && errors.type && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                                                <p id="myattendancesummary_errortype_deletelogp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                                             )}
                                         </div>
                                     </div>
@@ -602,6 +611,7 @@ export const MyAttendanceSummary = (props: any) => {
                                     <Modal.Footer className="d-flex justify-content-center">
                                         <div className="d-flex justify-content-center px-5">
                                             <button
+                                                id="myattendancesummary_proceed_deletelogbtn"
                                                 type="submit"
                                                 className="btn btn-primary">
                                                 Proceed
@@ -726,7 +736,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                 onChange={handleChange}
                                             />
                                             {errors && errors.shiftDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                <p id="myattendancesummary_errorshiftdate_addbiop" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -739,7 +749,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                 onChange={handleChange}
                                             />
                                             {errors && errors.tkDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
+                                                <p id="myattendancesummary_errortkdate_addbiop" style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -753,7 +763,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                 onChange={handleChange}
                                             />
                                             {errors && errors.tkTime && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
+                                                <p id="myattendancesummary_errortktime_addbiop" style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -780,7 +790,7 @@ export const MyAttendanceSummary = (props: any) => {
                                                     ))}
                                             </select>
                                             {errors && errors.type && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                                                <p id="myattendancesummary_errortype_addbiop" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                                             )}
                                         </div>
                                     </div>
@@ -788,6 +798,7 @@ export const MyAttendanceSummary = (props: any) => {
                                     <Modal.Footer>
                                         <div className="d-flex justify-content-end px-5">
                                             <button
+                                                id="myattendancesummary_save_addbiobtn"
                                                 type="submit"
                                                 className="btn btn-primary">
                                                 Save

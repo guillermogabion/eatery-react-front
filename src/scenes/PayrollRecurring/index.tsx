@@ -586,6 +586,7 @@ export const Recurring = (props: any) => {
                         <div className="input-container col-md-1">
                             <label>Employee</label>
                         <EmployeeDropdown
+                            id="payrollrecurring_employee_dropdown"
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
                             name="userId"
@@ -596,6 +597,7 @@ export const Recurring = (props: any) => {
                         <div className="input-container col-md-1">
                             <label>Amount</label>
                             <input type="text" 
+                            id="payrollrecurring_amount_input"
                             className="form-control"
                             name="adjustmentAmount"
                             placeholder="Amount"
@@ -624,7 +626,7 @@ export const Recurring = (props: any) => {
                             
                             </select>
                             {showButton && (
-                                <span className="clear-icon" onClick={reset}>
+                                <span id="payrollrecurring_closetype_span" className="clear-icon" onClick={reset}>
                                 X
                                 </span>
                             )}
@@ -656,7 +658,7 @@ export const Recurring = (props: any) => {
                             ))}
                             </select>
                             {showButtonRecurring && (
-                                <span className="clear-icon" onClick={resetRecurring}>
+                                <span id="payrollrecurring_closerecurringname_span" className="clear-icon" onClick={resetRecurring}>
                                 X
                                 </span>
                             )}
@@ -664,6 +666,7 @@ export const Recurring = (props: any) => {
                         <div className="input-container col-md-1">
                             <label>End Date</label>
                             <input type="date" 
+                            id="payrollrecurring_enddate_input"
                             className="form-control"
                             name="endDate"
                             placeholder="End Date"
@@ -692,7 +695,7 @@ export const Recurring = (props: any) => {
                             
                             </select>
                             {showButtonStatus && (
-                                <span className="clear-icon" onClick={resetStatus}>
+                                <span id="payrollrecurring_closestatus_span" className="clear-icon" onClick={resetStatus}>
                                 X
                                 </span>
                             )}
@@ -704,6 +707,7 @@ export const Recurring = (props: any) => {
                        
                         <div className="input-container col-md-2 pt-4">
                             <Button
+                            id="payrollrecurring_search_btn"
                             style={{ width: 210 }}
                             onClick={() => getAllRecurringList(0)}
                             className="btn btn-primary mx-2">
@@ -735,15 +739,16 @@ export const Recurring = (props: any) => {
 
                     return (
                         <tr>
-                        <td> {item.employeeId} </td>
-                        <td> {item.employeeName} </td>
-                        <td> {item.adjustmentAmount} </td>
-                        <td> {item.endDate} </td>
-                        <td> {item.recurringName} </td>
-                        <td> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
+                        <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
+                        <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
+                        <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {item.adjustmentAmount} </td>
+                        <td id="payrollrecurring_enddate_recurringlistdata"> {item.endDate} </td>
+                        <td id="payrollrecurring_recurringname_recurringlistdata"> {item.recurringName} </td>
+                        <td id="payrollrecurring_active_recurringlistdata"> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
 
                         <td>
                         <label
+                        id="payrollrecurring_update_recurringlistlabel"
                         onClick={() => {
                             getRecurring(item.id)
                         }}
@@ -800,17 +805,20 @@ export const Recurring = (props: any) => {
         <div className="d-flex justify-content-end mt-3" >
             <div>
                 <Button className="mx-2"
+                    id="payrollrecurring_addrecurring_recurringlistbtn"
                     onClick={() => {
                     // setModalUploadShow(true)
                     setModalShow(true)
                     }}
                 >Add Recurring</Button>
                 <Button
+                    id="payrollrecurring_importrecurring_recurringlistbtn"
                     className="mx-2"
                     onClick={() => {
                         setUploadModalShow(true)
                     }}>Import Recurring</Button>
                 <Button
+                    id="payrollrecurring_exportrecurring_recurringlistbtn"
                     className="mx-2"
                     onClick={() => {
                         setDownloadModalShow(true)
@@ -818,6 +826,7 @@ export const Recurring = (props: any) => {
                     }
                 >Export Recurring</Button>
                 <Button
+                    id="payrollrecurring_downloadrecurringtemplate_recurringlistbtn"
                     className="mx-2"
                     onClick={
                        downloadTemplate
@@ -869,6 +878,7 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-3 mb-3">
                                         <label>Employee ID</label>
                                             <input
+                                            id="payrollrecurring_employeeid_forminput"
                                             readOnly
                                             className="formControl"
                                             name="userId"
@@ -881,6 +891,7 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-3 mb-3">
                                     <label>Employee Name *</label>
                                     <select
+                                        id="payrollrecurring_employeename_formselect"
                                         disabled
                                         className="form-select"
                                         value={values.userId}
@@ -965,6 +976,7 @@ export const Recurring = (props: any) => {
                                         <label>Amount</label>
                                         <input
                                         type="number"
+                                        id="payrollrecurring_amount_forminput"
                                         className={`form-control ${touched.adjustmentAmount && errors.adjustmentAmount ? 'is-invalid' : ''}`}
                                         name="adjustmentAmount"
                                         value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
@@ -982,6 +994,7 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-4 mb-3">
                                         <label>End Date</label>
                                         <input
+                                        id="payrollrecurring_enddate_forminput"
                                         type="date"
                                         className="formControl"
                                         name="endDate"
@@ -994,6 +1007,7 @@ export const Recurring = (props: any) => {
                                     <div className="col-md-4 mb-3">
                                         <label>Status</label>
                                         <select
+                                            id="payrollrecurring_status_formstatus"
                                             name="active"
                                             className="formControl"
                                             value={values.active}
@@ -1019,6 +1033,7 @@ export const Recurring = (props: any) => {
                                             <div className="col-md-3 mb-3">
                                             <label>Employee ID</label>
                                                 <input
+                                                id="payrollrecurring_employeeid_recurringinput"
                                                 readOnly
                                                 className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                 name="userId"
@@ -1034,6 +1049,7 @@ export const Recurring = (props: any) => {
                                                 <div className="col-md-3 mb-3">
                                                 <label>Employee Name *</label>
                                                 <select
+                                                    id="payrollrecurring_employeeid_recurringselect"
                                                     placeholder="Employee Name"
                                                     className={`form-select ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                     value={values.userId}
@@ -1068,7 +1084,7 @@ export const Recurring = (props: any) => {
                                                     ))}
                                                 </select>
                                                 {errors && errors.userId && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                <p id="payrollrecurring_erroremployee_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
                                                 )}
                                                 </div>
 
@@ -1110,7 +1126,7 @@ export const Recurring = (props: any) => {
                                                         ))}
                                                     </select>
                                                     {errors && errors.recurringTypeId && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.recurringTypeId}</p>
+                                                    <p id="payrollrecurring_recurringtypeid_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.recurringTypeId}</p>
                                                     )}
                                                     </div>
 
@@ -1157,6 +1173,7 @@ export const Recurring = (props: any) => {
                                                 <div className="col-md-4 mb-3">
                                                     <label>Amount</label>
                                                     <input
+                                                    id="payrollrecurring_amount_recurringinput"
                                                     type="number"
                                                     name="adjustmentAmount"
                                                     className={`form-control ${touched.adjustmentAmount && errors.adjustmentAmount ? 'is-invalid' : ''}`}
@@ -1174,12 +1191,13 @@ export const Recurring = (props: any) => {
                                                     }}
                                                     />
                                                      {errors && errors.adjustmentAmount && (
-                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
+                                                    <p id="payrollrecurring_erroradjustmentamount_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
                                                     )}
                                                 </div>
                                                 <div className="col-md-4 mb-3">
                                                     <label>End Date</label>
                                                     <input
+                                                    id="payrollrecurring_enddate_recurringinput"
                                                     type="date"
                                                     className={`form-control ${touched.endDate && errors.endDate ? 'is-invalid' : ''}`}
                                                     name="endDate"
@@ -1192,12 +1210,13 @@ export const Recurring = (props: any) => {
                                                     }}
                                                     />
                                                     {errors && errors.endDate && (
-                                                        <p style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
+                                                        <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
                                                     )}
                                                 </div>
                                                 <div className="col-md-4 mb-3">
                                                 <label>Status</label>
                                                 <select
+                                                    id="payrollrecurring_status_recurringselect"
                                                     name="active"
                                                     className="form-select"
                                                     value={values.active === undefined ? true : false}
@@ -1221,6 +1240,7 @@ export const Recurring = (props: any) => {
                                                     <div className="col-md-3 mb-3">
                                                         <label>&nbsp;</label>
                                                         <button
+                                                            id="payrollrecurring_remove_recurringinputbtn"
                                                             type="button"
                                                             className="btn btn-outline-danger"
                                                             onClick={() => handleRemoveField(index)}
@@ -1244,6 +1264,7 @@ export const Recurring = (props: any) => {
                                 <div className="d-flex justify-content-end px-5">
                                 {values.userId ? null:  (
                                     <button
+                                    id="payrollrecurring_addfield_recurringbtn"
                                     type="button"
                                     className="btn btn btn-outline-primary me-2 mb-2 mt-2"
                                     onClick={handleAddField}
@@ -1254,6 +1275,7 @@ export const Recurring = (props: any) => {
                                 </div>
                                 <Modal.Footer>
                                     <button
+                                    id="payrollrecurring_save_recurringbtn"
                                     type="submit"
                                     className="btn btn-primary">
                                     Save
@@ -1333,6 +1355,7 @@ export const Recurring = (props: any) => {
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button
+            id="payrollrecurring_downloadexcel_recurringbtn"
             onClick={() => downloadExcel(fromDate, toDate)}
             disabled={isSubmit}>
             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed

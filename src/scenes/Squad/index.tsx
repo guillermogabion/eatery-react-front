@@ -130,6 +130,7 @@ export const Squad = (props: any) => {
               <div className="" style={{ width: 200, marginRight: 10 }}>
                 <label>Employee</label>
                 <EmployeeDropdown
+                  id="squad_employee_maindropdown"
                   squad={true}
                   placeholder={"Employee"}
                   singleChangeOption={singleChangeOption}
@@ -139,6 +140,7 @@ export const Squad = (props: any) => {
               </div>
               <div>
                 <Button
+                  id="squad_search_mainbtn"
                   style={{ width: 120 }}
                   onClick={() => {
                     setSquad([])
@@ -165,10 +167,10 @@ export const Squad = (props: any) => {
                   squad.content.length > 0 &&
                   squad.content.map((item: any, index: any) => (
                     <tr key={item.id}>
-                      <td>{item.fullname}</td>
-                      <td>{Utility.removeUnderscore(item.empType) }</td>
-                      <td>{item.empStatus}</td>
-                      <td>
+                      <td id="squad_fullname_squadata">{item.fullname}</td>
+                      <td id="squad_emptype_squadata">{Utility.removeUnderscore(item.empType) }</td>
+                      <td id="squad_empstatus_squadata">{item.empStatus}</td>
+                      <td id="squad_status_squadata">
                         {
                           item.status && item.status != "" ?
                             <>{item.status}</>
@@ -218,6 +220,7 @@ export const Squad = (props: any) => {
                 <div className="d-flex justify-content-end mt-3" >
                   <div>
                     <Button
+                      id="squad_downloadexcel_squadbtn"
                       className="mx-2"
                       onClick={() => {
                         setDownloadModalShow(true)
@@ -276,6 +279,7 @@ export const Squad = (props: any) => {
 
         <Modal.Footer className="d-flex justify-content-center">
           <Button
+            id="squad_proceed_squadbtn"
             onClick={() => downloadExcel(fromDate, toDate)}
             disabled={isSubmit}>
             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed

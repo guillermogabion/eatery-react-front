@@ -170,6 +170,7 @@ export default function GeneratePayroll(props: any) {
                                                 <tr>
                                                     <td>
                                                         <Form.Check
+                                                            id="payrollgenerate_ischeck_employeelistdata"
                                                             type="checkbox"
                                                             label=""
                                                             checked={item.isCheck}
@@ -178,8 +179,8 @@ export default function GeneratePayroll(props: any) {
                                                             }}
                                                         />
                                                     </td>
-                                                    <td>{item.employeeId}</td>
-                                                    <td>{item.firstname} {item.lastname}</td>
+                                                    <td id="payrollgenerate_employeeid_employeelistdata">{item.employeeId}</td>
+                                                    <td id="payrollgenerate_name_employeelistdata">{item.firstname} {item.lastname}</td>
                                                 </tr>
                                             )
                                         })
@@ -206,6 +207,7 @@ export default function GeneratePayroll(props: any) {
                 {
                     payroll.isUpdate ?
                         <Button
+                            id="payrollgenerate_regeneratepayroll_btn"
                             onClick={() => {
                                 generatePayroll(true)
                             }}
@@ -220,6 +222,7 @@ export default function GeneratePayroll(props: any) {
 
                         </Button> :
                         <Button
+                            id="payrollgenerate_generatepayroll_btn"
                             onClick={() => {
                                 generatePayroll(false)
                             }}
@@ -239,6 +242,7 @@ export default function GeneratePayroll(props: any) {
                     payroll.isUpdate ?
                         <>
                             <Button
+                                id="payrollgenerate_downloadpayrollregister_btn"
                                 onClick={() => {
                                     downloadPayrollRegister()
                                 }}
@@ -255,6 +259,7 @@ export default function GeneratePayroll(props: any) {
                             </Button>
 
                             <Button
+                                id="payrollgenerate_downloadbanktransmittal_btn"
                                 onClick={() => {
                                     downloadBankTransmittal()
                                 }}

@@ -331,23 +331,24 @@ export const Undertime = (props: any) => {
                                         {
                                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
-                                                    <td> {item.lastName}, {item.firstName} </td>
+                                                    <td id="undertime_name_myutdata"> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td> {item.reason} </td>
-                                        <td> {item.statusChangedBy} </td>
-                                        <td> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id="undertime_shiftdate_myutdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id="undertime_utstart_myutdata"> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="undertime_utend_myutdata"> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="undertime_filedate_myutdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id="undertime_reason_myutdata"> {item.reason} </td>
+                                        <td id="undertime_statuschangedby_myutdata"> {item.statusChangedBy} </td>
+                                        <td id="undertime_status_myutdata"> {Utility.removeUnderscore(item.status)} </td>
                                         <td className="d-flex">
                                             <label
+                                                id="undertime_view_myutlabel"
                                                 onClick={() => {
                                                     viewUT(item.id)
                                                 }}
                                             >
-                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id="undertime_eye_myutimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                             {
@@ -356,33 +357,36 @@ export const Undertime = (props: any) => {
                                                         {authorizations.includes("Request:Update") ? (
                                                             <>
                                                                 <label
+                                                                    id="undertime_actionedit_myutlabel"
                                                                     onClick={() => {
                                                                         getUT(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                                    <img id="undertime_name_myutdata" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                                 </label>
                                                             </>
                                                         ) : null}
                                                         {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                                             <>
                                                                 <label
+                                                                    id="undertime_actionapprove_myutlabel"
                                                                     onClick={() => {
                                                                         approveUT(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                                                    <img id="undertime_name_myutimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                                                 </label>
                                                             </>
                                                         ) : null}
                                                         {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                                             <>
                                                                 <label
+                                                                    id="undertime_actiondecline_myutlabel"
                                                                     onClick={() => {
                                                                         declineUT(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                                                    <img id="undertime_actiondecline_myutimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                                                 </label>
 
                                                             </>
@@ -397,11 +401,12 @@ export const Undertime = (props: any) => {
                                                         {authorizations.includes("Request:Update") ? (
                                                             <>
                                                                 <label
+                                                                    id="undertime_actioncancel_myutlabel"
                                                                     onClick={() => {
                                                                         cancelUndertime(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                                    <img id="undertime_actioncancel_myutimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                                 </label>
 
                                                             </>
@@ -456,6 +461,7 @@ export const Undertime = (props: any) => {
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
                                         <EmployeeDropdown
+                                            id="undertime_employee_maindropdown"
                                             placeholder={"Employee"}
                                             singleChangeOption={singleChangeOption}
                                             name="userId"
@@ -469,6 +475,7 @@ export const Undertime = (props: any) => {
                                 <label>Date From</label>
                                 <div>
                                     <input
+                                        id="undertime_datefrom_maininput"
                                         name="dateFrom"
                                         type="date"
                                         autoComplete="off"
@@ -482,6 +489,7 @@ export const Undertime = (props: any) => {
                                 <label>Date To</label>
                                 <div className="input-container">
                                     <input
+                                        id="undertime_dateto_maininput"
                                         name="dateTo"
                                         type="date"
                                         autoComplete="off"
@@ -495,6 +503,7 @@ export const Undertime = (props: any) => {
                                 <label>Date Filed</label>
                                 <div className="input-container">
                                     <input
+                                        id="undertime_datefiled_maininput"
                                         name="dateFiled"
                                         type="date"
                                         autoComplete="off"
@@ -506,6 +515,7 @@ export const Undertime = (props: any) => {
                             </div>
                             <div>
                                 <Button
+                                    id="undertime_search_mainbtn"
                                     style={{ width: 120 }}
                                     onClick={() => getMyUT(0, key, actionable)}
                                     className="btn btn-primary mx-2 mt-4">
@@ -528,22 +538,22 @@ export const Undertime = (props: any) => {
                             }}
                             className="mb-3"
                         >
-                            <Tab eventKey="all" title="All">
+                            <Tab id="undertime_all_maintab" eventKey="all" title="All">
                                 {underTimeTable()}
                             </Tab>
-                            <Tab eventKey="pending" title="Pending">
+                            <Tab id="undertime_pending_maintab" eventKey="pending" title="Pending">
                                 {underTimeTable()}
                             </Tab>
-                            <Tab eventKey="approved" title="Approved" >
+                            <Tab id="undertime_approved_maintab" eventKey="approved" title="Approved" >
                                 {underTimeTable()}
                             </Tab>
-                            <Tab eventKey="declined" title="Rejected/Cancelled">
+                            <Tab id="undertime_declined_maintab" eventKey="declined" title="Rejected/Cancelled">
                                 {underTimeTable()}
                             </Tab>
                             {
                                 data.profile.role == 'EXECUTIVE' &&
                                 (
-                                    <Tab eventKey="actionable" title="Actionable">
+                                    <Tab id="undertime_actionable_maintab" eventKey="actionable" title="Actionable">
                                         {underTimeTable()}
                                     </Tab>
                                 )
@@ -575,6 +585,7 @@ export const Undertime = (props: any) => {
                         <div className="d-flex justify-content-end mt-3" >
                             <div>
                                 <Button
+                                    id="undertime_requestundertime_mainbtn"
                                     className="mx-2"
                                     onClick={() => {
                                         setUtId("")
@@ -705,7 +716,7 @@ export const Undertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.shiftDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                <p id="undertime_errorshiftdate_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -720,7 +731,7 @@ export const Undertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utStart && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                                <p id="undertime_errorutstart_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -735,7 +746,7 @@ export const Undertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utEnd && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                                <p id="undertime_errorutend_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -749,7 +760,7 @@ export const Undertime = (props: any) => {
                                                 onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                             {errors && errors.reason && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                                <p id="undertime_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                                             )}
                                         </div>
                                     </div>
@@ -757,6 +768,7 @@ export const Undertime = (props: any) => {
                                     <Modal.Footer>
                                         <div className="d-flex justify-content-end px-5">
                                             <button
+                                                id="undertime_save_modalbtn"
                                                 type="submit"
                                                 disabled={onSubmit}
                                                 className="btn btn-primary">
@@ -820,7 +832,7 @@ export const Undertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.shiftDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                <p id="undertime_errorshiftdate_modalviewp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -836,7 +848,7 @@ export const Undertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utStart && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                                <p id="undertime_errorutstartmodalviewp" style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -852,7 +864,7 @@ export const Undertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utEnd && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                                <p id="undertime_errorutend_modalviewp" style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -867,7 +879,7 @@ export const Undertime = (props: any) => {
                                                 onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                             {errors && errors.reason && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                                <p id="undertime_errorreason_modalviewp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                                             )}
                                         </div>
                                     </div>

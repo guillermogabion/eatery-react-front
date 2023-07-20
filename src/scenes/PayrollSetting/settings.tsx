@@ -261,6 +261,7 @@ const Settings = (props: any) => {
                                     onChange={(e) => setDaysPerYear(e.target.value)}
                                 />
                                 <Button
+                                    id="payrollsettingsettings_savedaysofyear_btn"
                                     className="w-[200px] h-auto"
                                     onClick={() => {
                                         saveDaysOfYear(editDaysPerYear)
@@ -282,6 +283,7 @@ const Settings = (props: any) => {
                                     onChange={(e) => setDaysPerMonth(e.target.value)}
                                 />
                                 <Button
+                                    id="payrollsettingsettings_savedaysofmonth_btn"
                                     className="w-[200px] h-auto"
                                     onClick={() => {
                                         saveDaysOfMonth(editDaysPerMonth)
@@ -303,6 +305,7 @@ const Settings = (props: any) => {
                                     onChange={(e) => setDaysPerWeek(e.target.value)}
                                 />
                                 <Button
+                                    id="payrollsettingsettings_savedaysperweek_btn"
                                     className="w-[200px] h-auto"
                                     onClick={() => {
                                         saveDaysOfWeek(editDaysPerWeek)
@@ -324,6 +327,7 @@ const Settings = (props: any) => {
                                     onChange={(e) => setHourPerDay(e.target.value)}
                                 />
                                 <Button
+                                    id="payrollsettingsettings_savehourperday_btn"
                                     className="w-[200px] h-auto"
                                     onClick={() => {
                                         saveHourPerDay(editHourPerDay)

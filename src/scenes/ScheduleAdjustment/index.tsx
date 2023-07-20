@@ -412,23 +412,24 @@ export const ScheduleAdjustment = (props: any) => {
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <>
-                                <td> {item.lastName}, {item.firstName} </td>
+                                <td id="scheduleadjustment_name_alladjdata"> {item.lastName}, {item.firstName} </td>
                               </> : null
                           }
-                          <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td> {item.reason} </td>
-                          <td> {item.statusChangedBy} </td>
-                          <td> {Utility.removeUnderscore(item.status)} </td>
+                          <td id="scheduleadjustment_filedate_alladjdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id="scheduleadjustment_datefrom_alladjdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id="scheduleadjustment_dateto_alladjdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id="scheduleadjustment_reason_alladjdata"> {item.reason} </td>
+                          <td id="scheduleadjustment_statuschangedby_alladjdata"> {item.statusChangedBy} </td>
+                          <td id="scheduleadjustment_status_alladjdata"> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
+                              id="scheduleadjustment_view_alladjlabel"
                               onClick={() => {
                                 getViewSchedule(item.id)
                               }}
                             >
-                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
-
+                              <img id="scheduleadjustment_eye_alladjimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+ 
                             </label>
 
                             {
@@ -437,6 +438,7 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
+                                        id="scheduleadjustment_edit_alladjlabel"
                                         onClick={() => {
                                           setInitialValues(item)
                                           setAdjustmentBreakdown(item.breakdown)
@@ -444,7 +446,7 @@ export const ScheduleAdjustment = (props: any) => {
                                           setModalShow(true)
                                         }}
                                         className="cursor-pointer">
-                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                        <img id="scheduleadjustment_actionedit_alladjimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                       </label>
                                       <br />
                                     </>
@@ -453,11 +455,12 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
+                                        id="scheduleadjustment_actionapprove_alladjlabel"
                                         onClick={() => {
                                           approveAdjustment(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                        <img id="scheduleadjustment_actionapprove_alladjimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                       </label> <br />
                                     </>
                                   ) : null}
@@ -465,11 +468,12 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
+                                        id="scheduleadjustment_actiondecline_alladjlabel"
                                         onClick={() => {
                                           declineAdjustment(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                        <img id="scheduleadjustment_actiondecline_alladjimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                       </label>
                                       <br />
                                     </>
@@ -484,11 +488,12 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
+                                        id="scheduleadjustment_actioncancel_alladjlabel"
                                         onClick={() => {
                                           cancelAdjustment(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                        <img id="scheduleadjustment_actioncancel_alladjimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                       </label>
                                       <br />
                                     </>
@@ -561,7 +566,7 @@ export const ScheduleAdjustment = (props: any) => {
                 <h5>Current Work Schedule:</h5>
               </div>
               <div className="col-md-8">
-                <h5>{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
+                <h5 id="scheduleadjustment_startshift_mainlabel">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
               </div>
 
             </div>
@@ -575,6 +580,7 @@ export const ScheduleAdjustment = (props: any) => {
                   <div className="" style={{ width: 200, marginRight: 10 }}>
                     <label>Employee</label>
                     <EmployeeDropdown
+                      id="scheduleadjustment_employee_maindropdown"
                       placeholder={"Employee"}
                       singleChangeOption={singleChangeOption}
                       name="userId"
@@ -588,6 +594,7 @@ export const ScheduleAdjustment = (props: any) => {
                 <label>Date From</label>
                 <div>
                   <input
+                    id="scheduleadjustment_datefrom_maininput"
                     name="dateFrom"
                     type="date"
                     autoComplete="off"
@@ -601,6 +608,7 @@ export const ScheduleAdjustment = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="scheduleadjustment_dateto_maininput"
                     name="dateTo"
                     type="date"
                     autoComplete="off"
@@ -614,6 +622,7 @@ export const ScheduleAdjustment = (props: any) => {
                 <label>Date Filed</label>
                 <div className="input-container">
                   <input
+                    id="scheduleadjustment_datefield_maininput"
                     name="dateFiled"
                     type="date"
                     autoComplete="off"
@@ -625,6 +634,7 @@ export const ScheduleAdjustment = (props: any) => {
               </div>
               <div>
                 <Button
+                  id="scheduleadjustment_search_mainbtn"
                   style={{ width: 120 }}
                   onClick={() => getAllAdjustments(0, key, actionable)}
                   className="btn btn-primary mx-2 mt-4">
@@ -648,22 +658,22 @@ export const ScheduleAdjustment = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="scheduleadjustment_all_maintab" eventKey="all" title="All">
                 {adjustmentTable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="scheduleadjustment_pending_maintab" eventKey="pending" title="Pending">
                 {adjustmentTable()}
               </Tab>
-              <Tab eventKey="approved" title="Approved" >
+              <Tab id="scheduleadjustment_approved_maintab" eventKey="approved" title="Approved" >
                 {adjustmentTable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="scheduleadjustment_declined_maintab" eventKey="declined" title="Rejected/Cancelled">
                 {adjustmentTable()}
               </Tab>
               {
                 data.profile.role == 'EXECUTIVE' &&
                 (
-                  <Tab eventKey="actionable" title="Actionable">
+                  <Tab id="scheduleadjustment_actionable_maintab" eventKey="actionable" title="Actionable">
                     {adjustmentTable()}
                   </Tab>
                 )
@@ -694,6 +704,7 @@ export const ScheduleAdjustment = (props: any) => {
           <div className="d-flex justify-content-end mt-3" >
             <div>
               <Button
+                id="scheduleadjustment_requestforscheduleadjustment_mainbtn"
                 className="mx-2"
                 onClick={() => {
                   setInitialValues(initialPayload)
@@ -840,7 +851,7 @@ export const ScheduleAdjustment = (props: any) => {
                         }}
                       />
                       {errors && errors.dateFrom && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        <p id="scheduleadjustment_errordatefrom_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -857,7 +868,7 @@ export const ScheduleAdjustment = (props: any) => {
                         }}
                       />
                       {errors && errors.dateTo && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        <p id="scheduleadjustment_errordateto_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -870,7 +881,7 @@ export const ScheduleAdjustment = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="scheduleadjustment_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -907,7 +918,7 @@ export const ScheduleAdjustment = (props: any) => {
                                       }}
                                     />
                                     {errors && errors.startShift && (
-                                      <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
+                                      <p id="scheduleadjustment_errorstartshift_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
                                     )}
                                   </td>
                                   <td key={index + 'startBreak'} >
@@ -976,12 +987,14 @@ export const ScheduleAdjustment = (props: any) => {
 
                       {adjustmentBreakdown && adjustmentBreakdown.length == 0 ?
                         <button
+                          id="scheduleadjustment_save_modalbtn"
                           disabled
                           type="submit"
                           className="btn btn-primary">
                           Save
                         </button> :
                         <button
+                          id="scheduleadjustment_save2_modalbtn"
                           type="submit"
                           className="btn btn-primary">
                           Save
@@ -1017,16 +1030,16 @@ export const ScheduleAdjustment = (props: any) => {
         <Modal.Body className="d-flex align-items-center justify-content-center">
           <div className="container">
             {/* <h4>reason</h4> {{values.reason}} */}
-            <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
-            <p>Reason : {initialValues.reason}</p>
-            <p>Date From : {Utility.formatDate(initialValues.dateFrom, 'MM-DD-YYYY')}</p>
-            <p>Date To : {Utility.formatDate(initialValues.dateTo, 'MM-DD-YYYY')}</p>
-            <p>Shift Starts : {initialValues.startShift}</p>
-            <p>Start of Break : {initialValues.startBreak}</p>
-            <p>End of Break : {initialValues.endBreak}</p>
-            <p>Shift Ends : {initialValues.endShift}</p>
+            <p id="scheduleadjustment_name_requestinfop">Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+            <p id="scheduleadjustment_reason_requestinfop">Reason : {initialValues.reason}</p>
+            <p id="scheduleadjustment_datefrom_requestinfop">Date From : {Utility.formatDate(initialValues.dateFrom, 'MM-DD-YYYY')}</p>
+            <p id="scheduleadjustment_dateto_requestinfop">Date To : {Utility.formatDate(initialValues.dateTo, 'MM-DD-YYYY')}</p>
+            <p id="scheduleadjustment_shiftstarts_requestinfop">Shift Starts : {initialValues.startShift}</p>
+            <p id="scheduleadjustment_startofbreak_requestinfop">Start of Break : {initialValues.startBreak}</p>
+            <p id="scheduleadjustment_endofbreak_requestinfop">End of Break : {initialValues.endBreak}</p>
+            <p id="scheduleadjustment_shiftends_requestinfop">Shift Ends : {initialValues.endShift}</p>
 
-            <p>Status : {initialValues.status}</p>
+            <p id="scheduleadjustment_status_requestinfop">Status : {initialValues.status}</p>
           </div>
         </Modal.Body>
 

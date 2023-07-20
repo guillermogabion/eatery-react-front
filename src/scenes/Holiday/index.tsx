@@ -149,6 +149,7 @@ export const Holiday = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Holiday Name</label>
                   <input
+                    id="holiday_holidayname_input"
                     name="holidayName"
                     placeholder="Holiday Name"
                     type="text"
@@ -200,6 +201,7 @@ export const Holiday = (props: any) => {
                   </select>
                 </div>
                 <Button
+                  id="holiday_search_btn"
                   style={{ width: 120 }}
                   onClick={() => getHolidays(0, "")}
                   className="btn btn-primary mx-2 mt-4">
@@ -224,27 +226,29 @@ export const Holiday = (props: any) => {
                     allHoliday.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.holidayName} </td>
-                          <td> {Utility.removeUnderscore(item.holidayType)} </td>
-                          <td> {Utility.removeUnderscore(item.premiumType)} </td>
-                          <td> {Utility.formatDate(item.holidayDate, 'MM-DD-YYYY')} </td>
-                          <td className="d-flex">
+                          <td id="holiday_holidayname_data"> {item.holidayName} </td>
+                          <td id="holiday_holidaytype_data"> {Utility.removeUnderscore(item.holidayType)} </td>
+                          <td id="holiday_premiumtype_data"> {Utility.removeUnderscore(item.premiumType)} </td>
+                          <td id="holiday_holidaydate_data"> {Utility.formatDate(item.holidayDate, 'MM-DD-YYYY')} </td>
+                          <td className="d-flex" id="holiday_labels_data">
                             <label
+                              id="holiday_update_label"
                               onClick={() => {
                                 setHolidayId(item.id)
                                 setInitialValues(item)
                                 setModalShow(true)
                               }}
                               className="text-muted cursor-pointer">
-                              <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                              <img id="holiday_actionedit_img" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                             <br />
                             <label
+                              id="holiday_delete_btn"
                               onClick={() => {
                                 deleteHoliday(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                              <img id="holiday_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                             </label>
                           </td>
                         </tr>
@@ -290,6 +294,7 @@ export const Holiday = (props: any) => {
             <div className="d-flex justify-content-end mt-3" >
               <div>
                 <Button
+                  id="holiday_create_btn"
                   className="mx-2"
                   onClick={() => {
                     setHolidayId("")
@@ -418,7 +423,7 @@ export const Holiday = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.holidayType && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.holidayType}</p>
+                        <p id="holiday_errorholidaytype_p" style={{ color: "red", fontSize: "12px" }}>{errors.holidayType}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3 " >
@@ -438,7 +443,7 @@ export const Holiday = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.premiumType && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.premiumType}</p>
+                        <p id="holiday_errorpremiumtype_p" style={{ color: "red", fontSize: "12px" }}>{errors.premiumType}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -453,7 +458,7 @@ export const Holiday = (props: any) => {
                         }}
                       />
                       {errors && errors.holidayName && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.holidayName}</p>
+                        <p id="holiday_errorholidayname_p" style={{ color: "red", fontSize: "12px" }}>{errors.holidayName}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -468,7 +473,7 @@ export const Holiday = (props: any) => {
                         }}
                       />
                       {errors && errors.holidayDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.holidayDate}</p>
+                        <p id="holiday_errorholidaydate_p" style={{ color: "red", fontSize: "12px" }}>{errors.holidayDate}</p>
                       )}
                     </div>
                   </div>
@@ -476,6 +481,7 @@ export const Holiday = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="holiday_save_modalbtn"
                         type="submit"
                         disabled={isSubmit}
                         className="btn btn-primary">

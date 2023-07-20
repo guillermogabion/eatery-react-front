@@ -413,21 +413,21 @@ export const AttendanceCorrection = (props: any) => {
                     {
                       data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                         <>
-                          <td> {item.lastName}, {item.firstName} </td>
+                          <td id="attendancecorrection_name_data"> {item.lastName}, {item.firstName} </td>
                         </> : null
                     }
-                    <td>{Utility.removeUnderscore(item.type)}</td>
-                    <td> {item.reason} </td>
-                    <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')}</td>
-                    <td> {item.statusChangedBy} </td>
-                    <td> {Utility.removeUnderscore(item.status)} </td>
-                    <td className="d-flex">
-                      <label
+                    <td id="attendancecorrection_type_data">{Utility.removeUnderscore(item.type)}</td>
+                    <td id="attendancecorrection_reason_data"> {item.reason} </td>
+                    <td id="attendancecorrection_filedate_data"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')}</td>
+                    <td id="attendancecorrection_statuschangedby_data"> {item.statusChangedBy} </td>
+                    <td id="attendancecorrection_status_data"> {Utility.removeUnderscore(item.status)} </td>
+                    <td className="d-flex" id="attendancecorrection_labels_data">
+                      <label id="attendancecorrection_id_label"
                         onClick={() => {
                           getViewCoa(item.id)
                         }}
                       >
-                        <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                        <img id="attendancecorrection_eye_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       {
@@ -435,13 +435,13 @@ export const AttendanceCorrection = (props: any) => {
                           <>
                             {authorizations.includes("Request:Update") ? (
                               <>
-                                <label
+                                <label id="attendancecorrection_getcoaid_label"
                                   onClick={() => {
                                     getCoa(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                  <img id="attendancecorrection_actionedit_img" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                 </label>
                                 <br />
                               </>
@@ -449,26 +449,26 @@ export const AttendanceCorrection = (props: any) => {
 
                             {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                               <>
-                                <label
+                                <label id="attendancecorrection_approvecoaid_label"
                                   onClick={() => {
                                     approveCoa(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                  <img id="attendancecorrection_actionapprove_img" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                 </label> <br />
                               </>
                             ) : null}
 
                             {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                               <>
-                                <label
+                                <label id="attendancecorrection_declinecoaid_label"
                                   onClick={() => {
                                     declineCoa(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                  <img id="attendancecorrection_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                 </label>
                                 <br />
                               </>
@@ -482,12 +482,12 @@ export const AttendanceCorrection = (props: any) => {
                           <>
                             {authorizations.includes("Request:Update") ? (
                               <>
-                                <label
+                                <label id="attendancecorrection_cancelarid_label"
                                   onClick={() => {
                                     cancelAttendanceReversal(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                  <img id="attendancecorrection_actioncancelar_img" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                 </label>
                                 <br />
                               </>
@@ -535,6 +535,7 @@ export const AttendanceCorrection = (props: any) => {
                     <div>
                       <label>Employee</label>
                       <EmployeeDropdown
+                        id="attendancecorrection_employee_dropdown"
                         placeholder={"Employee"}
                         singleChangeOption={singleChangeOption}
                         name="userId"
@@ -550,6 +551,7 @@ export const AttendanceCorrection = (props: any) => {
                 {
                   data.profile.role == 'EXECUTIVE' ?
                     <Button
+                      id="attendancecorrection_getallcoarequestsearch_btn"
                       style={{ width: 120 }}
                       onClick={() => getAllCOARequest(0, key, actionable)}
                       className="btn btn-primary mx-2 mt-4">
@@ -574,22 +576,22 @@ export const AttendanceCorrection = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="attendancecorrection_allcoa_tab" eventKey="all" title="All">
                 {COATable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="attendancecorrection_pendingcoa_tab" eventKey="pending" title="Pending">
                 {COATable()}
               </Tab>
-              <Tab eventKey="APPROVED" title="Approved" >
+              <Tab id="attendancecorrection_approvedcoa_tab" eventKey="APPROVED" title="Approved" >
                 {COATable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="attendancecorrection_declinedcoa_tab" eventKey="declined" title="Rejected/Cancelled">
                 {COATable()}
               </Tab>
               {
                 data.profile.role == 'EXECUTIVE' &&
                 (
-                  <Tab eventKey="actionable" title="Actionable">
+                  <Tab id="attendancecorrection_actionablecoa_tab" eventKey="actionable" title="Actionable">
                     {COATable()}
                   </Tab>
                 )
@@ -619,6 +621,7 @@ export const AttendanceCorrection = (props: any) => {
         <div className="d-flex justify-content-end mt-3" >
           <div>
             <Button
+              id="attendancecorrection_requestar_btn"
               className="mx-2"
               onClick={() => {
                 setModalShow(true),
@@ -801,7 +804,7 @@ export const AttendanceCorrection = (props: any) => {
                       />
                     </div>
                     {touched.errors && errors.reason && (
-                      <p style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
+                      <p id="attendancecorrection_errorreason_p" style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
                     )}
 
 
@@ -813,6 +816,7 @@ export const AttendanceCorrection = (props: any) => {
                         <div className="col-md-3 mb-3">
                           <label>Shift Date *</label>
                           <input
+                            id="attendancecorrection_shiftdate_coabreakdowninput"
                             type="date"
                             name="shiftDate"
                             value={values.shiftDate}
@@ -828,6 +832,7 @@ export const AttendanceCorrection = (props: any) => {
                         <div className="col-md-3 mb-3">
                           <label>Date *</label>
                           <input
+                            id="attendancecorrection_date_coabreakdowninput"
                             type="date"
                             name="date"
                             value={values.date}
@@ -842,6 +847,7 @@ export const AttendanceCorrection = (props: any) => {
 
                         <div className="col-md-3 mb-3 mt-4">
                           <select
+                            id="attendancecorrection_coabdtype_coabreakdownselect"
                             name="coaBdType"
                             value={values.coaBdType}
                             onChange={(e) => {
@@ -862,6 +868,7 @@ export const AttendanceCorrection = (props: any) => {
                         <div className="col-md-3 mb-3">
                           <label>Time *</label>
                           <input
+                            id="attendancecorrection_time_coabreakdowninput"
                             type="time"
                             name="time"
                             value={values.time}
@@ -881,28 +888,29 @@ export const AttendanceCorrection = (props: any) => {
                       <div className="form-group row">
                         <div className="col-md-4 mb-3">
                           {touched.errors && errors.shiftDate && (
-                            <p style={{ color: "red", fontSize: "10px" }}>{errors.shiftDate}</p>
+                            <p id="attendancecorrection_errorreason_coabreakdownp" style={{ color: "red", fontSize: "10px" }}>{errors.shiftDate}</p>
                           )}
                         </div>
                         <div className="col-md-4 mb-3">
                           {touched.errors && errors.date && (
-                            <p style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
+                            <p id="attendancecorrection_errordate_coabreakdownp" style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
                           )}
                         </div>
                         <div className="col-md-4 mb-3">
                           {touched.errors && errors.coaBdType && (
-                            <p style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
+                            <p id="attendancecorrection_errorcoabdtype_coabreakdownp" style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
                           )}
                         </div>
                         <div className="col-md-4 mb-3">
                           {touched.errors && errors.time && (
-                            <p style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
+                            <p id="attendancecorrection_errortime_coabreakdownp" style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
                           )}
                         </div>
 
                       </div>
 
                       <button
+                        id="attendancecorrection_remove_coabreakdownbtn"
                         className="btn btn btn-outline-primary me-2 mb-2"
                         onClick={() => handleRemoveItem(index)}>Remove</button>
                     </div>
@@ -910,6 +918,7 @@ export const AttendanceCorrection = (props: any) => {
 
                   <div className="d-flex justify-content-end px-5">
                     <button
+                      id="attendancecorrection_addfield_coabreakdownbtn"
                       type="button"
                       className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
                       onClick={handleAddField}
@@ -921,6 +930,7 @@ export const AttendanceCorrection = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="attendancecorrection_save_coabreakdownbtn"
                         type="submit"
                         className="btn btn-primary"
                         disabled={!coaBreakdown.length}
@@ -969,10 +979,10 @@ export const AttendanceCorrection = (props: any) => {
         <Modal.Body className="d-flex align-items-center justify-content-center">
           <div className="container">
             {/* <h4>reason</h4> {{values.reason}} */}
-            <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
-            <p>Reason : {initialValues.reason}</p>
-            <p>Type : {initialValues.type}</p>
-            <p>Status : {initialValues.status}</p>
+            <p id="attendancecorrection_name_reqestinfop">Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+            <p id="attendancecorrection_reason_reqestinfop">Reason : {initialValues.reason}</p>
+            <p id="attendancecorrection_type_reqestinfop">Type : {initialValues.type}</p>
+            <p id="attendancecorrection_status_reqestinfop">Status : {initialValues.status}</p>
 
             <Table responsive="lg" style={{ maxHeight: '100vh' }}>
               <thead>
@@ -986,10 +996,10 @@ export const AttendanceCorrection = (props: any) => {
               <tbody>
                 {coaBreakdown.map((initialValues, index) => (
                   <tr key={`coaBreakdown-${index}`}>
-                    <td>{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
-                    <td>{initialValues.coaBdType}</td>
-                    <td>{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
-                    <td>{initialValues.time}</td>
+                    <td id="attendancecorrection_shiftdate_reqestinfodata">{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
+                    <td id="attendancecorrection_coabdtype_reqestinfodata">{initialValues.coaBdType}</td>
+                    <td id="attendancecorrection_date_reqestinfodata">{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
+                    <td id="attendancecorrection_time_reqestinfodata">{initialValues.time}</td>
                   </tr>
                 ))}
               </tbody>

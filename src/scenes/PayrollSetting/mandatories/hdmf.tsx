@@ -180,10 +180,11 @@ const hdmf = (props: any) => {
     hdmf.map((item, index) => {
       return (
         <tr key={index}>
-          <td>{item.amount}</td>
-          <td>{item.amount}</td>
+          <td id="payrollsettinghdmf_amount_data">{item.amount}</td>
+          <td id="payrollsettinghdmf_amount2_data">{item.amount}</td>
           <td>
             <label
+              id="payrollsettinghdmf_update_label"
               onClick={() => {
                
                 setModalShow(true)
@@ -302,6 +303,7 @@ const hdmf = (props: any) => {
                                 </div>
                                 <div className="d-flex justify-content-end px-5">
                                     <button
+                                        id="payrollsettinghdmf_save_formbtn"
                                         type="submit"
                                         className="btn btn-primary mx-2"
                                     >

@@ -316,32 +316,34 @@ export const SquadUndertime = (props: any) => {
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                        <td> {item.lastName}, {item.firstName}</td>
-                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td> {item.reason} </td>
-                                        <td> {item.statusChangedBy} </td>
-                                        <td> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id="squadschedadj_name_myutdata"> {item.lastName}, {item.firstName}</td>
+                                        <td id="squadschedadj_shiftdate_myutdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id="squadschedadj_utstart_myutdata"> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="squadschedadj_utend_myutdata"> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="squadschedadj_filedate_myutdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id="squadschedadj_reason_myutdata"> {item.reason} </td>
+                                        <td id="squadschedadj_statuschangedby_myutdata"> {item.statusChangedBy} </td>
+                                        <td id="squadschedadj_status_myutdata"> {Utility.removeUnderscore(item.status)} </td>
                                         <td>
                                             <label
+                                                id="squadschedadj_view_myutlabel"
                                                 onClick={() => {
                                                     viewUT(item.id)
                                                 }}
                                             >
-                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id="squadschedadj_eye_myutimg" src={eye} width={20} classNa   me="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                             <>
                                                 {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
+                                                            id="squadschedadj_update_myutlabel"
                                                             onClick={() => {
                                                                 getUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id="squadschedadj_actionedit_myutimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
                                                         </label>
                                                     </>
@@ -349,11 +351,12 @@ export const SquadUndertime = (props: any) => {
                                                 {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
+                                                            id="squadschedadj_actionapprove_myutlabel"
                                                             onClick={() => {
                                                                 approveUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                                            <img id="squadschedadj_actionapprove_myutimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
 
                                                         </label>
                                                     </>
@@ -361,11 +364,12 @@ export const SquadUndertime = (props: any) => {
                                                 {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
+                                                            id="squadschedadj_actiondecline_myutlabel"
                                                             onClick={() => {
                                                                 declineUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                                            <img id="squadschedadj_actiondecline_myutimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
 
                                                         </label>
 
@@ -376,11 +380,12 @@ export const SquadUndertime = (props: any) => {
                                                 {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                                                     <>
                                                         <label
+                                                            id="squadschedadj_actioncancel_myutlabel"
                                                             onClick={() => {
                                                                 cancelUndertime(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                            <img id="squadschedadj_actioncancel_myutimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                         </label>
 
                                                     </>
@@ -431,6 +436,7 @@ export const SquadUndertime = (props: any) => {
                             <div className="" style={{ width: 200, marginRight: 10 }}>
                                 <label>Employee</label>
                                 <EmployeeDropdown
+                                    id="squadschedadj_employee_maindropdown"
                                     squad={true}
                                     placeholder={"Employee"}
                                     singleChangeOption={singleChangeOption}
@@ -442,6 +448,7 @@ export const SquadUndertime = (props: any) => {
                                 <label>Date From</label>
                                 <div>
                                     <input
+                                        id="squadschedadj_datefrom_maininput"
                                         name="dateFrom"
                                         type="date"
                                         autoComplete="off"
@@ -455,6 +462,7 @@ export const SquadUndertime = (props: any) => {
                                 <label>Date To</label>
                                 <div className="input-container">
                                     <input
+                                        id="squadschedadj_dateto_maininput"
                                         name="dateTo"
                                         type="date"
                                         autoComplete="off"
@@ -468,6 +476,7 @@ export const SquadUndertime = (props: any) => {
                                 <label>Date Filed</label>
                                 <div className="input-container">
                                     <input
+                                        id="squadschedadj_datefiled_maininput"
                                         name="dateFiled"
                                         type="date"
                                         autoComplete="off"
@@ -479,6 +488,7 @@ export const SquadUndertime = (props: any) => {
                             </div>
                             <div>
                                 <Button
+                                    id="squadschedadj_search_mainbtn"
                                     style={{ width: 120 }}
                                     onClick={() => getMyUT(0, key)}
                                     className="btn btn-primary mx-2 mt-4">
@@ -496,16 +506,16 @@ export const SquadUndertime = (props: any) => {
                             }}
                             className="mb-3"
                         >
-                            <Tab eventKey="all" title="All">
+                            <Tab id="squadschedadj_all_maintab" eventKey="all" title="All">
                                 {underTimeTable()}
                             </Tab>
-                            <Tab eventKey="pending" title="Pending">
+                            <Tab id="squadschedadj_pending_maintab" eventKey="pending" title="Pending">
                                 {underTimeTable()}
                             </Tab>
-                            <Tab eventKey="approved" title="Approved" >
+                            <Tab id="squadschedadj_approved_maintab" eventKey="approved" title="Approved" >
                                 {underTimeTable()}
                             </Tab>
-                            <Tab eventKey="declined" title="Rejected/Cancelled">
+                            <Tab id="squadschedadj_declined_maintab" eventKey="declined" title="Rejected/Cancelled">
                                 {underTimeTable()}
                             </Tab>
                         </Tabs>
@@ -650,7 +660,7 @@ export const SquadUndertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.shiftDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                <p id="squadschedadj_errorshiftdate_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -665,7 +675,7 @@ export const SquadUndertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utStart && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                                <p id="squadschedadj_errorutstart_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -680,7 +690,7 @@ export const SquadUndertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utEnd && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                                <p id="squadschedadj_errorutend_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -694,7 +704,7 @@ export const SquadUndertime = (props: any) => {
                                                 onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                             {errors && errors.reason && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                                <p id="squadschedadj_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                                             )}
                                         </div>
                                     </div>
@@ -702,6 +712,7 @@ export const SquadUndertime = (props: any) => {
                                     <Modal.Footer>
                                         <div className="d-flex justify-content-end px-5">
                                             <button
+                                                id="squadschedadj_save_modalbtn"
                                                 type="submit"
                                                 disabled={onSubmit}
                                                 className="btn btn-primary">
@@ -765,7 +776,7 @@ export const SquadUndertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.shiftDate && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                                                <p id="squadschedadj_errorshiftdate_modalviewutp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -781,7 +792,7 @@ export const SquadUndertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utStart && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
+                                                <p id="squadschedadj_errorutstart_modalviewutp" style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-6 mb-3" >
@@ -797,7 +808,7 @@ export const SquadUndertime = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.utEnd && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
+                                                <p id="squadschedadj_errorutend_modalviewutp" style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -812,7 +823,7 @@ export const SquadUndertime = (props: any) => {
                                                 onChange={(e) => setFormField(e, setFieldValue)}
                                             />
                                             {errors && errors.reason && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                                <p id="squadschedadj_errorreason_modalviewutp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                                             )}
                                         </div>
                                     </div>

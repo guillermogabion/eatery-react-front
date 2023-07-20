@@ -112,13 +112,13 @@ export default function Timekeeping(props: any) {
                             timekeeping.length > 0 ?
                             <>
                                 <tr>
-                                    <td className="daysInMonth">Employee ID</td>
-                                    <td className="daysInMonth">Employee Name</td>
+                                    <td id="payrolltimekeeping_employeeid_timekeepingdata" className="daysInMonth">Employee ID</td>
+                                    <td id="payrolltimekeeping_employeename_timekeepingdata" className="daysInMonth">Employee Name</td>
                                     {
                                         daysInMonth.map((data: any, i: any) => {
                                             return (
                                                 <>
-                                                    <td className="daysInMonth">{data}</td>
+                                                    <td id="payrolltimekeeping_daysinmonth_timekeepingdata" className="daysInMonth">{data}</td>
                                                 </>
                                             )
                                         })
@@ -130,8 +130,8 @@ export default function Timekeeping(props: any) {
                                         return (
                                             <>
                                                 <tr>
-                                                    <td className="timeKeepingDates">{data.empId}</td>
-                                                    <td className="timeKeepingDates">{data.empName}</td>
+                                                    <td id="payrolltimekeeping_employeeid_timekeeping2data" className="timeKeepingDates">{data.empId}</td>
+                                                    <td id="payrolltimekeeping_employeename_timekeeping2data" className="timeKeepingDates">{data.empName}</td>
                                                     {
                                                         data.dateList && data.dateList.length > 0 &&
                                                         data.dateList.map((d: any, i: any) => {
@@ -140,7 +140,7 @@ export default function Timekeeping(props: any) {
                                                             }
                                                             return (
                                                                 <>
-                                                                    <td className="">{d.totalHours}</td>
+                                                                    <td id="payrolltimekeeping_totalhours_timekeeping2data" className="">{d.totalHours}</td>
                                                                 </>
                                                             )
                                                         })

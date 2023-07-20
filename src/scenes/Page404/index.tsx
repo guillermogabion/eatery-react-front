@@ -23,6 +23,7 @@ export const Page404 = () => {
                         <h2 className="text-[20px] mt-[20px] font-bold">Oops! Page Not Found</h2>
                         <p>Sorry but the page you are looking for does not exist.</p>
                         <NavLink to={"/timekeeping"}
+                            id="page404_backtohomepage_navlink"
                             className="text-[#007BFF]"
                             onClick={() => {
                                 setCurrentRoutePath('/timekeeping')

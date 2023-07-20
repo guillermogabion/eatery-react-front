@@ -65,7 +65,7 @@ const ReSetPasswordInput = (props: any) => {
             {errors.map((d: any) => {
               return (
                 <li key={d}>
-                  <span className="notpass" />
+                  <span id="changepassword_notpass_span" className="notpass" />
                   {d}
                 </li>
               )
@@ -74,6 +74,7 @@ const ReSetPasswordInput = (props: any) => {
         </div>
       ) : null}
       <input
+        id="changepassword_pass_input"
         value={inputValue}
         onFocus={(e) => {
           setOnFocusInput(true)
@@ -90,6 +91,7 @@ const ReSetPasswordInput = (props: any) => {
       />
       <span className="bg-danger">
         <img
+          id="changepassword_pass_img"
           src={visibile ? hide_password_dark : show_password_dark }
           alt="Hide"
           className={inputValue ? "password-right-icon" : "password-right-icon-disable"}
@@ -148,6 +150,7 @@ export const ChangePassword = (props: any) => {
                           <Form noValidate className="loginForm" onSubmit={handleSubmit}>
                             <label>Enter Current Password</label>
                             <ReSetPasswordInput
+                              id="changepassword_oldpass_field"
                               name="oldPassword"
                               placeholder="******"
                               type="password"
@@ -159,6 +162,7 @@ export const ChangePassword = (props: any) => {
                             />
                             <label>Enter New Password</label>
                             <ReSetPasswordInput
+                              id="changepassword_newpass_field"
                               type="password"
                               placeholder="******"
                               name="newPassword"
@@ -170,6 +174,7 @@ export const ChangePassword = (props: any) => {
                             />
                             <label>Confirm New Password</label>
                             <ReSetPasswordInput
+                              id="changepassword_confirmpass_field"
                               type="password"
                               placeholder="******"
                               name="conPassword"
@@ -181,6 +186,7 @@ export const ChangePassword = (props: any) => {
                             />
                             <div className="d-flex justify-content-center">
                               <Button
+                                id="changepassword_submit_btn"
                                 type="submit"
                                 className="btn btn-primary"
                                 disabled={
@@ -202,6 +208,7 @@ export const ChangePassword = (props: any) => {
                     <p>Your password has been changed. You may now re-login with your new password. Thank you.</p>
                     <p>
                       <button
+                        id="changepassword_login_btn"
                         type="button"
                         className="btn btn-primary btn btn-primary"
                         onClick={() => {

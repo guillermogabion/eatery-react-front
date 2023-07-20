@@ -470,31 +470,33 @@ export const SquadLeaves = (props: any) => {
                     allLeaves.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.lastName}, {item.firstName} </td>
-                          <td> {item.type} </td>
-                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td> {item.reason} </td>
-                          <td> {item.statusChangedBy} </td>
-                          <td> {Utility.removeUnderscore(item.status)} </td>
+                          <td id="squadleaves_name_alleavesdata"> {item.lastName}, {item.firstName} </td>
+                          <td id="squadleaves_type_alleavesdata"> {item.type} </td>
+                          <td id="squadleaves_datefrom_alleavesdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id="squadleaves_dateto_alleavesdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id="squadleaves_reason_alleavesdata"> {item.reason} </td>
+                          <td id="squadleaves_statuschangedby_alleavesdata"> {item.statusChangedBy} </td>
+                          <td id="squadleaves_status_alleavesdata"> {Utility.removeUnderscore(item.status)} </td>
                           <td>
                             <label
+                              id="squadleaves_view_alleaveslabel"
                               onClick={() => {
                                 viewLeave(item.id)
                               }}
                             >
-                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id="squadleaves_eye_alleavesimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             <>
                               {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
                                   <label
+                                    id="squadleaves_actionedit_alleaveslabel"
                                     onClick={() => {
                                       getLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                    <img id="squadleaves_actionedit_alleavesimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
                                   </label>
                                 </>
@@ -503,11 +505,12 @@ export const SquadLeaves = (props: any) => {
                               {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
                                   <label
+                                    id="squadleaves_actionapprove_alleaveslabel"
                                     onClick={() => {
                                       approveLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                    <img id="squadleaves_actionapprove_alleavesimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
 
                                   </label>
                                 </>
@@ -516,11 +519,12 @@ export const SquadLeaves = (props: any) => {
                               {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                 <>
                                   <label
+                                    id="squadleaves_actiondecline_alleaveslabel"
                                     onClick={() => {
                                       declineLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                    <img id="squadleaves_actiondecline_alleavesimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                   </label>
 
                                 </>
@@ -530,11 +534,12 @@ export const SquadLeaves = (props: any) => {
                               {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                                 <>
                                   <label
+                                    id="squadleaves_actioncancel_alleaveslabel"
                                     onClick={() => {
                                       cancelLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                    <img id="squadleaves_actioncancel_alleavesimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                   </label>
 
                                 </>
@@ -610,7 +615,7 @@ export const SquadLeaves = (props: any) => {
                 <h4 className="bold-text">Leave Credits </h4>
                 {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
-                    <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                    <p><b id="squadleaves_leavesleft_mainlabel">{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))}
               </div>
@@ -632,6 +637,7 @@ export const SquadLeaves = (props: any) => {
               <div className="" style={{ width: 200, marginRight: 10 }}>
                 <label>Employee</label>
                 <EmployeeDropdown
+                  id="squadleaves_employee_maindropdown"
                   squad={true}
                   placeholder={"Employee"}
                   singleChangeOption={singleChangeOption}
@@ -642,6 +648,7 @@ export const SquadLeaves = (props: any) => {
               <div>
                 <label>Date From</label>
                 <input
+                  id="squadleaves_datefrom_maininput"
                   name="dateFrom"
                   type="date"
                   autoComplete="off"
@@ -655,6 +662,7 @@ export const SquadLeaves = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="squadleaves_dateto_maininput"
                     name="dateTo"
                     type="date"
                     autoComplete="off"
@@ -687,6 +695,7 @@ export const SquadLeaves = (props: any) => {
               </div>
 
               <Button
+                id="squadleaves_search_mainbtn"
                 style={{ width: 120 }}
                 onClick={() => getAllLeaves(0, key)}
                 className="btn btn-primary mx-2 mt-4">
@@ -702,16 +711,16 @@ export const SquadLeaves = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="squadleaves_all_maintab" eventKey="all" title="All">
                 {leaveTable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="squadleaves_pending_maintab" eventKey="pending" title="Pending">
                 {leaveTable()}
               </Tab>
-              <Tab eventKey="approved" title="Approved" >
+              <Tab id="squadleaves_approved_maintab" eventKey="approved" title="Approved" >
                 {leaveTable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="squadleaves_declined_maintab" eventKey="declined" title="Rejected/Cancelled">
                 {leaveTable()}
               </Tab>
             </Tabs>
@@ -869,7 +878,7 @@ export const SquadLeaves = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.type && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                        <p id="squadleaves_errortype_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -887,7 +896,7 @@ export const SquadLeaves = (props: any) => {
                         }}
                       />
                       {errors && errors.dateFrom && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        <p id="squadleaves_errordatefrom_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -905,7 +914,7 @@ export const SquadLeaves = (props: any) => {
                         }}
                       />
                       {errors && errors.dateTo && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        <p id="squadleaves_errordateto_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -918,7 +927,7 @@ export const SquadLeaves = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="squadleaves_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -999,6 +1008,7 @@ export const SquadLeaves = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="squadleaves_save_modalbtn"
                         type="submit"
                         className="btn btn-primary">
                         Save
@@ -1072,7 +1082,7 @@ export const SquadLeaves = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.type && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                        <p id="squadleaves_errortype_modalreqp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -1091,7 +1101,7 @@ export const SquadLeaves = (props: any) => {
                         }}
                       />
                       {errors && errors.dateFrom && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        <p id="squadleaves_errordatefrom_modalreqp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -1110,7 +1120,7 @@ export const SquadLeaves = (props: any) => {
                         }}
                       />
                       {errors && errors.dateTo && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        <p id="squadleaves_errordateto_modalreqp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -1124,7 +1134,7 @@ export const SquadLeaves = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="squadleaves_errorreason_modalreqp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -1143,7 +1153,7 @@ export const SquadLeaves = (props: any) => {
                               const { date } = item
                               return (
                                 <tr>
-                                  <td key={index + 'date'} >{date}</td>
+                                  <td id="squadleaves_date_modalreqdata" key={index + 'date'} >{date}</td>
                                   <td key={index} >
                                     <input
                                       type="radio"
@@ -1155,7 +1165,7 @@ export const SquadLeaves = (props: any) => {
                                         setDateOption(index, 1, 'WHOLEDAY')
                                       }}
                                     />
-                                    <label htmlFor={"leaveCreditWhole" + index.toString()}
+                                    <label id="squadleaves_leavecreditwhole_modalreqlabel" htmlFor={"leaveCreditWhole" + index.toString()}
                                       style={{ marginRight: 10 }}>Whole Day</label>
                                     <input
                                       type="radio"
@@ -1166,7 +1176,7 @@ export const SquadLeaves = (props: any) => {
                                       onChange={() => {
                                         setDateOption(index, .5, "FIRST_HALF")
                                       }}
-                                    /> <label htmlFor={"leaveCreditDay" + index.toString()}
+                                    /> <label id="squadleaves_leavecreditday_modalreqlabel" htmlFor={"leaveCreditDay" + index.toString()}
                                       style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
                                     {
                                       item.dayType != 'WHOLEDAY' ?
@@ -1190,7 +1200,7 @@ export const SquadLeaves = (props: any) => {
                                             disabled={true}
                                             onChange={() => setDateOption(index, .5, "SECOND_HALF")}
                                           />
-                                          <label htmlFor={"leaveCreditDay1" + index.toString()}
+                                          <label id="squadleaves_leavecreditday1_modalreqlabel" htmlFor={"leaveCreditDay1" + index.toString()}
                                             style={{ paddingTop: -10 }}>Second Half</label>
                                         </>
                                         :

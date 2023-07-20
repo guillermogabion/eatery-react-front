@@ -119,6 +119,7 @@ export const Adjustment = (props: any) => {
                             <div className="mx-1" style={{ width: 200, marginRight: 10 }}>
                                 <label>Employee Name</label>
                                 <EmployeeDropdown
+                                    id="payrolladjustment_employee_dropdown"
                                     name="userId"
                                     placeholder={"Employee"}
                                     value={filterData && filterData['userId']}
@@ -167,14 +168,15 @@ export const Adjustment = (props: any) => {
 
                                     return (
                                         <tr>
-                                            <td> {item.employeeId} </td>
-                                            <td> {item.employeeName} </td>
-                                            <td> {Utility.formatToCurrency(item.amount)} </td>
-                                            <td> {item.adjustmentName} </td>
-                                            <td> {Utility.removeUnderscore(item.type)} </td>
-                                            <td> {item.deduc ? "YES" : "NO"} </td>
+                                            <td id="payrolladjustment_employeeid_adjlist"> {item.employeeId} </td>
+                                            <td id="payrolladjustment_employeename_adjlist"> {item.employeeName} </td>
+                                            <td id="payrolladjustment_amount_adjlist"> {Utility.formatToCurrency(item.amount)} </td>
+                                            <td id="payrolladjustment_adjustmentname_adjlist"> {item.adjustmentName} </td>
+                                            <td id="payrolladjustment_type_adjlist"> {Utility.removeUnderscore(item.type)} </td>
+                                            <td id="payrolladjustment_deduc_adjlist"> {item.deduc ? "YES" : "NO"} </td>
                                             <td>
                                                 <label
+                                                    id="payrolladjustment_update_adjbtn"
                                                     onClick={() => {
                                                         setInitialValues({
                                                             "id": item.id,
@@ -297,6 +299,7 @@ export const Adjustment = (props: any) => {
                                         <div className="w-full mb-3">
                                             <label>Employee ID</label>
                                             <input
+                                                id="payrolladjustment_employeeid_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -309,6 +312,7 @@ export const Adjustment = (props: any) => {
                                         <div className="w-full mb-3">
                                             <label>Employee Name</label>
                                             <input
+                                                id="payrolladjustment_employeename_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -318,6 +322,7 @@ export const Adjustment = (props: any) => {
                                         <div className="w-full mb-3">
                                             <label>Adjustment Name</label>
                                             <input
+                                                id="payrolladjustment_adjustmentname_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -327,6 +332,7 @@ export const Adjustment = (props: any) => {
                                         <div className="w-full mb-3">
                                             <label>Adjustment Type</label>
                                             <input
+                                                id="payrolladjustment_adjustmenttype_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="type"
@@ -336,6 +342,7 @@ export const Adjustment = (props: any) => {
                                         <div className="w-fll mb-3">
                                             <label>Amount</label>
                                             <input
+                                                id="payrolladjustment_amount_forminput"
                                                 className="form-control"
                                                 name="adjustmentAmount"
                                                 type="number"
@@ -348,6 +355,7 @@ export const Adjustment = (props: any) => {
                                     </div>
                                     <Modal.Footer className="w-full mt-[35px] flex justify-center">
                                         <button
+                                            id="payrolladjustment_save_formbtn"
                                             type="submit"
                                             className="btn btn-primary px-5"
                                             disabled={values.adjustmentAmount == ""}>

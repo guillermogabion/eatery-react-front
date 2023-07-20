@@ -245,53 +245,53 @@ const sss = (props: any) => {
                                             if (header === 'Range of Compensation') {
                                             return (
                                                 <>
-                                                <td colSpan={2}>{item.range_lower}</td>
-                                                <td colSpan={2}>{item.range_upper}</td>
+                                                <td id="payrollsettingsss_rangelower_data" colSpan={2}>{item.range_lower}</td>
+                                                <td id="payrollsettingsss_rangeupper_data" colSpan={2}>{item.range_upper}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'Monthly Salary Credit') {
                                             return (
                                                 <>
-                                                <td colSpan={2}>{item.mscRegular}</td>
-                                                <td colSpan={2}>{item.mscWisp}</td>
-                                                <td colSpan={2}>{item.mscTotal}</td>
+                                                <td id="payrollsettingsss_mscregular_data" colSpan={2}>{item.mscRegular}</td>
+                                                <td id="payrollsettingsss_mscwisp_data" colSpan={2}>{item.mscWisp}</td>
+                                                <td id="payrollsettingsss_msctotal_data" colSpan={2}>{item.mscTotal}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'Regular SSS') {
                                             return (
                                                 <>
-                                                <td colSpan={2}>{item.regularEr}</td>
-                                                <td colSpan={2}>{item.regularEe}</td>
-                                                <td colSpan={2}>{item.regularTotal}</td>
+                                                <td id="payrollsettingsss_regularer_data" colSpan={2}>{item.regularEr}</td>
+                                                <td id="payrollsettingsss_regularee_data" colSpan={2}>{item.regularEe}</td>
+                                                <td id="payrollsettingsss_regulartotal_data" colSpan={2}>{item.regularTotal}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'EC') {
                                             return (
                                                 <>
-                                                <td colSpan={2}>{item.ecEr}</td>
-                                                <td colSpan={2}>{item.ecEe}</td>
-                                                <td colSpan={2}>{item.ecTotal}</td>
+                                                <td id="payrollsettingsss_ecer_data" colSpan={2}>{item.ecEr}</td>
+                                                <td id="payrollsettingsss_ecee_data" colSpan={2}>{item.ecEe}</td>
+                                                <td id="payrollsettingsss_ectotal_data" colSpan={2}>{item.ecTotal}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'WISP') {
                                             return (
                                                 <>
-                                                <td colSpan={2}>{item.wispEr}</td>
-                                                <td colSpan={2}>{item.wispEe}</td>
-                                                <td colSpan={2}>{item.wispTotal}</td>
+                                                <td id="payrollsettingsss_wisper_data" colSpan={2}>{item.wispEr}</td>
+                                                <td id="payrollsettingsss_wispee_data" colSpan={2}>{item.wispEe}</td>
+                                                <td id="payrollsettingsss_wisptotal_data" colSpan={2}>{item.wispTotal}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'Total') {
                                             return (
                                                 <>
-                                                <td colSpan={2}>{item.totalEr}</td>
-                                                <td colSpan={2}>{item.totalEe}</td>
-                                                <td colSpan={2}>{item.totalTotal}</td>
+                                                <td id="payrollsettingsss_totaler_data" colSpan={2}>{item.totalEr}</td>
+                                                <td id="payrollsettingsss_totalee_data" colSpan={2}>{item.totalEe}</td>
+                                                <td id="payrollsettingsss_totaltotal_data" colSpan={2}>{item.totalTotal}</td>
                                                 </>
                                             );
                                             }
@@ -309,11 +309,13 @@ const sss = (props: any) => {
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
+                        id="payrollsettingsss_downloadtemplate_btn"
                         className="mx-2"
                         onClick={downloadTemplate}>Download Template</Button>
                 </div>
                 <div>
                     <Button
+                        id="payrollsettingsss_uploadtable_btn"
                         className="mx-2"
                         onClick={() => {
                             setModalUploadShow(true)

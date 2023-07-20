@@ -114,12 +114,12 @@ function ChangePassword(props: any) {
             return <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
               <div className="passwordField mt-3">
                 <input id="_oldpassword" onCopy={props.copyHandler} onCut={props.cutHandler} autoComplete="new-password" name="oldPassword" value={values.oldPassword} type={props.visibile1 ? "text" : "password"} className="form-control w-100 text-field-color input-login " placeholder="Current Password" onChange={e => setFieldValue('oldPassword', e.target.value)} />
-                <Button variant="link" onClick={() => props.setVisibile1(!props.visibile1)} className="passwordicon pt-3" type="button">
+                <Button id="login_oldpassword_btn" variant="link" onClick={() => props.setVisibile1(!props.visibile1)} className="passwordicon pt-3" type="button">
                   <span className="showpass">
-                    <img src={show_password_dark} alt="Show" />
+                    <img id="login_oldpasswordshow_img" src={show_password_dark} alt="Show" />
                   </span>
                   <span className="hidepass">
-                    <img src={hide_password_dark} alt="Hide" />
+                    <img id="login_oldpasswordhide_img" src={hide_password_dark} alt="Hide" />
                   </span>
                 </Button>
                 {errors && errors.oldPassword && <p style={{
@@ -129,12 +129,12 @@ function ChangePassword(props: any) {
               </div>
               <div className="passwordField mt-5">
                 <input id="_newpassword" onCopy={props.copyHandler} onCut={props.cutHandler} autoComplete="new-password" name="newPassword" value={values.newPassword} type={props.visibile2 ? "text" : "password"} className="form-control w-100 text-field-color input-login " maxLength={16} placeholder="New Password" onChange={e => setFieldValue('newPassword', e.target.value)} />
-                <Button variant="link" onClick={() => props.setVisibile2(!props.visibile2)} className="passwordicon pt-3" type="button">
+                <Button id="login_newassword_btn" variant="link" onClick={() => props.setVisibile2(!props.visibile2)} className="passwordicon pt-3" type="button">
                   <span className="showpass">
-                    <img src={show_password_dark} alt="Show" />
+                    <img id="login_newpasswordshow_img" src={show_password_dark} alt="Show" />
                   </span>
                   <span className="hidepass">
-                    <img src={hide_password_dark} alt="Hide" />
+                    <img id="login_newpasswordhide_img" src={hide_password_dark} alt="Hide" />
                   </span>
                 </Button>
                 {errors && errors.newPassword && <p style={{
@@ -144,12 +144,12 @@ function ChangePassword(props: any) {
               </div>
               <div className="passwordField mt-5">
                 <input id="_confirmpassword" onCopy={props.copyHandler} onCut={props.cutHandler} autoComplete="new-password" name="conPassword" value={values.conPassword} type={props.visibile3 ? "text" : "password"} className="form-control w-100 text-field-color input-login " maxLength={16} placeholder="Confirm New Password" onChange={e => setFieldValue('conPassword', e.target.value)} />
-                <Button variant="link" onClick={() => props.setVisibile3(!props.visibile3)} className="passwordicon pt-3" type="button">
+                <Button id="login_confirmpassword_btn" variant="link" onClick={() => props.setVisibile3(!props.visibile3)} className="passwordicon pt-3" type="button">
                   <span className="showpass">
-                    <img src={show_password_dark} alt="Show" />
+                    <img id="login_confirmpasswordshow_img" src={show_password_dark} alt="Show" />
                   </span>
                   <span className="hidepass">
-                    <img src={hide_password_dark} alt="Hide" />
+                    <img id="login_confirmpasswordhide_img" src={hide_password_dark} alt="Hide" />
                   </span>
                 </Button>
                 {errors && errors.conPassword && <p style={{
@@ -159,7 +159,7 @@ function ChangePassword(props: any) {
               </div>
               <br /> <br />
               <div className="d-flex">
-                <Button type="submit" className="w-100 btn btn-primary">
+                <Button id="login_password_btn" type="submit" className="w-100 btn btn-primary">
                   Submit
                 </Button>
                 <br /><br />
@@ -320,7 +320,7 @@ export const Login = () => {
           {!isNewAccount ?
             <div className="bg-white relative flex flex-column justify-center items-center rounded-md pb-[180px] pt-[80px] w-full xl:w-[500px] md:w-[450px]">
               <div className="company-logo p-0 m-0">
-                <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
+                <img id="login_actimailogo_img" src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
               </div>
               <div className="align-items-center mt-3">
                 <h5 className="text-[1.7em] color-primary">Employee Portal Login</h5>
@@ -354,23 +354,25 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <Button
+                    id="login_passwordportal_btn"
                     variant="link"
                     onClick={() => setVisibile(!visibile)}
                     className="passwordicon pt-3"
                     disabled={!password}>
                     <span className="showpass">
-                      <img src={show_password_dark} alt="Show" />
+                      <img id="login_passwordportalshow_img" src={show_password_dark} alt="Show" />
                     </span>
                     <span className="hidepass">
-                      <img src={hide_password_dark} alt="Hide" />
+                      <img id="login_passwordportalhide_btn" src={hide_password_dark} alt="Hide" />
                     </span>
                   </Button>
                 </div>
-                <a href="#!" onClick={handleModal} className="forgotPassword mb-3">
+                <a id="login_forgotpassword_a" href="#!" onClick={handleModal} className="forgotPassword mb-3">
                   Forgot Password?
                 </a>
                 <div className="d-flex">
                   <Button
+                    id="login_loginportal_btn"
                     style={{ width: '100%' }}
                     onClick={() => loginRequest()}
                     className="btn btn-primary"
@@ -381,7 +383,7 @@ export const Login = () => {
                 <div className="d-flex justify-content-center p-0 ">
                   {errorMessage != "" && (
                     <Alert variant="" className="w-100 p-0 pt-2" style={{ textAlign: "left" }}>
-                      <span className="text-danger"><b>{errorMessage}</b> </span>
+                      <span id="login_passwordportalerrormsg_span" className="text-danger"><b>{errorMessage}</b> </span>
                     </Alert>
                   )}
                 </div>
@@ -423,6 +425,7 @@ export const Login = () => {
         </div>
         <div className="modal-btns w-100">
           <Button variant="primary"
+            id="login_forgotsubmit_btn"
             className="modal-btn"
             disabled={forgotIsSubmit}
             onClick={() => {

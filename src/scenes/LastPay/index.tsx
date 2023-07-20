@@ -165,25 +165,27 @@ export const LastPay = (props: any) => {
                                         lastPayList.content.map((item: any, index: any) => {
                                             return (
                                                 <tr>
-                                                    <td> {item.employeeId} </td>
-                                                    <td> {item.employeeName} </td>
-                                                    <td>  {Utility.formatDate(item.seperationDate, 'MM-DD-YYYY')} </td>
-                                                    <td> {item.lastPayExist ? "Yes" : "No"} </td>
+                                                    <td id="lastpay_employeeid_data"> {item.employeeId} </td>
+                                                    <td id="lastpay_employeename_data"> {item.employeeName} </td>
+                                                    <td id="lastpay_separationdate_data">  {Utility.formatDate(item.seperationDate, 'MM-DD-YYYY')} </td>
+                                                    <td id="lastpay_lastpayexist_data"> {item.lastPayExist ? "Yes" : "No"} </td>
                                                     <td>
                                                         <label
+                                                            id="lastpay_view_label"
                                                             onClick={() => {
                                                                 setModalShow(true)
                                                                 getLastPayInfo(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id="lastpay_eye_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                         </label>
                                                         <label
+                                                            id="lastpay_regenerate_label"
                                                             onClick={() => {
                                                                 regenerateLastPay(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img src={regenerate} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id="lastpay_regenerate_img" src={regenerate} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -244,40 +246,40 @@ export const LastPay = (props: any) => {
                             <Col md={3} className="border-1 p-1 flex flex-column justify-start">
                                 {
                                     detailsMenu == 'Salary Details' ?
-                                        <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_salarydetails1_btn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Salary Details")
                                         }}>Salary Details</Button> :
-                                        <Button variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_salarydetail2_btn" variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Salary Details")
                                         }}>Salary Details</Button>
                                 }
 
                                 {
                                     detailsMenu == 'Employee Details' ?
-                                        <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_employeedetails1_btn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Employee Details")
                                         }}>Employee Details</Button> :
-                                        <Button variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_employeedetails2_btn" variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Employee Details")
                                         }}>Employee Details</Button>
                                 }
 
                                 {
                                     detailsMenu == 'Earnings & Deductions' ?
-                                        <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_earningsanddecution1_btn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Earnings & Deductions")
                                         }}>Earnings & Deductions</Button> :
-                                        <Button variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_earningsanddecution2_btn" variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Earnings & Deductions")
                                         }}>Earnings & Deductions</Button>
                                 }
 
                                 {
                                     detailsMenu == 'Tax Computation' ?
-                                        <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5] focus:bg-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_taxcomputation1_btn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] text-[#189FB5] border-[#189FB5] focus:bg-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Tax Computation")
                                         }}>Tax Computation</Button> :
-                                        <Button variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] focus:bg-[#189FB5]  text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                        <Button id="lastpay_taxcomputation2_btn" variant="" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF] focus:bg-[#189FB5]  text-[#189FB5] border-[#189FB5]" onClick={() => {
                                             setDetalsMenu("Tax Computation")
                                         }}>Tax Computation</Button>
                                 }
@@ -288,19 +290,19 @@ export const LastPay = (props: any) => {
                                         <tbody className="bg-light">
                                             <tr className="bg-white">
                                                 <td className="text-[#125667] font-bold text-lg px-2 py-3">Basic Salary</td>
-                                                <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.basicSalary, false)}</td>
+                                                <td id="lastpay_basicsalary_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.basicSalary, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
                                                 <td className="text-[#125667] font-bold text-lg px-2 py-3">De Minimis</td>
-                                                <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.deMinimis, false)}</td>
+                                                <td id="lastpay_deminimis_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.deMinimis, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
                                                 <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Allowance</td>
-                                                <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.taxableAllowance, false)}</td>
+                                                <td id="lastpay_taxableallowance_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.taxableAllowance, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
                                                 <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Allowance</td>
-                                                <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.nonTaxableAllowance, false)}</td>
+                                                <td id="lastpay_nontaxableallowance_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.nonTaxableAllowance, false)}</td>
                                             </tr>
                                         </tbody>
                                     </Table>
@@ -312,31 +314,31 @@ export const LastPay = (props: any) => {
                                             <tbody className="bg-light">
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Employee Name</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.employeeName}</td>
+                                                    <td id="lastpay_employeename_eddata"  className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.employeeName}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Date Covered</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.dateCovered}</td>
+                                                    <td id="lastpay_datecovered_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.dateCovered}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Department</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.removeUnderscore(lastPayInfo.employeeDetails.department)}</td>
+                                                    <td id="lastpay_department_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.removeUnderscore(lastPayInfo.employeeDetails.department)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Position</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.position}</td>
+                                                    <td id="lastpay_position_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.position}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Separation Date</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatDate(lastPayInfo.employeeDetails.seperationDate, 'MM-DD-YYYY')}</td>
+                                                    <td id="lastpay_separationdate_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatDate(lastPayInfo.employeeDetails.seperationDate, 'MM-DD-YYYY')}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Days Present</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.daysPresent}</td>
+                                                    <td id="lastpay_dayspresent_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.daysPresent}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Days Per Month</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.daysPerMonth}</td>
+                                                    <td id="lastpay_dayspermonth_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.daysPerMonth}</td>
                                                 </tr>
                                             </tbody>
                                         </Table>
@@ -350,67 +352,67 @@ export const LastPay = (props: any) => {
                                             <tbody className="bg-light">
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">SSS</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.sss, false)}</td>
+                                                    <td id="lastpay_sss_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.sss, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">PHILHEALTH</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.philHealth, false)}</td>
+                                                    <td id="lastpay_philhealth_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.philHealth, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">PHILHEALTH Adjustment</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.philHealthAdj, false)}</td>
+                                                    <td id="lastpay_philhealthadjustment_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.philHealthAdj, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">HDMF</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.hdmf, false)}</td>
+                                                    <td id="lastpay_hdmf_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.hdmf, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Unclaimed Salary</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.unclaimedSalary, false)}</td>
+                                                    <td id="lastpay_unclaimedsalary_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.unclaimedSalary, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">De Minimis</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.deMinimis, false)}</td>
+                                                    <td id="lastpay_deminimis_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.deMinimis, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Income</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.taxableIncome, false)}</td>
+                                                    <td id="lastpay_taxableincome_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.taxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Income</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.nonTaxableIncome, false)}</td>
+                                                    <td id="lastpay_nontaxableincome_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.nonTaxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Overtime</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.overtime, false)}</td>
+                                                    <td id="lastpay_overtime_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.overtime, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Undertime</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end"></td>
+                                                    <td id="lastpay_undertime_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end"></td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tardiness</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.tardiness, false)}</td>
+                                                    <td id="lastpay_tardiness_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.tardiness, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Absences</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.absences, false)}</td>
+                                                    <td id="lastpay_absences_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.absences, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">13th Month Pay</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.thirteenthMonthPay, false)}</td>
+                                                    <td id="lastpay_13thmonthpay_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.thirteenthMonthPay, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tax Refund <br /> (Payable)</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.taxRefund, false)}</td>
+                                                    <td id="lastpay_taxrefund_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.taxRefund, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">SSS Loan</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.sssLoan, false)}</td>
+                                                    <td id="lastpay_sssloan_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.sssLoan, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#189FB5] font-bold text-lg px-2 py-3">FINAL PAY</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.finalPay, false)}</td>
+                                                    <td id="lastpay_finalpay_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.finalPay, false)}</td>
                                                 </tr>
                                             </tbody>
                                         </Table>
@@ -424,67 +426,67 @@ export const LastPay = (props: any) => {
                                             <tbody className="bg-light">
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Gross Pay</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.grossPay, false)}</td>
+                                                    <td id="lastpay_grosspay_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.grossPay, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Less:</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end"></td>
+                                                    <td id="lastpay_less_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end"></td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Government Remittances</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.governmentRemittances, false)}</td>
+                                                    <td id="lastpay_governmentremittance_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.governmentRemittances, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">13th Month & Bonus not exceeding 90,000.00</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.thirteenthMonthAndBonus, false)}</td>
+                                                    <td id="lastpay_13thmonthpay_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.thirteenthMonthAndBonus, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">De Minimis</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.deMinimis, false)}</td>
+                                                    <td id="lastpay_deminimis_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.deMinimis, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Allowance</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.nonTaxableAllowance, false)}</td>
+                                                    <td id="lastpay_nontaxableallowance_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.nonTaxableAllowance, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Total Non-Taxable</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxableAllowance, false)}</td>
+                                                    <td id="lastpay_totalnontaxable_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxableAllowance, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Total Taxable Income</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxableIncome, false)}</td>
+                                                    <td id="lastpay_totaltaxable_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Refer to Tax Table</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.referToTaxTable, false)}</td>
+                                                    <td id="lastpay_refertotaxtbale_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.referToTaxTable, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Excess Taxable Income</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.excessTaxableIncom, false)}</td>
+                                                    <td id="lastpay_excesstaxableincome_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.excessTaxableIncom, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tax Rates</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.taxComputations.taxRates+'%'}</td>
+                                                    <td id="lastpay_taxrates_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.taxComputations.taxRates+'%'}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Pre-Tax Due</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.preTaxDue, false)}</td>
+                                                    <td id="lastpay_pretaxdue_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.preTaxDue, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Fixed Tax</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.fixedTax, false)}</td>
+                                                    <td id="lastpay_fixedtax_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.fixedTax, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tax Due</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxDue, false)}</td>
+                                                    <td id="lastpay_taxdue_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxDue, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tax Withheld</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxWithheld, false)}</td>
+                                                    <td id="lastpay_taxwithheld_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxWithheld, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tax Payable (Refund)</td>
-                                                    <td className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxPayable, false)}</td>
+                                                    <td id="lastpay_taxpayablerefund_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.taxComputations.taxPayable, false)}</td>
                                                 </tr>
                                             </tbody>
                                         </Table>
@@ -496,14 +498,14 @@ export const LastPay = (props: any) => {
                         </Row>
                         <Modal.Footer className="mt-5">
                             <div className="w-full flex justify-center">
-                                <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                <Button id="lastpay_close_mbtn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
                                     setModalShow(false)
                                     setLastPayInfo({})
                                 }}>Close</Button>
-                                <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                <Button id="lastpay_downloadlastpay_mbtn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
                                     setDetalsMenu("Salary Details")
                                 }}>Download Last Pay</Button>
-                                <Button className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
+                                <Button id="lastpay_downloadbanktransmittal_mbtn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
                                     setDetalsMenu("Salary Details")
                                 }}>Download Bank Transmittal</Button>
                             </div>

@@ -211,10 +211,11 @@ export const LeaveTypes = (props: any) => {
                                         allLeaveTypes.map((item: any, index: any) => {
                                             return (
                                                 <tr>
-                                                    <td> {item.name} </td>
-                                                    <td> {item.description} </td>
+                                                    <td id="leavetypes_name_allleavetypesdata"> {item.name} </td>
+                                                    <td id="leavetypes_description_allleavetypesdata"> {item.description} </td>
                                                     <td className="d-flex">
                                                         <label
+                                                            id="leavetypes_edit_allleavetypeslabel"
                                                             onClick={() => {
                                                                 setLeaveTypeId(item.id)
                                                                 setInitialValues(item)
@@ -222,16 +223,17 @@ export const LeaveTypes = (props: any) => {
                                                             }}
                                                             className="text-muted cursor-pointer">
 
-                                                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id="leavetypes_actionedit_allleavetypesimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                         </label>
                                                         <br />
                                                         <label
+                                                            id="leavetypes_delete_allleavetypeslabel"
                                                             onClick={() => {
                                                                 deleteLeaveType(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
 
-                                                            <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                                                            <img id="leavetypes_actiondecline_allleavetypesimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -278,6 +280,7 @@ export const LeaveTypes = (props: any) => {
                             <div className="d-flex justify-content-end mt-3" >
                                 <div>
                                     <Button
+                                        id="leavetypes_editcreditstoemployee_allleavetypesbtn"
                                         className="mx-2"
                                         onClick={() => {
                                             setCreditModal(true)
@@ -292,6 +295,7 @@ export const LeaveTypes = (props: any) => {
                             <div className="d-flex justify-content-end mt-3" >
                                 <div>
                                     <Button
+                                        id="leavetypes_createleavetype_allleavetypesbtn"
                                         className="mx-2"
                                         onClick={() => {
                                             setLeaveTypeId("")
@@ -413,7 +417,7 @@ export const LeaveTypes = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.name && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
+                                                <p id="leavetypes_errorname_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.name}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -429,7 +433,7 @@ export const LeaveTypes = (props: any) => {
                                                 }}
                                             />
                                             {errors && errors.description && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
+                                                <p id="leavetypes_errordescription_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.description}</p>
                                             )}
                                         </div>
                                     </div>
@@ -437,6 +441,7 @@ export const LeaveTypes = (props: any) => {
                                     <Modal.Footer>
                                         <div className="d-flex justify-content-end px-5">
                                             <button
+                                                id="leavetypes_save_modalbtn"
                                                 type="submit"
                                                 disabled={onSubmit}
                                                 className="btn btn-primary">
@@ -518,6 +523,7 @@ export const LeaveTypes = (props: any) => {
                                         <div className="form-group col-md-12 mb-3" >
                                             <label>Employee</label>
                                             <SingleSelect
+                                                id="leavetypes_employee_editmodalselect"
                                                 type="string"
                                                 options={employeeList || []}
                                                 placeholder={"Employee"}
@@ -531,7 +537,7 @@ export const LeaveTypes = (props: any) => {
                                                 value={values.userId}
                                             />
                                             {errors && errors.userId && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                <p id="leavetypes_erroremployee_editmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -560,7 +566,7 @@ export const LeaveTypes = (props: any) => {
                                                     ))}
                                             </select>
                                             {errors && errors.leaveTypeId && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.leaveTypeId}</p>
+                                                <p id="leavetypes_errorleavetypeid_editmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.leaveTypeId}</p>
                                             )}
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
@@ -574,13 +580,14 @@ export const LeaveTypes = (props: any) => {
                                                 onChange={handleChange}
                                             />
                                             {errors && errors.credits && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.credits}</p>
+                                                <p id="leavetypes_errorcredits_editmodalp" style={{ color: "red", fontSize: "12px" }}>{errors.credits}</p>
                                             )}
                                         </div>
                                     </div>
                                     <Modal.Footer>
                                         <div className="d-flex justify-content-end px-5">
                                             <button
+                                                id="leavetypes_edit_editmodalbtn"
                                                 type="button"
                                                 onClick={() => {
                                                     if (editCredit) {
@@ -596,6 +603,7 @@ export const LeaveTypes = (props: any) => {
                                             </button>
 
                                             <button
+                                                id="leavetypes_save_editmodalbtn"
                                                 type="submit"
                                                 disabled={editCredit}
                                                 className="btn btn-primary">
