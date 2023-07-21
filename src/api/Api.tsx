@@ -258,17 +258,17 @@ const Api: any = {
   lastPayInfo: process.env.REACT_APP_API_URL + "lastpay/info",
   lastPayBankUpload: process.env.REACT_APP_API_URL + "lastpay/bankupload",
 
-  getDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/info",
-  updateDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/update",
+  workingCalendarInfo : process.env.REACT_APP_API_URL + "payroll/working-calendar/info",
+  updateWorkingCalendar : process.env.REACT_APP_API_URL + "payroll/working-calendar/update",
   
-  getDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/info",
-  updateDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/update",
+  // getDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/info",
+  // updateDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/update",
   
-  getDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/info",
-  updateDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/update",
+  // getDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/info",
+  // updateDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/update",
   
-  getHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/info",
-  updateHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/update",
+  // getHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/info",
+  // updateHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/update",
 
 
   // AccessRights 
