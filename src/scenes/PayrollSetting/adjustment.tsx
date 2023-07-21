@@ -259,7 +259,7 @@ const Adjustment = (props: any) => {
                     </div>
                     <div className="input-container col-md-3">
                         <Button
-                        style={{ width: 210 }}
+                        style={{ width: 100 }}
                         onClick={() => getAllAdjustmentType(0)}
                         className="btn btn-primary mx-2 mt-4">
                         Search

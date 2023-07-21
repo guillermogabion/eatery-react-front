@@ -16,7 +16,7 @@ const unsent = (props : any ) => {
     const [employee, setEmployee] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [ failedPayslipList, setFailedPayslipList ] = useState<any>([]);
-    const [filterData, setFilterData] = React.useState([]);
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const selectRef = useRef(null);
     const [showButtonMonth, setShowButtonMonth] = useState(false);
     const [showButtonYear, setShowButtonYear] = useState(false);
@@ -178,33 +178,48 @@ const unsent = (props : any ) => {
                     setFilterData(filterObj)
             }
             const handlePageClick = (event: any) => {
-                getAllEmployee(event.selected)
+                getAllPayrollFailed(event.selected)
             };
             const resetMonth = () => {
             setPayrollMonth("");
-            const selectElement = document.getElementById("month");
+            const selectElement = document.getElementById("month1");
                 if (selectElement) {
                 selectElement.selectedIndex = 0;
                 }
                 setShowButtonMonth(false);
+                setFilterData(prevFilterData => {
+                    const filterObj = { ...prevFilterData };
+                    delete filterObj.payrollMonth;
+                    return filterObj;
+                  });
     
             }
             const resetYear = () => {
             setPayrollYear("");
-            const selectElement = document.getElementById("year");
+            const selectElement = document.getElementById("year1");
                 if (selectElement) {
                 selectElement.selectedIndex = 0;
                 }
                 setShowButtonYear(false);
+                setFilterData(prevFilterData => {
+                    const filterObj = { ...prevFilterData };
+                    delete filterObj.payrollYear;
+                    return filterObj;
+                  });
     
             }
             const resetStatus = () => {
             setStatus("");
-            const selectElement = document.getElementById("status");
+            const selectElement = document.getElementById("status1");
                 if (selectElement) {
                 selectElement.selectedIndex = 0;
                 }
                 setShowButtonStatus(false);
+                setFilterData(prevFilterData => {
+                    const filterObj = { ...prevFilterData };
+                    delete filterObj.status;
+                    return filterObj;
+                  });
         
             }
             const singleChangeOption = (option: any, name: any) => {
@@ -218,11 +233,21 @@ const unsent = (props : any ) => {
                       <div>
                         <div className="w-100 pt-2">
                             <div className="fieldtext d-flex ">
+                                <div className="input-container col-md-2">
+                                    <label>Employee Name</label>
+                                        <EmployeeDropdown
+                                            placeholder={"Employee"}
+                                            singleChangeOption={singleChangeOption}
+                                            name="userId"
+                                            value={filterData && filterData['userId']}
+                                            withEmployeeID={true}
+                                            />
+                                </div>
                                 <div className="input-container clearable-select col-md-2">
                                 <label> Month </label>
                                 <select 
                                     name="payrollMonth" 
-                                    id="month"
+                                    id="month1"
                                     onChange={(e) => { makeFilterData(e)
                                         setShowButtonMonth(e.target.value !== 'default')
                                     }}
@@ -256,7 +281,7 @@ const unsent = (props : any ) => {
                                     <select
                                         className={`form-select`}
                                         name="payrollYear"
-                                        id="year"
+                                        id="year1"
                                         onChange={(e) => {makeFilterData(e)
                                             setShowButtonYear(e.target.value !== 'default')
                                             
@@ -282,40 +307,10 @@ const unsent = (props : any ) => {
                                         </span>
                                     )}
                                 </div>
-                                <div className="input-container col-md-2">
-                                <label>Employee Name</label>
-                                    <EmployeeDropdown
-                                        placeholder={"Employee"}
-                                        singleChangeOption={singleChangeOption}
-                                        name="userId"
-                                        value={filterData && filterData['userId']}
-                                        withEmployeeID={true}
-                                        />
-                                    </div>
-                                <div className="input-container clearable-select col-md-2">
-                                <label> Status </label>
-                                <select 
-                                    name="status" 
-                                    id="status"
-                                    onChange={(e) => { makeFilterData(e)
-                                        setShowButtonStatus(e.target.value !== 'default')
-                                    }}
-                                    className="formControl"
-                                    >
-                                        <option value="default" disabled selected>
-                                            Status
-                                        </option>
-                                        <option value="completed">Completed</option>
-                                        <option value="incomplete">Incomplete</option>
-                                    </select>
-                                    {showButtonStatus && (
-                                        <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
-                                        X
-                                        </span>
-                                    )}
-                                </div>
+                                
+                               
                                 <Button
-                                style={{ width: 210 }}
+                                style={{ width: 100 }}
                                 onClick={() => getAllPayrollFailed(0)}
                                 className="btn btn-primary mx-2 mt-4">
                                 Search

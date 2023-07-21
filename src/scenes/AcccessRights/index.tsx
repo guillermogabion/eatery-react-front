@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Table } from "react-bootstrap";
+import { Button, Modal, Table, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -7,17 +7,34 @@ import { Api, RequestAPI } from "../../api";
 import { Formik } from "formik";
 import ContainerWrapper from "../../components/ContainerWrapper";
 import ReactPaginate from "react-paginate";
+import { async } from "validate.js";
+import { tr } from "date-fns/locale";
+
 
 const ErrorSwal = withReactContent(Swal);
 
 export const Access = (props: any) => {
     const [roleList, setRoleList] = useState<any>([]);
     const [roleAuthList, setRoleAuthList] = useState<any>([]);
+    const [availableAuthList, setAvailableAuthList] = useState<any>([]);
     const [manageModalShow, setManageModalShow] = useState(false);
     const [addAccessModalShow, setAddAccessModalShow] = useState(false);
     const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null);
-    const tableHeaders = ["ID", "Role Name", "Manage"];
-    const tableRoleAuth = ["ID", "Auth Name", "Action"];
+    const tableHeaders = [
+      "ID", 
+      "Role Name", 
+      "Manage"
+    ];
+    const tableRoleAuth = [
+      "ID", 
+      "Auth Name", 
+      "Action"
+    ];
+    const tableAddAccess = [
+      " ",
+      "ID",
+      "Auth Name"
+    ]
   
     const getAllRoles = () => {
         RequestAPI.getRequest(`${Api.getRoles}`, "", {}, {}, async (res: any) => {
@@ -45,7 +62,6 @@ export const Access = (props: any) => {
                 setRoleAuthList(body.data);
                 setSelectedRoleId(roleId);
                 if (status === 200 && body && (!body.data.content || body.data.content.length === 0) && pageNo > 0) {
-                    // getRoleInfo(roleId, pageNo - 1);
                     RequestAPI.getRequest(
                         `${Api.getRolesAuth}?id=${roleId}&page=${pageNo - 1 }`,
                         "",
@@ -66,10 +82,6 @@ export const Access = (props: any) => {
                                 }
                             }
                             }
-                            // else if (status === 200 && body && (!body.data.content || body.data.content.length === 0) && pageNo > 0) {
-                            //     // getRoleInfo(roleId, pageNo - 1);
-                                
-                            //   }
                         }
                         );
                   }
@@ -83,6 +95,27 @@ export const Access = (props: any) => {
         }
         );
     };
+    const addAccess = (roleId : any = 0) => {
+       RequestAPI.getRequest(
+        `${Api.getAvailableAuth}?id=${roleId}`,
+        "",
+        {},
+        {},
+        async (res : any) => {
+          const { status , body = { data: {}, error: {}}}: any = res;
+          if (status === 200 && body && body.data) {
+            if (body.error && body.error.message) {
+
+            }else{
+              setAvailableAuthList(body.data)
+              setAddAccessModalShow(true)
+              setSelectedRoleId(roleId);
+
+            }
+          }
+        }
+       )
+    }
 
 
 
@@ -149,9 +182,122 @@ export const Access = (props: any) => {
     getRoleInfo(selectedRoleId, selected);
     };
 
-    // const addAccess = (id : any) => {
-    //     RequestAPI.postRequest(Api.addRoleAuth, "")
+    const onChangeCheckbox = (index: any, boolCheck: any) => {
+      const valuesObj: any = [...availableAuthList]
+      valuesObj[index].isCheck = boolCheck
+      setAvailableAuthList([...valuesObj])
+    };
+
+    // const addCheckedAccess = async () => {
+    //   const checkedItems = availableAuthList.filter((item) => item.isCheck);
+    //   const toAccess = checkedItems.map((item) => {
+    //     return {
+    //       roleId: selectedRoleId, 
+    //       authorityId: item.authorityId,
+    //     };
+    //   });
+
+    //   try {
+    //     const response = await RequestAPI.postRequest(Api.addRoleAuth, "", toAccess, {}, async (res: any) => {
+    //       const { status, body = { data: {}, error: {} } }: any = res;
+    //       if (status === 200 || status === 201) {
+    //         if (body.error && body.error.message) {
+    //           ErrorSwal.fire('Error!', body.error.message, 'error');
+    //         } else {
+          
+    //           ErrorSwal.fire('Success!', 'Data saved successfully', 'success');
+    //           setAddAccessModalShow(false); 
+    //         }
+    //       } else {
+    //         ErrorSwal.fire('Error!', 'Something went wrong.', 'error');
+    //       }
+    //     });
+    
+     
+    //   } catch (error) {
+    //     console.error("Error saving data:", error);
+    //     ErrorSwal.fire('Error!', 'An error occurred while saving data.', 'error');
+    //   }
     // }
+
+    // const addCheckedAccess = async () => {
+    //   const checkedItems = availableAuthList.filter((item) => item.isCheck);
+    //   const toAccess = checkedItems.map((item) => {
+    //     return {
+    //       roleId: selectedRoleId,
+    //       authorityId: item.authorityId,
+    //     };
+    //   });
+    
+    //   try {
+    //     // Replace 'Api.addRoleAuth' with the actual API endpoint for saving the checked items
+    //     const response = await RequestAPI.postRequest(Api.addRoleAuth, "", toAccess, {}, async (res: any) => {
+    //       const { status, body = { data: {}, error: {} } }: any = res;
+    //       if (status === 200 || status === 201) {
+    //         if (body.error && body.error.message) {
+    //           ErrorSwal.fire('Error!', body.error.message, 'error');
+    //         } else {
+    //           ErrorSwal.fire('Success!', 'Data saved successfully', 'success');
+    //           setAddAccessModalShow(false);
+    //         }
+    //       } else {
+    //         ErrorSwal.fire('Error!', 'Something went wrong.', 'error');
+    //       }
+    //     });
+    
+    //     // Handle any additional logic based on the response if needed
+    //     // For example, if the response contains an ID or any other data you need to update your state or perform further actions.
+    //     // const { id } = response.data; // Replace 'id' with the actual key in the response data.
+    
+    //   } catch (error) {
+    //     console.error("Error saving data:", error);
+    //     ErrorSwal.fire('Error!', 'An error occurred while saving data.', 'error');
+    //   }
+    // };
+
+
+    const addCheckedAccess = async () => {
+      const checkedItems = availableAuthList.filter((item) => item.isCheck);
+      const toAccess = checkedItems.map((item) => {
+        return {
+          roleId: selectedRoleId,
+          authorityId: item.authorityId,
+        };
+      });
+    
+      const requestData = {
+        data: toAccess,
+      };
+    
+      try {
+        const response = await RequestAPI.postRequest(
+          Api.addRoleAuth,
+          "",
+          requestData,
+          {},
+          async (res: any) => {
+            const { status, body = { data: {}, error: {} } }: any = res;
+            if (status === 200 || status === 201) {
+              if (body.error && body.error.message) {
+                ErrorSwal.fire('Error!', body.error.message, 'error');
+              } else {
+                ErrorSwal.fire('Success!', 'Data saved successfully', 'success');
+                setAddAccessModalShow(false);
+              }
+            } else {
+              ErrorSwal.fire('Error!', 'Something went wrong.', 'error');
+            }
+          }
+        );
+      } catch (error) {
+        console.error("Error saving data:", error);
+        ErrorSwal.fire('Error!', 'An error occurred while saving data.', 'error');
+      }
+    };
+    
+    
+
+    
     
 
   return (
@@ -188,12 +334,13 @@ export const Access = (props: any) => {
                               >
                                 Manage
                               </label>
+                              <br />
                               <label
                                 onClick={() => {
                                   addAccess(item.roleId);
                                 }}
                               >
-                                Manage
+                                Add Access
                               </label>
                             </td>
                           </tr>
@@ -276,13 +423,7 @@ export const Access = (props: any) => {
                   </div>
                  
                 </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-center">
-                  {/* <Button
-                    onClick={() => downloadExcel(fromDate, toDate)}
-                    disabled={isSubmit}>
-                    {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
-                  </Button> */}
-                </Modal.Footer>
+               
               </Modal>
               <Modal
                  show={addAccessModalShow}
@@ -292,8 +433,68 @@ export const Access = (props: any) => {
                  backdrop="static"
                  keyboard={false}
                  onHide={() => setAddAccessModalShow(false)}
-                 dialogClassName="modal-90w"
+                 dialogClassName="modal-90w access-dialog"
               >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                    Add User Access 
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                  <div>
+                  <div className="table-body-container" style={{ maxHeight: "500px", overflowY: "auto" }}>
+                  <Table responsive="lg">
+                      <thead>
+                        <tr>
+                          { tableAddAccess &&
+                            tableAddAccess.length &&
+                            tableAddAccess.map((item: any, index: any) => {
+                              return <th style={{ width: "auto" }}>{item}</th>;
+                            })
+                          }
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {availableAuthList &&
+                          availableAuthList.length > 0 &&
+                          availableAuthList.map((item: any, index: any) => {
+                            return (
+                              <tr>  
+                                 <td>
+                                    <Form.Check
+                                        type="checkbox"
+                                        label=""
+                                        checked={item.isCheck}
+                                        onChange={(e) => {
+                                            onChangeCheckbox(index, e.target.checked)
+                                        }}
+                                    />
+                                    </td>
+                                <td> {item.authorityId}</td>
+                                <td> {item.name}</td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </Table>
+                  </div>
+                    
+                   
+                  </div>
+
+                </Modal.Body>
+                <Modal.Footer>
+                  <div className="d-flex justify-content-end px-5">
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={addCheckedAccess}
+                    >
+                  {/* {selectedRoleId} */}
+                      Save 
+                    </button>
+                  </div>
+                </Modal.Footer>
 
               </Modal>
             </div>

@@ -266,7 +266,7 @@ const sent = (props : any ) => {
                                     )}
                                 </div>
                                 <Button
-                                style={{ width: 210 }}
+                                style={{ width: 100 }}
                                 onClick={() => getAllPayroll(0)}
                                 className="btn btn-primary mx-2 mt-4">
                                 Search

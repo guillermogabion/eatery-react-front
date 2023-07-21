@@ -252,6 +252,12 @@ const Api: any = {
   failedEmail : process.env.REACT_APP_API_URL + "payroll/failedemail",
   resendEmail : process.env.REACT_APP_API_URL + "payroll/resendpayslip",
 
+  // export payslip 
+  exportPayslip : process.env.REACT_APP_API_URL + "payroll/payslip/export",
+
+
+
+
   // Last Pay
   lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",
   generateLastPay: process.env.REACT_APP_API_URL + "lastpay/generate",
@@ -277,6 +283,7 @@ const Api: any = {
   getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
   deleteRoleAuth : process.env.REACT_APP_API_URL + "role/authority/delete",
   addRoleAuth : process.env.REACT_APP_API_URL + "role/authority/add",
+  getAvailableAuth : process.env.REACT_APP_API_URL + "role/authority/all-authority-not-in-role",
 
 
   // Reimbursement
