@@ -9,6 +9,8 @@ import { Api, RequestAPI } from "../../api"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { async } from "validate.js";
+import { Utility } from '../../utils'
+
 
 
 export const Payslip = (props: any) => {
@@ -24,6 +26,14 @@ export const Payslip = (props: any) => {
     const [payrollMonth, setPayrollMonth] = useState("");
     const [payrollYear, setPayrollYear] = useState("");
     const [status, setStatus] = useState("");
+    const [ exportModal, setExportModal] = useState(false)
+    const [isSubmit, setIsSubmit] = React.useState(false);
+    const [payrollId, setPayrollId] = useState("");
+    const [userId, setUserId] = useState("");
+    const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
+
+
+
 
     const monthMap = {
         January: 1,
@@ -80,6 +90,7 @@ export const Payslip = (props: any) => {
         const valuesObj: any = [...employee]
         valuesObj[index].isCheck = boolCheck
         setEmployee([...valuesObj])
+        setIsAnyCheckboxChecked(valuesObj.some((item) => item.isCheck));
     }
 
     const selectAllEmployees = (boolCheck: any) => {
@@ -143,6 +154,7 @@ export const Payslip = (props: any) => {
             }
           );    
     };
+   
     const getAllPayroll = (pageNo : any ) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
@@ -243,6 +255,42 @@ export const Payslip = (props: any) => {
         )
     }
 
+    const exportPayslip = (payrollId: any, userId: any, accessToken: any) => {
+        console.log("payrollId:", payrollId);
+        console.log("userId:", userId);
+
+        setIsSubmit(true);
+
+        const url = `${Api.exportPayslip}?payrollId=${payrollId}&userId=${userId}`;
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken ? accessToken : Utility.getUserToken() || ""}`,
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exportedPayslip.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setIsSubmit(false);
+        })
+        .catch((error) => {
+            setIsSubmit(false);
+        });
+    };
 
     useEffect(() => {
         getAllPayroll(0)
@@ -278,6 +326,17 @@ export const Payslip = (props: any) => {
         setShowButtonStatus(false);
 
     }
+    const setFieldValue = (fieldName, fieldValue) => {
+      
+        switch (fieldName) {
+          case "userId":
+            setUserId(fieldValue);
+            break;
+          default:
+            break;
+        }
+      };
+ 
 
     return (
         <ContainerWrapper contents={<>
@@ -297,8 +356,7 @@ export const Payslip = (props: any) => {
                     <div>
                         <Button className="mx-2"
                             onClick={() => {
-                            // setModalUploadShow(true)
-                            // setModalShow(true)
+                            setExportModal(true)
                             }}
                         >Export Payslip</Button>
                         <Button
@@ -360,7 +418,7 @@ export const Payslip = (props: any) => {
                     </div>
                     <div className="col-md-2 pt-4">
                         <Button
-                            style={{ width: 210 }}
+                            style={{ width: 100 }}
                             onClick={() => getPayrollList()}
                             className="btn btn-primary mx-2">
                             Search
@@ -436,13 +494,93 @@ export const Payslip = (props: any) => {
                     onClick={() => {
                         sendEmailIndividual()
                     }}
-                    className="btn btn-primary mx-2">
+                    className="btn btn-primary mx-2"
+                    disabled={!isAnyCheckboxChecked}
+                    >
                     Send
                     </Button>
                 </div>
                 
                 </Modal.Body>
             </Modal>
+            <Modal
+                show={exportModal}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => setExportModal(false)}
+                dialogClassName="modal-90w"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                    Export Paylist
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="row w-100 px-5">
+                    <div className="px-3 h-400 overflow-auto">
+                        <div className="w-100 pt-2 pl-5 row">
+                            <div className="col-md-6">
+                                <label> Payroll List</label>
+                                    <select 
+                                        className="form-select"
+                                        name="payrollId"
+                                        id="type"
+                                        autoComplete="off"
+                                        onChange={(e) => setPayrollId(e.target.value)}
+                                    >
+                                        <option value="" disabled selected>
+                                            Select Payroll
+                                        </option>
+                                        {payroll && payroll.length &&
+                                        payroll.map((item: any, index: string) => (
+                                            <option value={item.id} key={`${index}_${item.id}`}>
+                                            {getMonthName(item.label1)}, {item.label2} From: {item.label3} - To: { item.label4 }
+                                            </option>
+                                        ))}
+                
+                                    </select>
+                            </div>
+                            <div className="col-md-6">
+                                    <label>Employee Name *</label>
+                                    <select
+                                        className="form-select"
+                                        value={userId}
+                                        onChange={(e) => {
+                                        const selectedValue = e.target.value;
+                                        setFieldValue('userId', e.target.value);
+                                       
+                                        }}
+                                    >
+                                        <option value="" disabled selected>
+                                        Select Employee
+                                        </option>
+                                        {employee &&
+                                        employee.length &&
+                                        employee.map((item: any, index: string) => (
+                                            <option key={`${index}_${item.userId}`} value={item.userId}>
+                                            {item.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    </div> 
+                            <div className="pt-4 col-md-12 d-flex justify-content-center">
+                                <Button
+                                    style={{ width: 300 }}
+                                    onClick={() => exportPayslip(payrollId, userId)}
+                                    className="btn btn-primary mx-2">
+                                    Export
+                                </Button>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </Modal.Body>
+
+
+              </Modal>
+
         
 
         </>} />        
