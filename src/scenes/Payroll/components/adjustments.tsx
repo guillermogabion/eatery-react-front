@@ -43,6 +43,7 @@ export const Adjustment = (props: any) => {
     })
 
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Amount',
@@ -159,7 +160,7 @@ export const Adjustment = (props: any) => {
                                 }
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                             {
                                 adjustmentList &&
                                 adjustmentList.content &&
@@ -168,6 +169,7 @@ export const Adjustment = (props: any) => {
 
                                     return (
                                         <tr>
+                                            <td id="payrolladjustment_id_adjlist"> {item.id} </td>
                                             <td id="payrolladjustment_employeeid_adjlist"> {item.employeeId} </td>
                                             <td id="payrolladjustment_employeename_adjlist"> {item.employeeName} </td>
                                             <td id="payrolladjustment_amount_adjlist"> {Utility.formatToCurrency(item.amount)} </td>
@@ -214,6 +216,9 @@ export const Adjustment = (props: any) => {
                             null
                     }
                 </div>
+            </div>
+            <div className="d-flex justify-content-end ma-3">
+                <span className="font-bold mr-8 ">Total Entries : { adjustmentList.totalElements }</span>
             </div>
             <div className="d-flex justify-content-end">
                 <div className="">

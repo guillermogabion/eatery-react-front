@@ -97,7 +97,7 @@ export default function Audit(props: any) {
                         }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         auditLogs &&
                         auditLogs.content &&

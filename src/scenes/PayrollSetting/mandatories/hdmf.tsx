@@ -174,7 +174,7 @@ const hdmf = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
   {hdmf &&
     hdmf.length > 0 &&
     hdmf.map((item, index) => {

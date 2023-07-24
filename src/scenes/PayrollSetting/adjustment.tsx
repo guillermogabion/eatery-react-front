@@ -37,6 +37,7 @@ const Adjustment = (props: any) => {
             "affectsGross": true
     })
     const tableHeaders = [
+        'ID',
         'Adjustment Name',
         'Adjustment Description',
         'Type',
@@ -282,7 +283,7 @@ const Adjustment = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         adjustmentType &&
                         adjustmentType.content &&
@@ -290,6 +291,7 @@ const Adjustment = (props: any) => {
                         adjustmentType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
+                                    <td id="payrollsettingadjustment_id_adjtypedata"> {item.id} </td>
                                     <td id="payrollsettingadjustment_name_adjtypedata"> {item.name} </td>
                                     <td id="payrollsettingadjustment_description_adjtypedata"> {item.description}</td>
                                     <td id="payrollsettingadjustment_type_adjtypedata"> {Utility.removeUnderscore(item.type)}</td>
@@ -329,6 +331,9 @@ const Adjustment = (props: any) => {
             :
             null
             }
+            <div className="d-flex justify-content-end ma-3">
+                <span className="font-bold mr-8 ">Total Entries : { adjustmentType.totalElements }</span>
+            </div>
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate

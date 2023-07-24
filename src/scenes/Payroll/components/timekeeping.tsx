@@ -106,7 +106,7 @@ export default function Timekeeping(props: any) {
                 </div>
             </div>
             <Table className="w-full tableOverflow mt-[-20px]">
-                <thead>
+                <thead className="custom-row">
                     {
                         timekeeping &&
                             timekeeping.length > 0 ?
@@ -155,7 +155,7 @@ export default function Timekeeping(props: any) {
                             null
                     }
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {/* {
                         timekeeping &&
                             timekeeping.length > 0 ?

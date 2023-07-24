@@ -75,6 +75,7 @@ export const Recurring = (props: any) => {
         
     })
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Amount',
@@ -83,7 +84,7 @@ export const Recurring = (props: any) => {
         'Status',
         'Action',
     ];
-
+    
     const options = [
         { value: false, label: 'Add' },
         { value: true, label: 'Deduct' },
@@ -200,7 +201,7 @@ export const Recurring = (props: any) => {
                             tempArray.push({
                                 userId: d.userAccountId,
                                 label: d.firstname + " " + d.lastname,
-                                // empId: d.employeeId
+                                empId: d.employeeId
                             })
                         });
                         setEmployee(tempArray)
@@ -387,10 +388,8 @@ export const Recurring = (props: any) => {
                 if(element.endDate == undefined) {
                     hasError = true
                 }
-                if(element.active === undefined) {
-                    element.active == true
-                }else{
-                    element.active == false
+                if(element.active == undefined) {
+                    element.active = true
                 }
                
            });
@@ -706,7 +705,6 @@ export const Recurring = (props: any) => {
 
 
                         </div>
-                       
                         <div className="input-container col-md-2 pt-4">
                             <Button
                             id="payrollrecurring_search_btn"
@@ -732,7 +730,7 @@ export const Recurring = (props: any) => {
                     }
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                 {
                     recurringList &&
                     recurringList.content &&
@@ -741,6 +739,7 @@ export const Recurring = (props: any) => {
 
                     return (
                         <tr>
+                        <td id="payrollrecurring_id_recurringlistdata"> {item.id} </td>
                         <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
                         <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
                         <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {item.adjustmentAmount} </td>
@@ -784,6 +783,9 @@ export const Recurring = (props: any) => {
                     null
                 }
             </div>
+        </div>
+        <div className="d-flex justify-content-end ma-3">
+            <span className="font-bold mr-8 ">Total Entries : { recurringList.totalElements }</span>
         </div>
         <div className="d-flex justify-content-end">
             <div className="">
@@ -873,11 +875,22 @@ export const Recurring = (props: any) => {
                             id="_formid"
                             autoComplete="off"
                             >
+                            <div className="d-flex justify-content-end px-5">
+                            {values.userId ? null:  (
+                                <button
+                                type="button"
+                                className="btn btn btn-outline-primary me-2 mb-2 mt-2"
+                                onClick={handleAddField}
+                                >
+                                Add Field
+                                </button>
+                            ) }
+                            </div>
 
-                                { values.userId ? (
-                                    <div>
+                            { values.userId ? (
+                            <div>
                                 <div className="form-group row">
-                                    <div className="col-md-3 mb-3">
+                                    <div className="col-md-2 mb-3">
                                         <label>Employee ID</label>
                                             <input
                                             id="payrollrecurring_employeeid_forminput"
@@ -890,12 +903,12 @@ export const Recurring = (props: any) => {
                                             }}
                                             />
                                     </div>
-                                    <div className="col-md-3 mb-3">
+                                    <div className="col-md-2 mb-3">
                                     <label>Employee Name *</label>
                                     <select
                                         id="payrollrecurring_employeename_formselect"
                                         disabled
-                                        className="form-select"
+                                        className="formControl"
                                         value={values.userId}
                                         onChange={(e) => {
                                         const selectedValue = e.target.value;
@@ -923,7 +936,7 @@ export const Recurring = (props: any) => {
                                         ))}
                                     </select>
                                     </div>
-                                    <div className="col-md-3 mb-3">
+                                    <div className="col-md-2 mb-3">
                                     <label>Recurring Name *</label>
                                         <select
                                             disabled
@@ -949,7 +962,7 @@ export const Recurring = (props: any) => {
                                         </select>
                                     </div>
 
-                                    <div className="col-md-3 mb-3">
+                                    {/* <div className="col-md-3 mb-3">
                                         <label>Recurring Action *</label>
                                         <select
                                             disabled
@@ -973,8 +986,8 @@ export const Recurring = (props: any) => {
                                                 </option>
                                             ))}
                                         </select>
-                                    </div>
-                                    <div className="col-md-4 mb-3">
+                                    </div> */}
+                                    <div className="col-md-2 mb-3">
                                         <label>Amount</label>
                                         <input
                                         type="number"
@@ -993,7 +1006,7 @@ export const Recurring = (props: any) => {
                                         />
                                          
                                     </div>
-                                    <div className="col-md-4 mb-3">
+                                    <div className="col-md-2 mb-3">
                                         <label>End Date</label>
                                         <input
                                         id="payrollrecurring_enddate_forminput"
@@ -1006,7 +1019,7 @@ export const Recurring = (props: any) => {
                                         }}
                                         />
                                     </div>
-                                    <div className="col-md-4 mb-3">
+                                    <div className="col-md-2 mb-3">
                                         <label>Status</label>
                                         <select
                                             id="payrollrecurring_status_formstatus"
@@ -1032,28 +1045,27 @@ export const Recurring = (props: any) => {
                                     return (
                                         <div key={`recurring-${index}`}>
                                             <div className="form-group row">
-                                            <div className="col-md-3 mb-3">
-                                            <label>Employee ID</label>
-                                                <input
-                                                id="payrollrecurring_employeeid_recurringinput"
-                                                readOnly
-                                                className={`form-control ${touched.employeeId && errors.employeeId ? 'is-invalid' : ''}`}
-                                                name="userId"
-                                                value={values.userId ? values.userId : ''}
-                                                onChange={(e) => {
-                                                    const updatedFields = [...recurring];
-                                                    updatedFields[index].employeeId = e.target.value;
-                                                    setRecurring(updatedFields);
-                                                    setFormField(e, setFieldValue)
-                                                }}
-                                                />
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                                <label>Employee Name *</label>
+                                            {/* <div className="col-md-2 mb-3">
+                                                <label>Employee ID</label>
+                                                    <input
+                                                    readOnly
+                                                    className={`form-control ${touched.employeeId && errors.employeeId ? 'is-invalid' : ''}`}
+                                                    name="userId"
+                                                    value={values.userId ? values.userId : ''}
+                                                    onChange={(e) => {
+                                                        const updatedFields = [...recurring];
+                                                        updatedFields[index].empId = e.target.value;
+                                                        setRecurring(updatedFields);
+                                                        setFormField(e, setFieldValue)
+                                                    }}
+                                                    />
+                                            </div> */}
+                                             <div className="col-md-2 mb-3">
+                                                <label>Employee ID *</label>
                                                 <select
                                                     id="payrollrecurring_employeeid_recurringselect"
                                                     placeholder="Employee Name"
-                                                    className={`form-select ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
+                                                    className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                     value={values.userId}
                                                     onChange={(e) => {
                                                     const selectedValue = e.target.value;
@@ -1062,16 +1074,16 @@ export const Recurring = (props: any) => {
                                                     setRecurring(updatedFields);
                                                     setFormField(e, setFieldValue)
 
-                                                    // Update the employee ID field with the selected employee's userId
                                                     const selectedEmployee = employee.find(
                                                         (item) => item.userId === selectedValue
                                                     );
-                                                    const employeeIdField = document.getElementsByName('userId')[0];
+                                                    const employeeId2Field = document.getElementsByName('employeeId')[0];
                                                     if (selectedEmployee) {
-                                                        employeeIdField.value = selectedEmployee.userId;
+                                                        employeeId2Field.value = selectedEmployee.userId;
                                                     } else {
-                                                        employeeIdField.value = '';
+                                                        employeeId2Field.value = '';
                                                     }
+                                                   
                                                     }}
                                                 >
                                                     <option value="" disabled selected>
@@ -1080,18 +1092,62 @@ export const Recurring = (props: any) => {
                                                     {employee &&
                                                     employee.length &&
                                                     employee.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.userId}`} value={item.userId}>
-                                                        {item.label}
+                                                        <option key={`${index}_${item.empId}`} value={item.userId}>
+                                                        {item.empId}
                                                         </option>
                                                     ))}
                                                 </select>
                                                 {errors && errors.userId && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                )}
+                                            </div>
+
+                                            {/* start of test  */}
+                                            <div className="col-md-2 mb-3">
+                                                {/* <label>Employee Name test *</label> */}
+                                                <label>Employee Name</label>
+                                                <select
+                                                    disabled
+                                                    placeholder="Employee Name"
+                                                    className="formControl"
+                                                    value={values.userId}
+                                                    name="employeeId"
+                                                    onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    const updatedFields = [...recurring];
+                                                    updatedFields[index].userId = selectedValue;
+                                                    setRecurring(updatedFields);
+                                                    setFormField(e, setFieldValue)
+
+                                                    }}
+                                                >
+                                                    <option value="" disabled selected>
+                                                    
+                                                    </option>
+                                                    {employee &&
+                                                    employee.length &&
+                                                    employee.map((item: any, index: string) => (
+                                                        <option key={`${index}_${item.label}`} value={item.userId}>
+                                                        {item.label}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                
+
+                                               
+                                                {errors && errors.userId && (
                                                 <p id="payrollrecurring_erroremployee_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
                                                 )}
-                                                </div>
+                                            </div>
 
 
-                                                <div className="col-md-3 mb-3">
+
+                                            {/* end of test  */}
+                                           
+                                            
+
+
+                                                <div className="col-md-2 mb-3">
                                                     <label>Recurring Name *</label>
                                                     <select
                                                         placeholder="Recurring Name"
@@ -1133,7 +1189,7 @@ export const Recurring = (props: any) => {
                                                     </div>
 
                                                     {/* start of test  */}
-                                                    <div className="col-md-3 mb-3">
+                                                    <div className="col-md-2 mb-3">
                                                     <label>Recurring Action *</label>
                                                     <select
                                                         disabled
@@ -1172,7 +1228,7 @@ export const Recurring = (props: any) => {
                                                     </select>
                                                     </div>
                                                     {/* end of test  */}
-                                                <div className="col-md-4 mb-3">
+                                                <div className="col-md-2 mb-3">
                                                     <label>Amount</label>
                                                     <input
                                                     id="payrollrecurring_amount_recurringinput"
@@ -1196,7 +1252,7 @@ export const Recurring = (props: any) => {
                                                     <p id="payrollrecurring_erroradjustmentamount_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
                                                     )}
                                                 </div>
-                                                <div className="col-md-4 mb-3">
+                                                <div className="col-md-2 mb-3">
                                                     <label>End Date</label>
                                                     <input
                                                     id="payrollrecurring_enddate_recurringinput"
@@ -1215,7 +1271,7 @@ export const Recurring = (props: any) => {
                                                         <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
                                                     )}
                                                 </div>
-                                                <div className="col-md-4 mb-3">
+                                                {/* <div className="col-md-4 mb-3">
                                                 <label>Status</label>
                                                 <select
                                                     id="payrollrecurring_status_recurringselect"
@@ -1234,7 +1290,7 @@ export const Recurring = (props: any) => {
                                                     <option value={false}>Inactive</option>
                                                 </select>
                                                 
-                                                </div>
+                                                </div> */}
 
                                                 {values.employeeId}
                                             
@@ -1263,7 +1319,7 @@ export const Recurring = (props: any) => {
                                 }
                                 
                                 
-                                <div className="d-flex justify-content-end px-5">
+                                {/* <div className="d-flex justify-content-end px-5">
                                 {values.userId ? null:  (
                                     <button
                                     id="payrollrecurring_addfield_recurringbtn"
@@ -1274,7 +1330,7 @@ export const Recurring = (props: any) => {
                                     Add Field
                                     </button>
                                 ) }
-                                </div>
+                                </div> */}
                                 <Modal.Footer>
                                     <button
                                     id="payrollrecurring_save_recurringbtn"

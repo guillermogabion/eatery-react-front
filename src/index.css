@@ -3660,3 +3660,41 @@ table thead tr th{
   transform: translateY(-50%);
   cursor: pointer;
 }
+
+
+table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > div > tbody.custom-row > tr > td {
+  width: auto !important;
+  min-width: 130px !important;
+  height: 10px !important;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.custom-select-wrapper::after {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}
+
+.custom-select-wrapper.disabled::after {
+  display: none;
+}

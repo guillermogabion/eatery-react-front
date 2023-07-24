@@ -38,6 +38,7 @@ export default function Recurring(props: any) {
         "active": true
     })
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Amount',
@@ -234,7 +235,7 @@ export default function Recurring(props: any) {
                                 }
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                             {
                                 recurringList &&
                                 recurringList.content &&
@@ -243,6 +244,7 @@ export default function Recurring(props: any) {
 
                                     return (
                                         <tr>
+                                            <td id="payrollrecurring_id_recurringlistdata"> {item.id} </td>
                                             <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
                                             <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
                                             <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
@@ -277,6 +279,9 @@ export default function Recurring(props: any) {
                             null
                     }
                 </div>
+            </div>
+            <div className="d-flex justify-content-end ma-3">
+                <span className="font-bold mr-8 ">Total Entries : { recurringList.totalElements }</span>
             </div>
             <div className="d-flex justify-content-end">
                 <div className="">

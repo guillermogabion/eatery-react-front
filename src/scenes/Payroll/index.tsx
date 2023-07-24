@@ -42,6 +42,7 @@ export const Payroll = (props: any) => {
     const [payrollData, setPayrollData] = React.useState({});
 
     const tableHeaders = [
+        'ID',
         'Year',
         'Month',
         'FROM',
@@ -127,7 +128,7 @@ export const Payroll = (props: any) => {
                                             }
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className="custom-row">
                                         {
                                             payrolls &&
                                             payrolls.content &&
@@ -135,6 +136,7 @@ export const Payroll = (props: any) => {
                                                 payrolls.content.map((item: any, index: any) => {
                                                     return (
                                                         <tr>
+                                                            <td id="payroll_id_payrollsdata"> {item.id} </td>
                                                             <td id="payroll_periodyear_payrollsdata"> {item.periodYear} </td>
                                                             <td id="payroll_periodmonth_payrollsdata"> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
                                                             <td id="payroll_datefrom_payrollsdata">{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
@@ -199,6 +201,9 @@ export const Payroll = (props: any) => {
                                         null
                                 }
                             </div>
+                        </div>
+                        <div className="d-flex justify-content-end ma-3">
+                            <span className="font-bold mr-8 ">Total Entries : { payrolls.totalElements }</span>
                         </div>
                         <div className="d-flex justify-content-end px-4">
                             <div className="">

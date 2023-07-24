@@ -90,6 +90,7 @@ export const PayrollAdjustment = (props: any) => {
         
     })
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Amount',
@@ -243,7 +244,8 @@ export const PayrollAdjustment = (props: any) => {
                         body.data.forEach((d: any, i: any) => {
                             tempArray.push({
                                 userId: d.userAccountId,
-                                label: d.firstname + " " + d.lastname
+                                label: d.firstname + " " + d.lastname,
+                                empId : d.employeeId
                             })
                         });
                         setEmployee(tempArray)
@@ -808,7 +810,7 @@ export const PayrollAdjustment = (props: any) => {
                     }
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                 {
                     adjustmentList &&
                     adjustmentList.content &&
@@ -817,6 +819,7 @@ export const PayrollAdjustment = (props: any) => {
 
                     return (
                         <tr>
+                        <td id="payrolladjustment_id_adjustmentlistdata"> {item.id} </td>
                         <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
                         <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
                         <td id="payrolladjustment_amount_adjustmentlistdata"> {item.amount} </td>
@@ -858,6 +861,9 @@ export const PayrollAdjustment = (props: any) => {
             null
         }
             </div>
+        </div>
+        <div className="d-flex justify-content-end ma-3">
+            <span className="font-bold mr-8 ">Total Entries : { adjustmentList.totalElements }</span>
         </div>
         <div className="d-flex justify-content-end">
             <div className="">
@@ -945,30 +951,41 @@ export const PayrollAdjustment = (props: any) => {
                             id="_formid"
                             autoComplete="off"
                             >
+                                 <div className="d-flex justify-content-end px-5">
+                                    {values.userId ? null:  (
+                                        <button
+                                        type="button"
+                                        className="btn btn btn-outline-primary me-2 mb-2 mt-2"
+                                        onClick={handleAddField}
+                                        >
+                                        Add Field
+                                        </button>
+                                    ) }
+                                </div>
 
                                 { values.userId ? (
                                     <div>
                                         <div className="form-group row">
-                                            <div className="col-md-3 mb-3">
+                                            <div className="col-md-2 mb-3">
                                                 <label>Employee ID</label>
                                                     <input
                                                     id="payrolladjustment_employeeid_createadjustmentinput"
                                                     readOnly
                                                     className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                     name="userId"
-                                                    value={values.userId ? values.userId : ''}
+                                                    value={values.employeeId ? values.employeeId : ''}
                                                     onChange={(e) => {
                                                         setFieldValue('userId', e.target.value);
                                                     }}
                                                     />
                                             </div>
-                                            <div className="col-md-3 mb-3">
+                                            <div className="col-md-2 mb-3">
                                             <label>Employee Name *</label>
                                             <select
                                                 id="payrolladjustment_employeename_createadjustmentinput"
                                                 disabled
                                                 placeholder="Employee Name"
-                                                className="form-select"
+                                                className="formControl"
                                                 value={values.userId}
                                                 onChange={(e) => {
                                                 const selectedValue = e.target.value;
@@ -1001,7 +1018,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 )}
                                             </div>
                                             </div>
-                                            <div className="col-md-3 mb-3 mt-4">
+                                            <div className="col-md-2 mb-3 mt-4">
                                                 <select
                                                     disabled
                                                     placeholder="Adjustment Name"
@@ -1035,7 +1052,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     ))}
                                                 </select>
                                             </div>
-                                            <div className="col-md-3 mb-3 mt-4">
+                                            {/* <div className="col-md-3 mb-3 mt-4">
                                                 <select
                                                     disabled
                                                     placeholder="Adjustment Name"
@@ -1068,9 +1085,9 @@ export const PayrollAdjustment = (props: any) => {
                                                         </option>
                                                     ))}
                                                 </select>
-                                            </div>
+                                            </div> */}
                                             
-                                            <div className="col-md-4 mb-3">
+                                            <div className="col-md-2 mb-3">
                                                 <label>Amount</label>
                                                 <input
                                                 id="payrolladjustment_amount_createadjustmentinput"
@@ -1089,7 +1106,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 }}
                                                 />
                                             </div>
-                                            <div className="col-md-4 mb-3 mt-4">
+                                            <div className="col-md-2 mb-3 mt-4">
                                                 
                                                 <select
                                                     placeholder="Month"
@@ -1113,7 +1130,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 </select>
                                                 
                                             </div>
-                                            <div className="col-md-4 mb-3 mt-4">
+                                            <div className="col-md-2 mb-3 mt-4">
                                                 <select
                                                     placeholder="Year"
                                                     className="form-select"
@@ -1146,7 +1163,7 @@ export const PayrollAdjustment = (props: any) => {
                                     return (
                                         <div key={`adjustment-${index}`}>
                                             <div className="form-group row">
-                                            <div className="col-md-3 mb-3">
+                                            {/* <div className="col-md-2 mb-3">
                                             <label>Employee ID</label>
                                                 <input
                                                 id="payrolladjustment_employeeid_adjustmentinput"
@@ -1164,11 +1181,11 @@ export const PayrollAdjustment = (props: any) => {
                                                  {touched.errors && errors.userId && (
                                                 <p id="payrolladjustment_erroruserid_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
                                                 )}
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                                <label>Employee Name *</label>
-                                                <select 
-                                                    id="payrolladjustment_employeename_adjustmentselect"
+                                                </div> */}
+                                                <div className="col-md-2 mb-3">
+                                                <label>Employee ID *</label>
+                                                <select
+                                                     id="payrolladjustment_employeename_adjustmentselect"
                                                     placeholder="Employee Name"
                                                     className={`form-control ${values.userId == "" ? 'is-invalid' : ''}`}
                                                     value={values.userId}
@@ -1179,7 +1196,6 @@ export const PayrollAdjustment = (props: any) => {
                                                     setAdjustment(updatedFields);
                                                     setFormField(e, setFieldValue)
 
-                                                    // Update the employee ID field with the selected employee's userId
                                                     const selectedEmployee = employee.find(
                                                         (item) => item.userId === selectedValue
                                                     );
@@ -1197,7 +1213,43 @@ export const PayrollAdjustment = (props: any) => {
                                                     {employee &&
                                                     employee.length &&
                                                     employee.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.userId}`} value={item.userId}>
+                                                        <option key={`${index}_${item.empId}`} value={item.userId}>
+                                                        {item.empId}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                {errors && errors.userId && (
+                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                )}
+                                                </div>
+                                                <div className="col-md-2 mb-3">
+                                                <label>Employee Name *</label>
+                                                <select
+                                                    disabled
+                                                    placeholder="Employee Name"
+                                                    className="formControl"
+                                                    value={values.userId}
+                                                    name="userId"
+                                                    onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    const updatedFields = [...adjustment];
+                                                    updatedFields[index].userId = selectedValue;
+                                                    setAdjustment(updatedFields);
+                                                    setFormField(e, setFieldValue)
+
+                                                    const selectedEmployee = employee.find(
+                                                        (item) => item.userId === selectedValue
+                                                    );
+                                                   
+                                                    }}
+                                                >
+                                                    <option value="" disabled selected>
+                                                   
+                                                    </option>
+                                                    {employee &&
+                                                    employee.length &&
+                                                    employee.map((item: any, index: string) => (
+                                                        <option key={`${index}_${item.label}`} value={item.userId}>
                                                         {item.label}
                                                         </option>
                                                     ))}
@@ -1207,7 +1259,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 )}
                                                 </div>
 
-                                                <div className="col-md-3 mb-3">
+                                                <div className="col-md-2 mb-3">
                                                     <label>Adjustment Name *</label>
                                                     <select
                                                         className={`form-control ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
@@ -1246,7 +1298,7 @@ export const PayrollAdjustment = (props: any) => {
                                                         <p id="payrolladjustment_errorselectadjustmentname_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
                                                     )}
                                                     </div>
-                                                    <div className="col-md-3 mb-3">
+                                                    {/* <div className="col-md-2 mb-3">
                                                     <label>Adjustment Action *</label>
                                                     <select
                                                         disabled
@@ -1282,8 +1334,8 @@ export const PayrollAdjustment = (props: any) => {
                                                             </option>
                                                         ))}
                                                     </select>
-                                                    </div>
-                                                <div className="col-md-4 mb-3">
+                                                    </div> */}
+                                                <div className="col-md-2 mb-3">
                                                     <label>Amount</label>
                                                     <input
                                                     id="payrolladjustment_amount_adjustmentminput"
@@ -1306,7 +1358,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     />
                                                    
                                                 </div>
-                                                <div className="col-md-4 mb-3 mt-4">
+                                                <div className="col-md-2 mb-3 mt-4">
                                                     <select
                                                         placeholder="Month"
                                                         className={`form-control ${values.periodMonth == "" ? 'is-invalid' : ''}`}
@@ -1333,7 +1385,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 </div>
 
                                                 
-                                                <div className="col-md-4 mb-3 mt-4">
+                                                <div className="col-md-2 mb-3 mt-4">
                                                     <select
                                                         placeholder="Year"
                                                         className={`form-control ${values.periodYear == "" ? 'is-invalid' : ''}`}
@@ -1385,18 +1437,7 @@ export const PayrollAdjustment = (props: any) => {
                                 } 
                                 </div>
                                 }
-                                <div className="d-flex justify-content-end px-5">
-                                {values.userId ? null:  (
-                                    <button
-                                    id="payrolladjustment_addfield_adjustmentbtn"
-                                    type="button"
-                                    className="btn btn btn-outline-primary me-2 mb-2 mt-2"
-                                    onClick={handleAddField}
-                                    >
-                                    Add Field
-                                    </button>
-                                ) }
-                                </div>
+                               
                                 <Modal.Footer>
                                     <button
                                     id="payrolladjustment_save_adjustmentbtn"

@@ -18,6 +18,7 @@ const Overtime = (props) => {
   const [selectedOvertime, setSelectedOvertime] = useState(null);
 
   const tableHeaders = [
+    'ID',
     '',
     'First 8 Hours',
     'OT',
@@ -132,12 +133,13 @@ const Overtime = (props) => {
               })}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="custom-row">
           {overtime &&
             overtime.length > 0 &&
             overtime.map((item, index) => {
               return (
                 <tr key={index}>
+                  <td id="payrollsettingot_id_data">{item.id}</td>
                   <td id="payrollsettingot_name_data">{item.name}</td>
                   <td id="payrollsettingot_firsteight_data">{item.firstEight}</td>
                   <td id="payrollsettingot_ot_data">{item.ot}</td>

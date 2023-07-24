@@ -30,6 +30,7 @@ const sent = (props : any ) => {
     const email = { ...emailData }
 
     const tableHeaders = [
+        'ID',
         'Payroll Period',
         'Status',
         'Action',
@@ -288,7 +289,7 @@ const sent = (props : any ) => {
                             }
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                         {
                             payrollList &&
                             payrollList.content &&
@@ -296,9 +297,10 @@ const sent = (props : any ) => {
                             payrollList.content.map((item: any, index: any) => {
         
                             return (
-                                <tr>
+                                <tr style={{height: '10px'}}>
                                 
                                 {/* <td> {item.isGenerated} </td> */}
+                                <td id="payslipsent_id_payrolllistdata"> {item.id} </td>
                                 <td id="payslipsent_monthyear_payrolllistdata"> {getMonthName(item.periodMonth)} {item.periodYear} </td>
                                 <td id="payslipsent_isgenerated_payrolllistdata"> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
                                 <td>
@@ -319,18 +321,20 @@ const sent = (props : any ) => {
                         }
                         </tbody>
                         </Table>
-                            {
-                                payrollList &&
-                                payrollList.length == 0 ?
-                                <div className="w-100 text-center">
-                                    <label htmlFor="">No Records Found</label>
-                                </div>
-                                :
-                                null
-                            }
+                        {
+                            payrollList &&
+                            payrollList.length == 0 ?
+                            <div className="w-100 text-center">
+                                <label htmlFor="">No Records Found</label>
+                            </div>
+                            :
+                            null
+                        }
                 
         
-                
+                <div className="d-flex justify-content-end ma-3">
+                    <span className="font-bold mr-8 ">Total Entries : { payrollList.totalElements }</span>
+                </div>
                 <div className="d-flex justify-content-end">
                   <div className="">
                     
