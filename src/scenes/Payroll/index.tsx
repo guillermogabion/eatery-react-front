@@ -141,7 +141,7 @@ export const Payroll = (props: any) => {
                                                             <td id="payroll_dateto_payrollsdata">{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                             {/* <td>{item.transactionDate.split("T")[0]} </td> */}
                                                             <td id="payroll_description_payrollsdata">{item.description} </td>
-                                                            <td id="payroll_isgenerated_payrollsdata">{item.isGenerated == true ? "Processed" : "Locked"} </td>
+                                                            <td id="payroll_isgenerated_payrollsdata">{item.isGenerated == true ? "Processed" : "To Process"} </td>
                                                             <td>
                                                                 <label
                                                                     id="payroll_update_payrollslabel"
