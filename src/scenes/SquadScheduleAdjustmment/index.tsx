@@ -387,26 +387,28 @@ export const SquadScheduleAdjustment = (props: any) => {
                     allAdjustments.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.lastName}, {item.firstName} </td>
-                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td> {item.reason} </td>
-                          <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td> {item.statusChangedBy} </td>
-                          <td> {Utility.removeUnderscore(item.status)} </td>
+                          <td id="squadschedadj_name_alladjdata"> {item.lastName}, {item.firstName} </td>
+                          <td id="squadschedadj_datefrom_alladjdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id="squadschedadj_dateto_alladjdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id="squadschedadj_reason_alladjdata"> {item.reason} </td>
+                          <td id="squadschedadj_filedate_alladjdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id="squadschedadj_statuschangedby_alladjdata"> {item.statusChangedBy} </td>
+                          <td id="squadschedadj_status_alladjdata"> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
+                              id="squadschedadj_view_alladjlabel"
                               onClick={() => {
                                 getViewSchedule(item.id)
                               }}
                             >
-                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id="squadschedadj_eye_alladjimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             <>
                               {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
                                   <label
+                                    id="squadschedadj_actionedit_alladjlabel"
                                     onClick={() => {
                                       setInitialValues(item)
                                       setAdjustmentBreakdown(item.breakdown)
@@ -414,7 +416,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                                       setModalShow(true)
                                     }}
                                     className="cursor-pointer">
-                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                    <img id="squadschedadj_actionedit_alladjimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                   </label>
                                   <br />
                                 </>
@@ -423,11 +425,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                               {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
                                   <label
+                                    id="squadschedadj_actionapprove_alladjlabel"
                                     onClick={() => {
                                       approveAdjustment(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                    <img id="squadschedadj_actionapprove_alladjimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                   </label> <br />
                                 </>
                               ) : null}
@@ -435,11 +438,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                               {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                 <>
                                   <label
+                                    id="squadschedadj_actiondecline_alladjlabel"
                                     onClick={() => {
                                       declineAdjustment(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                    <img id="squadschedadj_actiondecline_alladjimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                   </label>
                                   <br />
                                 </>
@@ -449,11 +453,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                               {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                                 <>
                                   <label
+                                    id="squadschedadj_actioncancel_alladjlabel"
                                     onClick={() => {
                                       cancelAdjustment(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                    <img id="squadschedadj_actioncancel_alladjimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                   </label>
                                   <br />
                                 </>
@@ -523,7 +528,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 <h5>Current Work Schedule:</h5>
               </div>
               <div className="col-md-8">
-                <h5>{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
+                <h5 id="squadschedadj_startshift_mainlabel">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
               </div>
 
             </div>
@@ -535,6 +540,7 @@ export const SquadScheduleAdjustment = (props: any) => {
               <div className="" style={{ width: 200, marginRight: 10 }}>
                 <label>Employee</label>
                 <EmployeeDropdown
+                  id="squadschedadj_employee_maindropdown"
                   squad={true}
                   placeholder={"Employee"}
                   singleChangeOption={singleChangeOption}
@@ -546,6 +552,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 <label>Date From</label>
                 <div>
                   <input
+                    id="squadschedadj_datefrom_maininput"
                     name="dateFrom"
                     type="date"
                     autoComplete="off"
@@ -559,6 +566,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="squadschedadj_dateto_maininput"
                     name="dateTo"
                     type="date"
                     autoComplete="off"
@@ -572,6 +580,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                 <label>Date Filed</label>
                 <div className="input-container">
                   <input
+                    id="squadschedadj_datefiled_maininput"
                     name="dateFiled"
                     type="date"
                     autoComplete="off"
@@ -583,6 +592,7 @@ export const SquadScheduleAdjustment = (props: any) => {
               </div>
               <div>
                 <Button
+                  id="squadschedadj_search_mainbtn"
                   style={{ width: 120 }}
                   onClick={() => getAllAdjustments(0, key)}
                   className="btn btn-primary mx-2 mt-4">
@@ -601,16 +611,16 @@ export const SquadScheduleAdjustment = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="squadschedadj_all_maintab" eventKey="all" title="All">
                 {adjustmentTable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="squadschedadj_pending_maintab" eventKey="pending" title="Pending">
                 {adjustmentTable()}
               </Tab>
-              <Tab eventKey="approved" title="Approved" >
+              <Tab id="squadschedadj_approved_maintab" eventKey="approved" title="Approved" >
                 {adjustmentTable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="squadschedadj_declined_maintab" eventKey="declined" title="Rejected/Cancelled">
                 {adjustmentTable()}
               </Tab>
             </Tabs>
@@ -779,7 +789,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                         }}
                       />
                       {errors && errors.dateFrom && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        <p id="squadschedadj_errordatefrom_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -796,7 +806,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                         }}
                       />
                       {errors && errors.dateTo && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        <p id="squadschedadj_errordateto_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -809,7 +819,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="squadschedadj_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -831,8 +841,8 @@ export const SquadScheduleAdjustment = (props: any) => {
                               const { date } = item
                               return (
                                 <tr>
-                                  <td key={index + 'date'} >{date}</td>
-                                  <td key={index + 'startShift'} >
+                                  <td id="squadschedadj_date_modaldata" key={index + 'date'} >{date}</td>
+                                  <td id="squadschedadj_startshift_modaldata" key={index + 'startShift'} >
                                     <input
                                       type="time"
                                       name={"startShift" + index.toString()}
@@ -848,7 +858,7 @@ export const SquadScheduleAdjustment = (props: any) => {
 
                                     />
                                     {errors && errors.startShift && (
-                                      <p style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
+                                      <p id="squadschedadj_errorstartshift_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
                                     )}
                                   </td>
                                   <td key={index + 'startBreak'} >
@@ -912,6 +922,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="squadschedadj_save_modalbtn"
                         type="submit"
                         className="btn btn-primary">
                         Save
@@ -945,16 +956,16 @@ export const SquadScheduleAdjustment = (props: any) => {
         <Modal.Body className="d-flex align-items-center justify-content-center">
           <div className="container">
             {/* <h4>reason</h4> {{values.reason}} */}
-            <p>Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
-            <p>Reason : {initialValues.reason}</p>
-            <p>Date From : {Utility.formatDate(initialValues.dateFrom, 'MM-DD-YYYY')}</p>
-            <p>Date To : {Utility.formatDate(initialValues.dateTo, 'MM-DD-YYYY')}</p>
-            <p>Shift Starts : {initialValues.startShift}</p>
-            <p>Start of Break : {initialValues.startBreak}</p>
-            <p>End of Break : {initialValues.endBreak}</p>
-            <p>Shift Ends : {initialValues.endShift}</p>
+            <p id="squadschedadj_name_modalviewp">Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
+            <p id="squadschedadj_reason_modalviewp">Reason : {initialValues.reason}</p>
+            <p id="squadschedadj_datefrom_modalviewp">Date From : {Utility.formatDate(initialValues.dateFrom, 'MM-DD-YYYY')}</p>
+            <p id="squadschedadj_dateto_modalviewp">Date To : {Utility.formatDate(initialValues.dateTo, 'MM-DD-YYYY')}</p>
+            <p id="squadschedadj_shiftstart_modalviewp">Shift Starts : {initialValues.startShift}</p>
+            <p id="squadschedadj_startbreak_modalviewp">Start of Break : {initialValues.startBreak}</p>
+            <p id="squadschedadj_endbreak_modalviewp">End of Break : {initialValues.endBreak}</p>
+            <p id="squadschedadj_endshift_modalviewp">Shift Ends : {initialValues.endShift}</p>
 
-            <p>Status : {initialValues.status}</p>
+            <p id="squadschedadj_status_modalviewp">Status : {initialValues.status}</p>
 
             {/* {adjustmentBreakdown.map ((initialValues, index) =>(
                       <div key={`adjustmentBreakdown-${index}`}>

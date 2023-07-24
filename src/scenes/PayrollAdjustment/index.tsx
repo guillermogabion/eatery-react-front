@@ -653,6 +653,7 @@ export const PayrollAdjustment = (props: any) => {
                         <div className="input-container col-md-4">
                         <label>Employee</label>
                         <EmployeeDropdown
+                            id="payrolladjustment_employee_dropdown"
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
                             name="userId"
@@ -692,6 +693,7 @@ export const PayrollAdjustment = (props: any) => {
                         <div className="input-container col-md-2">
                             <label>Amount</label>
                             <input type="text" 
+                            id="payrolladjustment_amount_input"
                             className="form-control"
                             name="amount"
                             placeholder="Amount"
@@ -719,7 +721,7 @@ export const PayrollAdjustment = (props: any) => {
                             
                             </select>
                             {showButton && (
-                                <span className="clear-icon" onClick={reset}>
+                                <span id="payrolladjustment_closetype_span" className="clear-icon" onClick={reset}>
                                 X
                                 </span>
                             )}
@@ -750,7 +752,7 @@ export const PayrollAdjustment = (props: any) => {
                                 ))}
                             </select>
                             {showButtonMonth && (
-                                    <span className="clear-icon" onClick={resetMonth}>
+                                    <span id="payrolladjustment_closemonth_span" className="clear-icon" onClick={resetMonth}>
                                     X
                                     </span>
                                 )}
@@ -776,13 +778,14 @@ export const PayrollAdjustment = (props: any) => {
                             ))}
                         </select>
                         {showButtonYear && (
-                            <span className="clear-icon" onClick={resetYear}>
+                            <span id="payrolladjustment_closeyear_span" className="clear-icon" onClick={resetYear}>
                             X
                             </span>
                         )}
                         </div>
                         <div className="input-container col-md-2 pt-4">
                             <Button
+                            id="payrolladjustment_search_button"
                             style={{ width: 100 }}
                             onClick={() => getAllAdjustmentList(0)}
                             className="btn btn-primary mx-2">
@@ -814,13 +817,14 @@ export const PayrollAdjustment = (props: any) => {
 
                     return (
                         <tr>
-                        <td> {item.employeeId} </td>
-                        <td> {item.employeeName} </td>
-                        <td> {item.amount} </td>
-                        <td> {item.adjustmentName} </td>
-                        <td> {getMonthName(item.payrollMonth)} {item.payrollYear} </td>
+                        <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
+                        <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
+                        <td id="payrolladjustment_amount_adjustmentlistdata"> {item.amount} </td>
+                        <td id="payrolladjustment_adjustmentname_adjustmentlistdata"> {item.adjustmentName} </td>
+                        <td id="payrolladjustment_monthyear_adjustmentlistdata"> {getMonthName(item.payrollMonth)} {item.payrollYear} </td>
                         <td>
                         <label
+                        id="payrolladjustment_edit_adjustmentlistlabel"
                         onClick={() => {
                             getAdjustment(item.id)
                         }}
@@ -877,24 +881,28 @@ export const PayrollAdjustment = (props: any) => {
         <div className="d-flex justify-content-end mt-3" >
         <div>
         <Button className="mx-2"
+            id="payrolladjustment_addadjustment_modalbtn"
             onClick={() => {
             // setModalUploadShow(true)
             setModalShow(true)
             }}
         >Add Adjustment</Button>
         <Button
+            id="payrolladjustment_importadjustment_modalbtn"
             className="mx-2"
             onClick={() => {
                 setUploadModalShow(true)
             }}>Import Adjustment</Button>
         <Button
+            id="payrolladjustment_exportadjustment_modalbtn"
             className="mx-2"
             onClick={() => {
                setDownloadModalShow(true)
                 }
             }
         >Export Adjustment</Button>
-         <Button
+         <Button    
+            id="payrolladjustment_downloadadjustmenttemplate_modalbtn"
             className="mx-2"
             onClick={
                 downloadTemplate
@@ -944,6 +952,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-3 mb-3">
                                                 <label>Employee ID</label>
                                                     <input
+                                                    id="payrolladjustment_employeeid_createadjustmentinput"
                                                     readOnly
                                                     className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
                                                     name="userId"
@@ -956,6 +965,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-3 mb-3">
                                             <label>Employee Name *</label>
                                             <select
+                                                id="payrolladjustment_employeename_createadjustmentinput"
                                                 disabled
                                                 placeholder="Employee Name"
                                                 className="form-select"
@@ -987,7 +997,7 @@ export const PayrollAdjustment = (props: any) => {
                                             </select>
                                             <div className="col-md-4 mb-3">
                                                 {touched.errors && errors.userId && (
-                                                    <p style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
+                                                    <p id="payrolladjustment_erroruserid_createadjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
                                                 )}
                                             </div>
                                             </div>
@@ -1063,6 +1073,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-4 mb-3">
                                                 <label>Amount</label>
                                                 <input
+                                                id="payrolladjustment_amount_createadjustmentinput"
                                                 type="number"
                                                 className={`form-control ${touched.amount && errors.amount ? 'is-invalid' : ''}`}
                                                 name="amount"
@@ -1138,6 +1149,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-3 mb-3">
                                             <label>Employee ID</label>
                                                 <input
+                                                id="payrolladjustment_employeeid_adjustmentinput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -1150,12 +1162,13 @@ export const PayrollAdjustment = (props: any) => {
                                                 }}
                                                 />
                                                  {touched.errors && errors.userId && (
-                                                <p style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
+                                                <p id="payrolladjustment_erroruserid_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
                                                 )}
                                                 </div>
                                                 <div className="col-md-3 mb-3">
                                                 <label>Employee Name *</label>
-                                                <select
+                                                <select 
+                                                    id="payrolladjustment_employeename_adjustmentselect"
                                                     placeholder="Employee Name"
                                                     className={`form-control ${values.userId == "" ? 'is-invalid' : ''}`}
                                                     value={values.userId}
@@ -1190,7 +1203,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     ))}
                                                 </select>
                                                 {errors && errors.userId && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                                <p id="payrolladjustment_errorselectemployee_adjustmentp" style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
                                                 )}
                                                 </div>
 
@@ -1230,7 +1243,7 @@ export const PayrollAdjustment = (props: any) => {
                                                         ))}
                                                     </select>
                                                     {touched.errors && errors.adjustmentTypeId && (
-                                                        <p style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
+                                                        <p id="payrolladjustment_errorselectadjustmentname_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
                                                     )}
                                                     </div>
                                                     <div className="col-md-3 mb-3">
@@ -1273,6 +1286,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 <div className="col-md-4 mb-3">
                                                     <label>Amount</label>
                                                     <input
+                                                    id="payrolladjustment_amount_adjustmentminput"
                                                     type="number"
                                                     className={`form-control ${ touched.amount && values.amount == "" ? 'is-invalid' : ''}`}
                                                     min={0}
@@ -1352,6 +1366,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     <div className="col-md-3 mb-3">
                                                         <label>&nbsp;</label>
                                                         <button
+                                                            id="payrolladjustment_remove_adjustmentbtn"
                                                             type="button"
                                                             className="btn btn-outline-danger"
                                                             onClick={() => handleRemoveField(index)}
@@ -1373,6 +1388,7 @@ export const PayrollAdjustment = (props: any) => {
                                 <div className="d-flex justify-content-end px-5">
                                 {values.userId ? null:  (
                                     <button
+                                    id="payrolladjustment_addfield_adjustmentbtn"
                                     type="button"
                                     className="btn btn btn-outline-primary me-2 mb-2 mt-2"
                                     onClick={handleAddField}
@@ -1383,6 +1399,7 @@ export const PayrollAdjustment = (props: any) => {
                                 </div>
                                 <Modal.Footer>
                                     <button
+                                    id="payrolladjustment_save_adjustmentbtn"
                                     type="submit"
                                     className="btn btn-primary">
                                     Save
@@ -1465,6 +1482,7 @@ export const PayrollAdjustment = (props: any) => {
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button
+            id="payrolladjustment_downloadexcel_exportbtn"
             onClick={() => downloadExcel(fromDate, toDate)}
             disabled={isSubmit}>
             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed

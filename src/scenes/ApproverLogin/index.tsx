@@ -213,10 +213,10 @@ export const ApproverLogin = (props: any) => {
                         showReason ?
                             <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full py-[100px] lg:py-[150px] xl:w-[500px] md:w-[450px]">
                                 <div className="company-logo m-0 p-0 ">
-                                    <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
+                                    <img id="approverlogin_actimailogo_img" src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
                                 </div>
                                 <div className="align-items-center ">
-                                    <label className="color-primary" style={{ fontSize: 20 }}>You are about to {action} this request</label>
+                                    <label id="approverlogin_action_label" className="color-primary" style={{ fontSize: 20 }}>You are about to {action} this request</label>
                                 </div>
                                 <form className="loginForm mt-2" action="#">
                                     <textarea
@@ -232,6 +232,7 @@ export const ApproverLogin = (props: any) => {
                                     />
                                     <div className="d-flex mt-5">
                                         <Button
+                                            id="approverlogin_proceed_btn"
                                             style={{ width: '100%' }}
                                             onClick={() => {
                                                 makeActionRequest(tempToken)
@@ -262,7 +263,7 @@ export const ApproverLogin = (props: any) => {
                             :
                             <div className="bg-white relative flex flex-column justify-center items-center   rounded-md w-full py-[100px] lg:py-[150px] xl:w-[500px] md:w-[450px]">
                                 <div className="company-logo m-0 p-0 ">
-                                    <img src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
+                                    <img id="approverlogin_actimailogo_approverimg" src={actimai_logo} alt="Actimai logo" className="w-full lg:w-[80%]" />
                                 </div>
                                 <div className="align-items-center ">
                                     <h5 className="text-[1.7em] color-primary">Approver Login</h5>
@@ -297,19 +298,21 @@ export const ApproverLogin = (props: any) => {
                                         />
                                         <Button
                                             variant="link"
+                                            id="approverlogin_link_btnk"
                                             onClick={() => setVisibile(!visibile)}
                                             className="passwordicon pt-3"
                                             disabled={!password}>
                                             <span className="showpass">
-                                                <img src={show_password_dark} alt="Show" />
+                                                <img id="approverlogin_showpassword_approverimg" src={show_password_dark} alt="Show" />
                                             </span>
                                             <span className="hidepass">
-                                                <img src={hide_password_dark} alt="Hide" />
+                                                <img id="approverlogin_hidepassword_approverimg" src={hide_password_dark} alt="Hide" />
                                             </span>
                                         </Button>
                                     </div>
                                     <div className="d-flex mt-[50px]">
                                         <Button
+                                            id="approverlogin_proceed_approverbtn"
                                             style={{ width: '100%' }}
                                             onClick={() => loginRequest()}
                                             className="btn btn-primary"
@@ -326,7 +329,7 @@ export const ApproverLogin = (props: any) => {
                                     <div className="d-flex justify-content-center p-0 ">
                                         {errorMessage != "" && (
                                             <Alert variant="" className="w-100 p-0 pt-2" style={{ textAlign: "left" }}>
-                                                <span className="text-danger"><b>{errorMessage}</b> </span>
+                                                <span id="approverlogin_errormessage_approverspan" className="text-danger"><b>{errorMessage}</b> </span>
                                             </Alert>
                                         )}
                                     </div>

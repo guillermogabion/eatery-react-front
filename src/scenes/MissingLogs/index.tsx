@@ -144,11 +144,11 @@ export const MissingLogs = (props: any) => {
                     allMissingLogs.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.lastName}, {item.firstName} </td>
-                          <td> {item.date} </td>
-                          <td> {item.schedule} </td>
-                          <td> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
-                          <td> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                          <td id="missinglogs_name_allmissinglogsdata"> {item.lastName}, {item.firstName} </td>
+                          <td id="missinglogs_date_allmissinglogsdata"> {item.date} </td>
+                          <td id="missinglogs_schedule_allmissinglogsdata"> {item.schedule} </td>
+                          <td id="missinglogs_firstlogin_allmissinglogsdata"> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
+                          <td id="missinglogs_lastlogin_allmissinglogsdata"> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
                         </tr>
                       )
                     })
@@ -190,6 +190,7 @@ export const MissingLogs = (props: any) => {
                     <div className="" style={{ width: 200, marginRight: 10 }}>
                       <label>Employee</label>
                       <SingleSelect
+                        id="missinglogs_employee_formselect"
                         type="string"
                         options={employeeList || []}
                         placeholder={"Employee"}
@@ -226,6 +227,7 @@ export const MissingLogs = (props: any) => {
               <div>
                 <label>Date From</label>
                 <input
+                  id="missinglogs_datefrom_formselect"
                   name="fromDate"
                   type="date"
                   autoComplete="off"
@@ -241,6 +243,7 @@ export const MissingLogs = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="missinglogs_dateto_formselect"
                     name="toDate"
                     type="date"
                     autoComplete="off"
@@ -254,6 +257,7 @@ export const MissingLogs = (props: any) => {
               </div>
 
               <Button
+                id="missinglogs_search_formselect"
                 style={{ width: 120 }}
                 onClick={() => getAllMissingLogs(0, "")}
                 className="btn btn-primary mx-2 mt-4">

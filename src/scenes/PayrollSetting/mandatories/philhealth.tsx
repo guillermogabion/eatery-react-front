@@ -187,11 +187,12 @@ const philhealth = (props: any) => {
                     ph.map((item, index) => {
                     return (
                         <tr key={index}>
-                        <td>{item.basicLowerRange}</td>
-                        <td>{item.basicUpperRange}</td>
-                        <td>{item.premiumRate}</td>
+                        <td id="payrollsettingphilhealth_basiclowerrange_data">{item.basicLowerRange}</td>
+                        <td id="payrollsettingphilhealth_basicupperrange_data">{item.basicUpperRange}</td>
+                        <td id="payrollsettingphilhealth_premiumrate_data">{item.premiumRate}</td>
                         <td>
                             <label
+                            id="payrollsettingphilhealth_update_btn"
                             onClick={() => {
                                 setModalShow(true)
                                 setHdmfData(item);
@@ -344,6 +345,7 @@ const philhealth = (props: any) => {
                                 </div>
                                 <div className="d-flex justify-content-end px-5">
                                     <button
+                                        id="payrollsettingphilhealth_save_formbtn"
                                         type="submit"
                                         className="btn btn-primary mx-2"
                                     >

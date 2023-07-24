@@ -122,6 +122,7 @@ export default function Leaves(props: any) {
                                 <div className="" style={{ width: 200, marginRight: 10 }}>
                                     <label>Employee</label>
                                     <EmployeeDropdown
+                                        id="payrollgenerate_employee_dropdown"
                                         name="userId"
                                         placeholder={"Employee"}
                                         value={filterData && filterData['userId']}
@@ -144,6 +145,7 @@ export default function Leaves(props: any) {
                     <div>
                         <label className="ml-[5px]">Date From</label>
                         <input
+                            id="payrollgenerate_datefrom_input"
                             name="dateFrom"
                             type="date"
                             autoComplete="off"
@@ -159,6 +161,7 @@ export default function Leaves(props: any) {
                         <label className="ml-[10px]">Date To</label>
                         <div className="input-container">
                             <input
+                                id="payrollgenerate_dateto_input"
                                 name="dateTo"
                                 type="date"
                                 autoComplete="off"
@@ -191,6 +194,7 @@ export default function Leaves(props: any) {
                     </div> */}
                     <div className="input-container col-md-3 pt-4">
                         <Button
+                        id="payrollgenerate_search_btn"
                         style={{ width: 210 }}
                         onClick={() => getAllLeaves(0)}
                         className="btn btn-primary mx-2">
@@ -230,13 +234,13 @@ export default function Leaves(props: any) {
                                                 {
                                                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                         <>
-                                                            <td> {item.lastName}, {item.firstName} </td>
+                                                            <td id="payrollgenerate_name_allleavesdata"> {item.lastName}, {item.firstName} </td>
                                                         </> : null
                                                 }
-                                                <td> {item.type} </td>
-                                                <td> {item.withPay == true ? "YES" : "NO"} </td>
-                                                <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                <td id="payrollgenerate_type_allleavesdata"> {item.type} </td>
+                                                <td id="payrollgenerate_withpay_allleavesdata"> {item.withPay == true ? "YES" : "NO"} </td>
+                                                <td id="payrollgenerate_datefrom_allleavesdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                <td id="payrollgenerate_dateto_allleavesdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                             </tr>
                                         )
                                     })

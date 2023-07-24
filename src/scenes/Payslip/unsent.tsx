@@ -271,7 +271,7 @@ const unsent = (props : any ) => {
                                         <option value="12">December</option>
                                     </select>
                                     {showButtonMonth && (
-                                        <span className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
+                                        <span id="payslipunsent_closemonth_span" className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
                                         X
                                         </span>
                                     )}
@@ -302,15 +302,47 @@ const unsent = (props : any ) => {
                                         }
                                     </select>
                                     {showButtonYear && (
-                                        <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
+                                        <span id="payslipunsent_closeyear_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
                                         X
                                         </span>
                                     )}
                                 </div>
-                                
-                               
+                                <div className="input-container col-md-2">
+                                <label>Employee Name</label>
+                                    <EmployeeDropdown
+                                        id="payslipunsent_employee_dropdown"
+                                        placeholder={"Employee"}
+                                        singleChangeOption={singleChangeOption}
+                                        name="userId"
+                                        value={filterData && filterData['userId']}
+                                        withEmployeeID={true}
+                                        />
+                                    </div>
+                                <div className="input-container clearable-select col-md-2">
+                                <label> Status </label>
+                                <select 
+                                    name="status" 
+                                    id="status"
+                                    onChange={(e) => { makeFilterData(e)
+                                        setShowButtonStatus(e.target.value !== 'default')
+                                    }}
+                                    className="formControl"
+                                    >
+                                        <option value="default" disabled selected>
+                                            Status
+                                        </option>
+                                        <option value="completed">Completed</option>
+                                        <option value="incomplete">Incomplete</option>
+                                    </select>
+                                    {showButtonStatus && (
+                                        <span id="payslipunsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
+                                        X
+                                        </span>
+                                    )}
+                                </div>
                                 <Button
-                                style={{ width: 100 }}
+                                id="payslipunsent_search_btn"
+                                style={{ width: 210 }}
                                 onClick={() => getAllPayrollFailed(0)}
                                 className="btn btn-primary mx-2 mt-4">
                                 Search
@@ -340,12 +372,13 @@ const unsent = (props : any ) => {
         
                             return (
                                 <tr>
-                                <td>{ item.employeeId }</td>
-                                <td>{ item.employeeName }</td>
-                                <td> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
+                                <td id="payslipunsent_employeeid_failedpaysliplistdata">{ item.employeeId }</td>
+                                <td id="payslipunsent_employeename_failedpaysliplistdata">{ item.employeeName }</td>
+                                <td id="payslipunsent_monthyear_failedpaysliplistdata"> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
                                 {/* <td> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td> */}
                                 <td>
                                 <label
+                                id="payslipunsent_resend_failedpaysliplistlabel"
                                 onClick={() => {
                                     Resend(item.id)
                                 }}

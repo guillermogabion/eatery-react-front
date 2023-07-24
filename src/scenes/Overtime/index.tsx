@@ -370,26 +370,27 @@ export const Overtime = (props: any) => {
                   <tr>
                     {/* <td> {item.lastName}, {item.firstName}</td> */}
                     {data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                      <td>{item.lastName}, {item.firstName}</td> :
+                      <td id="overtime_name_myotdata">{item.lastName}, {item.firstName}</td> :
                       null
                     }
-                    <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                    <td> {Utility.removeUnderscore(item.classification)} </td>
-                    <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                    <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                    <td> {item.totalDuration} </td>
+                    <td id="overtime_shiftdate_myotdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                    <td id="overtime_classification_myotdata"> {Utility.removeUnderscore(item.classification)} </td>
+                    <td id="overtime_otstart_myotdata"> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                    <td id="overtime_otend_myotdata"> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                    <td id="overtime_totalduration_myotdata"> {item.totalDuration} </td>
                     {/* <td> {item.totalDuration.split(':').map(value => value.padStart(2, '0')).slice(0, 2).join(':')}</td> */}
-                    <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td> {item.reason} </td>
-                    <td> {item.statusChangedBy} </td>
-                    <td> {Utility.removeUnderscore(item.status)} </td>
+                    <td id="overtime_filedate_myotdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                    <td id="overtime_reason_myotdata"> {item.reason} </td>
+                    <td id="overtime_statuschangedby_myotdata"> {item.statusChangedBy} </td>
+                    <td id="overtime_status_myotdata"> {Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
                       <label
+                        id="overtime_view_myotlabel"
                         onClick={() => {
                           viewOT(item.id)
                         }}
                       >
-                        <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                        <img id="overtime_eye_myotimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       {
@@ -398,11 +399,12 @@ export const Overtime = (props: any) => {
                             {authorizations.includes("Request:Update") ? (
                               <>
                                 <label
+                                  id="overtime_update_myotlabel"
                                   onClick={() => {
                                     getOT(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                  <img id="overtime_actionedit_myotimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                 </label>
 
                               </>
@@ -410,24 +412,26 @@ export const Overtime = (props: any) => {
                             {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                               <>
                                 <label
+                                  id="overtime_approveot_myotlabel"
                                   onClick={() => {
                                     approveOT(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                  <img id="overtime_actionapprove_myotimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                 </label>
                               </>
                             ) : null}
                             {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                               <>
                                 <label
+                                  id="overtime_declineot_myotlabel"
                                   onClick={() => {
                                     declineOT(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                  <img id="overtime_actiondecline_myotimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                 </label>
                                 <br />
                               </>
@@ -443,11 +447,12 @@ export const Overtime = (props: any) => {
                             {authorizations.includes("Request:Update") ? (
                               <>
                                 <label
+                                  id="overtime_cancelovertime_myotlabel"
                                   onClick={() => {
                                     cancelOvertime(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                  <img id="overtime_view_myotimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                 </label>
                                 <br />
                               </>
@@ -502,6 +507,7 @@ export const Overtime = (props: any) => {
                   <div className="" style={{ width: 200, marginRight: 10 }}>
                     <label>Employee</label>
                     <EmployeeDropdown
+                      id="overtime_employee_myotformdropdown"
                       placeholder={"Employee"}
                       singleChangeOption={singleChangeOption}
                       name="userId"
@@ -515,6 +521,7 @@ export const Overtime = (props: any) => {
                 <label>Date From</label>
                 <div>
                   <input
+                    id="overtime_datefrom_myotforminput"
                     name="dateFrom"
                     type="date"
                     autoComplete="off"
@@ -528,6 +535,7 @@ export const Overtime = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="overtime_dateto_myotforminput"
                     name="dateTo"
                     type="date"
                     autoComplete="off"
@@ -541,6 +549,7 @@ export const Overtime = (props: any) => {
                 <label>Date Filed</label>
                 <div className="input-container">
                   <input
+                    id="overtime_datefiled_myotforminput"
                     name="dateFiled"
                     type="date"
                     autoComplete="off"
@@ -552,6 +561,7 @@ export const Overtime = (props: any) => {
               </div>
               <div>
                 <Button
+                  id="overtime_search_myotformbtn"
                   style={{ width: 120 }}
                   onClick={() => getMyOT(0, key, actionable)}
                   className="btn btn-primary mx-2 mt-4">
@@ -573,22 +583,22 @@ export const Overtime = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="overtime_all_myotformtab" eventKey="all" title="All">
                 {overTimeTable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="overtime_pending_myotformtab" eventKey="pending" title="Pending">
                 {overTimeTable()}
               </Tab>
-              <Tab eventKey="approved" title="Approved" >
+              <Tab id="overtime_approved_myotformtab" eventKey="approved" title="Approved" >
                 {overTimeTable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="overtime_declined_myotformtab" eventKey="declined" title="Rejected/Cancelled">
                 {overTimeTable()}
               </Tab>
               {
                 data.profile.role == 'EXECUTIVE' &&
                 (
-                  <Tab eventKey="actionable" title="Actionable">
+                  <Tab id="overtime_actionable_myotformtab" eventKey="actionable" title="Actionable">
                     {overTimeTable()}
                   </Tab>
                 )
@@ -620,6 +630,7 @@ export const Overtime = (props: any) => {
             <div className="d-flex justify-content-end mt-3" >
               <div>
                 <Button
+                  id="overtime_requestovertime_myotformbtn"
                   className="mx-2"
                   onClick={() => {
                     setOtId("")
@@ -759,7 +770,7 @@ export const Overtime = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.classification && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                        <p id="overtime_errorclassification_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -775,7 +786,7 @@ export const Overtime = (props: any) => {
                         }}
                       />
                       {errors && errors.shiftDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                        <p id="overtime_errorshiftdate_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -791,7 +802,7 @@ export const Overtime = (props: any) => {
                         }}
                       />
                       {errors && errors.otStart && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                        <p id="overtime_errorotstart_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -807,13 +818,14 @@ export const Overtime = (props: any) => {
                         }}
                       />
                       {errors && errors.otEnd && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                        <p id="overtime_errorotend_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Work Type</label>
                       <span className="text-danger ml-2 text-md">*</span>
                       <select
+                        id="overtime_worktype_reqovertimeselect"
                         className="form-select"
                         value={values.location}
                         name="location"
@@ -828,13 +840,14 @@ export const Overtime = (props: any) => {
                         <option value="WORK_FROM_HOME">Work From Home</option>
                       </select>
                       {errors && errors.location && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
+                        <p id="overtime_errorlocation_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Breaktime Duration (minutes)</label>
                       <span className="text-danger ml-2 text-md">*</span>
                       <select
+                        id="overtime_breaktimeduratino_reqovertimeselect"
                         className="form-select"
                         value={values.breaktimeDuration}
                         name="breaktimeDuration"
@@ -852,7 +865,7 @@ export const Overtime = (props: any) => {
                         <option value="60">60</option>
                       </select>
                       {errors && errors.breaktimeDuration && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
+                        <p id="overtime_errorbreaktimeduration_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3"></div>
@@ -868,7 +881,7 @@ export const Overtime = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="overtime_errorreason_reqovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                   </div>
@@ -876,6 +889,7 @@ export const Overtime = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="overtime_save_reqovertimebtn"
                         type="submit"
                         disabled={onSubmit}
                         className="btn btn-primary">
@@ -947,7 +961,7 @@ export const Overtime = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.classification && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                        <p id="overtime_errorclassification_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -964,7 +978,7 @@ export const Overtime = (props: any) => {
                         }}
                       />
                       {errors && errors.shiftDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                        <p id="overtime_errorshiftdate_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -981,7 +995,7 @@ export const Overtime = (props: any) => {
                         }}
                       />
                       {errors && errors.otStart && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                        <p id="overtime_errorotstart_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -998,13 +1012,14 @@ export const Overtime = (props: any) => {
                         }}
                       />
                       {errors && errors.otEnd && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                        <p id="overtime_errorotend_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Work Type</label>
                       <span className="text-danger ml-2 text-md">*</span>
                       <select
+                        id="overtime_worktype_viewovertimeselect"
                         className="form-select"
                         value={values.location}
                         disabled={true}
@@ -1020,13 +1035,14 @@ export const Overtime = (props: any) => {
                         <option value="WORK_FROM_HOME">Work From Home</option>
                       </select>
                       {errors && errors.location && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
+                        <p id="overtime_errorworktype_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.location}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Breaktime Duration (minutes)</label>
                       <span className="text-danger ml-2 text-md">*</span>
                       <select
+                        id="overtime_breaktimeduration_viewovertimeselect"
                         className="form-select"
                         value={values.breaktimeDuration}
                         disabled={true}
@@ -1045,7 +1061,7 @@ export const Overtime = (props: any) => {
                         <option value="60">60</option>
                       </select>
                       {errors && errors.breaktimeDuration && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
+                        <p id="overtime_errorbreaktimeduration_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.breaktimeDuration}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3"></div>
@@ -1062,7 +1078,7 @@ export const Overtime = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="overtime_errorreason_viewovertimep" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                   </div>

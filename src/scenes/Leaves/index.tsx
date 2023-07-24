@@ -523,27 +523,28 @@ export const Leaves = (props: any) => {
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <>
-                                <td> {item.lastName}, {item.firstName} </td>
+                                <td id="leaves_name_allleavedata"> {item.lastName}, {item.firstName} </td>
                               </> : null
                           }
 
-                          <td> {item.type} </td>
+                          <td id="leaves_type_allleavedata"> {item.type} </td>
                           {/* <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td> */}
-                          <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td> {item.reason} </td>
-                          <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td> {item.statusChangedBy} </td>
+                          <td id="leaves_datefrom_allleavedata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id="leaves_dateto_allleavedata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id="leaves_reason_allleavedata"> {item.reason} </td>
+                          <td id="leaves_filedate_allleavedata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id="leaves_statuschangedby_allleavedata"> {item.statusChangedBy} </td>
                           {/* <td> {item.status} </td> */}
-                          <td> {Utility.removeUnderscore(item.status)} </td>
+                          <td id="leaves_status_allleavedata"> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
+                              id="leaves_view_allleavelabel"
                               onClick={() => {
                                 viewLeave(item.id)
                               }}
                             >
-                              <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id="leaves_eye_allleaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             {
@@ -552,11 +553,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
+                                        id="leaves_name_allleavelabel"
                                         onClick={() => {
                                           getLeave(item.id)
                                         }}
                                         className=" cursor-pointer">
-                                        <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                        <img id="leaves_actionedit_allleaveimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                       </label>
                                       <br />
                                     </>
@@ -565,11 +567,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
+                                        id="leaves_approveleave_allleavelabel"
                                         onClick={() => {
                                           approveLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                        <img id="leaves_actionapprove_allleaveimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                       </label> <br />
                                     </>
                                   ) : null}
@@ -577,11 +580,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
+                                        id="leaves_declineleave_allleavelabel"
                                         onClick={() => {
                                           declineLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                        <img id="leaves_actiondecline_allleaveimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                       </label>
                                       <br />
                                     </>
@@ -596,11 +600,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
+                                        id="leaves_cancelleave_allleavelabel"
                                         onClick={() => {
                                           cancelLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                        <img id="leaves_actioncancel_allleaveimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                       </label>
                                       <br />
                                     </>
@@ -671,7 +676,7 @@ export const Leaves = (props: any) => {
                 <h4 className="bold-text">Leave Credits </h4>
                 {getMyLeaves.map((leave: any) => (
                   <div key={leave.id}>
-                    <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
+                    <p id="leaves_name_leavecreditsp"><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
                   </div>
                 ))}
               </div>
@@ -684,6 +689,7 @@ export const Leaves = (props: any) => {
                   <div className="" style={{ width: 200, marginRight: 10 }}>
                     <label>Employee</label>
                     <EmployeeDropdown
+                      id="leaves_employee_leavecreditsdropdown"
                       placeholder={"Employee"}
                       singleChangeOption={singleChangeOption}
                       name="userId"
@@ -697,6 +703,7 @@ export const Leaves = (props: any) => {
               <div>
                 <label>Date From</label>
                 <input
+                  id="leaves_datefrom_leavecreditsinput"
                   name="dateFrom"
                   type="date"
                   autoComplete="off"
@@ -710,6 +717,7 @@ export const Leaves = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="leaves_dateto_leavecreditsinput"
                     name="dateTo"
                     type="date"
                     autoComplete="off"
@@ -722,6 +730,7 @@ export const Leaves = (props: any) => {
               </div>
 
               <Button
+                id="leaves_search_leavecreditsbtn"
                 style={{ width: 120 }}
                 onClick={() => getAllLeaves(0, key, actionable)}
                 className="btn btn-primary mx-2 mt-4">
@@ -742,23 +751,23 @@ export const Leaves = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="leaves_all_leavecreditstab" eventKey="all" title="All">
                 {leaveTable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="leaves_pending_leavecreditstab" eventKey="pending" title="Pending">
                 {leaveTable()}
               </Tab>
-              <Tab eventKey="approved" title="Approved" >
+              <Tab id="leaves_approved_leavecreditstab" eventKey="approved" title="Approved" >
                 {leaveTable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="leaves_declined_leavecreditstab" eventKey="declined" title="Rejected/Cancelled">
                 {leaveTable()}
               </Tab>
 
               {
                 data.profile.role == 'EXECUTIVE' &&
                 (
-                  <Tab eventKey="actionable" title="Actionable">
+                  <Tab id="leaves_actionable_leavecreditstab" eventKey="actionable" title="Actionable">
                     {leaveTable()}
                   </Tab>
                 )
@@ -789,6 +798,7 @@ export const Leaves = (props: any) => {
           <div className="d-flex justify-content-end mt-3" >
             <div>
               <Button
+                id="leaves_requestforleave_leavecreditsbtn"
                 className="mx-2"
                 onClick={() => {
                   setInitialValues(initialPayload)
@@ -942,7 +952,7 @@ export const Leaves = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.type && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                        <p id="leaves_errortype_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -966,7 +976,7 @@ export const Leaves = (props: any) => {
                         placeholder="dd/mm/yyyy"
                       />
                       {errors && errors.dateFrom && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        <p id="leaves_errordatefrom_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -988,7 +998,7 @@ export const Leaves = (props: any) => {
 
 
                       {errors && errors.dateTo && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        <p id="leaves_errordateto_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -1001,7 +1011,7 @@ export const Leaves = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="leaves_reason_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -1031,7 +1041,7 @@ export const Leaves = (props: any) => {
                                         setDateOption(index, 1, 'WHOLEDAY')
                                       }}
                                     />
-                                    <label htmlFor={"leaveCreditWhole" + index.toString()}
+                                    <label id="leaves_wholeday_leavebreakdownlabel" htmlFor={"leaveCreditWhole" + index.toString()}
                                       style={{ marginRight: 10 }}>Whole Day</label>
                                     <input
                                       type="radio"
@@ -1041,7 +1051,7 @@ export const Leaves = (props: any) => {
                                       onChange={() => {
                                         setDateOption(index, .5, "FIRST_HALF")
                                       }}
-                                    /> <label htmlFor={"leaveCreditDay" + index.toString()}
+                                    /> <label id="leaves_halfday_leavebreakdownlabel" htmlFor={"leaveCreditDay" + index.toString()}
                                       style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
                                     {
                                       item.dayType != 'WHOLEDAY' ?
@@ -1054,7 +1064,7 @@ export const Leaves = (props: any) => {
                                             checked={item.dayType == 'FIRST_HALF'}
                                             onChange={() => setDateOption(index, .5, "FIRST_HALF")}
                                           />
-                                          <label htmlFor={"leaveCreditWhole1" + index.toString()}
+                                          <label id="leaves_leavecreditfirsthalf_leavebreakdownlabel" htmlFor={"leaveCreditWhole1" + index.toString()}
                                             style={{ marginRight: 10 }}>First Half</label>
                                           <input
                                             type="radio"
@@ -1063,7 +1073,7 @@ export const Leaves = (props: any) => {
                                             id={"leaveCreditDay1" + index.toString()}
                                             onChange={() => setDateOption(index, .5, "SECOND_HALF")}
                                           />
-                                          <label htmlFor={"leaveCreditDay1" + index.toString()}
+                                          <label id="leaves_leavecreditsecondhalf_leavebreakdownlabel" htmlFor={"leaveCreditDay1" + index.toString()}
                                             style={{ paddingTop: -10 }}>Second Half</label>
                                         </>
                                         :
@@ -1095,12 +1105,14 @@ export const Leaves = (props: any) => {
                         leaveBreakdown && leaveBreakdown.length == 0 ?
 
                           <button
+                            id="leaves_save1_leavebreakdownbtn"
                             disabled
                             type="submit"
                             className="btn btn-primary">
                             Save
                           </button> :
                           <button
+                            id="leaves_save2_leavebreakdownbtn"
                             type="submit"
                             className="btn btn-primary"
                           >
@@ -1183,7 +1195,7 @@ export const Leaves = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.type && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
+                        <p id="leaves_errortype_leavereqp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -1208,7 +1220,7 @@ export const Leaves = (props: any) => {
                         placeholder="dd/mm/yyyy"
                       />
                       {errors && errors.dateFrom && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                        <p id="leaves_errordatefrom_leavereqp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -1231,7 +1243,7 @@ export const Leaves = (props: any) => {
 
 
                       {errors && errors.dateTo && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                        <p id="leaves_errordateto_leavereqp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -1245,7 +1257,7 @@ export const Leaves = (props: any) => {
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
                       {errors && errors.reason && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                        <p id="leaves_errorreason_leavereqp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -1276,7 +1288,7 @@ export const Leaves = (props: any) => {
                                         setDateOption(index, 1, 'WHOLEDAY')
                                       }}
                                     />
-                                    <label htmlFor={"leaveCreditWhole" + index.toString()}
+                                    <label id="leaves_wholeday_leavereqlabel" htmlFor={"leaveCreditWhole" + index.toString()}
                                       style={{ marginRight: 10 }}>Whole Day</label>
                                     <input
                                       type="radio"
@@ -1287,7 +1299,7 @@ export const Leaves = (props: any) => {
                                       onChange={() => {
                                         setDateOption(index, .5, "FIRST_HALF")
                                       }}
-                                    /> <label htmlFor={"leaveCreditDay" + index.toString()}
+                                    /> <label id="leaves_halfday_leavereqlabel" htmlFor={"leaveCreditDay" + index.toString()}
                                       style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
                                     {
                                       item.dayType != 'WHOLEDAY' ?
@@ -1301,7 +1313,7 @@ export const Leaves = (props: any) => {
                                             disabled={true}
                                             onChange={() => setDateOption(index, .5, "FIRST_HALF")}
                                           />
-                                          <label htmlFor={"leaveCreditWhole1" + index.toString()}
+                                          <label id="leaves_firsthalf_leavereqlabel" htmlFor={"leaveCreditWhole1" + index.toString()}
                                             style={{ marginRight: 10 }}>First Half</label>
                                           <input
                                             type="radio"
@@ -1311,7 +1323,7 @@ export const Leaves = (props: any) => {
                                             disabled={true}
                                             onChange={() => setDateOption(index, .5, "SECOND_HALF")}
                                           />
-                                          <label htmlFor={"leaveCreditDay1" + index.toString()}
+                                          <label id="leaves_secondhalf_leavereqlabel" htmlFor={"leaveCreditDay1" + index.toString()}
                                             style={{ paddingTop: -10 }}>Second Half</label>
                                         </>
                                         :

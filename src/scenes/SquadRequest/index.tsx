@@ -71,6 +71,7 @@ export const SquadRequest = (props: any) => {
                                     <div className="d-flex justify-content-end mt-3" >
                                         <div>
                                             <Button
+                                                id="squadrequest_downloadexcel_btn"
                                                 className="mx-2"
                                                 onClick={() => {
                                                     setDownloadModalShow(true)
@@ -128,7 +129,8 @@ export const SquadRequest = (props: any) => {
                 </div>
                 </Modal.Body>
                 <Modal.Footer className="d-flex justify-content-center">
-                    <Button 
+                    <Button         
+                        id="squadot_downloadexecl2_btn"
                         onClick={() => downloadExcel(fromDate, toDate)}
                         disabled={isSubmit}>
                             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>: "" } Proceed

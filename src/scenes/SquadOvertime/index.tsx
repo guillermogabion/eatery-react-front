@@ -357,58 +357,62 @@ export const SquadOvertime = (props: any) => {
                   <tr>
                     {/* <td> {item.lastName}, {item.firstName}</td> */}
                     {data.profile.role != 'EMPLOYEE' ?
-                      <td>{item.lastName}, {item.firstName}</td> :
+                      <td id="squadot_name_myotdata">{item.lastName}, {item.firstName}</td> :
                       null
                     }
-                    <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                    <td> {Utility.removeUnderscore(item.classification)} </td>
-                    <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                    <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                    <td> {item.totalDuration} </td>
-                    <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td> {item.reason} </td>
-                    <td> {item.statusChangedBy} </td>
-                    <td> {Utility.removeUnderscore(item.status)} </td>
+                    <td id="squadot_shiftdate_myotdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                    <td id="squadot_classification_myotdata"> {Utility.removeUnderscore(item.classification)} </td>
+                    <td id="squadot_otstart_myotdata"> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                    <td id="squadot_otend_myotdata"> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                    <td id="squadot_totalduration_myotdata"> {item.totalDuration} </td>
+                    <td id="squadot_filedate_myotdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                    <td id="squadot_reason_myotdata"> {item.reason} </td>
+                    <td id="squadot_statuschangedby_myotdata"> {item.statusChangedBy} </td>
+                    <td id="squadot_status_myotdata"> {Utility.removeUnderscore(item.status)} </td>
                     <td>
                       <label
+                        id="squadot_view_myotlabel"
                         onClick={() => {
                           viewOT(item.id)
                         }}
                       >
-                        <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                        <img id="squadot_eye_myotimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       <>
                         {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                           <>
                             <label
+                              id="squadot_actionedit_myotlabel"
                               onClick={() => {
                                 getOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                              <img id="squadot_actionedit_myotimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                           </>
                         ) : null}
                         {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                           <>
                             <label
+                              id="squadot_actionapprove_myotlabel"
                               onClick={() => {
                                 approveOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                              <img id="squadot_actionapprove_myotimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                             </label>
                           </>
                         ) : null}
                         {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                           <>
                             <label
+                              id="squadot_actiondecline_myotlabel"
                               onClick={() => {
                                 declineOT(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                              <img id="squadot_actiondecline_myotimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
 
                             </label>
                           </>
@@ -419,11 +423,12 @@ export const SquadOvertime = (props: any) => {
                         {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                           <>
                             <label
+                              id="squadot_actioncancel_myotlabel"
                               onClick={() => {
                                 cancelOvertime(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                              <img id="squadot_actioncancel_myotimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                             </label>
                           </>
                         ) : null}
@@ -473,6 +478,7 @@ export const SquadOvertime = (props: any) => {
               <div className="" style={{ width: 200, marginRight: 10 }}>
                 <label>Employee</label>
                 <EmployeeDropdown
+                  id="squadot_employee_maindropdown"
                   squad={true}
                   placeholder={"Employee"}
                   singleChangeOption={singleChangeOption}
@@ -484,6 +490,7 @@ export const SquadOvertime = (props: any) => {
                 <label>Date From</label>
                 <div>
                   <input
+                    id="squadot_datefrom_maininput"
                     name="dateFrom"
                     type="date"
                     autoComplete="off"
@@ -497,6 +504,7 @@ export const SquadOvertime = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="squadot_dateto_maininput"
                     name="dateTo"
                     type="date"
                     autoComplete="off"
@@ -510,6 +518,7 @@ export const SquadOvertime = (props: any) => {
                 <label>Date Filed</label>
                 <div className="input-container">
                   <input
+                    id="squadot_datefiled_maininput"
                     name="dateFiled"
                     type="date"
                     autoComplete="off"
@@ -521,6 +530,7 @@ export const SquadOvertime = (props: any) => {
               </div>
               <div>
                 <Button
+                  id="squadot_search_maininput"
                   style={{ width: 120 }}
                   onClick={() => getMyOT(0, key)}
                   className="btn btn-primary mx-2 mt-4">
@@ -537,16 +547,16 @@ export const SquadOvertime = (props: any) => {
               }}
               className="mb-3"
             >
-              <Tab eventKey="all" title="All">
+              <Tab id="squadot_all_maintab" eventKey="all" title="All">
                 {overTimeTable()}
               </Tab>
-              <Tab eventKey="pending" title="Pending">
+              <Tab id="squadot_pending_maintab" eventKey="pending" title="Pending">
                 {overTimeTable()}
               </Tab>
-              <Tab eventKey="approved" title="Approved" >
+              <Tab id="squadot_approved_maintab" eventKey="approved" title="Approved" >
                 {overTimeTable()}
               </Tab>
-              <Tab eventKey="declined" title="Rejected/Cancelled">
+              <Tab id="squadot_declined_maintab" eventKey="declined" title="Rejected/Cancelled">
                 {overTimeTable()}
               </Tab>
             </Tabs>
@@ -696,7 +706,7 @@ export const SquadOvertime = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.classification && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                        <p id="squadot_errorclassification_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -711,7 +721,7 @@ export const SquadOvertime = (props: any) => {
                         }}
                       />
                       {errors && errors.shiftDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                        <p id="squadot_errorshiftdate_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -726,7 +736,7 @@ export const SquadOvertime = (props: any) => {
                         }}
                       />
                       {errors && errors.otStart && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                        <p id="squadot_errorotstart_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -741,7 +751,7 @@ export const SquadOvertime = (props: any) => {
                         }}
                       />
                       {errors && errors.otEnd && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                        <p id="squadot_errorotend_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
@@ -760,6 +770,7 @@ export const SquadOvertime = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="squadot_save_reqotbtn"
                         type="submit"
                         disabled={onSubmit}
                         className="btn btn-primary">
@@ -826,7 +837,7 @@ export const SquadOvertime = (props: any) => {
                           ))}
                       </select>
                       {errors && errors.classification && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
+                        <p id="squadot_errorclassification_formp" style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -842,7 +853,7 @@ export const SquadOvertime = (props: any) => {
                         }}
                       />
                       {errors && errors.shiftDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
+                        <p id="squadot_errorshiftdate_formp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -858,7 +869,7 @@ export const SquadOvertime = (props: any) => {
                         }}
                       />
                       {errors && errors.otStart && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
+                        <p id="squadot_errorotstart_formp" style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -874,7 +885,7 @@ export const SquadOvertime = (props: any) => {
                         }}
                       />
                       {errors && errors.otEnd && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
+                        <p id="squadot_errorotend_formp" style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >

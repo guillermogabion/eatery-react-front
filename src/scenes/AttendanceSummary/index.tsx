@@ -317,16 +317,16 @@ export const AttendanceSummary = (props: any) => {
                     allAttendance.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td> {item.lastName}, {item.firstName} </td>
-                          <td> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
-                          <td> {item.schedule} </td>
-                          <td> {item.firstLogin ? moment(item.firstLogin).format('MM-DD-YYYY hh:mm A') : "No Time In"} </td>
-                          <td> {item.lastLogin ? moment(item.lastLogin).format('MM-DD-YYYY hh:mm A') : "No Time Out"} </td>
-                          <td> { Utility.removeUnderscore(item.dayType) } </td>
-                          <td> {item.status} </td>
+                          <td id="attendancesummary_name_allattendancedata"> {item.lastName}, {item.firstName} </td>
+                          <td id="attendancesummary_date_allattendancedata"> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
+                          <td id="attendancesummary_schedule_allattendancedata"> {item.schedule} </td>
+                          <td id="attendancesummary_firstlogin_allattendancedata"> {item.firstLogin ? moment(item.firstLogin).format('MM-DD-YYYY hh:mm A') : "No Time In"} </td>
+                          <td id="attendancesummary_lastlogin_allattendancedata"> {item.lastLogin ? moment(item.lastLogin).format('MM-DD-YYYY hh:mm A') : "No Time Out"} </td>
+                          <td id="attendancesummary_datatype_allattendancedata"> { Utility.removeUnderscore(item.dayType) } </td>
+                          <td id="attendancesummary_status_allattendancedata"> {item.status} </td> 
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                              <td> <label
+                              <td> <label id="attendancesummary_update_allattendancelabel"
                                 onClick={() => {
                                   setUpdateData(item)
                                   setInitialValues({
@@ -343,7 +343,7 @@ export const AttendanceSummary = (props: any) => {
                                 Update
                               </label>
                                 <br />
-                                <label
+                                <label id="attendancesummary_delete_allattendancelabel"
                                   onClick={() => {
                                     setDeleteInitialValues({
                                       "userid": filterData && filterData['userid'],
@@ -427,7 +427,7 @@ export const AttendanceSummary = (props: any) => {
                   <>
                     <div className="" style={{ width: 200, marginRight: 10 }}>
                       <label>Employee</label>
-                      <SingleSelect
+                      <SingleSelect id="attendancesummary_employee_summaryselect"
                         type="string"
                         options={employeeList || []}
                         placeholder={"Employee"}
@@ -444,6 +444,7 @@ export const AttendanceSummary = (props: any) => {
               <div>
                 <label>Date From</label>
                 <input
+                  id="attendancesummary_datefrom_summaryinput"
                   name="fromDate"
                   type="date"
                   autoComplete="off"
@@ -459,6 +460,7 @@ export const AttendanceSummary = (props: any) => {
                 <label>Date To</label>
                 <div className="input-container">
                   <input
+                    id="attendancesummary_dateto_summaryinput"
                     name="toDate"
                     type="date"
                     autoComplete="off"
@@ -472,6 +474,7 @@ export const AttendanceSummary = (props: any) => {
               </div>
 
               <Button
+                id="attendancesummary_search_summarybtn"
                 style={{ width: 120 }}
                 onClick={() => getAllAttendance(0)}
                 className="btn btn-primary mx-2 mt-4">
@@ -480,6 +483,7 @@ export const AttendanceSummary = (props: any) => {
               {
                 data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                   <Button
+                    id="attendancesummary_addbiolog_summarybtn"
                     onClick={() => setAddBioModal(true)}
                     disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
                     className="btn btn-primary mx-2 mt-4 w-auto">
@@ -498,21 +502,25 @@ export const AttendanceSummary = (props: any) => {
                   <div className="d-flex justify-content-end mt-3" >
                     <div>
                       <Button
+                        id="attendancesummary_import_summarybtn"
                         className="mx-2"
                         onClick={() => {
                           setImportModalShow(true)
                         }}>Import</Button>
                       <Button
+                        id="attendancesummary_export_summarybtn"
                         className="mx-2"
                         onClick={() => {
                           setDownloadModalShow(true)
                         }}>Export</Button>
                       <Button
+                        id="attendancesummary_recalculate_summarybtn"
                         className="mx-2"
                         onClick={() => {
                           setRecalculateModal(true)
                         }}>Recalculate</Button>
                       <Button
+                        id="attendancesummary_downloadtemplate_summarybtn"
                         className="mx-2"
                         onClick={
                           downloadTemplate
@@ -572,6 +580,7 @@ export const AttendanceSummary = (props: any) => {
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button
+            id="attendancesummary_submit_modalbtn"
             onClick={() => downloadExcel(fromDate, toDate)}
             disabled={isSubmit}>
             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
@@ -597,6 +606,7 @@ export const AttendanceSummary = (props: any) => {
           <div className="form-group col-md-12 mb-3" >
             <label>File</label>
             <input
+              id="attendancesummary_file_modalinput"
               type="file"
               accept=".xlsx"
               className="file-input-style w-100"
@@ -609,6 +619,7 @@ export const AttendanceSummary = (props: any) => {
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button
+            id="attendancesummary_proceed_modalbtn"
             onClick={() => uploadExcel()}
             disabled={isSubmit}>
             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
@@ -730,6 +741,7 @@ export const AttendanceSummary = (props: any) => {
                   <Modal.Footer className="d-flex justify-content-center">
                     <div className="d-flex justify-content-center px-5">
                       <button
+                        id="attendancesummary_proceed2_modalbtn"
                         type="submit"
                         className="btn btn-primary">
                         Proceed
@@ -918,6 +930,7 @@ export const AttendanceSummary = (props: any) => {
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="attendancesummary_save_addbiobtn"
                         type="submit"
                         className="btn btn-primary">
                         Save
@@ -997,6 +1010,7 @@ export const AttendanceSummary = (props: any) => {
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button
+            id="attendancesummary_proceed_recalcbtn"
             onClick={() => recalculate(fromDate, toDate, userid)}
             disabled={isSubmit}>
             {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed

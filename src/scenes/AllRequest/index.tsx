@@ -308,6 +308,7 @@ export const AllRequest = (props: any) => {
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
                                         <SingleSelect
+                                            id="allrequest_employee_leaveselect"
                                             type="string"
                                             options={employeeList || []}
                                             placeholder={"Employee"}
@@ -324,6 +325,7 @@ export const AllRequest = (props: any) => {
                         <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
+                                id="allrequest_datefrom_leaveinput"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -339,6 +341,7 @@ export const AllRequest = (props: any) => {
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
+                                    id="allrequest_dateto_leaveinput"
                                     name="dateTo"
                                     type="date"
                                     autoComplete="off"
@@ -402,22 +405,22 @@ export const AllRequest = (props: any) => {
                                                     {
                                                         data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <>
-                                                                <td> {item.lastName}, {item.firstName} </td>
+                                                                <td id="allrequest_name_leavedata"> {item.lastName}, {item.firstName} </td>
                                                             </> : null
                                                     }
-                                                    <td> {item.type} </td>
-                                                    <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                    <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                    <td> {item.reason} </td>
-                                                    <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                    <td> {Utility.removeUnderscore(item.status)} </td>
-                                                    <td>
-                                                        <label
+                                                    <td id="allrequest_type_leavedata"> {item.type} </td>
+                                                    <td id="allrequest_datefrom_leavedata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                    <td id="allrequest_dateto_leavedata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                    <td id="allrequest_reason_leavedata"> {item.reason} </td>
+                                                    <td id="allrequest_filedate_leavedata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                    <td id="allrequest_status_leavedata"> {Utility.removeUnderscore(item.status)} </td>
+                                                    <td id="allrequest_labels_leavedata">
+                                                        <label id="allrequest_id_leavelabel"
                                                             onClick={() => {
                                                                 viewLeave(item.id)
                                                             }}
                                                         >
-                                                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                            <img id="allrequest_eye_leaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                                         </label>
                                                     </td>
@@ -552,6 +555,7 @@ export const AllRequest = (props: any) => {
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
                                         <SingleSelect
+                                            id="allrequest_employee_revselect"
                                             type="string"
                                             options={employeeList || []}
                                             placeholder={"Employee"}
@@ -568,6 +572,7 @@ export const AllRequest = (props: any) => {
                         <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
+                                id="allrequest_datefrom_revinput"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -583,6 +588,7 @@ export const AllRequest = (props: any) => {
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
+                                    id="allrequest_dateto_revinput"
                                     name="dateTo"
                                     type="date"
                                     autoComplete="off"
@@ -642,20 +648,20 @@ export const AllRequest = (props: any) => {
                                         {
                                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
-                                                    <td> {item.lastName}, {item.firstName} </td>
+                                                    <td id="allrequest_name_revdata"> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td>{Utility.removeUnderscore(item.type)}</td>
-                                        <td> {item.reason} </td>
-                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.removeUnderscore(item.status)} </td>
-                                        <td>
-                                            <label
+                                        <td id="allrequest_type_revdata">{Utility.removeUnderscore(item.type)}</td>
+                                        <td id="allrequest_reason_revdata"> {item.reason} </td>
+                                        <td id="allrequest_filedate_revdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id="allrequest_status_revdata"> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id="allrequest_labels_revdata">
+                                            <label id="allrequest_id_revlabel"
                                                 onClick={() => {
                                                     getViewCoa(item.id)
                                                 }}
                                             >
-                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id="allrequest_eye_revimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                         </td>
@@ -785,6 +791,7 @@ export const AllRequest = (props: any) => {
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
                                         <SingleSelect
+                                            id="allrequest_employee_otselect"
                                             type="string"
                                             options={employeeList || []}
                                             placeholder={"Employee"}
@@ -801,6 +808,7 @@ export const AllRequest = (props: any) => {
                         <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
+                                id="allrequest_datefrom_otinput"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -816,6 +824,7 @@ export const AllRequest = (props: any) => {
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
+                                    id="allrequest_dateto_otinput"
                                     name="dateTo"
                                     type="date"
                                     autoComplete="off"
@@ -875,24 +884,24 @@ export const AllRequest = (props: any) => {
                                     <tr>
                                         {/* <td> {item.lastName}, {item.firstName}</td> */}
                                         {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                            <td>{item.lastName}, {item.firstName}</td> :
+                                            <td id="allrequest_name_otdata">{item.lastName}, {item.firstName}</td> :
                                             null
                                         }
-                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.removeUnderscore(item.classification)} </td>
-                                        <td> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td> {item.reason} </td>
-                                        <td> {Utility.removeUnderscore(item.status)} </td>
-                                        <td>
+                                        <td id="allrequest_shiftdate_otdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id="allrequest_classification_otdata"> {Utility.removeUnderscore(item.classification)} </td>
+                                        <td id="allrequest_otstart_otdata"> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="allrequest_otend_otdata"> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="allrequest_filedate_otdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id="allrequest_reason_otdata"> {item.reason} </td>
+                                        <td id="allrequest_status_otdata"> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id="allrequest_labels_otdata">
 
-                                            <label
+                                            <label id="allrequest_id_otlabel"
                                                 onClick={() => {
                                                     viewOT(item.id)
                                                 }}
                                             >
-                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id="allrequest_eye_otimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                         </td>
@@ -1021,6 +1030,7 @@ export const AllRequest = (props: any) => {
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
                                         <SingleSelect
+                                            id="allrequest_employee_utstatus"
                                             type="string"
                                             options={employeeList || []}
                                             placeholder={"Employee"}
@@ -1037,6 +1047,7 @@ export const AllRequest = (props: any) => {
                         <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
+                                id="allrequest_datefrom_utinput"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -1052,6 +1063,7 @@ export const AllRequest = (props: any) => {
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
+                                    id="allrequest_dateto_utinput"
                                     name="dateTo"
                                     type="date"
                                     autoComplete="off"
@@ -1113,22 +1125,22 @@ export const AllRequest = (props: any) => {
                                         {
                                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
-                                                    <td> {item.lastName}, {item.firstName} </td>
+                                                    <td id="allrequest_name_utdata"> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td> {item.reason} </td>
-                                        <td> {Utility.removeUnderscore(item.status)} </td>
-                                        <td>
-                                            <label
+                                        <td id="allrequest_shiftdate_utdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id="allrequest_utstart_utdata"> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="allrequest_utend_utdata"> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id="allrequest_filedate_utdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id="allrequest_reason_utdata"> {item.reason} </td>
+                                        <td id="allrequest_status_utdata"> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id="allrequest_labels_utdata">
+                                            <label id="allrequest_id_utlabel"
                                                 onClick={() => {
                                                     viewUT(item.id)
                                                 }}
                                             >
-                                                <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id="allrequest_eye_utimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                         </td>
@@ -1257,6 +1269,7 @@ export const AllRequest = (props: any) => {
                                     <div className="" style={{ width: 200, marginRight: 10 }}>
                                         <label>Employee</label>
                                         <SingleSelect
+                                            id="allrequest_employee_sudselect"
                                             type="string"
                                             options={employeeList || []}
                                             placeholder={"Employee"}
@@ -1273,6 +1286,7 @@ export const AllRequest = (props: any) => {
                         <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
+                                id="allrequest_datefrom_sudinput"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -1288,6 +1302,7 @@ export const AllRequest = (props: any) => {
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
+                                    id="allrequest_dateto_sudinput"
                                     name="dateTo"
                                     type="date"
                                     autoComplete="off"
@@ -1350,21 +1365,21 @@ export const AllRequest = (props: any) => {
                                                     {
                                                         data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <>
-                                                                <td> {item.lastName}, {item.firstName} </td>
+                                                                <td id="allrequest_name_suddata"> {item.lastName}, {item.firstName} </td>
                                                             </> : null
                                                     }
-                                                    <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                    <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                    <td> {item.reason} </td>
-                                                    <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                    <td> {Utility.removeUnderscore(item.status)} </td>
-                                                    <td>
-                                                        <label
+                                                    <td id="allrequest_datefrom_suddata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                    <td id="allrequest_dateto_suddata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                    <td id="allrequest_reason_suddata"> {item.reason} </td>
+                                                    <td id="allrequest_filedate_suddata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                    <td id="allrequest_status_suddata"> {Utility.removeUnderscore(item.status)} </td>
+                                                    <td id="allrequest_labels_suddata">
+                                                        <label id="allrequest_id_sudlabel"
                                                             onClick={() => {
                                                                 getViewSchedule(item.id)
                                                             }}
                                                         >
-                                                            <img src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                            <img id="allrequest_eye_sudimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                                         </label>
                                                     </td>
@@ -1553,9 +1568,9 @@ export const AllRequest = (props: any) => {
                                         <div className="form-group col-md-12 mb-3 " >
                                             <label>Leave Type</label>
                                             <select
+                                                id="allrequest_leavetype_allselect"
                                                 className="form-select"
                                                 name="type"
-                                                id="type"
                                                 value={values.type}
                                                 // onChange={(e) => setFormField(e, setFieldValue)}>
                                                 disabled={true}
@@ -1572,9 +1587,9 @@ export const AllRequest = (props: any) => {
                                         <div className="form-group col-md-6 mb-3" >
                                             <label>Date From</label>
                                             <input type="date"
+                                                id="allrequest_datefrom_allinput"
                                                 onKeyDown={(e) => e.preventDefault()}
                                                 name="dateFrom"
-                                                id="dateFrom"
                                                 className="form-control"
                                                 disabled={true}
                                                 value={values.dateFrom}
@@ -1917,16 +1932,16 @@ export const AllRequest = (props: any) => {
                 <Modal.Body className="d-flex align-items-center justify-content-center">
                     <div className="container">
                         {/* <h4>reason</h4> {{values.reason}} */}
-                        <p>Name : <span>{SchedAdjustmentInitialValues.lastName + ' ' + SchedAdjustmentInitialValues.firstName}</span> <span>{ }</span></p>
-                        <p>Reason : {SchedAdjustmentInitialValues.reason}</p>
-                        <p>Date From : {Utility.formatDate(SchedAdjustmentInitialValues.dateFrom, 'MM-DD-YYYY')}</p>
-                        <p>Date To : {Utility.formatDate(SchedAdjustmentInitialValues.dateTo, 'MM-DD-YYYY')}</p>
-                        <p>Shift Starts : {SchedAdjustmentInitialValues.startShift}</p>
-                        <p>Start of Break : {SchedAdjustmentInitialValues.startBreak}</p>
-                        <p>End of Break : {SchedAdjustmentInitialValues.endBreak}</p>
-                        <p>Shift Ends : {SchedAdjustmentInitialValues.endShift}</p>
+                        <p id="allrequests_name_rqinfosudp">Name : <span>{SchedAdjustmentInitialValues.lastName + ' ' + SchedAdjustmentInitialValues.firstName}</span> <span>{ }</span></p>
+                        <p id="allrequests_reason_rqinfosudp">Reason : {SchedAdjustmentInitialValues.reason}</p>
+                        <p id="allrequests_datefrom_rqinfosudp">Date From : {Utility.formatDate(SchedAdjustmentInitialValues.dateFrom, 'MM-DD-YYYY')}</p>
+                        <p id="allrequests_dateto_rqinfosudp">Date To : {Utility.formatDate(SchedAdjustmentInitialValues.dateTo, 'MM-DD-YYYY')}</p>
+                        <p id="allrequests_shiftstarts_rqinfosudp">Shift Starts : {SchedAdjustmentInitialValues.startShift}</p>
+                        <p id="allrequests_startofbreak_rqinfosudp">Start of Break : {SchedAdjustmentInitialValues.startBreak}</p>
+                        <p id="allrequests_endofbreak_rqinfosudp">End of Break : {SchedAdjustmentInitialValues.endBreak}</p>
+                        <p id="allrequests_shiftends_rqinfosudp">Shift Ends : {SchedAdjustmentInitialValues.endShift}</p>
 
-                        <p>Status : {SchedAdjustmentInitialValues.status}</p>
+                        <p id="allrequests_status_rqinfosudp">Status : {SchedAdjustmentInitialValues.status}</p>
                     </div>
                 </Modal.Body>
 
@@ -1952,10 +1967,10 @@ export const AllRequest = (props: any) => {
                 <Modal.Body className="d-flex align-items-center justify-content-center">
                     <div className="container">
                         {/* <h4>reason</h4> {{values.reason}} */}
-                        <p>Name : <span>{COAInitialValues.lastName + ' ' + COAInitialValues.firstName}</span> <span>{ }</span></p>
-                        <p>Reason : {COAInitialValues.reason}</p>
-                        <p>Type : {COAInitialValues.type}</p>
-                        <p>Status : {COAInitialValues.status}</p>
+                        <p id="allrequests_name_rqinfocoap">Name : <span>{COAInitialValues.lastName + ' ' + COAInitialValues.firstName}</span> <span>{ }</span></p>
+                        <p id="allrequests_reason_rqinfocoap">Reason : {COAInitialValues.reason}</p>
+                        <p id="allrequests_type_rqinfocoap">Type : {COAInitialValues.type}</p>
+                        <p id="allrequests_status_rqinfocoap">Status : {COAInitialValues.status}</p>
 
                         <Table responsive="lg" style={{ maxHeight: '100vh' }}>
                             <thead>
@@ -1969,10 +1984,10 @@ export const AllRequest = (props: any) => {
                             <tbody>
                                 {coaBreakdown.map((initialValues: any, index: any) => (
                                     <tr key={`coaBreakdown-${index}`}>
-                                        <td>{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
-                                        <td>{initialValues.coaBdType}</td>
-                                        <td>{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
-                                        <td>{initialValues.time}</td>
+                                        <td id="allrequests_shiftdate_allreqdata">{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
+                                        <td id="allrequests_coabdtype_allreqdata">{initialValues.coaBdType}</td>
+                                        <td id="allrequests_date_allreqdata">{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
+                                        <td id="allrequests_time_allreqdata">{initialValues.time}</td>
                                     </tr>
                                 ))}
                             </tbody>

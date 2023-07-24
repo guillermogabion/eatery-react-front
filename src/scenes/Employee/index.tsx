@@ -659,7 +659,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.firstName && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.firstName}</p>
+                  <p id="employee_errorfirstname_p" style={{ color: "red", fontSize: "12px" }}>{errors.firstName}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -672,7 +672,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.lastName && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.lastName}</p>
+                  <p id="employee_errorlastname_p" style={{ color: "red", fontSize: "12px" }}>{errors.lastName}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -685,7 +685,7 @@ export const Employee = (props: any) => {
                   value={values.middleName}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors.middleName && <div className="error-text">{String(errors.middleName)}</div>}
+                {errors.middleName && <div id="employee_errormiddlename_div" className="error-text">{String(errors.middleName)}</div>}
 
               </div>
               <div className="form-group col-md-3 mb-3" >
@@ -706,7 +706,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.gender && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.gender}</p>
+                  <p id="employee_errorgender_p" style={{ color: "red", fontSize: "12px" }}>{errors.gender}</p>
                 )}
               </div>
               <div className="form-group col-md-3 mb-3" >
@@ -727,7 +727,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.civilStatus && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.civilStatus}</p>
+                  <p id="employee_errorcivilstatus_p" style={{ color: "red", fontSize: "12px" }}>{errors.civilStatus}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -740,7 +740,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.birthDay && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.birthDay}</p>
+                  <p id="employee_errorbirthday_p" style={{ color: "red", fontSize: "12px" }}>{errors.birthDay}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -753,7 +753,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.contactNumber && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.contactNumber}</p>
+                  <p id="employee_contactnumber_p" style={{ color: "red", fontSize: "12px" }}>{errors.contactNumber}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -766,7 +766,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.emailAddress && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emailAddress}</p>
+                  <p id="employee_emailaddress_p" style={{ color: "red", fontSize: "12px" }}>{errors.emailAddress}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -779,7 +779,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.prclicenseNo && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.prclicenseNo}</p>
+                  <p id="employee_errorprclicenseno_p" style={{ color: "red", fontSize: "12px" }}>{errors.prclicenseNo}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -792,7 +792,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.passportNo && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.passportNo}</p>
+                  <p id="employee_passportno_p" style={{ color: "red", fontSize: "12px" }}>{errors.passportNo}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -813,7 +813,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.roleId && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.roleId}</p>
+                  <p id="employee_errorroleid_p" style={{ color: "red", fontSize: "12px" }}>{errors.roleId}</p>
                 )}
               </div>
             </div>
@@ -823,6 +823,7 @@ export const Employee = (props: any) => {
                 {userId ?
 
                   <button
+                    id="employee_save_btn"
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
@@ -831,6 +832,7 @@ export const Employee = (props: any) => {
                   </button>
                   : null}
                 <Button
+                  id="employee_next_btn"
                   type="submit"
                   className="btn btn-primary">
                   Next
@@ -948,6 +950,7 @@ export const Employee = (props: any) => {
                 {userId ?
 
                   <button
+                    id="employee_save_addressbtn"
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
@@ -956,6 +959,7 @@ export const Employee = (props: any) => {
                   </button>
                   : null}
                 <button
+                  id="employee_back_addressbtn"
                   type="button"
                   onClick={() => {
                     setTabIndex(1)
@@ -964,6 +968,7 @@ export const Employee = (props: any) => {
                   Back
                 </button>
                 <button
+                  id="employee_next_addressbtn"
                   type="submit"
                   className="btn btn-primary">
                   Next
@@ -1012,7 +1017,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.emergencyContactNo && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactNo}</p>
+                  <p id="employee_erroremergencycontactno_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactNo}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1026,7 +1031,7 @@ export const Employee = (props: any) => {
 
                 />
                 {errors && errors.emergencyContactName && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactName}</p>
+                  <p id="employee_erroremergencycontactname_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactName}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1039,7 +1044,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.emergencyContactAddress && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactAddress}</p>
+                  <p id="employee_erroremergencycontactaddress_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactAddress}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1060,7 +1065,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.emergencyContactRelationship && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactRelationship}</p>
+                  <p id="employee_erroremergencycontactrelationship_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactRelationship}</p>
                 )}
               </div>
             </div>
@@ -1070,6 +1075,7 @@ export const Employee = (props: any) => {
                 {userId ?
 
                   <button
+                    id="employee_save_emergencycontactp"
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
@@ -1078,6 +1084,7 @@ export const Employee = (props: any) => {
                   </button>
                   : null}
                 <button
+                  id="employee_back_emergencycontactp"
                   type="button"
                   onClick={() => {
                     setTabIndex(2)
@@ -1086,6 +1093,7 @@ export const Employee = (props: any) => {
                   Back
                 </button>
                 <button
+                  id="employee_next_emergencycontactp"
                   type="submit"
                   className="btn btn-primary">
                   Next
@@ -1149,7 +1157,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.employeeId && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employeeId}</p>
+                  <p id="employee_erroremployeeid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeId}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1162,7 +1170,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.biometricsId && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.biometricsId}</p>
+                  <p id="employee_errorbiometricsid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.biometricsId}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1175,7 +1183,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.companyEmail && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.companyEmail}</p>
+                  <p id="employee_errorcompanyemail_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.companyEmail}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1196,7 +1204,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.employeeType && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employeeType}</p>
+                  <p id="employee_erroremployeetype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeType}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1209,7 +1217,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.jobTitle && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.jobTitle}</p>
+                  <p id="employee_errorjobtitle_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobTitle}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1230,12 +1238,13 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.userLevel && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.userLevel}</p>
+                  <p id="employee_erroruserlevel_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.userLevel}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
                 <label>Immediate Superior ID</label>
                 <SingleSelect
+                  id="employee_immediatesupervisorid_otherinfoselect"
                   type="string"
                   options={immediateEmployeeList || []}
                   placeholder={"Immediate Supervisor"}
@@ -1253,7 +1262,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 /> */}
                 {errors && errors.immediateSuperiorId && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.immediateSuperiorId}</p>
+                  <p id="employee_errorimmediatesupervisorid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.immediateSuperiorId}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1274,7 +1283,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.employeeStatus && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employeeStatus}</p>
+                  <p id="employee_erroremployeestatus_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeStatus}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1287,7 +1296,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.employmentStatusEffectivityDate && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.employmentStatusEffectivityDate}</p>
+                  <p id="employee_erroremployeeeffectivedate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employmentStatusEffectivityDate}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1300,7 +1309,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.hireDate && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.hireDate}</p>
+                  <p id="employee_errorhiredate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.hireDate}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1321,7 +1330,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.bankAcctType && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.bankAcctType}</p>
+                  <p id="employee_errorbankaccttype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.bankAcctType}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1334,7 +1343,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.bankAccountNumber && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.bankAccountNumber}</p>
+                  <p id="employee_errorbankaccountnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.bankAccountNumber}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1347,7 +1356,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.tinNumber && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.tinNumber}</p>
+                  <p id="employee_errortinnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.tinNumber}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1360,7 +1369,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.position && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.position}</p>
+                  <p id="employee_errorposition_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.position}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1373,7 +1382,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.regularizationDate && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.regularizationDate}</p>
+                  <p id="employee_errorregularizationdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.regularizationDate}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1386,7 +1395,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.statusDate && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.statusDate}</p>
+                  <p id="employee_errorstatusdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.statusDate}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1407,7 +1416,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.department && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.department}</p>
+                  <p id="employee_errordepartment_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.department}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1420,7 +1429,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.costCenter && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.costCenter}</p>
+                  <p id="employee_errorcostcenter_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.costCenter}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1433,7 +1442,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.seperationDate && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.seperationDate}</p>
+                  <p id="employee_errorseparationdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.seperationDate}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1446,7 +1455,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.sssNumber && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.sssNumber}</p>
+                  <p id="employee_errorsssnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.sssNumber}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1459,7 +1468,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.philHealthId && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.philHealthId}</p>
+                  <p id="employee_errorphilhealthid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.philHealthId}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1472,7 +1481,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.hdmfNumber && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.hdmfNumber}</p>
+                  <p id="employee_errorhdmfnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.hdmfNumber}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1496,7 +1505,7 @@ export const Employee = (props: any) => {
                   }
                 </select>
                 {errors && errors.squadId && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.squadId}</p>
+                  <p id="employee_errorsquad_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.squadId}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1509,7 +1518,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.otComputationTable && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.otComputationTable}</p>
+                  <p id="employee_errorotcomupatationtable_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otComputationTable}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1522,7 +1531,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.minimumWageEarner && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.minimumWageEarner}</p>
+                  <p id="employee_errorminimumwageearner_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.minimumWageEarner}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1535,7 +1544,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.totalWorkHrsPerDay && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.totalWorkHrsPerDay}</p>
+                  <p id="employee_errortotalworkhrsperday_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.totalWorkHrsPerDay}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1548,7 +1557,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.workDaysPerYear && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.workDaysPerYear}</p>
+                  <p id="employee_errorworkdaysperyear_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.workDaysPerYear}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1569,7 +1578,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.consultantPercentTax && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.consultantPercentTax}</p>
+                  <p id="employee_errorconsultantpercenttax_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.consultantPercentTax}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1582,7 +1591,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.clientName && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.clientName}</p>
+                  <p id="employee_errorclientname_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clientName}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1595,7 +1604,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.jobCode && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.jobCode}</p>
+                  <p id="employee_errorjobcode_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobCode}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1616,7 +1625,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.jobGrade && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.jobGrade}</p>
+                  <p id="employee_errorjobgrade_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobGrade}</p>
                 )}
               </div><div className="form-group col-md-6 mb-3" >
                 <label>Billability</label>
@@ -1628,7 +1637,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.billability && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.billability}</p>
+                  <p id="employee_errorbillability_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.billability}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1649,7 +1658,7 @@ export const Employee = (props: any) => {
                     ))}
                 </select>
                 {errors && errors.payrollRole && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollRole}</p>
+                  <p id="employee_errorpayrollrole_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payrollRole}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1662,7 +1671,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.payGroup && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.payGroup}</p>
+                  <p id="employee_errorpaygroup_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payGroup}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1675,7 +1684,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.payrollRunType && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.payrollRunType}</p>
+                  <p id="employee_errorpayrollruntype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payrollRunType}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1688,7 +1697,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.basicMonthlySalary && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.basicMonthlySalary}</p>
+                  <p id="employee_errorbasicmonthlysalary_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.basicMonthlySalary}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1701,7 +1710,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.salaryEffectivityDate && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.salaryEffectivityDate}</p>
+                  <p id="employee_errorsalaryeffectivedate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salaryEffectivityDate}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1714,7 +1723,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.monthlyDeMinimisBenefits && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.monthlyDeMinimisBenefits}</p>
+                  <p id="employee_errormonthlydeminimis_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.monthlyDeMinimisBenefits}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3" >
@@ -1727,7 +1736,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.ecola && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.ecola}</p>
+                  <p id="employee_errorecola_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.ecola}</p>
                 )}
               </div>
             </div>
@@ -1737,6 +1746,7 @@ export const Employee = (props: any) => {
                 {userId ?
 
                   <button
+                    id="employee_save_otherinfobtn"
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
@@ -1745,6 +1755,7 @@ export const Employee = (props: any) => {
                   </button>
                   : null}
                 <button
+                  id="employee_back_otherinfobtn"
                   type="button"
                   onClick={() => {
                     setTabIndex(3)
@@ -1753,6 +1764,7 @@ export const Employee = (props: any) => {
                   Back
                 </button>
                 <button
+                  id="employee_next_otherinfobtn"
                   type="submit"
                   className="btn btn-primary">
                   Next
@@ -1831,6 +1843,7 @@ export const Employee = (props: any) => {
 
                   <label>Monday Start Shift</label>
                   <input
+                    id="employee_mondaystartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="mondayStartShift"
@@ -1842,6 +1855,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Monday Start Break</label>
                   <input
+                    id="employee_mondaystartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="mondayStartBreak"
@@ -1853,6 +1867,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Monday End Break</label>
                   <input
+                    id="employee_mondayendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="mondayEndBreak"
@@ -1864,6 +1879,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Monday End Shift</label>
                   <input
+                    id="employee_mondayendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="mondayEndShift"
@@ -1885,6 +1901,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Tuesday Start Shift</label>
                   <input
+                    id="employee_tuesdaystartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="tuesdayStartShift"
@@ -1896,6 +1913,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Tuesday Start Break</label>
                   <input
+                    id="employee_tuesdaystartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="tuesdayStartBreak"
@@ -1907,6 +1925,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Tuesday End Break</label>
                   <input
+                    id="employee_tuesdayendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="tuesdayEndBreak"
@@ -1918,6 +1937,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Tuesday End Shift</label>
                   <input
+                    id="employee_tuesdayendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="tuesdayEndShift"
@@ -1940,6 +1960,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Wednesday Start Shift</label>
                   <input
+                    id="employee_wedstartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="wednesdayStartShift"
@@ -1951,6 +1972,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Wednesday Start Break</label>
                   <input
+                    id="employee_wedstartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="wednesdayStartBreak"
@@ -1962,6 +1984,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Wednesday End Break</label>
                   <input
+                    id="employee_wedendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="wednesdayEndBreak"
@@ -1973,6 +1996,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Wednesday End Shift</label>
                   <input
+                    id="employee_wedendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="wednesdayEndShift"
@@ -1996,6 +2020,7 @@ export const Employee = (props: any) => {
 
                   <label>Thursday Start Shift</label>
                   <input
+                    id="employee_thurstartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="thursdayStartShift"
@@ -2007,6 +2032,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Thursday Start Break</label>
                   <input
+                    id="employee_thurstartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="thursdayStartBreak"
@@ -2018,6 +2044,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Thursday End Break</label>
                   <input
+                    id="employee_thursendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="thursdayEndBreak"
@@ -2029,6 +2056,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Thursday End Shift</label>
                   <input
+                    id="employee_thursendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="thursdayEndShift"
@@ -2053,6 +2081,7 @@ export const Employee = (props: any) => {
 
                   <label>Friday Start Shift</label>
                   <input
+                    id="employee_fristartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="fridayStartShift"
@@ -2064,6 +2093,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Friday Start Break</label>
                   <input
+                    id="employee_fristartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="fridayStartBreak"
@@ -2075,6 +2105,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Friday End Break</label>
                   <input
+                    id="employee_friendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="fridayEndBreak"
@@ -2086,6 +2117,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Friday End Shift</label>
                   <input
+                    id="employee_friendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="fridayEndShift"
@@ -2108,6 +2140,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Saturday Start Shift</label>
                   <input
+                    id="employee_satstartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="saturdayStartShift"
@@ -2119,6 +2152,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Saturday Start Break</label>
                   <input
+                    id="employee_satstartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="saturdayStartBreak"
@@ -2130,6 +2164,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Saturday End Break</label>
                   <input
+                    id="employee_satendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="saturdayEndBreak"
@@ -2141,6 +2176,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Saturday End Shift</label>
                   <input
+                    id="employee_satendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="saturdayEndShift"
@@ -2162,6 +2198,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Sunday Start Shift</label>
                   <input
+                    id="employee_sunstartshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="sundayStartShift"
@@ -2173,6 +2210,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Sunday Start Break</label>
                   <input
+                    id="employee_sunstartbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="saturdayStartBreak"
@@ -2184,6 +2222,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Sunday End Break</label>
                   <input
+                    id="employee_sunendbreak_schedinfoinput"
                     step={1}
                     type="time"
                     name="saturdayEndBreak"
@@ -2195,6 +2234,7 @@ export const Employee = (props: any) => {
                 <div className="form-group col-sm-3 mb-3">
                   <label>Sunday End Shift</label>
                   <input
+                    id="employee_sunendshift_schedinfoinput"
                     step={1}
                     type="time"
                     name="sundayEndShift"
@@ -2213,6 +2253,7 @@ export const Employee = (props: any) => {
                 {userId ?
 
                   <button
+                    id="employee_save_schedinfobtn"
                     type="submit"
                     className="btn btn-primary mx-2"
                     onClick={() => handleFormSubmit(values, userId)}
@@ -2221,6 +2262,7 @@ export const Employee = (props: any) => {
                   </button>
                   : null}
                 <button
+                  id="employee_back_schedinfobtn"
                   type="button"
                   onClick={() => {
                     setTabIndex(4)
@@ -2229,6 +2271,7 @@ export const Employee = (props: any) => {
                   Back
                 </button>
                 <button
+                  id="employee_next_schedinfobtn"
                   type="submit"
                   className="btn btn-primary">
                   Next
@@ -2338,7 +2381,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.clothingAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
+                  <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2351,7 +2394,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.communicationAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
+                  <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2364,7 +2407,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.discretionaryAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
+                  <p id="employee_errordiscretionaryallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2377,7 +2420,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.mealAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
+                  <p id="employee_errormealallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2390,7 +2433,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.medicalAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
+                  <p id="employee_errormedicalallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2403,7 +2446,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.productivityAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.productivityAllowance}</p>
+                  <p id="employee_errorproductivityallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.productivityAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2416,7 +2459,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.conveyanceAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
+                  <p id="employee_errorconveyanceallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2429,7 +2472,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.otherAllowance && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
+                  <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
                 )}
               </div>
               <div className="form-group col-md-6 mb-3 " >
@@ -2442,7 +2485,7 @@ export const Employee = (props: any) => {
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
                 {errors && errors.rdo && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
+                  <p id="employee_errorrdo_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
                 )}
               </div>
             </div>
@@ -2450,6 +2493,7 @@ export const Employee = (props: any) => {
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 <button
+                  id="employee_back_payrollinfobtn"
                   type="button"
                   onClick={() => {
                     setTabIndex(5)
@@ -2458,6 +2502,7 @@ export const Employee = (props: any) => {
                   Back
                 </button>
                 <button
+                  id="employee_save_payrollinfobtn"
                   type="submit"
                   className="btn btn-primary">
                   Save
@@ -2484,23 +2529,25 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee</label>
                   <EmployeeDropdown
-                    placeholder={"Employee"}
-                    singleChangeOption={singleChangeOption}
-                    name="userId"
-                    value={filterData && filterData['userId']}
-                    withEmployeeID={true}
-                  />
+                      id="employee_employee_maindropdown"
+                      placeholder={"Employee"}
+                      singleChangeOption={singleChangeOption}
+                      name="userId"
+                      value={filterData && filterData['userId']}
+                      withEmployeeID={true}
+                    />
                 </div>
               </div>
               <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Squad Name</label>
                   <select
-                    className="form-select"
-                    name="squadId"
-                    value={filterData && filterData['squadId']}
-                    onChange={(e) => {
-                      makeFilterData(e)
+                      id="employee_squad_maindropdown"
+                      className="form-select"
+                      name="squadId"
+                      value={filterData && filterData['squadId']}
+                      onChange={(e) => {
+                        makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
 
                     }}
@@ -2522,11 +2569,12 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Gender</label>
                   <select
-                    className="form-select"
-                    name="gender"
-                    value={filterData && filterData['gender']}
-                    onChange={(e) => {
-                      makeFilterData(e)
+                      id="employee_gender_maindropdown"
+                      className="form-select"
+                      name="gender"
+                      value={filterData && filterData['gender']}
+                      onChange={(e) => {
+                        makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
 
                     }}
@@ -2563,11 +2611,12 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee Status</label>
                   <select
-                    className="form-select"
-                    name="employmentStatus"
-                    value={filterData && filterData['employmentStatus']}
-                    onChange={(e) => {
-                      makeFilterData(e)
+                      id="employee_employeestatus_maindropdown"
+                      className="form-select"
+                      name="employmentStatus"
+                      value={filterData && filterData['employmentStatus']}
+                      onChange={(e) => {
+                        makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
 
                     }}
@@ -2596,6 +2645,7 @@ export const Employee = (props: any) => {
               <div className="input-container">
                 <div className="mt-[22px]">
                   <Button
+                    id="employee_search_mainbtn"
                     style={{ width: 160 }}
                     onClick={() => getAllEmployee(0, "")}
                     className="btn btn-primary mx-2">
@@ -2627,14 +2677,15 @@ export const Employee = (props: any) => {
 
                     return (
                       <tr>
-                        <td> {item.employeeId} </td>
-                        <td> {Utility.removeUnderscore(item.empType)} </td>
-                        <td> {item.empStatus} </td>
-                        <td> {item.fullname} </td>
-                        <td> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
-                        <td> {item.acctStatus} </td>
-                        <td>
+                        <td id="employee_employeeid_maindata"> {item.employeeId} </td>
+                        <td id="employee_employeetype_maindata"> {Utility.removeUnderscore(item.empType)} </td>
+                        <td id="employee_employeestatus_maindata"> {item.empStatus} </td>
+                        <td id="employee_employeefullname_maindata"> {item.fullname} </td>
+                        <td id="employee_employeehiredate_maindata"> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
+                        <td id="employee_employeeacctstatus_maindata"> {item.acctStatus} </td>
+                        <td id="employee_labels_maindata">
                           <label
+                            id="employee_update_mainbtn"
                             onClick={() => {
                               getEmployee(item.id)
                             }}
@@ -2652,6 +2703,7 @@ export const Employee = (props: any) => {
                           }
                           <br />
                           <label
+                            id="employee_view_mainbtn"
                             onClick={() => {
                               getEmployeeDetails(item.id)
                             }}
@@ -2660,6 +2712,7 @@ export const Employee = (props: any) => {
                           </label>
                           <br />
                           <label
+                            id="employee_changepassword_mainbtn"
                             onClick={() => {
                               changePassword(item.id)
                             }}
@@ -2709,16 +2762,19 @@ export const Employee = (props: any) => {
         <div className="d-flex justify-content-end mt-3" >
           <div>
             <Button className="mx-2"
+              id="employee_import_mainbtn"
               onClick={() => {
                 setModalUploadShow(true)
               }}
             >Import</Button>
             <Button
+              id="employee_addnew_mainbtn"
               className="mx-2"
               onClick={() => {
                 setModalShow(true)
               }}>Add New</Button>
             <Button
+              id="employee_downloadexceltemplate_mainbtn"
               className="mx-2"
               onClick={downloadTemplate}
             >Download Excel Template</Button>
@@ -2899,16 +2955,17 @@ export const Employee = (props: any) => {
                         onChange={e => setFieldValue('password', e.target.value)}
                       />
                       <Button
+                        id="employee_password_changepwordbtn"
                         variant="link"
                         onClick={() => setShowPassword(!showPassword)}
                         className="passwordicon"
                         style={{ paddingTop: 10, paddingBottom: 0, marginBottom: 0 }}
                         disabled={!values.password}>
                         <span className="showpass">
-                          <img src={show_password_dark} alt="Show" />
+                          <img id="employee_showpassworddark_changepwordimg" src={show_password_dark} alt="Show" />
                         </span>
                         <span className="hidepass">
-                          <img src={hide_password_dark} alt="Hide" />
+                          <img id="employee_hidepassworddark_changepwordimg" src={hide_password_dark} alt="Hide" />
                         </span>
                       </Button>
                       {errors && errors.password && <p style={{
@@ -2930,16 +2987,17 @@ export const Employee = (props: any) => {
                         onChange={e => setFieldValue('confirmPassword', e.target.value)}
                       />
                       <Button
+                        id="employee_confirmpassword_changepwordbtn"
                         variant="link"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         className="passwordicon"
                         style={{ paddingTop: 10 }}
                         disabled={!values.confirmPassword}>
                         <span className="showpass">
-                          <img src={show_password_dark} alt="Show" />
+                          <img id="employee_confirmshowpassworddark_changepwordbtn" src={show_password_dark} alt="Show" />
                         </span>
                         <span className="hidepass">
-                          <img src={hide_password_dark} alt="Hide" />
+                          <img id="employee_confirmhidepassworddark_changepwordbtn" src={hide_password_dark} alt="Hide" /> 
                         </span>
                       </Button>
                       {errors && errors.confirmPassword && <p style={{
@@ -2949,7 +3007,7 @@ export const Employee = (props: any) => {
                     </div>
                     <br />
                     <div className="d-flex justify-content-center">
-                      <Button type="submit" className=" btn btn-primary" style={{ width: 200 }}>
+                      <Button id="employee_submit_changepwordbtn" type="submit" className=" btn btn-primary" style={{ width: 200 }}>
                         Submit
                       </Button>
                     </div>

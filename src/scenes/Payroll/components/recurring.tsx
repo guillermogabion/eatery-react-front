@@ -180,6 +180,7 @@ export default function Recurring(props: any) {
                             <div className="mx-1" style={{ width: 200, marginRight: 10 }}>
                                 <label>Employee Name</label>
                                 <EmployeeDropdown
+                                    id="payrollrecurring_employeename_dropdown"
                                     name="userId"
                                     placeholder={"Employee"}
                                     value={filterData && filterData['userId']}
@@ -189,6 +190,7 @@ export default function Recurring(props: any) {
                             <div className="mx-1">
                                 <label>Amount</label>
                                 <input
+                                    id="payrollrecurring_amount_input"
                                     name="adjustmentAmount"
                                     placeholder="Amount"
                                     type="text"
@@ -241,14 +243,15 @@ export default function Recurring(props: any) {
 
                                     return (
                                         <tr>
-                                            <td> {item.employeeId} </td>
-                                            <td> {item.employeeName} </td>
-                                            <td> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
-                                            <td> {item.recurringName} </td>
-                                            <td>{Utility.removeUnderscore(item.typeAction)}</td>
-                                            <td>{item.typeIsDeduction ? "YES" : "NO" }</td>
+                                            <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
+                                            <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
+                                            <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
+                                            <td id="payrollrecurring_recurringname_recurringlistdata"> {item.recurringName} </td>
+                                            <td id="payrollrecurring_typeaction_recurringlistdata">{Utility.removeUnderscore(item.typeAction)}</td>
+                                            <td id="payrollrecurring_typeisdeduction_recurringlistdata">{item.typeIsDeduction ? "YES" : "NO" }</td>
                                             <td>
                                                 <label
+                                                    id="payrollrecurring_update_recurringlistlabel"
                                                     onClick={() => {
                                                         setInitialValues(item)
                                                         setModalShow(true)
@@ -360,6 +363,7 @@ export default function Recurring(props: any) {
                                         <div className="w-full mb-3">
                                             <label>Employee ID</label>
                                             <input
+                                                id="payrollrecurring_employeeid_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -372,6 +376,7 @@ export default function Recurring(props: any) {
                                         <div className="w-full mb-3">
                                             <label>Employee Name</label>
                                             <input
+                                                id="payrollrecurring_employeename_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -381,6 +386,7 @@ export default function Recurring(props: any) {
                                         <div className="w-full mb-3">
                                             <label>Recurring Name</label>
                                             <input
+                                                id="payrollrecurring_recurringname_forminput"
                                                 disabled
                                                 className="formControl"
                                                 name="userId"
@@ -390,6 +396,7 @@ export default function Recurring(props: any) {
                                         <div className="w-full mb-3">
                                             <label>Recurring Type</label>
                                             <input
+                                                id="payrollrecurring_recurringtype_forminput"
                                                 disabled
                                                 className="formControl"
                                                 value={Utility.removeUnderscore(values.typeAction)}
@@ -398,6 +405,7 @@ export default function Recurring(props: any) {
                                         <div className="w-fll mb-3">
                                             <label>Amount</label>
                                             <input
+                                                id="payrollrecurring_amount_forminput"
                                                 className="form-control"
                                                 name="adjustmentAmount"
                                                 type="number"
@@ -410,6 +418,7 @@ export default function Recurring(props: any) {
                                     </div>
                                     <Modal.Footer className="w-full mt-[35px] flex justify-center">
                                         <button
+                                            id="payrollrecurring_save_formbtn"
                                             type="submit"
                                             className="btn btn-primary px-5"
                                             disabled={values.adjustmentAmount == ""}>

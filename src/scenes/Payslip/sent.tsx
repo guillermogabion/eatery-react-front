@@ -207,7 +207,7 @@ const sent = (props : any ) => {
                                         <option value="12">December</option>
                                     </select>
                                     {showButtonMonth && (
-                                        <span className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
+                                        <span id="payslipsent_closemonth_span" className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
                                         X
                                         </span>
                                     )}
@@ -238,7 +238,7 @@ const sent = (props : any ) => {
                                         }
                                     </select>
                                     {showButtonYear && (
-                                        <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
+                                        <span id="payslipsent_closeyear_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
                                         X
                                         </span>
                                     )}
@@ -260,12 +260,13 @@ const sent = (props : any ) => {
                                         <option value="incomplete">Incomplete</option>
                                     </select>
                                     {showButtonStatus && (
-                                        <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
+                                        <span id="payslipsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
                                         X
                                         </span>
                                     )}
                                 </div>
                                 <Button
+                                id="payslipsent_search_btn"
                                 style={{ width: 100 }}
                                 onClick={() => getAllPayroll(0)}
                                 className="btn btn-primary mx-2 mt-4">
@@ -298,10 +299,11 @@ const sent = (props : any ) => {
                                 <tr>
                                 
                                 {/* <td> {item.isGenerated} </td> */}
-                                <td> {getMonthName(item.periodMonth)} {item.periodYear} </td>
-                                <td> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
+                                <td id="payslipsent_monthyear_payrolllistdata"> {getMonthName(item.periodMonth)} {item.periodYear} </td>
+                                <td id="payslipsent_isgenerated_payrolllistdata"> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
                                 <td>
                                 <label
+                                id="payslipsent_viewlogs_payrolllistbtn"
                                 onClick={() => {
                                     // getAdjustment(item.id)
                                 }}

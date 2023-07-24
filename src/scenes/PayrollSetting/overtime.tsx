@@ -138,13 +138,14 @@ const Overtime = (props) => {
             overtime.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.firstEight}</td>
-                  <td>{item.ot}</td>
-                  <td>{item.nd}</td>
-                  <td>{item.ndot}</td>
+                  <td id="payrollsettingot_name_data">{item.name}</td>
+                  <td id="payrollsettingot_firsteight_data">{item.firstEight}</td>
+                  <td id="payrollsettingot_ot_data">{item.ot}</td>
+                  <td id="payrollsettingot_nd_data">{item.nd}</td>
+                  <td id="payrollsettingot_ndot_data">{item.ndot}</td>
                   <td>
                     <label
+                      id="payrollsettingot_update_label"
                       onClick={() => {
                         setModalShow(true);
                         setSelectedOvertime(item);
@@ -207,6 +208,7 @@ const Overtime = (props) => {
                       <div className="form-group col-md-6 mb-3">
                         <label>Name</label>
                         <input
+                          id="payrollsettingot_name_modalinput"
                           readOnly
                           type="text"
                           name="name"
@@ -216,11 +218,12 @@ const Overtime = (props) => {
                             setFieldValue('name', e.target.value);
                           }}
                         />
-                        {touched.name && errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                        {touched.name && errors.name && <div id="payrollsettingot_errorname_modalp" className="invalid-feedback">{errors.name}</div>}
                       </div>
                       <div className="form-group col-md-6 mb-3">
                         <label>First 8 Hours</label>
                         <input
+                          id="payrollsettingot_firsteight_modalinput"
                           type="number"
                           name="firstEight"
                           className={`form-control ${touched.firstEight && errors.firstEight ? 'is-invalid' : ''}`}
@@ -229,11 +232,12 @@ const Overtime = (props) => {
                             setFieldValue('firstEight', e.target.value);
                           }}
                         />
-                        {touched.firstEight && errors.firstEight && <div className="invalid-feedback">{errors.firstEight}</div>}
+                        {touched.firstEight && errors.firstEight && <div id="payrollsettingot_errorfirsteight_modalp" className="invalid-feedback">{errors.firstEight}</div>}
                       </div>
                       <div className="form-group col-md-4 mb-3">
                         <label>OT</label>
                         <input
+                        id="payrollsettingot_ot_modalinput"
                         type="number"
                         name="ot"
                         className={`form-control ${touched.ot && errors.ot ? 'is-invalid' : ''}`}
@@ -247,12 +251,13 @@ const Overtime = (props) => {
                             }
                         }}
                         />
-                        {touched.ot && errors.ot && <div className="invalid-feedback">{errors.ot}</div>}
+                        {touched.ot && errors.ot && <div id="payrollsettingot_errorot_modalp" className="invalid-feedback">{errors.ot}</div>}
                       </div>
                      
                       <div className="form-group col-md-4 mb-3">
                         <label>ND</label>
                         <input
+                        id="payrollsettingot_nd_modalinput"
                         type="number"
                         name="nd"
                         className={`form-control ${touched.nd && errors.nd ? 'is-invalid' : ''}`}
@@ -266,7 +271,7 @@ const Overtime = (props) => {
                             }
                         }}
                         />
-                        {touched.nd && errors.nd && <div className="invalid-feedback">{errors.nd}</div>}
+                        {touched.nd && errors.nd && <div id="payrollsettingot_errornd_modalp" className="invalid-feedback">{errors.nd}</div>}
                       </div>
                       <div className="form-group col-md-4 mb-3">
                         <label>NDOT</label>
@@ -290,6 +295,7 @@ const Overtime = (props) => {
                    
                     <div className="d-flex justify-content-end px-5">
                       <button
+                        id="payrollsettingot_save_modalbtn"
                         type="submit"
                         className="btn btn-primary mx-2"
                         disabled={!isValid}

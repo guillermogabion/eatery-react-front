@@ -141,11 +141,11 @@ const tax = (props: any) => {
                                                 taxMonth.map((item: any, index: any) => {
                                                     return (
                                                         <tr>
-                                                <td> { item.basicRangeLower }</td>
-                                                <td> { item.basicRangeUpper }</td>
-                                                <td> { item.fixedTax }</td>
-                                                <td> { item.prescribedWitholdingTax }</td>    
-                                                <td> { item.nonTaxableCompensation }</td>    
+                                                <td id="payrollsettingstax_basicrangelower_data"> { item.basicRangeLower }</td>
+                                                <td id="payrollsettingstax_basicrangeupper_data"> { item.basicRangeUpper }</td>
+                                                <td id="payrollsettingstax_fixedtax_data"> { item.fixedTax }</td>
+                                                <td id="payrollsettingstax_prescribedwitholdingtax_data"> { item.prescribedWitholdingTax }</td>    
+                                                <td id="payrollsettingstax_nontaxablecompensation_data"> { item.nonTaxableCompensation }</td>    
                                                 </tr>
                                                 )
                                             })
@@ -157,11 +157,13 @@ const tax = (props: any) => {
                             <div className="d-flex justify-content-end mt-6 pt-6" >
                                 <div>
                                     <Button
+                                        id="payrollsettingstax_downloadtemplatemonthly_btn"
                                         className="mx-2"
                                         onClick={downloadMonthlyTemplate}>Download Template ( Monthly )</Button>
                                 </div>
                                 <div>
                                     <Button
+                                        id="payrollsettingstax_uploadtableformonthlytax_btn"
                                         className="mx-2"
                                         onClick={() => {
                                             setModalMonthlyUploadShow(true)
@@ -195,11 +197,11 @@ const tax = (props: any) => {
                                             taxYear.map((item: any, index: any) => {
                                                 return (
                                                     <tr>
-                                                        <td> { item.basicRangeLower }</td>
-                                                        <td> { item.basicRangeUpper }</td>
-                                                        <td> { item.taxRate }</td>
-                                                        <td> { item.fixedTax }</td>
-                                                        <td> { item.excessAmount }</td>    
+                                                        <td id="payrollsettingstax_basicrangelower_taxyeardata"> { item.basicRangeLower }</td>
+                                                        <td id="payrollsettingstax_basicrangeupper_taxyeardata"> { item.basicRangeUpper }</td>
+                                                        <td id="payrollsettingstax_taxrate_taxyeardata"> { item.taxRate }</td>
+                                                        <td id="payrollsettingstax_fixedtax_taxyeardata"> { item.fixedTax }</td>
+                                                        <td id="payrollsettingstax_excessamount_taxyeardata"> { item.excessAmount }</td>    
                                                     </tr>
                                                 )
                                             })
@@ -211,11 +213,13 @@ const tax = (props: any) => {
                                 <div className="d-flex justify-content-end mt-6 pt-6" >
                                     <div>
                                         <Button
+                                            id="payrollsettingstax_downloadtemplateyearly_btn"
                                             className="mx-2"
                                             onClick={downloadYearlyTemplate}>Download Template ( Yearly )</Button>
                                     </div>
                                     <div>
                                         <Button
+                                            id="payrollsettingstax_uploadtableforannualtax_btn"
                                             className="mx-2"
                                             onClick={() => {
                                                 setModalYearlyUploadShow(true)
