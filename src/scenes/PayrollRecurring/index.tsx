@@ -199,7 +199,8 @@ export const Recurring = (props: any) => {
                         body.data.forEach((d: any, i: any) => {
                             tempArray.push({
                                 userId: d.userAccountId,
-                                label: d.firstname + " " + d.lastname
+                                label: d.firstname + " " + d.lastname,
+                                // empId: d.employeeId
                             })
                         });
                         setEmployee(tempArray)
@@ -355,13 +356,7 @@ export const Recurring = (props: any) => {
       
       const executeSubmit = ( values , actions) => {
 
-        const loadingSwal = Swal.fire({
-            title: '',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        
 
         const recurringTransactions = recurring.map((item) => ({
             userId: item.userId,
@@ -407,6 +402,13 @@ export const Recurring = (props: any) => {
                 'warning'
             )
            }else{
+                const loadingSwal = Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
            
                 RequestAPI.postRequest(Api.createRecurringTransaction, "", payload, {}, async (res:any) => {
                     Swal.close();
@@ -708,9 +710,9 @@ export const Recurring = (props: any) => {
                         <div className="input-container col-md-2 pt-4">
                             <Button
                             id="payrollrecurring_search_btn"
-                            style={{ width: 210 }}
+                            style={{ width: 100 }}
                             onClick={() => getAllRecurringList(0)}
-                            className="btn btn-primary mx-2">
+                            className="btn btn-primary">
                             Search
                             </Button>
                         </div>
@@ -882,9 +884,9 @@ export const Recurring = (props: any) => {
                                             readOnly
                                             className="formControl"
                                             name="userId"
-                                            value={values.userId ? values.userId : ''}
+                                            value={values.employeeId ? values.employeeId : ''}
                                             onChange={(e) => {
-                                                setFieldValue('userId', e.target.value);
+                                                setFieldValue('employeeId', e.target.value);
                                             }}
                                             />
                                     </div>
@@ -903,7 +905,7 @@ export const Recurring = (props: any) => {
                                         );
                                         const employeeIdField = document.getElementsByName('userId')[0];
                                         if (selectedEmployee) {
-                                            employeeIdField.value = selectedEmployee.userId;
+                                            employeeIdField.value = selectedEmployee.employeeId;
                                         } else {
                                             employeeIdField.value = '';
                                         }
@@ -1035,12 +1037,12 @@ export const Recurring = (props: any) => {
                                                 <input
                                                 id="payrollrecurring_employeeid_recurringinput"
                                                 readOnly
-                                                className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
+                                                className={`form-control ${touched.employeeId && errors.employeeId ? 'is-invalid' : ''}`}
                                                 name="userId"
                                                 value={values.userId ? values.userId : ''}
                                                 onChange={(e) => {
                                                     const updatedFields = [...recurring];
-                                                    updatedFields[index].userId = e.target.value;
+                                                    updatedFields[index].employeeId = e.target.value;
                                                     setRecurring(updatedFields);
                                                     setFormField(e, setFieldValue)
                                                 }}

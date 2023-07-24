@@ -401,13 +401,7 @@ export const PayrollAdjustment = (props: any) => {
     };
 
     const executeSubmit = ( values, actions ) => {
-        const loadingSwal = Swal.fire({
-                title: '',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
+        
 
             const adjustmentTransactions = adjustment.map((item) => ({
                 userId: item.userId,
@@ -451,6 +445,13 @@ export const PayrollAdjustment = (props: any) => {
                         'warning'
                     )
                 }else {
+                    const loadingSwal = Swal.fire({
+                        title: '',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
                     console.log(payload)
                     RequestAPI.postRequest(Api.payrollAdjustmentCreate, "", payload, {}, async (res:any) => {
                         Swal.close();
@@ -785,7 +786,7 @@ export const PayrollAdjustment = (props: any) => {
                         <div className="input-container col-md-2 pt-4">
                             <Button
                             id="payrolladjustment_search_button"
-                            style={{ width: 210 }}
+                            style={{ width: 100 }}
                             onClick={() => getAllAdjustmentList(0)}
                             className="btn btn-primary mx-2">
                             Search

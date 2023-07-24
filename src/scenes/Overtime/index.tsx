@@ -764,7 +764,7 @@ export const Overtime = (props: any) => {
                         {otClassification &&
                           otClassification.length &&
                           otClassification.map((item: any, index: string) => (
-                            <option key={`${index}_${item.item}`} value={item.item}>
+                            <option key={`${index}_${item}`} value={item}>
                               {Utility.removeUnderscore(item)}
                             </option>
                           ))}
@@ -955,7 +955,7 @@ export const Overtime = (props: any) => {
                         {otClassification &&
                           otClassification.length &&
                           otClassification.map((item: any, index: string) => (
-                            <option key={`${index}_${item.item}`} value={item.item}>
+                            <option key={`${index}_${item.item}`} value={item}>
                               {Utility.removeUnderscore(item)}
                             </option>
                           ))}

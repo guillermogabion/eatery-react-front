@@ -343,7 +343,7 @@ export const LeaveTypes = (props: any) => {
                             const valuesObj: any = { ...values }
                             if (leaveTypeId) {
                                 valuesObj.id = leaveTypeId
-                                RequestAPI.putRequest(Api.updateCredits, "", valuesObj, {}, async (res: any) => {
+                                RequestAPI.putRequest(Api.updateLeaveType, "", valuesObj, {}, async (res: any) => {
                                     const { status, body = { data: {}, error: {} } }: any = res
                                     if (status === 200 || status === 201) {
                                         if (body.error && body.error.message) {

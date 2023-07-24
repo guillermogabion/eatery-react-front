@@ -32,7 +32,8 @@ import {
   Payslip,
   ApproverLogin,
   Access,
-  Page404
+  Page404,
+  Reimbursement
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -93,6 +94,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/request/type", component: LeaveTypes },
     { path: "/payroll", component: Payroll },
     { path: "/payroll/last-pay", component: LastPay },
+    { path: "/payroll/reimbursement", component: Reimbursement },
     { path: "/payroll/adjustment", component: PayrollAdjustment },
     { path: "/payroll/recurring", component: Recurring },
     { path: "/payroll/settings", component: PayrollSetting },

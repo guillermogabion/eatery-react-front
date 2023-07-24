@@ -28,6 +28,8 @@ export const LastPay = (props: any) => {
     const [modalShow, setModalShow] = React.useState(false);
     const [detailsMenu, setDetalsMenu] = React.useState('Salary Details');
     const [lastPayInfo, setLastPayInfo] = React.useState({});
+    const [isDownloadBankTrans, setIsDownloadBankTrans] = useState<any>(false)
+    const [userId, setUserId] = useState<any>("")
 
     const tableHeaders = [
         'Employee ID',
@@ -66,6 +68,7 @@ export const LastPay = (props: any) => {
     }
 
     const getLastPayInfo = (id: any) => {
+        setUserId(id)
         RequestAPI.getRequest(
             `${Api.lastPayInfo}?id=${id}`,
             "",
@@ -136,6 +139,20 @@ export const LastPay = (props: any) => {
                 })
             }
         })
+    }
+
+    const downloadBankTransmittal = () => {
+        setIsDownloadBankTrans(true)
+        RequestAPI.getFileAsync(
+            `${Api.lastPayBankUpload}?id=${userId}`,
+            "",
+            "BankUpload.txt",
+            async (res: any) => {
+                if (res) {
+                    setIsDownloadBankTrans(false)
+                }
+            }
+        )
     }
 
     return (
@@ -285,7 +302,7 @@ export const LastPay = (props: any) => {
                                 }
                             </Col>
                             <Col md={9} className="p-1">
-                                {detailsMenu == 'Salary Details' ?
+                                {detailsMenu == 'Salary Details' && lastPayInfo && lastPayInfo.salaryDetails ?
                                     <Table bordered className="bg-light " >
                                         <tbody className="bg-light">
                                             <tr className="bg-white">
@@ -309,12 +326,12 @@ export const LastPay = (props: any) => {
                                     : null}
 
                                 {
-                                    detailsMenu == 'Employee Details' ?
+                                    detailsMenu == 'Employee Details' && lastPayInfo && lastPayInfo.employeeDetails ?
                                         <Table bordered className="bg-light" >
                                             <tbody className="bg-light">
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Employee Name</td>
-                                                    <td id="lastpay_employeename_eddata"  className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.employeeName}</td>
+                                                    <td id="lastpay_employeename_eddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.employeeDetails.employeeName}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Date Covered</td>
@@ -347,7 +364,7 @@ export const LastPay = (props: any) => {
                                 }
 
                                 {
-                                    detailsMenu == 'Earnings & Deductions' ?
+                                    detailsMenu == 'Earnings & Deductions' && lastPayInfo && lastPayInfo.earningAndDeductions ?
                                         <Table bordered className="bg-light " >
                                             <tbody className="bg-light">
                                                 <tr className="bg-white">
@@ -421,7 +438,7 @@ export const LastPay = (props: any) => {
                                 }
 
                                 {
-                                    detailsMenu == 'Tax Computation' ?
+                                    detailsMenu == 'Tax Computation' && lastPayInfo && lastPayInfo.taxComputations ?
                                         <Table bordered className="bg-light " >
                                             <tbody className="bg-light">
                                                 <tr className="bg-white">
@@ -466,7 +483,7 @@ export const LastPay = (props: any) => {
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Tax Rates</td>
-                                                    <td id="lastpay_taxrates_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.taxComputations.taxRates+'%'}</td>
+                                                    <td id="lastpay_taxrates_tcdata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{lastPayInfo.taxComputations.taxRates + '%'}</td>
                                                 </tr>
                                                 <tr className="bg-white">
                                                     <td className="text-[#125667] font-bold text-lg px-2 py-3">Pre-Tax Due</td>
@@ -502,12 +519,18 @@ export const LastPay = (props: any) => {
                                     setModalShow(false)
                                     setLastPayInfo({})
                                 }}>Close</Button>
-                                <Button id="lastpay_downloadlastpay_mbtn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
-                                    setDetalsMenu("Salary Details")
-                                }}>Download Last Pay</Button>
+                                <Button id="lastpay_downloadlastpay_mbtn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" disabled={true}>Download Last Pay</Button>
                                 <Button id="lastpay_downloadbanktransmittal_mbtn" className="text-start pl-5 m-1 hover:bg-[#189FB5] hover:text-[#FFFFFF]  text-[#189FB5] border-[#189FB5]" onClick={() => {
-                                    setDetalsMenu("Salary Details")
-                                }}>Download Bank Transmittal</Button>
+                                    downloadBankTransmittal()
+                                }}
+
+                                    disabled={isDownloadBankTrans}>{isDownloadBankTrans ?
+                                        <div className="d-flex justify-content-center">
+                                            <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                            Downloading for Bank Transmittal
+                                        </div>
+                                        : "Download for Bank Transmittal"
+                                    }</Button>
                             </div>
                         </Modal.Footer>
                     </Modal.Body>

@@ -16,28 +16,23 @@ const ErrorSwal = withReactContent(Swal)
 
 
 const Settings = (props: any) => {
-    const [daysPerYear, setDaysPerYear] = React.useState("");
-    const [editDaysPerYear, setEditDaysPerYear] = React.useState(false);
+    const [isEdit, setIsEdit] = React.useState(false);
 
-    const [daysPerMonth, setDaysPerMonth] = React.useState("");
-    const [editDaysPerMonth, setEditDaysPerMonth] = React.useState(false);
-
-    const [daysPerWeek, setDaysPerWeek] = React.useState("");
-    const [editDaysPerWeek, setEditDaysPerWeek] = React.useState(false);
-
-    const [hourPerDay, setHourPerDay] = React.useState("");
-    const [editHourPerDay, setEditHourPerDay] = React.useState(false);
+    const [initialValues, setInitialValues] = useState<any>({
+        "workingDaysPerYear": 0,
+        "workingDaysPerMonth": 0,
+        "workingDaysPerWeek": 0,
+        "workingHoursPerDay": 0,
+        "thirteenthMonthReleased": true
+    })
 
     useEffect(() => {
-        getDaysOfYear()
-        getDaysPerMonth()
-        getDaysPerWeek()
-        getHourPerDay()
+        getWorkingCalender()
     }, [])
 
-    const getDaysOfYear = () => {
+    const getWorkingCalender = () => {
         RequestAPI.getRequest(
-            `${Api.getDaysPerYear}`,
+            `${Api.workingCalendarInfo}`,
             "",
             {},
             {},
@@ -47,297 +42,153 @@ const Settings = (props: any) => {
                 if (status === 200 && body && body.data) {
                     if (body.error && body.error.message) {
                     } else {
-                        setDaysPerYear(body.data.days)
+                        setInitialValues(body.data)
                     }
                 }
             }
         )
     }
 
-    const saveDaysOfYear = (edit: any = 0) => {
-        if (edit){
-            
-            RequestAPI.postRequest(Api.updateDaysPerYear, "", { "days": daysPerYear }, {}, async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                            'Error!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                        )
-                    } else {
-                        ErrorSwal.fire(
-                            'Success!',
-                            (body.data) || "",
-                            'success'
-                        )
-                        setEditDaysPerYear(false)
-                    }
-                } else {
-                    ErrorSwal.fire(
-                        'Error!',
-                        'Something Error.',
-                        'error'
-                    )
-                }
-            })
-        }else{
-            setEditDaysPerYear(true)
-        }
-    }
-
-    const getDaysPerMonth = () => {
-        RequestAPI.getRequest(
-            `${Api.getDaysPerMonth}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body && body.data) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        setDaysPerMonth(body.data.days)
-                    }
-                }
-            }
-        )
-    }
-
-    const saveDaysOfMonth = (edit: any = 0) => {
-        if (edit){
-            
-            RequestAPI.postRequest(Api.updateDaysPerMonth, "", { "days": daysPerMonth }, {}, async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                            'Error!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                        )
-                    } else {
-                        ErrorSwal.fire(
-                            'Success!',
-                            (body.data) || "",
-                            'success'
-                        )
-                        setEditDaysPerMonth(false)
-                    }
-                } else {
-                    ErrorSwal.fire(
-                        'Error!',
-                        'Something Error.',
-                        'error'
-                    )
-                }
-            })
-        }else{
-            setEditDaysPerMonth(true)
-        }
-    }
-
-    const getDaysPerWeek = () => {
-        RequestAPI.getRequest(
-            `${Api.getDaysPerWeek}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body && body.data) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        setDaysPerWeek(body.data.days)
-                    }
-                }
-            }
-        )
-    }
-
-    const saveDaysOfWeek = (edit: any = 0) => {
-        if (edit){
-            
-            RequestAPI.postRequest(Api.updateDaysPerWeek, "", { "days": daysPerWeek }, {}, async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                            'Error!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                        )
-                    } else {
-                        ErrorSwal.fire(
-                            'Success!',
-                            (body.data) || "",
-                            'success'
-                        )
-                        setEditDaysPerWeek(false)
-                    }
-                } else {
-                    ErrorSwal.fire(
-                        'Error!',
-                        'Something Error.',
-                        'error'
-                    )
-                }
-            })
-        }else{
-            setEditDaysPerWeek(true)
-        }
-    }
-
-    const getHourPerDay = () => {
-        RequestAPI.getRequest(
-            `${Api.getHourPerDay}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body && body.data) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        setHourPerDay(body.data.hours)
-                    }
-                }
-            }
-        )
-    }
-
-    const saveHourPerDay = (edit: any = 0) => {
-        if (edit){
-            
-            RequestAPI.postRequest(Api.updateHourPerDay, "", { "hours": hourPerDay }, {}, async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                            'Error!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                        )
-                    } else {
-                        ErrorSwal.fire(
-                            'Success!',
-                            (body.data) || "",
-                            'success'
-                        )
-                        setEditHourPerDay(false)
-                    }
-                } else {
-                    ErrorSwal.fire(
-                        'Error!',
-                        'Something Error.',
-                        'error'
-                    )
-                }
-            })
-        }else{
-            setEditHourPerDay(true)
-        }
-    }
-
+    const formRef: any = useRef()
     return (
         <div>
             <div className="w-100 pt-5 mt-3">
-                <div className="fieldtext row flex items-center justify-center m-0 p-0">
-                    <div className="row m-0 p-0 col-md-6">
-                        <div className="col-md-12">
-                            <label>Days of Year</label>
-                            <div className="flex">
-                                <input
-                                    type="text"
-                                    className="formControl py-3 mr-5"
-                                    name="name"
-                                    id="type"
-                                    disabled={!editDaysPerYear}
-                                    value={daysPerYear}
-                                    onChange={(e) => setDaysPerYear(e.target.value)}
-                                />
-                                <Button
-                                    id="payrollsettingsettings_savedaysofyear_btn"
-                                    className="w-[200px] h-auto"
-                                    onClick={() => {
-                                        saveDaysOfYear(editDaysPerYear)
-                                    }}>
-                                    {editDaysPerYear ? "Save" : "Edit"}
-                                </Button>
-                            </div>
-                        </div>
-                        <div className="col-md-12">
-                            <label>Days of Month</label>
-                            <div className="flex">
-                                <input
-                                    type="text"
-                                    className="formControl py-3 mr-5"
-                                    name="name"
-                                    id="type"
-                                    disabled={!editDaysPerMonth}
-                                    value={daysPerMonth}
-                                    onChange={(e) => setDaysPerMonth(e.target.value)}
-                                />
-                                <Button
-                                    id="payrollsettingsettings_savedaysofmonth_btn"
-                                    className="w-[200px] h-auto"
-                                    onClick={() => {
-                                        saveDaysOfMonth(editDaysPerMonth)
-                                    }}>
-                                    {editDaysPerMonth ? "Save" : "Edit"}
-                                </Button>
-                            </div>
-                        </div>
-                        <div className="col-md-12">
-                            <label>Days of Week</label>
-                            <div className="flex">
-                                <input
-                                    type="text"
-                                    className="formControl py-3 mr-5"
-                                    name="name"
-                                    id="type"
-                                    disabled={!editDaysPerWeek}
-                                    value={daysPerWeek}
-                                    onChange={(e) => setDaysPerWeek(e.target.value)}
-                                />
-                                <Button
-                                    id="payrollsettingsettings_savedaysperweek_btn"
-                                    className="w-[200px] h-auto"
-                                    onClick={() => {
-                                        saveDaysOfWeek(editDaysPerWeek)
-                                    }}>
-                                    {editDaysPerWeek ? "Save" : "Edit"}
-                                </Button>
-                            </div>
-                        </div>
-                        <div className="col-md-12">
-                            <label>Hours Per Day</label>
-                            <div className="flex">
-                                <input
-                                    type="text"
-                                    className="formControl py-3 mr-5"
-                                    name="name"
-                                    id="type"
-                                    disabled={!editHourPerDay}
-                                    value={hourPerDay}
-                                    onChange={(e) => setHourPerDay(e.target.value)}
-                                />
-                                <Button
-                                    id="payrollsettingsettings_savehourperday_btn"
-                                    className="w-[200px] h-auto"
-                                    onClick={() => {
-                                        saveHourPerDay(editHourPerDay)
-                                    }}>
-                                    {editHourPerDay ? "Save" : "Edit"}
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Formik
+                    innerRef={formRef}
+                    initialValues={initialValues}
+                    enableReinitialize={true}
+                    validationSchema={
+                        Yup.object().shape({
+                            workingDaysPerYear: Yup.string().required("Working days per year is required !"),
+                            workingDaysPerMonth: Yup.string().required("Working days per month is required !"),
+                            workingDaysPerWeek: Yup.string().required("Working days per week is required !"),
+                            workingHoursPerDay: Yup.string().required("Working hours per day is required !"),
+                            thirteenthMonthReleased: Yup.string().required("Thirteen month release is required !"),
+                        })
+                    }
+                    onSubmit={(values, actions) => {
+                        if (isEdit) {
+                            RequestAPI.postRequest(Api.updateWorkingCalendar, "", values, {}, async (res: any) => {
+                                const { status, body = { data: {}, error: {} } }: any = res
+                                if (status === 200 || status === 201) {
+                                    if (body.error && body.error.message) {
+                                        ErrorSwal.fire(
+                                            'Error!',
+                                            (body.error && body.error.message) || "",
+                                            'error'
+                                        )
+                                    } else {
+                                        ErrorSwal.fire(
+                                            'Success!',
+                                            (body.data) || "",
+                                            'success'
+                                        )
+                                    }
+                                } else {
+                                    ErrorSwal.fire(
+                                        'Error!',
+                                        'Something Error.',
+                                        'error'
+                                    )
+                                }
+                            })
+                        }
+
+                        setIsEdit(!isEdit)
+                    }}>
+                    {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+                        return (
+                            <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
+                                <div className="fieldtext w-full row flex items-center justify-center m-0 p-0">
+                                    <div className="row m-0 p-0 col-md-4">
+                                        <div className="col-md-12">
+                                            <label>Days of Year</label>
+                                            <div className="flex">
+                                                <input
+                                                    type="text"
+                                                    className="formControl py-3 mr-5"
+                                                    name="workingDaysPerYear"
+                                                    id="workingDaysPerYear"
+                                                    disabled={!isEdit}
+                                                    value={values.workingDaysPerYear}
+                                                    onChange={(e) => setFieldValue('workingDaysPerYear', e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <label>Days of Month</label>
+                                            <div className="flex">
+                                                <input
+                                                    type="text"
+                                                    className="formControl py-3 mr-5"
+                                                    name="workingDaysPerMonth"
+                                                    id="workingDaysPerMonth"
+                                                    disabled={!isEdit}
+                                                    value={values.workingDaysPerMonth}
+                                                    onChange={(e) => setFieldValue('workingDaysPerMonth', e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <label>Days of Week</label>
+                                            <div className="flex">
+                                                <input
+                                                    type="text"
+                                                    className="formControl py-3 mr-5"
+                                                    name="workingDaysPerWeek"
+                                                    id="workingDaysPerWeek"
+                                                    disabled={!isEdit}
+                                                    value={values.workingDaysPerWeek}
+                                                    onChange={(e) => setFieldValue('workingDaysPerWeek', e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <label>Hours Per Day</label>
+                                            <div className="flex">
+                                                <input
+                                                    type="text"
+                                                    className="formControl py-3 mr-5"
+                                                    name="workingHoursPerDay"
+                                                    id="workingHoursPerDay"
+                                                    disabled={!isEdit}
+                                                    value={values.workingHoursPerDay}
+                                                    onChange={(e) => setFieldValue('workingHoursPerDay', e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12 mt-3">
+                                            <div className="flex items-center">
+                                                <Form.Check // prettier-ignore
+                                                    type="switch"
+                                                    id="custom-switch"
+                                                    disabled={!isEdit}
+                                                    checked={values.thirteenthMonthReleased}
+                                                    onChange={(e) => {
+                                                        setFieldValue('thirteenthMonthReleased', e.target.checked)
+                                                    }}
+                                                    style={{ fontSize: 18 }}
+                                                />
+
+                                                <label className="mb-1" style={{ fontSize: 15 }} htmlFor="custom-switch">13th Month Release</label>
+                                            </div>
+                                        </div>
+                                        <div className="d-flex justify-content-center w-100 m-0 p-0 mt-4">
+                                            <Button
+                                                type="submit"
+                                                className="btn btn-primary w-[150px]">
+                                                {!isEdit ? "Edit" : "Submit"}
+                                            </Button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </Form>
+                        )
+                    }}
+                </Formik>
+
+
             </div>
         </div>
     );

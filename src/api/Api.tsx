@@ -252,22 +252,29 @@ const Api: any = {
   failedEmail : process.env.REACT_APP_API_URL + "payroll/failedemail",
   resendEmail : process.env.REACT_APP_API_URL + "payroll/resendpayslip",
 
+  // export payslip 
+  exportPayslip : process.env.REACT_APP_API_URL + "payroll/payslip/export",
+
+
+
+
   // Last Pay
   lastPayList: process.env.REACT_APP_API_URL + "lastpay/employee/list",
   generateLastPay: process.env.REACT_APP_API_URL + "lastpay/generate",
   lastPayInfo: process.env.REACT_APP_API_URL + "lastpay/info",
+  lastPayBankUpload: process.env.REACT_APP_API_URL + "lastpay/bankupload",
 
-  getDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/info",
-  updateDaysPerYear : process.env.REACT_APP_API_URL + "payroll/daysperyear/update",
+  workingCalendarInfo : process.env.REACT_APP_API_URL + "payroll/working-calendar/info",
+  updateWorkingCalendar : process.env.REACT_APP_API_URL + "payroll/working-calendar/update",
   
-  getDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/info",
-  updateDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/update",
+  // getDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/info",
+  // updateDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/update",
   
-  getDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/info",
-  updateDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/update",
+  // getDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/info",
+  // updateDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/update",
   
-  getHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/info",
-  updateHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/update",
+  // getHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/info",
+  // updateHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/update",
 
 
   // AccessRights 
@@ -276,6 +283,11 @@ const Api: any = {
   getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
   deleteRoleAuth : process.env.REACT_APP_API_URL + "role/authority/delete",
   addRoleAuth : process.env.REACT_APP_API_URL + "role/authority/add",
+  getAvailableAuth : process.env.REACT_APP_API_URL + "role/authority/all-authority-not-in-role",
+
+
+  // Reimbursement
+  getAllReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/all",
 }
 
 export default Api
