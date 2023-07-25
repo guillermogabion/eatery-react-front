@@ -181,7 +181,7 @@ const philhealth = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                 {ph &&
                     ph.length > 0 &&
                     ph.map((item, index) => {

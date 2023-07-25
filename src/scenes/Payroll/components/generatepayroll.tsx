@@ -180,7 +180,7 @@ export default function GeneratePayroll(props: any) {
                             <th>Employee Name</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="custom-row">
                         {
                             employeeList &&
                                 employeeList.length > 0 ?

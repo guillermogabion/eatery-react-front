@@ -35,6 +35,7 @@ const Recurring = (props: any) => {
             "affectsGross" : true
     })
     const tableHeaders = [
+        'ID',
         'Recurring Name',
         'Recurring Description',
         'Type',
@@ -279,7 +280,7 @@ const Recurring = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         recurringType &&
                         recurringType.content &&
@@ -287,6 +288,7 @@ const Recurring = (props: any) => {
                         recurringType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
+                                    <td id="payrollsettingrecurring_id_recurringtypedata"> {item.id} </td>
                                     <td id="payrollsettingrecurring_name_recurringtypedata"> {item.name} </td>
                                     <td id="payrollsettingrecurring_description_recurringtypedata"> {item.description}</td>
                                     <td id="payrollsettingrecurring_type_recurringtypedata"> {Utility.removeUnderscore(item.type)}</td>
@@ -327,6 +329,9 @@ const Recurring = (props: any) => {
             :
             null
             }
+            <div className="d-flex justify-content-end ma-3">
+                <span className="font-bold mr-8 ">Total Entries : { recurringType.totalElements }</span>
+            </div>
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate

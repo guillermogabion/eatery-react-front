@@ -210,6 +210,7 @@ export default function Leaves(props: any) {
                         {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
+                                    <th>ID</th>
                                     <th>Employee ID</th>
                                     <th>Employee Name</th>
                                 </> : null
@@ -220,7 +221,7 @@ export default function Leaves(props: any) {
                         <th>Date To</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         allLeaves &&
                             allLeaves.content &&
@@ -230,6 +231,7 @@ export default function Leaves(props: any) {
                                     allLeaves.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
+                                                <td>{item.id}</td>
                                                 <td>{item.userId}</td>
                                                 {
                                                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?

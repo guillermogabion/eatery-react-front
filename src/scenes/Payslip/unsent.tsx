@@ -29,6 +29,7 @@ const unsent = (props : any ) => {
     const email = { ...emailData }
 
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Payroll Period',
@@ -363,7 +364,7 @@ const unsent = (props : any ) => {
                             }
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                         {
                             failedPayslipList &&
                             failedPayslipList.content &&
@@ -372,6 +373,7 @@ const unsent = (props : any ) => {
         
                             return (
                                 <tr>
+                                <td id="payslipunsent_id_failedpaysliplistdata">{ item.id }</td>
                                 <td id="payslipunsent_employeeid_failedpaysliplistdata">{ item.employeeId }</td>
                                 <td id="payslipunsent_employeename_failedpaysliplistdata">{ item.employeeName }</td>
                                 <td id="payslipunsent_monthyear_failedpaysliplistdata"> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
@@ -394,16 +396,19 @@ const unsent = (props : any ) => {
                         }
                         </tbody>
                         </Table>
-                        {/* {
-                            payrollList &&
-                            payrollList.length == 0 ?
+                        {
+                            failedPayslipList &&
+                            failedPayslipList.length == 0 ?
                             <div className="w-100 text-center">
                                 <label htmlFor="">No Records Found</label>
                             </div>
                             :
                             null
                         }
-         */}
+                        <div className="d-flex justify-content-end ma-3">
+                            <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
+                        </div>
+        
                 
                         <div className="d-flex justify-content-end">
                         <div className="">

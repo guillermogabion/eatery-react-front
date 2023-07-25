@@ -231,7 +231,7 @@ const sss = (props: any) => {
                     </Table>
                     <Table>
                         <div style={{ height: '400px', overflowY: 'scroll' }}>
-                            <tbody>
+                            <tbody className="custom-row">
                                 {
                                 sss &&
                                 sss.length > 0 &&
