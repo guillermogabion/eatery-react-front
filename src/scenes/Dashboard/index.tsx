@@ -195,11 +195,11 @@ export const Dashboard = (props: any) => {
               <img id="dashboard_bundyclock_img" src={bundy_clock} className="Bundy Clock" />
             </div>
             <div className="row mt-3">
-              <Button id="dashboard_timein_img" className={hasTimeIn ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
+              <Button id="dashboard_timein_btn" className={hasTimeIn ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
                 style={{ width: 120 }}
                 onClick={() => makeAttendance('time in')}
               >Time in</Button>
-              <Button id="dashboard_timeout_img" className={hasTimeOut ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
+              <Button id="dashboard_timeout_btn" className={hasTimeOut ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
                 style={{ width: 120 }}
                 onClick={() => makeAttendance('time out')}>Time out</Button>
             </div>
