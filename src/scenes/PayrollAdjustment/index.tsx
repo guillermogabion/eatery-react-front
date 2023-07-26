@@ -16,6 +16,7 @@ import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import * as Yup from "yup"
 import Upload from './upload'
+import { Utility } from "../../utils"
 const ErrorSwal = withReactContent(Swal)
 
 export const PayrollAdjustment = (props: any) => {
@@ -44,6 +45,8 @@ export const PayrollAdjustment = (props: any) => {
     const [adjustmentTypeName, setAdjustmentTypeName] = useState<any>([]);
     const [month, setMonth] = useState<any>([]);
     const [year, setYear] = useState<any>([]);
+    const [pageSize, setPageSize] = useState(10);
+
 
     const [values, setValues] = useState({
         userId: '',
@@ -170,7 +173,7 @@ export const PayrollAdjustment = (props: any) => {
         setAdjustment(updatedFields);
     }
 
-    const getAllAdjustmentList = (pageNo: any) => {
+    const getAllAdjustmentList = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -184,7 +187,7 @@ export const PayrollAdjustment = (props: any) => {
         })
         }
         RequestAPI.getRequest(
-            `${Api.getAllPayrollList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllPayrollList}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -202,7 +205,7 @@ export const PayrollAdjustment = (props: any) => {
         )
     }
     useEffect(() => {
-        getAllAdjustmentList(0)
+        getAllAdjustmentList(0, pageSize)
         RequestAPI.getRequest(
             `${Api.getAdjustmentType}`,
             "",
@@ -280,7 +283,13 @@ export const PayrollAdjustment = (props: any) => {
     }, [])
 
     const handlePageClick = (event: any) => {
-        getAllAdjustmentList(event.selected)
+        const selectedPage = event.selected;
+        getAllAdjustmentList(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllAdjustmentList(0, selectedPageSize);
     };
 
     const makeFilterData = (event: any) => {
@@ -822,7 +831,7 @@ export const PayrollAdjustment = (props: any) => {
                         <td id="payrolladjustment_id_adjustmentlistdata"> {item.id} </td>
                         <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
                         <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
-                        <td id="payrolladjustment_amount_adjustmentlistdata"> {item.amount} </td>
+                        <td id="payrolladjustment_amount_adjustmentlistdata"> {Utility.formatToCurrency(item.amount)} </td>
                         <td id="payrolladjustment_adjustmentname_adjustmentlistdata"> {item.adjustmentName} </td>
                         <td id="payrolladjustment_monthyear_adjustmentlistdata"> {getMonthName(item.payrollMonth)} {item.payrollYear} </td>
                         <td>
@@ -864,6 +873,16 @@ export const PayrollAdjustment = (props: any) => {
         </div>
         <div className="d-flex justify-content-end ma-3">
             <span className="font-bold mr-8 ">Total Entries : { adjustmentList.totalElements }</span>
+        </div>
+        <div className="d-flex justify-content-end ma-3">
+            <div className="col-md-1">
+                <label className="font-bold pr-2">Select Page Size:</label>
+                <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                    <option value={10}>10</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                </select>
+            </div>
         </div>
         <div className="d-flex justify-content-end">
             <div className="">

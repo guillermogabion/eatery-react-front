@@ -27,6 +27,7 @@ const Adjustment = (props: any) => {
     const [typeType, setTypetype] = useState("");
     const [showButtonIsDeduction, setShowButtonIsDeduction] = useState(false);
     const [showButtonTypetype, setShowButtonTypetype] = useState(false);
+    const [pageSize, setPageSize] = useState(10);
 
 
     const [initialValues, setInitialValues] = useState<any>({
@@ -52,7 +53,7 @@ const Adjustment = (props: any) => {
         deduction: Yup.string().required("Action is required"),
       });
 
-    const getAllAdjustmentType = (pageNo: any) => {
+    const getAllAdjustmentType = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -65,7 +66,7 @@ const Adjustment = (props: any) => {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getAllAdjustmentSetting}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllAdjustmentSetting}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -90,12 +91,18 @@ const Adjustment = (props: any) => {
     }
     
     const handlePageClick = (event: any) => {
-        getAllAdjustmentType(event.selected)
+        const selectedPage = event.selected
+        getAllAdjustmentType(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllAdjustmentType(0, selectedPageSize);
     };
 
 
     useEffect(() => {
-        getAllAdjustmentType(0)
+        getAllAdjustmentType(0, pageSize)
     }, [])
     const setFormField = (e: any, setFieldValue: any) => {
         const { name, value } = e.target
@@ -333,6 +340,16 @@ const Adjustment = (props: any) => {
             }
             <div className="d-flex justify-content-end ma-3">
                 <span className="font-bold mr-8 ">Total Entries : { adjustmentType.totalElements }</span>
+            </div>
+            <div className="d-flex justify-content-end ma-3">
+                <div className="col-md-1">
+                    <label className="font-bold pr-2">Select Page Size:</label>
+                    <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
+                </div>
             </div>
             <div className="d-flex justify-content-end">
                 <div className="">

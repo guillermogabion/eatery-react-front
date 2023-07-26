@@ -11,6 +11,8 @@ import Upload from "./upload"
 import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import moment from "moment"
+import { Utility } from "../../utils"
+
 
 
 
@@ -47,6 +49,7 @@ export const Recurring = (props: any) => {
     const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [isSubmit, setIsSubmit] = React.useState(false);
+    const [pageSize, setPageSize] = useState(10);
 
 
 
@@ -122,7 +125,7 @@ export const Recurring = (props: any) => {
         setRecurring(updatedFields);
     }
 
-    const getAllRecurringList = (pageNo: any) => {
+    const getAllRecurringList = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -136,7 +139,7 @@ export const Recurring = (props: any) => {
         })
         }
         RequestAPI.getRequest(
-            `${Api.getAllRecurringList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllRecurringList}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -158,7 +161,7 @@ export const Recurring = (props: any) => {
         if (selectElement) {
         setShowButton(selectElement.selectedIndex !== 0);
         }
-        getAllRecurringList(0)
+        getAllRecurringList(0, pageSize)
         RequestAPI.getRequest(
             `${Api.getAllRecurringType}`,
             "",
@@ -235,7 +238,14 @@ export const Recurring = (props: any) => {
     }, [])
 
     const handlePageClick = (event: any) => {
-        getAllRecurringList(event.selected)
+        const selectedPage = event.selected;
+        getAllRecurringList(selectedPage , pageSize);
+    };
+
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllRecurringList(0, selectedPageSize);
     };
 
     const makeFilterData = (event: any) => {
@@ -742,7 +752,7 @@ export const Recurring = (props: any) => {
                         <td id="payrollrecurring_id_recurringlistdata"> {item.id} </td>
                         <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
                         <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
-                        <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {item.adjustmentAmount} </td>
+                        <td id="payrollrecurring_adjustmentamount_recurringlistdata">{Utility.formatToCurrency(item.adjustmentAmount)}</td>
                         <td id="payrollrecurring_enddate_recurringlistdata"> {item.endDate} </td>
                         <td id="payrollrecurring_recurringname_recurringlistdata"> {item.recurringName} </td>
                         <td id="payrollrecurring_active_recurringlistdata"> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
@@ -787,6 +797,18 @@ export const Recurring = (props: any) => {
         <div className="d-flex justify-content-end ma-3">
             <span className="font-bold mr-8 ">Total Entries : { recurringList.totalElements }</span>
         </div>
+        <div className="d-flex justify-content-end ma-3">
+            <div className="col-md-1">
+                <label className="font-bold pr-2">Select Page Size:</label>
+                <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                    <option value={10}>10</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                </select>
+            </div>
+           
+        </div>
+       
         <div className="d-flex justify-content-end">
             <div className="">
                 <ReactPaginate
