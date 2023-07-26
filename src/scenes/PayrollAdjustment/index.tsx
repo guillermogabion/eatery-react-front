@@ -1099,11 +1099,6 @@ export const PayrollAdjustment = (props: any) => {
                                                 onChange={(e) => {
                                                     setFieldValue('amount', e.target.value);
                                                 }}
-                                                onKeyPress={(e) => {
-                                                    if (e.key === '-' || e.key === '+') {
-                                                        e.preventDefault();
-                                                    }
-                                                }}
                                                 />
                                             </div>
                                             <div className="col-md-2 mb-3 mt-4">
