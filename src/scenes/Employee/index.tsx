@@ -246,6 +246,7 @@ export const Employee = (props: any) => {
                 squadName: d.name
               })
             });
+
             setSquadList(tempArray)
           }
         }
@@ -1496,8 +1497,8 @@ export const Employee = (props: any) => {
                     squadList.length &&
                     squadList.map((_data: any, index: string) => {
                       return (
-                        <option key={_data.name} value={_data.id}>
-                          {_data.name}
+                        <option key={_data.squadName} value={_data.squadId}>
+                          {_data.squadName}
                         </option>
                       )
 
@@ -2529,25 +2530,25 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee</label>
                   <EmployeeDropdown
-                      id="employee_employee_maindropdown"
-                      placeholder={"Employee"}
-                      singleChangeOption={singleChangeOption}
-                      name="userId"
-                      value={filterData && filterData['userId']}
-                      withEmployeeID={true}
-                    />
+                    id="employee_employee_maindropdown"
+                    placeholder={"Employee"}
+                    singleChangeOption={singleChangeOption}
+                    name="userId"
+                    value={filterData && filterData['userId']}
+                    withEmployeeID={true}
+                  />
                 </div>
               </div>
               <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Squad Name</label>
                   <select
-                      id="employee_squad_maindropdown"
-                      className="form-select"
-                      name="squadId"
-                      value={filterData && filterData['squadId']}
-                      onChange={(e) => {
-                        makeFilterData(e)
+                    id="employee_squad_maindropdown"
+                    className="form-select"
+                    name="squadId"
+                    value={filterData && filterData['squadId']}
+                    onChange={(e) => {
+                      makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
 
                     }}
@@ -2569,12 +2570,12 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Gender</label>
                   <select
-                      id="employee_gender_maindropdown"
-                      className="form-select"
-                      name="gender"
-                      value={filterData && filterData['gender']}
-                      onChange={(e) => {
-                        makeFilterData(e)
+                    id="employee_gender_maindropdown"
+                    className="form-select"
+                    name="gender"
+                    value={filterData && filterData['gender']}
+                    onChange={(e) => {
+                      makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
 
                     }}
@@ -2611,12 +2612,12 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee Status</label>
                   <select
-                      id="employee_employeestatus_maindropdown"
-                      className="form-select"
-                      name="employmentStatus"
-                      value={filterData && filterData['employmentStatus']}
-                      onChange={(e) => {
-                        makeFilterData(e)
+                    id="employee_employeestatus_maindropdown"
+                    className="form-select"
+                    name="employmentStatus"
+                    value={filterData && filterData['employmentStatus']}
+                    onChange={(e) => {
+                      makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
 
                     }}
@@ -2997,7 +2998,7 @@ export const Employee = (props: any) => {
                           <img id="employee_confirmshowpassworddark_changepwordbtn" src={show_password_dark} alt="Show" />
                         </span>
                         <span className="hidepass">
-                          <img id="employee_confirmhidepassworddark_changepwordbtn" src={hide_password_dark} alt="Hide" /> 
+                          <img id="employee_confirmhidepassworddark_changepwordbtn" src={hide_password_dark} alt="Hide" />
                         </span>
                       </Button>
                       {errors && errors.confirmPassword && <p style={{
