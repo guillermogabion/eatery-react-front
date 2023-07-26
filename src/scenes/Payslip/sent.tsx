@@ -25,6 +25,8 @@ const sent = (props : any ) => {
     const [payrollMonth, setPayrollMonth] = useState("");
     const [payrollYear, setPayrollYear] = useState("");
     const [status, setStatus] = useState("");
+    const [pageSize, setPageSize] = useState(10);
+
 
     const { emailData } = props
     const email = { ...emailData }
@@ -74,7 +76,7 @@ const sent = (props : any ) => {
             setPeriodMonths(monthNumber);
             };
            
-        const getAllPayroll = (pageNo : any ) => {
+        const getAllPayroll = (pageNo : any, pageSize: any ) => {
             let queryString = ""
             let filterDataTemp = { ...filterData }
             if (filterDataTemp) {
@@ -88,7 +90,7 @@ const sent = (props : any ) => {
             })
             }
             RequestAPI.getRequest(
-                `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+                `${Api.payrollPayListAll}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
                 "",
                 {},
                 {},
@@ -105,7 +107,7 @@ const sent = (props : any ) => {
             }
 
             useEffect(() => {
-                getAllPayroll(0)
+                getAllPayroll(0, pageSize)
             }, [])
 
            
@@ -125,8 +127,16 @@ const sent = (props : any ) => {
                     setFilterData(filterObj)
             }
             const handlePageClick = (event: any) => {
-                getAllPayroll(event.selected)
+                const selectedPage = event.selected;
+                getAllPayroll(selectedPage, pageSize)
             };
+            const handlePageSizeChange = (event) => {
+                const selectedPageSize = parseInt(event.target.value, 10);
+                setPageSize(selectedPageSize);
+                getAllPayroll(0, selectedPageSize);
+            };
+
+
             const resetMonth = () => {
             setPayrollMonth("");
             const selectElement = document.getElementById("month");
@@ -335,9 +345,18 @@ const sent = (props : any ) => {
                 <div className="d-flex justify-content-end ma-3">
                     <span className="font-bold mr-8 ">Total Entries : { payrollList.totalElements }</span>
                 </div>
+                <div className="d-flex justify-content-end ma-3">
+                    <div className="col-md-1">
+                        <label className="font-bold pr-2">Select Page Size:</label>
+                        <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                            <option value={10}>10</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="d-flex justify-content-end">
                   <div className="">
-                    
                      <ReactPaginate
                     className="d-flex justify-content-center align-items-center"
                     breakLabel="..."

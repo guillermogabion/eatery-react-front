@@ -40,6 +40,7 @@ export const Payroll = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
     const [payrollData, setPayrollData] = React.useState({});
+    const [pageSize, setPageSize] = useState(10);
 
     const tableHeaders = [
         'ID',
@@ -64,9 +65,9 @@ export const Payroll = (props: any) => {
     const currentYear = currentDate.getFullYear();
 
 
-    const getPayroll = (pageNo: any) => {
+    const getPayroll = (pageNo: any, pageSize: any) => {
         RequestAPI.getRequest(
-            `${Api.payrollAll}?size=10&page=${pageNo}&sort=id&sortDir=desc`,
+            `${Api.payrollAll}?size=${pageSize ? pageSize : '10'}&page=${pageNo}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -82,13 +83,20 @@ export const Payroll = (props: any) => {
         )
     }
     const handlePageClick = (event: any) => {
-        getPayroll(event.selected)
+        const selectedPage = event.selected;
+        
+        getPayroll(selectedPage, pageSize)
 
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getPayroll(0, selectedPageSize);
     };
     
 
     useEffect(() => {
-       getPayroll(0)
+       getPayroll(0, pageSize)
     }, [])
 
 
@@ -204,6 +212,16 @@ export const Payroll = (props: any) => {
                         </div>
                         <div className="d-flex justify-content-end ma-3">
                             <span className="font-bold mr-8 ">Total Entries : { payrolls.totalElements }</span>
+                        </div>
+                        <div className="d-flex justify-content-end ma-3">
+                            <div className="col-md-1">
+                                <label className="font-bold pr-2">Select Page Size:</label>
+                                <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                                    <option value={10}>10</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                            </div>
                         </div>
                         <div className="d-flex justify-content-end px-4">
                             <div className="">

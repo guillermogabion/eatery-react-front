@@ -24,6 +24,8 @@ export const Adjustment = (props: any) => {
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
+    const [pageSize, setPageSize] = useState(10);
+
     const [usedOption, setUseOption] = React.useState([
         {"name": "All","value": ""},
         {"name": "True","value": "True"},
@@ -59,7 +61,7 @@ export const Adjustment = (props: any) => {
         }
     }, [filterData])
 
-    const getAllAdjustmentList = (pageNo: any) => {
+    const getAllAdjustmentList = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -73,7 +75,7 @@ export const Adjustment = (props: any) => {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getAllPayrollList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllPayrollList}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -91,11 +93,18 @@ export const Adjustment = (props: any) => {
         )
     }
     useEffect(() => {
-        getAllAdjustmentList(0)
+        getAllAdjustmentList(0, pageSize)
     }, [])
 
     const handlePageClick = (event: any) => {
-        getAllAdjustmentList(event.selected)
+        const selectedPage = event.selected;
+
+        getAllAdjustmentList(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllAdjustmentList(0, selectedPageSize);
     };
 
     const makeFilterData = (event: any) => {
@@ -219,6 +228,16 @@ export const Adjustment = (props: any) => {
             </div>
             <div className="d-flex justify-content-end ma-3">
                 <span className="font-bold mr-8 ">Total Entries : { adjustmentList.totalElements }</span>
+            </div>
+            <div className="d-flex justify-content-end ma-3">
+                <div className="col-md-1">
+                    <label className="font-bold pr-2">Select Page Size:</label>
+                    <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
+                </div>
             </div>
             <div className="d-flex justify-content-end">
                 <div className="">

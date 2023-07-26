@@ -17,6 +17,8 @@ export default function Leaves(props: any) {
     const [filterData, setFilterData] = React.useState([]);
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const [employeeList, setEmployeeList] = useState<any>([])
+    const [pageSize, setPageSize] = useState(10);
+
     const [statusList, setStatusList] = useState<any>([
         'all',
         'pending',
@@ -46,10 +48,16 @@ export default function Leaves(props: any) {
     
 
     const handlePageClick = (event: any) => {
-        getAllLeaves(event.selected)
+        const selectedPage = event.selected;
+        getAllLeaves(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllLeaves(0, selectedPageSize);
     };
 
-    const getAllLeaves = (page: any = 0) => {
+    const getAllLeaves = (page: any = 0, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
 
@@ -65,7 +73,7 @@ export default function Leaves(props: any) {
 
         if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
             RequestAPI.getRequest(
-                `${Api.allRequestLeave}?size=10${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
+                `${Api.allRequestLeave}?size=${pageSize ? pageSize : '10'}${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
                 "",
                 {},
                 {},
@@ -266,6 +274,16 @@ export default function Leaves(props: any) {
                     null
             }
             <br />
+            <div className="d-flex justify-content-end ma-3">
+                <div className="col-md-1">
+                    <label className="font-bold pr-2">Select Page Size:</label>
+                    <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
+                </div>
+            </div>
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate
