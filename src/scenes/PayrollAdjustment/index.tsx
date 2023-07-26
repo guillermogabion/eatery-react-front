@@ -1094,7 +1094,6 @@ export const PayrollAdjustment = (props: any) => {
                                                 type="number"
                                                 className={`form-control ${touched.amount && errors.amount ? 'is-invalid' : ''}`}
                                                 name="amount"
-                                                min={0}
                                                 value={values.amount}
                                                 onChange={(e) => {
                                                     setFieldValue('amount', e.target.value);
@@ -1336,7 +1335,6 @@ export const PayrollAdjustment = (props: any) => {
                                                     id="payrolladjustment_amount_adjustmentminput"
                                                     type="number"
                                                     className={`form-control ${ touched.amount && values.amount == "" ? 'is-invalid' : ''}`}
-                                                    min={0}
                                                     name="adjustmentAmount"
                                                     value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
                                                     onChange={(e) => {
@@ -1345,13 +1343,7 @@ export const PayrollAdjustment = (props: any) => {
                                                         updatedFields[index].adjustmentAmount = e.target.value;
                                                         setAdjustment(updatedFields);
                                                     }}
-                                                    onKeyPress={(e) => {
-                                                        if (e.key === '-' || e.key === '+') {
-                                                            e.preventDefault();
-                                                        }
-                                                    }}
                                                     />
-                                                   
                                                 </div>
                                                 <div className="col-md-2 mb-3 mt-4">
                                                     <select
