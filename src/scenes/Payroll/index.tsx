@@ -210,17 +210,22 @@ export const Payroll = (props: any) => {
                                 }
                             </div>
                         </div>
-                        <div className="d-flex justify-content-end ma-3">
-                            <span className="font-bold mr-8 ">Total Entries : { payrolls.totalElements }</span>
-                        </div>
-                        <div className="d-flex justify-content-end ma-3">
-                            <div className="col-md-1">
-                                <label className="font-bold pr-2">Select Page Size:</label>
-                                <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
-                                    <option value={10}>10</option>
-                                    <option value={50}>50</option>
-                                    <option value={100}>100</option>
-                                </select>
+                        
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="d-flex ma-3">
+                                        <label className="font-bold px-2">Select Page Size:</label>
+                                        <select id="pageSizeSelect" value={pageSize} className="" onChange={handlePageSizeChange}>
+                                            <option value={10}>10</option>
+                                            <option value={50}>50</option>
+                                            <option value={100}>100</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="d-flex justify-content-end ma-3">
+                                    <span className="font-bold mr-8 ">Total Entries : { payrolls.totalElements }</span>
+                                </div>   
                             </div>
                         </div>
                         <div className="d-flex justify-content-end px-4">

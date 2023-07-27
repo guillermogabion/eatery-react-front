@@ -274,7 +274,7 @@ export default function Leaves(props: any) {
                     null
             }
             <br />
-            <div className="d-flex justify-content-end ma-3">
+            <div className="d-flex ma-3">
                 <div className="col-md-1">
                     <label className="font-bold pr-2">Select Page Size:</label>
                     <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>

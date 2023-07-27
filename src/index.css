@@ -3628,6 +3628,7 @@ table thead tr th{
 
 .tab-content{
   overflow: auto;
+  overflow-x: hidden;
 }
 .tax-table-container {
   max-height: 400px;
@@ -3697,4 +3698,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 
 .custom-select-wrapper.disabled::after {
   display: none;
+}
+
+
+.overflow-auto {
+  overflow-x: hidden !important;
 }

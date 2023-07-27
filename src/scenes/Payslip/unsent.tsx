@@ -24,6 +24,8 @@ const unsent = (props : any ) => {
     const [payrollMonth, setPayrollMonth] = useState("");
     const [payrollYear, setPayrollYear] = useState("");
     const [status, setStatus] = useState("");
+    const [pageSize, setPageSize] = useState(10);
+
 
     const { emailData } = props
     const email = { ...emailData }
@@ -74,7 +76,7 @@ const unsent = (props : any ) => {
             setPeriodMonths(monthNumber);
             };
            
-            const getAllPayrollFailed = (pageNo : any ) => {
+            const getAllPayrollFailed = (pageNo : any, pageSize: any ) => {
                 let queryString = ""
                 let filterDataTemp = { ...filterData }
                 if (filterDataTemp) {
@@ -88,7 +90,7 @@ const unsent = (props : any ) => {
                 })
                 }
                 RequestAPI.getRequest(
-                    `${Api.failedEmail}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+                    `${Api.failedEmail}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -179,7 +181,13 @@ const unsent = (props : any ) => {
                     setFilterData(filterObj)
             }
             const handlePageClick = (event: any) => {
-                getAllPayrollFailed(event.selected)
+                 const selectedPage = event.selected;
+                getAllPayrollFailed(selectedPage, pageSize)
+            };
+             const handlePageSizeChange = (event) => {
+                const selectedPageSize = parseInt(event.target.value, 10);
+                setPageSize(selectedPageSize);
+                getAllPayrollFailed(0, selectedPageSize);
             };
             const resetMonth = () => {
             setPayrollMonth("");
@@ -405,8 +413,22 @@ const unsent = (props : any ) => {
                             :
                             null
                         }
-                        <div className="d-flex justify-content-end ma-3">
-                            <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="d-flex ma-3">
+                                        <label className="font-bold px-2">Select Page Size:</label>
+                                        <select id="pageSizeSelect" value={pageSize} className="" onChange={handlePageSizeChange}>
+                                            <option value={10}>10</option>
+                                            <option value={50}>50</option>
+                                            <option value={100}>100</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="d-flex justify-content-end ma-3">
+                                    <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
+                                </div>   
+                            </div>
                         </div>
         
                 

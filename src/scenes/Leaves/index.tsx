@@ -848,80 +848,87 @@ export const Leaves = (props: any) => {
               })
             }
             onSubmit={(values, actions) => {
-              const loadingSwal = Swal.fire({
-                title: '',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                },
-
-              });
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
-              if (leaveId) {
-                delete valuesObj.userId
-
-                RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
-                    } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setLeaveBreakdown([])
-                      getAllLeaves(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      body.error && body.error.message,
-                      // (body.error && body.error.message),
-                      'error'
-                    )
-                  }
-                })
+              if ( valuesObj.breakdown.length >= 8 && values.type === 1) {
+                Swal.fire("Error!", "Leave type SICK LEAVE must not exceed 7 working days", "error");
               } else {
-                RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                  Swal.close();
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                // Swal.fire("Success!", "Success", "success");
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+  
+                });
+
+                  if (leaveId) {
+                      delete valuesObj.userId
+
+                      RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+                        const { status, body = { data: {}, error: {} } }: any = res
+                        if (status === 200 || status === 201) {
+                          if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                              'Error!',
+                              (body.error && body.error.message) || "",
+                              'error'
+                            )
+                          } else {
+                            ErrorSwal.fire(
+                              'Success!',
+                              (body.data) || "",
+                              'success'
+                            )
+                            setLeaveBreakdown([])
+                            getAllLeaves(0, key)
+                            setModalShow(false)
+                            formRef.current?.resetForm()
+                          }
+                        } else {
+                          ErrorSwal.fire(
+                            'Error!',
+                            body.error && body.error.message,
+                            'error'
+                          )
+                        }
+                      })
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setLeaveBreakdown([])
-                      getAllLeaves(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
+                      RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                        Swal.close();
+                        const { status, body = { data: {}, error: {} } }: any = res
+                        if (status === 200 || status === 201) {
+                          if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                              'Error!',
+                              (body.error && body.error.message) || "",
+                              'error'
+                            )
+                          } else {
+                            ErrorSwal.fire(
+                              'Success!',
+                              (body.data) || "",
+                              'success'
+                            )
+                            setLeaveBreakdown([])
+                            getAllLeaves(0, key)
+                            setModalShow(false)
+                            formRef.current?.resetForm()
+                          }
+                        } else {
+                          ErrorSwal.fire(
+                            'Error!',
+                            // 'Something Error.',
+                            body.error && body.error.message,
+                            'error'
+                          )
+                        }
+                      })
                     }
-                  } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      // 'Something Error.',
-                      body.error && body.error.message,
-                      'error'
-                    )
-                  }
-                })
               }
+
+            
 
             }}>
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
@@ -958,21 +965,14 @@ export const Leaves = (props: any) => {
                     <div className="form-group col-md-6 mb-3" >
                       <label>Date From</label>
                       <input type="date"
-                        onKeyDown={(e) => e.preventDefault()}
                         name="dateFrom"
                         id="dateFrom"
                         className="form-control"
                         value={values.dateFrom}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
-                          // setDateFrom(e.target.value)
                           dateBreakdown(e.target.value, values.dateTo)
                         }}
-                        // min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
-                        // max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
-                        // max={values.type == 1 ? getNextWeekday(Date.now()).toISOString().split("T")[0] : undefined} 
-                        max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : values.dateTo}
-
                         placeholder="dd/mm/yyyy"
                       />
                       {errors && errors.dateFrom && (
@@ -982,13 +982,11 @@ export const Leaves = (props: any) => {
                     <div className="form-group col-md-6 mb-3" >
                       <label>Date To</label>
                       <input type="date"
-                        onKeyDown={(e) => e.preventDefault()}
                         name="dateTo"
                         id="dateTo"
                         className="form-control"
                         value={values.dateTo}
                         min={values.dateFrom}
-                        max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : undefined}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
 
