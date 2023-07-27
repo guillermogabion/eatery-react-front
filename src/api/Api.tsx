@@ -163,12 +163,15 @@ const Api: any = {
   importRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/uploadExcel",
   exportRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/exportExcel",
   templateRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/downloadTemplate",
+  recurringTotalAmounts :  process.env.REACT_APP_API_URL + "payroll/recurring/totalAmounts",
+  
 
 
   // adjustment 
   importAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/uploadExcel",
   exportAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
   downloadTemplateAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/downloadTemplate",
+  adjustmentTotalAmounts :  process.env.REACT_APP_API_URL + "payroll/adjustment/totalAmounts",
 
 
   // getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
