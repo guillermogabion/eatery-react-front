@@ -214,12 +214,12 @@ export const Payroll = (props: any) => {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="d-flex ma-3">
-                                        <label className="font-bold px-2">Select Page Size:</label>
-                                        <select id="pageSizeSelect" value={pageSize} className="" onChange={handlePageSizeChange}>
-                                            <option value={10}>10</option>
-                                            <option value={50}>50</option>
-                                            <option value={100}>100</option>
-                                        </select>
+                                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className="col-md-6">
