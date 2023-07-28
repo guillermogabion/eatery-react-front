@@ -717,47 +717,43 @@ export const PayrollAdjustment = (props: any) => {
                                         X
                                     </span>
                                 )}
-                            </div>
-
-                            <div className="input-container col-md-2">
-                                <label>Amount</label>
-                                <input type="text"
-                                    id="payrolladjustment_amount_input"
-                                    className="form-control"
-                                    name="amount"
-                                    placeholder="Amount"
-                                    onChange={(e) => makeFilterData(e)}
-                                />
-                            </div>
-                            <div className="input-container clearable-select col-md-2">
-                                <label>Type</label>
-                                <select
-                                    className="form-select"
-                                    name="isDeduction"
-                                    id="type"
-                                    onChange={(e) => {
-                                        makeFilterData(e);
-                                        setShowButton(e.target.value !== 'default')
-                                    }}
-                                >
-                                    <option value="default" disabled selected>
-                                        Type
-                                    </option>
-                                    <option value={false}>Add
-                                    </option>
-                                    <option value={true}>Deduct
-                                    </option>
-
-                                </select>
-                                {showButton && (
-                                    <span id="payrolladjustment_closetype_span" className="clear-icon" onClick={reset}>
-                                        X
-                                    </span>
-                                )}
-
-
-
-
+                        </div>
+                        
+                        <div className="input-container col-md-2">
+                            <label>Amount</label>
+                            <input type="text" 
+                            id="payrolladjustment_amount_input"
+                            className="form-control"
+                            name="amount"
+                            placeholder="Amount"
+                            onChange={(e)=> makeFilterData(e)}
+                            />
+                        </div>
+                        <div className="input-container clearable-select col-md-2">
+                            <label>Type</label>
+                            <select
+                                className="form-select"
+                                name="isDeduction"
+                                id="type"
+                                onChange={(e) => {
+                                    makeFilterData(e);
+                                    setShowButton(e.target.value !== 'default')
+                                }}
+                            >
+                                <option value="default" disabled selected>
+                                Type
+                                </option>
+                                <option value={false}>Add
+                                </option>
+                                <option value={true}>Deduct
+                                </option>
+                            
+                            </select>
+                            {showButton && (
+                                <span id="payrolladjustment_closetype_span" className="clear-icon-adjustment" onClick={reset}>
+                                X
+                                </span>
+                            )}
                             </div>
                             <div className="input-container clearable-select col-md-2">
                                 <label>Select Month</label>
@@ -781,7 +777,7 @@ export const PayrollAdjustment = (props: any) => {
                                     ))}
                                 </select>
                                 {showButtonMonth && (
-                                    <span id="payrolladjustment_closemonth_span" className="clear-icon" onClick={resetMonth}>
+                                    <span id="payrolladjustment_closemonth_span" className="clear-icon-adjustment" onClick={resetMonth}>
                                         X
                                     </span>
                                 )}
@@ -861,14 +857,14 @@ export const PayrollAdjustment = (props: any) => {
                                                     className="text-muted cursor-pointer">
                                                     Update
                                                 </label>
-                                                {/* <br />
-                        <label
-                            onClick={() => {
-                                deleteRecurring(item.id)
-                            }}
-                            className="text-muted cursor-pointer">
-                            Delete
-                        </label> */}
+                                                <br />
+                                                <label
+                                                    onClick={() => {
+                                                        deleteRecurring(item.id)
+                                                    }}
+                                                    className="text-muted cursor-pointer">
+                                                    Delete
+                                                </label>
                                             </td>
 
                                         </tr>
@@ -888,228 +884,199 @@ export const PayrollAdjustment = (props: any) => {
                             null
                     }
                 </div>
-            </div>
-            <div className="px-5 text-muted mb-5">
+                       
+                
+        
+            <div className="px-5 text-muted mb-4">
                 <h2>Total: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.notDeductionAmount) : 0}</span></h2>
                 <h2>Total deducted: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.deductionAmount) : 0}</span></h2>
             </div>
-            <div className="row px-5">
-                <div className="col-md-6">
-                    <div className="d-flex ma-3">
-                        <label className="font-bold">Select Page Size:</label>
-                        <select id="pageSizeSelect" value={pageSize} className="" onChange={handlePageSizeChange}>
-                            <option value={10}>10</option>
-                            <option value={50}>50</option>
-                            <option value={100}>100</option>
-                        </select>
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <div className="d-flex justify-content-end ma-3">
-                        <span className="font-bold mr-8 ">Total Entries : {adjustmentList.totalElements}</span>
-                    </div>
+        </div>
+
+        <div className="row">
+            <div className="col-md-6">
+                <div className="d-flex justify-content-start ma-3">
+                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
                 </div>
             </div>
-            <div className="d-flex justify-content-end pr-5">
-                <div className="">
-                    <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(adjustmentList && adjustmentList.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                    />
+            <div className="col-md-6">
+                <div className="d-flex justify-content-end ma-3">
+                    <span className="font-bold mr-8 ">Total Entries : {adjustmentList.totalElements}</span>
                 </div>
+
             </div>
-            <div className="d-flex justify-content-end mt-3 pr-5" >
-                <div>
-                    <Button className="mx-2"
-                        id="payrolladjustment_addadjustment_modalbtn"
-                        onClick={() => {
-                            // setModalUploadShow(true)
-                            setModalShow(true)
-                        }}
-                    >Add Adjustment</Button>
-                    <Button
-                        id="payrolladjustment_importadjustment_modalbtn"
-                        className="mx-2"
-                        onClick={() => {
-                            setUploadModalShow(true)
-                        }}>Import Adjustment</Button>
-                    <Button
-                        id="payrolladjustment_exportadjustment_modalbtn"
-                        className="mx-2"
-                        onClick={() => {
-                            setDownloadModalShow(true)
-                        }
-                        }
-                    >Export Adjustment</Button>
-                    <Button
-                        id="payrolladjustment_downloadadjustmenttemplate_modalbtn"
-                        className="mx-2"
-                        onClick={
-                            downloadTemplate
-                        }
-                    >Download Adjustment Template</Button>
-                </div>
+        </div>
+        <div className="d-flex justify-content-end pr-5">
+            <div className="">
+                <ReactPaginate
+                    className="d-flex justify-content-center align-items-center"
+                    breakLabel="..."
+                    nextLabel=">"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={5}
+                    pageCount={(adjustmentList && adjustmentList.totalPages) || 0}
+                    previousLabel="<"
+                    previousLinkClassName="prev-next-pagination"
+                    nextLinkClassName="prev-next-pagination"
+                    activeLinkClassName="active-page-link"
+                    disabledLinkClassName="prev-next-disabled"
+                    pageLinkClassName="page-link"
+                    renderOnZeroPageCount={null}
+                />
             </div>
+        </div>
+        <div className="d-flex justify-content-end mt-3 pr-5" >
+            <div>
+                <Button className="mx-2"
+                    id="payrolladjustment_addadjustment_modalbtn"
+                    onClick={() => {
+                        // setModalUploadShow(true)
+                        setModalShow(true)
+                    }}
+                >Add Adjustment</Button>
+                <Button
+                    id="payrolladjustment_importadjustment_modalbtn"
+                    className="mx-2"
+                    onClick={() => {
+                        setUploadModalShow(true)
+                    }}>Import Adjustment</Button>
+                <Button
+                    id="payrolladjustment_exportadjustment_modalbtn"
+                    className="mx-2"
+                    onClick={() => {
+                        setDownloadModalShow(true)
+                    }
+                    }
+                >Export Adjustment</Button>
+                <Button
+                    id="payrolladjustment_downloadadjustmenttemplate_modalbtn"
+                    className="mx-2"
+                    onClick={
+                        downloadTemplate
+                    }
+                >Download Adjustment Template</Button>
+            </div>
+        </div>
 
 
-            <Modal
-                show={modalShow}
-                size="xl"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                backdrop="static"
-                keyboard={false}
-                dialogClassName="modal-90w"
-                onHide={
-                    handleModalHide
-                }
+        <Modal
+            show={modalShow}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            backdrop="static"
+            keyboard={false}
+            dialogClassName="modal-90w"
+            onHide={
+                handleModalHide
+            }
+        >
+        <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-v-center">
+                Create Adjustment
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-5">
+            <Formik
+            innerRef={formRef}
+            enableReinitialize={true}
+            validationSchema={null}
+            initialValues={initialValues}
+            onSubmit={executeSubmit}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-v-center">
-                        Create Adjustment
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
-                    <Formik
-                        innerRef={formRef}
-                        enableReinitialize={true}
-                        validationSchema={null}
-                        initialValues={initialValues}
-                        onSubmit={executeSubmit}
-                    >
-                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-                            return (
-                                <Form
-                                    noValidate
-                                    onSubmit={handleSubmit}
-                                    id="_formid"
-                                    autoComplete="off"
-                                >
-                                    <div className="d-flex justify-content-end px-5">
-                                        {values.userId ? null : (
-                                            <button
-                                                type="button"
-                                                className="btn btn btn-outline-primary me-2 mb-2 mt-2"
-                                                onClick={handleAddField}
-                                            >
-                                                Add Field
-                                            </button>
-                                        )}
-                                    </div>
+                {({ values, setFieldValue, handleSubmit, errors, touched})=> {
+                    return (
+                        <Form
+                        noValidate
+                        onSubmit={handleSubmit}
+                        id="_formid"
+                        autoComplete="off"
+                        >
+                                <div className="d-flex justify-content-end px-5">
+                                {values.userId ? null:  (
+                                    <button
+                                    type="button"
+                                    className="btn btn btn-outline-primary me-2 mb-2 mt-2"
+                                    onClick={handleAddField}
+                                    >
+                                    Add Field
+                                    </button>
+                                ) }
+                            </div>
 
-                                    {values.userId ? (
-                                        <div>
-                                            <div className="form-group row">
-                                                <div className="col-md-2 mb-3">
-                                                    <label>Employee ID</label>
-                                                    <input
-                                                        id="payrolladjustment_employeeid_createadjustmentinput"
-                                                        readOnly
-                                                        className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
-                                                        name="userId"
-                                                        value={values.employeeId ? values.employeeId : ''}
-                                                        onChange={(e) => {
-                                                            setFieldValue('userId', e.target.value);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="col-md-2 mb-3">
-                                                    <label>Employee Name *</label>
-                                                    <select
-                                                        id="payrolladjustment_employeename_createadjustmentinput"
-                                                        disabled
-                                                        placeholder="Employee Name"
-                                                        className="formControl"
-                                                        value={values.userId}
-                                                        onChange={(e) => {
-                                                            const selectedValue = e.target.value;
-                                                            setFieldValue('userId', e.target.value);
-                                                            const selectedEmployee = employee.find(
-                                                                (item) => item.userId === selectedValue
-                                                            );
-                                                            const employeeIdField = document.getElementsByName('userId')[0];
-                                                            if (selectedEmployee) {
-                                                                employeeIdField.value = selectedEmployee.userId;
-                                                            } else {
-                                                                employeeIdField.value = '';
-                                                            }
-                                                        }}
-                                                    >
-                                                        <option value="" disabled selected>
-                                                            Select Employee
-                                                        </option>
-                                                        {employee &&
-                                                            employee.length &&
-                                                            employee.map((item: any, index: string) => (
-                                                                <option key={`${index}_${item.userId}`} value={item.userId}>
-                                                                    {item.label}
-                                                                </option>
-                                                            ))}
-                                                    </select>
-                                                    <div className="col-md-4 mb-3">
-                                                        {touched.errors && errors.userId && (
-                                                            <p id="payrolladjustment_erroruserid_createadjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-2 mb-3 mt-4">
-                                                    <select
-                                                        disabled
-                                                        placeholder="Adjustment Name"
-                                                        className="form-select"
-                                                        name="adjustmentTypeId"
-                                                        id="type"
-                                                        value={values.adjustmentTypeId}
-                                                        onChange={(e) => {
-                                                            const selectedValue = e.target.value;
-                                                            setFieldValue('adjustmentTypeId', e.target.value);
-                                                            const selectedType = adjustmentTypes.find(
-                                                                item => item.id === selectedValue);
-                                                            const isDeductionField = document.getElementsByName('isDeduction')[0];
-                                                            if (selectedType) {
-                                                                isDeductionField.value = selectedType.deduction;
-                                                            } else {
-                                                                isDeductionField.value = '';
-                                                            }
-                                                        }}
-                                                    >
-                                                        <option value="" disabled selected>
-                                                            Select Adjustment Name
-                                                        </option>
-                                                        {adjustmentTypes &&
-                                                            adjustmentTypes &&
-                                                            adjustmentTypes.length &&
-                                                            adjustmentTypes.map((item: any, index: string) => (
-                                                                <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                                    {item.adjustmentName}
-                                                                </option>
-                                                            ))}
-                                                    </select>
-                                                </div>
-                                                {/* <div className="col-md-3 mb-3 mt-4">
-                                                <select
-                                                    disabled
-                                                    placeholder="Adjustment Name"
-                                                    className="form-select"
-                                                    name="adjustmentTypeId"
-                                                    id="type"
-                                                    value={values.adjustmentTypeId}
-                                                    onChange={(e) => {
-                                                        const selectedValue = e.target.value;
-                                                        setFieldValue('adjustmentTypeId', e.target.value);
-                                                        const selectedType = adjustmentTypes.find(
-                                                                item => item.id === selectedValue);
+                            { values.userId ? (
+                                <div>
+                                    <div className="form-group row">
+                                        {/* <div className="col-md-2 mb-3">
+                                            <label>Employee ID</label>
+                                                <input
+                                                id="payrolladjustment_employeeid_createadjustmentinput"
+                                                readOnly
+                                                className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
+                                                name="userId"
+                                                value={values.employeeId ? values.employeeId : ''}
+                                                onChange={(e) => {
+                                                    setFieldValue('userId', e.target.value);
+                                                }}
+                                                />
+                                        </div> */}
+                                        <div className="col-md-4 mb-3">
+                                        <label>Employee Name *</label>
+                                        <select
+                                            id="payrolladjustment_employeename_createadjustmentinput"
+                                            disabled
+                                            placeholder="Employee Name"
+                                            className="formControl"
+                                            value={values.userId}
+                                            onChange={(e) => {
+                                            const selectedValue = e.target.value;
+                                            setFieldValue('userId', e.target.value);
+                                            const selectedEmployee = employee.find(
+                                                (item) => item.userId === selectedValue
+                                            );
+                                            const employeeIdField = document.getElementsByName('userId')[0];
+                                            if (selectedEmployee) {
+                                                employeeIdField.value = selectedEmployee.userId;
+                                            } else {
+                                                employeeIdField.value = '';
+                                            }
+                                            }}
+                                        >
+                                            <option value="" disabled selected>
+                                            Select Employee
+                                            </option>
+                                            {employee &&
+                                            employee.length &&
+                                            employee.map((item: any, index: string) => (
+                                                <option key={`${index}_${item.userId}`} value={item.userId}>
+                                                {item.label} - { item.empId }
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <div className="col-md-4 mb-3">
+                                            {touched.errors && errors.userId && (
+                                                <p id="payrolladjustment_erroruserid_createadjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
+                                            )}
+                                        </div>
+                                        </div>
+                                        <div className="col-md-2 mb-3 mt-4">
+                                            <select
+                                                disabled
+                                                placeholder="Adjustment Name"
+                                                className="form-select"
+                                                name="adjustmentTypeId"
+                                                id="type"
+                                                value={values.adjustmentTypeId}
+                                                onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    setFieldValue('adjustmentTypeId', e.target.value);
+                                                    const selectedType = adjustmentTypes.find(
+                                                            item => item.id === selectedValue);
                                                         const isDeductionField = document.getElementsByName('isDeduction')[0];
                                                         if (selectedType) {
                                                             isDeductionField.value = selectedType.deduction;
@@ -1118,450 +1085,484 @@ export const PayrollAdjustment = (props: any) => {
                                                         }
                                                     }}
                                                 >
-                                                <option value="" disabled selected>
-                                                    Select Adjustment Name
-                                                </option>
+                                                    <option value="" disabled selected>
+                                                        Select Adjustment Name
+                                                    </option>
                                                     {adjustmentTypes &&
-                                                    adjustmentTypes &&
-                                                    adjustmentTypes.length &&
-                                                    adjustmentTypes.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                        {item.adjustmentDeduction == true ? "Deduct" : "Add"}
+                                                        adjustmentTypes &&
+                                                        adjustmentTypes.length &&
+                                                        adjustmentTypes.map((item: any, index: string) => (
+                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                                {item.adjustmentName}
+                                                            </option>
+                                                        ))}
+                                                </select>
+                                            </div>
+                                            {/* <div className="col-md-3 mb-3 mt-4">
+                                            <select
+                                                disabled
+                                                placeholder="Adjustment Name"
+                                                className="form-select"
+                                                name="adjustmentTypeId"
+                                                id="type"
+                                                value={values.adjustmentTypeId}
+                                                onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    setFieldValue('adjustmentTypeId', e.target.value);
+                                                    const selectedType = adjustmentTypes.find(
+                                                            item => item.id === selectedValue);
+                                                    const isDeductionField = document.getElementsByName('isDeduction')[0];
+                                                    if (selectedType) {
+                                                        isDeductionField.value = selectedType.deduction;
+                                                    } else {
+                                                        isDeductionField.value = '';
+                                                    }
+                                                }}
+                                            >
+                                            <option value="" disabled selected>
+                                                Select Adjustment Name
+                                            </option>
+                                                {adjustmentTypes &&
+                                                adjustmentTypes &&
+                                                adjustmentTypes.length &&
+                                                adjustmentTypes.map((item: any, index: string) => (
+                                                    <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                    {item.adjustmentDeduction == true ? "Deduct" : "Add"}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div> */}
+
+                                            <div className="col-md-2 mb-3">
+                                                <label>Amount</label>
+                                                <input
+                                                    id="payrolladjustment_amount_createadjustmentinput"
+                                                    type="number"
+                                                    className={`form-control ${touched.amount && errors.amount ? 'is-invalid' : ''}`}
+                                                    name="amount"
+                                                    value={values.amount}
+                                                    onChange={(e) => {
+                                                        setFieldValue('amount', e.target.value);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="col-md-2 mb-3 mt-4">
+
+                                                <select
+                                                    placeholder="Month"
+                                                    className="form-select"
+                                                    name="payrollMonth"
+                                                    id="type"
+                                                    value={values.payrollMonth}
+                                                    onChange={(e) => {
+                                                        setFieldValue('payrollMonth', e.target.value);
+                                                        // Update the corresponding value in Formik's state
+                                                    }}
+                                                >
+                                                    <option value="" disabled>
+                                                        Select Month
+                                                    </option>
+                                                    {Object.entries(monthMap).map(([month, value]) => (
+                                                        <option key={value} value={value}>
+                                                            {month}
                                                         </option>
                                                     ))}
                                                 </select>
-                                            </div> */}
 
-                                                <div className="col-md-2 mb-3">
-                                                    <label>Amount</label>
-                                                    <input
-                                                        id="payrolladjustment_amount_createadjustmentinput"
-                                                        type="number"
-                                                        className={`form-control ${touched.amount && errors.amount ? 'is-invalid' : ''}`}
-                                                        name="amount"
-                                                        value={values.amount}
-                                                        onChange={(e) => {
-                                                            setFieldValue('amount', e.target.value);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="col-md-2 mb-3 mt-4">
-
-                                                    <select
-                                                        placeholder="Month"
-                                                        className="form-select"
-                                                        name="payrollMonth"
-                                                        id="type"
-                                                        value={values.payrollMonth}
-                                                        onChange={(e) => {
-                                                            setFieldValue('payrollMonth', e.target.value);
-                                                            // Update the corresponding value in Formik's state
-                                                        }}
-                                                    >
-                                                        <option value="" disabled>
-                                                            Select Month
-                                                        </option>
-                                                        {Object.entries(monthMap).map(([month, value]) => (
-                                                            <option key={value} value={value}>
-                                                                {month}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-
-                                                </div>
-                                                <div className="col-md-2 mb-3 mt-4">
-                                                    <select
-                                                        placeholder="Year"
-                                                        className="form-select"
-                                                        name="payrollYear"
-                                                        id="type"
-                                                        value={values.payrollYear}
-                                                        onChange={(e) => {
-                                                            setFieldValue('payrollYear', e.target.value);
-                                                            // Update the corresponding value in Formik's state
-                                                        }}
-                                                    >
-                                                        <option value="" disabled selected >
-                                                            Select Year
-                                                        </option>
-                                                        {generateYearOptions().map((year) => (
-                                                            <option key={year} value={year}>
-                                                                {year}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                </div>
                                             </div>
-
+                                            <div className="col-md-2 mb-3 mt-4">
+                                                <select
+                                                    placeholder="Year"
+                                                    className="form-select"
+                                                    name="payrollYear"
+                                                    id="type"
+                                                    value={values.payrollYear}
+                                                    onChange={(e) => {
+                                                        setFieldValue('payrollYear', e.target.value);
+                                                        // Update the corresponding value in Formik's state
+                                                    }}
+                                                >
+                                                    <option value="" disabled selected >
+                                                        Select Year
+                                                    </option>
+                                                    {generateYearOptions().map((year) => (
+                                                        <option key={year} value={year}>
+                                                            {year}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                         </div>
 
-                                    ) :
+                                    </div>
 
-                                        <div>
-                                            {adjustment.map((values: any, index: any) => {
-                                                return (
-                                                    <div key={`adjustment-${index}`}>
-                                                        <div className="form-group row">
-                                                            {/* <div className="col-md-2 mb-3">
-                                            <label>Employee ID</label>
-                                                <input
-                                                id="payrolladjustment_employeeid_adjustmentinput"
-                                                disabled
-                                                className="formControl"
-                                                name="userId"
+                                ) :
+
+                                    <div>
+                                        {adjustment.map((values: any, index: any) => {
+                                            return (
+                                                <div key={`adjustment-${index}`}>
+                                                    <div className="form-group row">
+                                                        {/* <div className="col-md-2 mb-3">
+                                        <label>Employee ID</label>
+                                            <input
+                                            id="payrolladjustment_employeeid_adjustmentinput"
+                                            disabled
+                                            className="formControl"
+                                            name="userId"
+                                            value={values.userId}
+                                            onChange={(e) => {
+                                                const updatedFields = [...adjustment];
+                                                updatedFields[index].userId = e.target.value;
+                                                setAdjustment(updatedFields);
+                                                setFormField(e, setFieldValue)
+                                            }}
+                                            />
+                                                {touched.errors && errors.userId && (
+                                            <p id="payrolladjustment_erroruserid_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
+                                            )}
+                                            </div> */}
+                                            <div className="col-md-3 mb-3">
+                                            <label>Employee *</label>
+                                            <select
+                                                    id="payrolladjustment_employeename_adjustmentselect"
+                                                placeholder="Employee Name"
+                                                className={`form-control ${values.userId == "" ? 'is-invalid' : ''}`}
                                                 value={values.userId}
                                                 onChange={(e) => {
-                                                    const updatedFields = [...adjustment];
-                                                    updatedFields[index].userId = e.target.value;
-                                                    setAdjustment(updatedFields);
-                                                    setFormField(e, setFieldValue)
+                                                const selectedValue = e.target.value;
+                                                const updatedFields = [...adjustment];
+                                                updatedFields[index].userId = selectedValue;
+                                                setAdjustment(updatedFields);
+                                                setFormField(e, setFieldValue)
+
+                                                const selectedEmployee = employee.find(
+                                                    (item) => item.userId === selectedValue
+                                                );
+                                                // const employeeIdField = document.getElementsByName('userId')[0];
+                                                // if (selectedEmployee) {
+                                                //     employeeIdField.value = selectedEmployee.userId;
+                                                // } else {
+                                                //     employeeIdField.value = '';
+                                                // }
                                                 }}
-                                                />
-                                                 {touched.errors && errors.userId && (
-                                                <p id="payrolladjustment_erroruserid_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.userId}</p>
-                                                )}
-                                                </div> */}
-                                                            <div className="col-md-2 mb-3">
-                                                                <label>Employee ID *</label>
-                                                                <select
-                                                                    id="payrolladjustment_employeename_adjustmentselect"
-                                                                    placeholder="Employee Name"
-                                                                    className={`form-control ${values.userId == "" ? 'is-invalid' : ''}`}
-                                                                    value={values.userId}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].userId = selectedValue;
-                                                                        setAdjustment(updatedFields);
-                                                                        setFormField(e, setFieldValue)
+                                            >
+                                                <option value="" disabled selected>
+                                                Select Employee
+                                                </option>
+                                                {employee &&
+                                                employee.length &&
+                                                employee.map((item: any, index: string) => (
+                                                    <option key={`${index}_${item.empId}`} value={item.userId}>
+                                                    {item.label} - {item.empId}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {errors && errors.userId && (
+                                            <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                            )}
+                                            </div>
+                                            {/* <div className="col-md-2 mb-3">
+                                            <label>Employee Name *</label>
+                                            <select
+                                                disabled
+                                                placeholder="Employee Name"
+                                                className="formControl"
+                                                value={values.userId}
+                                                name="userId"
+                                                onChange={(e) => {
+                                                const selectedValue = e.target.value;
+                                                const updatedFields = [...adjustment];
+                                                updatedFields[index].userId = selectedValue;
+                                                setAdjustment(updatedFields);
+                                                setFormField(e, setFieldValue)
 
-                                                                        const selectedEmployee = employee.find(
-                                                                            (item) => item.userId === selectedValue
-                                                                        );
-                                                                        const employeeIdField = document.getElementsByName('userId')[0];
-                                                                        if (selectedEmployee) {
-                                                                            employeeIdField.value = selectedEmployee.userId;
-                                                                        } else {
-                                                                            employeeIdField.value = '';
-                                                                        }
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled selected>
-                                                                        Select Employee
-                                                                    </option>
-                                                                    {employee &&
-                                                                        employee.length &&
-                                                                        employee.map((item: any, index: string) => (
-                                                                            <option key={`${index}_${item.empId}`} value={item.userId}>
-                                                                                {item.empId}
-                                                                            </option>
-                                                                        ))}
-                                                                </select>
-                                                                {errors && errors.userId && (
-                                                                    <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
-                                                                )}
-                                                            </div>
-                                                            <div className="col-md-2 mb-3">
-                                                                <label>Employee Name *</label>
-                                                                <select
-                                                                    disabled
-                                                                    placeholder="Employee Name"
-                                                                    className="formControl"
-                                                                    value={values.userId}
-                                                                    name="userId"
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].userId = selectedValue;
-                                                                        setAdjustment(updatedFields);
-                                                                        setFormField(e, setFieldValue)
+                                                const selectedEmployee = employee.find(
+                                                    (item) => item.userId === selectedValue
+                                                );
+                                                
+                                                }}
+                                            >
+                                                <option value="" disabled selected>
+                                                
+                                                </option>
+                                                {employee &&
+                                                employee.length &&
+                                                employee.map((item: any, index: string) => (
+                                                    <option key={`${index}_${item.label}`} value={item.userId}>
+                                                    {item.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {errors && errors.userId && (
+                                            <p id="payrolladjustment_errorselectemployee_adjustmentp" style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
+                                            )}
+                                            </div> */}
 
-                                                                        const selectedEmployee = employee.find(
-                                                                            (item) => item.userId === selectedValue
-                                                                        );
-
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled selected>
-
-                                                                    </option>
-                                                                    {employee &&
-                                                                        employee.length &&
-                                                                        employee.map((item: any, index: string) => (
-                                                                            <option key={`${index}_${item.label}`} value={item.userId}>
-                                                                                {item.label}
-                                                                            </option>
-                                                                        ))}
-                                                                </select>
-                                                                {errors && errors.userId && (
-                                                                    <p id="payrolladjustment_errorselectemployee_adjustmentp" style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
-                                                                )}
-                                                            </div>
-
-                                                            <div className="col-md-2 mb-3">
-                                                                <label>Adjustment Name *</label>
-                                                                <select
-                                                                    className={`form-control ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
-                                                                    name="adjustmentTypeId"
-                                                                    id="type"
-                                                                    value={values.adjustmentTypeId}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].adjustmentTypeId = selectedValue;
-                                                                        setAdjustment(updatedFields);
-                                                                        setFormField(e, setFieldValue);
-                                                                        const selectedType = adjustmentTypes.find(
-                                                                            (item) => item.adjustmentTypeId === selectedValue
-                                                                        );
-                                                                        const isDeductionField = document.getElementsByName('adjustmentTypeId')[0];
-                                                                        if (selectedType) {
-                                                                            isDeductionField.value = selectedType.deduction;
-                                                                        } else {
-                                                                            isDeductionField.value = '';
-                                                                        }
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled={!index} selected={!index}>
-                                                                        Select Adjustment Name
-                                                                    </option>
-                                                                    {adjustmentTypes &&
-                                                                        adjustmentTypes.length &&
-                                                                        adjustmentTypes.map((item, index) => (
-                                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                                                {item.adjustmentName}
-                                                                            </option>
-                                                                        ))}
-                                                                </select>
-                                                                {touched.errors && errors.adjustmentTypeId && (
-                                                                    <p id="payrolladjustment_errorselectadjustmentname_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
-                                                                )}
-                                                            </div>
-                                                            {/* <div className="col-md-2 mb-3">
-                                                    <label>Adjustment Action *</label>
-                                                    <select
-                                                        disabled
-                                                        className="form-select"
-                                                        name="adjustmentTypeId"
-                                                        id="type"
-                                                        value={values.adjustmentTypeId}
-                                                        onChange={(e) => {
-                                                        const selectedValue = e.target.value;
-                                                        const updatedFields = [...adjustment];
-                                                        updatedFields[index].adjustmentTypeId = selectedValue;
-                                                        setAdjustment(updatedFields);
-                                                        setFormField(e, setFieldValue);
-                                                        const selectedType = adjustmentTypes.find(
-                                                            (item) => item.adjustmentDeduction === selectedValue
-                                                        );
-                                                        const isDeductionField = document.getElementsByName('recurringDeduction')[0];
-                                                        if (selectedType) {
-                                                            isDeductionField.value = selectedType.recurringDeduction;
-                                                        } else {
-                                                            isDeductionField.value = '';
-                                                        }
-                                                        }}
-                                                    >
-                                                        <option value="" disabled={!index} selected={!index}>
-                                                        Adjustment Action
+                                            <div className="col-md-3 mb-3">
+                                                <label>Adjustment Name *</label>
+                                                <select
+                                                    className={`form-control ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
+                                                    name="adjustmentTypeId"
+                                                    id="type"
+                                                    value={values.adjustmentTypeId}
+                                                    onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    const updatedFields = [...adjustment];
+                                                    updatedFields[index].adjustmentTypeId = selectedValue;
+                                                    setAdjustment(updatedFields);
+                                                    setFormField(e, setFieldValue);
+                                                    const selectedType = adjustmentTypes.find(
+                                                        (item) => item.adjustmentTypeId === selectedValue
+                                                    );
+                                                    const isDeductionField = document.getElementsByName('adjustmentTypeId')[0];
+                                                    if (selectedType) {
+                                                        isDeductionField.value = selectedType.deduction;
+                                                    } else {
+                                                        isDeductionField.value = '';
+                                                    }
+                                                    }}
+                                                >
+                                                    <option value="" disabled={!index} selected={!index}>
+                                                    Select Adjustment Name
+                                                    </option>
+                                                    {adjustmentTypes &&
+                                                    adjustmentTypes.length &&
+                                                    adjustmentTypes.map((item, index) => (
+                                                        <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                        {item.adjustmentName}
                                                         </option>
-                                                        {adjustmentTypes &&
-                                                        adjustmentTypes.length &&
-                                                        adjustmentTypes.map((item, index) => (
-                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                            {item.adjustmentDeduction === true ? "Deduct" : "Add"}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                    </div> */}
-                                                            <div className="col-md-2 mb-3">
-                                                                <label>Amount</label>
-                                                                <input
-                                                                    id="payrolladjustment_amount_adjustmentminput"
-                                                                    type="number"
-                                                                    className={`form-control ${touched.amount && values.amount == "" ? 'is-invalid' : ''}`}
-                                                                    name="adjustmentAmount"
-                                                                    value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
-                                                                    onChange={(e) => {
-                                                                        setFieldValue('adjustmentAmount', e.target.value);
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].adjustmentAmount = e.target.value;
-                                                                        setAdjustment(updatedFields);
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            <div className="col-md-2 mb-3 mt-4">
-                                                                <select
-                                                                    placeholder="Month"
-                                                                    className={`form-control ${values.periodMonth == "" ? 'is-invalid' : ''}`}
-                                                                    name="periodMonth"
-                                                                    id="type"
-                                                                    value={values.periodMonth}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].periodMonth = selectedValue; // Update the recurringTypeId for the specific item
-                                                                        setAdjustment(updatedFields);
-                                                                        setFieldValue(`adjustment[${index}].periodMonth`, selectedValue); // Update the corresponding value in Formik's state
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled={!index} selected={!index}>
-                                                                        Select Month
-                                                                    </option>
-                                                                    {Object.entries(monthMap).map(([month, value]) => (
-                                                                        <option key={value} value={value}>
-                                                                            {month}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>
-
-
-                                                            <div className="col-md-2 mb-3 mt-4">
-                                                                <select
-                                                                    placeholder="Year"
-                                                                    className={`form-control ${values.periodYear == "" ? 'is-invalid' : ''}`}
-                                                                    name="periodYear"
-                                                                    id="type"
-                                                                    value={values.periodYear}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].periodYear = selectedValue; // Update the periodYear for the specific item
-                                                                        setAdjustment(updatedFields);
-                                                                        setFieldValue(`adjustment[${index}].periodYear`, selectedValue); // Update the corresponding value in Formik's state
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled={!index} selected={!index}>
-                                                                        Select Year
-                                                                    </option>
-                                                                    {generateYearOptions().map((year) => (
-                                                                        <option key={year} value={year}>
-                                                                            {year}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>
-
-
-                                                            {values.employeeId}
-
-                                                            {adjustment.length > 1 && (
-                                                                <div className="col-md-3 mb-3">
-                                                                    <label>&nbsp;</label>
-                                                                    <button
-                                                                        id="payrolladjustment_remove_adjustmentbtn"
-                                                                        type="button"
-                                                                        className="btn btn-outline-danger"
-                                                                        onClick={() => handleRemoveField(index)}
-                                                                    >
-                                                                        Remove
-                                                                    </button>
-                                                                </div>
-                                                            )}
+                                                    ))}
+                                                </select>
+                                                {touched.errors && errors.adjustmentTypeId && (
+                                                    <p id="payrolladjustment_errorselectadjustmentname_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
+                                                )}
+                                                </div>
+                                                {/* <div className="col-md-2 mb-3">
+                                                <label>Adjustment Action *</label>
+                                                <select
+                                                    disabled
+                                                    className="form-select"
+                                                    name="adjustmentTypeId"
+                                                    id="type"
+                                                    value={values.adjustmentTypeId}
+                                                    onChange={(e) => {
+                                                    const selectedValue = e.target.value;
+                                                    const updatedFields = [...adjustment];
+                                                    updatedFields[index].adjustmentTypeId = selectedValue;
+                                                    setAdjustment(updatedFields);
+                                                    setFormField(e, setFieldValue);
+                                                    const selectedType = adjustmentTypes.find(
+                                                        (item) => item.adjustmentDeduction === selectedValue
+                                                    );
+                                                    const isDeductionField = document.getElementsByName('recurringDeduction')[0];
+                                                    if (selectedType) {
+                                                        isDeductionField.value = selectedType.recurringDeduction;
+                                                    } else {
+                                                        isDeductionField.value = '';
+                                                    }
+                                                    }}
+                                                >
+                                                    <option value="" disabled={!index} selected={!index}>
+                                                    Adjustment Action
+                                                    </option>
+                                                    {adjustmentTypes &&
+                                                    adjustmentTypes.length &&
+                                                    adjustmentTypes.map((item, index) => (
+                                                        <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                        {item.adjustmentDeduction === true ? "Deduct" : "Add"}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                </div> */}
+                                                        <div className="col-md-2 mb-3">
+                                                            <label>Amount</label>
+                                                            <input
+                                                                id="payrolladjustment_amount_adjustmentminput"
+                                                                type="number"
+                                                                className={`form-control ${touched.amount && values.amount == "" ? 'is-invalid' : ''}`}
+                                                                name="adjustmentAmount"
+                                                                value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
+                                                                onChange={(e) => {
+                                                                    setFieldValue('adjustmentAmount', e.target.value);
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].adjustmentAmount = e.target.value;
+                                                                    setAdjustment(updatedFields);
+                                                                }}
+                                                            />
                                                         </div>
+                                                        <div className="col-md-2 mb-3 mt-4">
+                                                            <select
+                                                                placeholder="Month"
+                                                                className={`form-control ${values.periodMonth == "" ? 'is-invalid' : ''}`}
+                                                                name="periodMonth"
+                                                                id="type"
+                                                                value={values.periodMonth}
+                                                                onChange={(e) => {
+                                                                    const selectedValue = e.target.value;
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].periodMonth = selectedValue; // Update the recurringTypeId for the specific item
+                                                                    setAdjustment(updatedFields);
+                                                                    setFieldValue(`adjustment[${index}].periodMonth`, selectedValue); // Update the corresponding value in Formik's state
+                                                                }}
+                                                            >
+                                                                <option value="" disabled={!index} selected={!index}>
+                                                                    Select Month
+                                                                </option>
+                                                                {Object.entries(monthMap).map(([month, value]) => (
+                                                                    <option key={value} value={value}>
+                                                                        {month}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+
+
+                                                        <div className="col-md-2 mb-3 mt-4">
+                                                            <select
+                                                                placeholder="Year"
+                                                                className={`form-control ${values.periodYear == "" ? 'is-invalid' : ''}`}
+                                                                name="periodYear"
+                                                                id="type"
+                                                                value={values.periodYear}
+                                                                onChange={(e) => {
+                                                                    const selectedValue = e.target.value;
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].periodYear = selectedValue; // Update the periodYear for the specific item
+                                                                    setAdjustment(updatedFields);
+                                                                    setFieldValue(`adjustment[${index}].periodYear`, selectedValue); // Update the corresponding value in Formik's state
+                                                                }}
+                                                            >
+                                                                <option value="" disabled={!index} selected={!index}>
+                                                                    Select Year
+                                                                </option>
+                                                                {generateYearOptions().map((year) => (
+                                                                    <option key={year} value={year}>
+                                                                        {year}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+
+
+                                                        {values.employeeId}
+
+                                                        {adjustment.length > 1 && (
+                                                            <div className="col-md-3 mb-3">
+                                                                <label>&nbsp;</label>
+                                                                <button
+                                                                    id="payrolladjustment_remove_adjustmentbtn"
+                                                                    type="button"
+                                                                    className="btn btn-outline-danger"
+                                                                    onClick={() => handleRemoveField(index)}
+                                                                >
+                                                                    Remove
+                                                                </button>
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                )
-                                            }
-
-
+                                                </div>
                                             )
-                                            }
-                                        </div>
-                                    }
+                                        }
 
-                                    <Modal.Footer>
-                                        <button
-                                            id="payrolladjustment_save_adjustmentbtn"
-                                            type="submit"
-                                            className="btn btn-primary">
-                                            Save
-                                        </button>
-                                    </Modal.Footer>
 
-                                </Form>
-                            )
+                                        )
+                                        }
+                                    </div>
+                                }
+
+                                <Modal.Footer>
+                                    <button
+                                        id="payrolladjustment_save_adjustmentbtn"
+                                        type="submit"
+                                        className="btn btn-primary">
+                                        Save
+                                    </button>
+                                </Modal.Footer>
+
+                            </Form>
+                        )
+                    }}
+                </Formik>
+
+            </Modal.Body>
+
+
+        </Modal>
+        <Modal
+            show={uploadModalShow}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            backdrop="static"
+            keyboard={false}
+            onHide={() => setUploadModalShow(false)}
+            dialogClassName="modal-90w"
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>
+                    Upload Excel File
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="d-flex align-items-center justify-content-center">
+                <div>
+                    <Upload onCloseModal={handleCloseModal} />
+                </div>
+
+            </Modal.Body>
+
+        </Modal>
+        <Modal
+            show={downloadModalShow}
+            size={'md'}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            backdrop="static"
+            keyboard={false}
+            onHide={() => setDownloadModalShow(false)}
+            dialogClassName="modal-90w"
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Export
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3" >
+                    <label>Date From</label>
+                    <input type="date"
+                        name="fromDate"
+                        id="fromDate"
+                        className="form-control"
+                        value={fromDate}
+                        onChange={(e) => {
+                            setFromDate(e.target.value)
                         }}
-                    </Formik>
-
-                </Modal.Body>
-
-
-            </Modal>
-            <Modal
-                show={uploadModalShow}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                backdrop="static"
-                keyboard={false}
-                onHide={() => setUploadModalShow(false)}
-                dialogClassName="modal-90w"
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        Upload Excel File
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="d-flex align-items-center justify-content-center">
-                    <div>
-                        <Upload onCloseModal={handleCloseModal} />
-                    </div>
-
-                </Modal.Body>
-
-            </Modal>
-            <Modal
-                show={downloadModalShow}
-                size={'md'}
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                backdrop="static"
-                keyboard={false}
-                onHide={() => setDownloadModalShow(false)}
-                dialogClassName="modal-90w"
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Export
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
-                    <div className="form-group col-md-6 mb-3" >
-                        <label>Date From</label>
-                        <input type="date"
-                            name="fromDate"
-                            id="fromDate"
-                            className="form-control"
-                            value={fromDate}
-                            onChange={(e) => {
-                                setFromDate(e.target.value)
-                            }}
-                        />
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                        <label>Date To</label>
-                        <input type="date"
-                            name="toDate"
-                            id="toDate"
-                            className="form-control"
-                            value={toDate}
-                            min={fromDate}
-                            onChange={(e) => {
-                                setToDate(e.target.value)
-                            }}
-                        />
-                    </div>
-                </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-center">
-                    <Button
-                        id="payrolladjustment_downloadexcel_exportbtn"
-                        onClick={() => downloadExcel(fromDate, toDate)}
-                        disabled={isSubmit}>
-                        {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                    />
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                    <label>Date To</label>
+                    <input type="date"
+                        name="toDate"
+                        id="toDate"
+                        className="form-control"
+                        value={toDate}
+                        min={fromDate}
+                        onChange={(e) => {
+                            setToDate(e.target.value)
+                        }}
+                    />
+                </div>
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+                <Button
+                    id="payrolladjustment_downloadexcel_exportbtn"
+                    onClick={() => downloadExcel(fromDate, toDate)}
+                    disabled={isSubmit}>
+                    {isSubmit ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : ""} Proceed
+                </Button>
+            </Modal.Footer>
+        </Modal>
 
         </>} />
 

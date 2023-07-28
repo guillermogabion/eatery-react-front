@@ -3661,7 +3661,20 @@ table thead tr th{
   transform: translateY(-50%);
   cursor: pointer;
 }
-
+.clearable-select .clear-icon-recurring {
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.clearable-select .clear-icon-adjustment {
+  position: absolute;
+  top: 70%;
+  right: 10%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
 
 table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > div > tbody.custom-row > tr > td {
   width: auto !important;
@@ -3704,3 +3717,4 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .overflow-auto {
   overflow-x: hidden !important;
 }
+

@@ -275,9 +275,9 @@ export default function Leaves(props: any) {
             }
             <br />
             <div className="d-flex ma-3">
-                <div className="col-md-1">
-                    <label className="font-bold pr-2">Select Page Size:</label>
-                    <select id="pageSizeSelect" value={pageSize} className="mt-2 mb-2" onChange={handlePageSizeChange}>
+                <div className="d-flex ma-3">
+                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
                         <option value={10}>10</option>
                         <option value={50}>50</option>
                         <option value={100}>100</option>

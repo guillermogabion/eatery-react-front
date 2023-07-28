@@ -851,8 +851,11 @@ export const Leaves = (props: any) => {
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
               if ( valuesObj.breakdown.length >= 8 && values.type === 1) {
-                Swal.fire("Error!", "Leave type SICK LEAVE must not exceed 7 working days", "error");
-              } else {
+                Swal.fire("Error!", `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`, "error");
+              }
+              if (condition) {
+                
+              }else {
                 // Swal.fire("Success!", "Success", "success");
                 const loadingSwal = Swal.fire({
                   title: '',
@@ -969,6 +972,7 @@ export const Leaves = (props: any) => {
                         id="dateFrom"
                         className="form-control"
                         value={values.dateFrom}
+                        max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
                           dateBreakdown(e.target.value, values.dateTo)
