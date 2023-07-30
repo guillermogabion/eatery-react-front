@@ -848,12 +848,29 @@ export const Leaves = (props: any) => {
               })
             }
             onSubmit={(values, actions) => {
+
+              const dateFromChecker = new Date(values.dateFrom);
+              const currentDateChecker = new Date();
+
+              const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+              const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
               if ( valuesObj.breakdown.length >= 8 && values.type === 1) {
-                Swal.fire("Error!", `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`, "error");
+                Swal.fire("Error!", 
+                          `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`, 
+                          "error"
+                          );
               }
-              if (condition) {
+              if (timeDifferenceInDays < -7 || timeDifferenceInDays > 0) {
+
+                Swal.fire(
+                  "Error!",
+                  "Selected date must be within 7 days in advance or earlier from today's date.",
+                  "error"
+                );
                 
               }else {
                 // Swal.fire("Success!", "Success", "success");
@@ -966,13 +983,13 @@ export const Leaves = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
-                      <label>Date From</label>
+                      <label>Date From </label>
                       <input type="date"
                         name="dateFrom"
                         id="dateFrom"
                         className="form-control"
                         value={values.dateFrom}
-                        max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
+                        // max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
                           dateBreakdown(e.target.value, values.dateTo)
