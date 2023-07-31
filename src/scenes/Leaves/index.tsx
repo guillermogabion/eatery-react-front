@@ -868,7 +868,7 @@ export const Leaves = (props: any) => {
 
                 Swal.fire(
                   "Error!",
-                  "Selected date must be within 7 days in advance or earlier from today's date.",
+                  "Selected 'Date From' must be within 7 working days from the date of selection.",
                   "error"
                 );
                 

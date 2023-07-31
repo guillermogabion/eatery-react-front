@@ -12,6 +12,8 @@ import { Formik } from "formik"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import moment from "moment"
 import { Utility } from "../../utils"
+import { action_decline, action_edit } from "../../assets/images"
+
 const ErrorSwal = withReactContent(Swal)
 
 export const Recurring = (props: any) => {
@@ -25,6 +27,7 @@ export const Recurring = (props: any) => {
     const [downloadModalShow, setDownloadModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
     const [recurringName, setRecurringName] = useState<any>([]);
+    // const [recurring, setRecurring] = useState<{ [key: string]: string }>({});
     const [recurring, setRecurring] = useState<any>([]);
     const [recurringTypes, setRecurringTypes] = useState<any>([]);
     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
@@ -41,6 +44,9 @@ export const Recurring = (props: any) => {
     const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [pageSize, setPageSize] = useState(10);
+    const [values, setValues] = useState({ userId: "" });
+    const [valueCreation, setValueCreation] = useState<{ [key: string]: string }>({});
+
 
     const [recurringTotal, setRecurringTotal] = useState<any>({});
     const [initialValues, setInitialValues] = useState<any>({
@@ -94,6 +100,10 @@ export const Recurring = (props: any) => {
             setFieldValue(name, value)
         }
     }
+
+    const handleSelectedOption = (selectedOption) => {
+        setSelectedOption(selectedOption);
+      };
 
     useEffect(() => {
         if (modalShow) {
@@ -262,6 +272,11 @@ export const Recurring = (props: any) => {
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
+    const createOption = (option: any, name: any) => {
+        const valueObj: any = { ...values };
+        valueObj[name] = option && option.value !== "Select" ? option.value : "";
+        setValues(valueObj);
+      };
 
     const getRecurring = (id: any = 0) => {
         RequestAPI.getRequest(
@@ -294,7 +309,7 @@ export const Recurring = (props: any) => {
     const deleteRecurring = (id: any = 0) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
-            text: "You want to cancel this transaction.",
+            text: "Are you sure you want to delete this transaction?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -346,6 +361,7 @@ export const Recurring = (props: any) => {
     const handleModalHide = useCallback(() => {
         setModalShow(false);
         formRef.current?.resetForm();
+        setRecurring([]);
         setUserId(null)
         setInitialValues({
             recurring: [
@@ -373,7 +389,7 @@ export const Recurring = (props: any) => {
 
 
         const recurringTransactions = recurring.map((item) => ({
-            userId: item.userId,
+            userId: item.userIdCreate,
             recurringTypeId: item.recurringTypeId,
             adjustmentAmount: item.adjustmentAmount,
             endDate: item.endDate,
@@ -389,9 +405,10 @@ export const Recurring = (props: any) => {
 
         if (!values.userId) {
             payload.recurring.forEach((element: any, index: any) => {
-                if (element.userId == undefined) {
-                    hasError = true
-                }
+                
+                // if ( element.userId == undefined) {
+                //     hasError = true;
+                //   }
                 if (element.recurringTypeId == undefined) {
                     hasError = true
                 }
@@ -607,6 +624,16 @@ export const Recurring = (props: any) => {
                             value={filterData && filterData['userId']}
                             withEmployeeID={true}
                             />
+
+{/* <EmployeeDropdown
+                                                           
+                                                           placeholder={"Employee"}
+                                                           singleChangeOption={createOption}
+                                                           name="userId"
+                                                           value={values && values['userId']}
+                                                           withEmployeeID={true}
+                                                           /> */}
+                           
                         </div>
                         <div className="input-container col-md-1">
                             <label>Amount</label>
@@ -768,15 +795,14 @@ export const Recurring = (props: any) => {
                             getRecurring(item.id)
                         }}
                         className="text-muted cursor-pointer">
-                        Update
+                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                         </label>
-                        <br />
                         <label
                             onClick={() => {
                                 deleteRecurring(item.id)
                             }}
                             className="text-muted cursor-pointer">
-                            Delete
+                                <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                         </label>
                         </td>
                     
@@ -797,14 +823,14 @@ export const Recurring = (props: any) => {
                     null
                 }
             </div>
-            <div className="px-5 text-muted">
+            <div className="text-muted">
                 <h2>Total: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.notDeductionAmount) : 0}</span></h2>
                 <h2>Total deducted: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.deductionAmount) : 0}</span></h2>
             </div>
         </div>
         <div className="row">
             <div className="col-md-6">
-                <div className="d-flex justify-content-start ma-3">
+                <div className="d-flex justify-content-start ma-3 px-5">
                     <span className="font-bold px-2 pt-2">Select Page Size:</span>
                     <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
                         <option value={10}>10</option>
@@ -814,7 +840,7 @@ export const Recurring = (props: any) => {
                 </div>
             </div>
             <div className="col-md-6">
-                <div className="d-flex justify-content-end ma-3">
+                <div className="d-flex justify-content-end ma-3 px-3">
                     <span className="font-bold mr-8 ">Total Entries : {recurringList.totalElements}</span>
                 </div>
 
@@ -918,7 +944,7 @@ export const Recurring = (props: any) => {
                                             className="btn btn btn-outline-primary me-2 mb-2 mt-2"
                                             onClick={handleAddField}
                                         >
-                                            Add Field
+                                            Add
                                         </button>
                                     )}
                                 </div>
@@ -1081,7 +1107,7 @@ export const Recurring = (props: any) => {
                                             return (
                                                 <div key={`recurring-${index}`}>
                                                     <div className="form-group row">
-                                                        <div className="col-md-3 mb-3">
+                                                        {/* <div className="col-md-3 mb-3">
                                                             <label>Employee *</label>
                                                             <select
                                                                 id="payrollrecurring_employeeid_recurringselect"
@@ -1121,7 +1147,19 @@ export const Recurring = (props: any) => {
                                                             {errors && errors.userId && (
                                                                 <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
                                                             )}
-                                                        </div>
+                                                        </div> */}
+                                                       <EmployeeDropdown
+                                                            placeholder={"Employee"}
+                                                            singleChangeOption={(selectedOption) => {
+                                                                handleSelectedOption(selectedOption); // Call the callback function with the selected option
+                                                                setFieldValue("userId", selectedOption ? selectedOption.value : "");
+                                                              }}
+                                                            name="userId"
+                                                            value={values && values['userId'] ? values.userId : "null"}
+                                                            withEmployeeID={true}
+                                                            />
+                                                             <p>Selected Employee: {selectedOption.label ? selectedOption.label : "None"}</p>
+                                                      
                                                         <div className="col-md-3 mb-3">
                                                             <label>Recurring Name *</label>
                                                             <select

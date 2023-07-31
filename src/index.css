@@ -3670,7 +3670,7 @@ table thead tr th{
 }
 .clearable-select .clear-icon-adjustment {
   position: absolute;
-  top: 70%;
+  top: 50%;
   right: 10%;
   transform: translateY(-50%);
   cursor: pointer;
