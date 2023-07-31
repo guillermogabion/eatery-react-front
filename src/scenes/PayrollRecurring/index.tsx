@@ -44,9 +44,9 @@ export const Recurring = (props: any) => {
     const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [pageSize, setPageSize] = useState(10);
-    const [values, setValues] = useState({ userId: "" });
+    const [value, setValue] = useState({ userId: "" });
     const [valueCreation, setValueCreation] = useState<{ [key: string]: string }>({});
-
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
 
     const [recurringTotal, setRecurringTotal] = useState<any>({});
     const [initialValues, setInitialValues] = useState<any>({
@@ -273,9 +273,9 @@ export const Recurring = (props: any) => {
         setFilterData(filterObj)
     }
     const createOption = (option: any, name: any) => {
-        const valueObj: any = { ...values };
+        const valueObj: any = { ...value };
         valueObj[name] = option && option.value !== "Select" ? option.value : "";
-        setValues(valueObj);
+        setValue(valueObj);
       };
 
     const getRecurring = (id: any = 0) => {
@@ -387,9 +387,8 @@ export const Recurring = (props: any) => {
     const executeSubmit = (values, actions) => {
 
 
-
         const recurringTransactions = recurring.map((item) => ({
-            userId: item.userIdCreate,
+            userId: item.userId,
             recurringTypeId: item.recurringTypeId,
             adjustmentAmount: item.adjustmentAmount,
             endDate: item.endDate,
@@ -406,9 +405,9 @@ export const Recurring = (props: any) => {
         if (!values.userId) {
             payload.recurring.forEach((element: any, index: any) => {
                 
-                // if ( element.userId == undefined) {
-                //     hasError = true;
-                //   }
+                if ( element.userId == undefined) {
+                    hasError = true;
+                  }
                 if (element.recurringTypeId == undefined) {
                     hasError = true
                 }
@@ -584,6 +583,7 @@ export const Recurring = (props: any) => {
             "recurringtransaction.xlsx",
             async (res: any) => {
                 if (res) {
+                    
                     setIsSubmit(false)
 
 
@@ -949,22 +949,9 @@ export const Recurring = (props: any) => {
                                     )}
                                 </div>
 
-                                {values.userId ? (
+                                {values.id ? (
                                     <div>
                                         <div className="form-group row">
-                                            {/* <div className="col-md-2 mb-3">
-                                                <label>Employee ID</label>
-                                                <input
-                                                    id="payrollrecurring_employeeid_forminput"
-                                                    readOnly
-                                                    className="formControl"
-                                                    name="userId"
-                                                    value={values.employeeId ? values.employeeId : ''}
-                                                    onChange={(e) => {
-                                                        setFieldValue('employeeId', e.target.value);
-                                                    }}
-                                                />
-                                            </div> */}
                                             <div className="col-md-3 mb-3">
                                                 <label>Employee Name *</label>
                                                 <select
@@ -978,12 +965,6 @@ export const Recurring = (props: any) => {
                                                         const selectedEmployee = employee.find(
                                                             (item) => item.userId === selectedValue
                                                         );
-                                                        // const employeeIdField = document.getElementsByName('userId')[0];
-                                                        // if (selectedEmployee) {
-                                                        //     employeeIdField.value = selectedEmployee.employeeId;
-                                                        // } else {
-                                                        //     employeeIdField.value = '';
-                                                        // }
                                                     }}
                                                 >
                                                     <option value="" disabled selected>
@@ -1024,31 +1005,6 @@ export const Recurring = (props: any) => {
                                                 </select>
                                             </div>
 
-                                            {/* <div className="col-md-3 mb-3">
-                                    <label>Recurring Action *</label>
-                                    <select
-                                        disabled
-                                        placeholder="Recurring Name"
-                                        className="form-select"
-                                        name="recurringTypeId"
-                                        id="type"
-                                        value={values.recurringTypeId}
-                                        onChange={(e) => {
-                                            setFieldValue('recurringTypeId', e.target.value);
-                                        }}
-                                    >
-                                        <option value="" disabled selected>
-                                        Recurring Action
-                                        </option>
-                                        {recurringTypes &&
-                                        recurringTypes.length &&
-                                        recurringTypes.map((item, index) => (
-                                            <option key={`${index}_${item.recurringTypeId}`} value={item.recurringTypeId}>
-                                            {item.recurringDeduction === true ? "Deduct" : "Add"}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div> */}
                                             <div className="col-md-2 mb-3">
                                                 <label>Amount</label>
                                                 <input
@@ -1107,58 +1063,23 @@ export const Recurring = (props: any) => {
                                             return (
                                                 <div key={`recurring-${index}`}>
                                                     <div className="form-group row">
-                                                        {/* <div className="col-md-3 mb-3">
-                                                            <label>Employee *</label>
-                                                            <select
-                                                                id="payrollrecurring_employeeid_recurringselect"
-                                                                placeholder="Employee Name"
-                                                                className={`form-control ${touched.userId && errors.userId ? 'is-invalid' : ''}`}
-                                                                value={values.userId}
-                                                                onChange={(e) => {
-                                                                    const selectedValue = e.target.value;
-                                                                    const updatedFields = [...recurring];
-                                                                    updatedFields[index].userId = selectedValue;
-                                                                    setRecurring(updatedFields);
-                                                                    setFormField(e, setFieldValue)
-
-                                                                    const selectedEmployee = employee.find(
-                                                                        (item) => item.userId === selectedValue
-                                                                    );
-                                                                        // const employeeId2Field = document.getElementsByName('employeeId')[0];
-                                                                        // if (selectedEmployee) {
-                                                                        //     employeeId2Field.value = selectedEmployee.userId;
-                                                                        // } else {
-                                                                        //     employeeId2Field.value = '';
-                                                                        // }
-
-                                                                }}
-                                                            >
-                                                                <option value="" disabled selected>
-                                                                    Select Employee
-                                                                </option>
-                                                                {employee &&
-                                                                    employee.length &&
-                                                                    employee.map((item: any, index: string) => (
-                                                                        <option key={`${index}_${item.empId}`} value={item.userId}>
-                                                                            {item.label } - {item.empId}
-                                                                        </option>
-                                                                    ))}
-                                                            </select>
-                                                            {errors && errors.userId && (
-                                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
-                                                            )}
-                                                        </div> */}
+                                                       
                                                        <EmployeeDropdown
-                                                            placeholder={"Employee"}
-                                                            singleChangeOption={(selectedOption) => {
-                                                                handleSelectedOption(selectedOption); // Call the callback function with the selected option
-                                                                setFieldValue("userId", selectedOption ? selectedOption.value : "");
-                                                              }}
-                                                            name="userId"
-                                                            value={values && values['userId'] ? values.userId : "null"}
-                                                            withEmployeeID={true}
-                                                            />
-                                                             <p>Selected Employee: {selectedOption.label ? selectedOption.label : "None"}</p>
+                                                        placeholder={"Employee"}
+                                                        singleChangeOption={createOption}
+                                                        name="userId"
+                                                        value={value && value['userId'] ? values.userId = value['userId'] : "nothing"}
+                                                        withEmployeeID={true}
+                                                        onChange={(e) => {
+
+                                                            const selectedValue = e.target.value;
+                                                            const updatedFields = [ ...recurring ] ;
+                                                            updatedFields[index].userId = selectedValue;
+                                                            setRecurring(updatedFields);
+                                                            setFormField(e, setFieldValue);
+                                                        }}
+                                                        />
+                                                             {/* <p>Selected Employee: {value ? value.userId : "None"}</p> */}
                                                       
                                                         <div className="col-md-3 mb-3">
                                                             <label>Recurring Name *</label>

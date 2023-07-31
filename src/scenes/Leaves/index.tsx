@@ -858,96 +858,66 @@ export const Leaves = (props: any) => {
 
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
-              if ( valuesObj.breakdown.length >= 8 && values.type === 1) {
-                Swal.fire("Error!", 
-                          `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`, 
-                          "error"
-                          );
-              }
-              if (timeDifferenceInDays < -7 || timeDifferenceInDays > 0) {
-
+              if (valuesObj.breakdown.length > 7 && values.type === 1) {
+                Swal.fire(
+                  "Error!",
+                  `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
+                  "error"
+                );
+              } else if (timeDifferenceInDays > 7 || timeDifferenceInDays <= 0) {
                 Swal.fire(
                   "Error!",
                   "Selected 'Date From' must be within 7 working days from the date of selection.",
                   "error"
                 );
-                
-              }else {
-                // Swal.fire("Success!", "Success", "success");
+              } else {
                 const loadingSwal = Swal.fire({
                   title: '',
                   allowOutsideClick: false,
                   didOpen: () => {
                     Swal.showLoading();
                   },
-  
                 });
-
-                  if (leaveId) {
-                      delete valuesObj.userId
-
-                      RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 || status === 201) {
-                          if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                              'Error!',
-                              (body.error && body.error.message) || "",
-                              'error'
-                            )
-                          } else {
-                            ErrorSwal.fire(
-                              'Success!',
-                              (body.data) || "",
-                              'success'
-                            )
-                            setLeaveBreakdown([])
-                            getAllLeaves(0, key)
-                            setModalShow(false)
-                            formRef.current?.resetForm()
-                          }
-                        } else {
-                          ErrorSwal.fire(
-                            'Error!',
-                            body.error && body.error.message,
-                            'error'
-                          )
-                        }
-                      })
+              
+                if (leaveId) {
+                  delete valuesObj.userId;
+              
+                  RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        Swal.fire('Error!', body.error.message, 'error');
+                      } else {
+                        Swal.fire('Success!', body.data || "", 'success');
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
                     } else {
-                      RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                        Swal.close();
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 || status === 201) {
-                          if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                              'Error!',
-                              (body.error && body.error.message) || "",
-                              'error'
-                            )
-                          } else {
-                            ErrorSwal.fire(
-                              'Success!',
-                              (body.data) || "",
-                              'success'
-                            )
-                            setLeaveBreakdown([])
-                            getAllLeaves(0, key)
-                            setModalShow(false)
-                            formRef.current?.resetForm()
-                          }
-                        } else {
-                          ErrorSwal.fire(
-                            'Error!',
-                            // 'Something Error.',
-                            body.error && body.error.message,
-                            'error'
-                          )
-                        }
-                      })
+                      Swal.fire('Error!', body.error && body.error.message, 'error');
                     }
+                  });
+                } else {
+                  RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                    Swal.close();
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        Swal.fire('Error!', body.error.message, 'error');
+                      } else {
+                        Swal.fire('Success!', body.data || "", 'success');
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
+                    } else {
+                      Swal.fire('Error!', body.error && body.error.message, 'error');
+                    }
+                  });
+                }
               }
-
             
 
             }}>
