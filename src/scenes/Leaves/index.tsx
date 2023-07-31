@@ -482,6 +482,20 @@ export const Leaves = (props: any) => {
 
   const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
 
+  function calculateWorkingDays(startDate, endDate) {
+    let currentDate = new Date(startDate);
+    let totalDays = 0;
+  
+    while (currentDate <= endDate) {
+      const dayOfWeek = currentDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Exclude Sundays (0) and Saturdays (6)
+        totalDays++;
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return totalDays;
+  }
 
 
 
@@ -853,12 +867,13 @@ export const Leaves = (props: any) => {
               const currentDateChecker = new Date();
 
               const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
-              const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+              // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+              const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
 
 
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
-              if (valuesObj.breakdown.length > 7 && values.type === 1) {
+              if (valuesObj.breakdown.length >= 8 && values.type === 1) {
                 Swal.fire(
                   "Error!",
                   `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
