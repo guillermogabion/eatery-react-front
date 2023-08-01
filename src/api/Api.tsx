@@ -172,6 +172,7 @@ const Api: any = {
   exportAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
   downloadTemplateAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/downloadTemplate",
   adjustmentTotalAmounts :  process.env.REACT_APP_API_URL + "payroll/adjustment/totalAmounts",
+  deleteAdjustment: process.env.REACT_APP_API_URL + "payroll/adjustment/delete",
 
 
   // getAllRecurringType : process.env.REACT_APP_API_URL + "payroll/recurring/type/all",
