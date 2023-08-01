@@ -358,7 +358,7 @@ const unsent = (props : any ) => {
                                 </Button>
                             </div>
                         </div>
-                        <Table responsive="lg">
+                        <Table responsive>
                         <thead>
                         <tr>
                             {

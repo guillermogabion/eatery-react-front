@@ -341,7 +341,7 @@ export const Overtime = (props: any) => {
   const overTimeTable = useCallback(() => {
     return (
       <div>
-        <Table responsive="lg">
+        <Table responsive>
           <thead>
             <tr>
               {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?

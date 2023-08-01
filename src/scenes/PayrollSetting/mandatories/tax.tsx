@@ -119,7 +119,7 @@ const tax = (props: any) => {
                             <h3 style={{ fontWeight: 'bold', padding: '10px' }} >Tax Table (Monthly)</h3>
                             <div className="tax-table-container">
 
-                                <Table responsive="lg">
+                                <Table responsive>
                                         <thead>
                                             <tr className="tax-sticky-header">
                                                 {
@@ -175,7 +175,7 @@ const tax = (props: any) => {
                             <h3 style={{ fontWeight: 'bold', padding: '10px' }} >Tax Table (Yearly)</h3>
 
                             <div className="tax-table-container">
-                                <Table responsive="lg">
+                                <Table responsive>
                                         <thead>
                                             <tr className="tax-sticky-header">
                                                 {

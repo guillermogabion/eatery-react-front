@@ -757,7 +757,7 @@ export const Recurring = (props: any) => {
                             </div>
                         </div>
                     </div>
-                    <Table responsive="lg">
+                    <Table responsive>
                         <thead>
                             <tr>
                                 {

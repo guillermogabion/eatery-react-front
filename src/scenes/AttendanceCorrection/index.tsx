@@ -385,7 +385,7 @@ export const AttendanceCorrection = (props: any) => {
   const COATable = useCallback(() => {
     return (
       <div>
-        <Table responsive="lg">
+        <Table responsive>
           <thead>
             <tr>
               {
@@ -984,7 +984,7 @@ export const AttendanceCorrection = (props: any) => {
             <p id="attendancecorrection_type_reqestinfop">Type : {initialValues.type}</p>
             <p id="attendancecorrection_status_reqestinfop">Status : {initialValues.status}</p>
 
-            <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+            <Table responsive style={{ maxHeight: '100vh' }}>
               <thead>
                 <tr>
                   <th style={{ width: '100px' }}>Shift Date</th>

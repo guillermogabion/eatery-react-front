@@ -3714,7 +3714,5 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 
 
-.overflow-auto {
-  overflow-x: hidden !important;
-}
+
 

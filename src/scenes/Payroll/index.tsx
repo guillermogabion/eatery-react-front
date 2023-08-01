@@ -122,7 +122,7 @@ export const Payroll = (props: any) => {
                                         Export Payroll
                                     </Button>
                                 </div>
-                                <Table responsive="lg">
+                                <Table responsive>
                                     <thead>
                                         <tr>
                                             {

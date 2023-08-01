@@ -363,7 +363,7 @@ export const SquadScheduleAdjustment = (props: any) => {
     return (
       <div>
 
-        <Table responsive="lg">
+        <Table responsive>
           <thead>
             <tr>
 
@@ -823,7 +823,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
-                      <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                      <Table responsive style={{ maxHeight: '100vh' }}>
                         <thead>
                           <tr>
                             <th style={{ width: 'auto' }}>Date</th>
