@@ -2522,7 +2522,7 @@ export const Employee = (props: any) => {
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
         <div>
-          <div className="w-100">
+          <div className="w-100 ">
 
             <div className="fieldtext d-flex col-md-6">
 
