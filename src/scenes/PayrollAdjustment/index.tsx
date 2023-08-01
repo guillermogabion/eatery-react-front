@@ -891,8 +891,8 @@ export const PayrollAdjustment = (props: any) => {
                        
                 
         <div className="text-muted mb-4">
-            <h2>Total: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.notDeductionAmount) : 0}</span></h2>
-            <h2>Total deducted: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.deductionAmount) : 0}</span></h2>
+            <h2>Total Amount: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.notDeductionAmount) : 0}</span></h2>
+            <h2>Total deduction: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.deductionAmount) : 0}</span></h2>
         </div>
             
         </div>
