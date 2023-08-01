@@ -482,6 +482,20 @@ export const Leaves = (props: any) => {
 
   const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
 
+  function calculateWorkingDays(startDate, endDate) {
+    let currentDate = new Date(startDate);
+    let totalDays = 0;
+  
+    while (currentDate <= endDate) {
+      const dayOfWeek = currentDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Exclude Sundays (0) and Saturdays (6)
+        totalDays++;
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return totalDays;
+  }
 
 
 
@@ -848,89 +862,77 @@ export const Leaves = (props: any) => {
               })
             }
             onSubmit={(values, actions) => {
+
+              const dateFromChecker = new Date(values.dateFrom);
+              const currentDateChecker = new Date();
+
+              const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+              // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+              const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
+
+
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
-              if ( valuesObj.breakdown.length >= 8 && values.type === 1) {
-                Swal.fire("Error!", `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`, "error");
-              }
-              if (condition) {
-                
-              }else {
-                // Swal.fire("Success!", "Success", "success");
+              if (valuesObj.breakdown.length >= 8 && values.type === 1) {
+                Swal.fire(
+                  "Error!",
+                  `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
+                  "error"
+                );
+              } else if (timeDifferenceInDays > 7 || timeDifferenceInDays <= 0) {
+                Swal.fire(
+                  "Error!",
+                  "Selected 'Date From' must be within 7 working days from the date of selection.",
+                  "error"
+                );
+              } else {
                 const loadingSwal = Swal.fire({
                   title: '',
                   allowOutsideClick: false,
                   didOpen: () => {
                     Swal.showLoading();
                   },
-  
                 });
-
-                  if (leaveId) {
-                      delete valuesObj.userId
-
-                      RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 || status === 201) {
-                          if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                              'Error!',
-                              (body.error && body.error.message) || "",
-                              'error'
-                            )
-                          } else {
-                            ErrorSwal.fire(
-                              'Success!',
-                              (body.data) || "",
-                              'success'
-                            )
-                            setLeaveBreakdown([])
-                            getAllLeaves(0, key)
-                            setModalShow(false)
-                            formRef.current?.resetForm()
-                          }
-                        } else {
-                          ErrorSwal.fire(
-                            'Error!',
-                            body.error && body.error.message,
-                            'error'
-                          )
-                        }
-                      })
+              
+                if (leaveId) {
+                  delete valuesObj.userId;
+              
+                  RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        Swal.fire('Error!', body.error.message, 'error');
+                      } else {
+                        Swal.fire('Success!', body.data || "", 'success');
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
                     } else {
-                      RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                        Swal.close();
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 || status === 201) {
-                          if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                              'Error!',
-                              (body.error && body.error.message) || "",
-                              'error'
-                            )
-                          } else {
-                            ErrorSwal.fire(
-                              'Success!',
-                              (body.data) || "",
-                              'success'
-                            )
-                            setLeaveBreakdown([])
-                            getAllLeaves(0, key)
-                            setModalShow(false)
-                            formRef.current?.resetForm()
-                          }
-                        } else {
-                          ErrorSwal.fire(
-                            'Error!',
-                            // 'Something Error.',
-                            body.error && body.error.message,
-                            'error'
-                          )
-                        }
-                      })
+                      Swal.fire('Error!', body.error && body.error.message, 'error');
                     }
+                  });
+                } else {
+                  RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                    Swal.close();
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        Swal.fire('Error!', body.error.message, 'error');
+                      } else {
+                        Swal.fire('Success!', body.data || "", 'success');
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
+                    } else {
+                      Swal.fire('Error!', body.error && body.error.message, 'error');
+                    }
+                  });
+                }
               }
-
             
 
             }}>
@@ -966,13 +968,13 @@ export const Leaves = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
-                      <label>Date From</label>
+                      <label>Date From </label>
                       <input type="date"
                         name="dateFrom"
                         id="dateFrom"
                         className="form-control"
                         value={values.dateFrom}
-                        max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
+                        // max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
                           dateBreakdown(e.target.value, values.dateTo)
