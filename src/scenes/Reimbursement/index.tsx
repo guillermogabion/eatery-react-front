@@ -15,12 +15,13 @@ import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { Formik } from "formik"
 import * as Yup from "yup"
 import ContainerWrapper from "../../components/ContainerWrapper"
-import { regenerate, eye } from "../../assets/images"
+import { regenerate, eye, show_password_dark } from "../../assets/images"
 import { Utility } from "../../utils"
 import ContentWrapper from "../../components/ContentWrapper"
 import { ReimbursementList } from "./component/reimbursementList"
 import { UploadReceipt } from "./component/uploadReceipt"
 import { FileUploader } from "react-drag-drop-files";
+import { auto } from "@popperjs/core"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -48,6 +49,17 @@ export const Reimbursement = (props: any) => {
     const handleChange = (file: any) => {
         setFile(file);
     };
+
+    const [files, setFiles] = useState([])
+    const handleDrop = (event:any) => {
+        event.preventDefault();
+        const { files } = event.dataTransfer;
+        if (files.length > 0) {
+            console.log(files)
+            // setFiles([...files]);
+        }
+    }
+
     return (
         <ContainerWrapper contents={<>
             <div className="px-5 mt-5">
@@ -114,15 +126,28 @@ export const Reimbursement = (props: any) => {
                             Upload Receipt
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="row w-100 px-5">
-                        <div className="w-100 flex justify-center mb-5">
-                            <FileUploader 
-                            handleChange={handleChange} 
-                            classes="px-5 py-5" 
-                            dropMessageStyle={{backgroundColor: 'red'}} 
-                            name="file" 
-                            label="Drag & Drop or choose file to upload" 
-                            types={fileTypes} />
+                    <Modal.Body className="row w-100 px-2 m-0">
+                        <div className="w-100 p-2 flex justify-center mb-5 bg-[#F2F2F2] cursor-pointer" onDrop={handleDrop}>
+                            <div className="bg-white rounded-md p-3 py-4 border border-dashed border-green-50 w-100">
+                                <div className="flex justify-center">
+                                    <img src={show_password_dark} alt="Show" width={80} height="auto" />
+
+                                </div>
+                                <div className="text-center cursor-pointer">
+                                    <h3 className="mt-3 font-bold text-[#189FB5]">Drag & Drop or choose file to upload</h3>
+                                    <label className="mt-2 text-sm text-dark">Supported file types: BMP, TIFF, JPEG, GIF, PNG and PDF</label> <br />
+                                    <label className="text-sm mt-[-10px] text-dark">Maximum file size per attachment: 3 mb.</label>
+                                </div>
+                            </div>
+                            <input
+                                id="fileInput"
+                                className="fileInput"
+                                type="file"
+                                multiple
+                                onChange={(e: any) => {
+                                    console.log(e.target.files)
+                                }}
+                            />
                         </div>
 
                         <div className="flex justify-center">
