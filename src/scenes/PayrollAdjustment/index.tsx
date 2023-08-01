@@ -356,7 +356,7 @@ export const PayrollAdjustment = (props: any) => {
     }
 
 
-    const deleteRecurring = (id: any = 0) => {
+    const deleteAdjustment = (id: any = 0) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "Are you sure you want to delete this transaction?",
@@ -375,7 +375,7 @@ export const PayrollAdjustment = (props: any) => {
                     }
                 });
 
-                RequestAPI.putRequest(`${Api.deleteRecurring}?id=${id}`, "", { "id": id }, {}, async (res) => {
+                RequestAPI.putRequest(`${Api.deleteAdjustment}?id=${id}`, "", { "id": id }, {}, async (res) => {
                     const { status, body = { data: {}, error: {} } } = res;
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
@@ -869,7 +869,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 </label>
                                                 <label
                                                     onClick={() => {
-                                                        deleteRecurring(item.id)
+                                                        deleteAdjustment(item.id)
                                                     }}
                                                     className="text-muted cursor-pointer">
                                                         <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
