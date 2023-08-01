@@ -323,6 +323,11 @@ export const PayrollAdjustment = (props: any) => {
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
+    const createOption = (option: any, name: any, index: any) => {
+        const valueObj: any = [...adjustment];
+        valueObj[index][name] = option && option.value !== "Select" ? option.value : "";
+        setAdjustment([...valueObj]);
+    };
 
     const getAdjustment = (id: any = 0) => {
         RequestAPI.getRequest(
@@ -900,41 +905,43 @@ export const PayrollAdjustment = (props: any) => {
 
         <div className="row">
             <div className="col-md-6">
-                <div className="d-flex justify-content-start ma-3 px-5">
-                    <span className="font-bold pt-2">Select Page Size:</span>
-                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
-                        <option value={10}>10</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                    </select>
+                <div className="justify-content-start px-5">
+                    <span className="font-bold mr-8 text-muted">Total Entries : {adjustmentList.totalElements}</span>
+                    <br />
+                    <div className="flex items-center">
+                        <span className="text-muted mr-3">Select Page Size:</span>
+                        <select id="pageSizeSelect" value={pageSize} className="form-select rounded-md py-2" style={{ fontSize: "16px", width: "150px" }} onChange={handlePageSizeChange}>
+                            <option value={10}>10</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div className="col-md-6">
-                <div className="d-flex justify-content-end ma-3 px-3">
-                    <span className="font-bold mr-8 ">Total Entries : {adjustmentList.totalElements}</span>
+                <div className="d-flex justify-content-end pr-10">
+                <div className="">
+                    <ReactPaginate
+                        className="d-flex justify-content-center align-items-center"
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={(adjustmentList && adjustmentList.totalPages) || 0}
+                        previousLabel="<"
+                        previousLinkClassName="prev-next-pagination"
+                        nextLinkClassName="prev-next-pagination"
+                        activeLinkClassName="active-page-link"
+                        disabledLinkClassName="prev-next-disabled"
+                        pageLinkClassName="page-link"
+                        renderOnZeroPageCount={null}
+                    />
                 </div>
+            </div>
 
             </div>
         </div>
-        <div className="d-flex justify-content-end pr-5">
-            <div className="">
-                <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(adjustmentList && adjustmentList.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeLinkClassName="active-page-link"
-                    disabledLinkClassName="prev-next-disabled"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                />
-            </div>
-        </div>
+        
         <div className="d-flex justify-content-end mt-3 pr-5" >
             <div>
                 <Button className="mx-2"
@@ -1160,45 +1167,24 @@ export const PayrollAdjustment = (props: any) => {
                                             return (
                                                 <div key={`adjustment-${index}`}>
                                                     <div className="form-group row">
+                                            
                                             <div className="col-md-3 mb-3">
                                                 <label>Employee *</label>
-                                                <select
-                                                    id="payrolladjustment_employeename_adjustmentselect"
-                                                    placeholder="Employee Name"
-                                                    className={`form-control ${values.userId == "" ? 'is-invalid' : ''}`}
-                                                    value={values.userId}
-                                                    onChange={(e) => {
-                                                        const selectedValue = e.target.value;
-                                                        const updatedFields = [...adjustment];
-                                                        updatedFields[index].userId = selectedValue;
-                                                        setAdjustment(updatedFields);
-                                                        setFormField(e, setFieldValue)
-
-                                                        const selectedEmployee = employee.find(
-                                                            (item) => item.userId === selectedValue
-                                                        );
+                                                <EmployeeDropdown
+                                                    placeholder={"Employee"}
+                                                    singleChangeOption={(e: any) => {
+                                                        createOption(e, 'userId', index)
                                                     }}
-                                                >
-                                                    <option value="" disabled selected>
-                                                    Select Employee
-                                                    </option>
-                                                    {employee &&
-                                                    employee.length &&
-                                                    employee.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item.empId}`} value={item.userId}>
-                                                        {item.label} - {item.empId}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                                {errors && errors.userId && (
-                                                <p style={{ color: "red", fontSize: "12px" }}>{errors.userId}</p>
-                                                )}
+                                                    name="userId"
+                                                    value={adjustment && adjustment[index] && adjustment[index]['userId'] ? adjustment[index]['userId'] : ""}
+                                                    withEmployeeID={true}
+                                                />
                                             </div>
 
                                             <div className="col-md-3 mb-3">
                                                 <label>Adjustment Name *</label>
                                                 <select
-                                                    className={`form-control ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
+                                                    className={`form-select ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
                                                     name="adjustmentTypeId"
                                                     id="type"
                                                     value={values.adjustmentTypeId}
@@ -1254,7 +1240,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-2 mb-3 mt-4">
                                                 <select
                                                     placeholder="Month"
-                                                    className={`form-control ${values.periodMonth == "" ? 'is-invalid' : ''}`}
+                                                    className={`form-select ${values.periodMonth == "" ? 'is-invalid' : ''}`}
                                                     name="periodMonth"
                                                     id="type"
                                                     value={values.periodMonth}
@@ -1281,7 +1267,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-2 mb-3 mt-4">
                                                 <select
                                                     placeholder="Year"
-                                                    className={`form-control ${values.periodYear == "" ? 'is-invalid' : ''}`}
+                                                    className={`form-select ${values.periodYear == "" ? 'is-invalid' : ''}`}
                                                     name="periodYear"
                                                     id="type"
                                                     value={values.periodYear}

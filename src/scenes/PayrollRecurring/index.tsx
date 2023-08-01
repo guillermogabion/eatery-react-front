@@ -845,7 +845,7 @@ export const Recurring = (props: any) => {
                     </div>
                 </div>
                 <div className="col-md-6">
-                    <div className="d-flex justify-content-end pr-5">
+                    <div className="d-flex justify-content-end pr-10 ">
                         <div className="">
                             <ReactPaginate
                                 className="d-flex justify-content-center align-items-center"
