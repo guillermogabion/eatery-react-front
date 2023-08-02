@@ -879,7 +879,7 @@ export const Leaves = (props: any) => {
                   `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
                   "error"
                 );
-              } else if (timeDifferenceInDays >= 7) {
+              } else if (timeDifferenceInDays >= 7 && values.type === 1) {
                 Swal.fire(
                   "Error!",
                   "Selected 'Date From' must be within 7 working days from the date of selection.",
