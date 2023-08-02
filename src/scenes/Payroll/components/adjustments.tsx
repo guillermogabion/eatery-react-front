@@ -178,22 +178,13 @@ export const Adjustment = (props: any) => {
 
                                     return (
                                         <tr>
-<<<<<<< HEAD
+                                            <td id={"payrolladjustment_id_adjlist_" + item.id}> {item.id} </td>
                                             <td id={"payrolladjustment_employeeid_adjlist_" + item.id}> {item.employeeId} </td>
                                             <td id={"payrolladjustment_employeename_adjlist_" + item.id}> {item.employeeName} </td>
                                             <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.amount)} </td>
                                             <td id={"payrolladjustment_adjustmentname_adjlist_" + item.id}> {item.adjustmentName} </td>
                                             <td id={"payrolladjustment_type_adjlist_" + item.id}> {Utility.removeUnderscore(item.type)} </td>
                                             <td id={"payrolladjustment_deduc_adjlist_" + item.id}> {item.deduc ? "YES" : "NO"} </td>
-=======
-                                            <td id="payrolladjustment_id_adjlist"> {item.id} </td>
-                                            <td id="payrolladjustment_employeeid_adjlist"> {item.employeeId} </td>
-                                            <td id="payrolladjustment_employeename_adjlist"> {item.employeeName} </td>
-                                            <td id="payrolladjustment_amount_adjlist"> {Utility.formatToCurrency(item.amount)} </td>
-                                            <td id="payrolladjustment_adjustmentname_adjlist"> {item.adjustmentName} </td>
-                                            <td id="payrolladjustment_type_adjlist"> {Utility.removeUnderscore(item.type)} </td>
-                                            <td id="payrolladjustment_deduc_adjlist"> {item.deduc ? "YES" : "NO"} </td>
->>>>>>> ef039d2996f1c16a91e5aef2db2df60dfcc5817d
                                             <td>
                                                 <label
                                                     id={"payrolladjustment_update_adjbtn_" + item.id}
