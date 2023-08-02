@@ -621,7 +621,7 @@ export const AllRequest = (props: any) => {
                         </div>
                     </div>
                 </div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             {
@@ -857,7 +857,7 @@ export const AllRequest = (props: any) => {
                         </div>
                     </div>
                 </div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
@@ -1096,7 +1096,7 @@ export const AllRequest = (props: any) => {
                         </div>
                     </div>
                 </div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             {
@@ -1335,7 +1335,7 @@ export const AllRequest = (props: any) => {
                         </div>
                     </div>
                 </div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             {
@@ -1618,7 +1618,7 @@ export const AllRequest = (props: any) => {
                                             />
                                         </div>
                                         <div className="form-group col-md-12 mb-3" >
-                                            <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                                            <Table responsive style={{ maxHeight: '100vh' }}>
                                                 <thead>
                                                     <tr>
                                                         <th style={{ width: 'auto' }}>Date Breakdown</th>
@@ -1972,7 +1972,7 @@ export const AllRequest = (props: any) => {
                         <p id="allrequests_type_rqinfocoap">Type : {COAInitialValues.type}</p>
                         <p id="allrequests_status_rqinfocoap">Status : {COAInitialValues.status}</p>
 
-                        <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                        <Table responsive style={{ maxHeight: '100vh' }}>
                             <thead>
                                 <tr>
                                     <th style={{ width: '100px' }}>Shift Date</th>

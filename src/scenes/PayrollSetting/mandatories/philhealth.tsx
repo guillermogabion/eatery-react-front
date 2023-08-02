@@ -167,7 +167,7 @@ const philhealth = (props: any) => {
     return (
         <div>
 
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {
@@ -181,7 +181,7 @@ const philhealth = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                 {ph &&
                     ph.length > 0 &&
                     ph.map((item, index) => {

@@ -160,7 +160,7 @@ const hdmf = (props: any) => {
     return (
         <div>
 
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {
@@ -174,7 +174,7 @@ const hdmf = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
   {hdmf &&
     hdmf.length > 0 &&
     hdmf.map((item, index) => {

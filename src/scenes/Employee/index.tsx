@@ -238,14 +238,15 @@ export const Employee = (props: any) => {
         if (status === 200 && body && body.data) {
           if (body.error && body.error.message) {
 
-          }else {
-            let tempArray : any = []
-            body.data.forEach((d: any, i:any) => {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
               tempArray.push({
-                squadId : d.id,
-                squadName : d.name
+                squadId: d.id,
+                squadName: d.name
               })
             });
+
             setSquadList(tempArray)
           }
         }
@@ -316,7 +317,7 @@ export const Employee = (props: any) => {
     getAllEmployee(event.selected)
   };
 
-  
+
 
   useEffect(() => {
     if (filterData) {
@@ -332,7 +333,7 @@ export const Employee = (props: any) => {
     filterObj[name] = name && value !== "Select" ? value : ""
     setFilterData(filterObj)
   }
- 
+
 
   const singleChangeOption = (option: any, name: any) => {
     const filterObj: any = { ...filterData }
@@ -616,7 +617,7 @@ export const Employee = (props: any) => {
 
   };
 
-  
+
   const information = (
     <Formik
       initialValues={initialValues}
@@ -803,10 +804,14 @@ export const Employee = (props: any) => {
                   id="roleId"
                   value={values.roleId}
                   onChange={(e) => setFormField(e, setFieldValue)}>
-                  <option key={1} value={1}>Executive</option>
-                  <option key={2} value={2}>Admin</option>
-                  <option key={3} value={3}>Employee</option>
-                  <option key={4} value={4}>Approver</option>
+                  {masterList &&
+                    masterList.roleList &&
+                    masterList.roleList.length &&
+                    masterList.roleList.map((item: any, index: string) => (
+                      <option key={`${index}_`} value={item.id}>
+                        {item.roleName}
+                      </option>
+                    ))}
                 </select>
                 {errors && errors.roleId && (
                   <p id="employee_errorroleid_p" style={{ color: "red", fontSize: "12px" }}>{errors.roleId}</p>
@@ -1492,8 +1497,8 @@ export const Employee = (props: any) => {
                     squadList.length &&
                     squadList.map((_data: any, index: string) => {
                       return (
-                        <option key={_data.name} value={_data.id}>
-                          {_data.name}
+                        <option key={_data.squadName} value={_data.squadId}>
+                          {_data.squadName}
                         </option>
                       )
 
@@ -2517,7 +2522,7 @@ export const Employee = (props: any) => {
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5">
         <div>
-          <div className="w-100">
+          <div className="w-100 ">
 
             <div className="fieldtext d-flex col-md-6">
 
@@ -2525,38 +2530,38 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee</label>
                   <EmployeeDropdown
-                      id="employee_employee_maindropdown"
-                      placeholder={"Employee"}
-                      singleChangeOption={singleChangeOption}
-                      name="userId"
-                      value={filterData && filterData['userId']}
-                      withEmployeeID={true}
-                    />
+                    id="employee_employee_maindropdown"
+                    placeholder={"Employee"}
+                    singleChangeOption={singleChangeOption}
+                    name="userId"
+                    value={filterData && filterData['userId']}
+                    withEmployeeID={true}
+                  />
                 </div>
               </div>
               <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Squad Name</label>
                   <select
-                      id="employee_squad_maindropdown"
-                      className="form-select"
-                      name="squadId"
-                      value={filterData && filterData['squadId']}
-                      onChange={(e) => {
-                        makeFilterData(e)
+                    id="employee_squad_maindropdown"
+                    className="form-select"
+                    name="squadId"
+                    value={filterData && filterData['squadId']}
+                    onChange={(e) => {
+                      makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
-                    
-                      }}
+
+                    }}
                   >
-                      <option value="" disabled selected>
+                    <option value="" disabled selected>
                       Select Squad Name
-                      </option>
-                      {squadList &&
+                    </option>
+                    {squadList &&
                       squadList.length &&
                       squadList.map((item: any, index: string) => (
-                          <option key={`${index}_${item.squadId}`} value={item.squadId}>
+                        <option key={`${index}_${item.squadId}`} value={item.squadId}>
                           {item.squadName}
-                          </option>
+                        </option>
                       ))}
                   </select>
                 </div>
@@ -2565,24 +2570,24 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Gender</label>
                   <select
-                      id="employee_gender_maindropdown"
-                      className="form-select"
-                      name="gender"
-                      value={filterData && filterData['gender']}
-                      onChange={(e) => {
-                        makeFilterData(e)
+                    id="employee_gender_maindropdown"
+                    className="form-select"
+                    name="gender"
+                    value={filterData && filterData['gender']}
+                    onChange={(e) => {
+                      makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
-                    
-                      }}
+
+                    }}
                   >
-                      <option value="" disabled selected>
+                    <option value="" disabled selected>
                       Select Gender
-                      </option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
+                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                   </select>
                 </div>
-                </div>
+              </div>
               {/* <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Position</label>
@@ -2607,34 +2612,34 @@ export const Employee = (props: any) => {
                 <div className="" style={{ width: 200, marginRight: 10 }}>
                   <label>Employee Status</label>
                   <select
-                      id="employee_employeestatus_maindropdown"
-                      className="form-select"
-                      name="employmentStatus"
-                      value={filterData && filterData['employmentStatus']}
-                      onChange={(e) => {
-                        makeFilterData(e)
+                    id="employee_employeestatus_maindropdown"
+                    className="form-select"
+                    name="employmentStatus"
+                    value={filterData && filterData['employmentStatus']}
+                    onChange={(e) => {
+                      makeFilterData(e)
                       // setFieldValue('squadId', e.target.value);
-                    
-                      }}
+
+                    }}
                   >
-                      <option value="" disabled selected>
+                    <option value="" disabled selected>
                       Select Employee Status
-                      </option>
-                      <option value="Regular">Regular</option>
-                      <option value="Maternity">Maternity</option>
-                      <option value="Paternity">Paternity</option>
-                      <option value="Sabbatical">Sabbatical</option>
-                      <option value="Terminated">Terminated</option>
-                      <option value="Resigned">Resigned</option>
-                      <option value="AWOL">AWOL</option>
-                      <option value="Probationary">Probationary</option>
-                      <option value="PartTime">Part Time</option>
-                      <option value="Extended_PartTime">Extended Part Time</option>
-                      <option value="Contructual_Project_Based">Contractual/Project Based</option>
-                      <option value="OJT">OJT</option>
-                      <option value="ON_PIP">ON PIP</option>
-                      <option value="End_of_Contract">End of Contract</option>
-                      <option value="OJT_Ended">OJT Ended</option>
+                    </option>
+                    <option value="Regular">Regular</option>
+                    <option value="Maternity">Maternity</option>
+                    <option value="Paternity">Paternity</option>
+                    <option value="Sabbatical">Sabbatical</option>
+                    <option value="Terminated">Terminated</option>
+                    <option value="Resigned">Resigned</option>
+                    <option value="AWOL">AWOL</option>
+                    <option value="Probationary">Probationary</option>
+                    <option value="PartTime">Part Time</option>
+                    <option value="Extended_PartTime">Extended Part Time</option>
+                    <option value="Contructual_Project_Based">Contractual/Project Based</option>
+                    <option value="OJT">OJT</option>
+                    <option value="ON_PIP">ON PIP</option>
+                    <option value="End_of_Contract">End of Contract</option>
+                    <option value="OJT_Ended">OJT Ended</option>
                   </select>
                 </div>
               </div>
@@ -2650,7 +2655,7 @@ export const Employee = (props: any) => {
                 </div>
               </div>
             </div>
-            <Table responsive="lg">
+            <Table responsive>
               <thead>
                 <tr>
                   {
@@ -2993,7 +2998,7 @@ export const Employee = (props: any) => {
                           <img id="employee_confirmshowpassworddark_changepwordbtn" src={show_password_dark} alt="Show" />
                         </span>
                         <span className="hidepass">
-                          <img id="employee_confirmhidepassworddark_changepwordbtn" src={hide_password_dark} alt="Hide" /> 
+                          <img id="employee_confirmhidepassworddark_changepwordbtn" src={hide_password_dark} alt="Hide" />
                         </span>
                       </Button>
                       {errors && errors.confirmPassword && <p style={{

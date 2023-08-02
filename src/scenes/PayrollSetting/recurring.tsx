@@ -26,6 +26,7 @@ const Recurring = (props: any) => {
     const [typeType, setTypetype] = useState("");
     const [showButtonIsDeduction, setShowButtonIsDeduction] = useState(false);
     const [showButtonTypetype, setShowButtonTypetype] = useState(false);
+    const [pageSize, setPageSize] = useState(10);
 
     const [initialValues, setInitialValues] = useState<any>({
             "name" : "",
@@ -35,6 +36,7 @@ const Recurring = (props: any) => {
             "affectsGross" : true
     })
     const tableHeaders = [
+        'ID',
         'Recurring Name',
         'Recurring Description',
         'Type',
@@ -51,7 +53,7 @@ const Recurring = (props: any) => {
         affectsGross: Yup.string().required("Gross Affected is required"),
       });
 
-    const getAllRecurringType = (pageNo: any) => {
+    const getAllRecurringType = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -64,7 +66,7 @@ const Recurring = (props: any) => {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getAllRecurringTypeSetting}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllRecurringTypeSetting}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -88,11 +90,17 @@ const Recurring = (props: any) => {
             setFilterData(filterObj)
     }
     const handlePageClick = (event: any) => {
-        getAllRecurringType(event.selected)
+        const selectedPage = event.selected;
+        getAllRecurringType(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllRecurringType(0, selectedPageSize);
     };
 
     useEffect(() => {
-        getAllRecurringType(0)
+        getAllRecurringType(0, pageSize)
     }, [])
     const setFormField = (e: any, setFieldValue: any) => {
         const { name, value } = e.target
@@ -256,7 +264,7 @@ const Recurring = (props: any) => {
                     <div className="input-container col-md-3">
                         <Button
                         id="payrollsettingrecurring_search_btn"
-                        style={{ width: 210 }}
+                        style={{ width: 100 }}
                         onClick={() => getAllRecurringType(0)}
                         className="btn btn-primary mx-2 mt-4">
                         Search
@@ -265,7 +273,7 @@ const Recurring = (props: any) => {
                 </div>
             </div>
 
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {
@@ -279,7 +287,7 @@ const Recurring = (props: any) => {
                     }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         recurringType &&
                         recurringType.content &&
@@ -287,6 +295,7 @@ const Recurring = (props: any) => {
                         recurringType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
+                                    <td id={"payrollsettingrecurring_id_recurringtypedata_" + item.id}> {item.id} </td>
                                     <td id={"payrollsettingrecurring_name_recurringtypedata_" + item.id}> {item.name} </td>
                                     <td id={"payrollsettingrecurring_description_recurringtypedata_" + item.id}> {item.description}</td>
                                     <td id={"payrollsettingrecurring_type_recurringtypedata_" + item.id}> {Utility.removeUnderscore(item.type)}</td>
@@ -327,6 +336,23 @@ const Recurring = (props: any) => {
             :
             null
             }
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="d-flex ma-3">
+                            <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                            <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="d-flex justify-content-end ma-3">
+                            <span className="font-bold mr-8 ">Total Entries : { recurringType.totalElements }</span>
+                        </div>   
+                    </div>
+                </div>
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate

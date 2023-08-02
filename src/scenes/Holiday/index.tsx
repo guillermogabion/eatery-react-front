@@ -208,7 +208,7 @@ export const Holiday = (props: any) => {
                   Search
                 </Button>
               </div>
-              <Table responsive="lg">
+              <Table responsive>
                 <thead>
                   <tr>
                     <th style={{ width: 'auto' }}>Name</th>

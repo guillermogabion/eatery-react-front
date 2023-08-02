@@ -57,8 +57,19 @@ export default function GeneratePayroll(props: any) {
         setEmployeeList([...valuesObj])
     }
 
+    const checkIfHasCheck = () => {
+        const valuesObj: any = [...employeeList]
+
+        valuesObj.forEach((data: any, index: any) => {
+            if (data.isCheck) {
+                return true
+            }
+        });
+
+        return false
+    }
+
     const generatePayroll = (isRegenerate: any = false) => {
-        setIsSubmit(true)
         const valuesObj: any = { ...props.payrollData }
         let userIds: any = []
         const tempArray: any = [...employeeList]
@@ -73,39 +84,49 @@ export default function GeneratePayroll(props: any) {
         if (isRegenerate) {
             endpoint = Api.reGeneratePayroll
         }
-        RequestAPI.postRequest(
-            endpoint,
-            "",
-            valuesObj,
-            {},
-            async (res) => {
-                const { status, body = { data: {}, error: {} } } = res;
-                setIsSubmit(false)
-                if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                        ErrorSwal.fire(
-                            "Error!",
-                            body.error.message || "",
-                            "error"
-                        );
+
+        if (userIds.length > 0) {
+            setIsSubmit(true)
+            RequestAPI.postRequest(
+                endpoint,
+                "",
+                valuesObj,
+                {},
+                async (res) => {
+                    const { status, body = { data: {}, error: {} } } = res;
+                    setIsSubmit(false)
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                "Error!",
+                                body.error.message || "",
+                                "error"
+                            );
+                        } else {
+                            ErrorSwal.fire(
+                                "Success",
+                                body.data || "",
+                                "success"
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    // item.isCheck
+                                    selectAllEmployees(false)
+                                    setIsSelectAll(false)
+                                }
+                            });
+                        }
                     } else {
-                        ErrorSwal.fire(
-                            "Success",
-                            body.data || "",
-                            "success"
-                        ).then((result) => {
-                            if (result.isConfirmed) {
-                                // item.isCheck
-                                selectAllEmployees(false)
-                                setIsSelectAll(false)
-                            }
-                        });
+                        ErrorSwal.fire("Error!", "Something Error.", "error");
                     }
-                } else {
-                    ErrorSwal.fire("Error!", "Something Error.", "error");
                 }
-            }
-        );
+            );
+        } else {
+            ErrorSwal.fire(
+                "Warning",
+                "No employee selected.",
+                "warning"
+            );
+        }
     }
 
     const downloadPayrollRegister = () => {
@@ -159,7 +180,7 @@ export default function GeneratePayroll(props: any) {
                             <th>Employee Name</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="custom-row">
                         {
                             employeeList &&
                                 employeeList.length > 0 ?

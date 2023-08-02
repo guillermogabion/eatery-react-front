@@ -71,7 +71,7 @@ const DashboardMenu = (props: any) => {
         return (
             <div>
                 <div className="w-full flex justify-end p-3 dashboardMenuClose pointer" onClick={onToggle}>
-                    <FaRegWindowClose size={25} color={"#ffffff"}/>
+                    <FaRegWindowClose size={25} color={"#ffffff"} />
                 </div>
                 <div className="p-3 px-5 mb-3 d-flex justify-content-center align-items-center">
                     <NavLink to={"/timekeeping"}
@@ -83,14 +83,35 @@ const DashboardMenu = (props: any) => {
                     </NavLink>
                 </div>
 
-                <Accordion defaultActiveKey={menu_index} style={{ borderRadius: 0, border: 0 }} >
-                    {
-                        nav.length > 0 && nav.map((d: any, i: any) => {
-                            const { name, menu } = d
 
+                {
+                    nav.length > 0 && nav.map((d: any, i: any) => {
+                        const { name, menu, route } = d
+                        if (route != "") {
                             return (
-                                <Accordion.Item eventKey={i} key={i} style={{ borderRadius: 0, border: 0, backgroundColor: "#009FB5" }} >
-                                    <Accordion.Header style={{ fontWeight: 'bolder' }}>
+                                <div >
+                                    
+                                    <NavLink
+                                        key={`${index}${route}`}
+                                        activeClassName={currentRoutePath == route ? "activeMenu" : ""}
+                                        className="text-white flex items-center cursor-pointer accordionMenu justify-start "
+                                        style={{ minHeight: 60, textDecoration: 'none', paddingLeft: 18}}
+                                        to={route}
+                                        onClick={() => {
+                                            setCurrentRoutePath(route)
+                                        }}>
+                                        <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
+                                        <span>
+                                            <span>{name}</span>
+                                        </span>
+                                    </NavLink>
+                                </div>
+                            )
+                        }
+                        return (
+                            <Accordion defaultActiveKey={menu_index} key={name} style={{ borderRadius: 0, border: 0 }} >
+                                <Accordion.Item eventKey={i} key={`${i}${name}`} style={{ borderRadius: 0, border: 0, backgroundColor: "#009FB5" }} >
+                                    <Accordion.Header key={`${i}`} style={{ fontWeight: 'bolder' }}>
                                         <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
                                         {name}
                                     </Accordion.Header>
@@ -101,7 +122,7 @@ const DashboardMenu = (props: any) => {
 
                                                 return (
                                                     <NavLink
-                                                        key={index}
+                                                        key={`${index}${label}`}
                                                         activeClassName={currentRoutePath == route ? "activeMenu" : ""}
                                                         className="text-white d-flex align-items-center cursor-pointer accordionMenu"
                                                         style={{ minHeight: 60, textDecoration: 'none', paddingLeft: 50 }}
@@ -118,10 +139,11 @@ const DashboardMenu = (props: any) => {
                                         }
                                     </Accordion.Body>
                                 </Accordion.Item>
-                            )
-                        })
-                    }
-                </Accordion>
+                            </Accordion>
+                        )
+                    })
+                }
+
             </div>
         )
     }, [nav])

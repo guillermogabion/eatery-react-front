@@ -17,6 +17,8 @@ export default function Leaves(props: any) {
     const [filterData, setFilterData] = React.useState([]);
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const [employeeList, setEmployeeList] = useState<any>([])
+    const [pageSize, setPageSize] = useState(10);
+
     const [statusList, setStatusList] = useState<any>([
         'all',
         'pending',
@@ -46,10 +48,16 @@ export default function Leaves(props: any) {
     
 
     const handlePageClick = (event: any) => {
-        getAllLeaves(event.selected)
+        const selectedPage = event.selected;
+        getAllLeaves(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllLeaves(0, selectedPageSize);
     };
 
-    const getAllLeaves = (page: any = 0) => {
+    const getAllLeaves = (page: any = 0, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
 
@@ -65,7 +73,7 @@ export default function Leaves(props: any) {
 
         if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
             RequestAPI.getRequest(
-                `${Api.allRequestLeave}?size=10${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
+                `${Api.allRequestLeave}?size=${pageSize ? pageSize : '10'}${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
                 "",
                 {},
                 {},
@@ -210,6 +218,7 @@ export default function Leaves(props: any) {
                         {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                 <>
+                                    <th>ID</th>
                                     <th>Employee ID</th>
                                     <th>Employee Name</th>
                                 </> : null
@@ -220,7 +229,7 @@ export default function Leaves(props: any) {
                         <th>Date To</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         allLeaves &&
                             allLeaves.content &&
@@ -230,17 +239,18 @@ export default function Leaves(props: any) {
                                     allLeaves.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
-                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.userId}>{item.userId}</td>
+                                                <td id={"payrollgenerate_id_allleavesdata_" + item.id}>{item.id}</td>
+                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.id}>{item.id}</td>
                                                 {
                                                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                         <>
-                                                            <td id={"payrollgenerate_name_allleavesdata_" + item.userId}> {item.lastName}, {item.firstName} </td>
+                                                            <td id={"payrollgenerate_name_allleavesdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                         </> : null
                                                 }
-                                                <td id={"payrollgenerate_type_allleavesdata_" + item.userId}> {item.type} </td>
-                                                <td id={"payrollgenerate_withpay_allleavesdata_" + item.userId}> {item.withPay == true ? "YES" : "NO"} </td>
-                                                <td id={"payrollgenerate_datefrom_allleavesdata_" + item.userId}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                <td id={"payrollgenerate_dateto_allleavesdata_" + item.userId}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                <td id={"payrollgenerate_type_allleavesdata_" + item.id}> {item.type} </td>
+                                                <td id={"payrollgenerate_withpay_allleavesdata_" + item.id}> {item.withPay == true ? "YES" : "NO"} </td>
+                                                <td id={"payrollgenerate_datefrom_allleavesdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                <td id={"payrollgenerate_dateto_allleavesdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                             </tr>
                                         )
                                     })
@@ -264,6 +274,16 @@ export default function Leaves(props: any) {
                     null
             }
             <br />
+            <div className="d-flex ma-3">
+                <div className="d-flex ma-3">
+                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                        <option value={10}>10</option>
+                        <option value={50}>50</option>
+                        <option value={100}>100</option>
+                    </select>
+                </div>
+            </div>
             <div className="d-flex justify-content-end">
                 <div className="">
                     <ReactPaginate

@@ -24,6 +24,8 @@ export const Adjustment = (props: any) => {
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
+    const [pageSize, setPageSize] = useState(10);
+
     const [usedOption, setUseOption] = React.useState([
         {"name": "All","value": ""},
         {"name": "True","value": "True"},
@@ -43,6 +45,7 @@ export const Adjustment = (props: any) => {
     })
 
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Amount',
@@ -58,7 +61,7 @@ export const Adjustment = (props: any) => {
         }
     }, [filterData])
 
-    const getAllAdjustmentList = (pageNo: any) => {
+    const getAllAdjustmentList = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -72,7 +75,7 @@ export const Adjustment = (props: any) => {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getAllPayrollList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllPayrollList}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -90,11 +93,18 @@ export const Adjustment = (props: any) => {
         )
     }
     useEffect(() => {
-        getAllAdjustmentList(0)
+        getAllAdjustmentList(0, pageSize)
     }, [])
 
     const handlePageClick = (event: any) => {
-        getAllAdjustmentList(event.selected)
+        const selectedPage = event.selected;
+
+        getAllAdjustmentList(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllAdjustmentList(0, selectedPageSize);
     };
 
     const makeFilterData = (event: any) => {
@@ -112,7 +122,7 @@ export const Adjustment = (props: any) => {
 
     return (
         <>
-            <div className="w-100">
+            <div className="w-100 horizontal-scroll">
                 <div>
                     <div className="w-100 pt-2">
                         <div className="fieldtext d-flex col-md-6">
@@ -145,7 +155,7 @@ export const Adjustment = (props: any) => {
                             </div>
                         </div>
                     </div>
-                    <Table responsive="lg">
+                    <Table responsive>
                         <thead>
                             <tr>
                                 {
@@ -159,7 +169,7 @@ export const Adjustment = (props: any) => {
                                 }
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                             {
                                 adjustmentList &&
                                 adjustmentList.content &&
@@ -168,12 +178,22 @@ export const Adjustment = (props: any) => {
 
                                     return (
                                         <tr>
+<<<<<<< HEAD
                                             <td id={"payrolladjustment_employeeid_adjlist_" + item.id}> {item.employeeId} </td>
                                             <td id={"payrolladjustment_employeename_adjlist_" + item.id}> {item.employeeName} </td>
                                             <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.amount)} </td>
                                             <td id={"payrolladjustment_adjustmentname_adjlist_" + item.id}> {item.adjustmentName} </td>
                                             <td id={"payrolladjustment_type_adjlist_" + item.id}> {Utility.removeUnderscore(item.type)} </td>
                                             <td id={"payrolladjustment_deduc_adjlist_" + item.id}> {item.deduc ? "YES" : "NO"} </td>
+=======
+                                            <td id="payrolladjustment_id_adjlist"> {item.id} </td>
+                                            <td id="payrolladjustment_employeeid_adjlist"> {item.employeeId} </td>
+                                            <td id="payrolladjustment_employeename_adjlist"> {item.employeeName} </td>
+                                            <td id="payrolladjustment_amount_adjlist"> {Utility.formatToCurrency(item.amount)} </td>
+                                            <td id="payrolladjustment_adjustmentname_adjlist"> {item.adjustmentName} </td>
+                                            <td id="payrolladjustment_type_adjlist"> {Utility.removeUnderscore(item.type)} </td>
+                                            <td id="payrolladjustment_deduc_adjlist"> {item.deduc ? "YES" : "NO"} </td>
+>>>>>>> ef039d2996f1c16a91e5aef2db2df60dfcc5817d
                                             <td>
                                                 <label
                                                     id={"payrolladjustment_update_adjbtn_" + item.id}
@@ -213,6 +233,24 @@ export const Adjustment = (props: any) => {
                             :
                             null
                     }
+                </div>
+            </div>
+            
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="d-flex ma-3">
+                        <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                        <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                            <option value={10}>10</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="d-flex justify-content-end ma-3">
+                        <span className="font-bold mr-8 ">Total Entries : { adjustmentList.totalElements }</span>
+                    </div>   
                 </div>
             </div>
             <div className="d-flex justify-content-end">

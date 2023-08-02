@@ -206,7 +206,7 @@ export const MyAttendanceSummary = (props: any) => {
     const attendanceTable = useCallback(() => {
         return (
             <div>
-                <Table responsive="lg">
+                <Table responsive>
                     <thead>
                         <tr>
                             <th style={{ width: 'auto' }}>Fullname</th>

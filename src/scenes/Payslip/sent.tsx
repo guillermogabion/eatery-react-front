@@ -25,11 +25,14 @@ const sent = (props : any ) => {
     const [payrollMonth, setPayrollMonth] = useState("");
     const [payrollYear, setPayrollYear] = useState("");
     const [status, setStatus] = useState("");
+    const [pageSize, setPageSize] = useState(10);
+
 
     const { emailData } = props
     const email = { ...emailData }
 
     const tableHeaders = [
+        'ID',
         'Payroll Period',
         'Status',
         'Action',
@@ -73,7 +76,7 @@ const sent = (props : any ) => {
             setPeriodMonths(monthNumber);
             };
            
-        const getAllPayroll = (pageNo : any ) => {
+        const getAllPayroll = (pageNo : any, pageSize: any ) => {
             let queryString = ""
             let filterDataTemp = { ...filterData }
             if (filterDataTemp) {
@@ -87,7 +90,7 @@ const sent = (props : any ) => {
             })
             }
             RequestAPI.getRequest(
-                `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+                `${Api.payrollPayListAll}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
                 "",
                 {},
                 {},
@@ -104,7 +107,7 @@ const sent = (props : any ) => {
             }
 
             useEffect(() => {
-                getAllPayroll(0)
+                getAllPayroll(0, pageSize)
             }, [])
 
            
@@ -124,8 +127,16 @@ const sent = (props : any ) => {
                     setFilterData(filterObj)
             }
             const handlePageClick = (event: any) => {
-                getAllPayroll(event.selected)
+                const selectedPage = event.selected;
+                getAllPayroll(selectedPage, pageSize)
             };
+            const handlePageSizeChange = (event) => {
+                const selectedPageSize = parseInt(event.target.value, 10);
+                setPageSize(selectedPageSize);
+                getAllPayroll(0, selectedPageSize);
+            };
+
+
             const resetMonth = () => {
             setPayrollMonth("");
             const selectElement = document.getElementById("month");
@@ -267,14 +278,14 @@ const sent = (props : any ) => {
                                 </div>
                                 <Button
                                 id="payslipsent_search_btn"
-                                style={{ width: 210 }}
+                                style={{ width: 100 }}
                                 onClick={() => getAllPayroll(0)}
                                 className="btn btn-primary mx-2 mt-4">
                                 Search
                                 </Button>
                             </div>
                         </div>
-                        <Table responsive="lg">
+                        <Table responsive>
                         <thead>
                         <tr>
                             {
@@ -288,7 +299,7 @@ const sent = (props : any ) => {
                             }
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                         {
                             payrollList &&
                             payrollList.content &&
@@ -296,9 +307,10 @@ const sent = (props : any ) => {
                             payrollList.content.map((item: any, index: any) => {
         
                             return (
-                                <tr>
+                                <tr style={{height: '10px'}}>
                                 
                                 {/* <td> {item.isGenerated} </td> */}
+                                <td id={"payslipsent_id_payrolllistdata_" + item.id}> {item.id} </td>
                                 <td id={"payslipsent_monthyear_payrolllistdata_" + item.id}> {getMonthName(item.periodMonth)} {item.periodYear} </td>
                                 <td id={"payslipsent_isgenerated_payrolllistdata_" + item.id}> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
                                 <td>
@@ -319,21 +331,37 @@ const sent = (props : any ) => {
                         }
                         </tbody>
                         </Table>
-                            {
-                                payrollList &&
-                                payrollList.length == 0 ?
-                                <div className="w-100 text-center">
-                                    <label htmlFor="">No Records Found</label>
-                                </div>
-                                :
-                                null
-                            }
+                        {
+                            payrollList &&
+                            payrollList.length == 0 ?
+                            <div className="w-100 text-center">
+                                <label htmlFor="">No Records Found</label>
+                            </div>
+                            :
+                            null
+                        }
                 
         
-                
+       
+                <div className="row">
+                            <div className="col-md-6">
+                                <div className="d-flex ma-3">
+                                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="d-flex justify-content-end ma-3">
+                                    <span className="font-bold mr-8 ">Total Entries : { payrollList.totalElements }</span>
+                                </div>   
+                            </div>
+                        </div>
                 <div className="d-flex justify-content-end">
                   <div className="">
-                    
                      <ReactPaginate
                     className="d-flex justify-content-center align-items-center"
                     breakLabel="..."

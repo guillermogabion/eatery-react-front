@@ -482,6 +482,20 @@ export const Leaves = (props: any) => {
 
   const maxDate = getNextWeekday(new Date()).toISOString().split("T")[0];
 
+  function calculateWorkingDays(startDate, endDate) {
+    let currentDate = new Date(startDate);
+    let totalDays = 0;
+  
+    while (currentDate <= endDate) {
+      const dayOfWeek = currentDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Exclude Sundays (0) and Saturdays (6)
+        totalDays++;
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return totalDays;
+  }
 
 
 
@@ -491,7 +505,7 @@ export const Leaves = (props: any) => {
     return (
       <div>
 
-        <Table responsive="lg">
+        <Table responsive>
           <thead>
             <tr>
               {
@@ -848,80 +862,78 @@ export const Leaves = (props: any) => {
               })
             }
             onSubmit={(values, actions) => {
-              const loadingSwal = Swal.fire({
-                title: '',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                },
 
-              });
+              const dateFromChecker = new Date(values.dateFrom);
+              const currentDateChecker = new Date();
+
+              const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+              // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+              const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
+
+
               const valuesObj: any = { ...values }
               valuesObj.breakdown = leaveBreakdown
-              if (leaveId) {
-                delete valuesObj.userId
-
-                RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
-                    } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setLeaveBreakdown([])
-                      getAllLeaves(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      body.error && body.error.message,
-                      // (body.error && body.error.message),
-                      'error'
-                    )
-                  }
-                })
+              if (valuesObj.breakdown.length >= 8 && values.type === 1) {
+                Swal.fire(
+                  "Error!",
+                  `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
+                  "error"
+                );
+              } else if (timeDifferenceInDays >= 7 && values.type === 1) {
+                Swal.fire(
+                  "Error!",
+                  "Selected 'Date From' must be within 7 working days from the date of selection.",
+                  "error"
+                );
               } else {
-                RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                  Swal.close();
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                const loadingSwal = Swal.fire({
+                  title: '',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+                });
+              
+                if (leaveId) {
+                  delete valuesObj.userId;
+              
+                  RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        Swal.fire('Error!', body.error.message, 'error');
+                      } else {
+                        Swal.fire('Success!', body.data || "", 'success');
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
-                      setLeaveBreakdown([])
-                      getAllLeaves(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
+                      Swal.fire('Error!', body.error && body.error.message, 'error');
                     }
-                  } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      // 'Something Error.',
-                      body.error && body.error.message,
-                      'error'
-                    )
-                  }
-                })
+                  });
+                } else {
+                  RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                    Swal.close();
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        Swal.fire('Error!', body.error.message, 'error');
+                      } else {
+                        Swal.fire('Success!', body.data || "", 'success');
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
+                    } else {
+                      Swal.fire('Error!', body.error && body.error.message, 'error');
+                    }
+                  });
+                }
               }
+            
 
             }}>
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
@@ -956,23 +968,17 @@ export const Leaves = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-6 mb-3" >
-                      <label>Date From</label>
+                      <label>Date From </label>
                       <input type="date"
-                        onKeyDown={(e) => e.preventDefault()}
                         name="dateFrom"
                         id="dateFrom"
                         className="form-control"
                         value={values.dateFrom}
+                        // max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
-                          // setDateFrom(e.target.value)
                           dateBreakdown(e.target.value, values.dateTo)
                         }}
-                        // min={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
-                        // max={values.type == 1 ? new Date(Date.now()).toISOString().split("T")[0] : undefined} 
-                        // max={values.type == 1 ? getNextWeekday(Date.now()).toISOString().split("T")[0] : undefined} 
-                        max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : values.dateTo}
-
                         placeholder="dd/mm/yyyy"
                       />
                       {errors && errors.dateFrom && (
@@ -982,13 +988,11 @@ export const Leaves = (props: any) => {
                     <div className="form-group col-md-6 mb-3" >
                       <label>Date To</label>
                       <input type="date"
-                        onKeyDown={(e) => e.preventDefault()}
                         name="dateTo"
                         id="dateTo"
                         className="form-control"
                         value={values.dateTo}
                         min={values.dateFrom}
-                        max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : undefined}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
 
@@ -1015,7 +1019,7 @@ export const Leaves = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
-                      <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                      <Table responsive style={{ maxHeight: '100vh' }}>
                         <thead>
                           <tr>
                             <th style={{ width: 'auto' }}>Date Breakdown</th>
@@ -1261,7 +1265,7 @@ export const Leaves = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
-                      <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+                      <Table responsive style={{ maxHeight: '100vh' }}>
                         <thead>
                           <tr>
                             <th style={{ width: 'auto' }}>Date Breakdown</th>

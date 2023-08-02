@@ -18,6 +18,7 @@ const Overtime = (props) => {
   const [selectedOvertime, setSelectedOvertime] = useState(null);
 
   const tableHeaders = [
+    'ID',
     '',
     'First 8 Hours',
     'OT',
@@ -120,7 +121,7 @@ const Overtime = (props) => {
 
   return (
     <div>
-      <Table responsive="lg">
+      <Table responsive>
         <thead>
           <tr>
             {tableHeaders &&
@@ -132,12 +133,13 @@ const Overtime = (props) => {
               })}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="custom-row">
           {overtime &&
             overtime.length > 0 &&
             overtime.map((item, index) => {
               return (
                 <tr key={index}>
+                  <td id="payrollsettingot_id_data">{item.id}</td>
                   <td id="payrollsettingot_name_data">{item.name}</td>
                   <td id="payrollsettingot_firsteight_data">{item.firstEight}</td>
                   <td id="payrollsettingot_ot_data">{item.ot}</td>
@@ -177,7 +179,7 @@ const Overtime = (props) => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-v-center">
-            Create New Adjustment Type
+             Update Overtime Setting
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="row w-100 px-5">
@@ -253,25 +255,7 @@ const Overtime = (props) => {
                         />
                         {touched.ot && errors.ot && <div id="payrollsettingot_errorot_modalp" className="invalid-feedback">{errors.ot}</div>}
                       </div>
-                      <div className="form-group col-md-4 mb-3">
-                        <label>OT</label>
-                        <input
-                        id="payrollsettingot_ot2_modalinput"
-                        type="number"
-                        name="ot"
-                        className={`form-control ${touched.ot && errors.ot ? 'is-invalid' : ''}`}
-                        value={values.ot}
-                        onChange={(e) => {
-                            setFieldValue('ot', e.target.value);
-                        }}
-                        onKeyPress={(e) => {
-                            if (e.key === '-' || e.key === '+') {
-                                e.preventDefault();
-                            }
-                        }}
-                        />
-                        {touched.ot && errors.ot && <div id="payrollsettingot_ot2_modalp" className="invalid-feedback">{errors.ot}</div>}
-                      </div>
+                     
                       <div className="form-group col-md-4 mb-3">
                         <label>ND</label>
                         <input
@@ -290,6 +274,24 @@ const Overtime = (props) => {
                         }}
                         />
                         {touched.nd && errors.nd && <div id="payrollsettingot_errornd_modalp" className="invalid-feedback">{errors.nd}</div>}
+                      </div>
+                      <div className="form-group col-md-4 mb-3">
+                        <label>NDOT</label>
+                        <input
+                        type="number"
+                        name="ndot"
+                        className={`form-control ${touched.ot && errors.ot ? 'is-invalid' : ''}`}
+                        value={values.ndot}
+                        onChange={(e) => {
+                            setFieldValue('ndot', e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                            if (e.key === '-' || e.key === '+') {
+                                e.preventDefault();
+                            }
+                        }}
+                        />
+                        {touched.ot && errors.ot && <div className="invalid-feedback">{errors.ot}</div>}
                       </div>
                     </div>
                    

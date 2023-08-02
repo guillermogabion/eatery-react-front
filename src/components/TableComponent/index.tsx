@@ -7,7 +7,7 @@ const TableComponent = (props: any) => {
     const { tableHeaders } = props
     return (
         <div>
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {tableHeaders.map((data: any, index: any) => {

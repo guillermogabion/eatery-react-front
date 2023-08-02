@@ -16,7 +16,7 @@ const unsent = (props : any ) => {
     const [employee, setEmployee] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [ failedPayslipList, setFailedPayslipList ] = useState<any>([]);
-    const [filterData, setFilterData] = React.useState([]);
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const selectRef = useRef(null);
     const [showButtonMonth, setShowButtonMonth] = useState(false);
     const [showButtonYear, setShowButtonYear] = useState(false);
@@ -24,11 +24,14 @@ const unsent = (props : any ) => {
     const [payrollMonth, setPayrollMonth] = useState("");
     const [payrollYear, setPayrollYear] = useState("");
     const [status, setStatus] = useState("");
+    const [pageSize, setPageSize] = useState(10);
+
 
     const { emailData } = props
     const email = { ...emailData }
 
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Payroll Period',
@@ -73,7 +76,7 @@ const unsent = (props : any ) => {
             setPeriodMonths(monthNumber);
             };
            
-            const getAllPayrollFailed = (pageNo : any ) => {
+            const getAllPayrollFailed = (pageNo : any, pageSize: any ) => {
                 let queryString = ""
                 let filterDataTemp = { ...filterData }
                 if (filterDataTemp) {
@@ -87,7 +90,7 @@ const unsent = (props : any ) => {
                 })
                 }
                 RequestAPI.getRequest(
-                    `${Api.failedEmail}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+                    `${Api.failedEmail}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
                     "",
                     {},
                     {},
@@ -178,33 +181,54 @@ const unsent = (props : any ) => {
                     setFilterData(filterObj)
             }
             const handlePageClick = (event: any) => {
-                getAllEmployee(event.selected)
+                 const selectedPage = event.selected;
+                getAllPayrollFailed(selectedPage, pageSize)
+            };
+             const handlePageSizeChange = (event) => {
+                const selectedPageSize = parseInt(event.target.value, 10);
+                setPageSize(selectedPageSize);
+                getAllPayrollFailed(0, selectedPageSize);
             };
             const resetMonth = () => {
             setPayrollMonth("");
-            const selectElement = document.getElementById("month");
+            const selectElement = document.getElementById("month1");
                 if (selectElement) {
                 selectElement.selectedIndex = 0;
                 }
                 setShowButtonMonth(false);
+                setFilterData(prevFilterData => {
+                    const filterObj = { ...prevFilterData };
+                    delete filterObj.payrollMonth;
+                    return filterObj;
+                  });
     
             }
             const resetYear = () => {
             setPayrollYear("");
-            const selectElement = document.getElementById("year");
+            const selectElement = document.getElementById("year1");
                 if (selectElement) {
                 selectElement.selectedIndex = 0;
                 }
                 setShowButtonYear(false);
+                setFilterData(prevFilterData => {
+                    const filterObj = { ...prevFilterData };
+                    delete filterObj.payrollYear;
+                    return filterObj;
+                  });
     
             }
             const resetStatus = () => {
             setStatus("");
-            const selectElement = document.getElementById("status");
+            const selectElement = document.getElementById("status1");
                 if (selectElement) {
                 selectElement.selectedIndex = 0;
                 }
                 setShowButtonStatus(false);
+                setFilterData(prevFilterData => {
+                    const filterObj = { ...prevFilterData };
+                    delete filterObj.status;
+                    return filterObj;
+                  });
         
             }
             const singleChangeOption = (option: any, name: any) => {
@@ -218,11 +242,21 @@ const unsent = (props : any ) => {
                       <div>
                         <div className="w-100 pt-2">
                             <div className="fieldtext d-flex ">
+                                <div className="input-container col-md-2">
+                                    <label>Employee Name</label>
+                                        <EmployeeDropdown
+                                            placeholder={"Employee"}
+                                            singleChangeOption={singleChangeOption}
+                                            name="userId"
+                                            value={filterData && filterData['userId']}
+                                            withEmployeeID={true}
+                                            />
+                                </div>
                                 <div className="input-container clearable-select col-md-2">
                                 <label> Month </label>
                                 <select 
                                     name="payrollMonth" 
-                                    id="month"
+                                    id="month1"
                                     onChange={(e) => { makeFilterData(e)
                                         setShowButtonMonth(e.target.value !== 'default')
                                     }}
@@ -256,7 +290,7 @@ const unsent = (props : any ) => {
                                     <select
                                         className={`form-select`}
                                         name="payrollYear"
-                                        id="year"
+                                        id="year1"
                                         onChange={(e) => {makeFilterData(e)
                                             setShowButtonYear(e.target.value !== 'default')
                                             
@@ -324,7 +358,7 @@ const unsent = (props : any ) => {
                                 </Button>
                             </div>
                         </div>
-                        <Table responsive="lg">
+                        <Table responsive>
                         <thead>
                         <tr>
                             {
@@ -338,7 +372,7 @@ const unsent = (props : any ) => {
                             }
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                         {
                             failedPayslipList &&
                             failedPayslipList.content &&
@@ -347,6 +381,7 @@ const unsent = (props : any ) => {
         
                             return (
                                 <tr>
+                                <td id={"payslipunsent_id_failedpaysliplistdata_" + item.id}>{ item.id }</td>
                                 <td id={"payslipunsent_employeeid_failedpaysliplistdata_" + item.id}>{ item.employeeId }</td>
                                 <td id={"payslipunsent_employeename_failedpaysliplistdata_" + item.id}>{ item.employeeName }</td>
                                 <td id={"payslipunsent_monthyear_failedpaysliplistdata_" + item.id}> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
@@ -369,16 +404,33 @@ const unsent = (props : any ) => {
                         }
                         </tbody>
                         </Table>
-                        {/* {
-                            payrollList &&
-                            payrollList.length == 0 ?
+                        {
+                            failedPayslipList &&
+                            failedPayslipList.length == 0 ?
                             <div className="w-100 text-center">
                                 <label htmlFor="">No Records Found</label>
                             </div>
                             :
                             null
                         }
-         */}
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="d-flex ma-3">
+                                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                    </select>
+                                </div>  
+                            </div>
+                            <div className="col-md-6">
+                                <div className="d-flex justify-content-end ma-3">
+                                    <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
+                                </div>   
+                            </div>
+                        </div>
+        
                 
                         <div className="d-flex justify-content-end">
                         <div className="">

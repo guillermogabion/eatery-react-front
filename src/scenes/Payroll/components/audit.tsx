@@ -83,7 +83,7 @@ export default function Audit(props: any) {
                     <label className="text-lg cursor-pointer">Back</label>
                 </div>
             </div>
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {
@@ -97,7 +97,7 @@ export default function Audit(props: any) {
                         }
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="custom-row">
                     {
                         auditLogs &&
                         auditLogs.content &&

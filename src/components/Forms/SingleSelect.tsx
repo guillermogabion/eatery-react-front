@@ -81,7 +81,7 @@ const customStyles = {
 }
 
 const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
-  const { placeholder, type, options = [], onChangeOption, name, value, isClearable = false, menuPortal = false, defaultValue } = props
+  const { placeholder, type, options = [], onChangeOption, name, value, isClearable = false, menuPortal = false, defaultValue, id } = props
   const optionCopy: any = []
   const optionArr = [...options]
   if (type === "string") {
@@ -128,17 +128,18 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
     <Select
       isClearable={isClearable}
       menuPortalTarget={menuPortal ? document.body : null}
-      value={ value ?
+      value={value ?
         optionCopy.filter((option: any) => {
-            if (option.value.toString() === value.toString()) {
-              return { value: option.value, label: option.label }
-            }
+          if (option.value.toString() === value.toString()) {
+            return { value: option.value, label: option.label }
+          }
         })
         :
         null
       }
       // menuIsOpen={true}
       // value={value}
+      id={id}
       closeMenuOnSelect={true}
       defaultValue={4}
       className="basic-single-select"

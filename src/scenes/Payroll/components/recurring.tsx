@@ -23,6 +23,8 @@ export default function Recurring(props: any) {
     const [recurringTypes, setRecurringTypes] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
+    const [pageSize, setPageSize] = useState(10);
+
     const [recurringTypeOption, setRecurringTypeOption] = React.useState([
         { "name": "All", "value": "" },
         { "name": "True", "value": "true" },
@@ -38,6 +40,7 @@ export default function Recurring(props: any) {
         "active": true
     })
     const tableHeaders = [
+        'ID',
         'Employee ID',
         'Employee Name',
         'Amount',
@@ -72,7 +75,7 @@ export default function Recurring(props: any) {
         setRecurring(updatedFields);
     }
 
-    const getAllRecurringList = (pageNo: any) => {
+    const getAllRecurringList = (pageNo: any, pageSize: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
@@ -86,7 +89,7 @@ export default function Recurring(props: any) {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getAllRecurringList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
+            `${Api.getAllRecurringList}?size=${pageSize ? pageSize : '10'}&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -105,7 +108,7 @@ export default function Recurring(props: any) {
     }
 
     useEffect(() => {
-        getAllRecurringList(0)
+        getAllRecurringList(0, pageSize)
         RequestAPI.getRequest(
             `${Api.getAllRecurringType}`,
             "",
@@ -156,7 +159,13 @@ export default function Recurring(props: any) {
     }, [])
 
     const handlePageClick = (event: any) => {
-        getAllRecurringList(event.selected)
+        const selectedPage = event.selected;
+        getAllRecurringList(selectedPage, pageSize)
+    };
+    const handlePageSizeChange = (event) => {
+        const selectedPageSize = parseInt(event.target.value, 10);
+        setPageSize(selectedPageSize);
+        getAllRecurringList(0, selectedPageSize);
     };
 
     const makeFilterData = (event: any) => {
@@ -220,7 +229,7 @@ export default function Recurring(props: any) {
                             </div>
                         </div>
                     </div>
-                    <Table responsive="lg">
+                    <Table responsive>
                         <thead>
                             <tr>
                                 {
@@ -234,7 +243,7 @@ export default function Recurring(props: any) {
                                 }
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="custom-row">
                             {
                                 recurringList &&
                                 recurringList.content &&
@@ -243,6 +252,7 @@ export default function Recurring(props: any) {
 
                                     return (
                                         <tr>
+                                            <td id={"payrollrecurring_id_recurringlistdata_" + item.id}> {item.id} </td>
                                             <td id={"payrollrecurring_employeeid_recurringlistdata_" + item.employeeId}> {item.employeeId} </td>
                                             <td id={"payrollrecurring_employeename_recurringlistdata_" + item.employeeId}> {item.employeeName} </td>
                                             <td id={"payrollrecurring_adjustmentamount_recurringlistdata_" + item.employeeId}> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
@@ -276,6 +286,25 @@ export default function Recurring(props: any) {
                             :
                             null
                     }
+                </div>
+            </div>
+            
+           
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="d-flex ma-3">
+                        <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                        <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                            <option value={10}>10</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="d-flex justify-content-end ma-3">
+                    <span className="font-bold mr-8 ">Total Entries : { recurringList.totalElements }</span>
+                    </div>   
                 </div>
             </div>
             <div className="d-flex justify-content-end">

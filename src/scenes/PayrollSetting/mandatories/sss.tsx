@@ -94,7 +94,7 @@ const sss = (props: any) => {
              <div style={{ width: '100%', overflowX: 'auto' }}>
                 <div className="w-100 pt-2">
 
-                    <Table responsive="lg">
+                    <Table responsive>
                         <thead>
                             <tr>
                                 {
@@ -231,7 +231,7 @@ const sss = (props: any) => {
                     </Table>
                     <Table>
                         <div style={{ height: '400px', overflowY: 'scroll' }}>
-                            <tbody>
+                            <tbody className="custom-row">
                                 {
                                 sss &&
                                 sss.length > 0 &&
