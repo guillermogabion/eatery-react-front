@@ -290,14 +290,14 @@ const Adjustment = (props: any) => {
                         adjustmentType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
-                                    <td id="payrollsettingadjustment_name_adjtypedata"> {item.name} </td>
-                                    <td id="payrollsettingadjustment_description_adjtypedata"> {item.description}</td>
-                                    <td id="payrollsettingadjustment_type_adjtypedata"> {Utility.removeUnderscore(item.type)}</td>
-                                    <td id="payrollsettingadjustment_deduction_adjtypedata"> {item.deduction == true ? "Deduct" : "Add" }</td>
-                                    <td id="payrollsettingadjustment_affectsgross_adjtypedata"> {item.affectsGross == true ? "YES" : "NO" }</td>
+                                    <td id={"payrollsettingadjustment_name_adjtypedata_" + item.id}> {item.name} </td>
+                                    <td id={"payrollsettingadjustment_description_adjtypedata_" + item.id}> {item.description}</td>
+                                    <td id={"payrollsettingadjustment_type_adjtypedata_" + item.id}> {Utility.removeUnderscore(item.type)}</td>
+                                    <td id={"payrollsettingadjustment_deduction_adjtypedata_" + item.id}> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td id={"payrollsettingadjustment_affectsgross_adjtypedata_" + item.id}> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
-                                        id="payrollsettingadjustment_update_adjtypelabel"
+                                        id={"payrollsettingadjustment_update_adjtypelabel_" + item.id}
                                         onClick={() => {
                                             getAdjustmentData(item.id)
                                         }}

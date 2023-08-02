@@ -168,15 +168,15 @@ export const Adjustment = (props: any) => {
 
                                     return (
                                         <tr>
-                                            <td id="payrolladjustment_employeeid_adjlist"> {item.employeeId} </td>
-                                            <td id="payrolladjustment_employeename_adjlist"> {item.employeeName} </td>
-                                            <td id="payrolladjustment_amount_adjlist"> {Utility.formatToCurrency(item.amount)} </td>
-                                            <td id="payrolladjustment_adjustmentname_adjlist"> {item.adjustmentName} </td>
-                                            <td id="payrolladjustment_type_adjlist"> {Utility.removeUnderscore(item.type)} </td>
-                                            <td id="payrolladjustment_deduc_adjlist"> {item.deduc ? "YES" : "NO"} </td>
+                                            <td id={"payrolladjustment_employeeid_adjlist_" + item.id}> {item.employeeId} </td>
+                                            <td id={"payrolladjustment_employeename_adjlist_" + item.id}> {item.employeeName} </td>
+                                            <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.amount)} </td>
+                                            <td id={"payrolladjustment_adjustmentname_adjlist_" + item.id}> {item.adjustmentName} </td>
+                                            <td id={"payrolladjustment_type_adjlist_" + item.id}> {Utility.removeUnderscore(item.type)} </td>
+                                            <td id={"payrolladjustment_deduc_adjlist_" + item.id}> {item.deduc ? "YES" : "NO"} </td>
                                             <td>
                                                 <label
-                                                    id="payrolladjustment_update_adjbtn"
+                                                    id={"payrolladjustment_update_adjbtn_" + item.id}
                                                     onClick={() => {
                                                         setInitialValues({
                                                             "id": item.id,

@@ -370,27 +370,27 @@ export const Overtime = (props: any) => {
                   <tr>
                     {/* <td> {item.lastName}, {item.firstName}</td> */}
                     {data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                      <td id="overtime_name_myotdata">{item.lastName}, {item.firstName}</td> :
+                      <td id={"overtime_name_myotdata_" + item.id}>{item.lastName}, {item.firstName}</td> :
                       null
                     }
-                    <td id="overtime_shiftdate_myotdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                    <td id="overtime_classification_myotdata"> {Utility.removeUnderscore(item.classification)} </td>
-                    <td id="overtime_otstart_myotdata"> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                    <td id="overtime_otend_myotdata"> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                    <td id="overtime_totalduration_myotdata"> {item.totalDuration} </td>
+                    <td id={"overtime_shiftdate_myotdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                    <td id={"overtime_classification_myotdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td>
+                    <td id={"overtime_otstart_myotdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                    <td id={"overtime_otend_myotdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                    <td id={"overtime_totalduration_myotdata_" + item.id}> {item.totalDuration} </td>
                     {/* <td> {item.totalDuration.split(':').map(value => value.padStart(2, '0')).slice(0, 2).join(':')}</td> */}
-                    <td id="overtime_filedate_myotdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td id="overtime_reason_myotdata"> {item.reason} </td>
-                    <td id="overtime_statuschangedby_myotdata"> {item.statusChangedBy} </td>
-                    <td id="overtime_status_myotdata"> {Utility.removeUnderscore(item.status)} </td>
+                    <td id={"overtime_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                    <td id={"overtime_reason_myotdata_" + item.id}> {item.reason} </td>
+                    <td id={"overtime_statuschangedby_myotdata_" + item.id}> {item.statusChangedBy} </td>
+                    <td id={"overtime_status_myotdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
                       <label
-                        id="overtime_view_myotlabel"
+                        id={"overtime_view_myotlabel_" + item.id}
                         onClick={() => {
                           viewOT(item.id)
                         }}
                       >
-                        <img id="overtime_eye_myotimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                        <img id={"overtime_eye_myotimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       {
@@ -399,12 +399,12 @@ export const Overtime = (props: any) => {
                             {authorizations.includes("Request:Update") ? (
                               <>
                                 <label
-                                  id="overtime_update_myotlabel"
+                                  id={"overtime_update_myotlabel_" + item.id}
                                   onClick={() => {
                                     getOT(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  <img id="overtime_actionedit_myotimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                  <img id={"overtime_actionedit_myotimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                 </label>
 
                               </>
@@ -412,26 +412,26 @@ export const Overtime = (props: any) => {
                             {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                               <>
                                 <label
-                                  id="overtime_approveot_myotlabel"
+                                  id={"overtime_approveot_myotlabel_" + item.id}
                                   onClick={() => {
                                     approveOT(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img id="overtime_actionapprove_myotimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                  <img id={"overtime_actionapprove_myotimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                 </label>
                               </>
                             ) : null}
                             {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                               <>
                                 <label
-                                  id="overtime_declineot_myotlabel"
+                                  id={"overtime_declineot_myotlabel_" + item.id}
                                   onClick={() => {
                                     declineOT(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img id="overtime_actiondecline_myotimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                  <img id={"overtime_actiondecline_myotimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                 </label>
                                 <br />
                               </>
@@ -447,12 +447,12 @@ export const Overtime = (props: any) => {
                             {authorizations.includes("Request:Update") ? (
                               <>
                                 <label
-                                  id="overtime_cancelovertime_myotlabel"
+                                  id={"overtime_cancelovertime_myotlabel_" + item.id}
                                   onClick={() => {
                                     cancelOvertime(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  <img id="overtime_view_myotimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                  <img id={"overtime_view_myotimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                 </label>
                                 <br />
                               </>

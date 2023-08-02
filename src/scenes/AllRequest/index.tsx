@@ -405,22 +405,22 @@ export const AllRequest = (props: any) => {
                                                     {
                                                         data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <>
-                                                                <td id="allrequest_name_leavedata"> {item.lastName}, {item.firstName} </td>
+                                                                <td id={"allrequest_name_leavedata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                             </> : null
                                                     }
-                                                    <td id="allrequest_type_leavedata"> {item.type} </td>
-                                                    <td id="allrequest_datefrom_leavedata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                    <td id="allrequest_dateto_leavedata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                    <td id="allrequest_reason_leavedata"> {item.reason} </td>
-                                                    <td id="allrequest_filedate_leavedata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                    <td id="allrequest_status_leavedata"> {Utility.removeUnderscore(item.status)} </td>
-                                                    <td id="allrequest_labels_leavedata">
-                                                        <label id="allrequest_id_leavelabel"
+                                                    <td id={"allrequest_type_leavedata_" + item.id}> {item.type} </td>
+                                                    <td id={"allrequest_datefrom_leavedata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                    <td id={"allrequest_dateto_leavedata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                    <td id={"allrequest_reason_leavedata_" + item.id}> {item.reason} </td>
+                                                    <td id={"allrequest_filedate_leavedata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                    <td id={"allrequest_status_leavedata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                                                    <td id={"allrequest_labels_leavedata_" + item.id}>
+                                                        <label id={"allrequest_id_leavelabel_" + item.id}
                                                             onClick={() => {
                                                                 viewLeave(item.id)
                                                             }}
                                                         >
-                                                            <img id="allrequest_eye_leaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                            <img id={"allrequest_eye_leaveimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                                         </label>
                                                     </td>
@@ -648,20 +648,20 @@ export const AllRequest = (props: any) => {
                                         {
                                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
-                                                    <td id="allrequest_name_revdata"> {item.lastName}, {item.firstName} </td>
+                                                    <td id={"allrequest_name_revdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td id="allrequest_type_revdata">{Utility.removeUnderscore(item.type)}</td>
-                                        <td id="allrequest_reason_revdata"> {item.reason} </td>
-                                        <td id="allrequest_filedate_revdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id="allrequest_status_revdata"> {Utility.removeUnderscore(item.status)} </td>
-                                        <td id="allrequest_labels_revdata">
-                                            <label id="allrequest_id_revlabel"
+                                        <td id={"allrequest_type_revdata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
+                                        <td id={"allrequest_reason_revdata_" + item.id}> {item.reason} </td>
+                                        <td id={"allrequest_filedate_revdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"allrequest_status_revdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id={"allrequest_labels_revdata_" + item.id}>
+                                            <label id={"allrequest_id_revlabel_" + item.id}
                                                 onClick={() => {
                                                     getViewCoa(item.id)
                                                 }}
                                             >
-                                                <img id="allrequest_eye_revimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id={"allrequest_eye_revimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                         </td>
@@ -884,24 +884,24 @@ export const AllRequest = (props: any) => {
                                     <tr>
                                         {/* <td> {item.lastName}, {item.firstName}</td> */}
                                         {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                            <td id="allrequest_name_otdata">{item.lastName}, {item.firstName}</td> :
+                                            <td id={"allrequest_name_otdata_" + item.id}>{item.lastName}, {item.firstName}</td> :
                                             null
                                         }
-                                        <td id="allrequest_shiftdate_otdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td id="allrequest_classification_otdata"> {Utility.removeUnderscore(item.classification)} </td>
-                                        <td id="allrequest_otstart_otdata"> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="allrequest_otend_otdata"> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="allrequest_filedate_otdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id="allrequest_reason_otdata"> {item.reason} </td>
-                                        <td id="allrequest_status_otdata"> {Utility.removeUnderscore(item.status)} </td>
-                                        <td id="allrequest_labels_otdata">
+                                        <td id={"allrequest_shiftdate_otdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"allrequest_classification_otdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td>
+                                        <td id={"allrequest_otstart_otdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"allrequest_otend_otdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"allrequest_filedate_otdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"allrequest_reason_otdata_" + item.id}> {item.reason} </td>
+                                        <td id={"allrequest_status_otdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id={"allrequest_labels_otdata_" + item.id}>
 
-                                            <label id="allrequest_id_otlabel"
+                                            <label id={"allrequest_id_otlabel_" + item.id}
                                                 onClick={() => {
                                                     viewOT(item.id)
                                                 }}
                                             >
-                                                <img id="allrequest_eye_otimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id={"allrequest_eye_otimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                         </td>
@@ -1125,22 +1125,22 @@ export const AllRequest = (props: any) => {
                                         {
                                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
-                                                    <td id="allrequest_name_utdata"> {item.lastName}, {item.firstName} </td>
+                                                    <td id={"allrequest_name_utdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td id="allrequest_shiftdate_utdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td id="allrequest_utstart_utdata"> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="allrequest_utend_utdata"> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="allrequest_filedate_utdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id="allrequest_reason_utdata"> {item.reason} </td>
-                                        <td id="allrequest_status_utdata"> {Utility.removeUnderscore(item.status)} </td>
-                                        <td id="allrequest_labels_utdata">
-                                            <label id="allrequest_id_utlabel"
+                                        <td id={"allrequest_shiftdate_utdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"allrequest_utstart_utdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"allrequest_utend_utdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"allrequest_filedate_utdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"allrequest_reason_utdata_" + item.id}> {item.reason} </td>
+                                        <td id={"allrequest_status_utdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id={"allrequest_labels_utdata_" + item.id}>
+                                            <label id={"allrequest_id_utlabel_" + item.id}
                                                 onClick={() => {
                                                     viewUT(item.id)
                                                 }}
                                             >
-                                                <img id="allrequest_eye_utimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id={"allrequest_eye_utimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                         </td>
@@ -1365,21 +1365,21 @@ export const AllRequest = (props: any) => {
                                                     {
                                                         data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                             <>
-                                                                <td id="allrequest_name_suddata"> {item.lastName}, {item.firstName} </td>
+                                                                <td id={"allrequest_name_suddata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                             </> : null
                                                     }
-                                                    <td id="allrequest_datefrom_suddata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                    <td id="allrequest_dateto_suddata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                    <td id="allrequest_reason_suddata"> {item.reason} </td>
-                                                    <td id="allrequest_filedate_suddata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                    <td id="allrequest_status_suddata"> {Utility.removeUnderscore(item.status)} </td>
-                                                    <td id="allrequest_labels_suddata">
-                                                        <label id="allrequest_id_sudlabel"
+                                                    <td id={"allrequest_datefrom_suddata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                    <td id={"allrequest_dateto_suddata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                    <td id={"allrequest_reason_suddata_" + item.id}> {item.reason} </td>
+                                                    <td id={"allrequest_filedate_suddata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                    <td id={"allrequest_status_suddata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                                                    <td id={"allrequest_labels_suddata_" + item.id}>
+                                                        <label id={"allrequest_id_sudlabel_" + item.id}
                                                             onClick={() => {
                                                                 getViewSchedule(item.id)
                                                             }}
                                                         >
-                                                            <img id="allrequest_eye_sudimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                            <img id={"allrequest_eye_sudimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                                         </label>
                                                     </td>

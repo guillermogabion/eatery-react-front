@@ -165,27 +165,27 @@ export const LastPay = (props: any) => {
                                         lastPayList.content.map((item: any, index: any) => {
                                             return (
                                                 <tr>
-                                                    <td id="lastpay_employeeid_data"> {item.employeeId} </td>
-                                                    <td id="lastpay_employeename_data"> {item.employeeName} </td>
-                                                    <td id="lastpay_separationdate_data">  {Utility.formatDate(item.seperationDate, 'MM-DD-YYYY')} </td>
-                                                    <td id="lastpay_lastpayexist_data"> {item.lastPayExist ? "Yes" : "No"} </td>
+                                                    <td id={"lastpay_employeeid_data_" + item.userId}> {item.employeeId} </td>
+                                                    <td id={"lastpay_employeename_data_" + item.userId}> {item.employeeName} </td>
+                                                    <td id={"lastpay_separationdate_data_" + item.userId}>  {Utility.formatDate(item.seperationDate, 'MM-DD-YYYY')} </td>
+                                                    <td id={"lastpay_lastpayexist_data_" + item.userId}> {item.lastPayExist ? "Yes" : "No"} </td>
                                                     <td>
                                                         <label
-                                                            id="lastpay_view_label"
+                                                            id={"lastpay_view_label_" + item.userId}
                                                             onClick={() => {
                                                                 setModalShow(true)
                                                                 getLastPayInfo(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="lastpay_eye_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id={"lastpay_eye_img_" + item.userId} src={eye} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                         </label>
                                                         <label
-                                                            id="lastpay_regenerate_label"
+                                                            id={"lastpay_regenerate_label_" + item.userId}
                                                             onClick={() => {
                                                                 regenerateLastPay(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="lastpay_regenerate_img" src={regenerate} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id={"lastpay_regenerate_img_" + item.userId} src={regenerate} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                         </label>
                                                     </td>
                                                 </tr>

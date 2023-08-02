@@ -347,13 +347,13 @@ const unsent = (props : any ) => {
         
                             return (
                                 <tr>
-                                <td id="payslipunsent_employeeid_failedpaysliplistdata">{ item.employeeId }</td>
-                                <td id="payslipunsent_employeename_failedpaysliplistdata">{ item.employeeName }</td>
-                                <td id="payslipunsent_monthyear_failedpaysliplistdata"> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
+                                <td id={"payslipunsent_employeeid_failedpaysliplistdata_" + item.id}>{ item.employeeId }</td>
+                                <td id={"payslipunsent_employeename_failedpaysliplistdata_" + item.id}>{ item.employeeName }</td>
+                                <td id={"payslipunsent_monthyear_failedpaysliplistdata_" + item.id}> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
                                 {/* <td> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td> */}
                                 <td>
                                 <label
-                                id="payslipunsent_resend_failedpaysliplistlabel"
+                                id={"payslipunsent_resend_failedpaysliplistlabel_" + item.id}
                                 onClick={() => {
                                     Resend(item.id)
                                 }}

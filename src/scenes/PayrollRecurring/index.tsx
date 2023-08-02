@@ -739,16 +739,16 @@ export const Recurring = (props: any) => {
 
                     return (
                         <tr>
-                        <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
-                        <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
-                        <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {item.adjustmentAmount} </td>
-                        <td id="payrollrecurring_enddate_recurringlistdata"> {item.endDate} </td>
-                        <td id="payrollrecurring_recurringname_recurringlistdata"> {item.recurringName} </td>
-                        <td id="payrollrecurring_active_recurringlistdata"> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
+                        <td id={"payrollrecurring_employeeid_recurringlistdata_" + item.id}> {item.employeeId} </td>
+                        <td id={"payrollrecurring_employeename_recurringlistdata_" + item.id}> {item.employeeName} </td>
+                        <td id={"payrollrecurring_adjustmentamount_recurringlistdata_" + item.id}> {item.adjustmentAmount} </td>
+                        <td id={"payrollrecurring_enddate_recurringlistdata_" + item.id}> {item.endDate} </td>
+                        <td id={"payrollrecurring_recurringname_recurringlistdata_" + item.id}> {item.recurringName} </td>
+                        <td id={"payrollrecurring_active_recurringlistdata_" + item.id}> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
 
                         <td>
                         <label
-                        id="payrollrecurring_update_recurringlistlabel"
+                        id={"payrollrecurring_update_recurringlistlabel_" + item.id}
                         onClick={() => {
                             getRecurring(item.id)
                         }}

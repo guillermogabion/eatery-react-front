@@ -816,14 +816,14 @@ export const PayrollAdjustment = (props: any) => {
 
                     return (
                         <tr>
-                        <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
-                        <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
-                        <td id="payrolladjustment_amount_adjustmentlistdata"> {item.amount} </td>
-                        <td id="payrolladjustment_adjustmentname_adjustmentlistdata"> {item.adjustmentName} </td>
-                        <td id="payrolladjustment_monthyear_adjustmentlistdata"> {getMonthName(item.payrollMonth)} {item.payrollYear} </td>
+                        <td id={"payrolladjustment_employeeid_adjustmentlistdata_" + item.id}> {item.employeeId} </td>
+                        <td id={"payrolladjustment_employeename_adjustmentlistdata_" + item.id}> {item.employeeName} </td>
+                        <td id={"payrolladjustment_amount_adjustmentlistdata_" + item.id}> {item.amount} </td>
+                        <td id={"payrolladjustment_adjustmentname_adjustmentlistdata_" + item.id}> {item.adjustmentName} </td>
+                        <td id={"payrolladjustment_monthyear_adjustmentlistdata_" + item.id}> {getMonthName(item.payrollMonth)} {item.payrollYear} </td>
                         <td>
                         <label
-                        id="payrolladjustment_edit_adjustmentlistlabel"
+                        id={"payrolladjustment_edit_adjustmentlistlabel_" + item.id}
                         onClick={() => {
                             getAdjustment(item.id)
                         }}

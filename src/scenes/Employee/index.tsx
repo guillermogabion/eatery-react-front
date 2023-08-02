@@ -2673,15 +2673,15 @@ export const Employee = (props: any) => {
 
                     return (
                       <tr>
-                        <td id="employee_employeeid_maindata"> {item.employeeId} </td>
-                        <td id="employee_employeetype_maindata"> {Utility.removeUnderscore(item.empType)} </td>
-                        <td id="employee_employeestatus_maindata"> {item.empStatus} </td>
-                        <td id="employee_employeefullname_maindata"> {item.fullname} </td>
-                        <td id="employee_employeehiredate_maindata"> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
-                        <td id="employee_employeeacctstatus_maindata"> {item.acctStatus} </td>
-                        <td id="employee_labels_maindata">
+                        <td id={"employee_employeeid_maindata_" + item.id}> {item.employeeId} </td>
+                        <td id={"employee_employeetype_maindata_" + item.id}> {Utility.removeUnderscore(item.empType)} </td>
+                        <td id={"employee_employeestatus_maindata_" + item.id}> {item.empStatus} </td>
+                        <td id={"employee_employeefullname_maindata_" + item.id}> {item.fullname} </td>
+                        <td id={"employee_employeehiredate_maindata_" + item.id}> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
+                        <td id={"employee_employeeacctstatus_maindata_" + item.id}> {item.acctStatus} </td>
+                        <td id={"employee_labels_maindata_" + item.id}>
                           <label
-                            id="employee_update_mainbtn"
+                            id={"employee_update_mainbtn_" + item.id}
                             onClick={() => {
                               getEmployee(item.id)
                             }}
@@ -2699,7 +2699,7 @@ export const Employee = (props: any) => {
                           }
                           <br />
                           <label
-                            id="employee_view_mainbtn"
+                            id={"employee_view_mainbtn_" + item.id}
                             onClick={() => {
                               getEmployeeDetails(item.id)
                             }}
@@ -2708,7 +2708,7 @@ export const Employee = (props: any) => {
                           </label>
                           <br />
                           <label
-                            id="employee_changepassword_mainbtn"
+                            id={"employee_changepassword_mainbtn_" + item.id}
                             onClick={() => {
                               changePassword(item.id)
                             }}

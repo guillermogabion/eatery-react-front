@@ -230,17 +230,17 @@ export default function Leaves(props: any) {
                                     allLeaves.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
-                                                <td>{item.userId}</td>
+                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.userId}>{item.userId}</td>
                                                 {
                                                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                         <>
-                                                            <td id="payrollgenerate_name_allleavesdata"> {item.lastName}, {item.firstName} </td>
+                                                            <td id={"payrollgenerate_name_allleavesdata_" + item.userId}> {item.lastName}, {item.firstName} </td>
                                                         </> : null
                                                 }
-                                                <td id="payrollgenerate_type_allleavesdata"> {item.type} </td>
-                                                <td id="payrollgenerate_withpay_allleavesdata"> {item.withPay == true ? "YES" : "NO"} </td>
-                                                <td id="payrollgenerate_datefrom_allleavesdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                <td id="payrollgenerate_dateto_allleavesdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                <td id={"payrollgenerate_type_allleavesdata_" + item.userId}> {item.type} </td>
+                                                <td id={"payrollgenerate_withpay_allleavesdata_" + item.userId}> {item.withPay == true ? "YES" : "NO"} </td>
+                                                <td id={"payrollgenerate_datefrom_allleavesdata_" + item.userId}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                                                <td id={"payrollgenerate_dateto_allleavesdata_" + item.userId}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                             </tr>
                                         )
                                     })

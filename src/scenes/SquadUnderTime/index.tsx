@@ -316,34 +316,34 @@ export const SquadUndertime = (props: any) => {
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                        <td id="squadschedadj_name_myutdata"> {item.lastName}, {item.firstName}</td>
-                                        <td id="squadschedadj_shiftdate_myutdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td id="squadschedadj_utstart_myutdata"> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="squadschedadj_utend_myutdata"> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="squadschedadj_filedate_myutdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id="squadschedadj_reason_myutdata"> {item.reason} </td>
-                                        <td id="squadschedadj_statuschangedby_myutdata"> {item.statusChangedBy} </td>
-                                        <td id="squadschedadj_status_myutdata"> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id={"squadschedadj_name_myutdata_" + item.id}> {item.lastName}, {item.firstName}</td>
+                                        <td id={"squadschedadj_shiftdate_myutdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"squadschedadj_utstart_myutdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"squadschedadj_utend_myutdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"squadschedadj_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"squadschedadj_reason_myutdata_" + item.id}> {item.reason} </td>
+                                        <td id={"squadschedadj_statuschangedby_myutdata_" + item.id}> {item.statusChangedBy} </td>
+                                        <td id={"squadschedadj_status_myutdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td>
                                             <label
-                                                id="squadschedadj_view_myutlabel"
+                                                id={"squadschedadj_view_myutlabel_" + item.id}
                                                 onClick={() => {
                                                     viewUT(item.id)
                                                 }}
                                             >
-                                                <img id="squadschedadj_eye_myutimg" src={eye} width={20} classNa   me="hover-icon-pointer mx-1" title="View" />
+                                                <img id={"squadschedadj_eye_myutimg_" + item.id} src={eye} width={20} classNa   me="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                             <>
                                                 {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
-                                                            id="squadschedadj_update_myutlabel"
+                                                            id={"squadschedadj_update_myutlabel_" + item.id}
                                                             onClick={() => {
                                                                 getUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="squadschedadj_actionedit_myutimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id={"squadschedadj_actionedit_myutimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
                                                         </label>
                                                     </>
@@ -351,12 +351,12 @@ export const SquadUndertime = (props: any) => {
                                                 {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
-                                                            id="squadschedadj_actionapprove_myutlabel"
+                                                            id={"squadschedadj_actionapprove_myutlabel_" + item.id}
                                                             onClick={() => {
                                                                 approveUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="squadschedadj_actionapprove_myutimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                                            <img id={"squadschedadj_actionapprove_myutimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
 
                                                         </label>
                                                     </>
@@ -364,12 +364,12 @@ export const SquadUndertime = (props: any) => {
                                                 {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
-                                                            id="squadschedadj_actiondecline_myutlabel"
+                                                            id={"squadschedadj_actiondecline_myutlabel_" + item.id}
                                                             onClick={() => {
                                                                 declineUT(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="squadschedadj_actiondecline_myutimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                                            <img id={"squadschedadj_actiondecline_myutimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
 
                                                         </label>
 
@@ -380,12 +380,12 @@ export const SquadUndertime = (props: any) => {
                                                 {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                                                     <>
                                                         <label
-                                                            id="squadschedadj_actioncancel_myutlabel"
+                                                            id={"squadschedadj_actioncancel_myutlabel_" + item.id}
                                                             onClick={() => {
                                                                 cancelUndertime(item.id)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="squadschedadj_actioncancel_myutimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                            <img id={"squadschedadj_actioncancel_myutimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                         </label>
 
                                                     </>

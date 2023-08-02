@@ -144,11 +144,11 @@ export const MissingLogs = (props: any) => {
                     allMissingLogs.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td id="missinglogs_name_allmissinglogsdata"> {item.lastName}, {item.firstName} </td>
-                          <td id="missinglogs_date_allmissinglogsdata"> {item.date} </td>
-                          <td id="missinglogs_schedule_allmissinglogsdata"> {item.schedule} </td>
-                          <td id="missinglogs_firstlogin_allmissinglogsdata"> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
-                          <td id="missinglogs_lastlogin_allmissinglogsdata"> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
+                          <td id={"missinglogs_name_allmissinglogsdata_" + item.lastName + item.firstName}> {item.lastName}, {item.firstName} </td>
+                          <td id={"missinglogs_date_allmissinglogsdata_" + item.lastName + item.firstName}> {item.date} </td>
+                          <td id={"missinglogs_schedule_allmissinglogsdata_" + item.lastName + item.firstName}> {item.schedule} </td>
+                          <td id={"missinglogs_firstlogin_allmissinglogsdata_" + item.lastName + item.firstName}> {item.firstLogin ? moment(item.firstLogin).format('YYYY-MM-DD hh:mm A') : "No Time In"} </td>
+                          <td id={"missinglogs_lastlogin_allmissinglogsdata_" + item.lastName + item.firstName}> {item.lastLogin ? moment(item.lastLogin).format('YYYY-MM-DD hh:mm A') : "No Time Out"} </td>
                         </tr>
                       )
                     })
