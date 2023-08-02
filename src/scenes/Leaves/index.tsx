@@ -974,11 +974,7 @@ export const Leaves = (props: any) => {
                         id="dateFrom"
                         className="form-control"
                         value={values.dateFrom}
-<<<<<<< Updated upstream
                         // max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
-=======
-                        max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
->>>>>>> Stashed changes
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
                           dateBreakdown(e.target.value, values.dateTo)
