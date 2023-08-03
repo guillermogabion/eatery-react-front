@@ -580,7 +580,7 @@ export const Recurring = (props: any) => {
         RequestAPI.getFileAsync(
             `${Api.exportRecurring}?fromDate=${fromDate}&toDate=${toDate}`,
             "",
-            "recurringtransaction.xlsx",
+            "Recurringtransactions.xlsx",
             async (res: any) => {
                 if (res) {
 
