@@ -867,27 +867,12 @@ export const Recurring = (props: any) => {
                 </div>
             </div>
 
-<<<<<<< HEAD
-                    return (
-                        <tr>
-                        <td id={"payrollrecurring_employeeid_recurringlistdata_" + item.id}> {item.employeeId} </td>
-                        <td id={"payrollrecurring_employeename_recurringlistdata_" + item.id}> {item.employeeName} </td>
-                        <td id={"payrollrecurring_adjustmentamount_recurringlistdata_" + item.id}> {item.adjustmentAmount} </td>
-                        <td id={"payrollrecurring_enddate_recurringlistdata_" + item.id}> {item.endDate} </td>
-                        <td id={"payrollrecurring_recurringname_recurringlistdata_" + item.id}> {item.recurringName} </td>
-                        <td id={"payrollrecurring_active_recurringlistdata_" + item.id}> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
-
-                        <td>
-                        <label
-                        id={"payrollrecurring_update_recurringlistlabel_" + item.id}
-=======
 
 
             <div className="d-flex justify-content-end mt-3 pr-5 mb-5" >
                 <div>
                     <Button className="mx-2"
                         id="payrollrecurring_addrecurring_recurringlistbtn"
->>>>>>> ef039d2996f1c16a91e5aef2db2df60dfcc5817d
                         onClick={() => {
                             // setModalUploadShow(true)
                             setModalShow(true)
@@ -1082,6 +1067,7 @@ export const Recurring = (props: any) => {
                                                             <div className="col-md-3 mb-3">
                                                                 <label>Employee *</label>
                                                                 <EmployeeDropdown
+                                                                    id="payrollrecurring_recurringtypeemployee_recurringdropdown"
                                                                     placeholder={"Employee"}
                                                                     singleChangeOption={(e: any) => {
                                                                         createOption(e, 'userId', index)
