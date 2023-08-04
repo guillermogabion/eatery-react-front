@@ -206,70 +206,80 @@ const Recurring = (props: any) => {
     return (
         <div>
             <div className="w-100 pt-2">
-                <div className="fieldtext d-flex">
-                    <div className="input-container col-md-2">
-                        <label>Recurring Name</label>
-                        <input 
-                        type="text"
-                        className="formControl"
-                        name="name"
-                        id="type"
-                        onChange={(e) => makeFilterData(e)}
-                        />
-                    </div>
-                    <div className="input-container col-md-2 clearable-select">
-                        <label> Type </label>
-                        <select 
-                            name="typeType" 
-                            id="typeType1"
-                            onChange={(e) => { makeFilterData(e)
-                                setShowButtonTypetype(e.target.value !== 'default')    
-                            }}
+                <div className="fieldtext row">
+                    <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                        <div className="input-container">
+                            <label>Recurring Name</label>
+                            <input 
+                            type="text"
                             className="formControl"
+                            name="name"
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                        <div className="input-container">
+                            <label> Type </label>
+                            <select 
+                                name="typeType" 
+                                id="typeType1"
+                                onChange={(e) => { makeFilterData(e)
+                                    setShowButtonTypetype(e.target.value !== 'default')    
+                                }}
+                                className="formControl"
+                                >
+                                    <option value="default" disabled selected>
+                                        Type
+                                    </option>
+                                    <option value="Taxable">Taxable</option>
+                                    <option value="NonTaxable">Non-Taxable</option>
+                                </select>
+                                {showButtonTypetype && (
+                                    <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetTypetype}>
+                                    X
+                                    </span>
+                                )}
+                        </div>
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                        <div className="input-container">
+                        <label>Action</label>
+                        <select
+                            name="isDeduction"
+                            id="deduction1"
+                            className="form-control"
+                            onChange={(e) => {makeFilterData(e)
+                                setShowButtonIsDeduction(e.target.value !== 'default')
+                            }}
                             >
                                 <option value="default" disabled selected>
-                                    Type
+                                    Action
                                 </option>
-                                <option value="Taxable">Taxable</option>
-                                <option value="NonTaxable">Non-Taxable</option>
+                                <option value={true}>Deduct</option>
+                                <option value={false}>Add</option>
                             </select>
-                            {showButtonTypetype && (
-                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetTypetype}>
-                                X
-                                </span>
-                            )}
+                            {showButtonIsDeduction && (
+                                    <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
+                                    X
+                                    </span>
+                                )}
+                        </div>
                     </div>
-                    <div className="input-container col-md-2 clearable-select">
-                    <label>Action</label>
-                    <select
-                        name="isDeduction"
-                        id="deduction1"
-                        className="form-control"
-                        onChange={(e) => {makeFilterData(e)
-                            setShowButtonIsDeduction(e.target.value !== 'default')
-                        }}
-                        >
-                            <option value="default" disabled selected>
-                                Action
-                            </option>
-                            <option value={true}>Deduct</option>
-                            <option value={false}>Add</option>
-                        </select>
-                        {showButtonIsDeduction && (
-                                <span className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
-                                X
-                                </span>
-                            )}
+                    <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+                        <div className="input-container">
+                            <Button
+                            id="payrollsettingrecurring_search_btn"
+                            style={{ width: '100%' }}
+                            onClick={() => getAllRecurringType(0)}
+                            className="btn btn-primary mx-2 mt-4">
+                            Search
+                            </Button>
+                        </div>
                     </div>
-                    <div className="input-container col-md-3">
-                        <Button
-                        id="payrollsettingrecurring_search_btn"
-                        style={{ width: 100 }}
-                        onClick={() => getAllRecurringType(0)}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                        </Button>
-                    </div>
+                    
+                    
                 </div>
             </div>
 
