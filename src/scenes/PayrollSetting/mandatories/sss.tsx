@@ -94,9 +94,9 @@ const sss = (props: any) => {
              <div style={{ width: '100%', overflowX: 'auto' }}>
                 <div className="w-100 pt-2">
 
-                    <Table responsive>
+                    <Table responsive="lg">
                         <thead>
-                            <tr>
+                        <tr>
                                 {
                                     tableHeaders &&
                                     tableHeaders.length &&
@@ -152,6 +152,8 @@ const sss = (props: any) => {
                                     })
                                 }
                             </tr>
+
+
                             <tr>
                             {
                                     tableHeaders &&

@@ -3648,10 +3648,14 @@ table thead tr th{
 .clearable-select {
   position: relative;
   display: inline-block;
+  /* width: 100%;  */
 }
 
 .clearable-select select {
   padding-right: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; 
 }
 
 .clearable-select .clear-icon {
@@ -3663,16 +3667,23 @@ table thead tr th{
 }
 .clearable-select .clear-icon-recurring {
   position: absolute;
-  top: 70%;
-  right: 10%;
-  transform: translateY(-50%);
+  top: 35%;
+  right: 15%;
+  transform: translateY(50%);
   cursor: pointer;
 }
-.clearable-select .clear-icon-adjustment {
+/* .clearable-select .clear-icon-recurring > .recurring-name {
   position: absolute;
   top: 50%;
-  right: 10%;
-  transform: translateY(-50%);
+  right: 20%;
+  transform: translateY(50%);
+  cursor: pointer;
+} */
+.clearable-select .clear-icon-adjustment {
+  position: absolute;
+  top: 35%;
+  right: 20%;
+  transform: translateY(50%);
   cursor: pointer;
 }
 
@@ -3712,6 +3723,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .custom-select-wrapper.disabled::after {
   display: none;
 }
+
+/* .overflow-auto {
+  overflow-x: hidden !important;
+} */
 
 
 

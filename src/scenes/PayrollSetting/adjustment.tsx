@@ -210,18 +210,21 @@ const Adjustment = (props: any) => {
     return (
         <div>
             <div className="w-100 pt-2">
-                <div className="fieldtext d-flex">
-                    <div className="input-container col-md-2">
-                        <label>Adjustment Name</label>
-                        <input 
-                        type="text"
-                        className="formControl"
-                        name="name"
-                        id="type"
-                        onChange={(e) => makeFilterData(e)}
-                        />
+                <div className="fieldtext row">
+                <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                    <div className="input-container">
+                            <label>Adjustment Name</label>
+                            <input 
+                            type="text"
+                            className="formControl"
+                            name="name"
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            />
                     </div>
-                    <div className="input-container col-md-2 clearable-select">
+                </div>
+                <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                    <div className="input-container">
                         <label> Type </label>
                         <select 
                             name="typeType" 
@@ -243,37 +246,45 @@ const Adjustment = (props: any) => {
                                 </span>
                             )}
                     </div>
-                    <div className="input-container col-md-2 clearable-select">
-                    <label>Action</label>
-                    <select
-                        name="isDeduction"
-                        id="deduction"
-                        className="form-control"
-                        onChange={(e) => {makeFilterData(e)
-                                setShowButtonIsDeduction(e.target.value !== 'default')
-                        }}
-                        >
-                            <option value="default" disabled selected>
-                                Action
-                            </option>
-                            <option value={true}>Deduct</option>
-                            <option value={false}>Add</option>
-                        </select>
-                        {showButtonIsDeduction && (
+                </div>
+                <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                    <div className="input-container">
+                        <label>Action</label>
+                        <select
+                            name="isDeduction"
+                            id="deduction"
+                            className="form-control"
+                            onChange={(e) => {makeFilterData(e)
+                                    setShowButtonIsDeduction(e.target.value !== 'default')
+                            }}
+                            >
+                                <option value="default" disabled selected>
+                                    Action
+                                </option>
+                                <option value={true}>Deduct</option>
+                                <option value={false}>Add</option>
+                            </select>
+                            {showButtonIsDeduction && (
                                 <span id="payrollsettingadjustment_closeaction_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
                                 X
                                 </span>
                             )}
                     </div>
-                    <div className="input-container col-md-3">
-                        <Button
-                        id="payrollsettingadjustment_search_btn"
-                        style={{ width: 100 }}
-                        onClick={() => getAllAdjustmentType(0)}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                        </Button>
+                </div>
+                <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+                    <div className="input-container">
+                            <Button
+                            id="payrollsettingadjustment_search_btn"
+                            style={{ width: '100%' }}
+                            onClick={() => getAllAdjustmentType(0)}
+                            className="btn btn-primary mx-2 mt-4">
+                            Search
+                            </Button>
                     </div>
+                </div>
+                    
+                    
+                    
                 </div>
             </div>
             <Table responsive>
