@@ -218,7 +218,7 @@ const philhealth = (props: any) => {
             </Table>
             <Modal
              show={modalShow}
-             size="xl"
+             size="lg"
              aria-labelledby="contained-modal-title-vcenter"
              centered
              backdrop="static"
@@ -230,7 +230,7 @@ const philhealth = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Create New Adjustment Type
+                        Update Philhealth Rates
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -262,7 +262,7 @@ const philhealth = (props: any) => {
                                 )
                             } else {
                                 ErrorSwal.fire(
-                                    'Success!',
+                                    'Updated Successfully',
                                     (body.data) || "",
                                     'success'
                                     )
@@ -290,7 +290,7 @@ const philhealth = (props: any) => {
                                 autoComplete="off"
                             >
                                 <div className="row w-100 px-5">
-                                <div className="form-group col-md-6 mb-3">
+                                <div className="form-group col-md-4 mb-3">
                                     <label>Basic Lower Range</label>
                                     <input
                                         type="text"
@@ -307,7 +307,7 @@ const philhealth = (props: any) => {
                                           }}
                                     />
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                     <label>Basic Upper Range</label>
                                     <input
                                         type="text"
@@ -324,7 +324,7 @@ const philhealth = (props: any) => {
                                           }}
                                     />
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                     <label>Premium Rate</label>
                                     <input
                                         type="text"
