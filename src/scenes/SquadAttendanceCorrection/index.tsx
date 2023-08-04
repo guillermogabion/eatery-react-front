@@ -358,7 +358,7 @@ export const SquadAttendanceCorrection = (props: any) => {
   const COATable = useCallback(() => {
     return (
       <div>
-        <Table responsive="lg">
+        <Table responsive>
           <thead>
             <tr>
               <th style={{ width: 'auto' }}>Employee Name</th>
@@ -844,7 +844,7 @@ export const SquadAttendanceCorrection = (props: any) => {
             <p id="squadattendancecorrection_type_reqinfop">Type : {initialValues.type}</p>
             <p id="squadattendancecorrection_status_reqinfop">Status : {initialValues.status}</p>
 
-            <Table responsive="lg" style={{ maxHeight: '100vh' }}>
+            <Table responsive style={{ maxHeight: '100vh' }}>
               <thead>
                 <tr>
                   <th style={{ width: '100px' }}>Shift Date</th>

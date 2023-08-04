@@ -195,7 +195,7 @@ export const LeaveTypes = (props: any) => {
                     <h3>Leave Types</h3>
                     <div className="w-100 pt-2">
                         <div>
-                            <Table responsive="lg">
+                            <Table responsive>
                                 <thead>
                                     <tr>
                                         <th style={{ width: 'auto' }}>Name</th>

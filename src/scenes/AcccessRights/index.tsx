@@ -308,7 +308,7 @@ export const Access = (props: any) => {
             <div>
               <div className="w-100 pt-2">
               
-                <Table responsive="lg">
+                <Table responsive>
                   <thead>
                     <tr>
                       {tableHeaders &&
@@ -367,7 +367,7 @@ export const Access = (props: any) => {
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
                   <div>
-                    <Table responsive="lg">
+                    <Table responsive>
                       <thead>
                         <tr>
                           {tableRoleAuth &&
@@ -444,7 +444,7 @@ export const Access = (props: any) => {
                 <Modal.Body className="row w-100 px-5">
                   <div>
                   <div className="table-body-container" style={{ maxHeight: "500px", overflowY: "auto" }}>
-                  <Table responsive="lg">
+                  <Table responsive>
                       <thead>
                         <tr>
                           { tableAddAccess &&

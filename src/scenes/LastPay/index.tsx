@@ -29,6 +29,7 @@ export const LastPay = (props: any) => {
     const [detailsMenu, setDetalsMenu] = React.useState('Salary Details');
     const [lastPayInfo, setLastPayInfo] = React.useState({});
     const [isDownloadBankTrans, setIsDownloadBankTrans] = useState<any>(false)
+    const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = useState<any>("")
 
     const tableHeaders = [
@@ -50,8 +51,21 @@ export const LastPay = (props: any) => {
     const currentYear = currentDate.getFullYear();
 
     const getLastPay = (pageNo: any) => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
+
         RequestAPI.getRequest(
-            `${Api.lastPayList}?size=10&page=${pageNo}&sort=id&sortDir=desc`,
+            `${Api.lastPayList}?size=10&page=${pageNo}${queryString}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -96,6 +110,11 @@ export const LastPay = (props: any) => {
         getLastPay(0)
     }, [])
 
+    useEffect(() => {
+        if (filterData) {
+            getLastPay(0)
+        }
+    }, [filterData])
 
     const regenerateLastPay = (id: any = 0) => {
         ErrorSwal.fire({
@@ -155,12 +174,74 @@ export const LastPay = (props: any) => {
         )
     }
 
+    const singleChangeOption = (option: any, name: any) => {
+
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
+
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+    }
+
     return (
         <ContainerWrapper contents={<>
             <>
                 <div className="w-100 px-5 py-5">
+                    <div className="fieldtext d-flex col-md-3 w-100">
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <div>
+                                <label>Employee</label>
+                                <EmployeeDropdown
+                                    id="lastpay_employee_dropdown"
+                                    placeholder={"Employee"}
+                                    singleChangeOption={singleChangeOption}
+                                    name="userId"
+                                    value={filterData && filterData['userId']}
+                                    withEmployeeID={true}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label>Separation Date</label>
+                            <input
+                                id="lastpay_datefrom_leavecreditsinput"
+                                name="seperationDate"
+                                type="date"
+                                autoComplete="off"
+                                className="formControl"
+                                maxLength={40}
+                                onChange={(e) => makeFilterData(e)}
+                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                            />
+                        </div>
+                        <div className="ml-2">
+                            <div className="" style={{ width: 200, marginRight: 10 }}>
+                                <label>Last Pay Generated</label>
+                                <select
+                                    id="employee_gender_maindropdown"
+                                    className="form-select"
+                                    name="lastPayGenerated"
+                                    value={filterData && filterData['lastPayGenerated']}
+                                    onChange={(e) => {
+                                        makeFilterData(e)
+                                    }}
+                                >
+                                    <option value="" selected>
+                                        All
+                                    </option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div>
-                        <Table responsive="lg">
+                        <Table responsive>
                             <thead>
                                 <tr>
                                     {
@@ -194,7 +275,7 @@ export const LastPay = (props: any) => {
                                                                 getLastPayInfo(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="lastpay_eye_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id="lastpay_eye_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
                                                         </label>
                                                         <label
                                                             id="lastpay_regenerate_label"
@@ -202,7 +283,7 @@ export const LastPay = (props: any) => {
                                                                 regenerateLastPay(item.userId)
                                                             }}
                                                             className="text-muted cursor-pointer">
-                                                            <img id="lastpay_regenerate_img" src={regenerate} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                            <img id="lastpay_regenerate_img" src={regenerate} width={20} className="hover-icon-pointer mx-1" title={item.lastPayExist ? "Regenerate" : "Generate"} />
                                                         </label>
                                                     </td>
                                                 </tr>

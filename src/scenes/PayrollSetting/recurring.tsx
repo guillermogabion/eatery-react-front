@@ -273,7 +273,7 @@ const Recurring = (props: any) => {
                 </div>
             </div>
 
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {

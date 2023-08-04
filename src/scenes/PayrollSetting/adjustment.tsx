@@ -276,7 +276,7 @@ const Adjustment = (props: any) => {
                     </div>
                 </div>
             </div>
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {

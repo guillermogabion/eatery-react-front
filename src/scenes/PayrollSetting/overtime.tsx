@@ -121,7 +121,7 @@ const Overtime = (props) => {
 
   return (
     <div>
-      <Table responsive="lg">
+      <Table responsive>
         <thead>
           <tr>
             {tableHeaders &&

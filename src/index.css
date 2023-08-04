@@ -3670,7 +3670,7 @@ table thead tr th{
 }
 .clearable-select .clear-icon-adjustment {
   position: absolute;
-  top: 70%;
+  top: 50%;
   right: 10%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -3714,7 +3714,4 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 
 
-.overflow-auto {
-  overflow-x: hidden !important;
-}
 

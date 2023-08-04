@@ -167,7 +167,7 @@ const philhealth = (props: any) => {
     return (
         <div>
 
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {

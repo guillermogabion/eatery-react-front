@@ -160,7 +160,7 @@ const hdmf = (props: any) => {
     return (
         <div>
 
-            <Table responsive="lg">
+            <Table responsive>
                 <thead>
                     <tr>
                         {

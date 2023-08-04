@@ -51,6 +51,7 @@ const Upload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
           console.log("File uploaded successfully!");
           showAlert("Success", "File uploaded successfully!", "success");
           onCloseModal();
+          location.reload();
         } else {
           console.error(`File upload failed with status ${response.status}`);
           showAlert("Error", `File upload failed with status ${response.status}`, "error");
