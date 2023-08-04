@@ -166,6 +166,7 @@ const Recurring = (props: any) => {
     
     const handleModalHide = useCallback(() => {
         setModalShow(false);
+        setId(false)
         formRef.current?.resetForm();
         setInitialValues({
           name: "",
