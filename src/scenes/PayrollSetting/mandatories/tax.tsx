@@ -6,6 +6,8 @@ import { Api, RequestAPI } from "../../../api"
 import Table from 'react-bootstrap/Table'
 import FileUploadMonthly from "./MonthlyTaxUpload"
 import FileUploadYearly from "./AnnualTaxUpload"
+import { Utility } from "../../../utils"
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -141,11 +143,11 @@ const tax = (props: any) => {
                                                 taxMonth.map((item: any, index: any) => {
                                                     return (
                                                         <tr>
-                                                <td id="payrollsettingstax_basicrangelower_data"> { item.basicRangeLower }</td>
-                                                <td id="payrollsettingstax_basicrangeupper_data"> { item.basicRangeUpper }</td>
+                                                <td id="payrollsettingstax_basicrangelower_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
+                                                <td id="payrollsettingstax_basicrangeupper_data"> {Utility.formatToCurrency(item.basicRangeUpper)}</td>
                                                 <td id="payrollsettingstax_fixedtax_data"> { item.fixedTax }</td>
-                                                <td id="payrollsettingstax_prescribedwitholdingtax_data"> { item.prescribedWitholdingTax }</td>    
-                                                <td id="payrollsettingstax_nontaxablecompensation_data"> { item.nonTaxableCompensation }</td>    
+                                                <td id="payrollsettingstax_prescribedwitholdingtax_data"> {Utility.formatToCurrency(item.prescribedWitholdingTax)}</td>    
+                                                <td id="payrollsettingstax_nontaxablecompensation_data"> {Utility.formatToCurrency(item.nonTaxableCompensation)}</td>    
                                                 </tr>
                                                 )
                                             })
@@ -197,11 +199,11 @@ const tax = (props: any) => {
                                             taxYear.map((item: any, index: any) => {
                                                 return (
                                                     <tr>
-                                                        <td id="payrollsettingstax_basicrangelower_taxyeardata"> { item.basicRangeLower }</td>
-                                                        <td id="payrollsettingstax_basicrangeupper_taxyeardata"> { item.basicRangeUpper }</td>
-                                                        <td id="payrollsettingstax_taxrate_taxyeardata"> { item.taxRate }</td>
-                                                        <td id="payrollsettingstax_fixedtax_taxyeardata"> { item.fixedTax }</td>
-                                                        <td id="payrollsettingstax_excessamount_taxyeardata"> { item.excessAmount }</td>    
+                                                        <td id="payrollsettingstax_basicrangelower_taxyeardata">{Utility.formatToCurrency(item.basicRangeLower)} </td>
+                                                        <td id="payrollsettingstax_basicrangeupper_taxyeardata">{Utility.formatToCurrency(item.basicRangeUpper)} </td>
+                                                        <td id="payrollsettingstax_taxrate_taxyeardata">{Utility.formatToCurrency(item.taxRate)}</td>
+                                                        <td id="payrollsettingstax_fixedtax_taxyeardata"> {Utility.formatToCurrency(item.fixedTax)}</td>
+                                                        <td id="payrollsettingstax_excessamount_taxyeardata">{Utility.formatToCurrency(item.excessAmount)}</td>    
                                                     </tr>
                                                 )
                                             })

@@ -7,6 +7,10 @@ import Table from 'react-bootstrap/Table'
 import ReactPaginate from 'react-paginate'
 import { Formik } from "formik"
 import { async } from "validate.js"
+import { Utility } from "../../../utils"
+import { action_decline, action_edit } from "../../../assets/images"
+
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -27,8 +31,8 @@ const philhealth = (props: any) => {
             "amount" : "",
     })
     const tableHeaders = [
-        'Monthly Basic Salary (Range 1)',
-        'Monthly Basic Salary (Range 2)',
+        'Basic Lower Range',
+        'Basic Upper Range',
         'Premium',
         'Action',
     ];
@@ -187,9 +191,9 @@ const philhealth = (props: any) => {
                     ph.map((item, index) => {
                     return (
                         <tr key={index}>
-                        <td id="payrollsettingphilhealth_basiclowerrange_data">{item.basicLowerRange}</td>
-                        <td id="payrollsettingphilhealth_basicupperrange_data">{item.basicUpperRange}</td>
-                        <td id="payrollsettingphilhealth_premiumrate_data">{item.premiumRate}</td>
+                        <td id="payrollsettingphilhealth_basiclowerrange_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
+                        <td id="payrollsettingphilhealth_basicupperrange_data">{Utility.formatToCurrency(item.basicUpperRange)}</td>
+                        <td id="payrollsettingphilhealth_premiumrate_data">{Utility.formatToCurrency(item.premiumRate)}</td>
                         <td>
                             <label
                             id="payrollsettingphilhealth_update_btn"
@@ -199,7 +203,7 @@ const philhealth = (props: any) => {
                             }}
                             className="text-muted cursor-pointer"
                             >
-                            Update
+                               <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                             <br />
                             {/* <label

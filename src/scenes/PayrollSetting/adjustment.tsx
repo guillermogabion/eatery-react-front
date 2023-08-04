@@ -11,6 +11,8 @@ import { User } from "../User"
 import { async } from "validate.js"
 import * as Yup from "yup"
 import { Utility } from "../../utils"
+import { action_decline, action_edit } from "../../assets/images"
+
 
 
 const ErrorSwal = withReactContent(Swal)
@@ -21,13 +23,15 @@ const Adjustment = (props: any) => {
     const [ adjustmentType, setAdjustmentType ] = React.useState([]);
     const formRef: any = useRef()
     const [ modalShow, setModalShow ] = React.useState(false);
-    const [id, setId] = useState(null);
+    // const [id, setId] = useState(null);
     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [isDeduction, setIsDeduction] = useState("");
     const [typeType, setTypetype] = useState("");
     const [showButtonIsDeduction, setShowButtonIsDeduction] = useState(false);
     const [showButtonTypetype, setShowButtonTypetype] = useState(false);
     const [pageSize, setPageSize] = useState(10);
+    const [id, setId] = React.useState("");
+
 
 
     const [initialValues, setInitialValues] = useState<any>({
@@ -126,7 +130,7 @@ const Adjustment = (props: any) => {
                     const valueObj: any = body.data
                     setInitialValues(valueObj)
                     setModalShow(true)
-
+                    setId(body.data.id)
                     console.log("Data:", body.data);
                 }
                 }
@@ -165,6 +169,7 @@ const Adjustment = (props: any) => {
     } 
     
     const handleModalHide = useCallback(() => {
+        setId(false)
         setModalShow(false);
         formRef.current?.resetForm();
         setInitialValues({
@@ -322,7 +327,7 @@ const Adjustment = (props: any) => {
                                             getAdjustmentData(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        Update
+                                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                         </label>
                                         <br />
                                         {/* <label
@@ -352,41 +357,43 @@ const Adjustment = (props: any) => {
            
             <div className="row">
                 <div className="col-md-6">
-                    <div className="d-flex ma-3">
-                        <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                        <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                    <div className="justify-content-start">
+                        <span className="font-bold mr-8 text-muted">Total Entries : {adjustmentType.totalElements}</span>
+                        <br />
+                        <div className="flex items-center">
+                        <span className="text-muted mr-3">Select Page Size:</span>
+                        <select id="pageSizeSelect" value={pageSize} className="form-select rounded-md py-2" style={{ fontSize: "16px", width: "150px" }} onChange={handlePageSizeChange}>
                             <option value={10}>10</option>
                             <option value={50}>50</option>
                             <option value={100}>100</option>
                         </select>
                     </div>
+                    </div>
                 </div>
                 <div className="col-md-6">
-                    <div className="d-flex justify-content-end ma-3">
-                        <span className="font-bold mr-8 ">Total Entries : { adjustmentType.totalElements }</span>
+                    <div className="d-flex justify-content-end">
+                        <div className="">
+                            <ReactPaginate
+                                className="d-flex justify-content-center align-items-center"
+                                breakLabel="..."
+                                nextLabel=">"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={5}
+                                pageCount={(adjustmentType && adjustmentType.totalPages) || 0}
+                                previousLabel="<"
+                                previousLinkClassName="prev-next-pagination"
+                                nextLinkClassName="prev-next-pagination"
+                                activeLinkClassName="active-page-link"
+                                disabledLinkClassName="prev-next-disabled"
+                                pageLinkClassName="page-link"
+                                renderOnZeroPageCount={null}
+                            />
+                        </div>
                     </div>   
                 </div>
             </div>
             
-            <div className="d-flex justify-content-end">
-                <div className="">
-                    <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(adjustmentType && adjustmentType.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                    />
-                </div>
-            </div>
+            
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
@@ -411,7 +418,7 @@ const Adjustment = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Create New Adjustment Type
+                        {id ? 'Update Recurring' : 'Create Recurring'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -495,11 +502,11 @@ const Adjustment = (props: any) => {
                                         )
                                     } else {
                                         ErrorSwal.fire(
-                                            'Success!',
+                                            'Updated Successfully!',
                                             (body.data) || "",
                                             'success'
                                             )
-                                        getAllAdjustmentType(0)
+                                        getAllAdjustmentType(0, pageSize)
                                         setModalShow(false)
     
                                     }
@@ -606,6 +613,7 @@ const Adjustment = (props: any) => {
                                             value={values.affectsGross}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             >
+                                                <option value="" disabled selected>Gross Affected</option>
                                                 <option value={true}>Yes</option>
                                                 <option value={false}>No</option>
                                             </select>

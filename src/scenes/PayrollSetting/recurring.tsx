@@ -11,6 +11,8 @@ import { User } from "../User"
 import { async } from "validate.js"
 import * as Yup from "yup"
 import { Utility } from "../../utils"
+import { action_decline, action_edit } from "../../assets/images"
+
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -20,7 +22,7 @@ const Recurring = (props: any) => {
     const [ recurringType, setRecurringType ] = React.useState([]);
     const formRef: any = useRef()
     const [ modalShow, setModalShow ] = React.useState(false);
-    const [id, setId] = useState(null);
+    const [id, setId] = useState("");
     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [isDeduction, setIsDeduction] = useState("");
     const [typeType, setTypetype] = useState("");
@@ -124,7 +126,7 @@ const Recurring = (props: any) => {
                     const valueObj: any = body.data
                     setInitialValues(valueObj)
                     setModalShow(true)
-
+                    setId(body.data.id)
                     console.log("Data:", body.data);
                 }
                 }
@@ -318,7 +320,7 @@ const Recurring = (props: any) => {
                                             getRecurringData(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        Update
+                                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                         </label>
                                         <br />
                                         {/* <label
@@ -348,40 +350,41 @@ const Recurring = (props: any) => {
             }
                 <div className="row">
                     <div className="col-md-6">
-                        <div className="d-flex ma-3">
-                            <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                            <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                        <div className="justify-content-start">
+                            <span className="font-bold mr-8 text-muted">Total Entries : {recurringType.totalElements}</span>
+                            <br />
+                            <div className="flex items-center">
+                            <span className="text-muted mr-3">Select Page Size:</span>
+                            <select id="pageSizeSelect" value={pageSize} className="form-select rounded-md py-2" style={{ fontSize: "16px", width: "150px" }} onChange={handlePageSizeChange}>
                                 <option value={10}>10</option>
                                 <option value={50}>50</option>
                                 <option value={100}>100</option>
                             </select>
                         </div>
+                        </div>
                     </div>
                     <div className="col-md-6">
-                        <div className="d-flex justify-content-end ma-3">
-                            <span className="font-bold mr-8 ">Total Entries : { recurringType.totalElements }</span>
+                        <div className="d-flex justify-content-end">
+                            <div className="">
+                                <ReactPaginate
+                                    className="d-flex justify-content-center align-items-center"
+                                    breakLabel="..."
+                                    nextLabel=">"
+                                    onPageChange={handlePageClick}
+                                    pageRangeDisplayed={5}
+                                    pageCount={(recurringType && recurringType.totalPages) || 0}
+                                    previousLabel="<"
+                                    previousLinkClassName="prev-next-pagination"
+                                    nextLinkClassName="prev-next-pagination"
+                                    activeLinkClassName="active-page-link"
+                                    disabledLinkClassName="prev-next-disabled"
+                                    pageLinkClassName="page-link"
+                                    renderOnZeroPageCount={null}
+                                />
+                            </div>
                         </div>   
                     </div>
                 </div>
-            <div className="d-flex justify-content-end">
-                <div className="">
-                    <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(recurringType && recurringType.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                    />
-                </div>
-            </div>
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
@@ -406,7 +409,7 @@ const Recurring = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Create New Recurring Type
+                        {id ? 'Update Recurring Type' : 'Create New Recurring Type'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -464,7 +467,7 @@ const Recurring = (props: any) => {
                                                 'success'
                                             )
                                             setModalShow(false)
-                                            getAllRecurringType(0)
+                                            getAllRecurringType(0, pageSize)
                                             values.id = null
                                             }
                                     }else {
