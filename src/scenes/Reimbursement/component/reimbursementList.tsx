@@ -46,7 +46,7 @@ export const ReimbursementList = (props: any) => {
         <div>
             <div className="w-100 px-2 py-3">
                 <div>
-                    <Table responsive="lg">
+                    <Table responsive>
                         <thead>
                             <tr>
                                 {

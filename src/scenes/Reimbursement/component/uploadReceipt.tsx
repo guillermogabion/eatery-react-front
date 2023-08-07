@@ -48,7 +48,7 @@ export const UploadReceipt = (props: any) => {
         <div>
             <div className="w-100 px-2 py-3">
                 <div>
-                    <Table responsive="lg">
+                    <Table responsive>
                         <thead>
                             <tr>
                                 {
@@ -70,13 +70,14 @@ export const UploadReceipt = (props: any) => {
                                     reimbursementList.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
-                                                <td> {item.typeName} </td>
-                                                <td> {item.approvedBudget} </td>
-                                                <td> {item.amount} </td>
-                                                <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                <td> {item.id} </td>
+                                                <td> {item.fileName} </td>
+                                                <td> {item.fileContentType} </td>
+                                                <td> {item.companyName} </td>
+                                                <td> {Utility.formatDate(item.uploadDate, 'MM-DD-YYYY')}</td>
+                                                <td> {item.used} </td>
                                                 <td> {item.status} </td>
-                                                <td>
-                                                </td>
+                                                <td></td>
                                             </tr>
                                         )
                                     })
