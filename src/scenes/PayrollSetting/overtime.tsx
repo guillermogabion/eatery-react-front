@@ -7,6 +7,8 @@ import Table from 'react-bootstrap/Table';
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { async } from "validate.js";
+import { action_decline, action_edit } from "../../assets/images"
+
 
 const ErrorSwal = withReactContent(Swal);
 
@@ -154,7 +156,7 @@ const Overtime = (props) => {
                       }}
                       className="text-muted cursor-pointer"
                     >
-                      Update
+                      <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                     </label>
                   </td>
                 </tr>

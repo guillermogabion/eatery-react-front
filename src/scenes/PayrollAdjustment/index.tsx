@@ -17,7 +17,7 @@ import ContainerWrapper from "../../components/ContainerWrapper"
 import * as Yup from "yup"
 import Upload from './upload'
 import { Utility } from "../../utils"
-import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
+import { action_decline, action_edit } from "../../assets/images"
 
 const ErrorSwal = withReactContent(Swal)
 

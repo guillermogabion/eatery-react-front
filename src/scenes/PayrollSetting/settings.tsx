@@ -79,7 +79,7 @@ const Settings = (props: any) => {
                                         )
                                     } else {
                                         ErrorSwal.fire(
-                                            'Success!',
+                                            'Updated Successfully!',
                                             (body.data) || "",
                                             'success'
                                         )
@@ -102,7 +102,7 @@ const Settings = (props: any) => {
                                 <div className="fieldtext w-full row flex items-center justify-center m-0 p-0">
                                     <div className="row m-0 p-0 col-md-4">
                                         <div className="col-md-12">
-                                            <label>Days of Year</label>
+                                            <label>Days per Year</label>
                                             <div className="flex">
                                                 <input
                                                     type="text"
@@ -116,7 +116,7 @@ const Settings = (props: any) => {
                                             </div>
                                         </div>
                                         <div className="col-md-12">
-                                            <label>Days of Month</label>
+                                            <label>Days per Month</label>
                                             <div className="flex">
                                                 <input
                                                     type="text"
@@ -130,7 +130,7 @@ const Settings = (props: any) => {
                                             </div>
                                         </div>
                                         <div className="col-md-12">
-                                            <label>Days of Week</label>
+                                            <label>Days per Week</label>
                                             <div className="flex">
                                                 <input
                                                     type="text"

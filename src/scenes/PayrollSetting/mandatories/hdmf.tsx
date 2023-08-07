@@ -7,6 +7,10 @@ import Table from 'react-bootstrap/Table'
 import ReactPaginate from 'react-paginate'
 import { Formik } from "formik"
 import { async } from "validate.js"
+import { Utility } from "../../../utils"
+import { action_decline, action_edit } from "../../../assets/images"
+
+
 const ErrorSwal = withReactContent(Swal)
 
 interface HDMFItem {
@@ -180,8 +184,8 @@ const hdmf = (props: any) => {
     hdmf.map((item, index) => {
       return (
         <tr key={index}>
-          <td id="payrollsettinghdmf_amount_data">{item.amount}</td>
-          <td id="payrollsettinghdmf_amount2_data">{item.amount}</td>
+          <td id="payrollsettinghdmf_amount_data">{Utility.formatToCurrency(item.amount)}</td>
+          <td id="payrollsettinghdmf_amount2_data">{Utility.formatToCurrency(item.amount)}</td>
           <td>
             <label
               id="payrollsettinghdmf_update_label"
@@ -191,7 +195,7 @@ const hdmf = (props: any) => {
               }}
               className="text-muted cursor-pointer"
             >
-              Update
+              <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
             </label>
             <br />
             {/* <label
