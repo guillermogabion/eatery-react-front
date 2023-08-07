@@ -1111,6 +1111,7 @@ export const Recurring = (props: any) => {
                                                             <div className="col-md-3 mb-3">
                                                                 <label>Employee *</label>
                                                                 <EmployeeDropdown
+                                                                    id="payrollrecurring_recurringtypeemployee_recurringdropdown"
                                                                     placeholder={"Employee"}
                                                                     singleChangeOption={(e: any) => {
                                                                         createOption(e, 'userId', index)

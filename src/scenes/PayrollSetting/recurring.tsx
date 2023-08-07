@@ -308,15 +308,15 @@ const Recurring = (props: any) => {
                         recurringType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
-                                    <td id="payrollsettingrecurring_id_recurringtypedata"> {item.id} </td>
-                                    <td id="payrollsettingrecurring_name_recurringtypedata"> {item.name} </td>
-                                    <td id="payrollsettingrecurring_description_recurringtypedata"> {item.description}</td>
-                                    <td id="payrollsettingrecurring_type_recurringtypedata"> {Utility.removeUnderscore(item.type)}</td>
-                                    <td id="payrollsettingrecurring_deduction_recurringtypedata"> {item.deduction == true ? "Deduct" : "Add" }</td>
-                                    <td id="payrollsettingrecurring_affectgross_recurringtypedata"> {item.affectsGross == true ? "YES" : "NO" }</td>
+                                    <td id={"payrollsettingrecurring_id_recurringtypedata_" + item.id}> {item.id} </td>
+                                    <td id={"payrollsettingrecurring_name_recurringtypedata_" + item.id}> {item.name} </td>
+                                    <td id={"payrollsettingrecurring_description_recurringtypedata_" + item.id}> {item.description}</td>
+                                    <td id={"payrollsettingrecurring_type_recurringtypedata_" + item.id}> {Utility.removeUnderscore(item.type)}</td>
+                                    <td id={"payrollsettingrecurring_deduction_recurringtypedata_" + item.id}> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td id={"payrollsettingrecurring_affectgross_recurringtypedata_" + item.id}> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
-                                        id="payrollsettingrecurring_update_recurringtypelabel"
+                                        id={"payrollsettingrecurring_update_recurringtypelabel_" + item.id}
                                         onClick={() => {
                                             getRecurringData(item.id)
                                         }}

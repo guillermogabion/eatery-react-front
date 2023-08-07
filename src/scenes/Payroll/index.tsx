@@ -144,17 +144,17 @@ export const Payroll = (props: any) => {
                                                 payrolls.content.map((item: any, index: any) => {
                                                     return (
                                                         <tr>
-                                                            <td id="payroll_id_payrollsdata"> {item.id} </td>
-                                                            <td id="payroll_periodyear_payrollsdata"> {item.periodYear} </td>
-                                                            <td id="payroll_periodmonth_payrollsdata"> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
-                                                            <td id="payroll_datefrom_payrollsdata">{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
-                                                            <td id="payroll_dateto_payrollsdata">{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                                                            <td id={"payroll_id_payrollsdata_" + item.data}> {item.id} </td>
+                                                            <td id={"payroll_periodyear_payrollsdata_" + item.id}> {item.periodYear} </td>
+                                                            <td id={"payroll_periodmonth_payrollsdata_" + item.id}> {moment().month(item.periodMonth - 1).format('MMMM')} </td>
+                                                            <td id={"payroll_datefrom_payrollsdata_" + item.id}>{Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')}</td>
+                                                            <td id={"payroll_dateto_payrollsdata_" + item.id}>{Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                             {/* <td>{item.transactionDate.split("T")[0]} </td> */}
-                                                            <td id="payroll_description_payrollsdata">{item.description} </td>
-                                                            <td id="payroll_isgenerated_payrollsdata">{item.isGenerated == true ? "Processed" : "To Process"} </td>
+                                                            <td id={"payroll_description_payrollsdata_" + item.id}>{item.description} </td>
+                                                            <td id={"payroll_isgenerated_payrollsdata_" + item.id}>{item.isGenerated == true ? "Processed" : "Locked"} </td>
                                                             <td>
                                                                 <label
-                                                                    id="payroll_update_payrollslabel"
+                                                                    id={"payroll_update_payrollslabel_" + item.id}
                                                                     onClick={() => {
                                                                         setIsCreatePayroll(true)
                                                                         setPayrollData({
@@ -172,7 +172,7 @@ export const Payroll = (props: any) => {
                                                                 </label>
                                                                 <br />
                                                                 <label
-                                                                    id="payroll_audit_payrollslabel"
+                                                                    id={"payroll_audit_payrollslabel_" + item.id}
                                                                     onClick={() => {
                                                                         setIsCreatePayroll(true)
                                                                         setPayrollData({

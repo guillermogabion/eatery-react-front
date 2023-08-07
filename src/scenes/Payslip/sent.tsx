@@ -319,12 +319,12 @@ const sent = (props : any ) => {
                                 <tr style={{height: '10px'}}>
                                 
                                 {/* <td> {item.isGenerated} </td> */}
-                                <td id="payslipsent_id_payrolllistdata"> {item.id} </td>
-                                <td id="payslipsent_monthyear_payrolllistdata"> {getMonthName(item.periodMonth)} {item.periodYear} </td>
-                                <td id="payslipsent_isgenerated_payrolllistdata"> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
+                                <td id={"payslipsent_id_payrolllistdata_" + item.id}> {item.id} </td>
+                                <td id={"payslipsent_monthyear_payrolllistdata_" + item.id}> {getMonthName(item.periodMonth)} {item.periodYear} </td>
+                                <td id={"payslipsent_isgenerated_payrolllistdata_" + item.id}> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
                                 <td>
                                 <label
-                                id="payslipsent_viewlogs_payrolllistbtn"
+                                id={"payslipsent_viewlogs_payrolllistbtn_" + item.id}
                                 onClick={() => {
                                     // getAdjustment(item.id)
                                 }}
