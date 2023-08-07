@@ -355,15 +355,7 @@ const unsent = (props : any ) => {
                                     className="btn btn-primary mx-2 mt-4">
                                     Search
                                 </Button>
-                            </div>
-
-
-
-
-                                
-                                
-                               
-                                
+                            </div>       
                                 
                         </div>
                     </div>

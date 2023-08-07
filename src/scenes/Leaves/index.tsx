@@ -537,28 +537,28 @@ export const Leaves = (props: any) => {
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <>
-                                <td id="leaves_name_allleavedata"> {item.lastName}, {item.firstName} </td>
+                                <td id={"leaves_name_allleavedata_" + item.id}> {item.lastName}, {item.firstName} </td>
                               </> : null
                           }
 
-                          <td id="leaves_type_allleavedata"> {item.type} </td>
+                          <td id={"leaves_type_allleavedata_" + item.id}> {item.type} </td>
                           {/* <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td> */}
-                          <td id="leaves_datefrom_allleavedata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td id="leaves_dateto_allleavedata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id="leaves_reason_allleavedata"> {item.reason} </td>
-                          <td id="leaves_filedate_allleavedata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td id="leaves_statuschangedby_allleavedata"> {item.statusChangedBy} </td>
+                          <td id={"leaves_datefrom_allleavedata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id={"leaves_dateto_allleavedata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id={"leaves_reason_allleavedata_" + item.id}> {item.reason} </td>
+                          <td id={"leaves_filedate_allleavedata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id={"leaves_statuschangedby_allleavedata_" + item.id}> {item.statusChangedBy} </td>
                           {/* <td> {item.status} </td> */}
-                          <td id="leaves_status_allleavedata"> {Utility.removeUnderscore(item.status)} </td>
+                          <td id={"leaves_status_allleavedata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
-                              id="leaves_view_allleavelabel"
+                              id={"leaves_view_allleavelabel_" + item.id}
                               onClick={() => {
                                 viewLeave(item.id)
                               }}
                             >
-                              <img id="leaves_eye_allleaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id={"leaves_eye_allleaveimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             {
@@ -567,12 +567,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
-                                        id="leaves_name_allleavelabel"
+                                        id={"leaves_name_allleavelabel_" + item.id}
                                         onClick={() => {
                                           getLeave(item.id)
                                         }}
                                         className=" cursor-pointer">
-                                        <img id="leaves_actionedit_allleaveimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                        <img id={"leaves_actionedit_allleaveimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                       </label>
                                       <br />
                                     </>
@@ -581,12 +581,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
-                                        id="leaves_approveleave_allleavelabel"
+                                        id={"leaves_approveleave_allleavelabel_" + item.id}
                                         onClick={() => {
                                           approveLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id="leaves_actionapprove_allleaveimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                        <img id={"leaves_actionapprove_allleaveimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                       </label> <br />
                                     </>
                                   ) : null}
@@ -594,12 +594,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
-                                        id="leaves_declineleave_allleavelabel"
+                                        id={"leaves_declineleave_allleavelabel_" + item.id}
                                         onClick={() => {
                                           declineLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id="leaves_actiondecline_allleaveimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                        <img id={"leaves_actiondecline_allleaveimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                       </label>
                                       <br />
                                     </>
@@ -614,12 +614,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
-                                        id="leaves_cancelleave_allleavelabel"
+                                        id={"leaves_cancelleave_allleavelabel_" + item.id}
                                         onClick={() => {
                                           cancelLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id="leaves_actioncancel_allleaveimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                        <img id={"leaves_actioncancel_allleaveimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                       </label>
                                       <br />
                                     </>

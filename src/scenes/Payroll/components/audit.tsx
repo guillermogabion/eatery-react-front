@@ -105,9 +105,9 @@ export default function Audit(props: any) {
                             auditLogs.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                        <td id="payrollaudit_datetime_auditlogsdata"> {Utility.formatDate(item.dateTime.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="payrollaudit_username_auditlogsdata"> {item.username} </td>
-                                        <td id="payrollaudit_description_auditlogsdata"> {item.description} </td>
+                                        <td id={"payrollaudit_datetime_auditlogsdata_" + item.username + item.dateTime}> {Utility.formatDate(item.dateTime.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"payrollaudit_username_auditlogsdata_" + item.username + item.dateTime}> {item.username} </td>
+                                        <td id={"payrollaudit_description_auditlogsdata_" + item.username + item.dateTime}> {item.description} </td>
                                     </tr>
                                 )
                             })
