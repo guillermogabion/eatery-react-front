@@ -562,7 +562,7 @@ export const Leaves = (props: any) => {
 
                             </label>
                             {
-                              item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" && item.status != "CANCELLED"  ?
+                              item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED"  ?
                                 <>
                                   {authorizations.includes("Request:Update") ? (
                                     <>

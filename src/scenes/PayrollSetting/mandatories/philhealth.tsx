@@ -193,7 +193,12 @@ const philhealth = (props: any) => {
                         <tr key={index}>
                         <td id="payrollsettingphilhealth_basiclowerrange_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
                         <td id="payrollsettingphilhealth_basicupperrange_data">{Utility.formatToCurrency(item.basicUpperRange)}</td>
-                        <td id="payrollsettingphilhealth_premiumrate_data">{Utility.formatToCurrency(item.premiumRate)}</td>
+                        <td id="payrollsettingphilhealth_premiumrate_data">  {`${(item.premiumRate / 100).toLocaleString(undefined, {
+                            style: 'percent',
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          })}`}
+                        </td>
                         <td>
                             <label
                             id="payrollsettingphilhealth_update_btn"

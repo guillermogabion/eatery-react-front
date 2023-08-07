@@ -172,13 +172,23 @@ export const Employee = (props: any) => {
     "monthlyDeMinimisBenefits": 0,
     "ecola": 0,
     "clothingAllowance": 0,
+    "clothIsTaxable": true,
     "communicationAllowance": 0,
+    "commIsTaxable": true,
     "discretionaryAllowance": 0,
+    "discreIsTaxable": true,
     "mealAllowance": 0,
+    "mealIsTaxable": true,
     "medicalAllowance": 0,
+    "medicalIsTaxable": true,
     "productivityAllowance": 0,
+    "prodIsTaxable": true,
     "conveyanceAllowance": 0,
+    "convIsTaxable": true,
     "otherAllowance": 0,
+    "otherIsTaxable": true,
+    "miscellaneous": 0,
+    "miscIsTaxable": true,
     "rdo": "0",
     "prclicenseNo": 0,
     "passportNo": 0
@@ -2384,6 +2394,13 @@ export const Employee = (props: any) => {
                 {errors && errors.clothingAllowance && (
                   <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
                 )}
+                 <Form.Check
+                    type="checkbox"
+                    label="Taxable (Clothing Allowance)"
+                    name="clothIsTaxable"
+                    checked={values.clothIsTaxable}
+                    onChange={(e) => setFieldValue("clothIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Communication Allowance</label>
@@ -2397,6 +2414,13 @@ export const Employee = (props: any) => {
                 {errors && errors.communicationAllowance && (
                   <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Communication Allowance)"
+                    name="commIsTaxable"
+                    checked={values.commIsTaxable}
+                    onChange={(e) => setFieldValue("commIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Discretionary Allowance</label>
@@ -2410,6 +2434,13 @@ export const Employee = (props: any) => {
                 {errors && errors.discretionaryAllowance && (
                   <p id="employee_errordiscretionaryallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Discretionary Allowance)"
+                    name="discreIsTaxable"
+                    checked={values.discreIsTaxable}
+                    onChange={(e) => setFieldValue("discreIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Meal Allowance</label>
@@ -2423,6 +2454,13 @@ export const Employee = (props: any) => {
                 {errors && errors.mealAllowance && (
                   <p id="employee_errormealallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Meal Allowance)"
+                    name="mealIsTaxable"
+                    checked={values.mealIsTaxable}
+                    onChange={(e) => setFieldValue("mealIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Medical Allowance</label>
@@ -2436,6 +2474,13 @@ export const Employee = (props: any) => {
                 {errors && errors.medicalAllowance && (
                   <p id="employee_errormedicalallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
                 )}
+                 <Form.Check
+                    type="checkbox"
+                    label="Taxable (Medical Allowance)"
+                    name="medicalIsTaxable"
+                    checked={values.medicalIsTaxable}
+                    onChange={(e) => setFieldValue("medicalIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Productivity Allowance</label>
@@ -2449,6 +2494,13 @@ export const Employee = (props: any) => {
                 {errors && errors.productivityAllowance && (
                   <p id="employee_errorproductivityallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.productivityAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Productivity Allowance)"
+                    name="prodIsTaxable"
+                    checked={values.prodIsTaxable}
+                    onChange={(e) => setFieldValue("prodIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Conveyance Allowance</label>
@@ -2462,6 +2514,14 @@ export const Employee = (props: any) => {
                 {errors && errors.conveyanceAllowance && (
                   <p id="employee_errorconveyanceallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
                 )}
+             
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Conveyance Allowance)"
+                    name="convIsTaxable"
+                    checked={values.convIsTaxable}
+                    onChange={(e) => setFieldValue("convIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Other Allowance</label>
@@ -2475,6 +2535,35 @@ export const Employee = (props: any) => {
                 {errors && errors.otherAllowance && (
                   <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
                 )}
+              
+                   <Form.Check
+                    type="checkbox"
+                    label="Taxable (Other Allowance)"
+                    name="otherIsTaxable"
+                    checked={values.otherIsTaxable}
+                    onChange={(e) => setFieldValue("otherIsTaxable", e.target.checked)}
+                  />
+              </div>
+              <div className="form-group col-md-6 mb-3 " >
+                <label>Miscellaneous Allowance</label>
+                <input type="text"
+                  name="miscellaneous"
+                  id="miscellaneous"
+                  className="form-control"
+                  value={values.miscellaneous}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+                {errors && errors.miscellaneous && (
+                  <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
+                )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Miscellaneous Allowance)"
+                    name="miscIsTaxable"
+                    checked={values.miscIsTaxable}
+                    onChange={(e) => setFieldValue("miscIsTaxable", e.target.checked)}
+                  />
+                 
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>RDO</label>
@@ -2489,6 +2578,7 @@ export const Employee = (props: any) => {
                   <p id="employee_errorrdo_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
                 )}
               </div>
+              
             </div>
             <br />
             <Modal.Footer>
