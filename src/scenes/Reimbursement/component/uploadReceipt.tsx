@@ -3,6 +3,10 @@ import { Api, RequestAPI } from "../../../api";
 import { Table } from "react-bootstrap";
 import { Utility } from "../../../utils";
 import ReactPaginate from "react-paginate";
+import { action_decline } from "../../../assets/images";
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+const ErrorSwal = withReactContent(Swal)
 
 export const UploadReceipt = (props: any) => {
     const [allLeaves, setAllLeaves] = useState<any>([]);
@@ -44,6 +48,39 @@ export const UploadReceipt = (props: any) => {
         getUploadedReceipts(event.selected)
     };
 
+    const deleteReceipt = (id: any = 0) => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to delete this receipt.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                RequestAPI.deleteRequest(`${Api.deleteReimbursementReceipt}/${id}`, "", { "id": id }, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200) {
+                        getUploadedReceipts(0)
+                        ErrorSwal.fire(
+                            'Deleted!',
+                            (body && body.data) || "",
+                            'success'
+                        )
+                    } else {
+                        //error
+                        ErrorSwal.fire(
+                            'Failed!',
+                            (body.error && body.error.message) || "",
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    }
+
     return (
         <div>
             <div className="w-100 px-2 py-3">
@@ -77,7 +114,16 @@ export const UploadReceipt = (props: any) => {
                                                 <td> {Utility.formatDate(item.uploadDate, 'MM-DD-YYYY')}</td>
                                                 <td> {item.used} </td>
                                                 <td> {item.status} </td>
-                                                <td></td>
+                                                <td>
+                                                    <label
+                                                        id="holiday_delete_btn"
+                                                        onClick={() => {
+                                                            deleteReceipt(item.id)
+                                                        }}
+                                                        className="text-muted cursor-pointer">
+                                                        <img id="holiday_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                                                    </label>
+                                                </td>
                                             </tr>
                                         )
                                     })

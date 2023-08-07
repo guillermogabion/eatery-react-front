@@ -294,6 +294,7 @@ const Api: any = {
   getAllReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/all",
   getAllReceiptReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getReceiptAll",
   uploadReimbursementReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/saveReceipt",
+  deleteReimbursementReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt",
 
 }
 
