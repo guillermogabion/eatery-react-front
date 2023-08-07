@@ -842,6 +842,7 @@ export const Recurring = (props: any) => {
                                                     <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                 </label>
                                                 <label
+                                                    id="payrollrecurring_delete_recurringlistlabel"
                                                     onClick={() => {
                                                         deleteRecurring(item.id)
                                                     }}
