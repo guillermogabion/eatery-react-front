@@ -164,6 +164,16 @@ export const Overtime = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this overtime.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "overtime_approveotconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "overtime_approveotcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -204,6 +214,16 @@ export const Overtime = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this overtime.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "overtime_declineotconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "overtime_declineotcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -244,6 +264,16 @@ export const Overtime = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this overtime.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "overtime_cancelotconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "overtime_cancelotcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

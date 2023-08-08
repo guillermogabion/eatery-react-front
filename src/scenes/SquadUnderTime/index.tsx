@@ -97,6 +97,16 @@ export const SquadUndertime = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to approve this undertime.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "squadut_approveutconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "squadut_approveutcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -146,6 +156,16 @@ export const SquadUndertime = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to cancel this undertime.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "squadut_cancelutconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "squadut_cancelutcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -196,6 +216,16 @@ export const SquadUndertime = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to decline this undertime.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "squadut_declineutconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "squadut_declineutcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

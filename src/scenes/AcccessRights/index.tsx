@@ -128,6 +128,16 @@ export const Access = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to remove the user's Access?",
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+              const cancelButton = Swal.getCancelButton();
+    
+              if(confirmButton)
+                confirmButton.id = "accessrights_deleteconfirm_alertbtn"
+    
+              if(cancelButton)
+                cancelButton.id = "accessrights_deletecancel_alertbtn"
+            },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

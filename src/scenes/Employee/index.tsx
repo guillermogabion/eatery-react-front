@@ -439,6 +439,16 @@ export const Employee = (props: any) => {
     ErrorSwal.fire({
       title: 'Notification',
       text: "Confirm Unlock?",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "employee_unlockconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "employee_unlockcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

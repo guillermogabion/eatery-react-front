@@ -183,6 +183,16 @@ export const SquadAttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this Attendance.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadattendancecorrection_approvecoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadattendancecorrection_approvecoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -232,6 +242,16 @@ export const SquadAttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this Attendance.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadattendancecorrection_declinecoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadattendancecorrection_declinecoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -281,6 +301,16 @@ export const SquadAttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this attendance reversal.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadattendancecorrection_cancelcoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadattendancecorrection_cancelcoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

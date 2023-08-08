@@ -151,6 +151,16 @@ export const LeaveTypes = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to delete this leave type.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "leavetypes_deleteconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "leavetypes_deletecancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

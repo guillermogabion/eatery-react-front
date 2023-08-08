@@ -294,6 +294,16 @@ export const SquadLeaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this leave.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadleave_approveconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadleave_approvecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -344,6 +354,16 @@ export const SquadLeaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this leave.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadleave_declineconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadleave_declinecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -395,6 +415,16 @@ export const SquadLeaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this leave.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadleave_declineconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadleave_declinecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

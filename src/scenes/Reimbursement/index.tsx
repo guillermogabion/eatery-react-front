@@ -100,6 +100,16 @@ export const Reimbursement = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to generate last pay.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "reimbursement_regenerateconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "reimbursement_regeneratecancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
