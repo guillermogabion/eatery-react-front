@@ -120,6 +120,16 @@ export const LastPay = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to generate last pay.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "lastpay_regeneratelastpayconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "lastpay_regeneratelastpaycancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

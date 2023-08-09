@@ -360,6 +360,16 @@ export const PayrollAdjustment = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "Are you sure you want to delete this transaction?",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "payrolladjustment_deleteadjconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "payrolladjustment_deleteadjcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -1027,6 +1037,7 @@ export const PayrollAdjustment = (props: any) => {
                                 <div className="d-flex justify-content-end px-5">
                                 {values.userId ? null:  (
                                     <button
+                                    id="payrolladjustment_btn_addform"
                                     type="button"
                                     className="btn btn btn-outline-primary me-2 mb-2 mt-2"
                                     onClick={handleAddField}

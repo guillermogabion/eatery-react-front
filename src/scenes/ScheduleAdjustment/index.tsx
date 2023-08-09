@@ -248,6 +248,16 @@ export const ScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "scheduleadjustment_approveconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "scheduleadjustment_approvecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -288,6 +298,16 @@ export const ScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "scheduleadjustment_declineconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "scheduleadjustment_declinecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -329,6 +349,16 @@ export const ScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "scheduleadjustment_canceladjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "scheduleadjustment_canceladjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

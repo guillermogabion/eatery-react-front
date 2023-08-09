@@ -210,6 +210,16 @@ export const SquadScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadadj_approveadjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadadj_approveadjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -260,6 +270,16 @@ export const SquadScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadadj_declineadjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadadj_declineadjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -311,6 +331,16 @@ export const SquadScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadadj_canceladjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadadj_canceladjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

@@ -78,6 +78,16 @@ export const Dashboard = (props: any) => {
       ErrorSwal.fire({
         title: 'Are you sure?',
         text: "You want to log in.",
+        didOpen: () => {
+          const confirmButton = Swal.getConfirmButton();
+          const cancelButton = Swal.getCancelButton();
+
+          if(confirmButton)
+            confirmButton.id = "dashboard_loginconfirm_alertbtn"
+
+          if(cancelButton)
+            cancelButton.id = "dashboard_logincancel_alertbtn"
+        },
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -119,6 +129,16 @@ export const Dashboard = (props: any) => {
       ErrorSwal.fire({
         title: 'Are you sure?',
         text: "You want to log out.",
+        didOpen: () => {
+          const confirmButton = Swal.getConfirmButton();
+          const cancelButton = Swal.getCancelButton();
+
+          if(confirmButton)
+            confirmButton.id = "dashboard_logoutconfirm_alertbtn"
+
+          if(cancelButton)
+            cancelButton.id = "dashboard_logoutcancel_alertbtn"
+        },
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

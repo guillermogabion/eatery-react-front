@@ -439,6 +439,16 @@ export const Employee = (props: any) => {
     ErrorSwal.fire({
       title: 'Notification',
       text: "Confirm Unlock?",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "employee_unlockconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "employee_unlockcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -1843,6 +1853,7 @@ export const Employee = (props: any) => {
               <div className="row">
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_mondayrestday"
                     type="checkbox"
                     label="Monday Rest Day"
                     name="mondayRestDay"
@@ -1902,6 +1913,7 @@ export const Employee = (props: any) => {
                 {/* tuesday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_tuesdayrestday"
                     type="checkbox"
                     label="Tuesday Rest Day"
                     name="tuesdayRestDay"
@@ -1961,6 +1973,7 @@ export const Employee = (props: any) => {
                 {/* wednesday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_wedrestday"
                     type="checkbox"
                     label="Wednesday Rest Day"
                     name="wednesdayRestDay"
@@ -2019,6 +2032,7 @@ export const Employee = (props: any) => {
                 {/* thursday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_thursdayrestday"
                     type="checkbox"
                     label="Thursday Rest Day"
                     name="thursdayRestDay"
@@ -2081,6 +2095,7 @@ export const Employee = (props: any) => {
 
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_fridayrestday"
                     type="checkbox"
                     label="Friday Rest Day"
                     name="fridayRestDay"
@@ -2141,6 +2156,7 @@ export const Employee = (props: any) => {
 
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_saturdayrestday"
                     type="checkbox"
                     label="Saturday Rest Day"
                     name="saturdayRestDay"
@@ -2199,6 +2215,7 @@ export const Employee = (props: any) => {
                 {/* Sunday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_sundayrestday"
                     type="checkbox"
                     label="Sunday Rest Day"
                     name="sundayRestDay"
