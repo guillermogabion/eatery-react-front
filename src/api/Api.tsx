@@ -292,6 +292,24 @@ const Api: any = {
 
   // Reimbursement
   getAllReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/all",
+  getMyReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/my-reimbursement",
+  getAllReceiptReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getReceiptAll",
+  getMyReceiptReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getMyReceipt",
+  uploadReimbursementReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/saveReceipt",
+  deleteReimbursementReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/delete",
+  reimbursementType : process.env.REACT_APP_API_URL + "payroll/request/reimbursement/type/all",
+  createReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/create",
+  createBulkReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/breakdown/list/create",
+  approveReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/approve",
+  declineReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/decline",
+  cancelReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/cancel",
+  updateReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/update",
+  updateReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/updateReceipt",
+
+
+  getFile : process.env.REACT_APP_API_URL + "file/getUrl",
+  
+
 }
 
 export default Api

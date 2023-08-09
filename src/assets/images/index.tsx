@@ -16,6 +16,11 @@ import actimai_logo_white1 from "./dist/logo1.png"
 import actimai_sidebar_bg from "./dist/SidebarBG.png"
 import caret_close from "./dist/menu/caret close.png"
 import regenerate from "./dist/action/regenerate.png"
+import gallery_img from "./dist/gallery_image.png"
+import cloud_upload from "./dist/cloud_upload.png"
+import add_reimbursement from "./AddReimbursement@2x.png"
+import inactive_review from "./Review&Submit@2x-1.png"
+import active_review from "./Review&Submit@2x-Fill.png"
 
 export {
   eye,
@@ -34,5 +39,10 @@ export {
   actimai_logo_white1,
   actimai_sidebar_bg,
   caret_close,
-  regenerate
+  regenerate,
+  gallery_img,
+  cloud_upload,
+  add_reimbursement,
+  inactive_review,
+  active_review,
 }

@@ -2051,8 +2051,7 @@ input::-ms-reveal {
 }
 
 .progress-bar {
-  height: 2px;
-  background: #3483e2 0% 0% no-repeat padding-box;
+  background: #1B84B7 0% 0% no-repeat padding-box;
 }
 
 .documents_section .uploadaction {
