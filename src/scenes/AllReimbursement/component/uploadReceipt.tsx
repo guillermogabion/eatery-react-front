@@ -49,7 +49,7 @@ export const UploadReceipt = (props: any) => {
             })
         }
         RequestAPI.getRequest(
-            `${Api.getMyReceiptReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=DESC`,
+            `${Api.getAllReceiptReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=DESC`,
             "",
             {},
             {},

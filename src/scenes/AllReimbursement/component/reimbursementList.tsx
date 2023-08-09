@@ -76,7 +76,7 @@ export const ReimbursementList = (props: any) => {
                 })
             }
         RequestAPI.getRequest(
-            `${Api.getMyReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=desc`,
+            `${Api.getAllReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=desc`,
             "",
             {},
             {},

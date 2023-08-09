@@ -33,7 +33,8 @@ import {
   ApproverLogin,
   Access,
   Page404,
-  Reimbursement
+  Reimbursement,
+  AllReimbursement
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -79,7 +80,10 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/timekeeping/attendancesummary", component: AttendanceSummary },
     { path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary },
     { path: "/timekeeping/missinglogs", component: MissingLogs },
-    { path: "/user", component: Reimbursement },
+    { path: "/user", component: ChangePassword },
+    { path: "/user/reimbursement", component: Reimbursement },
+    { path: "/manage/reimbursement", component: AllReimbursement },
+    
     { path: "/report", component: Report },
     { path: "/dashboard", component: Dashboard },
     { path: "/timekeeping", component: Dashboard },
