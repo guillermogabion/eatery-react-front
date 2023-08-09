@@ -124,6 +124,16 @@ export const Undertime = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to approve this undertime.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "undertime_approveutconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "undertime_approveutcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -164,6 +174,16 @@ export const Undertime = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to cancel this undertime.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "undertime_cancelutconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "undertime_cancelutcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -214,6 +234,16 @@ export const Undertime = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to decline this undertime.",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "undertime_declineutconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "undertime_declineutcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -331,62 +361,62 @@ export const Undertime = (props: any) => {
                                         {
                                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                 <>
-                                                    <td id="undertime_name_myutdata"> {item.lastName}, {item.firstName} </td>
+                                                    <td id={"undertime_name_myutdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                 </> : null
                                         }
-                                        <td id="undertime_shiftdate_myutdata"> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                                        <td id="undertime_utstart_myutdata"> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="undertime_utend_myutdata"> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id="undertime_filedate_myutdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id="undertime_reason_myutdata"> {item.reason} </td>
-                                        <td id="undertime_statuschangedby_myutdata"> {item.statusChangedBy} </td>
-                                        <td id="undertime_status_myutdata"> {Utility.removeUnderscore(item.status)} </td>
+                                        <td id={"undertime_shiftdate_myutdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"undertime_utstart_myutdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"undertime_utend_myutdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
+                                        <td id={"undertime_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                        <td id={"undertime_reason_myutdata_" + item.id}> {item.reason} </td>
+                                        <td id={"undertime_statuschangedby_myutdata_" + item.id}> {item.statusChangedBy} </td>
+                                        <td id={"undertime_status_myutdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td className="d-flex">
                                             <label
-                                                id="undertime_view_myutlabel"
+                                                id={"undertime_view_myutlabel_" + item.id}
                                                 onClick={() => {
                                                     viewUT(item.id)
                                                 }}
                                             >
-                                                <img id="undertime_eye_myutimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                <img id={"undertime_eye_myutimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                                             </label>
                                             {
-                                                item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" && item.status != "CANCELLED" ?
+                                                item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" ?
                                                     <>
                                                         {authorizations.includes("Request:Update") ? (
                                                             <>
                                                                 <label
-                                                                    id="undertime_actionedit_myutlabel"
+                                                                    id={"undertime_actionedit_myutlabel_" + item.id}
                                                                     onClick={() => {
                                                                         getUT(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img id="undertime_name_myutdata" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                                                    <img id={"undertime_name_myutdata_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                                 </label>
                                                             </>
                                                         ) : null}
                                                         {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                                             <>
                                                                 <label
-                                                                    id="undertime_actionapprove_myutlabel"
+                                                                    id={"undertime_actionapprove_myutlabel_" + item.id}
                                                                     onClick={() => {
                                                                         approveUT(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img id="undertime_name_myutimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                                                    <img id={"undertime_name_myutimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                                                 </label>
                                                             </>
                                                         ) : null}
                                                         {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                                             <>
                                                                 <label
-                                                                    id="undertime_actiondecline_myutlabel"
+                                                                    id={"undertime_actiondecline_myutlabel_" + item.id}
                                                                     onClick={() => {
                                                                         declineUT(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img id="undertime_actiondecline_myutimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                                                    <img id={"undertime_actiondecline_myutimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                                                 </label>
 
                                                             </>
@@ -401,12 +431,12 @@ export const Undertime = (props: any) => {
                                                         {authorizations.includes("Request:Update") ? (
                                                             <>
                                                                 <label
-                                                                    id="undertime_actioncancel_myutlabel"
+                                                                    id={"undertime_actioncancel_myutlabel_" + item.id}
                                                                     onClick={() => {
                                                                         cancelUndertime(item.id)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    <img id="undertime_actioncancel_myutimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                                    <img id={"undertime_actioncancel_myutimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                                 </label>
 
                                                             </>

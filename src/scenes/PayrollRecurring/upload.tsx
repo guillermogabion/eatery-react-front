@@ -25,7 +25,13 @@ const Upload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
       title: title,
       text: text,
       icon: type,
-      confirmButtonText: "OK"
+      confirmButtonText: "OK",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+
+        if(confirmButton)
+          confirmButton.id = "payrolrecurring_showconfirm_alertbtn"
+      },
     });
   };
 

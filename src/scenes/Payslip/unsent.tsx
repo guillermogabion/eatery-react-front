@@ -241,51 +241,57 @@ const unsent = (props : any ) => {
                 
                       <div>
                         <div className="w-100 pt-2">
-                            <div className="fieldtext d-flex ">
-                                <div className="input-container col-md-2">
+                            <div className="fieldtext row ">
+                            <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12">
+                                <div className="input-container">
                                     <label>Employee Name</label>
-                                        <EmployeeDropdown
-                                            placeholder={"Employee"}
-                                            singleChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                            withEmployeeID={true}
-                                            />
+                                    <EmployeeDropdown
+                                        placeholder={"Employee"}
+                                        singleChangeOption={singleChangeOption}
+                                        name="userId"
+                                        value={filterData && filterData['userId']}
+                                        withEmployeeID={true}
+                                    />
                                 </div>
-                                <div className="input-container clearable-select col-md-2">
+                            </div>
+                            <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12 clearable-select">
+                                <div className="input-container">
                                 <label> Month </label>
-                                <select 
-                                    name="payrollMonth" 
-                                    id="month1"
-                                    onChange={(e) => { makeFilterData(e)
-                                        setShowButtonMonth(e.target.value !== 'default')
-                                    }}
-                                    className="formControl"
-                                    ref={selectRef}
-                                    >
-                                        <option value="default" disabled selected>
-                                            Month
-                                        </option>
-                                        <option value="1">January</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">May</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
+                                    <select 
+                                        name="payrollMonth" 
+                                        id="month1"
+                                        onChange={(e) => { makeFilterData(e)
+                                            setShowButtonMonth(e.target.value !== 'default')
+                                        }}
+                                        className="formControl"
+                                        ref={selectRef}
+                                        >
+                                            <option value="default" disabled selected>
+                                                Month
+                                            </option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
                                     </select>
                                     {showButtonMonth && (
                                         <span id="payslipunsent_closemonth_span" className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
                                         X
                                         </span>
                                     )}
-                                    </div>
-                                <div className="input-container clearable-select col-md-2">
+                                </div>
+                            
+                            </div>
+                            <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12 clearable-select">
+                            <div className="input-container">
                                 <label>Year</label>
                                     <select
                                         className={`form-select`}
@@ -316,123 +322,118 @@ const unsent = (props : any ) => {
                                         </span>
                                     )}
                                 </div>
-                                <div className="input-container col-md-2">
-                                <label>Employee Name</label>
-                                    <EmployeeDropdown
-                                        id="payslipunsent_employee_dropdown"
-                                        placeholder={"Employee"}
-                                        singleChangeOption={singleChangeOption}
-                                        name="userId"
-                                        value={filterData && filterData['userId']}
-                                        withEmployeeID={true}
-                                        />
-                                    </div>
-                                <div className="input-container clearable-select col-md-2">
-                                <label> Status </label>
-                                <select 
-                                    name="status" 
-                                    id="status"
-                                    onChange={(e) => { makeFilterData(e)
-                                        setShowButtonStatus(e.target.value !== 'default')
-                                    }}
-                                    className="formControl"
-                                    >
-                                        <option value="default" disabled selected>
-                                            Status
-                                        </option>
-                                        <option value="completed">Completed</option>
-                                        <option value="incomplete">Incomplete</option>
-                                    </select>
-                                    {showButtonStatus && (
-                                        <span id="payslipunsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
-                                        X
-                                        </span>
-                                    )}
+                            </div>
+                            <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label> Status </label>
+                                    <select 
+                                        name="status" 
+                                        id="status"
+                                        onChange={(e) => { makeFilterData(e)
+                                            setShowButtonStatus(e.target.value !== 'default')
+                                        }}
+                                        className="formControl"
+                                        >
+                                            <option value="default" disabled selected>
+                                                Status
+                                            </option>
+                                            <option value="completed">Completed</option>
+                                            <option value="incomplete">Incomplete</option>
+                                        </select>
+                                        {showButtonStatus && (
+                                            <span id="payslipunsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
+                                            X
+                                            </span>
+                                        )}
                                 </div>
+                            </div>
+                            <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 text-center">
                                 <Button
-                                id="payslipunsent_search_btn"
-                                style={{ width: 210 }}
-                                onClick={() => getAllPayrollFailed(0)}
-                                className="btn btn-primary mx-2 mt-4">
-                                Search
+                                    id="payslipunsent_search_btn"
+                                    style={{ width: '100%' }}
+                                    onClick={() => getAllPayrollFailed(0)}
+                                    className="btn btn-primary mx-2 mt-4">
+                                    Search
                                 </Button>
-                            </div>
+                            </div>       
+                                
                         </div>
-                        <Table responsive>
-                        <thead>
-                        <tr>
-                            {
-                            tableHeaders &&
-                            tableHeaders.length &&
-                            tableHeaders.map((item: any, index: any) => {
-                                return (
-                                <th style={{ width: 'auto' }}>{item}</th>
-                                )
-                            })
-                            }
-                        </tr>
-                        </thead>
-                        <tbody className="custom-row">
+                    </div>
+                    <Table responsive>
+                    <thead>
+                    <tr>
                         {
-                            failedPayslipList &&
-                            failedPayslipList.content &&
-                            failedPayslipList.content.length > 0 &&
-                            failedPayslipList.content.map((item: any, index: any) => {
-        
+                        tableHeaders &&
+                        tableHeaders.length &&
+                        tableHeaders.map((item: any, index: any) => {
                             return (
-                                <tr>
-                                <td id="payslipunsent_id_failedpaysliplistdata">{ item.id }</td>
-                                <td id="payslipunsent_employeeid_failedpaysliplistdata">{ item.employeeId }</td>
-                                <td id="payslipunsent_employeename_failedpaysliplistdata">{ item.employeeName }</td>
-                                <td id="payslipunsent_monthyear_failedpaysliplistdata"> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
-                                {/* <td> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td> */}
-                                <td>
-                                <label
-                                id="payslipunsent_resend_failedpaysliplistlabel"
-                                onClick={() => {
-                                    Resend(item.id)
-                                }}
-                                className="text-muted cursor-pointer">
-                                Resend
-                                </label>
-                               
-                                </td>
-                            
-                                </tr>
+                            <th style={{ width: 'auto' }}>{item}</th>
                             )
-                            })
+                        })
                         }
-                        </tbody>
-                        </Table>
-                        {
-                            failedPayslipList &&
-                            failedPayslipList.length == 0 ?
-                            <div className="w-100 text-center">
-                                <label htmlFor="">No Records Found</label>
-                            </div>
-                            :
-                            null
-                        }
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className="d-flex ma-3">
-                                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
-                                        <option value={10}>10</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                    </select>
-                                </div>  
-                            </div>
-                            <div className="col-md-6">
-                                <div className="d-flex justify-content-end ma-3">
-                                    <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
-                                </div>   
-                            </div>
+                    </tr>
+                    </thead>
+                    <tbody className="custom-row">
+                    {
+                        failedPayslipList &&
+                        failedPayslipList.content &&
+                        failedPayslipList.content.length > 0 &&
+                        failedPayslipList.content.map((item: any, index: any) => {
+    
+                        return (
+                            <tr>
+                            <td id="payslipunsent_id_failedpaysliplistdata">{ item.id }</td>
+                            <td id="payslipunsent_employeeid_failedpaysliplistdata">{ item.employeeId }</td>
+                            <td id="payslipunsent_employeename_failedpaysliplistdata">{ item.employeeName }</td>
+                            <td id="payslipunsent_monthyear_failedpaysliplistdata"> {getMonthName(item.payrollPeriod.split(" ")[0])} {item.payrollPeriod.split(" ")[1]} </td>
+                            {/* <td> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td> */}
+                            <td>
+                            <label
+                            id="payslipunsent_resend_failedpaysliplistlabel"
+                            onClick={() => {
+                                Resend(item.id)
+                            }}
+                            className="text-muted cursor-pointer">
+                            Resend
+                            </label>
+                            
+                            </td>
+                        
+                            </tr>
+                        )
+                        })
+                    }
+                    </tbody>
+                    </Table>
+                    {
+                        failedPayslipList &&
+                        failedPayslipList.length == 0 ?
+                        <div className="w-100 text-center">
+                            <label htmlFor="">No Records Found</label>
                         </div>
+                        :
+                        null
+                    }
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="d-flex ma-3">
+                                <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                                <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                                    <option value={10}>10</option>
+                                    <option value={50}>50</option>
+                                    <option value={100}>100</option>
+                                </select>
+                            </div>  
+                        </div>
+                        <div className="col-md-6">
+                            <div className="d-flex justify-content-end ma-3">
+                                <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
+                            </div>   
+                        </div>
+                    </div>
         
                 
-                        <div className="d-flex justify-content-end">
+                    <div className="d-flex justify-content-end">
                         <div className="">
                             <ReactPaginate
                             className="d-flex justify-content-center align-items-center"

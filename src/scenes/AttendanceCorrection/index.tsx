@@ -188,6 +188,16 @@ export const AttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this Attendance.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "attendancecorrections_approveconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "attendancecorrections_approvecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -228,6 +238,16 @@ export const AttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this attendance reversal.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "attendancecorrections_cancelarconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "attendancecorrections_cancelarcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -304,6 +324,16 @@ export const AttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this Attendance.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "attendancecorrections_declinecoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "attendancecorrections_declinecoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -413,35 +443,35 @@ export const AttendanceCorrection = (props: any) => {
                     {
                       data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                         <>
-                          <td id="attendancecorrection_name_data"> {item.lastName}, {item.firstName} </td>
+                          <td id={"attendancecorrection_name_data_" + item.id}> {item.lastName}, {item.firstName} </td>
                         </> : null
                     }
-                    <td id="attendancecorrection_type_data">{Utility.removeUnderscore(item.type)}</td>
-                    <td id="attendancecorrection_reason_data"> {item.reason} </td>
-                    <td id="attendancecorrection_filedate_data"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')}</td>
-                    <td id="attendancecorrection_statuschangedby_data"> {item.statusChangedBy} </td>
-                    <td id="attendancecorrection_status_data"> {Utility.removeUnderscore(item.status)} </td>
-                    <td className="d-flex" id="attendancecorrection_labels_data">
-                      <label id="attendancecorrection_id_label"
+                    <td id={"attendancecorrection_type_data_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
+                    <td id={"attendancecorrection_reason_data_" + item.id}> {item.reason} </td>
+                    <td id={"attendancecorrection_filedate_data_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')}</td>
+                    <td id={"attendancecorrection_statuschangedby_data_" + item.id}> {item.statusChangedBy} </td>
+                    <td id={"attendancecorrection_status_data_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                    <td className="d-flex" id={"attendancecorrection_labels_data_" + item.id}>
+                      <label id={"attendancecorrection_id_label_" + item.id}
                         onClick={() => {
                           getViewCoa(item.id)
                         }}
                       >
-                        <img id="attendancecorrection_eye_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                        <img id={"attendancecorrection_eye_img_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       {
-                        item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" && item.status != "CANCELLED" ?
+                        item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" ?
                           <>
                             {authorizations.includes("Request:Update") ? (
                               <>
-                                <label id="attendancecorrection_getcoaid_label"
+                                <label id={"attendancecorrection_getcoaid_label_" + item.id}
                                   onClick={() => {
                                     getCoa(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img id="attendancecorrection_actionedit_img" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                  <img id={"attendancecorrection_actionedit_img_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                 </label>
                                 <br />
                               </>
@@ -449,26 +479,26 @@ export const AttendanceCorrection = (props: any) => {
 
                             {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                               <>
-                                <label id="attendancecorrection_approvecoaid_label"
+                                <label id={"attendancecorrection_approvecoaid_label_" + item.id}
                                   onClick={() => {
                                     approveCoa(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img id="attendancecorrection_actionapprove_img" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                  <img id={"attendancecorrection_actionapprove_img_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                 </label> <br />
                               </>
                             ) : null}
 
                             {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                               <>
-                                <label id="attendancecorrection_declinecoaid_label"
+                                <label id={"attendancecorrection_declinecoaid_label_" + item.id}
                                   onClick={() => {
                                     declineCoa(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
 
-                                  <img id="attendancecorrection_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                  <img id={"attendancecorrection_actiondecline_img_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                 </label>
                                 <br />
                               </>
@@ -482,12 +512,12 @@ export const AttendanceCorrection = (props: any) => {
                           <>
                             {authorizations.includes("Request:Update") ? (
                               <>
-                                <label id="attendancecorrection_cancelarid_label"
+                                <label id={"attendancecorrection_cancelarid_label_" + item.id}
                                   onClick={() => {
                                     cancelAttendanceReversal(item.id)
                                   }}
                                   className="text-muted cursor-pointer">
-                                  <img id="attendancecorrection_actioncancelar_img" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                  <img id={"attendancecorrection_actioncancelar_img_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                 </label>
                                 <br />
                               </>

@@ -248,6 +248,16 @@ export const ScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "scheduleadjustment_approveconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "scheduleadjustment_approvecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -288,6 +298,16 @@ export const ScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "scheduleadjustment_declineconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "scheduleadjustment_declinecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -329,6 +349,16 @@ export const ScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "scheduleadjustment_canceladjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "scheduleadjustment_canceladjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -412,33 +442,33 @@ export const ScheduleAdjustment = (props: any) => {
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <>
-                                <td id="scheduleadjustment_name_alladjdata"> {item.lastName}, {item.firstName} </td>
+                                <td id={"scheduleadjustment_name_alladjdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                               </> : null
                           }
-                          <td id="scheduleadjustment_filedate_alladjdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td id="scheduleadjustment_datefrom_alladjdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td id="scheduleadjustment_dateto_alladjdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id="scheduleadjustment_reason_alladjdata"> {item.reason} </td>
-                          <td id="scheduleadjustment_statuschangedby_alladjdata"> {item.statusChangedBy} </td>
-                          <td id="scheduleadjustment_status_alladjdata"> {Utility.removeUnderscore(item.status)} </td>
+                          <td id={"scheduleadjustment_filedate_alladjdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id={"scheduleadjustment_datefrom_alladjdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id={"scheduleadjustment_dateto_alladjdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id={"scheduleadjustment_reason_alladjdata_" + item.id}> {item.reason} </td>
+                          <td id={"scheduleadjustment_statuschangedby_alladjdata_" + item.id}> {item.statusChangedBy} </td>
+                          <td id={"scheduleadjustment_status_alladjdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
-                              id="scheduleadjustment_view_alladjlabel"
+                              id={"scheduleadjustment_view_alladjlabel_" + item.id}
                               onClick={() => {
                                 getViewSchedule(item.id)
                               }}
                             >
-                              <img id="scheduleadjustment_eye_alladjimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id={"scheduleadjustment_eye_alladjimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
  
                             </label>
 
                             {
-                              item.status != "APPROVED" && item.status != "DECLINED_CANCELLED" && item.status != "CANCELLED" ?
+                              item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" ?
                                 <>
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
-                                        id="scheduleadjustment_edit_alladjlabel"
+                                        id={"scheduleadjustment_edit_alladjlabel_" + item.id}
                                         onClick={() => {
                                           setInitialValues(item)
                                           setAdjustmentBreakdown(item.breakdown)
@@ -446,7 +476,7 @@ export const ScheduleAdjustment = (props: any) => {
                                           setModalShow(true)
                                         }}
                                         className="cursor-pointer">
-                                        <img id="scheduleadjustment_actionedit_alladjimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                        <img id={"scheduleadjustment_actionedit_alladjimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                       </label>
                                       <br />
                                     </>
@@ -455,12 +485,12 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
-                                        id="scheduleadjustment_actionapprove_alladjlabel"
+                                        id={"scheduleadjustment_actionapprove_alladjlabel_" + item.id}
                                         onClick={() => {
                                           approveAdjustment(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id="scheduleadjustment_actionapprove_alladjimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                        <img id={"scheduleadjustment_actionapprove_alladjimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                       </label> <br />
                                     </>
                                   ) : null}
@@ -468,12 +498,12 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
-                                        id="scheduleadjustment_actiondecline_alladjlabel"
+                                        id={"scheduleadjustment_actiondecline_alladjlabel_" + item.id}
                                         onClick={() => {
                                           declineAdjustment(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id="scheduleadjustment_actiondecline_alladjimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                        <img id={"scheduleadjustment_actiondecline_alladjimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                       </label>
                                       <br />
                                     </>
@@ -488,12 +518,12 @@ export const ScheduleAdjustment = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
-                                        id="scheduleadjustment_actioncancel_alladjlabel"
+                                        id={"scheduleadjustment_actioncancel_alladjlabel_" + item.id}
                                         onClick={() => {
                                           cancelAdjustment(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id="scheduleadjustment_actioncancel_alladjimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                        <img id={"scheduleadjustment_actioncancel_alladjimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                       </label>
                                       <br />
                                     </>

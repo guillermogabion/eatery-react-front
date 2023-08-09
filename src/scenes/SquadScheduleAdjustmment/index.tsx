@@ -210,6 +210,16 @@ export const SquadScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadadj_approveadjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadadj_approveadjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -260,6 +270,16 @@ export const SquadScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadadj_declineadjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadadj_declineadjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -311,6 +331,16 @@ export const SquadScheduleAdjustment = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this schedule adjustment.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadadj_canceladjconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadadj_canceladjcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -387,28 +417,28 @@ export const SquadScheduleAdjustment = (props: any) => {
                     allAdjustments.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td id="squadschedadj_name_alladjdata"> {item.lastName}, {item.firstName} </td>
-                          <td id="squadschedadj_datefrom_alladjdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td id="squadschedadj_dateto_alladjdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id="squadschedadj_reason_alladjdata"> {item.reason} </td>
-                          <td id="squadschedadj_filedate_alladjdata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td id="squadschedadj_statuschangedby_alladjdata"> {item.statusChangedBy} </td>
-                          <td id="squadschedadj_status_alladjdata"> {Utility.removeUnderscore(item.status)} </td>
+                          <td id={"squadschedadj_name_alladjdata_" + item.id}> {item.lastName}, {item.firstName} </td>
+                          <td id={"squadschedadj_datefrom_alladjdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id={"squadschedadj_dateto_alladjdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id={"squadschedadj_reason_alladjdata_" + item.id}> {item.reason} </td>
+                          <td id={"squadschedadj_filedate_alladjdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id={"squadschedadj_statuschangedby_alladjdata_" + item.id}> {item.statusChangedBy} </td>
+                          <td id={"squadschedadj_status_alladjdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
-                              id="squadschedadj_view_alladjlabel"
+                              id={"squadschedadj_view_alladjlabel_" + item.id}
                               onClick={() => {
                                 getViewSchedule(item.id)
                               }}
                             >
-                              <img id="squadschedadj_eye_alladjimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id={"squadschedadj_eye_alladjimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             <>
                               {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
                                   <label
-                                    id="squadschedadj_actionedit_alladjlabel"
+                                    id={"squadschedadj_actionedit_alladjlabel_" + item.id}
                                     onClick={() => {
                                       setInitialValues(item)
                                       setAdjustmentBreakdown(item.breakdown)
@@ -416,7 +446,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                                       setModalShow(true)
                                     }}
                                     className="cursor-pointer">
-                                    <img id="squadschedadj_actionedit_alladjimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                    <img id={"squadschedadj_actionedit_alladjimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                   </label>
                                   <br />
                                 </>
@@ -425,12 +455,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                               {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
                                   <label
-                                    id="squadschedadj_actionapprove_alladjlabel"
+                                    id={"squadschedadj_actionapprove_alladjlabel_" + item.id}
                                     onClick={() => {
                                       approveAdjustment(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadschedadj_actionapprove_alladjimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                    <img id={"squadschedadj_actionapprove_alladjimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                   </label> <br />
                                 </>
                               ) : null}
@@ -438,12 +468,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                               {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                 <>
                                   <label
-                                    id="squadschedadj_actiondecline_alladjlabel"
+                                    id={"squadschedadj_actiondecline_alladjlabel_" + item.id}
                                     onClick={() => {
                                       declineAdjustment(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadschedadj_actiondecline_alladjimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                    <img id={"squadschedadj_actiondecline_alladjimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                   </label>
                                   <br />
                                 </>
@@ -453,12 +483,12 @@ export const SquadScheduleAdjustment = (props: any) => {
                               {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                                 <>
                                   <label
-                                    id="squadschedadj_actioncancel_alladjlabel"
+                                    id={"squadschedadj_actioncancel_alladjlabel_" + item.id}
                                     onClick={() => {
                                       cancelAdjustment(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadschedadj_actioncancel_alladjimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                    <img id={"squadschedadj_actioncancel_alladjimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                   </label>
                                   <br />
                                 </>

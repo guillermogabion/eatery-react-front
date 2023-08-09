@@ -7,6 +7,10 @@ import Table from 'react-bootstrap/Table'
 import ReactPaginate from 'react-paginate'
 import { Formik } from "formik"
 import { async } from "validate.js"
+import { Utility } from "../../../utils"
+import { action_decline, action_edit } from "../../../assets/images"
+
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -27,8 +31,8 @@ const philhealth = (props: any) => {
             "amount" : "",
     })
     const tableHeaders = [
-        'Monthly Basic Salary (Range 1)',
-        'Monthly Basic Salary (Range 2)',
+        'Basic Lower Range',
+        'Basic Upper Range',
         'Premium',
         'Action',
     ];
@@ -187,9 +191,14 @@ const philhealth = (props: any) => {
                     ph.map((item, index) => {
                     return (
                         <tr key={index}>
-                        <td id="payrollsettingphilhealth_basiclowerrange_data">{item.basicLowerRange}</td>
-                        <td id="payrollsettingphilhealth_basicupperrange_data">{item.basicUpperRange}</td>
-                        <td id="payrollsettingphilhealth_premiumrate_data">{item.premiumRate}</td>
+                        <td id="payrollsettingphilhealth_basiclowerrange_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
+                        <td id="payrollsettingphilhealth_basicupperrange_data">{Utility.formatToCurrency(item.basicUpperRange)}</td>
+                        <td id="payrollsettingphilhealth_premiumrate_data">  {`${(item.premiumRate / 100).toLocaleString(undefined, {
+                            style: 'percent',
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          })}`}
+                        </td>
                         <td>
                             <label
                             id="payrollsettingphilhealth_update_btn"
@@ -199,7 +208,7 @@ const philhealth = (props: any) => {
                             }}
                             className="text-muted cursor-pointer"
                             >
-                            Update
+                               <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                             <br />
                             {/* <label
@@ -218,7 +227,7 @@ const philhealth = (props: any) => {
             </Table>
             <Modal
              show={modalShow}
-             size="xl"
+             size="lg"
              aria-labelledby="contained-modal-title-vcenter"
              centered
              backdrop="static"
@@ -230,7 +239,7 @@ const philhealth = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Create New Adjustment Type
+                        Update Philhealth Rates
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -262,7 +271,7 @@ const philhealth = (props: any) => {
                                 )
                             } else {
                                 ErrorSwal.fire(
-                                    'Success!',
+                                    'Updated Successfully',
                                     (body.data) || "",
                                     'success'
                                     )
@@ -290,7 +299,7 @@ const philhealth = (props: any) => {
                                 autoComplete="off"
                             >
                                 <div className="row w-100 px-5">
-                                <div className="form-group col-md-6 mb-3">
+                                <div className="form-group col-md-4 mb-3">
                                     <label>Basic Lower Range</label>
                                     <input
                                         type="text"
@@ -307,7 +316,7 @@ const philhealth = (props: any) => {
                                           }}
                                     />
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                     <label>Basic Upper Range</label>
                                     <input
                                         type="text"
@@ -324,7 +333,7 @@ const philhealth = (props: any) => {
                                           }}
                                     />
                                     </div>
-                                    <div className="form-group col-md-6 mb-3">
+                                    <div className="form-group col-md-4 mb-3">
                                     <label>Premium Rate</label>
                                     <input
                                         type="text"

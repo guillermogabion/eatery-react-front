@@ -155,33 +155,7 @@ export const Recurring = (props: any) => {
         if (selectElement) {
             setShowButton(selectElement.selectedIndex !== 0);
         }
-        getAllRecurringList(0, pageSize)
-        RequestAPI.getRequest(
-            `${Api.getAllRecurringType}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body && body.data) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        let tempArray: any = []
-                        body.data.forEach((d: any, i: any) => {
-                            tempArray.push({
-                                recurringTypeId: d.id,
-                                recurringName: d.name,
-                                recurringDeduction: d.deduction
-                            })
-                        });
-                        setRecurringTypes(tempArray)
-                        // setRecurringTypes([])
-
-
-                    }
-                }
-            }
-        )
+        getAllRecurringList(0, pageSize);
 
         RequestAPI.getRequest(
             `${Api.employeeList}`,
@@ -224,6 +198,28 @@ export const Recurring = (props: any) => {
                             })
                         });
                         setRecurringName(tempArray)
+                    }
+                }
+            }
+        )
+        RequestAPI.getRequest(
+            `${Api.getAllRecurringType}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.forEach((d: any, i: any) => {
+                            tempArray.push({
+                                recurringTypeId: d.id,
+                                recurringName: d.name
+                            })
+                        });
+                        setRecurringTypes(tempArray)
                     }
                 }
             }
@@ -271,6 +267,7 @@ export const Recurring = (props: any) => {
         const filterObj: any = { ...filterData }
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
+        // alert(option.value)
     }
     const createOption = (option: any, name: any, index: any) => {
         const valueObj: any = [...recurring];
@@ -289,7 +286,6 @@ export const Recurring = (props: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res;
                 if (status === 200 && body && body.data) {
                     if (body.error && body.error.message) {
-                        // Handle error
                     } else {
                         setUserId(body.data.userId)
                         const valueObj: any = body.data;
@@ -300,7 +296,6 @@ export const Recurring = (props: any) => {
             }
         );
 
-        // Return statement
 
 
     }
@@ -310,6 +305,16 @@ export const Recurring = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "Are you sure you want to delete this transaction?",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "payrollrecurring_deleteconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "payrollrecurring_deletecancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -337,7 +342,7 @@ export const Recurring = (props: any) => {
                             );
                         } else {
                             Swal.close();
-                            getAllRecurringList(0);
+                            getAllRecurringList(0, pageSize);
                             ErrorSwal.fire(
                                 'Success!',
                                 body.data || "",
@@ -606,154 +611,203 @@ export const Recurring = (props: any) => {
         )
     };
 
+    // test watch search - start
+
+    // const handleOnChange = (e) => {
+    //     if (e && e.target) {
+    //       // If it's called from an event (handleChange)
+    //       const { name, value } = e.target;
+    //       setFilterData((prevFilterData) => ({
+    //         ...prevFilterData,
+    //         [name]: value,
+    //       }));
+    //     }
+    
+    //         getAllRecurringList(0, pageSize);
+
+    //         clearTimeout(typingTimer);
+
+    //         // Set a new timer to trigger the API call after a certain delay
+    //         const typingTimer = setTimeout(() => {
+    //           getAllRecurringList(0, pageSize); // Call the API after the delay
+    //         }, 1000);
+    //   };
 
 
+    // useEffect(() => {
+
+    //     // handleOnChange(filterData);
+        
+    //     const timer = setTimeout(() => {
+    //         handleOnChange(filterData);
+    //       }, 3000);
+      
+    //       return () => clearTimeout(timer);
+    // }, [filterData]);
+    // useEffect(() => {
+    //     return () => clearTimeout(typingTimer);
+    // }, []);
+    
     return (
         <ContainerWrapper contents={<>
             <div className="w-100 px-5 py-5">
                 <div>
                     <div className="w-100">
-                        <div className="fieldtext d-flex">
-                            <div className="input-container col-md-2">
-                                <label>Employee</label>
-                                <EmployeeDropdown
+                        <div className="fieldtext row">
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Employee</label>
+                                    <EmployeeDropdown
                                     id="payrollrecurring_employee_dropdown"
                                     placeholder={"Employee"}
                                     singleChangeOption={singleChangeOption}
                                     name="userId"
                                     value={filterData && filterData['userId']}
                                     withEmployeeID={true}
-                                />
-
-                                {/* <EmployeeDropdown
-                                                           
-                                                           placeholder={"Employee"}
-                                                           singleChangeOption={createOption}
-                                                           name="userId"
-                                                           value={values && values['userId']}
-                                                           withEmployeeID={true}
-                                                           /> */}
-
+                                    
+                                    />
+                                </div>
                             </div>
-                            <div className="input-container col-md-1">
-                                <label>Amount</label>
-                                <input type="text"
-                                    id="payrollrecurring_amount_input"
-                                    className="form-control"
-                                    name="adjustmentAmount"
-                                    placeholder="Amount"
-                                    onChange={(e) => makeFilterData(e)}
-                                />
+                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Amount</label>
+                                    <input
+                                        type="number"
+                                        id="payrollrecurring_amount_input"
+                                        className="form-control"
+                                        name="adjustmentAmount"
+                                        placeholder="Amount"
+                                        onChange={(e) => makeFilterData(e)}
+                                        // onChange={(e) => {
+                                        //     // Call handleChange to update filterData
+                                        //     makeFilterData(e);
+                                        //     // Call handleOnChange as you've updated filterData
+                                        //     // (handleOnChange is now also triggered when Amount field changes)
+                                        //     handleOnChange();
+                                        //   }}
+                                        // onChange={handleOnChange}
+                                    />
+                                </div>
                             </div>
-                            <div className="input-container clearable-select col-md-1">
-                                <label>Type</label>
-                                <select
+                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="">
+                                    <label>Type</label>
+                                    <select
                                     className="form-control"
                                     name="isDeduction"
                                     id="type"
                                     onChange={(e) => {
                                         makeFilterData(e);
-                                        setShowButton(e.target.value !== 'default')
+                                        // handleOnChange(e);
+                                        setShowButton(e.target.value !== 'default');
                                     }}
                                     ref={selectRef}
-                                >
-                                    <option value="default" disabled selected>
+                                    >
+                                    <option value="default" disabled selected >
                                         Type
                                     </option>
-                                    <option value={false}>Add
-                                    </option>
-                                    <option value={true}>Deduct
-                                    </option>
-
-                                </select>
-                                {showButton && (
-                                    <span id="payrollrecurring_closetype_span" className="clear-icon-recurring" onClick={reset}>
+                                    <option value={false}>Add</option>
+                                    <option value={true}>Deduct</option>
+                                    </select>
+                                    {showButton && (
+                                    <span
+                                        id="payrollrecurring_closetype_span"
+                                        className="clear-icon-recurring"
+                                        onClick={reset}
+                                    >
                                         X
                                     </span>
-                                )}
-
-
-
-
-
+                                    )}
+                                </div>
                             </div>
-                            <div className="input-container col-md-2 clearable-select">
-                                <label>Recurring Name</label>
-                                <select
-                                    className="form-control"
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="">
+                                    <label>Recurring Name</label>
+                                    <select
+                                    className="formControl"
                                     name="recurringTypeName"
                                     id="typeName"
                                     onChange={(e) => {
-                                        makeFilterData(e)
-                                        setShowButtonRecurring(e.target.value !== 'default')
+                                        makeFilterData(e);
+                                        setShowButtonRecurring(e.target.value !== 'default');
                                     }}
-                                >
+                                    >
                                     <option value="" disabled selected>
                                         Select Recurring Name
                                     </option>
                                     {recurringName &&
                                         recurringName.length &&
                                         recurringName.map((item: any, index: string) => (
-                                            <option key={`${index}_${item.name}`} value={item.name}>
-                                                {item.name}
-                                            </option>
+                                        <option key={`${index}_${item.name}`} value={item.name}>
+                                            {item.name}
+                                        </option>
                                         ))}
-                                </select>
-                                {showButtonRecurring && (
-                                    <span id="payrollrecurring_closerecurringname_span" className="clear-icon" onClick={resetRecurring}>
+                                    </select>
+                                    {showButtonRecurring && (
+                                    <span
+                                        id="payrollrecurring_closerecurringname_span"
+                                        className="clear-icon-recurring"
+                                        onClick={resetRecurring}
+                                    >
                                         X
                                     </span>
-                                )}
+                                    )}
+                                </div>
                             </div>
-                            <div className="input-container col-md-2">
-                                <label>End Date</label>
-                                <input type="date"
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>End Date</label>
+                                    <input
+                                    type="date"
                                     id="payrollrecurring_enddate_input"
                                     className="form-control"
                                     name="endDate"
                                     placeholder="End Date"
                                     onChange={(e) => makeFilterData(e)}
-                                />
+                                    />
+                                </div>
                             </div>
-                            <div className="input-container clearable-select col-md-1">
-                                <label>Status</label>
-                                <select
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label>Status</label>
+                                    <select
                                     className="form-control"
                                     name="status"
                                     id="status1"
                                     onChange={(e) => {
                                         makeFilterData(e);
-                                        setShowButtonStatus(e.target.value !== 'default')
+                                        setShowButtonStatus(e.target.value !== 'default');
                                     }}
                                     ref={selectRef}
-                                >
+                                    >
                                     <option value="default" disabled selected>
                                         Status
                                     </option>
-                                    <option value="active">Active
-                                    </option>
-                                    <option value="inactive">Inactive
-                                    </option>
-
-                                </select>
-                                {showButtonStatus && (
-                                    <span id="payrollrecurring_closestatus_span" className="clear-icon-recurring" onClick={resetStatus}>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    </select>
+                                    {showButtonStatus && (
+                                    <span
+                                        id="payrollrecurring_closestatus_span"
+                                        className="clear-icon-recurring"
+                                        onClick={resetStatus}
+                                    >
                                         X
                                     </span>
-                                )}
-
-
-
-
+                                    )}
+                                </div>
                             </div>
-                            <div className="input-container col-md-2 pt-4">
-                                <Button
+                            <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 text-center">
+                                <div className="input-container pt-4">
+                                    <Button
                                     id="payrollrecurring_search_btn"
-                                    style={{ width: 150 }}
+                                    style={{ width: '100%' }}
                                     onClick={() => getAllRecurringList(0)}
-                                    className="btn btn-primary">
+                                    className="btn btn-primary"
+                                    >
                                     Search
-                                </Button>
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -798,6 +852,7 @@ export const Recurring = (props: any) => {
                                                     <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                 </label>
                                                 <label
+                                                    id="payrollrecurring_delete_recurringlistlabel"
                                                     onClick={() => {
                                                         deleteRecurring(item.id)
                                                     }}
@@ -941,6 +996,7 @@ export const Recurring = (props: any) => {
                                     <div className="d-flex justify-content-end px-5">
                                         {values.userId ? null : (
                                             <button
+                                                id="payrollrecurring_add_createrecurringbtn"
                                                 type="button"
                                                 className="btn btn btn-outline-primary me-2 mb-2 mt-2"
                                                 onClick={handleAddField}
@@ -1067,6 +1123,7 @@ export const Recurring = (props: any) => {
                                                             <div className="col-md-3 mb-3">
                                                                 <label>Employee *</label>
                                                                 <EmployeeDropdown
+                                                                    id="payrollrecurring_recurringtypeemployee_recurringdropdown"
                                                                     placeholder={"Employee"}
                                                                     singleChangeOption={(e: any) => {
                                                                         createOption(e, 'userId', index)

@@ -11,6 +11,8 @@ import { User } from "../User"
 import { async } from "validate.js"
 import * as Yup from "yup"
 import { Utility } from "../../utils"
+import { action_decline, action_edit } from "../../assets/images"
+
 
 
 const ErrorSwal = withReactContent(Swal)
@@ -21,13 +23,15 @@ const Adjustment = (props: any) => {
     const [ adjustmentType, setAdjustmentType ] = React.useState([]);
     const formRef: any = useRef()
     const [ modalShow, setModalShow ] = React.useState(false);
-    const [id, setId] = useState(null);
+    // const [id, setId] = useState(null);
     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
     const [isDeduction, setIsDeduction] = useState("");
     const [typeType, setTypetype] = useState("");
     const [showButtonIsDeduction, setShowButtonIsDeduction] = useState(false);
     const [showButtonTypetype, setShowButtonTypetype] = useState(false);
     const [pageSize, setPageSize] = useState(10);
+    const [id, setId] = React.useState("");
+
 
 
     const [initialValues, setInitialValues] = useState<any>({
@@ -126,7 +130,7 @@ const Adjustment = (props: any) => {
                     const valueObj: any = body.data
                     setInitialValues(valueObj)
                     setModalShow(true)
-
+                    setId(body.data.id)
                     console.log("Data:", body.data);
                 }
                 }
@@ -165,6 +169,7 @@ const Adjustment = (props: any) => {
     } 
     
     const handleModalHide = useCallback(() => {
+        setId(false)
         setModalShow(false);
         formRef.current?.resetForm();
         setInitialValues({
@@ -210,18 +215,21 @@ const Adjustment = (props: any) => {
     return (
         <div>
             <div className="w-100 pt-2">
-                <div className="fieldtext d-flex">
-                    <div className="input-container col-md-2">
-                        <label>Adjustment Name</label>
-                        <input 
-                        type="text"
-                        className="formControl"
-                        name="name"
-                        id="type"
-                        onChange={(e) => makeFilterData(e)}
-                        />
+                <div className="fieldtext row">
+                <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                    <div className="input-container">
+                            <label>Adjustment Name</label>
+                            <input 
+                            type="text"
+                            className="formControl"
+                            name="name"
+                            id="type"
+                            onChange={(e) => makeFilterData(e)}
+                            />
                     </div>
-                    <div className="input-container col-md-2 clearable-select">
+                </div>
+                <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                    <div className="input-container">
                         <label> Type </label>
                         <select 
                             name="typeType" 
@@ -243,37 +251,45 @@ const Adjustment = (props: any) => {
                                 </span>
                             )}
                     </div>
-                    <div className="input-container col-md-2 clearable-select">
-                    <label>Action</label>
-                    <select
-                        name="isDeduction"
-                        id="deduction"
-                        className="form-control"
-                        onChange={(e) => {makeFilterData(e)
-                                setShowButtonIsDeduction(e.target.value !== 'default')
-                        }}
-                        >
-                            <option value="default" disabled selected>
-                                Action
-                            </option>
-                            <option value={true}>Deduct</option>
-                            <option value={false}>Add</option>
-                        </select>
-                        {showButtonIsDeduction && (
+                </div>
+                <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                    <div className="input-container">
+                        <label>Action</label>
+                        <select
+                            name="isDeduction"
+                            id="deduction"
+                            className="form-control"
+                            onChange={(e) => {makeFilterData(e)
+                                    setShowButtonIsDeduction(e.target.value !== 'default')
+                            }}
+                            >
+                                <option value="default" disabled selected>
+                                    Action
+                                </option>
+                                <option value={true}>Deduct</option>
+                                <option value={false}>Add</option>
+                            </select>
+                            {showButtonIsDeduction && (
                                 <span id="payrollsettingadjustment_closeaction_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetIsDeduction}>
                                 X
                                 </span>
                             )}
                     </div>
-                    <div className="input-container col-md-3">
-                        <Button
-                        id="payrollsettingadjustment_search_btn"
-                        style={{ width: 100 }}
-                        onClick={() => getAllAdjustmentType(0)}
-                        className="btn btn-primary mx-2 mt-4">
-                        Search
-                        </Button>
+                </div>
+                <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+                    <div className="input-container">
+                            <Button
+                            id="payrollsettingadjustment_search_btn"
+                            style={{ width: '100%' }}
+                            onClick={() => getAllAdjustmentType(0)}
+                            className="btn btn-primary mx-2 mt-4">
+                            Search
+                            </Button>
                     </div>
+                </div>
+                    
+                    
+                    
                 </div>
             </div>
             <Table responsive>
@@ -298,20 +314,20 @@ const Adjustment = (props: any) => {
                         adjustmentType.content.map((item: any, index: any) => {
                             return(
                                 <tr>
-                                    <td id="payrollsettingadjustment_id_adjtypedata"> {item.id} </td>
-                                    <td id="payrollsettingadjustment_name_adjtypedata"> {item.name} </td>
-                                    <td id="payrollsettingadjustment_description_adjtypedata"> {item.description}</td>
-                                    <td id="payrollsettingadjustment_type_adjtypedata"> {Utility.removeUnderscore(item.type)}</td>
-                                    <td id="payrollsettingadjustment_deduction_adjtypedata"> {item.deduction == true ? "Deduct" : "Add" }</td>
-                                    <td id="payrollsettingadjustment_affectsgross_adjtypedata"> {item.affectsGross == true ? "YES" : "NO" }</td>
+                                    <td id={"payrollsettingadjustment_id_adjtypedata_" + item.id}> {item.id} </td>
+                                    <td id={"payrollsettingadjustment_name_adjtypedata_" + item.id}> {item.name} </td>
+                                    <td id={"payrollsettingadjustment_description_adjtypedata_" + item.id}> {item.description}</td>
+                                    <td id={"payrollsettingadjustment_type_adjtypedata_" + item.id}> {Utility.removeUnderscore(item.type)}</td>
+                                    <td id={"payrollsettingadjustment_deduction_adjtypedata_" + item.id}> {item.deduction == true ? "Deduct" : "Add" }</td>
+                                    <td id={"payrollsettingadjustment_affectsgross_adjtypedata_" + item.id}> {item.affectsGross == true ? "YES" : "NO" }</td>
                                     <td>
                                         <label
-                                        id="payrollsettingadjustment_update_adjtypelabel"
+                                        id={"payrollsettingadjustment_update_adjtypelabel_" + item.id}
                                         onClick={() => {
                                             getAdjustmentData(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        Update
+                                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                         </label>
                                         <br />
                                         {/* <label
@@ -341,41 +357,43 @@ const Adjustment = (props: any) => {
            
             <div className="row">
                 <div className="col-md-6">
-                    <div className="d-flex ma-3">
-                        <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                        <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                    <div className="justify-content-start">
+                        <span className="font-bold mr-8 text-muted">Total Entries : {adjustmentType.totalElements}</span>
+                        <br />
+                        <div className="flex items-center">
+                        <span className="text-muted mr-3">Select Page Size:</span>
+                        <select id="pageSizeSelect" value={pageSize} className="form-select rounded-md py-2" style={{ fontSize: "16px", width: "150px" }} onChange={handlePageSizeChange}>
                             <option value={10}>10</option>
                             <option value={50}>50</option>
                             <option value={100}>100</option>
                         </select>
                     </div>
+                    </div>
                 </div>
                 <div className="col-md-6">
-                    <div className="d-flex justify-content-end ma-3">
-                        <span className="font-bold mr-8 ">Total Entries : { adjustmentType.totalElements }</span>
+                    <div className="d-flex justify-content-end">
+                        <div className="">
+                            <ReactPaginate
+                                className="d-flex justify-content-center align-items-center"
+                                breakLabel="..."
+                                nextLabel=">"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={5}
+                                pageCount={(adjustmentType && adjustmentType.totalPages) || 0}
+                                previousLabel="<"
+                                previousLinkClassName="prev-next-pagination"
+                                nextLinkClassName="prev-next-pagination"
+                                activeLinkClassName="active-page-link"
+                                disabledLinkClassName="prev-next-disabled"
+                                pageLinkClassName="page-link"
+                                renderOnZeroPageCount={null}
+                            />
+                        </div>
                     </div>   
                 </div>
             </div>
             
-            <div className="d-flex justify-content-end">
-                <div className="">
-                    <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(adjustmentType && adjustmentType.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                    />
-                </div>
-            </div>
+            
             <div className="d-flex justify-content-end mt-3" >
                 <div>
                     <Button
@@ -400,7 +418,7 @@ const Adjustment = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Create New Adjustment Type
+                        {id ? 'Update Recurring' : 'Create Recurring'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -484,11 +502,11 @@ const Adjustment = (props: any) => {
                                         )
                                     } else {
                                         ErrorSwal.fire(
-                                            'Success!',
+                                            'Updated Successfully!',
                                             (body.data) || "",
                                             'success'
                                             )
-                                        getAllAdjustmentType(0)
+                                        getAllAdjustmentType(0, pageSize)
                                         setModalShow(false)
     
                                     }
@@ -595,6 +613,7 @@ const Adjustment = (props: any) => {
                                             value={values.affectsGross}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             >
+                                                <option value="" disabled selected>Gross Affected</option>
                                                 <option value={true}>Yes</option>
                                                 <option value={false}>No</option>
                                             </select>

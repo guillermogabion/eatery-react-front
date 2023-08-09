@@ -252,16 +252,16 @@ export default function Recurring(props: any) {
 
                                     return (
                                         <tr>
-                                            <td id="payrollrecurring_id_recurringlistdata"> {item.id} </td>
-                                            <td id="payrollrecurring_employeeid_recurringlistdata"> {item.employeeId} </td>
-                                            <td id="payrollrecurring_employeename_recurringlistdata"> {item.employeeName} </td>
-                                            <td id="payrollrecurring_adjustmentamount_recurringlistdata"> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
-                                            <td id="payrollrecurring_recurringname_recurringlistdata"> {item.recurringName} </td>
-                                            <td id="payrollrecurring_typeaction_recurringlistdata">{Utility.removeUnderscore(item.typeAction)}</td>
-                                            <td id="payrollrecurring_typeisdeduction_recurringlistdata">{item.typeIsDeduction ? "YES" : "NO" }</td>
-                                            <td style={{ width: '2px'}}>
+                                            <td id={"payrollrecurring_id_recurringlistdata_" + item.id}> {item.id} </td>
+                                            <td id={"payrollrecurring_employeeid_recurringlistdata_" + item.employeeId}> {item.employeeId} </td>
+                                            <td id={"payrollrecurring_employeename_recurringlistdata_" + item.employeeId}> {item.employeeName} </td>
+                                            <td id={"payrollrecurring_adjustmentamount_recurringlistdata_" + item.employeeId}> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
+                                            <td id={"payrollrecurring_recurringname_recurringlistdata_" + item.employeeId}> {item.recurringName} </td>
+                                            <td id={"payrollrecurring_typeaction_recurringlistdata_" + item.employeeId}>{Utility.removeUnderscore(item.typeAction)}</td>
+                                            <td id={"payrollrecurring_typeisdeduction_recurringlistdata_" + item.employeeId}>{item.typeIsDeduction ? "YES" : "NO" }</td>
+                                            <td>
                                                 <label
-                                                    id="payrollrecurring_update_recurringlistlabel"
+                                                    id={"payrollrecurring_update_recurringlistlabel_" + item.employeeId}
                                                     onClick={() => {
                                                         setInitialValues(item)
                                                         setModalShow(true)

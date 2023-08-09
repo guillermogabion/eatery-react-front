@@ -101,6 +101,16 @@ export const Holiday = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to delete this holiday.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "holiday_deleteconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "holiday_deletecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -226,29 +236,29 @@ export const Holiday = (props: any) => {
                     allHoliday.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td id="holiday_holidayname_data"> {item.holidayName} </td>
-                          <td id="holiday_holidaytype_data"> {Utility.removeUnderscore(item.holidayType)} </td>
-                          <td id="holiday_premiumtype_data"> {Utility.removeUnderscore(item.premiumType)} </td>
-                          <td id="holiday_holidaydate_data"> {Utility.formatDate(item.holidayDate, 'MM-DD-YYYY')} </td>
-                          <td className="d-flex" id="holiday_labels_data">
+                          <td id={"holiday_holidayname_data_" + item.id}> {item.holidayName} </td>
+                          <td id={"holiday_holidaytype_data_" + item.id}> {Utility.removeUnderscore(item.holidayType)} </td>
+                          <td id={"holiday_premiumtype_data_" + item.id}> {Utility.removeUnderscore(item.premiumType)} </td>
+                          <td id={"holiday_holidaydate_data_" + item.id}> {Utility.formatDate(item.holidayDate, 'MM-DD-YYYY')} </td>
+                          <td className="d-flex" id={"holiday_labels_data_" + item.id}>
                             <label
-                              id="holiday_update_label"
+                              id={"holiday_update_label_" + item.id}
                               onClick={() => {
                                 setHolidayId(item.id)
                                 setInitialValues(item)
                                 setModalShow(true)
                               }}
                               className="text-muted cursor-pointer">
-                              <img id="holiday_actionedit_img" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                              <img id={"holiday_actionedit_img_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                             <br />
                             <label
-                              id="holiday_delete_btn"
+                              id={"holiday_delete_btn_" + item.id}
                               onClick={() => {
                                 deleteHoliday(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img id="holiday_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                              <img id={"holiday_actiondecline_img_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                             </label>
                           </td>
                         </tr>

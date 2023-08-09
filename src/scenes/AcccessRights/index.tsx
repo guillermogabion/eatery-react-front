@@ -128,6 +128,16 @@ export const Access = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "You want to remove the user's Access?",
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+              const cancelButton = Swal.getCancelButton();
+    
+              if(confirmButton)
+                confirmButton.id = "accessrights_deleteconfirm_alertbtn"
+    
+              if(cancelButton)
+                cancelButton.id = "accessrights_deletecancel_alertbtn"
+            },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -384,10 +394,10 @@ export const Access = (props: any) => {
                           roleAuthList.content.map((item: any, index: any, roleId: any) => {
                             return (
                               <tr>  
-                                <td id="accessrights_authorityid_data"> {item.authorityId}</td>
-                                <td id="accessrights_authname_data"> {item.name}</td>
-                                <td id="accessrights_labels_mdata">
-                                  <label id="accessrights_delete_label"
+                                <td id={"accessrights_authorityid_data_" + item.authorityId}> {item.authorityId}</td>
+                                <td id={"accessrights_authname_data_" + item.authorityId}> {item.name}</td>
+                                <td id={"accessrights_labels_mdata_" + item.authorityId}>
+                                  <label id={"accessrights_delete_label_" + item.authorityId}
                                     onClick={() => {
                                       deleteAccess(item.id,selectedRoleId, roleAuthList.pageable.pageNumber);
                                     }}

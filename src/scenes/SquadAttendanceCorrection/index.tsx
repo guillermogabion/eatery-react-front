@@ -183,6 +183,16 @@ export const SquadAttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this Attendance.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadattendancecorrection_approvecoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadattendancecorrection_approvecoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -232,6 +242,16 @@ export const SquadAttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this Attendance.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadattendancecorrection_declinecoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadattendancecorrection_declinecoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -281,6 +301,16 @@ export const SquadAttendanceCorrection = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this attendance reversal.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadattendancecorrection_cancelcoaconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadattendancecorrection_cancelcoacancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -377,32 +407,32 @@ export const SquadAttendanceCorrection = (props: any) => {
               allCOA.content.map((item: any, index: any) => {
                 return (
                   <tr>
-                    <td id="squadattendancecorrection_name_allcoadata"> {item.lastName}, {item.firstName}</td>
-                    <td id="squadattendancecorrection_type_allcoadata">{Utility.removeUnderscore(item.type)}</td>
-                    <td id="squadattendancecorrection_reason_allcoadata"> {item.reason} </td>
-                    <td id="squadattendancecorrection_statuschangedby_allcoadata"> {item.statusChangedBy} </td>
-                    <td id="squadattendancecorrection_status_allcoadata"> {Utility.removeUnderscore(item.status)} </td>
+                    <td id={"squadattendancecorrection_name_allcoadata_" + item.id}> {item.lastName}, {item.firstName}</td>
+                    <td id={"squadattendancecorrection_type_allcoadata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
+                    <td id={"squadattendancecorrection_reason_allcoadata_" + item.id}> {item.reason} </td>
+                    <td id={"squadattendancecorrection_statuschangedby_allcoadata_" + item.id}> {item.statusChangedBy} </td>
+                    <td id={"squadattendancecorrection_status_allcoadata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td>
 
                       <label
-                        id="squadattendancecorrection_view_allcoalabel"
+                        id={"squadattendancecorrection_view_allcoalabel_" + item.id}
                         onClick={() => {
                           getViewCoa(item.id)
                         }}
                       >
-                        <img id="squadattendancecorrection_eye_allcoaimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                        <img id={"squadattendancecorrection_eye_allcoaimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                       </label>
                       <>
                         {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                           <>
                             <label
-                              id="squadattendancecorrection_actionedit_allcoalabel"
+                              id={"squadattendancecorrection_actionedit_allcoalabel_" + item.id}
                               onClick={() => {
                                 getCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img id="squadattendancecorrection_actionedit_allcoaimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                              <img id={"squadattendancecorrection_actionedit_allcoaimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                           </>
                         ) : null}
@@ -410,12 +440,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                         {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                           <>
                             <label
-                              id="squadattendancecorrection_actionapprove_allcoalabel"
+                              id={"squadattendancecorrection_actionapprove_allcoalabel_" + item.id}
                               onClick={() => {
                                 approveCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img id="squadattendancecorrection_actionapprove_allcoaimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                              <img id={"squadattendancecorrection_actionapprove_allcoaimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                             </label>
                           </>
                         ) : null}
@@ -423,12 +453,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                         {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                           <>
                             <label
-                              id="squadattendancecorrection_actiondecline_allcoalabel"
+                              id={"squadattendancecorrection_actiondecline_allcoalabel_" + item.id}
                               onClick={() => {
                                 declineCoa(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img id="squadattendancecorrection_actiondecline_allcoaimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                              <img id={"squadattendancecorrection_actiondecline_allcoaimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                             </label>
                           </>
                         ) : null}
@@ -437,12 +467,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                         {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                           <>
                             <label
-                              id="squadattendancecorrection_actioncancel_allcoalabel"
+                              id={"squadattendancecorrection_actioncancel_allcoalabel_" + item.id}
                               onClick={() => {
                                 cancelAttendanceReversal(item.id)
                               }}
                               className="text-muted cursor-pointer">
-                              <img id="squadattendancecorrection_actioncancel_allcoaimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                              <img id={"squadattendancecorrection_actioncancel_allcoaimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                             </label>
                           </>
                         ) : null}

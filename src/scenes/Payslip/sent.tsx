@@ -189,103 +189,112 @@ const sent = (props : any ) => {
             return (
                       <div>
                         <div className="w-100 pt-2">
-                            <div className="fieldtext d-flex ">
-                                <div className="input-container clearable-select col-md-2">
-                                <label> Month </label>
-                                <select 
-                                    name="payrollMonth" 
-                                    id="month"
-                                    onChange={(e) => { makeFilterData(e)
-                                        setShowButtonMonth(e.target.value !== 'default')
-                                    }}
-                                    className="formControl"
-                                    ref={selectRef}
-                                    >
-                                        <option value="default" disabled selected>
-                                            Month
-                                        </option>
-                                        <option value="1">January</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">May</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
-                                    </select>
-                                    {showButtonMonth && (
-                                        <span id="payslipsent_closemonth_span" className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
-                                        X
-                                        </span>
-                                    )}
-                                    </div>
-                                <div className="input-container clearable-select col-md-2">
-                                <label>Year</label>
-                                    <select
-                                        className={`form-select`}
-                                        name="payrollYear"
-                                        id="year"
-                                        onChange={(e) => {makeFilterData(e)
-                                            setShowButtonYear(e.target.value !== 'default')
-                                            
+                            <div className="fieldtext row ">
+                            <div className="col-lg-2 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label> Month </label>
+                                    <select 
+                                        name="payrollMonth" 
+                                        id="month"
+                                        onChange={(e) => { makeFilterData(e)
+                                            setShowButtonMonth(e.target.value !== 'default')
                                         }}
+                                        className="formControl"
                                         ref={selectRef}
                                         >
-                                        <option key={`defaultYear`} value="default" selected disabled>
-                                            Select Year
-                                        </option>
-                                        {
-                                            Utility.getYears().map((item: any, index: string) => {
-                                                return (
-                                                    <option key={`${index}_${item.year}`} value={item.year}>
-                                                        {item.year}
-                                                    </option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {showButtonYear && (
-                                        <span id="payslipsent_closeyear_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
-                                        X
-                                        </span>
-                                    )}
+                                            <option value="default" disabled selected>
+                                                Month
+                                            </option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                        {showButtonMonth && (
+                                            <span id="payslipsent_closemonth_span" className="clear-icon" style={{paddingTop: '10%'}} onClick={resetMonth}>
+                                            X
+                                            </span>
+                                        )}
+                                    </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label>Year</label>
+                                        <select
+                                            className={`form-select`}
+                                            name="payrollYear"
+                                            id="year"
+                                            onChange={(e) => {makeFilterData(e)
+                                                setShowButtonYear(e.target.value !== 'default')
+                                                
+                                            }}
+                                            ref={selectRef}
+                                            >
+                                            <option key={`defaultYear`} value="default" selected disabled>
+                                                Select Year
+                                            </option>
+                                            {
+                                                Utility.getYears().map((item: any, index: string) => {
+                                                    return (
+                                                        <option key={`${index}_${item.year}`} value={item.year}>
+                                                            {item.year}
+                                                        </option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                        {showButtonYear && (
+                                            <span id="payslipsent_closeyear_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetYear}>
+                                            X
+                                            </span>
+                                        )}
                                 </div>
-                                <div className="input-container clearable-select col-md-2">
-                                <label> Status </label>
-                                <select 
-                                    name="status" 
-                                    id="status"
-                                    onChange={(e) => { makeFilterData(e)
-                                        setShowButtonStatus(e.target.value !== 'default')
-                                    }}
-                                    className="formControl"
-                                    >
-                                        <option value="default" disabled selected>
-                                            Status
-                                        </option>
-                                        <option value="completed">Completed</option>
-                                        <option value="incomplete">Incomplete</option>
-                                    </select>
-                                    {showButtonStatus && (
-                                        <span id="payslipsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
-                                        X
-                                        </span>
-                                    )}
+                            </div>
+                            <div className="col-lg-2 col-md-4 col-sm-12 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label> Status </label>
+                                    <select 
+                                        name="status" 
+                                        id="status"
+                                        onChange={(e) => { makeFilterData(e)
+                                            setShowButtonStatus(e.target.value !== 'default')
+                                        }}
+                                        className="formControl"
+                                        >
+                                            <option value="default" disabled selected>
+                                                Status
+                                            </option>
+                                            <option value="completed">Completed</option>
+                                            <option value="incomplete">Incomplete</option>
+                                        </select>
+                                        {showButtonStatus && (
+                                            <span id="payslipsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
+                                            X
+                                            </span>
+                                        )}
                                 </div>
+                            </div>
+                            <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 text-center">
                                 <Button
-                                id="payslipsent_search_btn"
-                                style={{ width: 100 }}
-                                onClick={() => getAllPayroll(0)}
-                                className="btn btn-primary mx-2 mt-4">
-                                Search
+                                    id="payslipsent_search_btn"
+                                    style={{ width: '100%' }}
+                                    onClick={() => getAllPayroll(0)}
+                                    className="btn btn-primary mx-2 mt-4">
+                                    Search
                                 </Button>
                             </div>
+                            
                         </div>
-                        <Table responsive>
+                    </div>
+                    <Table responsive>
                         <thead>
                         <tr>
                             {
@@ -310,12 +319,12 @@ const sent = (props : any ) => {
                                 <tr style={{height: '10px'}}>
                                 
                                 {/* <td> {item.isGenerated} </td> */}
-                                <td id="payslipsent_id_payrolllistdata"> {item.id} </td>
-                                <td id="payslipsent_monthyear_payrolllistdata"> {getMonthName(item.periodMonth)} {item.periodYear} </td>
-                                <td id="payslipsent_isgenerated_payrolllistdata"> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
+                                <td id={"payslipsent_id_payrolllistdata_" + item.id}> {item.id} </td>
+                                <td id={"payslipsent_monthyear_payrolllistdata_" + item.id}> {getMonthName(item.periodMonth)} {item.periodYear} </td>
+                                <td id={"payslipsent_isgenerated_payrolllistdata_" + item.id}> {item.isGenerated == true ? 'Completed' : 'Incomplete' } </td>
                                 <td>
                                 <label
-                                id="payslipsent_viewlogs_payrolllistbtn"
+                                id={"payslipsent_viewlogs_payrolllistbtn_" + item.id}
                                 onClick={() => {
                                     // getAdjustment(item.id)
                                 }}
@@ -330,58 +339,57 @@ const sent = (props : any ) => {
                             })
                         }
                         </tbody>
-                        </Table>
-                        {
-                            payrollList &&
-                            payrollList.length == 0 ?
-                            <div className="w-100 text-center">
-                                <label htmlFor="">No Records Found</label>
-                            </div>
-                            :
-                            null
-                        }
+                    </Table>
+                    {
+                        payrollList &&
+                        payrollList.length == 0 ?
+                        <div className="w-100 text-center">
+                            <label htmlFor="">No Records Found</label>
+                        </div>
+                        :
+                        null
+                    }
                 
         
        
                 <div className="row">
-                            <div className="col-md-6">
-                                <div className="d-flex ma-3">
-                                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
-                                        <option value={10}>10</option>
-                                        <option value={50}>50</option>
-                                        <option value={100}>100</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="d-flex justify-content-end ma-3">
-                                    <span className="font-bold mr-8 ">Total Entries : { payrollList.totalElements }</span>
-                                </div>   
-                            </div>
+                    <div className="col-md-6">
+                        <div className="d-flex ma-3">
+                            <span className="font-bold px-2 pt-2">Select Page Size:</span>
+                            <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                            </select>
                         </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="d-flex justify-content-end ma-3">
+                            <span className="font-bold mr-8 ">Total Entries : { payrollList.totalElements }</span>
+                        </div>   
+                    </div>
+                </div>
                 <div className="d-flex justify-content-end">
                   <div className="">
-                     <ReactPaginate
-                    className="d-flex justify-content-center align-items-center"
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={(payrollList && payrollList.totalPages) || 0}
-                    previousLabel="<"
-                    previousLinkClassName="prev-next-pagination"
-                    nextLinkClassName="prev-next-pagination"
-                    activeLinkClassName="active-page-link"
-                    disabledLinkClassName="prev-next-disabled"
-                    pageLinkClassName="page-link"
-                    renderOnZeroPageCount={null}
-                />
-                  </div>
+                        <ReactPaginate
+                            className="d-flex justify-content-center align-items-center"
+                            breakLabel="..."
+                            nextLabel=">"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={(payrollList && payrollList.totalPages) || 0}
+                            previousLabel="<"
+                            previousLinkClassName="prev-next-pagination"
+                            nextLinkClassName="prev-next-pagination"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
+                            pageLinkClassName="page-link"
+                            renderOnZeroPageCount={null}
+                        />
+                    </div>
                 </div>
-                <div className="d-flex justify-content-end mt-3" >
-                </div>
-                </div>
+                
+            </div>
         
             )
 }

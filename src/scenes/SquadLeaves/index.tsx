@@ -294,6 +294,16 @@ export const SquadLeaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this leave.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadleave_approveconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadleave_approvecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -344,6 +354,16 @@ export const SquadLeaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this leave.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadleave_declineconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadleave_declinecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -395,6 +415,16 @@ export const SquadLeaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this leave.",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "squadleave_declineconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "squadleave_declinecancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -470,33 +500,33 @@ export const SquadLeaves = (props: any) => {
                     allLeaves.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td id="squadleaves_name_alleavesdata"> {item.lastName}, {item.firstName} </td>
-                          <td id="squadleaves_type_alleavesdata"> {item.type} </td>
-                          <td id="squadleaves_datefrom_alleavesdata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td id="squadleaves_dateto_alleavesdata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id="squadleaves_reason_alleavesdata"> {item.reason} </td>
-                          <td id="squadleaves_statuschangedby_alleavesdata"> {item.statusChangedBy} </td>
-                          <td id="squadleaves_status_alleavesdata"> {Utility.removeUnderscore(item.status)} </td>
+                          <td id={"squadleaves_name_alleavesdata_" + item.id}> {item.lastName}, {item.firstName} </td>
+                          <td id={"squadleaves_type_alleavesdata_" + item.id}> {item.type} </td>
+                          <td id={"squadleaves_datefrom_alleavesdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id={"squadleaves_dateto_alleavesdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id={"squadleaves_reason_alleavesdata_" + item.id}> {item.reason} </td>
+                          <td id={"squadleaves_statuschangedby_alleavesdata_" + item.id}> {item.statusChangedBy} </td>
+                          <td id={"squadleaves_status_alleavesdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td>
                             <label
-                              id="squadleaves_view_alleaveslabel"
+                              id={"squadleaves_view_alleaveslabel_" + item.id}
                               onClick={() => {
                                 viewLeave(item.id)
                               }}
                             >
-                              <img id="squadleaves_eye_alleavesimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id={"squadleaves_eye_alleavesimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             <>
                               {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
                                   <label
-                                    id="squadleaves_actionedit_alleaveslabel"
+                                    id={"squadleaves_actionedit_alleaveslabel_" + item.id}
                                     onClick={() => {
                                       getLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadleaves_actionedit_alleavesimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                    <img id={"squadleaves_actionedit_alleavesimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
 
                                   </label>
                                 </>
@@ -505,12 +535,12 @@ export const SquadLeaves = (props: any) => {
                               {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
                                   <label
-                                    id="squadleaves_actionapprove_alleaveslabel"
+                                    id={"squadleaves_actionapprove_alleaveslabel_" + item.id}
                                     onClick={() => {
                                       approveLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadleaves_actionapprove_alleavesimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                    <img id={"squadleaves_actionapprove_alleavesimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
 
                                   </label>
                                 </>
@@ -519,12 +549,12 @@ export const SquadLeaves = (props: any) => {
                               {authorizations.includes("Request:Reject") && item.status == "PENDING" ? (
                                 <>
                                   <label
-                                    id="squadleaves_actiondecline_alleaveslabel"
+                                    id={"squadleaves_actiondecline_alleaveslabel_" + item.id}
                                     onClick={() => {
                                       declineLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadleaves_actiondecline_alleavesimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                    <img id={"squadleaves_actiondecline_alleavesimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                   </label>
 
                                 </>
@@ -534,12 +564,12 @@ export const SquadLeaves = (props: any) => {
                               {authorizations.includes("Request:Update") && (item.status == "APPROVED" || item.status == "PENDING") ? (
                                 <>
                                   <label
-                                    id="squadleaves_actioncancel_alleaveslabel"
+                                    id={"squadleaves_actioncancel_alleaveslabel_" + item.id}
                                     onClick={() => {
                                       cancelLeave(item.id)
                                     }}
                                     className="text-muted cursor-pointer">
-                                    <img id="squadleaves_actioncancel_alleavesimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                    <img id={"squadleaves_actioncancel_alleavesimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                   </label>
 
                                 </>

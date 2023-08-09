@@ -17,7 +17,7 @@ import ContainerWrapper from "../../components/ContainerWrapper"
 import * as Yup from "yup"
 import Upload from './upload'
 import { Utility } from "../../utils"
-import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
+import { action_decline, action_edit } from "../../assets/images"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -360,6 +360,16 @@ export const PayrollAdjustment = (props: any) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
             text: "Are you sure you want to delete this transaction?",
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+        
+                if(confirmButton)
+                  confirmButton.id = "payrolladjustment_deleteadjconfirm_alertbtn"
+        
+                if(cancelButton)
+                  cancelButton.id = "payrolladjustment_deleteadjcancel_alertbtn"
+              },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -688,144 +698,159 @@ export const PayrollAdjustment = (props: any) => {
             <div className="w-100 px-5 pt-5 pb-1">
                 <div>
                     <div className="w-100 pt-2">
-                        <div className="fieldtext d-flex col-md-6">
-                            <div className="input-container col-md-4">
-                                <label>Employee</label>
-                                <EmployeeDropdown
-                                    id="payrolladjustment_employee_dropdown"
-                                    placeholder={"Employee"}
-                                    singleChangeOption={singleChangeOption}
-                                    name="userId"
-                                    value={filterData && filterData['userId']}
-                                    withEmployeeID={true}
-                                />
+                        <div className="fieldtext row">
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Employee</label>
+                                    <EmployeeDropdown
+                                        id="payrolladjustment_employee_dropdown"
+                                        placeholder={"Employee"}
+                                        singleChangeOption={singleChangeOption}
+                                        name="userId"
+                                        value={filterData && filterData['userId']}
+                                        withEmployeeID={true}
+                                    />
+                                </div>
                             </div>
-                            <div className="input-container col-md-3 clearable-select">
-                                <label>Adjustment Name</label>
-                                <select
+                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Amount</label>
+                                    <input type="text" 
+                                    id="payrolladjustment_amount_input"
                                     className="formControl"
-                                    name="adjustmentTypeName"
-                                    id="typeName"
-                                    onChange={(e) => {
-                                        makeFilterData(e)
-                                        setShowButtonAdjustment(e.target.value !== 'default')
-                                    }}
-                                >
-                                    <option value="" disabled selected>
-                                        Adjustment Name
-                                    </option>
-                                    {adjustmentTypeName &&
-                                        adjustmentTypeName.length &&
-                                        adjustmentTypeName.map((item: any, index: string) => (
-                                            <option key={`${index}_${item.name}`} value={item.name}>
-                                                {item.name}
+                                    name="amount"
+                                    placeholder="Amount"
+                                    onChange={(e)=> makeFilterData(e)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="">
+                                    <label>Type</label>
+                                    <select
+                                        className="form-control"
+                                        name="isDeduction"
+                                        id="type"
+                                        onChange={(e) => {
+                                            makeFilterData(e);
+                                            setShowButton(e.target.value !== 'default')
+                                        }}
+                                    >
+                                        <option value="default" disabled selected>
+                                        Type
+                                        </option>
+                                        <option value={false}>Add
+                                        </option>
+                                        <option value={true}>Deduct
+                                        </option>
+                                    
+                                    </select>
+                                    {showButton && (
+                                        <span id="payrolladjustment_closetype_span" className="clear-icon-adjustment" onClick={reset}>
+                                        X
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label>Adjustment Name</label>
+                                    <select
+                                        className="formControl"
+                                        name="adjustmentTypeName"
+                                        id="typeName"
+                                        onChange={(e) => {
+                                            makeFilterData(e)
+                                            setShowButtonAdjustment(e.target.value !== 'default')
+                                        }}
+                                    >
+                                        <option value="" disabled selected>
+                                            Adjustment Name
+                                        </option>
+                                        {adjustmentTypeName &&
+                                            adjustmentTypeName.length &&
+                                            adjustmentTypeName.map((item: any, index: string) => (
+                                                <option key={`${index}_${item.name}`} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                    </select>
+                                    {showButtonAdjustment && (
+                                        <span className="clear-icon-adjustment" onClick={resetAdjustment}>
+                                            X
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+
+                           
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="">
+                                    <label>Select Month</label>
+                                    <select
+                                        placeholder="Month"
+                                        className="form-control"
+                                        name="periodMonth"
+                                        id="month"
+                                        onChange={(e) => {
+                                            makeFilterData(e)
+                                            setShowButtonMonth(e.target.value !== 'default')
+                                        }}
+                                    >
+                                        <option value="" disabled selected>
+                                            Select Month
+                                        </option>
+                                        {Object.entries(monthMap).map(([month, value]) => (
+                                            <option key={value} value={value}>
+                                                {month}
                                             </option>
                                         ))}
-                                </select>
-                                {showButtonAdjustment && (
-                                    <span className="clear-icon-adjustment" onClick={resetAdjustment}>
-                                        X
-                                    </span>
-                                )}
-                        </div>
-                        
-                        <div className="input-container col-md-2">
-                            <label>Amount</label>
-                            <input type="text" 
-                            id="payrolladjustment_amount_input"
-                            className="formControl"
-                            name="amount"
-                            placeholder="Amount"
-                            onChange={(e)=> makeFilterData(e)}
-                            />
-                        </div>
-                        <div className="input-container clearable-select col-md-2">
-                            <label>Type</label>
-                            <select
-                                className="form-control"
-                                name="isDeduction"
-                                id="type"
-                                onChange={(e) => {
-                                    makeFilterData(e);
-                                    setShowButton(e.target.value !== 'default')
-                                }}
-                            >
-                                <option value="default" disabled selected>
-                                Type
-                                </option>
-                                <option value={false}>Add
-                                </option>
-                                <option value={true}>Deduct
-                                </option>
-                            
-                            </select>
-                            {showButton && (
-                                <span id="payrolladjustment_closetype_span" className="clear-icon-adjustment" onClick={reset}>
-                                X
-                                </span>
-                            )}
+                                    </select>
+                                    {showButtonMonth && (
+                                        <span id="payrolladjustment_closemonth_span" className="clear-icon-adjustment" onClick={resetMonth}>
+                                            X
+                                        </span>
+                                    )}
+                                </div>
                             </div>
-                            <div className="input-container clearable-select col-md-2">
-                                <label>Select Month</label>
-                                <select
-                                    placeholder="Month"
-                                    className="form-control"
-                                    name="periodMonth"
-                                    id="month"
-                                    onChange={(e) => {
-                                        makeFilterData(e)
-                                        setShowButtonMonth(e.target.value !== 'default')
-                                    }}
-                                >
-                                    <option value="" disabled selected>
-                                        Select Month
-                                    </option>
-                                    {Object.entries(monthMap).map(([month, value]) => (
-                                        <option key={value} value={value}>
-                                            {month}
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="">
+                                    <label>Select Year</label>
+                                    <select
+                                        className="form-control"
+                                        name="periodYear"
+                                        id="year"
+                                        onChange={(e) => {
+                                            makeFilterData(e)
+                                            setShowButtonYear(e.target.value !== 'default')
+                                        }}
+                                    >
+                                        <option value="" disabled selected>
+                                            Year
                                         </option>
-                                    ))}
-                                </select>
-                                {showButtonMonth && (
-                                    <span id="payrolladjustment_closemonth_span" className="clear-icon-adjustment" onClick={resetMonth}>
-                                        X
-                                    </span>
-                                )}
+                                        {generateYearOptions().map((year) => (
+                                            <option key={year} value={year}>
+                                                {year}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {showButtonYear && (
+                                        <span id="payrolladjustment_closeyear_span" className="clear-icon-adjustment" onClick={resetYear}>
+                                            X
+                                        </span>
+                                    )}
+                                </div>
                             </div>
-                            <div className="input-container clearable-select col-md-2">
-                                <label>Select Year</label>
-                                <select
-                                    className="form-control"
-                                    name="periodYear"
-                                    id="year"
-                                    onChange={(e) => {
-                                        makeFilterData(e)
-                                        setShowButtonYear(e.target.value !== 'default')
-                                    }}
-                                >
-                                    <option value="" disabled selected>
-                                        Year
-                                    </option>
-                                    {generateYearOptions().map((year) => (
-                                        <option key={year} value={year}>
-                                            {year}
-                                        </option>
-                                    ))}
-                                </select>
-                                {showButtonYear && (
-                                    <span id="payrolladjustment_closeyear_span" className="clear-icon" onClick={resetYear}>
-                                        X
-                                    </span>
-                                )}
-                            </div>
-                            <div className="input-container col-md-2 pt-4">
-                                <Button
-                                    id="payrolladjustment_search_button"
-                                    style={{ width: 100 }}
-                                    onClick={() => getAllAdjustmentList(0)}
-                                    className="btn btn-primary mx-2">
-                                    Search
-                                </Button>
+                            <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 text-center">
+                                <div className="input-container pt-4">
+                                    <Button
+                                        id="payrolladjustment_search_button"
+                                        style={{ width: '100%' }}
+                                        onClick={() => getAllAdjustmentList(0)}
+                                        className="btn btn-primary">
+                                        Search
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1012,6 +1037,7 @@ export const PayrollAdjustment = (props: any) => {
                                 <div className="d-flex justify-content-end px-5">
                                 {values.userId ? null:  (
                                     <button
+                                    id="payrolladjustment_btn_addform"
                                     type="button"
                                     className="btn btn btn-outline-primary me-2 mb-2 mt-2"
                                     onClick={handleAddField}
@@ -1171,6 +1197,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <div className="col-md-3 mb-3">
                                                 <label>Employee *</label>
                                                 <EmployeeDropdown
+                                                    payrolladjustment_employee_adjustmentdropdown
                                                     placeholder={"Employee"}
                                                     singleChangeOption={(e: any) => {
                                                         createOption(e, 'userId', index)

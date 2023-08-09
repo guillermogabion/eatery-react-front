@@ -172,13 +172,23 @@ export const Employee = (props: any) => {
     "monthlyDeMinimisBenefits": 0,
     "ecola": 0,
     "clothingAllowance": 0,
+    "clothIsTaxable": true,
     "communicationAllowance": 0,
+    "commIsTaxable": true,
     "discretionaryAllowance": 0,
+    "discreIsTaxable": true,
     "mealAllowance": 0,
+    "mealIsTaxable": true,
     "medicalAllowance": 0,
+    "medicalIsTaxable": true,
     "productivityAllowance": 0,
+    "prodIsTaxable": true,
     "conveyanceAllowance": 0,
+    "convIsTaxable": true,
     "otherAllowance": 0,
+    "otherIsTaxable": true,
+    "miscellaneous": 0,
+    "miscIsTaxable": true,
     "rdo": "0",
     "prclicenseNo": 0,
     "passportNo": 0
@@ -429,6 +439,16 @@ export const Employee = (props: any) => {
     ErrorSwal.fire({
       title: 'Notification',
       text: "Confirm Unlock?",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+
+        if(confirmButton)
+          confirmButton.id = "employee_unlockconfirm_alertbtn"
+
+        if(cancelButton)
+          cancelButton.id = "employee_unlockcancel_alertbtn"
+      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -1833,6 +1853,7 @@ export const Employee = (props: any) => {
               <div className="row">
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_mondayrestday"
                     type="checkbox"
                     label="Monday Rest Day"
                     name="mondayRestDay"
@@ -1892,6 +1913,7 @@ export const Employee = (props: any) => {
                 {/* tuesday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_tuesdayrestday"
                     type="checkbox"
                     label="Tuesday Rest Day"
                     name="tuesdayRestDay"
@@ -1951,6 +1973,7 @@ export const Employee = (props: any) => {
                 {/* wednesday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_wedrestday"
                     type="checkbox"
                     label="Wednesday Rest Day"
                     name="wednesdayRestDay"
@@ -2009,6 +2032,7 @@ export const Employee = (props: any) => {
                 {/* thursday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_thursdayrestday"
                     type="checkbox"
                     label="Thursday Rest Day"
                     name="thursdayRestDay"
@@ -2071,6 +2095,7 @@ export const Employee = (props: any) => {
 
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_fridayrestday"
                     type="checkbox"
                     label="Friday Rest Day"
                     name="fridayRestDay"
@@ -2131,6 +2156,7 @@ export const Employee = (props: any) => {
 
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_saturdayrestday"
                     type="checkbox"
                     label="Saturday Rest Day"
                     name="saturdayRestDay"
@@ -2189,6 +2215,7 @@ export const Employee = (props: any) => {
                 {/* Sunday  */}
                 <div className="form-group col-sm-12 mb-12">
                   <Form.Check
+                    id="employee_checkbox_sundayrestday"
                     type="checkbox"
                     label="Sunday Rest Day"
                     name="sundayRestDay"
@@ -2384,6 +2411,13 @@ export const Employee = (props: any) => {
                 {errors && errors.clothingAllowance && (
                   <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
                 )}
+                 <Form.Check
+                    type="checkbox"
+                    label="Taxable (Clothing Allowance)"
+                    name="clothIsTaxable"
+                    checked={values.clothIsTaxable}
+                    onChange={(e) => setFieldValue("clothIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Communication Allowance</label>
@@ -2397,6 +2431,13 @@ export const Employee = (props: any) => {
                 {errors && errors.communicationAllowance && (
                   <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Communication Allowance)"
+                    name="commIsTaxable"
+                    checked={values.commIsTaxable}
+                    onChange={(e) => setFieldValue("commIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Discretionary Allowance</label>
@@ -2410,6 +2451,13 @@ export const Employee = (props: any) => {
                 {errors && errors.discretionaryAllowance && (
                   <p id="employee_errordiscretionaryallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Discretionary Allowance)"
+                    name="discreIsTaxable"
+                    checked={values.discreIsTaxable}
+                    onChange={(e) => setFieldValue("discreIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Meal Allowance</label>
@@ -2423,6 +2471,13 @@ export const Employee = (props: any) => {
                 {errors && errors.mealAllowance && (
                   <p id="employee_errormealallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Meal Allowance)"
+                    name="mealIsTaxable"
+                    checked={values.mealIsTaxable}
+                    onChange={(e) => setFieldValue("mealIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Medical Allowance</label>
@@ -2436,6 +2491,13 @@ export const Employee = (props: any) => {
                 {errors && errors.medicalAllowance && (
                   <p id="employee_errormedicalallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
                 )}
+                 <Form.Check
+                    type="checkbox"
+                    label="Taxable (Medical Allowance)"
+                    name="medicalIsTaxable"
+                    checked={values.medicalIsTaxable}
+                    onChange={(e) => setFieldValue("medicalIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Productivity Allowance</label>
@@ -2449,6 +2511,13 @@ export const Employee = (props: any) => {
                 {errors && errors.productivityAllowance && (
                   <p id="employee_errorproductivityallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.productivityAllowance}</p>
                 )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Productivity Allowance)"
+                    name="prodIsTaxable"
+                    checked={values.prodIsTaxable}
+                    onChange={(e) => setFieldValue("prodIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Conveyance Allowance</label>
@@ -2462,6 +2531,14 @@ export const Employee = (props: any) => {
                 {errors && errors.conveyanceAllowance && (
                   <p id="employee_errorconveyanceallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
                 )}
+             
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Conveyance Allowance)"
+                    name="convIsTaxable"
+                    checked={values.convIsTaxable}
+                    onChange={(e) => setFieldValue("convIsTaxable", e.target.checked)}
+                  />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Other Allowance</label>
@@ -2475,6 +2552,35 @@ export const Employee = (props: any) => {
                 {errors && errors.otherAllowance && (
                   <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
                 )}
+              
+                   <Form.Check
+                    type="checkbox"
+                    label="Taxable (Other Allowance)"
+                    name="otherIsTaxable"
+                    checked={values.otherIsTaxable}
+                    onChange={(e) => setFieldValue("otherIsTaxable", e.target.checked)}
+                  />
+              </div>
+              <div className="form-group col-md-6 mb-3 " >
+                <label>Miscellaneous Allowance</label>
+                <input type="text"
+                  name="miscellaneous"
+                  id="miscellaneous"
+                  className="form-control"
+                  value={values.miscellaneous}
+                  onChange={(e) => setFormField(e, setFieldValue)}
+                />
+                {errors && errors.miscellaneous && (
+                  <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
+                )}
+                <Form.Check
+                    type="checkbox"
+                    label="Taxable (Miscellaneous Allowance)"
+                    name="miscIsTaxable"
+                    checked={values.miscIsTaxable}
+                    onChange={(e) => setFieldValue("miscIsTaxable", e.target.checked)}
+                  />
+                 
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>RDO</label>
@@ -2489,6 +2595,7 @@ export const Employee = (props: any) => {
                   <p id="employee_errorrdo_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
                 )}
               </div>
+              
             </div>
             <br />
             <Modal.Footer>
@@ -2678,15 +2785,15 @@ export const Employee = (props: any) => {
 
                     return (
                       <tr>
-                        <td id="employee_employeeid_maindata"> {item.employeeId} </td>
-                        <td id="employee_employeetype_maindata"> {Utility.removeUnderscore(item.empType)} </td>
-                        <td id="employee_employeestatus_maindata"> {item.empStatus} </td>
-                        <td id="employee_employeefullname_maindata"> {item.fullname} </td>
-                        <td id="employee_employeehiredate_maindata"> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
-                        <td id="employee_employeeacctstatus_maindata"> {item.acctStatus} </td>
-                        <td id="employee_labels_maindata">
+                        <td id={"employee_employeeid_maindata_" + item.id}> {item.employeeId} </td>
+                        <td id={"employee_employeetype_maindata_" + item.id}> {Utility.removeUnderscore(item.empType)} </td>
+                        <td id={"employee_employeestatus_maindata_" + item.id}> {item.empStatus} </td>
+                        <td id={"employee_employeefullname_maindata_" + item.id}> {item.fullname} </td>
+                        <td id={"employee_employeehiredate_maindata_" + item.id}> {Utility.formatDate(item.hireDate, 'MM-DD-YYYY')} </td>
+                        <td id={"employee_employeeacctstatus_maindata_" + item.id}> {item.acctStatus} </td>
+                        <td id={"employee_labels_maindata_" + item.id}>
                           <label
-                            id="employee_update_mainbtn"
+                            id={"employee_update_mainbtn_" + item.id}
                             onClick={() => {
                               getEmployee(item.id)
                             }}
@@ -2704,7 +2811,7 @@ export const Employee = (props: any) => {
                           }
                           <br />
                           <label
-                            id="employee_view_mainbtn"
+                            id={"employee_view_mainbtn_" + item.id}
                             onClick={() => {
                               getEmployeeDetails(item.id)
                             }}
@@ -2713,7 +2820,7 @@ export const Employee = (props: any) => {
                           </label>
                           <br />
                           <label
-                            id="employee_changepassword_mainbtn"
+                            id={"employee_changepassword_mainbtn_" + item.id}
                             onClick={() => {
                               changePassword(item.id)
                             }}

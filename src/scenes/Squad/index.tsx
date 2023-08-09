@@ -167,10 +167,10 @@ export const Squad = (props: any) => {
                   squad.content.length > 0 &&
                   squad.content.map((item: any, index: any) => (
                     <tr key={item.id}>
-                      <td id="squad_fullname_squadata">{item.fullname}</td>
-                      <td id="squad_emptype_squadata">{Utility.removeUnderscore(item.empType) }</td>
-                      <td id="squad_empstatus_squadata">{item.empStatus}</td>
-                      <td id="squad_status_squadata">
+                      <td id={"squad_fullname_squadata_" + item.id}>{item.fullname}</td>
+                      <td id={"squad_emptype_squadata_" + item.id}>{Utility.removeUnderscore(item.empType) }</td>
+                      <td id={"squad_empstatus_squadata_" + item.id}>{item.empStatus}</td>
+                      <td id={"squad_status_squadata_" + item.id}>
                         {
                           item.status && item.status != "" ?
                             <>{item.status}</>

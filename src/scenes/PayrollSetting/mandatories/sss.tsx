@@ -5,6 +5,8 @@ import withReactContent from "sweetalert2-react-content"
 import { Api, RequestAPI } from "../../../api"
 import Table from 'react-bootstrap/Table'
 import FileUpload from "./SSSUpload"
+import { Utility } from "../../../utils"
+
 const ErrorSwal = withReactContent(Swal)
 
 
@@ -94,9 +96,9 @@ const sss = (props: any) => {
              <div style={{ width: '100%', overflowX: 'auto' }}>
                 <div className="w-100 pt-2">
 
-                    <Table responsive>
+                    <Table responsive="lg">
                         <thead>
-                            <tr>
+                        <tr>
                                 {
                                     tableHeaders &&
                                     tableHeaders.length &&
@@ -152,6 +154,8 @@ const sss = (props: any) => {
                                     })
                                 }
                             </tr>
+
+
                             <tr>
                             {
                                     tableHeaders &&
@@ -245,53 +249,53 @@ const sss = (props: any) => {
                                             if (header === 'Range of Compensation') {
                                             return (
                                                 <>
-                                                <td id="payrollsettingsss_rangelower_data" colSpan={2}>{item.range_lower}</td>
-                                                <td id="payrollsettingsss_rangeupper_data" colSpan={2}>{item.range_upper}</td>
+                                                <td id="payrollsettingsss_rangelower_data" colSpan={2}>{Utility.formatToCurrency(item.range_lower)}</td>
+                                                <td id="payrollsettingsss_rangeupper_data" colSpan={2}>{Utility.formatToCurrency(item.range_upper)}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'Monthly Salary Credit') {
                                             return (
                                                 <>
-                                                <td id="payrollsettingsss_mscregular_data" colSpan={2}>{item.mscRegular}</td>
-                                                <td id="payrollsettingsss_mscwisp_data" colSpan={2}>{item.mscWisp}</td>
-                                                <td id="payrollsettingsss_msctotal_data" colSpan={2}>{item.mscTotal}</td>
+                                                <td id="payrollsettingsss_mscregular_data" colSpan={2}>{Utility.formatToCurrency(item.mscRegular)}</td>
+                                                <td id="payrollsettingsss_mscwisp_data" colSpan={2}>{Utility.formatToCurrency(item.mscWisp)}</td>
+                                                <td id="payrollsettingsss_msctotal_data" colSpan={2}>{Utility.formatToCurrency(item.mscTotal)}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'Regular SSS') {
                                             return (
                                                 <>
-                                                <td id="payrollsettingsss_regularer_data" colSpan={2}>{item.regularEr}</td>
-                                                <td id="payrollsettingsss_regularee_data" colSpan={2}>{item.regularEe}</td>
-                                                <td id="payrollsettingsss_regulartotal_data" colSpan={2}>{item.regularTotal}</td>
+                                                <td id="payrollsettingsss_regularer_data" colSpan={2}>{Utility.formatToCurrency(item.regularEr)}</td>
+                                                <td id="payrollsettingsss_regularee_data" colSpan={2}>{Utility.formatToCurrency(item.regularEe)}</td>
+                                                <td id="payrollsettingsss_regulartotal_data" colSpan={2}>{Utility.formatToCurrency(item.regularTotal)}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'EC') {
                                             return (
                                                 <>
-                                                <td id="payrollsettingsss_ecer_data" colSpan={2}>{item.ecEr}</td>
-                                                <td id="payrollsettingsss_ecee_data" colSpan={2}>{item.ecEe}</td>
-                                                <td id="payrollsettingsss_ectotal_data" colSpan={2}>{item.ecTotal}</td>
+                                                <td id="payrollsettingsss_ecer_data" colSpan={2}>{Utility.formatToCurrency(item.ecEr)}</td>
+                                                <td id="payrollsettingsss_ecee_data" colSpan={2}>{Utility.formatToCurrency(item.ecEe)}</td>
+                                                <td id="payrollsettingsss_ectotal_data" colSpan={2}>{Utility.formatToCurrency(item.ecTotal)}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'WISP') {
                                             return (
                                                 <>
-                                                <td id="payrollsettingsss_wisper_data" colSpan={2}>{item.wispEr}</td>
-                                                <td id="payrollsettingsss_wispee_data" colSpan={2}>{item.wispEe}</td>
-                                                <td id="payrollsettingsss_wisptotal_data" colSpan={2}>{item.wispTotal}</td>
+                                                <td id="payrollsettingsss_wisper_data" colSpan={2}>{Utility.formatToCurrency(item.wispEr)}</td>
+                                                <td id="payrollsettingsss_wispee_data" colSpan={2}>{Utility.formatToCurrency(item.wispEe)}</td>
+                                                <td id="payrollsettingsss_wisptotal_data" colSpan={2}>{Utility.formatToCurrency(item.wispTotal)}</td>
                                                 </>
                                             );
                                             }
                                             if (header === 'Total') {
                                             return (
                                                 <>
-                                                <td id="payrollsettingsss_totaler_data" colSpan={2}>{item.totalEr}</td>
-                                                <td id="payrollsettingsss_totalee_data" colSpan={2}>{item.totalEe}</td>
-                                                <td id="payrollsettingsss_totaltotal_data" colSpan={2}>{item.totalTotal}</td>
+                                                <td id="payrollsettingsss_totaler_data" colSpan={2}>{Utility.formatToCurrency(item.totalEr)}</td>
+                                                <td id="payrollsettingsss_totalee_data" colSpan={2}>{Utility.formatToCurrency(item.totalEe)}</td>
+                                                <td id="payrollsettingsss_totaltotal_data" colSpan={2}>{Utility.formatToCurrency(item.totalTotal)}</td>
                                                 </>
                                             );
                                             }

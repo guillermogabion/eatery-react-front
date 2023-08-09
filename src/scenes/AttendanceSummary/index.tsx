@@ -317,16 +317,16 @@ export const AttendanceSummary = (props: any) => {
                     allAttendance.content.map((item: any, index: any) => {
                       return (
                         <tr>
-                          <td id="attendancesummary_name_allattendancedata"> {item.lastName}, {item.firstName} </td>
-                          <td id="attendancesummary_date_allattendancedata"> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
-                          <td id="attendancesummary_schedule_allattendancedata"> {item.schedule} </td>
-                          <td id="attendancesummary_firstlogin_allattendancedata"> {item.firstLogin ? moment(item.firstLogin).format('MM-DD-YYYY hh:mm A') : "No Time In"} </td>
-                          <td id="attendancesummary_lastlogin_allattendancedata"> {item.lastLogin ? moment(item.lastLogin).format('MM-DD-YYYY hh:mm A') : "No Time Out"} </td>
-                          <td id="attendancesummary_datatype_allattendancedata"> { Utility.removeUnderscore(item.dayType) } </td>
-                          <td id="attendancesummary_status_allattendancedata"> {item.status} </td> 
+                          <td id={"attendancesummary_name_allattendancedata_" + item.lastName + item.firstName}> {item.lastName}, {item.firstName} </td>
+                          <td id={"attendancesummary_date_allattendancedata_" + item.lastName + item.firstName}> {Utility.formatDate(item.date, 'MM-DD-YYYY')} </td>
+                          <td id={"attendancesummary_schedule_allattendancedata_" + item.lastName + item.firstName}> {item.schedule} </td>
+                          <td id={"attendancesummary_firstlogin_allattendancedata_" + item.lastName + item.firstName}> {item.firstLogin ? moment(item.firstLogin).format('MM-DD-YYYY hh:mm A') : "No Time In"} </td>
+                          <td id={"attendancesummary_lastlogin_allattendancedata_" + item.lastName + item.firstName}> {item.lastLogin ? moment(item.lastLogin).format('MM-DD-YYYY hh:mm A') : "No Time Out"} </td>
+                          <td id={"attendancesummary_datatype_allattendancedata_" + item.lastName + item.firstName}> { Utility.removeUnderscore(item.dayType) } </td>
+                          <td id={"attendancesummary_status_allattendancedata_" + item.lastName + item.firstName}> {item.status} </td> 
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                              <td> <label id="attendancesummary_update_allattendancelabel"
+                              <td> <label id={"attendancesummary_update_allattendancelabel_" + item.lastName + item.firstName+ item.date}
                                 onClick={() => {
                                   setUpdateData(item)
                                   setInitialValues({
@@ -343,7 +343,7 @@ export const AttendanceSummary = (props: any) => {
                                 Update
                               </label>
                                 <br />
-                                <label id="attendancesummary_delete_allattendancelabel"
+                                <label id={"attendancesummary_delete_allattendancelabel_" + item.lastName + item.firstName}
                                   onClick={() => {
                                     setDeleteInitialValues({
                                       "userid": filterData && filterData['userid'],
