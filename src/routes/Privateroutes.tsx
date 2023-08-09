@@ -83,6 +83,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
     { path: "/user", component: ChangePassword },
     { path: "/user/reimbursement", component: Reimbursement },
     { path: "/manage/reimbursement", component: AllReimbursement },
+    { path: "/reimbursement/squadmembers", component: AllReimbursement },
     
     { path: "/report", component: Report },
     { path: "/dashboard", component: Dashboard },

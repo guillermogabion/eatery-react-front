@@ -8,11 +8,13 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { FaTimesCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
 const ErrorSwal = withReactContent(Swal)
 
 export const ReimbursementList = (props: any) => {
     const [allLeaves, setAllLeaves] = useState<any>([]);
     const [viewReimbursementModal, setViewReimbursementModal] = useState<any>(false);
+    const { data } = useSelector((state: any) => state.rootReducer.userData)
     const [isEditReimbursement, setIsEditReimbursement] = useState<any>(false);
     const [reimbursementType, setReimbursementType] = React.useState([])
     const [filterData, setFilterData] = React.useState([]);
@@ -64,17 +66,22 @@ export const ReimbursementList = (props: any) => {
 
     const getReimbursements = (pageNo: any) => {
         let queryString = ""
-            let filterDataTemp = { ...filterData }
+        let filterDataTemp = { ...filterData }
 
-            if (filterDataTemp) {
-                Object.keys(filterDataTemp).forEach((d: any) => {
-                    if (filterDataTemp[d]) {
-                        queryString += `&${d}=${filterDataTemp[d]}`
-                    } else {
-                        queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-                    }
-                })
-            }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
+        if (data.profile.role == 'APPROVER') {
+            queryString += `&enableSquad=true`
+        } else {
+            queryString += `&enableSquad=false`
+        }
         RequestAPI.getRequest(
             `${Api.getAllReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=desc`,
             "",
