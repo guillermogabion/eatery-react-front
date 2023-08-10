@@ -360,7 +360,7 @@ export const UploadReceipt = (props: any) => {
                                                 <td> <label className={`bg-[${Utility.uploadReceiptStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
-                                                        id="holiday_delete_btn"
+                                                        id=""
                                                         onClick={() => {
                                                             console.log(item)
                                                             getReceiptImage(item.fileNamePath)
@@ -371,15 +371,19 @@ export const UploadReceipt = (props: any) => {
                                                         className="text-muted cursor-pointer">
                                                         <img id="holiday_actiondecline_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                     </label>
+                                                    {
+                                                        item.status == "Failed" && (
+                                                            <label
+                                                                id=""
+                                                                onClick={() => {
+                                                                    deleteReceipt(item.id)
+                                                                }}
+                                                                className="text-muted cursor-pointer">
+                                                                <img id="holiday_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                                                            </label>
+                                                        )
+                                                    }
 
-                                                    <label
-                                                        id="holiday_delete_btn"
-                                                        onClick={() => {
-                                                            deleteReceipt(item.id)
-                                                        }}
-                                                        className="text-muted cursor-pointer">
-                                                        <img id="holiday_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
-                                                    </label>
                                                 </td>
                                             </tr>
                                         )
@@ -575,7 +579,7 @@ export const UploadReceipt = (props: any) => {
                             className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                             Cancel
                         </Button>
-                        <Button
+                        {/* <Button
                             onClick={() => {
                                 if (isEditReceipt) {
                                     updateReceipt()
@@ -585,7 +589,7 @@ export const UploadReceipt = (props: any) => {
                             }}
                             className="w-[150px] mr-2">
                             {isEditReceipt ? "Save Changes" : "Modify"}
-                        </Button>
+                        </Button> */}
                         {
                             !isEditReceipt ?
                                 <button

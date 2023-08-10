@@ -55,13 +55,17 @@
 body {
   background: #ffffff;
   color: #000000;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-size: 15px;
   line-height: 1.65;
   word-break: break-word;
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
+}
+
+button {
+  font-family: 'Source Sans Pro', sans-serif !important;
 }
 
 img {

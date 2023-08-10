@@ -263,7 +263,7 @@ export const UploadReceipt = (props: any) => {
                                                 <td> {item.companyName} </td>
                                                 <td> {Utility.formatDate(item.uploadDate, 'MM-DD-YYYY')}</td>
                                                 <td> {item.used} </td>
-                                                <td> {item.status} </td>
+                                                <td> <label className={`bg-[${Utility.uploadReceiptStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
                                                         id="holiday_delete_btn"

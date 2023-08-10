@@ -24,7 +24,7 @@ export const ReimbursementList = (props: any) => {
     const tableHeaders = [
         'Employee Name',
         'Reimbursement Type',
-        'Approved Budget',
+        // 'Approved Budget',
         'Total Amount',
         'Date Filed',
         'Status',
@@ -394,47 +394,56 @@ export const ReimbursementList = (props: any) => {
     const updateReimbursement = () => {
         if (reimbursementView) {
             const valuesObj: any = { ...reimbursementParentValues }
-            let payload: any = {
-                "approvedBudget": valuesObj.approvedBudget,
-                "total": valuesObj.total,
-                "purpose": valuesObj.purpose,
-                "remark": valuesObj.remark,
-                "typeId": valuesObj.typeId,
-                "parentId": valuesObj.parentId,
-            }
-            RequestAPI.putRequest(
-                Api.updateReimbursement,
-                "",
-                payload,
-                {},
-                async (res) => {
-                    const { status, body = { data: {}, error: {} } } = res;
-                    if (status === 200 || status === 201) {
-                        if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+            if (valuesObj.total > 0 && valuesObj.total != "") {
+                let payload: any = {
+                    "approvedBudget": valuesObj.approvedBudget,
+                    "total": valuesObj.total,
+                    "purpose": valuesObj.purpose,
+                    "remark": valuesObj.remark,
+                    "typeId": valuesObj.typeId,
+                    "parentId": valuesObj.parentId,
+                }
+                RequestAPI.putRequest(
+                    Api.updateReimbursement,
+                    "",
+                    payload,
+                    {},
+                    async (res) => {
+                        const { status, body = { data: {}, error: {} } } = res;
+                        if (status === 200 || status === 201) {
+                            if (body.error && body.error.message) {
+                                ErrorSwal.fire(
+                                    'Error!',
+                                    (body.error && body.error.message) || "",
+                                    'error'
+                                )
+                            } else {
+                                ErrorSwal.fire(
+                                    'Success!',
+                                    (body.data) || "",
+                                    'success'
+                                )
+                                getReimbursements(0)
+                                setIsEditReimbursement(false)
+                                setViewReimbursementModal(false)
+                            }
                         } else {
                             ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
+                                'Error!',
+                                'Something Error.',
+                                'error'
                             )
-                            getReimbursements(0)
-                            setIsEditReimbursement(false)
-                            setViewReimbursementModal(false)
                         }
-                    } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
                     }
-                }
-            );
+                );
+            }else{
+                ErrorSwal.fire(
+                    'Error!',
+                    'Total amount should not be 0 or blank.',
+                    'error'
+                )
+            }
+
         }
 
     }
@@ -628,7 +637,7 @@ export const ReimbursementList = (props: any) => {
                                                 </td>
                                                 <td> {`${item.firstName} ${item.lastName}`} </td>
                                                 <td> {item.typeName} </td>
-                                                <td> {item.approvedBudget} </td>
+                                                {/* <td> {item.approvedBudget} </td> */}
                                                 <td> {Utility.formatToCurrency(item.total)} </td>
                                                 <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                                 <td> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
@@ -854,7 +863,7 @@ export const ReimbursementList = (props: any) => {
                                     className={`form-select`}
                                     name="typeId"
                                     id="typeId"
-                                    disabled={!isEditReimbursement}
+                                    disabled={true}
                                     value={reimbursementParentValues && reimbursementParentValues.typeId}
                                     onChange={(e) => {
                                         updateParentData('typeId', e.target.value)
@@ -892,7 +901,7 @@ export const ReimbursementList = (props: any) => {
                                     name="purpose"
                                     id="purpose"
                                     className="form-control p-2"
-                                    disabled={!isEditReimbursement}
+                                    disabled={true}
                                     value={reimbursementParentValues && reimbursementParentValues.purpose}
                                     style={{ minHeight: 100 }}
                                     onChange={(e) => {

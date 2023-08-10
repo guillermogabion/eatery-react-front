@@ -26,6 +26,7 @@ import { auto } from "@popperjs/core"
 import { BsFillCheckCircleFill, BsFillCloudUploadFill, BsFillXCircleFill, BsPlus } from "react-icons/bs";
 import FileUploadService from "../../services/FileUploadService";
 import { update, values } from "lodash";
+import { FaRegTrashAlt, FaTimesCircle } from "react-icons/fa";
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -268,20 +269,22 @@ export const Reimbursement = (props: any) => {
 
     const newItem = () => {
         const valuesObj: any = [...reimbursementValues]
-        valuesObj.push({
-            "receiptId": "",
-            "amount": "",
-            "companyName": "",
-            "transactionDate": "",
-            "tin": "",
-            "invoice": "",
-            "receipt": true,
-            "filePath": "",
-            "fileName": "",
-            "fileContentType": "",
-            "isDisplayData": false
-        })
-        setReimbursementValues([...valuesObj])
+        if (valuesObj.length < 5) {
+            valuesObj.push({
+                "receiptId": "",
+                "amount": "",
+                "companyName": "",
+                "transactionDate": "",
+                "tin": "",
+                "invoice": "",
+                "receipt": true,
+                "filePath": "",
+                "fileName": "",
+                "fileContentType": "",
+                "isDisplayData": false
+            })
+            setReimbursementValues([...valuesObj])
+        }
     }
 
     const updateData = (index: any, key: any, value: any) => {
@@ -391,7 +394,13 @@ export const Reimbursement = (props: any) => {
         })
     }
 
-
+    const deleteItem = (index: any) => {
+        const valuesObj: any = [...reimbursementValues]
+        if (valuesObj.length > 1) {
+            valuesObj.splice(index, 1)
+            setReimbursementValues([...valuesObj])
+        }
+    }
 
     return (
         <ContainerWrapper contents={<>
@@ -409,8 +418,29 @@ export const Reimbursement = (props: any) => {
                         className="flex items-center"
                         onClick={() => {
                             setCreateReimbursementModal(true)
+                            setReimbursementValues([{
+                                "receiptId": "",
+                                "amount": "",
+                                "companyName": "",
+                                "transactionDate": "",
+                                "tin": "",
+                                "invoice": "",
+                                "receipt": true,
+                                "filePath": "",
+                                "fileName": "",
+                                "fileContentType": "",
+                                "isDisplayData": false
+                            }])
+                            setReimbursementParentValues({
+                                "approvedBudget": "",
+                                "total": "",
+                                "purpose": "",
+                                "remark": "",
+                                "typeId": "",
+                                "transactionDate": ""
+                            })
                         }}>
-                            <BsPlus size={27} color={"#fff"} />
+                        <BsPlus size={27} color={"#fff"} />
                         Create Reimbursement
                     </Button>
                 </div>
@@ -582,9 +612,11 @@ export const Reimbursement = (props: any) => {
                                         reimbursementValues &&
                                         reimbursementValues.length > 0 &&
                                         reimbursementValues.map((data: any, index: any) => {
-                                            console.log(data)
                                             return (<>
-                                                <div className="rounded-md  bg-[#F2F2F2] p-3">
+                                                <div className="rounded-md relative bg-[#F2F2F2] p-3">
+                                                    <FaTimesCircle size={15} color="#FF3838" onClick={() => {
+                                                        deleteItem(index)
+                                                    }} className="absolute top-[25px] right-[25px] cursor-pointer" />
                                                     <div className="bg-white row p-3 m-0 ">
                                                         <div className="form-group col-md-3 mb-3" >
                                                             <label>With Receipt?</label>
@@ -788,7 +820,7 @@ export const Reimbursement = (props: any) => {
                                 </>
                                 :
                                 <>
-                                    <div className="form-group col-md-4 mb-3" >
+                                    <div className="form-group col-md-6 mb-3" >
                                         <label>Type of Reimbursement:</label>
                                         <select
                                             className={`form-select`}
@@ -812,7 +844,7 @@ export const Reimbursement = (props: any) => {
                                             }
                                         </select>
                                     </div>
-                                    <div className="form-group col-md-4 mb-3" >
+                                    <div className="form-group col-md-4 d-none mb-3" >
                                         <label>Approve Budget:</label>
                                         <input type="text"
                                             name="approvedBudget"
@@ -824,7 +856,7 @@ export const Reimbursement = (props: any) => {
                                             }}
                                         />
                                     </div>
-                                    <div className="form-group col-md-4 mb-3" >
+                                    <div className="form-group col-md-6 mb-3" >
                                         <label>Total Amount:</label>
                                         <input type="text"
                                             name="total"

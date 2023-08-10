@@ -20,7 +20,7 @@ export const ReimbursementList = (props: any) => {
     const tableHeaders = [
         'Employee Name',
         'Reimbursement Type',
-        'Approved Budget',
+        // 'Approved Budget',
         'Total Amount',
         'Date Filed',
         'Status',
@@ -415,7 +415,7 @@ export const ReimbursementList = (props: any) => {
                                             <tr>
                                                 <td> {`${item.firstName} ${item.lastName}`} </td>
                                                 <td> {item.typeName} </td>
-                                                <td> {item.approvedBudget} </td>
+                                                {/* <td> {item.approvedBudget} </td> */}
                                                 <td> {Utility.formatToCurrency(item.total)} </td>
                                                 <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                                 <td> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
@@ -458,9 +458,9 @@ export const ReimbursementList = (props: any) => {
                                                         <img id="" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
                                                     </label>
                                                     {
-                                                        item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" && (
+                                                        item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" && item.status != "REVIEWED" && (
                                                             <>
-                                                                <label
+                                                                {/* <label
                                                                     onClick={() => {
                                                                         approveReimbursement(item.id)
                                                                     }}>
@@ -471,7 +471,7 @@ export const ReimbursementList = (props: any) => {
                                                                         declineReimbursement(item.id)
                                                                     }}>
                                                                     <img id="" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-                                                                </label>
+                                                                </label> */}
                                                                 <label
                                                                     onClick={() => {
                                                                         cancelReimbursement(item.id)
@@ -574,7 +574,6 @@ export const ReimbursementList = (props: any) => {
                                 :
                                 null
                         }
-
                         {
                             reimbursementView && reimbursementView.approverFirstName ?
                                 <>
@@ -732,7 +731,7 @@ export const ReimbursementList = (props: any) => {
                             className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                             Close
                         </Button>
-                        {
+                        {/* {
                             reimbursementView && reimbursementView.status != "APPROVED" && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" && (
                                 <button
                                     onClick={() => {
@@ -747,21 +746,22 @@ export const ReimbursementList = (props: any) => {
                                 </button>
                             )
 
-                        }
+                        } */}
 
 
                         {
                             !isEditReimbursement && reimbursementView && reimbursementView.status != "APPROVED" && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
-                                <><button
-                                    onClick={() => approveReimbursement(reimbursementView.id)}
-                                    className="w-[150px] mr-2 rounded-md text-white bg-[#2EBF91]" style={{ borderColor: '#189FB5' }}>
-                                    Approve/Endorse
-                                </button>
+                                <>
+                                    {/* <button
+                                        onClick={() => approveReimbursement(reimbursementView.id)}
+                                        className="w-[150px] mr-2 rounded-md text-white bg-[#2EBF91]" style={{ borderColor: '#189FB5' }}>
+                                        Approve/Endorse
+                                    </button>
                                     <button
                                         onClick={() => declineReimbursement(reimbursementView.id)}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#FF3838]" style={{ borderColor: '#189FB5' }}>
                                         Decline
-                                    </button>
+                                    </button> */}
                                     <button
                                         onClick={() => cancelReimbursement(reimbursementView.id)}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
