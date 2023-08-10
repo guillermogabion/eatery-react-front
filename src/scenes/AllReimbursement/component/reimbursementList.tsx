@@ -9,6 +9,7 @@ import withReactContent from "sweetalert2-react-content"
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { FaTimes, FaTimesCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import EmployeeDropdown from "../../../components/EmployeeDropdown";
 const ErrorSwal = withReactContent(Swal)
 
 export const ReimbursementList = (props: any) => {
@@ -436,7 +437,7 @@ export const ReimbursementList = (props: any) => {
                         }
                     }
                 );
-            }else{
+            } else {
                 ErrorSwal.fire(
                     'Error!',
                     'Total amount should not be 0 or blank.',
@@ -476,31 +477,16 @@ export const ReimbursementList = (props: any) => {
                 <div className="w-100">
                     <div className="row m-0 p-0 d-flex col-md-12">
 
-                        {/* <div className="col-md-2 ">
-                            <label>Type of Reimbursement:</label>
-                            <select
-                                className={`form-select `}
-                                name="typeId"
-                                id="typeId"
-                                style={{ height: 42 }}
-                                value={reimbursementParentValues && reimbursementParentValues.typeId}
-                                onChange={(e) => {
-                                    updateParentData('typeId', e.target.value)
-                                }}>
-                                <option value="" disabled selected>
-                                    Select reimbursement type
-                                </option>
-                                {
-                                    reimbursementType &&
-                                    reimbursementType.length > 0 &&
-                                    reimbursementType.map((item: any, index: string) => {
-                                        return (<option key={`${index}_${item}`} value={item.id}>
-                                            {item.name}
-                                        </option>)
-                                    })
-                                }
-                            </select>
-                        </div> */}
+                        <div className="col-md-3 ">
+                            <label>Employee</label>
+                            <EmployeeDropdown
+                                id="reimbursement_employee_maindropdown"
+                                placeholder={"Employee"}
+                                singleChangeOption={singleChangeOption}
+                                name="userId"
+                                value={filterData && filterData['userId']}
+                            />
+                        </div>
                         <div className="col-md-2">
                             <label className="">Date From</label>
                             <input

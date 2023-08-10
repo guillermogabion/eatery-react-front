@@ -232,7 +232,7 @@ export const Reimbursement = (props: any) => {
 
     const getUploadedReceipts = (pageNo: any) => {
         RequestAPI.getRequest(
-            `${Api.getAllReceiptReimbursement}?size=1000&sort=id&sortDir=DESC`,
+            `${Api.getMyReceiptReimbursement}?size=1000&sort=id&sortDir=DESC`,
             "",
             {},
             {},

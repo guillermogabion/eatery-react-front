@@ -250,8 +250,28 @@ export const UploadReceipt = (props: any) => {
     return (
         <div>
             <div className="w-100 px-2 py-3">
-                {/* <div className="row m-0 p-0 d-flex col-md-12">
-
+                <div className="row m-0 p-0 d-flex col-md-12">
+                    <div className="col-md-2">
+                        <label className="">File Type</label>
+                        <div >
+                            <select
+                                className={`form-select `}
+                                name="fileType"
+                                id="fileType"
+                                style={{ height: 42 }}
+                                value={filterData["fileType"]}
+                                onChange={(e) => makeFilterData(e)}>
+                                <option value="Select" disabled selected>
+                                    Select file type
+                                </option>
+                                <option value="image/jpeg">JPEG</option>
+                                <option value="image/png">PNG</option>
+                                <option value="image/bmp">BMP</option>
+                                <option value="image/gif">GIF</option>
+                                <option value="application/pdf">PDF</option>
+                            </select>
+                        </div>
+                    </div>
                     <div className="col-md-2">
                         <label className="">Date From</label>
                         <input
@@ -296,15 +316,15 @@ export const UploadReceipt = (props: any) => {
                                 <option value="Select" disabled selected>
                                     Select Status
                                 </option>
-                                <option value="Pending">Pending</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Declined">Declined</option>
-                                <option value="Endorsed">Endorsed</option>
-                                <option value="Reviewed">Reviewed</option>
+                                <option value="success">Success</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="failed">Failed</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="uploaded">Uploaded</option>
                             </select>
                         </div>
                     </div>
-                </div> */}
+                </div>
                 <div className="flex justify-end">
                     <button
                         onClick={() => {

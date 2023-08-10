@@ -175,12 +175,93 @@ export const UploadReceipt = (props: any) => {
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
+    const onChangeCheckbox = (index: any, boolCheck: any) => {
+        const valuesObj: any = { ...reimbursementList }
+        if (valuesObj.content) {
+            let tempArray = [...valuesObj.content]
+            tempArray[index].isCheck = boolCheck
+            setReimbursementList({ ...valuesObj })
+        }
+    }
 
+    const extractData = () => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to extract data.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const valuesObj: any = { ...reimbursementList }
+                let payload: any = {}
+                if (valuesObj.content) {
+                    let tempArray = [...valuesObj.content]
+                    let ids: any = []
+                    tempArray.forEach((d: any, i: any) => {
+                        if (d.isCheck) {
+                            ids.push(d.id)
+                        }
+                    });
+                    payload = {
+                        "ids": ids
+                    }
+                }
+                RequestAPI.putRequest(Api.extractFailedReceipts, "", payload, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                'Error!',
+                                (body.error && body.error.message) || "",
+                                'error'
+                            )
+                        } else {
+                            ErrorSwal.fire(
+                                'Success!',
+                                (body.data) || (body.data.message),
+                                'success'
+                            )
+                            getUploadedReceipts(0)
+                        }
+                    } else {
+                        ErrorSwal.fire(
+                            'Error!',
+                            'Something Error.',
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    }
     return (
         <div>
             <div className="w-100 px-2 py-3">
-                {/* <div className="row m-0 p-0 d-flex col-md-12">
-
+            <div className="row m-0 p-0 d-flex col-md-12">
+                    <div className="col-md-2">
+                        <label className="">File Type</label>
+                        <div >
+                            <select
+                                className={`form-select `}
+                                name="fileType"
+                                id="fileType"
+                                style={{ height: 42 }}
+                                value={filterData["fileType"]}
+                                onChange={(e) => makeFilterData(e)}>
+                                <option value="Select" disabled selected>
+                                    Select file type
+                                </option>
+                                <option value="image/jpeg">JPEG</option>
+                                <option value="image/png">PNG</option>
+                                <option value="image/bmp">BMP</option>
+                                <option value="image/gif">GIF</option>
+                                <option value="application/pdf">PDF</option>
+                            </select>
+                        </div>
+                    </div>
                     <div className="col-md-2">
                         <label className="">Date From</label>
                         <input
@@ -225,19 +306,31 @@ export const UploadReceipt = (props: any) => {
                                 <option value="Select" disabled selected>
                                     Select Status
                                 </option>
-                                <option value="Pending">Pending</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Declined">Declined</option>
-                                <option value="Endorsed">Endorsed</option>
-                                <option value="Reviewed">Reviewed</option>
+                                <option value="success">Success</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="failed">Failed</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="uploaded">Uploaded</option>
                             </select>
                         </div>
                     </div>
-                </div> */}
+                </div>
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => {
+                            extractData()
+                        }}
+                        className=" px-3 py-2 rounded-md text-white bg-[#189FB5]">
+                        Extract Data
+                    </button>
+                </div>
                 <div>
                     <Table responsive>
                         <thead>
                             <tr>
+                                <th style={{ width: 10 }}>
+                                    Select
+                                </th>
                                 {
                                     tableHeaders &&
                                     tableHeaders.length &&
@@ -257,6 +350,17 @@ export const UploadReceipt = (props: any) => {
                                     reimbursementList.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
+                                                <td>
+                                                    <Form.Check
+                                                        id="payrollgenerate_ischeck_employeelistdata"
+                                                        type="checkbox"
+                                                        label=""
+                                                        checked={item.isCheck}
+                                                        onChange={(e) => {
+                                                            onChangeCheckbox(index, e.target.checked)
+                                                        }}
+                                                    />
+                                                </td>
                                                 <td> {item.id} </td>
                                                 <td> {item.fileName} </td>
                                                 <td> {item.fileContentType} </td>
