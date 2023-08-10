@@ -627,16 +627,9 @@ export const ReimbursementList = (props: any) => {
 
                             </div>
                             <div className="form-group col-md-4 mb-3" >
-                                <label>Status:</label>
-                                <input type="text"
-                                    name="companyName"
-                                    id="companyName"
-                                    className="form-control"
-                                    disabled={true}
-                                    value={reimbursementParentValues && reimbursementParentValues.status}
-                                    onChange={(e) => {
-                                    }}
-                                />
+                                <label>Status:</label> <br />
+                                <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
+                                
                             </div>
                             <div className="form-group col-md-6 mb-3" >
                                 <label>Type of Reimbursement:</label>
