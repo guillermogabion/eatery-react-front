@@ -19,7 +19,7 @@ export const ReimbursementList = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [reimbursementList, setReimbursementList] = useState<any>([]);
     const tableHeaders = [
-        'Employee Name',
+        'ID',
         'Reimbursement Type',
         // 'Approved Budget',
         'Total Amount',
@@ -310,6 +310,9 @@ export const ReimbursementList = (props: any) => {
         <div>
             <div className="w-100 px-2 py-3">
                 <div className="w-100">
+                    <div className="pl-3 text-[#009FB5] text-lg ">
+                        Search By:
+                    </div>
                     <div className="row m-0 p-0 d-flex col-md-12">
 
                         {/* <div className="col-md-2 ">
@@ -414,7 +417,7 @@ export const ReimbursementList = (props: any) => {
                                     reimbursementList.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
-                                                <td> {`${item.firstName} ${item.lastName}`} </td>
+                                                <td> {item.id} </td>
                                                 <td> {item.typeName} </td>
                                                 {/* <td> {item.approvedBudget} </td> */}
                                                 <td> {Utility.formatToCurrency(item.total)} </td>

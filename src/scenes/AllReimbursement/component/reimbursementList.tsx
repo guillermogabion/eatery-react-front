@@ -475,8 +475,10 @@ export const ReimbursementList = (props: any) => {
         <div>
             <div className="w-100 px-2 py-3">
                 <div className="w-100">
+                    <div className="pl-3 text-[#009FB5] text-lg ">
+                        Search By:
+                    </div>
                     <div className="row m-0 p-0 d-flex col-md-12">
-
                         <div className="col-md-3 ">
                             <label>Employee</label>
                             <EmployeeDropdown

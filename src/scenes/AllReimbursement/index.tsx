@@ -424,7 +424,7 @@ export const AllReimbursement = (props: any) => {
                         }}
                         className="mb-3"
                     >
-                        <Tab eventKey="reimbursement" title="Reimbursement Dashboard">
+                        <Tab eventKey="reimbursement" title="Reimbursements">
                             {
                                 key == 'reimbursement' ?
                                     <ReimbursementList />

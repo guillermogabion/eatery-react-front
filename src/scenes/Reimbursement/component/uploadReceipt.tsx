@@ -181,8 +181,25 @@ export const UploadReceipt = (props: any) => {
             let tempArray = [...valuesObj.content]
             tempArray[index].isCheck = boolCheck
             setReimbursementList({ ...valuesObj })
+            checkIfHasSelected()
         }
     }
+
+    const [hasReceiptSelected, setHasReceiptSelected] = useState(false);
+    const checkIfHasSelected = () => {
+        const valuesObj: any = { ...reimbursementList }
+        if (valuesObj.content) {
+            let tempArray = [...valuesObj.content]
+            let hasSelected = false
+            tempArray.forEach((data: any, index: any) => {
+                if (data.isCheck) {
+                    hasSelected = true
+                }
+            });
+            setHasReceiptSelected(hasSelected)
+        }
+    }
+
 
     const extractData = () => {
         ErrorSwal.fire({
@@ -240,7 +257,10 @@ export const UploadReceipt = (props: any) => {
     return (
         <div>
             <div className="w-100 px-2 py-3">
-            <div className="row m-0 p-0 d-flex col-md-12">
+                <div className="pl-3 text-[#009FB5] text-lg ">
+                    Search By:
+                </div>
+                <div className="row m-0 p-0 d-flex col-md-12">
                     <div className="col-md-2">
                         <label className="">File Type</label>
                         <div >
@@ -316,13 +336,14 @@ export const UploadReceipt = (props: any) => {
                     </div>
                 </div>
                 <div className="flex justify-end">
-                    <button
+                    <Button
+                        disabled={!hasReceiptSelected}
                         onClick={() => {
                             extractData()
                         }}
-                        className=" px-3 py-2 rounded-md text-white bg-[#189FB5]">
+                        className="px-3 py-2 rounded-md text-white bg-[#189FB5] text-normal" >
                         Extract Data
-                    </button>
+                    </Button>
                 </div>
                 <div>
                     <Table responsive>
