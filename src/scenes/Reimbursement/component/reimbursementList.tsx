@@ -64,17 +64,17 @@ export const ReimbursementList = (props: any) => {
 
     const getReimbursements = (pageNo: any) => {
         let queryString = ""
-            let filterDataTemp = { ...filterData }
+        let filterDataTemp = { ...filterData }
 
-            if (filterDataTemp) {
-                Object.keys(filterDataTemp).forEach((d: any) => {
-                    if (filterDataTemp[d]) {
-                        queryString += `&${d}=${filterDataTemp[d]}`
-                    } else {
-                        queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-                    }
-                })
-            }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
         RequestAPI.getRequest(
             `${Api.getMyReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=desc`,
             "",
@@ -418,7 +418,7 @@ export const ReimbursementList = (props: any) => {
                                                 <td> {item.approvedBudget} </td>
                                                 <td> {Utility.formatToCurrency(item.total)} </td>
                                                 <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                <td> {item.status} </td>
+                                                <td> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
                                                         onClick={() => {

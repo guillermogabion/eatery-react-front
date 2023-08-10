@@ -254,4 +254,31 @@ export const Utility = {
 
     return yearRange;
   },
+
+  reimbursementStatus(stats: any) {
+    switch (stats) {
+      case "PENDING":
+        return "#189FB5";
+      case "APPROVED":
+        return "#3BB273";
+      case "DECLINED":
+        return "#FF3838";
+      case "CANCELLED":
+        return "#838383";
+      default:
+        return "#189FB5"; // Default color if no match is found
+    }
+  },
+  uploadReceiptStatus(stats: any) {
+    switch (stats) {
+      case "Failed":
+        return "#E15554";
+      case "Success":
+        return "#3BB273";
+      case "Uploaded":
+        return "#189FB5";
+      default:
+        return "#189FB5"; // Default color if no match is found
+    }
+  },
 }

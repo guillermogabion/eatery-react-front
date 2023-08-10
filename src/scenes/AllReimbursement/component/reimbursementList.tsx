@@ -7,7 +7,7 @@ import { action_approve, action_cancel, action_decline, action_edit, eye } from 
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { FaTimesCircle } from "react-icons/fa";
+import { FaTimes, FaTimesCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 const ErrorSwal = withReactContent(Swal)
 
@@ -18,6 +18,8 @@ export const ReimbursementList = (props: any) => {
     const [isEditReimbursement, setIsEditReimbursement] = useState<any>(false);
     const [reimbursementType, setReimbursementType] = React.useState([])
     const [filterData, setFilterData] = React.useState([]);
+    const [isBulkAction, setIsBulkAction] = useState<any>(false);
+    const [isBulkPayload, setIsBulkPayload] = useState<any>(false);
     const [reimbursementList, setReimbursementList] = useState<any>([]);
     const tableHeaders = [
         'Employee Name',
@@ -92,11 +94,65 @@ export const ReimbursementList = (props: any) => {
                 if (status === 200 && body && body.data) {
                     if (body.error && body.error.message) {
                     } else {
-                        setReimbursementList(body.data)
+                        let reimTemp: any = { ...body.data }
+                        if (reimTemp.content) {
+                            let tempArray = [...reimTemp.content]
+                            tempArray.forEach((d: any, i: any) => {
+                                d.isCheck = false
+                            });
+                            setReimbursementList(reimTemp)
+                        }
+
                     }
                 }
             }
         )
+    }
+
+    useEffect(() => {
+        if (reimbursementList) {
+            const valuesObj: any = { ...reimbursementList }
+            if (valuesObj.content) {
+                let tempArray = [...valuesObj.content]
+                let hasCheck: any = false
+                let count: any = 0
+                let ids: any = []
+                tempArray.forEach((d: any, i: any) => {
+                    if (d.isCheck) {
+                        hasCheck = true
+                        ids.push(d.id)
+                        count = count + 1
+                    }
+                });
+                setIsBulkAction(hasCheck)
+                setIsBulkPayload({
+                    "ids": ids,
+                    "count": count
+                })
+            }
+        }
+    }, [reimbursementList])
+
+
+    const onChangeCheckbox = (index: any, boolCheck: any) => {
+        const valuesObj: any = { ...reimbursementList }
+        if (valuesObj.content) {
+            let tempArray = [...valuesObj.content]
+            tempArray[index].isCheck = boolCheck
+            setReimbursementList({ ...valuesObj })
+        }
+
+    }
+
+    const unSelectAll = () => {
+        let reimTemp: any = { ...reimbursementList }
+        if (reimTemp.content) {
+            let tempArray = [...reimTemp.content]
+            tempArray.forEach((d: any, i: any) => {
+                d.isCheck = false
+            });
+            setReimbursementList(reimTemp)
+        }
     }
 
     const getReimbursementType = () => {
@@ -147,6 +203,96 @@ export const ReimbursementList = (props: any) => {
                             ErrorSwal.fire(
                                 'Success!',
                                 (body.data) || "",
+                                'success'
+                            )
+                            getReimbursements(0)
+                        }
+                    } else {
+                        ErrorSwal.fire(
+                            'Error!',
+                            'Something Error.',
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    }
+
+    const bulkApproveReimbursement = () => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to bulk approve this reimbursement.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                let payload: any = {
+                    "ids": isBulkPayload && isBulkPayload.ids
+                }
+
+                RequestAPI.postRequest(Api.reimbursementBulkApprove, "", payload, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                'Error!',
+                                (body.error && body.error.message) || "",
+                                'error'
+                            )
+                        } else {
+                            ErrorSwal.fire(
+                                'Success!',
+                                (body.data) || (body.data.message),
+                                'success'
+                            )
+                            getReimbursements(0)
+                        }
+                    } else {
+                        ErrorSwal.fire(
+                            'Error!',
+                            'Something Error.',
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    }
+
+    const bulkDeclineReimbursement = () => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to bulk decline this reimbursement.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                let payload: any = {
+                    "ids": isBulkPayload && isBulkPayload.ids
+                }
+
+                RequestAPI.postRequest(Api.reimbursementBulkDecline, "", payload, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                'Error!',
+                                (body.error && body.error.message) || "",
+                                'error'
+                            )
+                        } else {
+                            ErrorSwal.fire(
+                                'Success!',
+                                (body.data) || (body.data.message),
                                 'success'
                             )
                             getReimbursements(0)
@@ -312,6 +458,9 @@ export const ReimbursementList = (props: any) => {
         setFilterData(filterObj)
     }
 
+
+
+    const [isSelectAll, setIsSelectAll] = useState<any>(false)
     return (
         <div>
             <div className="w-100 px-2 py-3">
@@ -397,10 +546,56 @@ export const ReimbursementList = (props: any) => {
                         </div>
                     </div>
                 </div>
+                {
+                    isBulkAction ?
+                        <div className="w-100 py-1 mt-3 mb-2 px-2 rounded-md flex items-center justify-between bg-[#F5F5F5]">
+                            <div className="font-bold text-[#009FB5]">
+                                {isBulkPayload && isBulkPayload.count} Item/s Selected
+                            </div>
+                            <div className="flex">
+                                <button
+                                    onClick={() => {
+                                        bulkApproveReimbursement()
+                                    }}
+                                    className="px-3 py-2 mr-2 rounded-md text-white bg-[#3BB273] flex items-center" style={{ borderColor: '#189FB5' }}>
+                                    <BsFillCheckCircleFill size={15} color="#fff" className="mr-1" /> Approve All Selected({isBulkPayload && isBulkPayload.count})
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        bulkDeclineReimbursement()
+                                    }}
+                                    className="px-3 py-2 rounded-md text-white bg-[#E15554] flex items-center" style={{ borderColor: '#189FB5' }}>
+                                    <FaTimesCircle size={15} color="#fff" className="mr-1" /> Decline All Selected({isBulkPayload && isBulkPayload.count})
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        unSelectAll()
+                                    }}
+                                    className="px-3 py-2 rounded-md">
+                                    <FaTimes size={30} color="#323232" />
+                                </button>
+                            </div>
+                        </div>
+                        :
+                        null
+                }
                 <div>
                     <Table responsive>
                         <thead>
                             <tr>
+                                <th style={{ width: 10 }}>
+                                    Select
+                                    {/* <Form.Check
+                                        type="checkbox"
+                                        id="Select All"
+                                        label="Select All"
+                                        checked={isSelectAll}
+                                        onChange={(e) => {
+                                            setIsSelectAll(e.target.checked)
+                                            selectAllEmployees(e.target.checked)
+                                        }}
+                                    /> */}
+                                </th>
                                 {
                                     tableHeaders &&
                                     tableHeaders.length &&
@@ -420,12 +615,23 @@ export const ReimbursementList = (props: any) => {
                                     reimbursementList.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
+                                                <td>
+                                                    <Form.Check
+                                                        id="payrollgenerate_ischeck_employeelistdata"
+                                                        type="checkbox"
+                                                        label=""
+                                                        checked={item.isCheck}
+                                                        onChange={(e) => {
+                                                            onChangeCheckbox(index, e.target.checked)
+                                                        }}
+                                                    />
+                                                </td>
                                                 <td> {`${item.firstName} ${item.lastName}`} </td>
                                                 <td> {item.typeName} </td>
                                                 <td> {item.approvedBudget} </td>
                                                 <td> {Utility.formatToCurrency(item.total)} </td>
                                                 <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                <td> {item.status} </td>
+                                                <td> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
                                                         onClick={() => {

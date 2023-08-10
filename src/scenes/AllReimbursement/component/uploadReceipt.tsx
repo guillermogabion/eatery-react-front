@@ -58,7 +58,15 @@ export const UploadReceipt = (props: any) => {
                 if (status === 200 && body && body.data) {
                     if (body.error && body.error.message) {
                     } else {
-                        setReimbursementList(body.data)
+                        let reimTemp: any = { ...body.data }
+                        if (reimTemp.content) {
+                            let tempArray = [...reimTemp.content]
+                            tempArray.forEach((d: any, i: any) => {
+                                d.isCheck = false
+                            });
+                            setReimbursementList(reimTemp)
+                        }
+                        // setReimbursementList(body.data)
                     }
                 }
             }
@@ -176,6 +184,69 @@ export const UploadReceipt = (props: any) => {
         setFilterData(filterObj)
     }
 
+    const onChangeCheckbox = (index: any, boolCheck: any) => {
+        const valuesObj: any = { ...reimbursementList }
+        if (valuesObj.content) {
+            let tempArray = [...valuesObj.content]
+            tempArray[index].isCheck = boolCheck
+            setReimbursementList({ ...valuesObj })
+        }
+    }
+
+    const extractData = () => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to extract data.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const valuesObj: any = { ...reimbursementList }
+                let payload: any = {}
+                if (valuesObj.content) {
+                    let tempArray = [...valuesObj.content]
+                    let ids: any = []
+                    tempArray.forEach((d: any, i: any) => {
+                        if (d.isCheck) {
+                            ids.push(d.id)
+                        }
+                    });
+                    payload = {
+                        "ids": ids
+                    }
+                }
+                RequestAPI.putRequest(Api.extractFailedReceipts, "", payload, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire(
+                                'Error!',
+                                (body.error && body.error.message) || "",
+                                'error'
+                            )
+                        } else {
+                            ErrorSwal.fire(
+                                'Success!',
+                                (body.data) || (body.data.message),
+                                'success'
+                            )
+                            getUploadedReceipts(0)
+                        }
+                    } else {
+                        ErrorSwal.fire(
+                            'Error!',
+                            'Something Error.',
+                            'error'
+                        )
+                    }
+                })
+            }
+        })
+    }
+
     return (
         <div>
             <div className="w-100 px-2 py-3">
@@ -234,10 +305,22 @@ export const UploadReceipt = (props: any) => {
                         </div>
                     </div>
                 </div> */}
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => {
+                            extractData()
+                        }}
+                        className=" px-3 py-2 rounded-md text-white bg-[#189FB5]">
+                        Extract Data
+                    </button>
+                </div>
                 <div>
                     <Table responsive>
                         <thead>
                             <tr>
+                                <th style={{ width: 10 }}>
+                                    Select
+                                </th>
                                 {
                                     tableHeaders &&
                                     tableHeaders.length &&
@@ -257,13 +340,24 @@ export const UploadReceipt = (props: any) => {
                                     reimbursementList.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
+                                                <td>
+                                                    <Form.Check
+                                                        id="payrollgenerate_ischeck_employeelistdata"
+                                                        type="checkbox"
+                                                        label=""
+                                                        checked={item.isCheck}
+                                                        onChange={(e) => {
+                                                            onChangeCheckbox(index, e.target.checked)
+                                                        }}
+                                                    />
+                                                </td>
                                                 <td> {item.id} </td>
                                                 <td> {item.fileName} </td>
                                                 <td> {item.fileContentType} </td>
                                                 <td> {item.companyName} </td>
                                                 <td> {Utility.formatDate(item.uploadDate, 'MM-DD-YYYY')}</td>
                                                 <td> {item.used} </td>
-                                                <td> {item.status} </td>
+                                                <td> <label className={`bg-[${Utility.uploadReceiptStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
                                                         id="holiday_delete_btn"

@@ -396,7 +396,7 @@ export const AllReimbursement = (props: any) => {
     return (
         <ContainerWrapper contents={<>
             <div className="px-5 mt-5">
-                <div className="mb-3 flex">
+                {/* <div className="mb-3 flex">
                     <Button
                         className="mr-3 flex items-center"
                         onClick={() => {
@@ -413,7 +413,7 @@ export const AllReimbursement = (props: any) => {
                             <BsPlus size={27} color={"#fff"} />
                         Create Reimbursement
                     </Button>
-                </div>
+                </div> */}
                 <ContentWrapper name="Reimbursement Dashboard" hasMenu={false} content={<>
 
                     <Tabs

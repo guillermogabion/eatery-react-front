@@ -305,6 +305,9 @@ const Api: any = {
   cancelReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/cancel",
   updateReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/update",
   updateReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/updateReceipt",
+  reimbursementBulkApprove : process.env.REACT_APP_API_URL + "request/reimbursement/approve/list",
+  reimbursementBulkDecline : process.env.REACT_APP_API_URL + "request/reimbursement/decline/list",
+  extractFailedReceipts : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/extractFailedReceipts",
 
 
   getFile : process.env.REACT_APP_API_URL + "file/getUrl",
