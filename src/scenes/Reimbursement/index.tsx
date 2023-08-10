@@ -348,7 +348,7 @@ export const Reimbursement = (props: any) => {
                         'error'
                     )
                 } else {
-
+                    let message: any = body.message
                     const valuesObj: any = [...reimbursementValues]
                     let payload = {
                         "parentId": body.parentId,
@@ -367,7 +367,7 @@ export const Reimbursement = (props: any) => {
                             } else {
                                 ErrorSwal.fire(
                                     'Success!',
-                                    (body.data) || (body.data.message),
+                                    message,
                                     'success'
                                 ).then((e) => {
                                     if (e.isConfirmed) {
@@ -399,6 +399,91 @@ export const Reimbursement = (props: any) => {
         if (valuesObj.length > 1) {
             valuesObj.splice(index, 1)
             setReimbursementValues([...valuesObj])
+        }
+    }
+
+    const validateBreakdown = () => {
+        const valuesObj: any = [...reimbursementValues]
+        console.log(valuesObj)
+        let hasBlank: any = false
+        let totalAmount: any = 0
+        valuesObj.forEach((data: any, index: any) => {
+            totalAmount = totalAmount + parseFloat(data.amount)
+            if (data.receipt) {
+                if (data.invoice == "" || data.invoice == null) {
+                    hasBlank = true
+                }
+                if (data.companyName == "" || data.companyName == null) {
+                    hasBlank = true
+                }
+                if (data.tin == "" || data.tin == null) {
+                    hasBlank = true
+                }
+                if (data.transactionDate == "" || data.transactionDate == null) {
+                    hasBlank = true
+                }
+                if (data.amount == "" || data.amount == null) {
+                    hasBlank = true
+                }
+            } else {
+                if (data.transactionDate == "" || data.transactionDate == null) {
+                    hasBlank = true
+                }
+                if (data.companyName == "" || data.companyName == null) {
+                    hasBlank = true
+                }
+                if (data.amount == "" || data.amount == null) {
+                    hasBlank = true
+                }
+            }
+        });
+        if (hasBlank) {
+            ErrorSwal.fire(
+                'Warning',
+                'Please fill all fields.',
+                'warning'
+            )
+        } else {
+            const valuesObj: any = { ...reimbursementParentValues }
+            valuesObj.total = totalAmount
+            console.log(valuesObj)
+            setReimbursementParentValues({ ...valuesObj })
+            setCreateStep(2)
+        }
+    }
+
+    const validateParent = () => {
+        const valuesObj: any = { ...reimbursementParentValues }
+        let hasBlank: any = false
+        let invalidAmount: any = false
+        if (valuesObj.typeId == "" || valuesObj.typeId == null) {
+            hasBlank = true
+        }
+        if (valuesObj.total == "" || valuesObj.total == null) {
+            hasBlank = true
+        }
+        if (valuesObj.purpose == "" || valuesObj.purpose == null) {
+            hasBlank = true
+        }
+
+        if (valuesObj.total <= 0) {
+            invalidAmount = true
+        }
+
+        if (hasBlank) {
+            ErrorSwal.fire(
+                'Warning',
+                'Please fill all fields.',
+                'warning'
+            )
+        } else if (invalidAmount) {
+            ErrorSwal.fire(
+                'Warning',
+                'Total amount should be 0 or less.',
+                'warning'
+            )
+        } else {
+            createReimbursement()
         }
     }
 
@@ -586,12 +671,17 @@ export const Reimbursement = (props: any) => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="row w-100 px-3 m-0">
-                        <div className="w-100 m-0 p-0  py-3  flex justify-center mb-5 cursor-pointer rounded-md" style={{ border: 1, borderStyle: 'solid', borderColor: "#DADADA" }}>
-                            <div className="rounded-md  flex flex-column justify-center items-center mr-[100px]" >
+                        <div className="w-100 m-0 p-0  row py-3  flex justify-center mb-5 cursor-pointer bg-[#FDFDFD] rounded-md" style={{ border: 1, borderStyle: 'solid', borderColor: "#DADADA" }}>
+                            <div className="rounded-md col-md-4 flex flex-column justify-end items-center " >
                                 <img src={add_reimbursement} width={30} />
                                 <label className="font-bold mt-3 text-[#189FB5]">Reimbursement Breakdown</label>
                             </div>
-                            <div className="rounded-md  flex flex-column justify-center items-center" >
+                            <div className="col-md-2  flex items-center">
+                                <div className="w-100 h-[2px] bg-[#D9D9D9]">
+
+                                </div>
+                            </div>
+                            <div className="rounded-md   col-md-4 flex flex-column justify-start items-center" >
                                 <img src={createStep == 1 ? inactive_review : active_review} width={30} />
                                 <label className="font-bold mt-3  text-[#189FB5]">Review & Submit</label>
                             </div>
@@ -654,7 +744,7 @@ export const Reimbursement = (props: any) => {
                                                                     <div className="form-group col-md-5 mb-3" >
                                                                         <label>Choose Receipt:</label>
                                                                         <select
-                                                                            className={`form-select`}
+                                                                            className={`form-select ${data.receiptId == "" ? "border-1 border-red-500" : ""}`}
                                                                             name="receiptId"
                                                                             id="receiptId"
                                                                             value={data.receiptId}
@@ -674,20 +764,24 @@ export const Reimbursement = (props: any) => {
                                                                                 ))}
                                                                         </select>
                                                                     </div>
-                                                                    <div className="col-md-4 flex items-center mt-2">
-                                                                        <div className="flex items-center ">
-                                                                            <Form.Check // prettier-ignore
-                                                                                type="switch"
-                                                                                id={"custom-switch" + index}
-                                                                                checked={data.isDisplayData}
-                                                                                onChange={(e) => {
-                                                                                    updateData(index, 'isDisplayData', e.target.checked)
-                                                                                }}
-                                                                                style={{ fontSize: 18 }}
-                                                                            />
-                                                                            <label className="mb-1" style={{ fontSize: 12 }} htmlFor={"custom-switch" + index}>Display Extracted Data</label>
-                                                                        </div>
-                                                                    </div>
+                                                                    {
+                                                                        data.receiptId != "" && (
+                                                                            <div className="col-md-4 flex items-center mt-2">
+                                                                                <div className="flex items-center ">
+                                                                                    <Form.Check // prettier-ignore
+                                                                                        type="switch"
+                                                                                        id={"custom-switch" + index}
+                                                                                        checked={data.isDisplayData}
+                                                                                        onChange={(e) => {
+                                                                                            updateData(index, 'isDisplayData', e.target.checked)
+                                                                                        }}
+                                                                                        style={{ fontSize: 18 }}
+                                                                                    />
+                                                                                    <label className="mb-1" style={{ fontSize: 12 }} htmlFor={"custom-switch" + index}>Display Extracted Data</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        )
+                                                                    }
                                                                     {
                                                                         data.isDisplayData ?
                                                                             <>
@@ -697,7 +791,7 @@ export const Reimbursement = (props: any) => {
                                                                                         name="invoice"
                                                                                         id="invoice"
                                                                                         value={data.invoice}
-                                                                                        className="form-control"
+                                                                                        className={`${data.invoice == "" || data.invoice == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
                                                                                             updateData(index, 'invoice', e.target.value)
                                                                                         }}
@@ -709,7 +803,8 @@ export const Reimbursement = (props: any) => {
                                                                                         name="companyName"
                                                                                         id="companyName"
                                                                                         value={data.companyName}
-                                                                                        className="form-control"
+                                                                                        className={`${data.companyName === "" || data.companyName == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"
+                                                                                            }`}
                                                                                         onChange={(e) => {
                                                                                             updateData(index, 'companyName', e.target.value)
                                                                                         }}
@@ -721,7 +816,7 @@ export const Reimbursement = (props: any) => {
                                                                                         name="tin"
                                                                                         id="tin"
                                                                                         value={data.tin}
-                                                                                        className="form-control"
+                                                                                        className={`${data.tin == "" || data.tin == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
                                                                                             updateData(index, 'tin', e.target.value)
                                                                                         }}
@@ -733,7 +828,7 @@ export const Reimbursement = (props: any) => {
                                                                                         name="transactionDate"
                                                                                         id="transactionDate"
                                                                                         value={data.transactionDate}
-                                                                                        className="form-control"
+                                                                                        className={`${data.transactionDate == "" || data.transactionDate == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
                                                                                             updateData(index, 'transactionDate', e.target.value)
                                                                                         }}
@@ -745,7 +840,7 @@ export const Reimbursement = (props: any) => {
                                                                                         name="amount"
                                                                                         id="amount"
                                                                                         value={data.amount}
-                                                                                        className="form-control"
+                                                                                        className={`${data.amount == "" || data.amount == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
                                                                                             updateData(index, 'amount', e.target.value)
                                                                                         }}
@@ -763,7 +858,7 @@ export const Reimbursement = (props: any) => {
                                                                         <input type="date"
                                                                             name="transactionDate"
                                                                             id="transactionDate"
-                                                                            className="form-control"
+                                                                            className={`${data.transactionDate == "" || data.transactionDate == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                             value={data.transactionDate}
                                                                             onChange={(e) => {
                                                                                 updateData(index, 'transactionDate', e.target.value)
@@ -775,7 +870,7 @@ export const Reimbursement = (props: any) => {
                                                                         <input type="text"
                                                                             name="companyName"
                                                                             id="companyName"
-                                                                            className="form-control"
+                                                                            className={`${data.companyName == "" || data.companyName == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                             value={data.companyName}
                                                                             onChange={(e) => {
                                                                                 updateData(index, 'companyName', e.target.value)
@@ -788,7 +883,7 @@ export const Reimbursement = (props: any) => {
                                                                             name="amount"
                                                                             id="amount"
                                                                             value={data.amount}
-                                                                            className="form-control"
+                                                                            className={`${data.amount == "" || data.amount == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                             onChange={(e) => {
                                                                                 updateData(index, 'amount', e.target.value)
                                                                             }}
@@ -811,7 +906,7 @@ export const Reimbursement = (props: any) => {
                                         </Button>
                                         <Button
                                             onClick={() => {
-                                                setCreateStep(2)
+                                                validateBreakdown()
                                             }}
                                             className="w-[180px] mr-2">
                                             Continue
@@ -858,7 +953,7 @@ export const Reimbursement = (props: any) => {
                                     </div>
                                     <div className="form-group col-md-6 mb-3" >
                                         <label>Total Amount:</label>
-                                        <input type="text"
+                                        <input type="number"
                                             name="total"
                                             id="total"
                                             value={reimbursementParentValues && reimbursementParentValues.total}
@@ -922,7 +1017,7 @@ export const Reimbursement = (props: any) => {
                                         </Button>
                                         <Button
                                             onClick={() => {
-                                                createReimbursement()
+                                                validateParent()
                                             }}
                                             className="w-[180px] mr-2">
                                             Submit

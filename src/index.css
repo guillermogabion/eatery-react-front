@@ -185,6 +185,31 @@ h1 {
   color: #003139;
   padding: 0 15px;
 }
+
+.form-control-reimbursement {
+  /* width: 299px; */
+  height: 44px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  opacity: 1;
+  font: normal normal normal 16px/20px "Source Sans Pro", sans-serif;
+  color: #003139;
+  padding: 0 15px;
+}
+
+.form-control-reimbursement-has-error {
+  /* width: 299px; */
+  height: 44px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #FF3838;
+  border-radius: 5px;
+  opacity: 1;
+  font: normal normal normal 16px/20px "Source Sans Pro", sans-serif;
+  color: #003139;
+  padding: 0 15px;
+}
+
 .form-select{
   height: 44px;
 }
