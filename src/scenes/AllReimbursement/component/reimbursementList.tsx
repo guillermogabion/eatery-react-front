@@ -21,6 +21,10 @@ export const ReimbursementList = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [isBulkAction, setIsBulkAction] = useState<any>(false);
     const [isBulkPayload, setIsBulkPayload] = useState<any>(false);
+
+    const [isDeclining, setIsDeclining] = useState<any>(false)
+    const [isApproving, setIsApproving] = useState<any>(false)
+    const [isCancelling, setIsCancelling] = useState<any>(false);
     const [reimbursementList, setReimbursementList] = useState<any>([]);
     const tableHeaders = [
         'Employee Name',
@@ -190,7 +194,6 @@ export const ReimbursementList = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
-
                 RequestAPI.postRequest(Api.approveReimbursement, "", { "parentId": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
@@ -200,6 +203,7 @@ export const ReimbursementList = (props: any) => {
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
+                            setIsApproving(false)
                         } else {
                             ErrorSwal.fire(
                                 'Success!',
@@ -207,6 +211,8 @@ export const ReimbursementList = (props: any) => {
                                 'success'
                             )
                             getReimbursements(0)
+                            setViewReimbursementModal(false)
+                            setIsApproving(false)
                         }
                     } else {
                         ErrorSwal.fire(
@@ -214,8 +220,11 @@ export const ReimbursementList = (props: any) => {
                             'Something Error.',
                             'error'
                         )
+                        setIsApproving(false)
                     }
                 })
+            } else {
+                setIsApproving(false)
             }
         })
     }
@@ -331,6 +340,7 @@ export const ReimbursementList = (props: any) => {
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
+                            setIsDeclining(false)
                         } else {
                             ErrorSwal.fire(
                                 'Success!',
@@ -338,6 +348,8 @@ export const ReimbursementList = (props: any) => {
                                 'success'
                             )
                             getReimbursements(0)
+                            setViewReimbursementModal(false)
+                            setIsDeclining(false)
                         }
                     } else {
                         ErrorSwal.fire(
@@ -345,8 +357,11 @@ export const ReimbursementList = (props: any) => {
                             'Something Error.',
                             'error'
                         )
+                        setIsDeclining(false)
                     }
                 })
+            } else {
+                setIsDeclining(false)
             }
         })
     }
@@ -372,6 +387,7 @@ export const ReimbursementList = (props: any) => {
                                 (body.error && body.error.message) || "",
                                 'error'
                             )
+                            setIsCancelling(false)
                         } else {
                             ErrorSwal.fire(
                                 'Success!',
@@ -379,6 +395,8 @@ export const ReimbursementList = (props: any) => {
                                 'success'
                             )
                             getReimbursements(0)
+                            setViewReimbursementModal(false)
+                            setIsCancelling(false)
                         }
                     } else {
                         ErrorSwal.fire(
@@ -386,8 +404,11 @@ export const ReimbursementList = (props: any) => {
                             'Something Error.',
                             'error'
                         )
+                        setIsCancelling(false)
                     }
                 })
+            }else{
+                setIsCancelling(false)
             }
         })
     }
@@ -955,20 +976,51 @@ export const ReimbursementList = (props: any) => {
 
                         {
                             !isEditReimbursement && reimbursementView && reimbursementView.status != "APPROVED" && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
-                                <><button
-                                    onClick={() => approveReimbursement(reimbursementView.id)}
-                                    className="w-[150px] mr-2 rounded-md text-white bg-[#2EBF91]" style={{ borderColor: '#189FB5' }}>
-                                    Approve/Endorse
-                                </button>
+                                <>
                                     <button
-                                        onClick={() => declineReimbursement(reimbursementView.id)}
-                                        className="w-[150px] mr-2 rounded-md text-white bg-[#FF3838]" style={{ borderColor: '#189FB5' }}>
-                                        Decline
+                                        onClick={() => {
+                                            setIsApproving(true)
+                                            approveReimbursement(reimbursementView.id)
+                                        }}
+                                        disabled={isApproving}
+                                        className="w-[150px] mr-2 rounded-md text-white bg-[#2EBF91]" style={{ borderColor: '#189FB5' }}>
+                                        {isApproving ?
+                                            <div className="d-flex justify-content-center">
+                                                <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                                Approve/Endorse
+                                            </div>
+                                            : "Approve/Endorse"
+                                        }
                                     </button>
                                     <button
-                                        onClick={() => cancelReimbursement(reimbursementView.id)}
+                                        onClick={() => {
+                                            setIsDeclining(true)
+                                            declineReimbursement(reimbursementView.id)
+                                        }}
+                                        disabled={isDeclining}
+                                        className="w-[150px] mr-2 rounded-md text-white bg-[#FF3838]" style={{ borderColor: '#189FB5' }}>
+                                        {isDeclining ?
+                                            <div className="d-flex justify-content-center">
+                                                <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                                Declining
+                                            </div>
+                                            : "Decline"
+                                        }
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setIsCancelling(true)
+                                            cancelReimbursement(reimbursementView.id)
+                                        }}
+                                        disabled={isCancelling}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
-                                        Retract/Cancel
+                                        {isCancelling ?
+                                            <div className="d-flex justify-content-center">
+                                                <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                                Retract/Cancel
+                                            </div>
+                                            : "Retract/Cancel"
+                                        }
                                     </button></>
                                 :
                                 null

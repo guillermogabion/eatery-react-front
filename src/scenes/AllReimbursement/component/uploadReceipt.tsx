@@ -201,8 +201,8 @@ export const UploadReceipt = (props: any) => {
         if (valuesObj.content) {
             let tempArray = [...valuesObj.content]
             let hasSelected = false
-            tempArray.forEach((data:any, index:any) => {
-                if(data.isCheck){
+            tempArray.forEach((data: any, index: any) => {
+                if (data.isCheck) {
                     hasSelected = true
                 }
             });
@@ -268,9 +268,9 @@ export const UploadReceipt = (props: any) => {
     return (
         <div>
             <div className="w-100 px-2 py-3">
-            <div className="pl-3 text-[#009FB5] text-lg ">
-                        Search By:
-                    </div>
+                <div className="pl-3 text-[#009FB5] text-lg ">
+                    Search By:
+                </div>
                 <div className="row m-0 p-0 d-flex col-md-12">
                     <div className="col-md-2">
                         <label className="">File Type</label>
@@ -404,7 +404,6 @@ export const UploadReceipt = (props: any) => {
                                                     <label
                                                         id=""
                                                         onClick={() => {
-                                                            console.log(item)
                                                             getReceiptImage(item.fileNamePath)
                                                             setIsDisplayData(true)
                                                             setDisplayData(item)
@@ -425,7 +424,6 @@ export const UploadReceipt = (props: any) => {
                                                             </label>
                                                         )
                                                     }
-
                                                 </td>
                                             </tr>
                                         )
@@ -633,7 +631,7 @@ export const UploadReceipt = (props: any) => {
                             {isEditReceipt ? "Save Changes" : "Modify"}
                         </Button> */}
                         {
-                            !isEditReceipt ?
+                            !isEditReceipt && displayData && displayData.status == "Failed" ?
                                 <button
                                     onClick={() => {
                                         if (displayData) {
@@ -647,7 +645,6 @@ export const UploadReceipt = (props: any) => {
                                 :
                                 null
                         }
-
                     </div>
                 </Modal.Body>
             </Modal>

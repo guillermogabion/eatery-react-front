@@ -399,7 +399,7 @@ export const Overtime = (props: any) => {
                 return (
                   <tr>
                     {/* <td> {item.lastName}, {item.firstName}</td> */}
-                    {data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                    {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                       <td id={"overtime_name_myotdata_" + item.id}>{item.lastName}, {item.firstName}</td> :
                       null
                     }

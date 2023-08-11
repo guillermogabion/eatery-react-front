@@ -39,6 +39,9 @@ export const Reimbursement = (props: any) => {
     const [uploadModal, setUploadModal] = React.useState(false);
     const [createReimbursementModal, setCreateReimbursementModal] = React.useState(false);
 
+    const [isSubmitCreateReim, setIsSubmitCreateReim] = React.useState(false);
+
+
     const [createStep, setCreateStep] = React.useState(1);
     const [reimbursementType, setReimbursementType] = React.useState([])
     const [reimbursementValues, setReimbursementValues] = React.useState([{
@@ -347,6 +350,7 @@ export const Reimbursement = (props: any) => {
                         (body.error && body.error.message) || "",
                         'error'
                     )
+                    setIsSubmitCreateReim(false)
                 } else {
                     let message: any = body.message
                     const valuesObj: any = [...reimbursementValues]
@@ -364,12 +368,15 @@ export const Reimbursement = (props: any) => {
                                     (body.error && body.error.message) || "",
                                     'error'
                                 )
+                                setIsSubmitCreateReim(false)
                             } else {
+
                                 ErrorSwal.fire(
                                     'Success!',
                                     message,
                                     'success'
                                 ).then((e) => {
+                                    setIsSubmitCreateReim(false)
                                     if (e.isConfirmed) {
                                         location.reload()
                                     }
@@ -381,6 +388,7 @@ export const Reimbursement = (props: any) => {
                                 'Something Error.',
                                 'error'
                             )
+                            setIsSubmitCreateReim(false)
                         }
                     })
                 }
@@ -390,6 +398,7 @@ export const Reimbursement = (props: any) => {
                     'Something Error.',
                     'error'
                 )
+                setIsSubmitCreateReim(false)
             }
         })
     }
@@ -483,6 +492,7 @@ export const Reimbursement = (props: any) => {
                 'warning'
             )
         } else {
+            setIsSubmitCreateReim(true)
             createReimbursement()
         }
     }
@@ -647,8 +657,15 @@ export const Reimbursement = (props: any) => {
                                     setOnSubmit(true)
                                     uploadFiles()
                                 }}
+                                disabled={(storedFiles && storedFiles.length > 0 ? false: true) || onSubmit}
                                 className="w-[180px] mr-2">
-                                Submit
+                                {onSubmit ?
+                                    <div className="d-flex justify-content-center">
+                                        <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                        Submitting
+                                    </div>
+                                    : "Submit"
+                                }
                             </Button>
                         </div>
                     </Modal.Body>
@@ -832,6 +849,7 @@ export const Reimbursement = (props: any) => {
                                                                                         onChange={(e) => {
                                                                                             updateData(index, 'transactionDate', e.target.value)
                                                                                         }}
+                                                                                        max={moment().format('YYYY-MM-DD')}
                                                                                     />
                                                                                 </div>
                                                                                 <div className="form-group col-md-4 mb-3" >
@@ -863,6 +881,7 @@ export const Reimbursement = (props: any) => {
                                                                             onChange={(e) => {
                                                                                 updateData(index, 'transactionDate', e.target.value)
                                                                             }}
+                                                                            max={moment().format('YYYY-MM-DD')}
                                                                         />
                                                                     </div>
                                                                     <div className="form-group col-md-3 mb-3" >
@@ -1019,8 +1038,16 @@ export const Reimbursement = (props: any) => {
                                             onClick={() => {
                                                 validateParent()
                                             }}
+                                            disabled={isSubmitCreateReim}
                                             className="w-[180px] mr-2">
-                                            Submit
+                                            {isSubmitCreateReim ?
+                                                <div className="d-flex justify-content-center">
+                                                    <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                                    Submitting
+                                                </div>
+                                                : "Submit"
+                                            }
+
                                         </Button>
                                     </div>
                                 </>
