@@ -3,7 +3,7 @@ import UserTopMenu from "../../components/UserTopMenu"
 
 import { Formik } from "formik"
 import moment from "moment"
-import { Button, Form, Modal } from "react-bootstrap"
+import { Button, Form, Modal} from "react-bootstrap"
 import Tab from 'react-bootstrap/Tab'
 import Table from 'react-bootstrap/Table'
 import Tabs from 'react-bootstrap/Tabs'
@@ -49,7 +49,16 @@ export const Leaves = (props: any) => {
   const userData = useSelector((state: any) => state.rootReducer.userData)
   const [holidays, setHolidays] = useState<any>([])
 
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  
+
   const formRef: any = useRef()
+
+  const [values, setValues] = useState({
+    dateFrom: '',
+    dateTo: '',
+  });
 
 
   const tableHeaders = [
@@ -257,45 +266,127 @@ export const Leaves = (props: any) => {
     dateBreakdown(moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'))
   }, [])
 
+
   const dateBreakdown = (dFrom: any, dTo: any) => {
     const date1 = moment(dFrom);
     const date2 = moment(dTo);
-    let leavesBreakdown = []
-    let dayTypesArray = []
+    let leavesBreakdown = [];
+    let dayTypesArray = [];
     let diffInDays = date2.diff(date1, 'days') + 1;
-    let dateCounter = 0
-
-    if (diffInDays >= 1) {
-      for (let index = 1; index <= diffInDays; index++) {
-        var added_date = moment(dFrom).add(dateCounter, 'days');
-        let new_date = new Date(added_date.format('YYYY-MM-DD'))
-
-
-        if (new_date.getDay() == 0 || new_date.getDay() == 6) {
-          dateCounter += 1
-        } else if (new_date.getDay() == 6) {
-          dateCounter += 2
-        } else {
-          let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
-          if (!holidays.includes(new_date_with_counter)) {
-            leavesBreakdown.push({
-              "date": new_date_with_counter,
-              "credit": 1,
-              "dayType": 'WHOLEDAY'
-            })
-          }
-          dayTypesArray.push(false)
-          dateCounter += 1
+    let dateCounter = 0;
+  
+    for (let index = 1; index <= diffInDays; index++) {
+      var added_date = moment(dFrom).add(dateCounter, 'days');
+      let new_date = new Date(added_date.format('YYYY-MM-DD'));
+  
+      if (new_date.getDay() == 0 || new_date.getDay() == 6) {
+        dateCounter += 1;
+      } else if (new_date.getDay() == 6) {
+        dateCounter += 2;
+      } else {
+        let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD');
+        if (!holidays.includes(new_date_with_counter)) {
+          leavesBreakdown.push({
+            "date": new_date_with_counter,
+            "credit": 1,
+            "dayType": 'WHOLEDAY'
+          });
         }
+        dayTypesArray.push(false);
+        dateCounter += 1;
       }
-      setDayTypes(dayTypesArray)
-      setLeaveBreakdown(leavesBreakdown)
-
-    } else {
-      setDayTypes([])
-      setLeaveBreakdown([])
     }
-  }
+  
+    setDayTypes(dayTypesArray);
+    setLeaveBreakdown(leavesBreakdown);
+  
+    if (leavesBreakdown.length <= 30) {
+      console.log(leavesBreakdown.length);
+    } else {
+
+      if (!leaveId) {
+        initialValues.breakdown = [];
+        setLeaveBreakdown([]);
+        setDayTypes([]);
+        formRef.current?.resetForm();
+      }else{
+        leavesBreakdown.pop(); 
+        setModalShow(false)
+      }
+     
+      Swal.fire({
+        title: 'Error',
+        text: 'Date counter should not exceed 30 days',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+  
+
+
+
+
+  // const dateBreakdown = (dFrom: any, dTo: any) => {
+  //   const date1 = moment(dFrom);
+  //   const date2 = moment(dTo);
+  //   let leavesBreakdown = []
+  //   let dayTypesArray = []
+  //   let diffInDays = date2.diff(date1, 'days') + 1;
+  //   let dateCounter = 0
+ 
+  //   if (diffInDays >= 1 && leavesBreakdown.length <= 30) {
+  //     for (let index = 1; index <= diffInDays; index++) {
+  //       var added_date = moment(dFrom).add(dateCounter, 'days');
+  //       let new_date = new Date(added_date.format('YYYY-MM-DD'))
+
+
+  //       if (new_date.getDay() == 0 || new_date.getDay() == 6) {
+  //         dateCounter += 1
+  //       } else if (new_date.getDay() == 6) {
+  //         dateCounter += 2
+  //       } else {
+  //         let new_date_with_counter = moment(dFrom).add(dateCounter, 'days').format('YYYY-MM-DD')
+  //         if (!holidays.includes(new_date_with_counter)) {
+  //           leavesBreakdown.push({
+  //             "date": new_date_with_counter,
+  //             "credit": 1,
+  //             "dayType": 'WHOLEDAY'
+  //           })
+  //         }
+  //         dayTypesArray.push(false)
+  //         dateCounter += 1
+  //       }
+  //     }
+  //     setDayTypes(dayTypesArray)
+  //     setLeaveBreakdown(leavesBreakdown)
+
+
+  //     console.log(leavesBreakdown.length)
+
+  //   }
+  //   else if (leavesBreakdown.length > 30) {
+  //     initialValues.breakdown = [];
+  //     setLeaveBreakdown([]);
+  //     setDayTypes([]);
+  //     setLeaveBreakdown([]);
+  //     formRef.current?.resetForm();
+  //     Swal.fire({
+  //       title: 'Error',
+  //       text: 'Date counter should not exceed 30 days',
+  //       icon: 'error',
+  //       confirmButtonText: 'OK'
+  //     });
+
+
+    
+  //   }
+    
+  //   else {
+  //     setDayTypes([])
+  //     setLeaveBreakdown([])
+  //   }
+  // }
 
 
   const setDateOption = (index: any, value: any, dayType: any = null) => {
@@ -325,16 +416,6 @@ export const Leaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to approve this leave.",
-      didOpen: () => {
-        const confirmButton = Swal.getConfirmButton();
-        const cancelButton = Swal.getCancelButton();
-
-        if(confirmButton)
-          confirmButton.id = "leaves_approveconfirm_alertbtn"
-
-        if(cancelButton)
-          cancelButton.id = "leaves_approvecancel_alertbtn"
-      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -376,16 +457,6 @@ export const Leaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to decline this leave.",
-      didOpen: () => {
-        const confirmButton = Swal.getConfirmButton();
-        const cancelButton = Swal.getCancelButton();
-
-        if(confirmButton)
-          confirmButton.id = "leaves_declineconfirm_alertbtn"
-
-        if(cancelButton)
-          cancelButton.id = "leaves_declinecancel_alertbtn"
-      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -430,16 +501,6 @@ export const Leaves = (props: any) => {
     ErrorSwal.fire({
       title: 'Are you sure?',
       text: "You want to cancel this leave.",
-      didOpen: () => {
-        const confirmButton = Swal.getConfirmButton();
-        const cancelButton = Swal.getCancelButton();
-
-        if(confirmButton)
-          confirmButton.id = "leaves_cancelconfirm_alertbtn"
-
-        if(cancelButton)
-          cancelButton.id = "leaves_cancelcancel_alertbtn"
-      },
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -567,28 +628,28 @@ export const Leaves = (props: any) => {
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                               <>
-                                <td id={"leaves_name_allleavedata_" + item.id}> {item.lastName}, {item.firstName} </td>
+                                <td id="leaves_name_allleavedata"> {item.lastName}, {item.firstName} </td>
                               </> : null
                           }
 
-                          <td id={"leaves_type_allleavedata_" + item.id}> {item.type} </td>
+                          <td id="leaves_type_allleavedata"> {item.type} </td>
                           {/* <td> {item.dateFrom} </td>
                           <td> {item.dateTo} </td> */}
-                          <td id={"leaves_datefrom_allleavedata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                          <td id={"leaves_dateto_allleavedata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id={"leaves_reason_allleavedata_" + item.id}> {item.reason} </td>
-                          <td id={"leaves_filedate_allleavedata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                          <td id={"leaves_statuschangedby_allleavedata_" + item.id}> {item.statusChangedBy} </td>
+                          <td id="leaves_datefrom_allleavedata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
+                          <td id="leaves_dateto_allleavedata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
+                          <td id="leaves_reason_allleavedata"> {item.reason} </td>
+                          <td id="leaves_filedate_allleavedata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id="leaves_statuschangedby_allleavedata"> {item.statusChangedBy} </td>
                           {/* <td> {item.status} </td> */}
-                          <td id={"leaves_status_allleavedata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
+                          <td id="leaves_status_allleavedata"> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
                             <label
-                              id={"leaves_view_allleavelabel_" + item.id}
+                              id="leaves_view_allleavelabel"
                               onClick={() => {
                                 viewLeave(item.id)
                               }}
                             >
-                              <img id={"leaves_eye_allleaveimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                              <img id="leaves_eye_allleaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
 
                             </label>
                             {
@@ -597,12 +658,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
-                                        id={"leaves_name_allleavelabel_" + item.id}
+                                        id="leaves_name_allleavelabel"
                                         onClick={() => {
                                           getLeave(item.id)
                                         }}
                                         className=" cursor-pointer">
-                                        <img id={"leaves_actionedit_allleaveimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                        <img id="leaves_actionedit_allleaveimg" src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                       </label>
                                       <br />
                                     </>
@@ -611,12 +672,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Approve") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
-                                        id={"leaves_approveleave_allleavelabel_" + item.id}
+                                        id="leaves_approveleave_allleavelabel"
                                         onClick={() => {
                                           approveLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id={"leaves_actionapprove_allleaveimg_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                        <img id="leaves_actionapprove_allleaveimg" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                       </label> <br />
                                     </>
                                   ) : null}
@@ -624,12 +685,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Reject") && data.profile.role == 'EXECUTIVE' ? (
                                     <>
                                       <label
-                                        id={"leaves_declineleave_allleavelabel_" + item.id}
+                                        id="leaves_declineleave_allleavelabel"
                                         onClick={() => {
                                           declineLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id={"leaves_actiondecline_allleaveimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                        <img id="leaves_actiondecline_allleaveimg" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                       </label>
                                       <br />
                                     </>
@@ -644,12 +705,12 @@ export const Leaves = (props: any) => {
                                   {authorizations.includes("Request:Update") ? (
                                     <>
                                       <label
-                                        id={"leaves_cancelleave_allleavelabel_" + item.id}
+                                        id="leaves_cancelleave_allleavelabel"
                                         onClick={() => {
                                           cancelLeave(item.id)
                                         }}
                                         className="text-muted cursor-pointer">
-                                        <img id={"leaves_actioncancel_allleaveimg_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                        <img id="leaves_actioncancel_allleaveimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                       </label>
                                       <br />
                                     </>
@@ -1025,8 +1086,11 @@ export const Leaves = (props: any) => {
                         min={values.dateFrom}
                         onChange={(e) => {
                           setFormField(e, setFieldValue)
-
                           dateBreakdown(values.dateFrom, e.target.value)
+                          if (leaveBreakdown.length > 30) {
+                            const lastDate = leaveBreakdown[29].date;
+                            setFieldValue('dateTo', values.dateTo);
+                          }
                         }}
                       />
 
@@ -1136,7 +1200,7 @@ export const Leaves = (props: any) => {
                     <div className="d-flex justify-content-end px-5">
 
                       {
-                        leaveBreakdown && leaveBreakdown.length == 0 ?
+                        leaveBreakdown && leaveBreakdown.length == 0 && leaveBreakdown.length > 30  ?
 
                           <button
                             id="leaves_save1_leavebreakdownbtn"
@@ -1252,6 +1316,7 @@ export const Leaves = (props: any) => {
                         max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : values.dateTo}
 
                         placeholder="dd/mm/yyyy"
+                        maxLength={10}  
                       />
                       {errors && errors.dateFrom && (
                         <p id="leaves_errordatefrom_leavereqp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
