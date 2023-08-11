@@ -251,6 +251,7 @@ export const UploadReceipt = (props: any) => {
                                 'success'
                             )
                             getUploadedReceipts(0)
+                            setHasReceiptSelected(false)
                         }
                     } else {
                         ErrorSwal.fire(
