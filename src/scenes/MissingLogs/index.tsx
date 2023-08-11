@@ -204,7 +204,7 @@ export const MissingLogs = (props: any) => {
                       <select
                         className={`form-select`}
                         name="department"
-                        id="type"
+                        id="missinglogs_department"
                         value={filterData && filterData['department']}
                         onChange={(e) => makeFilterData(e)}>
                         <option key={`departmentItem}`} value={""}>

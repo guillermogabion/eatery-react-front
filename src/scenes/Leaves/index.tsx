@@ -975,7 +975,7 @@ export const Leaves = (props: any) => {
                       <select
                         className="form-select"
                         name="type"
-                        id="type"
+                        id="leaves_leavetype"
                         value={values.type}
                         // onChange={(e) => setFormField(e, setFieldValue)}>
                         onChange={(e) => {
@@ -1210,7 +1210,7 @@ export const Leaves = (props: any) => {
                       <select
                         className="form-select"
                         name="type"
-                        id="type"
+                        id="leaves_formleavetype"
                         value={values.type}
                         // onChange={(e) => setFormField(e, setFieldValue)}>
                         disabled={true}

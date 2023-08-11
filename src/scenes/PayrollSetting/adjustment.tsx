@@ -223,7 +223,7 @@ const Adjustment = (props: any) => {
                             type="text"
                             className="formControl"
                             name="name"
-                            id="type"
+                            id="payrollsettings_adjname"
                             onChange={(e) => makeFilterData(e)}
                             />
                     </div>
@@ -257,7 +257,7 @@ const Adjustment = (props: any) => {
                         <label>Action</label>
                         <select
                             name="isDeduction"
-                            id="deduction"
+                            id="payroll_settings_deduction"
                             className="form-control"
                             onChange={(e) => {makeFilterData(e)
                                     setShowButtonIsDeduction(e.target.value !== 'default')
@@ -570,7 +570,7 @@ const Adjustment = (props: any) => {
 
                                             <select 
                                             name="type" 
-                                            id="type"
+                                            id="payrollsettings_type2"
                                             value={values.type}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             className="formControl"
@@ -589,7 +589,7 @@ const Adjustment = (props: any) => {
                                         <label>Action</label>
                                         <select
                                             name="deduction"
-                                            id="deduction"
+                                            id="payrollsettings_adj_action"
                                             className="form-control"
                                             value={values.deduction }
                                             onChange={(e) => setFormField(e, setFieldValue)}
@@ -608,7 +608,7 @@ const Adjustment = (props: any) => {
                                         <label>Gross Affected</label>
                                         <select
                                             name="affectsGross"
-                                            id="deduction"
+                                            id="payrollsetting_adj_grossaffected"
                                             className="form-control"
                                             value={values.affectsGross}
                                             onChange={(e) => setFormField(e, setFieldValue)}

@@ -392,7 +392,7 @@ export const Payslip = (props: any) => {
                         <select 
                             className="form-select"
                             name="id"
-                            id="type"
+                            id="payslip_payrollselect"
                             autoComplete="off"
                             onChange={(e) => makeFilterData(e)}
                         >
@@ -532,7 +532,7 @@ export const Payslip = (props: any) => {
                                     <select 
                                         className="form-select"
                                         name="payrollId"
-                                        id="type"
+                                        id="payslip_payrollselect2"
                                         autoComplete="off"
                                         onChange={(e) => setPayrollId(e.target.value)}
                                     >

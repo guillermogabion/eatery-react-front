@@ -160,28 +160,48 @@ export const Access = (props: any) => {
                 if (status === 200 || status === 201) {
                 if (body.error && body.error.message) {
                     Swal.close();
-                    ErrorSwal.fire(
-                    'Error!',
-                    body.error.message,
-                    'error'
-                    );
+
+                    ErrorSwal.fire({
+                        title: 'Error!',
+                        text: body.error.message,
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "accessrights_errorconfirm_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                 } else {
                     Swal.close();
                  
                     getRoleInfo(roleId, currentPage);
-                    ErrorSwal.fire(
-                    'Success!',
-                    body.data || "",
-                    'success'
-                    );
+
+                    ErrorSwal.fire({
+                      title: 'Success!!',
+                      text: body.data || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "accessrights_successconfirm_alertbtn"
+                      },
+                      icon: 'success',
+                  })
                 }
                 } else {
-                Swal.close();
-                ErrorSwal.fire(
-                    'Error!',
-                    'Something went wrong.',
-                    'error'
-                );
+                  Swal.close();
+                  ErrorSwal.fire({
+                      title: 'Error!',
+                      text: 'Something went wrong.',
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "accessrights_errorconfirm2_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                 }
             })
             }
@@ -289,19 +309,59 @@ export const Access = (props: any) => {
             const { status, body = { data: {}, error: {} } }: any = res;
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
-                ErrorSwal.fire('Error!', body.error.message, 'error');
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: body.error.message,
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "accessrights_errorconfirm3_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
-                ErrorSwal.fire('Success!', 'Data saved successfully', 'success');
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: 'Data saved successfully',
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "accessrights_errorsuccess2_alertbtn"
+                  },
+                  icon: 'success',
+              })
                 setAddAccessModalShow(false);
               }
             } else {
-              ErrorSwal.fire('Error!', 'Something went wrong.', 'error');
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: 'Something went wrong.',
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "accessrights_errorconfirm4_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           }
         );
       } catch (error) {
         console.error("Error saving data:", error);
-        ErrorSwal.fire('Error!', 'An error occurred while saving data.', 'error');
+        ErrorSwal.fire({
+          title: 'Error!',
+          text: 'An error occured while saving data',
+          didOpen: () => {
+            const confirmButton = Swal.getConfirmButton();
+  
+            if(confirmButton)
+              confirmButton.id = "accessrights_errorconfirm5_alertbtn"
+          },
+          icon: 'error',
+      })
       }
     };
     

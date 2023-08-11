@@ -804,7 +804,7 @@ export const AttendanceCorrection = (props: any) => {
                     <select
                       className="form-select"
                       name="type"
-                      id="type"
+                      id="attendancecorrection_type"
                       onChange={(e) => {
                         setFieldValue('type', e.target.value);
                         setShowReason(e.target.value === 'Others');
