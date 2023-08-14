@@ -226,6 +226,7 @@ export const ReimbursementList = (props: any) => {
                                 'success'
                             )
                             getReimbursements(0)
+                            setViewReimbursementModal(true)
                         }
                     } else {
                         ErrorSwal.fire(
