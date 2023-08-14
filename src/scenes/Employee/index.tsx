@@ -2500,7 +2500,7 @@ export const Employee = (props: any) => {
                   />
               </div>
               <div className="form-group col-md-6 mb-3 " >
-                <label>Productivity Allowance</label>
+                <label>Sales Incentive</label>
                 <input type="text"
                   name="productivityAllowance"
                   id="productivityAllowance"
@@ -2513,7 +2513,7 @@ export const Employee = (props: any) => {
                 )}
                 <Form.Check
                     type="checkbox"
-                    label="Taxable (Productivity Allowance)"
+                    label="Taxable (Sales Incentive)"
                     name="prodIsTaxable"
                     checked={values.prodIsTaxable}
                     onChange={(e) => setFieldValue("prodIsTaxable", e.target.checked)}

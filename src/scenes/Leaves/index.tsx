@@ -316,7 +316,7 @@ export const Leaves = (props: any) => {
      
       Swal.fire({
         title: 'Error',
-        text: 'Date counter should not exceed 30 days',
+        text: 'Total number of leave should not exceed 30 days',
         icon: 'error',
         confirmButtonText: 'OK'
       });
