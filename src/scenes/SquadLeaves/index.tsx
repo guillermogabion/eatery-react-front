@@ -708,7 +708,7 @@ export const SquadLeaves = (props: any) => {
                 <select
                   className="form-select"
                   name="type"
-                  id="type"
+                  id="squadleaves_leavetype"
                   value={values.type}
                   // onChange={(e) => makeFilterData(e)}
                   onChange={(e) => {
@@ -896,7 +896,7 @@ export const SquadLeaves = (props: any) => {
                       <select
                         className="form-select"
                         name="type"
-                        id="type"
+                        id="squadleaves_type2"
                         value={values.type}
                         onChange={(e) => setFormField(e, setFieldValue)}>
                         {leaveTypes &&
@@ -1099,7 +1099,7 @@ export const SquadLeaves = (props: any) => {
                       <select
                         className="form-select"
                         name="type"
-                        id="type"
+                        id="squadleaves_leavetype3"
                         value={values.type}
                         disabled={true}
                         onChange={(e) => setFormField(e, setFieldValue)}>

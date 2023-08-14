@@ -730,7 +730,7 @@ export const PayrollAdjustment = (props: any) => {
                                     <select
                                         className="form-control"
                                         name="isDeduction"
-                                        id="type"
+                                        id="payroll_adjustment_type"
                                         onChange={(e) => {
                                             makeFilterData(e);
                                             setShowButton(e.target.value !== 'default')
@@ -1095,7 +1095,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 placeholder="Adjustment Name"
                                                 className="form-select"
                                                 name="adjustmentTypeId"
-                                                id="type"
+                                                id="payrolladjustment_name"
                                                 value={values.adjustmentTypeId}
                                                 onChange={(e) => {
                                                     const selectedValue = e.target.value;
@@ -1142,7 +1142,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     placeholder="Month"
                                                     className="form-select"
                                                     name="payrollMonth"
-                                                    id="type"
+                                                    id="payrolladjustment_month"
                                                     value={values.payrollMonth}
                                                     onChange={(e) => {
                                                         setFieldValue('payrollMonth', e.target.value);
@@ -1165,7 +1165,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     placeholder="Year"
                                                     className="form-select"
                                                     name="payrollYear"
-                                                    id="type"
+                                                    id="payrolladjustment_year"
                                                     value={values.payrollYear}
                                                     onChange={(e) => {
                                                         setFieldValue('payrollYear', e.target.value);
@@ -1213,7 +1213,7 @@ export const PayrollAdjustment = (props: any) => {
                                                 <select
                                                     className={`form-select ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
                                                     name="adjustmentTypeId"
-                                                    id="type"
+                                                    id="payrolladjustment_adjname"
                                                     value={values.adjustmentTypeId}
                                                     onChange={(e) => {
                                                     const selectedValue = e.target.value;
@@ -1269,7 +1269,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     placeholder="Month"
                                                     className={`form-select ${values.periodMonth == "" ? 'is-invalid' : ''}`}
                                                     name="periodMonth"
-                                                    id="type"
+                                                    id="payrolladjustment_periodmonth"
                                                     value={values.periodMonth}
                                                     onChange={(e) => {
                                                         const selectedValue = e.target.value;
@@ -1296,7 +1296,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     placeholder="Year"
                                                     className={`form-select ${values.periodYear == "" ? 'is-invalid' : ''}`}
                                                     name="periodYear"
-                                                    id="type"
+                                                    id="payrolladjustment_periodyear"
                                                     value={values.periodYear}
                                                     onChange={(e) => {
                                                         const selectedValue = e.target.value;

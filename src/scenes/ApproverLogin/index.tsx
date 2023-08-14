@@ -106,7 +106,17 @@ export const ApproverLogin = (props: any) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "approvelogin_makeactionconfirm_alertbtn"
+      
+                if(cancelButton)
+                  cancelButton.id = "approvelogin_makeactioncancel_alertbtn"
+              },
         }).then((result) => {
             if (result.isConfirmed) {
                 setIsSubmit(true)
@@ -122,11 +132,17 @@ export const ApproverLogin = (props: any) => {
                     const { status, body } = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "approverlogin_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                             setIsSubmit(false)
                         } else {
                             ErrorSwal.fire({
@@ -136,7 +152,17 @@ export const ApproverLogin = (props: any) => {
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
                                 allowOutsideClick: false,
-                                confirmButtonText: 'Go back to login'
+                                confirmButtonText: 'Go back to login',
+                                didOpen: () => {
+                                    const confirmButton = Swal.getConfirmButton();
+                                    const cancelButton = Swal.getCancelButton();
+                          
+                                    if(confirmButton)
+                                      confirmButton.id = "approvelogin_gobackloginconfirm_alertbtn"
+                          
+                                    if(cancelButton)
+                                      cancelButton.id = "approvelogin_gobacklogincancel_alertbtn"
+                                  },
                             }).then((result: any) => {
                                 if (result.isConfirmed) {
                                     window.location.href = "/"
@@ -144,11 +170,17 @@ export const ApproverLogin = (props: any) => {
                             })
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "approverlogin_errorconfirm2_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                         setIsSubmit(false)
                     }
                 });
@@ -175,11 +207,17 @@ export const ApproverLogin = (props: any) => {
                                 makeActionRequest(accessToken)
                             }
                         }else{
-                            ErrorSwal.fire(
-                                'Error!',
-                                "Your account is not approver.",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: "Your account is not approver.",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "approverlogin_errorconfirm3_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         }
                         
                     }

@@ -555,7 +555,7 @@ export const LeaveTypes = (props: any) => {
                                             <select
                                                 className={`form-select`}
                                                 name="leaveTypeId"
-                                                id="type"
+                                                id="leavetypes_leavetype"
                                                 value={values.leaveTypeId}
                                                 onChange={(e) => {
                                                     if (e.target.value && values.userId) {

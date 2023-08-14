@@ -217,7 +217,7 @@ const Recurring = (props: any) => {
                             type="text"
                             className="formControl"
                             name="name"
-                            id="type"
+                            id="payrollsettings_recurring_recurringname"
                             onChange={(e) => makeFilterData(e)}
                             />
                         </div>
@@ -251,7 +251,7 @@ const Recurring = (props: any) => {
                         <label>Action</label>
                         <select
                             name="isDeduction"
-                            id="deduction1"
+                            id="payrollsettings_deduction1"
                             className="form-control"
                             onChange={(e) => {makeFilterData(e)
                                 setShowButtonIsDeduction(e.target.value !== 'default')
@@ -556,7 +556,7 @@ const Recurring = (props: any) => {
                                         <label>Type</label>
                                             <select 
                                             name="type" 
-                                            id="type"
+                                            id="payrollsettings_recurring_type"
                                             value={values.type}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                             className="formControl"
@@ -572,7 +572,7 @@ const Recurring = (props: any) => {
                                         <label>Action</label>
                                         <select
                                             name="deduction"
-                                            id="deduction"
+                                            id="payrollsettings_recurring_action1"
                                             className="form-control"
                                             value={values.deduction }
                                             onChange={(e) => setFormField(e, setFieldValue)}
@@ -591,7 +591,7 @@ const Recurring = (props: any) => {
                                         <label>Gross Affected</label>
                                         <select
                                             name="affectsGross"
-                                            id="deduction"
+                                            id="payrollsettings_recurring_grossaffected1"
                                             className="form-control"
                                             value={values.affectsGross}
                                             onChange={(e) => setFormField(e, setFieldValue)}

@@ -118,6 +118,12 @@ export const AllReimbursement = (props: any) => {
                             title: "File Skipped!",
                             text: `"${element.name}" file size is greater than 3MB.`,
                             confirmButtonColor: "#73BF45",
+                            didOpen: () => {
+                                const confirmButton = Swal.getConfirmButton();
+                      
+                                if(confirmButton)
+                                  confirmButton.id = "allreimbursement_errorconfirm_alertbtn"
+                              },
                         })
                         delete files[i]
                     } else if (!allowedFormats.includes(element.type)) {
@@ -126,6 +132,12 @@ export const AllReimbursement = (props: any) => {
                             title: "File Skipped!",
                             text: `"${element.name}" is not a valid file format.`,
                             confirmButtonColor: "#73BF45",
+                            didOpen: () => {
+                                const confirmButton = Swal.getConfirmButton();
+                      
+                                if(confirmButton)
+                                  confirmButton.id = "allreimbursement_fileskippedconfirm_alertbtn"
+                              },
                         });
                     } else {
                         storedFilesTemp.push(element);
@@ -213,6 +225,12 @@ export const AllReimbursement = (props: any) => {
                     title: "Success!",
                     text: "Files Successfully uploaded.",
                     confirmButtonColor: "#73BF45",
+                    didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "allreimbursement_successuploadconfirm_alertbtn"
+                      },
                 }).then((e) => {
                     if (e.isConfirmed) {
                         location.reload()
@@ -339,11 +357,17 @@ export const AllReimbursement = (props: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
             if (status === 200 || status === 201) {
                 if (body.error && body.error.message) {
-                    ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                    )
+                    ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "allreimbursement_errorconfirm2_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                 } else {
 
                     const valuesObj: any = [...reimbursementValues]
@@ -356,37 +380,62 @@ export const AllReimbursement = (props: any) => {
                         const { status, body = { data: {}, error: {} } }: any = res
                         if (status === 200 || status === 201) {
                             if (body.error && body.error.message) {
-                                ErrorSwal.fire(
-                                    'Error!',
-                                    (body.error && body.error.message) || "",
-                                    'error'
-                                )
+                                
+                                ErrorSwal.fire({
+                                    title: 'Error!',
+                                    text: (body.error && body.error.message) || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "allreimbursement_errorconfirm3_alertbtn"
+                                    },
+                                    icon: 'error',
+                                })
                             } else {
-                                ErrorSwal.fire(
-                                    'Success!',
-                                    (body.data) || (body.data.message),
-                                    'success'
-                                ).then((e) => {
+                                ErrorSwal.fire({
+                                    title: 'Success!',
+                                    text: (body.error && body.error.message) || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "allreimbursement_errorconfirm3_alertbtn"
+                                    },
+                                    icon: 'success',
+                                }).then((e) => {
                                     if (e.isConfirmed) {
                                         location.reload()
                                     }
                                 })
                             }
                         } else {
-                            ErrorSwal.fire(
-                                'Error!',
-                                'Something Error.',
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: 'Something Error',
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "allreimbursement_errorconfirm4_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         }
                     })
                 }
             } else {
-                ErrorSwal.fire(
-                    'Error!',
-                    'Something Error.',
-                    'error'
-                )
+                ErrorSwal.fire({
+                    title: 'Error!',
+                    text: 'Something error',
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "allreimbursement_errorconfirm5_alertbtn"
+                    },
+                    icon: 'error',
+                })
             }
         })
     }

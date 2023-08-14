@@ -429,11 +429,17 @@ export const Recurring = (props: any) => {
             });
 
             if (hasError) {
-                ErrorSwal.fire(
-                    'Warning!',
-                    'Please fill all the required fields',
-                    'warning'
-                )
+                ErrorSwal.fire({
+                    title: 'Warning!',
+                    text: "Please fill all the required fields",
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "payrollrecurring_warnconfirm_alertbtn"
+                    },
+                    icon: 'warning',
+                })
             } else {
                 const loadingSwal = Swal.fire({
                     title: '',
@@ -695,7 +701,7 @@ export const Recurring = (props: any) => {
                                     <select
                                     className="form-control"
                                     name="isDeduction"
-                                    id="type"
+                                    id="payrollrecurring_type"
                                     onChange={(e) => {
                                         makeFilterData(e);
                                         // handleOnChange(e);
@@ -1043,7 +1049,7 @@ export const Recurring = (props: any) => {
                                                         placeholder="Recurring Name"
                                                         className="form-select"
                                                         name="recurringTypeId"
-                                                        id="type"
+                                                        id="payrollrecurring_recurringname"
                                                         value={values.recurringTypeId}
                                                         onChange={(e) => {
                                                             setFormField(e, setFieldValue);
@@ -1140,7 +1146,7 @@ export const Recurring = (props: any) => {
                                                                     placeholder="Recurring Name"
                                                                     className={`form-select ${touched.recurringTypeId && errors.recurringTypeId ? 'is-invalid' : ''}`}
                                                                     name="recurringTypeId"
-                                                                    id="type"
+                                                                    id="payrollrecurring_recurringname2"
                                                                     value={values.recurringTypeId}
                                                                     onChange={(e) => {
                                                                         const selectedValue = e.target.value;
@@ -1183,7 +1189,7 @@ export const Recurring = (props: any) => {
                                                                     placeholder="Recurring Name"
                                                                     className="form-control"
                                                                     name="recurringTypeId"
-                                                                    id="type"
+                                                                    id="payrollrecurring_recurringaction"
                                                                     value={values.recurringTypeId}
                                                                     onChange={(e) => {
                                                                         const selectedValue = e.target.value;

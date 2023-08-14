@@ -123,7 +123,7 @@ const DashboardMenu = (props: any) => {
 
                                                 return (
                                                     <NavLink
-                                                        id={"navlinksub_" + name}
+                                                        id={"navlinksub_" + i + '_' + index}
                                                         key={`${index}${label}`}
                                                         activeClassName={currentRoutePath == route ? "activeMenu" : ""}
                                                         className="text-white d-flex align-items-center cursor-pointer accordionMenu"
@@ -133,7 +133,7 @@ const DashboardMenu = (props: any) => {
                                                             setCurrentRoutePath(route)
                                                         }}>
                                                         <span>
-                                                            <span id={"navlinksubspan_" + label}>{label}</span>
+                                                            <span id={"navlinksubspan_" + i + '_' + index}>{label}</span>
                                                         </span>
                                                     </NavLink>
                                                 )

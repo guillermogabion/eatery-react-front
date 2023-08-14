@@ -585,7 +585,7 @@ export const MyAttendanceSummary = (props: any) => {
                                             <select
                                                 className={`form-select`}
                                                 name="type"
-                                                id="type"
+                                                id="myattendancesummary_type"
                                                 value={values.type}
                                                 onChange={(e) => {
                                                     setFieldValue('type', e.target.value);
@@ -771,7 +771,7 @@ export const MyAttendanceSummary = (props: any) => {
                                             <select
                                                 className={`form-select`}
                                                 name="type"
-                                                id="type"
+                                                id="myattendancesummary_type2"
                                                 value={values.type}
                                                 onChange={(e) => {
                                                     setFieldValue('type', e.target.value);
