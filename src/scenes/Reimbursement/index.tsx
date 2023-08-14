@@ -938,7 +938,7 @@ export const Reimbursement = (props: any) => {
                                     <div className="form-group col-md-6 mb-3" >
                                         <label>Type of Reimbursement:</label>
                                         <select
-                                            className={`form-select`}
+                                            className={`form-select ${reimbursementParentValues && (reimbursementParentValues.typeId == "" || reimbursementParentValues.typeId == null) ? "border-1 border-red-500" : ""}`}
                                             name="typeId"
                                             id="typeId"
                                             value={reimbursementParentValues && reimbursementParentValues.typeId}
@@ -964,8 +964,8 @@ export const Reimbursement = (props: any) => {
                                         <input type="text"
                                             name="approvedBudget"
                                             id="approvedBudget"
+                                            className={`${reimbursementParentValues  && (reimbursementParentValues.approvedBudget  == null || reimbursementParentValues.total  == "") ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                             value={reimbursementParentValues && reimbursementParentValues.approvedBudget}
-                                            className="form-control"
                                             onChange={(e) => {
                                                 updateParentData('approvedBudget', e.target.value)
                                             }}
@@ -977,7 +977,7 @@ export const Reimbursement = (props: any) => {
                                             name="total"
                                             id="total"
                                             value={reimbursementParentValues && reimbursementParentValues.total}
-                                            className="form-control"
+                                            className={`${reimbursementParentValues  && (reimbursementParentValues.total  == null || reimbursementParentValues.total  == "") ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                             onChange={(e) => {
                                                 updateParentData('total', e.target.value)
                                             }}
@@ -989,7 +989,7 @@ export const Reimbursement = (props: any) => {
                                             name="purpose"
                                             id="purpose"
                                             value={reimbursementParentValues && reimbursementParentValues.purpose}
-                                            className="form-control p-2"
+                                            className={`${reimbursementParentValues  && (reimbursementParentValues.purpose  == null || reimbursementParentValues.purpose  == "") ? "form-control p-2 form-control-reimbursement-has-error" : "form-control form-control-reimbursement p-2"}`}
                                             style={{ minHeight: 100 }}
                                             onChange={(e) => {
                                                 updateParentData('purpose', e.target.value)
