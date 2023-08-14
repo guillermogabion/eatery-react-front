@@ -416,42 +416,45 @@ const unsent = (props : any ) => {
                     }
                     <div className="row">
                         <div className="col-md-6">
-                            <div className="d-flex ma-3">
-                                <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                                <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
-                                    <option value={10}>10</option>
-                                    <option value={50}>50</option>
-                                    <option value={100}>100</option>
-                                </select>
+                            <div className="justify-content-start px-2">
+                                <span className="font-bold mr-8 text-muted">Total Entries : {failedPayslipList.totalElements}</span>
+                                <br />
+                                <div className="flex items-center">
+                                    <span className="text-muted mr-2">Select Page Size:</span>
+                                    <select id="pageSizeSelect" value={pageSize} className="form-select rounded-md py-2" style={{ fontSize: "16px", width: "150px" }} onChange={handlePageSizeChange}>
+                                        <option value={10}>10</option>
+                                        <option value={50}>50</option>
+                                        <option value={100}>100</option>
+                                    </select>
+                                </div>
+                               
                             </div>  
                         </div>
                         <div className="col-md-6">
-                            <div className="d-flex justify-content-end ma-3">
-                                <span className="font-bold mr-8 ">Total Entries : { failedPayslipList.totalElements }</span>
+                            <div className="d-flex justify-content-end pr-2">
+                                <div className="">
+                                    <ReactPaginate
+                                    className="d-flex justify-content-center align-items-center"
+                                    breakLabel="..."
+                                    nextLabel=">"
+                                    onPageChange={handlePageClick}
+                                    pageRangeDisplayed={5}
+                                    pageCount={(failedPayslipList && failedPayslipList.totalPages) || 0}
+                                    previousLabel="<"
+                                    previousLinkClassName="prev-next-pagination"
+                                    nextLinkClassName="prev-next-pagination"
+                                    activeLinkClassName="active-page-link"
+                                    disabledLinkClassName="prev-next-disabled"
+                                    pageLinkClassName="page-link"
+                                    renderOnZeroPageCount={null}
+                                    />
+                                </div>
                             </div>   
                         </div>
                     </div>
         
                 
-                    <div className="d-flex justify-content-end">
-                        <div className="">
-                            <ReactPaginate
-                            className="d-flex justify-content-center align-items-center"
-                            breakLabel="..."
-                            nextLabel=">"
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={5}
-                            pageCount={(failedPayslipList && failedPayslipList.totalPages) || 0}
-                            previousLabel="<"
-                            previousLinkClassName="prev-next-pagination"
-                            nextLinkClassName="prev-next-pagination"
-                            activeLinkClassName="active-page-link"
-                            disabledLinkClassName="prev-next-disabled"
-                            pageLinkClassName="page-link"
-                            renderOnZeroPageCount={null}
-                            />
-                        </div>
-                    </div>
+                    
                 </div>
         
             )

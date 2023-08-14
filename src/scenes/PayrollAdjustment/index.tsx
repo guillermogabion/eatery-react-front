@@ -49,6 +49,7 @@ export const PayrollAdjustment = (props: any) => {
     const [year, setYear] = useState<any>([]);
     const [pageSize, setPageSize] = useState(10);
     const [adjustmentTotal, setAdjustmentTotal] = useState<any>({});
+    const [ id, setId] = React.useState("");
 
     const [values, setValues] = useState({
         userId: '',
@@ -345,6 +346,7 @@ export const PayrollAdjustment = (props: any) => {
                         const valueObj: any = body.data;
                         setInitialValues(valueObj);
                         setModalShow(true);
+                        setId(true)
                     }
                 }
             }
@@ -1015,7 +1017,7 @@ export const PayrollAdjustment = (props: any) => {
         >
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-v-center">
-                Create Adjustment
+               {id ? "Update Adjustment" : "Create Adjustment"}
             </Modal.Title>
         </Modal.Header>
         <Modal.Body className="row w-100 px-5">
