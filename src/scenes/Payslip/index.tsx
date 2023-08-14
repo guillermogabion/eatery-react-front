@@ -74,6 +74,10 @@ export const Payslip = (props: any) => {
         setEmployee(updatedEmployee);
       }, []);
     
+    const handleExportHide = () => {
+        setEmployee([])
+    } 
+    
     const makeFilterData = (event: any) => {
     const { name, value } = event.target
         const filterObj: any = { ...filterData }
@@ -538,7 +542,9 @@ export const Payslip = (props: any) => {
                 centered
                 backdrop="static"
                 keyboard={false}
-                onHide={() => setExportModal(false)}
+                onHide={() => {setExportModal(false)
+                              handleExportHide()
+                }}
                 dialogClassName="modal-90w"
               >
                 <Modal.Header closeButton>
