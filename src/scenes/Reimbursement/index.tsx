@@ -307,19 +307,20 @@ export const Reimbursement = (props: any) => {
 
     const selectReceipt = (index: any, key: any, value: any) => {
         const valuesObj: any = receiptList
+
         if (valuesObj && valuesObj.content) {
             valuesObj.content.forEach((element: any, i: any) => {
                 if (element.id == value) {
-                    console.log("datas: ", element)
                     const valuesObj: any = [...reimbursementValues]
-                    valuesObj[index]['receiptId'] = element.id
-                    valuesObj[index]['tin'] = element.tin
-                    valuesObj[index]['invoice'] = element.invoice
-                    valuesObj[index]['companyName'] = element.companyName
-                    valuesObj[index]['transactionDate'] = element.transactionDate
-                    valuesObj[index]['filePath'] = element.fileNamePath
-                    valuesObj[index]['fileName'] = element.fileName
-                    valuesObj[index]['fileContentType'] = element.fileContentType
+                    valuesObj[index]['receiptId'] = (element.id || "")
+                    valuesObj[index]['tin'] = (element.tin || "")
+                    valuesObj[index]['invoice'] = (element.invoice || "")
+                    valuesObj[index]['companyName'] = (element.companyName || "")
+                    valuesObj[index]['transactionDate'] = (element.transactionDate || "")
+                    valuesObj[index]['filePath'] = (element.fileNamePath || "")
+                    valuesObj[index]['fileName'] = (element.fileName || "")
+                    valuesObj[index]['fileContentType'] = (element.fileContentType || "")
+                    valuesObj[index]['amount'] = (element.amount || "")
                     valuesObj[index]['isDisplayData'] = true
                     setReimbursementValues([...valuesObj])
                     return;
@@ -657,7 +658,7 @@ export const Reimbursement = (props: any) => {
                                     setOnSubmit(true)
                                     uploadFiles()
                                 }}
-                                disabled={(storedFiles && storedFiles.length > 0 ? false: true) || onSubmit}
+                                disabled={(storedFiles && storedFiles.length > 0 ? false : true) || onSubmit}
                                 className="w-[180px] mr-2">
                                 {onSubmit ?
                                     <div className="d-flex justify-content-center">
@@ -853,7 +854,7 @@ export const Reimbursement = (props: any) => {
                                                                                     />
                                                                                 </div>
                                                                                 <div className="form-group col-md-4 mb-3" >
-                                                                                    <label>Amount:</label>
+                                                                                    <label>Amount: </label>
                                                                                     <input type="number"
                                                                                         name="amount"
                                                                                         id="amount"
