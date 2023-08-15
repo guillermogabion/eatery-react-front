@@ -73,11 +73,15 @@ export const Payslip = (props: any) => {
         setModalShow(false);
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
+        setExportModal(false)
+
     }, []);
 
     const handleExportHide = () => {
-        setEmployee([])
+        setUserId('');
+        setExportModal(false)
     }
+  
 
     const makeFilterData = (event: any) => {
         const { name, value } = event.target
@@ -292,6 +296,11 @@ export const Payslip = (props: any) => {
             });
     };
 
+
+    // const getEmployeeList = () => {
+        
+    // }
+
     useEffect(() => {
         getAllPayroll(0)
         getAllPayrollLists()
@@ -317,6 +326,7 @@ export const Payslip = (props: any) => {
                 }
             }
         )
+       
     }, [])
     const handlePageClick = (event: any) => {
         getAllPayroll(event.selected)
@@ -539,7 +549,6 @@ export const Payslip = (props: any) => {
                 backdrop="static"
                 keyboard={false}
                 onHide={() => {
-                    setExportModal(false)
                     handleExportHide()
                 }}
                 dialogClassName="modal-90w"
