@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useRef } from "react";
 
-import { Tabs, Tab, Button, Modal,Table, Form } from "react-bootstrap"
+import { Tabs, Tab, Button, Modal, Table, Form } from "react-bootstrap"
 import Sent from './sent'
 import Unsent from './unsent'
 import ContainerWrapper from "../../components/ContainerWrapper"
@@ -18,7 +18,7 @@ export const Payslip = (props: any) => {
     const [modalShow, setModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
-    const [ payrollList, setPayrollList ] = useState<any>([]);
+    const [payrollList, setPayrollList] = useState<any>([]);
     const selectRef = useRef(null);
     const [showButtonMonth, setShowButtonMonth] = useState(false);
     const [showButtonYear, setShowButtonYear] = useState(false);
@@ -26,7 +26,7 @@ export const Payslip = (props: any) => {
     const [payrollMonth, setPayrollMonth] = useState("");
     const [payrollYear, setPayrollYear] = useState("");
     const [status, setStatus] = useState("");
-    const [ exportModal, setExportModal] = useState(false)
+    const [exportModal, setExportModal] = useState(false)
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [payrollId, setPayrollId] = useState("");
     const [userId, setUserId] = useState("");
@@ -64,22 +64,22 @@ export const Payslip = (props: any) => {
             11: "November",
             12: "December"
         };
-    
+
         return monthMap[monthNumber];
     }
 
     const handleModalHide = useCallback(() => {
-        setModalShow(false);  
+        setModalShow(false);
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
-      }, []);
-    
+    }, []);
+
     const handleExportHide = () => {
         setEmployee([])
-    } 
-    
+    }
+
     const makeFilterData = (event: any) => {
-    const { name, value } = event.target
+        const { name, value } = event.target
         const filterObj: any = { ...filterData }
         filterObj[name] = name && value !== "Select" ? value : ""
         setFilterData(filterObj)
@@ -108,7 +108,7 @@ export const Payslip = (props: any) => {
     const sendEmailIndividual = async () => {
         const valuesObj: any = { ...props.emailData };
         let payslipIds: any = [];
-       
+
         const tempArray: any = [...employee]
         tempArray.forEach((data: any, index: any) => {
             if (data.isCheck) {
@@ -120,9 +120,9 @@ export const Payslip = (props: any) => {
         console.log(valuesObj.ids)
 
         const payload = {
-            "ids" : valuesObj.ids
+            "ids": valuesObj.ids
         }
-        
+
         const loadingSwal = Swal.fire({
             title: '',
             allowOutsideClick: false,
@@ -130,47 +130,47 @@ export const Payslip = (props: any) => {
                 Swal.showLoading();
             }
         });
-        
+
         RequestAPI.postRequest(
             `${Api.sendIndividual}`,
             "",
             payload,
             {},
-            async(res) => {
-              const { status, body = { data: {}, error: {} } }: any = res;
-              console.log(valuesObj.ids)
-              if (status === 200 && body) {
-                if (body.error && body.error.message) {
-                    Swal.fire('Error', 
-                        body.error.message, 
-                        'error'
+            async (res) => {
+                const { status, body = { data: {}, error: {} } }: any = res;
+                console.log(valuesObj.ids)
+                if (status === 200 && body) {
+                    if (body.error && body.error.message) {
+                        Swal.fire('Error',
+                            body.error.message,
+                            'error'
                         );
-                } else {
-                    Swal.fire(
-                        'Success', 
-                        'Email sent successfully!', 
-                        'success'
+                    } else {
+                        Swal.fire(
+                            'Success',
+                            'Email sent successfully!',
+                            'success'
                         );
-                    handleModalHide()
-                   
+                        handleModalHide()
+
+                    }
                 }
-              }
             }
-          );    
+        );
     };
-   
-    const getAllPayroll = (pageNo : any ) => {
+
+    const getAllPayroll = (pageNo: any) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
-        Object.keys(filterDataTemp).forEach((d: any) => {
-            if (filterDataTemp[d]) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
 
-            queryString += `&${d}=${filterDataTemp[d]}`
-            } else {
-            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-            }
-        })
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
         }
         RequestAPI.getRequest(
             `${Api.payrollPayListAll}?size=10&page=${pageNo}${queryString}&sortDir=desc`,
@@ -178,24 +178,24 @@ export const Payslip = (props: any) => {
             {},
             {},
             async (res: any) => {
-              const { status, body = { data: {}, error: {} } }: any = res
-              if (status === 200 && body && body.data.content) {
-                if (body.error && body.error.message) {
-                } else {
-                    let tempArray: any = []
-                    body.data.content.forEach((d: any, i: any) => {
-                        tempArray.push({
-                            id: d.id,
-                            periodMonth: d.periodMonth,
-                            periodYear : d.periodYear,
-                            isGenerated : d.isGenerated
-                        })
-                    });
-                    setPayrollList(tempArray)
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data.content) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.content.forEach((d: any, i: any) => {
+                            tempArray.push({
+                                id: d.id,
+                                periodMonth: d.periodMonth,
+                                periodYear: d.periodYear,
+                                isGenerated: d.isGenerated
+                            })
+                        });
+                        setPayrollList(tempArray)
+                    }
                 }
-              }
             }
-          )
+        )
     }
     const getAllPayrollLists = () => {
         RequestAPI.getRequest(
@@ -220,23 +220,23 @@ export const Payslip = (props: any) => {
                         });
                         setPayroll(tempArray)
                     }
-              } 
+                }
             }
-          )
+        )
 
     }
-    const getPayrollList = ( id = 0) => {
+    const getPayrollList = (id = 0) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
         if (filterDataTemp) {
-        Object.keys(filterDataTemp).forEach((d: any) => {
-            if (filterDataTemp[d]) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
 
-            queryString += `&${d}=${filterDataTemp[d]}`
-            } else {
-            queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
-            }
-        })
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
         }
         RequestAPI.getRequest(
             `${Api.generatedList}?${queryString}`,
@@ -274,26 +274,26 @@ export const Payslip = (props: any) => {
                 "Authorization": `Bearer ${accessToken ? accessToken : Utility.getUserToken() || ""}`,
             },
         })
-        .then((response) => {
-            if (response.ok) {
-                return response.blob();
-            } else {
-                throw new Error('Network response was not ok.');
-            }
-        })
-        .then((blob) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'exportedPayslip.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setIsSubmit(false);
-        })
-        .catch((error) => {
-            setIsSubmit(false);
-        });
+            .then((response) => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then((blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'exportedPayslip.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setIsSubmit(false);
+            })
+            .catch((error) => {
+                setIsSubmit(false);
+            });
     };
 
     useEffect(() => {
@@ -311,10 +311,10 @@ export const Payslip = (props: any) => {
                     } else {
                         let tempArray: any = []
                         body.data.forEach((d: any, i: any) => {
-                                tempArray.push({
-                                    value: d.userAccountId,
-                                    label: d.lastname + "," + d.firstname + " " + d.middleName
-                                })
+                            tempArray.push({
+                                value: d.userAccountId,
+                                label: d.lastname + "," + d.firstname + " " + d.middleName
+                            })
                         });
                         setEmployee(tempArray)
                     }
@@ -326,43 +326,43 @@ export const Payslip = (props: any) => {
         getAllPayroll(event.selected)
     };
     const resetMonth = () => {
-    setPayrollMonth("");
-    const selectElement = document.getElementById("month");
+        setPayrollMonth("");
+        const selectElement = document.getElementById("month");
         if (selectElement) {
-        selectElement.selectedIndex = 0;
+            selectElement.selectedIndex = 0;
         }
         setShowButtonMonth(false);
 
     }
     const resetYear = () => {
-    setPayrollYear("");
-    const selectElement = document.getElementById("year");
+        setPayrollYear("");
+        const selectElement = document.getElementById("year");
         if (selectElement) {
-        selectElement.selectedIndex = 0;
+            selectElement.selectedIndex = 0;
         }
         setShowButtonYear(false);
 
     }
     const resetStatus = () => {
-    setStatus("");
-    const selectElement = document.getElementById("status");
+        setStatus("");
+        const selectElement = document.getElementById("status");
         if (selectElement) {
-        selectElement.selectedIndex = 0;
+            selectElement.selectedIndex = 0;
         }
         setShowButtonStatus(false);
 
     }
     const setFieldValue = (fieldName, fieldValue) => {
-      
+
         switch (fieldName) {
-          case "userId":
-            setUserId(fieldValue);
-            break;
-          default:
-            break;
+            case "userId":
+                setUserId(fieldValue);
+                break;
+            default:
+                break;
         }
-      };
- 
+    };
+
 
     return (
         <ContainerWrapper contents={<>
@@ -373,24 +373,24 @@ export const Payslip = (props: any) => {
                             <Sent />
                         </Tab>
                         <Tab id="payslip_unsent_tab" eventKey="tab2" title="Unsent">
-                            <Unsent/>
+                            <Unsent />
                         </Tab>
                     </Tabs>
-                    
+
                 </div>
                 <div className="d-flex justify-content-end mt-3" >
                     <div>
                         <Button className="mx-2"
                             id="payslip_exportpayslip_btn"
                             onClick={() => {
-                            setExportModal(true)
+                                setExportModal(true)
                             }}
                         >Export Payslip</Button>
                         <Button
                             id="payslip_emailpayslip_btn"
                             className="mx-2"
                             onClick={() => {
-                            setModalShow(true)
+                                setModalShow(true)
                             }}>Email Payslip</Button>
                     </div>
                 </div>
@@ -404,135 +404,135 @@ export const Payslip = (props: any) => {
                 keyboard={false}
                 dialogClassName="modal-90w"
                 onHide={handleModalHide}
-                >
+            >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                    Email Payslip
+                        Email Payslip
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
-                <div className="px-3 h-[60vh] overflow-auto">
-                <div className="w-100 pt-2 row">
-                    <div className="col-md-3">
-                        <label> Payroll List</label>
-                        <select 
-                            className="form-select"
-                            name="id"
-                            id="payslip_payrollselect"
-                            autoComplete="off"
-                            onChange={(e) => makeFilterData(e)}
-                        >
-                            <option value="" disabled selected>
-                                Select Payroll
-                            </option>
-                            {payroll && payroll.length &&
-                            payroll.map((item: any, index: string) => (
-                                <option value={item.id} key={`${index}_${item.id}`}>
-                                {getMonthName(item.label1)}, {item.label2} From: {item.label3} - To: { item.label4 }
-                                </option>
-                            ))}
-    
-                        </select>
-                    </div>
-                    <div className="input-container col-md-3">
-                        <label>Employee Name</label>
-                            <EmployeeDropdown
-                                id="payslip_employeename_modaldropdown"
-                                placeholder={"Employee"}
-                                singleChangeOption={singleChangeOption}
-                                name="userId"
-                                value={filterData && filterData['userId']}
-                                withEmployeeID={true}
+                    <div className="px-3 h-[60vh] overflow-auto">
+                        <div className="w-100 pt-2 row">
+                            <div className="col-md-3">
+                                <label> Payroll List</label>
+                                <select
+                                    className="form-select"
+                                    name="id"
+                                    id="payslip_payrollselect"
+                                    autoComplete="off"
+                                    onChange={(e) => makeFilterData(e)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select Payroll
+                                    </option>
+                                    {payroll && payroll.length &&
+                                        payroll.map((item: any, index: string) => (
+                                            <option value={item.id} key={`${index}_${item.id}`}>
+                                                {getMonthName(item.label1)}, {item.label2} From: {item.label3} - To: {item.label4}
+                                            </option>
+                                        ))}
+
+                                </select>
+                            </div>
+                            <div className="input-container col-md-3">
+                                <label>Employee Name</label>
+                                <EmployeeDropdown
+                                    id="payslip_employeename_modaldropdown"
+                                    placeholder={"Employee"}
+                                    singleChangeOption={singleChangeOption}
+                                    name="userId"
+                                    value={filterData && filterData['userId']}
+                                    withEmployeeID={true}
                                 />
+                            </div>
+                            <div className="col-md-2 pt-4">
+                                <Button
+                                    id="payslip_search_modalbtn"
+                                    style={{ width: 100 }}
+                                    onClick={() => getPayrollList()}
+                                    className="btn btn-primary mx-2">
+                                    Search
+                                </Button>
+                            </div>
+
+                        </div>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: 10 }}>
+                                        <Form.Check
+                                            type="checkbox"
+                                            id="Select All"
+                                            label="Select All"
+                                            onChange={(e) => {
+                                                selectAllEmployees(e.target.checked)
+                                            }}
+                                        />
+                                    </th>
+                                    <th>Employee Payroll ID</th>
+                                    <th>Employee Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    employee &&
+                                        employee.length > 0 ?
+                                        <>
+                                            {
+                                                employee.map((item: any, index: any) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>
+                                                                <Form.Check
+                                                                    id="payslip_check_formdata"
+                                                                    type="checkbox"
+                                                                    label=""
+                                                                    checked={item.isCheck}
+                                                                    onChange={(e) => {
+                                                                        onChangeCheckbox(index, e.target.checked)
+                                                                    }}
+                                                                />
+                                                            </td>
+                                                            <td id="payslip_id_formdata">{item.id}</td>
+                                                            <td id="payslip_employeename_formdata">{item.employeeName}</td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+
+                                        </>
+                                        :
+                                        null
+                                }
+                            </tbody>
+
+                        </Table>
+                        {
+                            employee &&
+                                employee.length == 0 ?
+                                <div className="w-100 text-center">
+                                    <label htmlFor="">No Records Found</label>
+                                </div>
+                                :
+                                null
+                        }
+
+
                     </div>
-                    <div className="col-md-2 pt-4">
+                    <div className="d-flex justify-content-end">
                         <Button
-                            id="payslip_search_modalbtn"
-                            style={{ width: 100 }}
-                            onClick={() => getPayrollList()}
-                            className="btn btn-primary mx-2">
-                            Search
+                            id="payslip_send_formbtn"
+                            style={{ width: 210 }}
+                            onClick={() => {
+                                sendEmailIndividual()
+                            }}
+                            className="btn btn-primary mx-2"
+                            disabled={!isAnyCheckboxChecked}
+                        >
+                            Send
                         </Button>
                     </div>
-                
-                </div>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th style={{ width: 10 }}>
-                                    <Form.Check
-                                        type="checkbox"
-                                        id="Select All"
-                                        label="Select All"
-                                        onChange={(e) => {
-                                            selectAllEmployees(e.target.checked)
-                                        }}
-                                    />
-                                </th>
-                                <th>Employee Payroll ID</th>
-                                <th>Employee Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                employee &&
-                                    employee.length > 0 ?
-                                    <>
-                                        {
-                                            employee.map((item: any, index: any) => {
-                                                return (
-                                                    <tr>
-                                                        <td>
-                                                            <Form.Check
-                                                                id="payslip_check_formdata"
-                                                                type="checkbox"
-                                                                label=""
-                                                                checked={item.isCheck}
-                                                                onChange={(e) => {
-                                                                    onChangeCheckbox(index, e.target.checked)
-                                                                }}
-                                                            />
-                                                        </td>
-                                                        <td id="payslip_id_formdata">{item.id}</td>
-                                                        <td id="payslip_employeename_formdata">{item.employeeName}</td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-    
-                                    </>
-                                    :
-                                    null
-                            }
-                        </tbody>
-    
-                    </Table>
-                    {
-                        employee &&
-                            employee.length == 0 ?
-                            <div className="w-100 text-center">
-                                <label htmlFor="">No Records Found</label>
-                            </div>
-                            :
-                            null
-                    }
-    
-                
-                </div>
-                <div className="d-flex justify-content-end">
-                    <Button
-                    id="payslip_send_formbtn"
-                    style={{ width: 210 }}
-                    onClick={() => {
-                        sendEmailIndividual()
-                    }}
-                    className="btn btn-primary mx-2"
-                    disabled={!isAnyCheckboxChecked}
-                    >
-                    Send
-                    </Button>
-                </div>
-                
+
                 </Modal.Body>
             </Modal>
             <Modal
@@ -542,63 +542,67 @@ export const Payslip = (props: any) => {
                 centered
                 backdrop="static"
                 keyboard={false}
-                onHide={() => {setExportModal(false)
-                              handleExportHide()
+                onHide={() => {
+                    setExportModal(false)
+                    handleExportHide()
                 }}
                 dialogClassName="modal-90w"
-              >
+            >
                 <Modal.Header closeButton>
-                  <Modal.Title id="contained-modal-title-vcenter">
-                    Export Payslip
-                  </Modal.Title>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Export Payslip
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
                     <div className="px-3 h-400 overflow-auto">
                         <div className="w-100 pt-2 pl-5 row">
                             <div className="col-md-6">
                                 <label> Payroll List</label>
-                                    <select 
-                                        className="form-select"
-                                        name="payrollId"
-                                        id="payslip_payrollselect2"
-                                        autoComplete="off"
-                                        onChange={(e) => setPayrollId(e.target.value)}
-                                    >
-                                        <option value="" disabled selected>
-                                            Select Payroll
-                                        </option>
-                                        {payroll && payroll.length &&
+                                <select
+                                    className="form-select"
+                                    name="payrollId"
+                                    id="payslip_payrollselect2"
+                                    autoComplete="off"
+                                    onChange={(e) => setPayrollId(e.target.value)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select Payroll
+                                    </option>
+                                    {payroll && payroll.length &&
                                         payroll.map((item: any, index: string) => (
                                             <option value={item.id} key={`${index}_${item.id}`}>
-                                            {getMonthName(item.label1)}, {item.label2} From: {item.label3} - To: { item.label4 }
+                                                {getMonthName(item.label1)}, {item.label2} From: {item.label3} - To: {item.label4}
                                             </option>
                                         ))}
-                
-                                    </select>
+
+                                </select>
                             </div>
                             <div className="col-md-6">
-                                    <label>Employee Name *</label>
-                                    <select
-                                        className="form-select"
-                                        value={userId}
-                                        onChange={(e) => {
+                                <label>Employee Name *</label>
+                                <select
+                                    className="form-select"
+                                    value={userId}
+                                    onChange={(e) => {
                                         const selectedValue = e.target.value;
                                         setFieldValue('userId', e.target.value);
-                                       
-                                        }}
-                                    >
-                                        <option value="" disabled selected>
+
+                                    }}
+                                >
+                                    <option value="" disabled selected>
                                         Select Employee
-                                        </option>
-                                        {employee &&
+                                    </option>
+                                    {employee &&
                                         employee.length &&
-                                        employee.map((item: any, index: string) => (
-                                            <option key={`${index}_${item.userId}`} value={item.userId}>
-                                            {item.label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    </div> 
+                                        employee.map((item: any, index: string) => {
+                                            return (
+                                                <option key={`${index}_${item.userId}`} value={item.value}>
+                                                    {item.label}
+                                                </option>
+                                            )
+
+                                        })}
+                                </select>
+                            </div>
                             <div className="pt-4 col-md-12 d-flex justify-content-center">
                                 <Button
                                     style={{ width: 300 }}
@@ -607,16 +611,16 @@ export const Payslip = (props: any) => {
                                     Export
                                 </Button>
                             </div>
-                           
+
                         </div>
                     </div>
                 </Modal.Body>
 
 
-              </Modal>
+            </Modal>
 
-        
 
-        </>} />        
+
+        </>} />
     )
 }
