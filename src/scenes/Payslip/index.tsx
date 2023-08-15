@@ -32,7 +32,7 @@ export const Payslip = (props: any) => {
     const [userId, setUserId] = useState("");
     const [filename, setFileName] = useState("");
     const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
-
+    // const [selectedEmployee, setSelectedEmployee] = useState([]);
 
 
 
@@ -73,9 +73,7 @@ export const Payslip = (props: any) => {
         setModalShow(false);
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
-        setExportModal(false)
-
-    }, []);
+    }, [employee]);
 
     const handleExportHide = () => {
         setUserId('');
@@ -302,6 +300,7 @@ export const Payslip = (props: any) => {
     // }
 
     useEffect(() => {
+        getPayrollList()
         getAllPayroll(0)
         getAllPayrollLists()
         RequestAPI.getRequest(
@@ -445,7 +444,9 @@ export const Payslip = (props: any) => {
                                 <EmployeeDropdown
                                     id="payslip_employeename_modaldropdown"
                                     placeholder={"Employee"}
-                                    singleChangeOption={singleChangeOption}
+                                    singleChangeOption={(selectedValue) => {
+                                        setSelectedEmployee(selectedValue);
+                                        singleChangeOption}}
                                     name="userId"
                                     value={filterData && filterData['userId']}
                                     withEmployeeID={true}
