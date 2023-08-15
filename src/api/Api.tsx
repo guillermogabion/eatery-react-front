@@ -308,6 +308,7 @@ const Api: any = {
   reimbursementBulkApprove : process.env.REACT_APP_API_URL + "request/reimbursement/approve/list",
   reimbursementBulkDecline : process.env.REACT_APP_API_URL + "request/reimbursement/decline/list",
   extractFailedReceipts : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/extractFailedReceipts",
+  createReimbursementReceiptList : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/findByUserId",
 
 
   getFile : process.env.REACT_APP_API_URL + "file/getUrl",

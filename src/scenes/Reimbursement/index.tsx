@@ -235,7 +235,7 @@ export const Reimbursement = (props: any) => {
 
     const getUploadedReceipts = (pageNo: any) => {
         RequestAPI.getRequest(
-            `${Api.getMyReceiptReimbursement}?size=1000&sort=id&sortDir=DESC`,
+            `${Api.createReimbursementReceiptList}/${60}?sort=id&sortDir=DESC`,
             "",
             {},
             {},
@@ -308,8 +308,8 @@ export const Reimbursement = (props: any) => {
     const selectReceipt = (index: any, key: any, value: any) => {
         const valuesObj: any = receiptList
 
-        if (valuesObj && valuesObj.content) {
-            valuesObj.content.forEach((element: any, i: any) => {
+        if (valuesObj) {
+            valuesObj.forEach((element: any, i: any) => {
                 if (element.id == value) {
                     const valuesObj: any = [...reimbursementValues]
                     valuesObj[index]['receiptId'] = (element.id || "")
@@ -774,9 +774,8 @@ export const Reimbursement = (props: any) => {
                                                                                 Select Receipt
                                                                             </option>
                                                                             {receiptList &&
-                                                                                receiptList.content &&
-                                                                                receiptList.content.length > 0 &&
-                                                                                receiptList.content.map((item: any, index: string) => (
+                                                                                receiptList.length > 0 &&
+                                                                                receiptList.map((item: any, index: string) => (
                                                                                     <option key={`${index}_${item}`} value={item.id}>
                                                                                         {item.fileName}
                                                                                     </option>
