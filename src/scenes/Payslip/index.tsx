@@ -73,6 +73,7 @@ export const Payslip = (props: any) => {
         setModalShow(false);
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
+        setIsAnyCheckboxChecked(false)
     }, [employee]);
 
     const handleExportHide = () => {
