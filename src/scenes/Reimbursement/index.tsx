@@ -513,6 +513,7 @@ export const Reimbursement = (props: any) => {
                     <Button
                         className="flex items-center"
                         onClick={() => {
+                            getUploadedReceipts(0)
                             setCreateReimbursementModal(true)
                             setReimbursementValues([{
                                 "receiptId": "",
