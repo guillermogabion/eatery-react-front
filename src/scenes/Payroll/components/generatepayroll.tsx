@@ -8,6 +8,7 @@ import { Utility } from "../../../utils";
 import EmployeeDropdown from "../../../components/EmployeeDropdown";
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 const ErrorSwal = withReactContent(Swal)
 
 export default function GeneratePayroll(props: any) {
@@ -112,6 +113,9 @@ export default function GeneratePayroll(props: any) {
                                     // item.isCheck
                                     selectAllEmployees(false)
                                     setIsSelectAll(false)
+                                    if (!isRegenerate){
+                                        props.back()
+                                    }
                                 }
                             });
                         }

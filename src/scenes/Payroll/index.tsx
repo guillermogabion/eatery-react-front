@@ -22,6 +22,7 @@ import Timekeeping from "./components/timekeeping"
 import GeneratePayroll from "./components/generatepayroll"
 import { Utility } from "../../utils"
 import Audit from "./components/audit"
+import { BsFillArrowLeftCircleFill } from "react-icons/bs"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -33,7 +34,7 @@ export const Payroll = (props: any) => {
     const [payrollPeriodModal, setPayrollPeriodModal] = React.useState(false);
     const [isCreatePayroll, setIsCreatePayroll] = useState<any>(false);
     const [isAudit, setIsAudit] = useState<any>(false);
-    const [key, setKey] = React.useState('timekeeping');
+    const [key, setKey] = React.useState('payroll');
     const [payrolls, setPayrolls] = useState<any>([]);
     const [periodMonths, setPeriodMonths] = useState<any>([]);
     const [adjustmentTypes, setAdjustmentTypes] = useState<any>([]);
@@ -84,7 +85,7 @@ export const Payroll = (props: any) => {
     }
     const handlePageClick = (event: any) => {
         const selectedPage = event.selected;
-        
+
         getPayroll(selectedPage, pageSize)
 
     };
@@ -93,10 +94,10 @@ export const Payroll = (props: any) => {
         setPageSize(selectedPageSize);
         getPayroll(0, selectedPageSize);
     };
-    
+
 
     useEffect(() => {
-       getPayroll(0, pageSize)
+        getPayroll(0, pageSize)
     }, [])
 
 
@@ -156,6 +157,7 @@ export const Payroll = (props: any) => {
                                                                 <label
                                                                     id={"payroll_update_payrollslabel_" + item.id}
                                                                     onClick={() => {
+                                                                        setKey("payroll")
                                                                         setIsCreatePayroll(true)
                                                                         setPayrollData({
                                                                             "payrollMonth": item.periodMonth,
@@ -168,7 +170,7 @@ export const Payroll = (props: any) => {
                                                                         })
                                                                     }}
                                                                     className="text-muted cursor-pointer">
-                                                                    Update
+                                                                    View
                                                                 </label>
                                                                 <br />
                                                                 <label
@@ -185,7 +187,6 @@ export const Payroll = (props: any) => {
                                                                             "isUpdate": false,
                                                                         })
                                                                         setIsAudit(true)
-                                                                        
                                                                     }}
                                                                     className="text-muted cursor-pointer">
                                                                     Audit
@@ -210,11 +211,11 @@ export const Payroll = (props: any) => {
                                 }
                             </div>
                         </div>
-                        
+
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="justify-content-start px-5">
-                                    <span className="font-bold mr-8 text-muted">Total Entries : { payrolls.totalElements }</span>
+                                    <span className="font-bold mr-8 text-muted">Total Entries : {payrolls.totalElements}</span>
                                 </div>
                                 <div className="flex items-center">
                                     <span className="text-muted pl-12 pr-3  ">Select Page Size:</span>
@@ -229,19 +230,19 @@ export const Payroll = (props: any) => {
                                 <div className="d-flex justify-content-end pr-10 ">
                                     <div className="">
                                         <ReactPaginate
-                                        className="d-flex justify-content-center align-items-center"
-                                        breakLabel="..."
-                                        nextLabel=">"
-                                        onPageChange={handlePageClick}
-                                        pageRangeDisplayed={5}
-                                        pageCount={(payrolls && payrolls.totalPages) || 0}
-                                        previousLabel="<"
-                                        previousLinkClassName="prev-next-pagination"
-                                        nextLinkClassName="prev-next-pagination"
-                                        activeLinkClassName="active-page-link"
-                                        disabledLinkClassName="prev-next-disabled"
-                                        pageLinkClassName="page-link"
-                                        renderOnZeroPageCount={null}
+                                            className="d-flex justify-content-center align-items-center"
+                                            breakLabel="..."
+                                            nextLabel=">"
+                                            onPageChange={handlePageClick}
+                                            pageRangeDisplayed={5}
+                                            pageCount={(payrolls && payrolls.totalPages) || 0}
+                                            previousLabel="<"
+                                            previousLinkClassName="prev-next-pagination"
+                                            nextLinkClassName="prev-next-pagination"
+                                            activeLinkClassName="active-page-link"
+                                            disabledLinkClassName="prev-next-disabled"
+                                            pageLinkClassName="page-link"
+                                            renderOnZeroPageCount={null}
                                         />
                                     </div>
                                 </div>
@@ -252,13 +253,21 @@ export const Payroll = (props: any) => {
                     <>
                         {
                             isAudit ? <>
-                            <Audit payrollData={payrollData} goBack={()=>{
-                                setIsCreatePayroll(false)
-                                setIsAudit(false)
-                            }} />
+                                <Audit payrollData={payrollData} goBack={() => {
+                                    setIsCreatePayroll(false)
+                                    setIsAudit(false)
+                                }} />
                             </>
                                 :
                                 <div className="px-5 py-5 pt-5 w-full ">
+                                    <div className="w-100 flex mb-[10px]">
+                                        <div className="flex items-center cursor-pointer" style={{ color: '#009FB5' }} onClick={() => {
+                                            setIsCreatePayroll(false)
+                                        }}>
+                                            <BsFillArrowLeftCircleFill className="mr-2" size={20} />
+                                            <label className="text-lg cursor-pointer">Back</label>
+                                        </div>
+                                    </div>
                                     <Tabs
                                         id="controlled-tab-example"
                                         activeKey={key}
@@ -302,7 +311,10 @@ export const Payroll = (props: any) => {
                                         <Tab id="payroll_payroll_audittabs" eventKey="payroll" title="Payroll">
                                             {
                                                 key == 'payroll' && Object.keys(payrollData).length != 0 ?
-                                                    <GeneratePayroll payrollData={payrollData} />
+                                                    <GeneratePayroll back={() => {
+                                                        setIsCreatePayroll(false)
+                                                        getPayroll(0, pageSize)
+                                                    }} payrollData={payrollData} />
                                                     :
                                                     null
                                             }

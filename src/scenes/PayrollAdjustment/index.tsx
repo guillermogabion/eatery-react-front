@@ -472,21 +472,22 @@ export const PayrollAdjustment = (props: any) => {
         let hasError = false
         if (!values.userId) {
             payload.adjustments.forEach((element: any, index: any) => {
-                if (element.userId == undefined) {
+                if (element.userId == undefined || element.userId == "") {
                     hasError = true
                 }
-                if (element.adjustmentTypeId == undefined) {
+                if (element.adjustmentTypeId == undefined || element.adjustmentTypeId == "") {
                     hasError = true
                 }
-                if (element.adjustmentAmount == undefined) {
+                if (element.adjustmentAmount == undefined || element.adjustmentAmount == "") {
                     hasError = true
                 }
-                if (element.periodMonth == undefined) {
+                if (element.periodMonth == undefined || element.periodMonth == "") {
                     hasError = true
                 }
-                if (element.periodYear == undefined) {
+                if (element.periodYear == undefined || element.periodYear == "") {
                     hasError = true
                 }
+                
             });
 
             if (hasError) {
