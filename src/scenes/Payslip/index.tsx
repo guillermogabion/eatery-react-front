@@ -32,7 +32,7 @@ export const Payslip = (props: any) => {
     const [userId, setUserId] = useState("");
     const [filename, setFileName] = useState("");
     const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
-
+    // const [selectedEmployee, setSelectedEmployee] = useState([]);
 
 
 
@@ -73,11 +73,14 @@ export const Payslip = (props: any) => {
         setModalShow(false);
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
-    }, []);
+        setIsAnyCheckboxChecked(false);
+    }, [employee]);
 
     const handleExportHide = () => {
-        setEmployee([])
+        setUserId('');
+        setExportModal(false)
     }
+  
 
     const makeFilterData = (event: any) => {
         const { name, value } = event.target
@@ -292,31 +295,38 @@ export const Payslip = (props: any) => {
             });
     };
 
+
+    // const getEmployeeList = () => {
+        
+    // }
+
     useEffect(() => {
+        getPayrollList()
         getAllPayroll(0)
         getAllPayrollLists()
-        RequestAPI.getRequest(
-            `${Api.employeeList}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        let tempArray: any = []
-                        body.data.forEach((d: any, i: any) => {
-                            tempArray.push({
-                                value: d.userAccountId,
-                                label: d.lastname + "," + d.firstname + " " + d.middleName
-                            })
-                        });
-                        setEmployee(tempArray)
+            RequestAPI.getRequest(
+                `${Api.employeeList}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            let tempArray: any = []
+                            body.data.forEach((d: any, i: any) => {
+                                tempArray.push({
+                                    value: d.userAccountId,
+                                    label: d.lastname + "," + d.firstname + " " + d.middleName
+                                })
+                            });
+                            setEmployee(tempArray)
+                        }
                     }
                 }
-            }
-        )
+            )
+       
     }, [])
     const handlePageClick = (event: any) => {
         getAllPayroll(event.selected)
@@ -435,7 +445,8 @@ export const Payslip = (props: any) => {
                                 <EmployeeDropdown
                                     id="payslip_employeename_modaldropdown"
                                     placeholder={"Employee"}
-                                    singleChangeOption={singleChangeOption}
+                                    singleChangeOption={
+                                        singleChangeOption}
                                     name="userId"
                                     value={filterData && filterData['userId']}
                                     withEmployeeID={true}
@@ -539,7 +550,6 @@ export const Payslip = (props: any) => {
                 backdrop="static"
                 keyboard={false}
                 onHide={() => {
-                    setExportModal(false)
                     handleExportHide()
                 }}
                 dialogClassName="modal-90w"
