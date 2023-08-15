@@ -74,6 +74,10 @@ export const Payslip = (props: any) => {
         setEmployee(updatedEmployee);
       }, []);
     
+    const handleExportHide = () => {
+        setEmployee([])
+    } 
+    
     const makeFilterData = (event: any) => {
     const { name, value } = event.target
         const filterObj: any = { ...filterData }
@@ -295,6 +299,28 @@ export const Payslip = (props: any) => {
     useEffect(() => {
         getAllPayroll(0)
         getAllPayrollLists()
+        RequestAPI.getRequest(
+            `${Api.employeeList}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.forEach((d: any, i: any) => {
+                                tempArray.push({
+                                    value: d.userAccountId,
+                                    label: d.lastname + "," + d.firstname + " " + d.middleName
+                                })
+                        });
+                        setEmployee(tempArray)
+                    }
+                }
+            }
+        )
     }, [])
     const handlePageClick = (event: any) => {
         getAllPayroll(event.selected)
@@ -516,12 +542,14 @@ export const Payslip = (props: any) => {
                 centered
                 backdrop="static"
                 keyboard={false}
-                onHide={() => setExportModal(false)}
+                onHide={() => {setExportModal(false)
+                              handleExportHide()
+                }}
                 dialogClassName="modal-90w"
               >
                 <Modal.Header closeButton>
                   <Modal.Title id="contained-modal-title-vcenter">
-                    Export Paylist
+                    Export Payslip
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
