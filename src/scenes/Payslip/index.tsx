@@ -30,6 +30,7 @@ export const Payslip = (props: any) => {
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [payrollId, setPayrollId] = useState("");
     const [userId, setUserId] = useState("");
+    const [filename, setFileName] = useState("");
     const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
 
 
@@ -260,13 +261,8 @@ export const Payslip = (props: any) => {
     }
 
     const exportPayslip = (payrollId: any, userId: any, accessToken: any) => {
-        console.log("payrollId:", payrollId);
-        console.log("userId:", userId);
-
         setIsSubmit(true);
-
         const url = `${Api.exportPayslip}?payrollId=${payrollId}&userId=${userId}`;
-
         fetch(url, {
             method: "POST",
             headers: {
@@ -285,7 +281,7 @@ export const Payslip = (props: any) => {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'exportedPayslip.pdf';
+                a.download = `${filename ? filename : "Payslip"}.pdf`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -585,7 +581,9 @@ export const Payslip = (props: any) => {
                                     onChange={(e) => {
                                         const selectedValue = e.target.value;
                                         setFieldValue('userId', e.target.value);
-
+                                        const selectedIndex = e.target.selectedIndex;
+                                        const label = e.target[selectedIndex].label;
+                                        setFileName(label)
                                     }}
                                 >
                                     <option value="" disabled selected>
@@ -607,8 +605,16 @@ export const Payslip = (props: any) => {
                                 <Button
                                     style={{ width: 300 }}
                                     onClick={() => exportPayslip(payrollId, userId)}
+                                    disabled={isSubmit}
                                     className="btn btn-primary mx-2">
-                                    Export
+                                    {isSubmit ?
+                                        <div className="d-flex justify-content-center">
+                                            <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
+                                            Exporting
+                                        </div>
+                                        : "Export"
+                                    }
+
                                 </Button>
                             </div>
 
