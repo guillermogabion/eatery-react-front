@@ -73,7 +73,7 @@ export const Payslip = (props: any) => {
         setModalShow(false);
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
-        setIsAnyCheckboxChecked(false)
+        setIsAnyCheckboxChecked(false);
     }, [employee]);
 
     const handleExportHide = () => {
@@ -304,28 +304,28 @@ export const Payslip = (props: any) => {
         getPayrollList()
         getAllPayroll(0)
         getAllPayrollLists()
-        RequestAPI.getRequest(
-            `${Api.employeeList}`,
-            "",
-            {},
-            {},
-            async (res: any) => {
-                const { status, body = { data: {}, error: {} } }: any = res
-                if (status === 200 && body) {
-                    if (body.error && body.error.message) {
-                    } else {
-                        let tempArray: any = []
-                        body.data.forEach((d: any, i: any) => {
-                            tempArray.push({
-                                value: d.userAccountId,
-                                label: d.lastname + "," + d.firstname + " " + d.middleName
-                            })
-                        });
-                        setEmployee(tempArray)
+            RequestAPI.getRequest(
+                `${Api.employeeList}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            let tempArray: any = []
+                            body.data.forEach((d: any, i: any) => {
+                                tempArray.push({
+                                    value: d.userAccountId,
+                                    label: d.lastname + "," + d.firstname + " " + d.middleName
+                                })
+                            });
+                            setEmployee(tempArray)
+                        }
                     }
                 }
-            }
-        )
+            )
        
     }, [])
     const handlePageClick = (event: any) => {
@@ -445,9 +445,8 @@ export const Payslip = (props: any) => {
                                 <EmployeeDropdown
                                     id="payslip_employeename_modaldropdown"
                                     placeholder={"Employee"}
-                                    singleChangeOption={(selectedValue) => {
-                                        setSelectedEmployee(selectedValue);
-                                        singleChangeOption}}
+                                    singleChangeOption={
+                                        singleChangeOption}
                                     name="userId"
                                     value={filterData && filterData['userId']}
                                     withEmployeeID={true}
