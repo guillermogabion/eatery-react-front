@@ -114,11 +114,11 @@ export const ChangePassword = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
-        <div>
-          <div className="w-100 pt-2">
-            <div className="col-md-12 col-lg-10 px-5 py-5">
-              <div className="ForgotPassword mt-5">
+      <div className="w-100 px-5 py-5 ">
+        <div className="p-0 m-0 flex justify-center">
+          <div className="w-100 px-0 pt-2 ">
+            <div className="px-5 py-5">
+              <div className="ForgotPassword mt-5 ">
                 {!isSuccess ? (
                   <div className="contentForm">
                     <Formik
@@ -190,8 +190,9 @@ export const ChangePassword = (props: any) => {
                                 type="submit"
                                 className="btn btn-primary"
                                 disabled={
-                                  !(values.oldPassword && values.newPassword && values.conPassword) ||
-                                  (errorOldPass.length && errorNewPass.length && errorConPass.length)
+                                  (errorOldPass.length > 0 || errorNewPass.length > 0 || errorConPass.length > 0 ? true : false) ||
+                                  (values.oldPassword == "" || values.newPassword == "" || values.conPassword =="") || 
+                                  (errors.conPassword)
                                 }>
                                 SUBMIT
                             </Button>
