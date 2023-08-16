@@ -27,24 +27,24 @@ export default function Leaves(props: any) {
     ])
 
     useEffect(() => {
-        // if (payrollData){
-        //     let data = { ...payrollData }
-        //     let from = data.from
-        //     let to = data.to
-        //     const filterObj: any = { ...filterData }        
-        //     filterObj["dateFrom"] = from
-        //     filterObj["dateTo"] = to
-        //     setFilterData(filterObj)
-        // }
+        if (payrollData){
+            let data = { ...payrollData }
+            let from = data.from
+            let to = data.to
+            const filterObj: any = { ...filterData }        
+            filterObj["dateFrom"] = from
+            filterObj["dateTo"] = to
+            setFilterData(filterObj)
+        }
         
     }, [])
 
-    // useEffect(() => {
-    //     if (filterData){
-    //         getAllLeaves(0)
-    //     }
+    useEffect(() => {
+        if (filterData){
+            getAllLeaves(0, pageSize)
+        }
         
-    // }, [filterData])
+    }, [filterData])
     
 
     const handlePageClick = (event: any) => {
