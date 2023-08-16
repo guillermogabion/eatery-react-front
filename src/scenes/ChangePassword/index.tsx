@@ -135,13 +135,33 @@ export const ChangePassword = (props: any) => {
                           const { status, body = { data: {}, error: {} } }: any = res
                           if (status === 200 || status === 201) {
                             if (body.error && body.error.message){
-                              ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
+                              ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "changepassword_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                             }else{
                               setIsSuccess(true)
                             }
                             
                           } else {
-                            ErrorSwal.fire("Error!", (body.error && body.error.message) || "", "error")
+                            ErrorSwal.fire({
+                              title: 'Error!',
+                              text: (body.error && body.error.message) || "",
+                              didOpen: () => {
+                                const confirmButton = Swal.getConfirmButton();
+                      
+                                if(confirmButton)
+                                  confirmButton.id = "changepassword_errorconfirm2_alertbtn"
+                              },
+                              icon: 'error',
+                          })
                           }
                         })
                       }}>

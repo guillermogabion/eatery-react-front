@@ -122,18 +122,30 @@ export const Holiday = (props: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200) {
             getHolidays(0, "")
-            ErrorSwal.fire(
-              'Deleted!',
-              (body && body.data) || "",
-              'success'
-            )
+            ErrorSwal.fire({
+              title: 'Deleted!',
+              text: (body && body.data) || "",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "holiday_successdeleteconfirm_alertbtn"
+              },
+              icon: 'success',
+          })
           } else {
             //error
-            ErrorSwal.fire(
-              'Failed!',
-              (body.error && body.error.message) || "",
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Failed!',
+              text: (body.error && body.error.message) || "",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "holiday_errorconfirm_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -356,27 +368,45 @@ export const Holiday = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "holiday_errorconfirm2_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
                       getHolidays(0, "")
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "holiday_successconfirm2_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "Something error!",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "Something error!",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "holiday_errorconfirm3_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                   setIsSubmit(false)
                 })
@@ -385,27 +415,45 @@ export const Holiday = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "holiday_errorconfirm4_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
                       getHolidays(0, "")
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "holiday_successconfirm3_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "Something error!",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "Something error!",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "holiday_errorconfirm5_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                   setIsSubmit(false)
                 })

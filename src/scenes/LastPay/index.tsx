@@ -143,27 +143,43 @@ export const LastPay = (props: any) => {
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
 
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "lastpay_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "lastpay_successconfirm_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getLastPay(0)
                         }
                     } else {
-
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "lastpay_errorconfirm2_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }

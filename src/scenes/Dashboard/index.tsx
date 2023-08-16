@@ -99,25 +99,43 @@ export const Dashboard = (props: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
-                ErrorSwal.fire(
-                  'Error!',
-                  (body.error && body.error.message) || "",
-                  'error'
-                )
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: (body.error && body.error.message) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "dashboard_errorconfirm_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
-                ErrorSwal.fire(
-                  'Success!',
-                  (body.data) || "",
-                  'success'
-                )
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: (body.data) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "dashboard_successconfirm_alertbtn"
+                  },
+                  icon: 'success',
+              })
                 getFetchData(0)
               }
             } else {
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || 'Something Error.',
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "Something Error.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "dashboard_errorconfirm2_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
 
@@ -150,26 +168,43 @@ export const Dashboard = (props: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
-                ErrorSwal.fire(
-                  'Error!',
-                  (body.error && body.error.message) || "",
-                  'error'
-                )
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: (body.error && body.error.message) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "dashboard_errorconfirm3_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
                 getFetchData(0)
-                ErrorSwal.fire(
-                  'Success!',
-                  (body.data) || "",
-                  'success'
-                )
-
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: (body.data) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "dashboard_successconfirm2_alertbtn"
+                  },
+                  icon: 'success',
+              })
               }
             } else {
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || 'Something Error.',
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "Something Error.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "dashboard_errorconfirm4_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
 

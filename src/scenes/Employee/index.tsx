@@ -460,25 +460,43 @@ export const Employee = (props: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "employee_errorconfirm_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               getAllEmployee(0)
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "employee_successconfirm_alertbtn"
+                },
+                icon: 'success',
+            })
             }
           } else {
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "employee_errorconfirm2_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -497,19 +515,30 @@ export const Employee = (props: any) => {
 
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
-              ErrorSwal.fire(
-                "Error!",
-                body.error.message || "",
-                "error"
-
-              );
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "employee_errorconfirm3_alertbtn"
+                },
+                icon: 'error',
+            })
               handleCloseModal();
             } else {
-              ErrorSwal.fire(
-                "Updated Successfully!",
-                body.data || "",
-                "success"
-              ).then((result) => {
+              ErrorSwal.fire({
+                title: 'Updated Successfully!',
+                text: body.data || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "employee_successconfirm2_alertbtn"
+                },
+                icon: 'success',
+            }).then((result) => {
                 if (result.isConfirmed) {
                   location.reload();
                 }
@@ -517,7 +546,17 @@ export const Employee = (props: any) => {
               handleCloseModal();
             }
           } else {
-            ErrorSwal.fire("Error!", "Something Error.", "error");
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "employee_errorconfirm4_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         }
       );
@@ -2326,17 +2365,29 @@ export const Employee = (props: any) => {
 
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
-                ErrorSwal.fire(
-                  'Error!',
-                  (body.error && body.error.message) || "",
-                  'error'
-                )
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: (body.error && body.error.message) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "employee_errorconfirm5_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
-                ErrorSwal.fire(
-                  'Updated Successfully!',
-                  (body.data || ""),
-                  'success'
-                ).then((result) => {
+                ErrorSwal.fire({
+                  title: 'Updated Successfully!',
+                  text: (body.data) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "employee_successconfirm3_alertbtn"
+                  },
+                  icon: 'success',
+              }).then((result) => {
                   if (result.isConfirmed) {
                     location.reload()
                   }
@@ -2344,11 +2395,17 @@ export const Employee = (props: any) => {
 
               }
             } else {
-              ErrorSwal.fire(
-                'Error!',
-                'Something Error.',
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: "Something Error.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "employee_errorconfirm6_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
         } else {
@@ -2357,21 +2414,33 @@ export const Employee = (props: any) => {
 
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
-                ErrorSwal.fire(
-                  'Error!',
-                  (body.error && body.error.message) || "",
-                  'error'
-                )
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: (body.error && body.error.message) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "employee_errorconfirm7_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
                 let messageBody = ""
                 if (body.data && body.data.username && body.data.password) {
                   messageBody = "Username: " + body.data.username + "<br>" + "Password: " + body.data.password
                 }
-                ErrorSwal.fire(
-                  'Created Successfully!',
-                  messageBody,
-                  'success'
-                ).then((result) => {
+                ErrorSwal.fire({
+                  title: 'Created Successfully!',
+                  text: messageBody,
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "employee_successconfirm4_alertbtn"
+                  },
+                  icon: 'success',
+              }).then((result) => {
                   if (result.isConfirmed) {
                     location.reload()
                   }
@@ -2379,11 +2448,17 @@ export const Employee = (props: any) => {
 
               }
             } else {
-              ErrorSwal.fire(
-                'Error!',
-                'Something Error.',
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: "Something Error.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "employee_errorconfirm8_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
         }
@@ -3013,28 +3088,46 @@ export const Employee = (props: any) => {
                       const { status, body = { data: {}, error: {} } }: any = res
                       if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                          ErrorSwal.fire(
-                            'Error!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                          )
+                          ErrorSwal.fire({
+                            title: 'Error!',
+                            text: (body.error && body.error.message) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "employee_errorconfirm9_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                         } else {
                           getAllEmployee(0)
-                          ErrorSwal.fire(
-                            'Success!',
-                            (body.data) || "",
-                            'success'
-                          )
+                          ErrorSwal.fire({
+                            title: 'Success!',
+                            text: (body.data) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "employee_successconfirm5_alertbtn"
+                            },
+                            icon: 'success',
+                        })
                           setModalPasswordShow(false)
                           setPassword("")
                           setShowPassword(false)
                         }
                       } else {
-                        ErrorSwal.fire(
-                          'Error!',
-                          'Something Error.',
-                          'error'
-                        )
+                        ErrorSwal.fire({
+                          title: 'Error!',
+                          text: "Something Error.",
+                          didOpen: () => {
+                            const confirmButton = Swal.getConfirmButton();
+                  
+                            if(confirmButton)
+                              confirmButton.id = "employee_errorconfirm10_alertbtn"
+                          },
+                          icon: 'error',
+                      })
                         setModalPasswordShow(false)
                       }
                     }
