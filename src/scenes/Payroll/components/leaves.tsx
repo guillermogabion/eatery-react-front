@@ -27,25 +27,18 @@ export default function Leaves(props: any) {
     ])
 
     useEffect(() => {
-        if (payrollData){
+        if (payrollData) {
             let data = { ...payrollData }
             let from = data.from
             let to = data.to
-            const filterObj: any = { ...filterData }        
+            const filterObj: any = { ...filterData }
             filterObj["dateFrom"] = from
             filterObj["dateTo"] = to
             setFilterData(filterObj)
-        }
-        
-    }, [])
-
-    useEffect(() => {
-        if (filterData){
+        }else{
             getAllLeaves(0, pageSize)
         }
-        
-    }, [filterData])
-    
+    }, [])
 
     const handlePageClick = (event: any) => {
         const selectedPage = event.selected;
@@ -58,6 +51,7 @@ export default function Leaves(props: any) {
     };
 
     const getAllLeaves = (page: any = 0, pageSize: any) => {
+        console.log("Test")
         let queryString = ""
         let filterDataTemp = { ...filterData }
 
@@ -88,7 +82,6 @@ export default function Leaves(props: any) {
                 }
             )
         } else {
-
             RequestAPI.getRequest(
                 `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                 "",
@@ -183,15 +176,15 @@ export default function Leaves(props: any) {
                     </div>
                     <div className="input-container col-md-3 pt-4">
                         <Button
-                        id="payrollgenerate_search_btn"
-                        style={{ width: 210 }}
-                        onClick={() => getAllLeaves(0, pageSize)}
-                        className="btn btn-primary mx-2">
-                        Search
+                            id="payrollgenerate_search_btn"
+                            style={{ width: 210 }}
+                            onClick={() => getAllLeaves(0, pageSize)}
+                            className="btn btn-primary mx-2">
+                            Search
                         </Button>
                     </div>
                 </div>
-              
+
             </div>
             <Table responsive>
                 <thead>
@@ -260,8 +253,8 @@ export default function Leaves(props: any) {
                 <div className="col-md-6">
                     <div className="justify-content-start">
                         <div className="flex items-center">
-                        <span className="text-muted mr-3">Select Page Size:</span>
-                            <select id="pageSizeSelect" value={pageSize} className="form-select" style={{ fontSize: "16px", width: "150px" }} onChange={handlePageSizeChange}>
+                            <span className="text-muted mr-3">Select Page Size:</span>
+                            <select id="pageSizeSelect" value={pageSize} className="form-select" style={{ fontSize: "16px", width: "150px" }} onChange={(e: any) => { handlePageSizeChange(e) }}>
                                 <option value={10}>10</option>
                                 <option value={50}>50</option>
                                 <option value={100}>100</option>
@@ -291,9 +284,9 @@ export default function Leaves(props: any) {
                     </div>
                 </div>
             </div>
-           
+
             <div className="d-flex justify-content-end">
-                
+
             </div>
         </div>);
 }
