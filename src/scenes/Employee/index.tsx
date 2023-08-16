@@ -2803,7 +2803,7 @@ export const Employee = (props: any) => {
                           {
                             item.acctStatus == 'LOCKED' ?
                               <div>
-                                <label onClick={() => unlockEmployee(item.id)}>Unlock</label>
+                                <label id={"employee_unlock_mainbtn_" + item.id} onClick={() => unlockEmployee(item.id)}>Unlock</label>
                               </div>
 
                               :

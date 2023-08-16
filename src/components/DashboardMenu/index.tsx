@@ -92,7 +92,7 @@ const DashboardMenu = (props: any) => {
                                 <div >
                                     
                                     <NavLink
-                                        id={"navlink_" + name}
+                                        id={"navlink_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}
                                         key={`${index}${route}`}
                                         activeClassName={currentRoutePath == route ? "activeMenu" : ""}
                                         className="text-white flex items-center cursor-pointer accordionMenu justify-start "
@@ -101,9 +101,9 @@ const DashboardMenu = (props: any) => {
                                         onClick={() => {
                                             setCurrentRoutePath(route)
                                         }}>
-                                        <img id={"navlinkimg_" + name} src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
+                                        <img id={"navlinkimg_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')} src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
                                         <span>
-                                            <span id={"navlinkspan_" + name}>{name}</span>
+                                            <span id={"navlinkspan_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}>{name}</span>
                                         </span>
                                     </NavLink>
                                 </div>
@@ -112,7 +112,7 @@ const DashboardMenu = (props: any) => {
                         return (
                             <Accordion defaultActiveKey={menu_index} key={name} style={{ borderRadius: 0, border: 0 }} >
                                 <Accordion.Item eventKey={i} key={`${i}${name}`} style={{ borderRadius: 0, border: 0, backgroundColor: "#009FB5" }} >
-                                    <Accordion.Header id={"menuaccordheader_" + i + name}  key={`${i}`} style={{ fontWeight: 'bolder' }}>
+                                    <Accordion.Header id={"menuaccordheader_" + name}  key={`${i}`} style={{ fontWeight: 'bolder' }}>
                                         <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
                                         {name}
                                     </Accordion.Header>
@@ -123,7 +123,7 @@ const DashboardMenu = (props: any) => {
 
                                                 return (
                                                     <NavLink
-                                                        id={"navlinksub_" + i + '_' + index}
+                                                        id={"navlinksub_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '') + "_" +  label.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}
                                                         key={`${index}${label}`}
                                                         activeClassName={currentRoutePath == route ? "activeMenu" : ""}
                                                         className="text-white d-flex align-items-center cursor-pointer accordionMenu"
@@ -133,7 +133,7 @@ const DashboardMenu = (props: any) => {
                                                             setCurrentRoutePath(route)
                                                         }}>
                                                         <span>
-                                                            <span id={"navlinksubspan_" + i + '_' + index}>{label}</span>
+                                                            <span id={"navlinksubspan_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '') + "_" + label.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}>{label}</span>
                                                         </span>
                                                     </NavLink>
                                                 )
