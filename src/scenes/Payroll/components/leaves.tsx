@@ -27,24 +27,24 @@ export default function Leaves(props: any) {
     ])
 
     useEffect(() => {
-        if (payrollData){
-            let data = { ...payrollData }
-            let from = data.from
-            let to = data.to
-            const filterObj: any = { ...filterData }        
-            filterObj["dateFrom"] = from
-            filterObj["dateTo"] = to
-            setFilterData(filterObj)
-        }
+        // if (payrollData){
+        //     let data = { ...payrollData }
+        //     let from = data.from
+        //     let to = data.to
+        //     const filterObj: any = { ...filterData }        
+        //     filterObj["dateFrom"] = from
+        //     filterObj["dateTo"] = to
+        //     setFilterData(filterObj)
+        // }
         
     }, [])
 
-    useEffect(() => {
-        if (filterData){
-            getAllLeaves(0)
-        }
+    // useEffect(() => {
+    //     if (filterData){
+    //         getAllLeaves(0)
+    //     }
         
-    }, [filterData])
+    // }, [filterData])
     
 
     const handlePageClick = (event: any) => {
@@ -181,30 +181,11 @@ export default function Leaves(props: any) {
                             />
                         </div>
                     </div>
-                    {/* <div>
-                        <label className="ml-[10px]">Status</label>
-                        <div className="input-container">
-                            <select
-                                className={`form-select`}
-                                name="status"
-                                id="status"
-                                value={filterData["status"]}
-                                onChange={(e) => makeFilterData(e)}>
-                                {statusList &&
-                                    statusList.length &&
-                                    statusList.map((item: any, index: string) => (
-                                        <option key={`${index}_${item}`} value={item}>
-                                            {Utility.capitalizeFirstLetter(item)}
-                                        </option>
-                                    ))}
-                            </select>
-                        </div>
-                    </div> */}
                     <div className="input-container col-md-3 pt-4">
                         <Button
                         id="payrollgenerate_search_btn"
                         style={{ width: 210 }}
-                        onClick={() => getAllLeaves(0)}
+                        onClick={() => getAllLeaves(0, pageSize)}
                         className="btn btn-primary mx-2">
                         Search
                         </Button>
