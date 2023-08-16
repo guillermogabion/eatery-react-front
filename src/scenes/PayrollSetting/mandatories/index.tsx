@@ -71,9 +71,12 @@ const Mandatory = () => {
       </div>
       <div>
         <span className="text-primary font-bold" style={{fontSize: "20px"}}>Philhealth</span>
+        <PhilHealthPage />
+      </div>
+      <div>
+        <span className="text-primary font-bold" style={{fontSize: "20px"}}>HDMF</span>
         <HFMDPage />
       </div>
-      <PhilHealthPage />
 
 
 

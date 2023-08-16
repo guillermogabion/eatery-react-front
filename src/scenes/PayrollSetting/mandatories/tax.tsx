@@ -117,7 +117,7 @@ const tax = (props: any) => {
     return (
         <div>
             <div className="hide-x">
-                <div className="w-100 pt-2">
+                <div>
 
                     <Modal
                         show={taxAnnualModalShow}
@@ -234,7 +234,7 @@ const tax = (props: any) => {
                     </Modal>
                     
                 </div>
-                <div className="d-flex justify-content-start mt-6 pt-6" >
+                <div className="d-flex justify-content-start mt-3 pb-4" >
                     <div>
                         <Button
                             id="payrollsettingstax_downloadtemplatemonthly_btn"
