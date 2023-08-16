@@ -44,7 +44,7 @@ const Mandatory = () => {
 
   return (
     <div className='p-3'>
-      <Tabs defaultActiveKey="sss" id="sss"
+      {/* <Tabs defaultActiveKey="sss" id="sss"
         onSelect={(k: any) => {
           setKey(k)
         }}>
@@ -60,11 +60,20 @@ const Mandatory = () => {
         <Tab eventKey="philhealth" title="Philhealth">
           <PhilHealthPage />
         </Tab>
-      </Tabs>
-      {/* <SSSPage />
-      <TaxPage />
-      <HFMDPage />
-      <PhilHealthPage /> */}
+      </Tabs> */}
+      <div>
+        <span className="text-primary font-bold" style={{fontSize: "20px"}}>SSS</span>
+        <SSSPage />
+      </div>
+      <div>
+        <span className="text-primary font-bold" style={{fontSize: "20px"}}>Tax</span>
+        <TaxPage />
+      </div>
+      <div>
+        <span className="text-primary font-bold" style={{fontSize: "20px"}}>Philhealth</span>
+        <HFMDPage />
+      </div>
+      <PhilHealthPage />
 
 
 

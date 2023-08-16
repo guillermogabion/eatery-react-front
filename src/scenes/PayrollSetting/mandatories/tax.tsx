@@ -19,6 +19,8 @@ const tax = (props: any) => {
     const [taxYear, setTaxYear] = useState([]);
     const [modalMonthlyUploadShow, setModalMonthlyUploadShow] = React.useState(false);
     const [modalYearlyUploadShow, setModalYearlyUploadShow] = React.useState(false);
+    const [ taxAnnualModalShow, setTaxAnnualModalShow ] = React.useState(false)
+    const [ taxMonthlyModalShow, setTaxMonthlyModalShow ] = React.useState(false)
 
     const tableMonthlyHeaders = [
         'Compensation Range 1',
@@ -114,70 +116,29 @@ const tax = (props: any) => {
       };
     return (
         <div>
-             <div className="hide-x">
+            <div className="hide-x">
                 <div className="w-100 pt-2">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <h3 style={{ fontWeight: 'bold', padding: '10px' }} >Tax Table (Monthly)</h3>
-                            <div className="tax-table-container">
 
-                                <Table responsive>
-                                        <thead>
-                                            <tr className="tax-sticky-header">
-                                                {
-                                                    tableMonthlyHeaders &&
-                                                    tableMonthlyHeaders.length &&
-                                                    tableMonthlyHeaders.map((item: any, index: any) => {
-                                                        return (
-                                                            <th style={{ width: '20px' }}>{item}</th>
-                                                            )
-                                                            
-                                                    })
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            {
-                                                taxMonth &&
-                                                taxMonth.length > 0 &&
-                                                taxMonth.map((item: any, index: any) => {
-                                                    return (
-                                                        <tr>
-                                                <td id="payrollsettingstax_basicrangelower_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
-                                                <td id="payrollsettingstax_basicrangeupper_data"> {Utility.formatToCurrency(item.basicRangeUpper)}</td>
-                                                <td id="payrollsettingstax_fixedtax_data"> { item.fixedTax }</td>
-                                                <td id="payrollsettingstax_prescribedwitholdingtax_data"> {Utility.formatToCurrency(item.prescribedWitholdingTax)}</td>    
-                                                <td id="payrollsettingstax_nontaxablecompensation_data"> {Utility.formatToCurrency(item.nonTaxableCompensation)}</td>    
-                                                </tr>
-                                                )
-                                            })
-                                        }
-                                        </tbody>
-                                    
-                                </Table>
-                            </div>
-                            <div className="d-flex justify-content-end mt-6 pt-6" >
-                                <div>
-                                    <Button
-                                        id="payrollsettingstax_downloadtemplatemonthly_btn"
-                                        className="mx-2"
-                                        onClick={downloadMonthlyTemplate}>Download Template ( Monthly )</Button>
-                                </div>
-                                <div>
-                                    <Button
-                                        id="payrollsettingstax_uploadtableformonthlytax_btn"
-                                        className="mx-2"
-                                        onClick={() => {
-                                            setModalMonthlyUploadShow(true)
-                                        }}>Upload Table for Monthly Tax</Button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <h3 style={{ fontWeight: 'bold', padding: '10px' }} >Tax Table (Yearly)</h3>
-
-                            <div className="tax-table-container">
-                                <Table responsive>
+                    <Modal
+                        show={taxAnnualModalShow}
+                        size="xl"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        backdrop="static"
+                        keyboard={false}
+                        onHide={() => {
+                         setTaxAnnualModalShow(false)
+                        }}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                            Tax Table (Annual)
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="row w-100 px-5">
+                            <div className="w-100 pb-2">
+                                <div className="tax-table-container">
+                                    <Table responsive>
                                         <thead>
                                             <tr className="tax-sticky-header">
                                                 {
@@ -186,8 +147,7 @@ const tax = (props: any) => {
                                                     tableAnnualHeaders.map((item: any, index: any) => {
                                                         return (
                                                             <th style={{ width: '20px' }}>{item}</th>
-                                                            )
-                                                            
+                                                        )
                                                     })
                                                 }
                                             </tr>
@@ -210,26 +170,115 @@ const tax = (props: any) => {
                                         }
                                         </tbody>
                                     
-                                </Table>
+                                    </Table>
                                 </div>
-                                <div className="d-flex justify-content-end mt-6 pt-6" >
-                                    <div>
-                                        <Button
-                                            id="payrollsettingstax_downloadtemplateyearly_btn"
-                                            className="mx-2"
-                                            onClick={downloadYearlyTemplate}>Download Template ( Yearly )</Button>
-                                    </div>
-                                    <div>
-                                        <Button
-                                            id="payrollsettingstax_uploadtableforannualtax_btn"
-                                            className="mx-2"
-                                            onClick={() => {
-                                                setModalYearlyUploadShow(true)
-                                            }}>Upload Table for Annual Tax</Button>
-                                    </div>
+                            </div>                  
+                        </Modal.Body>
+                    </Modal>
+                    <Modal
+                        show={taxMonthlyModalShow}
+                        size="xl"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        backdrop="static"
+                        keyboard={false}
+                        onHide={() => {
+                         setTaxMonthlyModalShow(false)
+                        }}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                            Tax Table (Monthly)
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="row w-100 px-5">
+                            <div className="w-100 pb-2">
+                                <div className="tax-table-container">
+                                    <Table responsive>
+                                            <thead>
+                                                <tr className="tax-sticky-header">
+                                                    {
+                                                        tableMonthlyHeaders &&
+                                                        tableMonthlyHeaders.length &&
+                                                        tableMonthlyHeaders.map((item: any, index: any) => {
+                                                            return (
+                                                                <th style={{ width: '20px' }}>{item}</th>
+                                                                )
+                                                                
+                                                        })
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody >
+                                                {
+                                                    taxMonth &&
+                                                    taxMonth.length > 0 &&
+                                                    taxMonth.map((item: any, index: any) => {
+                                                        return (
+                                                            <tr>
+                                                    <td id="payrollsettingstax_basicrangelower_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
+                                                    <td id="payrollsettingstax_basicrangeupper_data"> {Utility.formatToCurrency(item.basicRangeUpper)}</td>
+                                                    <td id="payrollsettingstax_fixedtax_data"> { item.fixedTax }</td>
+                                                    <td id="payrollsettingstax_prescribedwitholdingtax_data"> {Utility.formatToCurrency(item.prescribedWitholdingTax)}</td>    
+                                                    <td id="payrollsettingstax_nontaxablecompensation_data"> {Utility.formatToCurrency(item.nonTaxableCompensation)}</td>    
+                                                    </tr>
+                                                    )
+                                                })
+                                            }
+                                            </tbody>
+                                        
+                                    </Table>
                                 </div>
-                            </div>
-                        </div>
+                            </div>                  
+                        </Modal.Body>
+                    </Modal>
+                    
+                </div>
+                <div className="d-flex justify-content-start mt-6 pt-6" >
+                    <div>
+                        <Button
+                            id="payrollsettingstax_downloadtemplatemonthly_btn"
+                            className="mx-2"
+                            onClick={() => {setTaxAnnualModalShow(true)}}
+                            >View Annual</Button>
+                    </div>
+                    <div>
+                        <Button
+                            id="payrollsettingstax_uploadtableformonthlytax_btn"
+                            className="mx-2"
+                            onClick={() => {setTaxMonthlyModalShow(true)}}
+                            >
+                                View Monthly
+                            </Button>
+                    </div>
+                    <div>
+                        <Button
+                            id="payrollsettingstax_downloadtemplatemonthly_btn"
+                            className="mx-2"
+                            onClick={downloadMonthlyTemplate}>Download Template ( Monthly )</Button>
+                    </div>
+                    <div>
+                        <Button
+                            id="payrollsettingstax_uploadtableformonthlytax_btn"
+                            className="mx-2"
+                            onClick={() => {
+                                setModalMonthlyUploadShow(true)
+                            }}>Upload Table for Monthly Tax</Button>
+                    </div>
+                    <div>
+                        <Button
+                            id="payrollsettingstax_downloadtemplateyearly_btn"
+                            className="mx-2"
+                            onClick={downloadYearlyTemplate}>Download Template ( Yearly )</Button>
+                    </div>
+                    <div>
+                        <Button
+                            id="payrollsettingstax_uploadtableforannualtax_btn"
+                            className="mx-2"
+                            onClick={() => {
+                                setModalYearlyUploadShow(true)
+                            }}>Upload Table for Annual Tax</Button>
+                    </div>
                 </div>
             </div>
             
