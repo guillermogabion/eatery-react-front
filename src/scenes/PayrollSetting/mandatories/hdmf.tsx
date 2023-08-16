@@ -259,7 +259,7 @@ const hdmf = (props: any) => {
                                     'error'
                                   )
                                 } else {
-                                  ErrorSwal.fire(
+                                  Swal.fire(
                                     'Updated Successfully!',
                                     (body.data || ""),
                                     'success'
