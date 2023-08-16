@@ -94,7 +94,7 @@ export default function Timekeeping(props: any) {
         <div className="w-100">
             <div className="w-100 pt-2">
                 <div className="fieldtext d-flex ">
-                    <div className="mx-1" style={{ width: 200, marginRight: 10 }}>
+                    <div className="mx-1 mb-3" style={{ width: 200, marginRight: 10 }}>
                         <label>Employee Name</label>
                         <EmployeeDropdown
                             name="userId"
