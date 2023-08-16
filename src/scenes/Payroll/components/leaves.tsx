@@ -240,7 +240,7 @@ export default function Leaves(props: any) {
                                         return (
                                             <tr>
                                                 <td id={"payrollgenerate_id_allleavesdata_" + item.id}>{item.id}</td>
-                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.id}>{item.userId}</td>
+                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.id}>{item.employeeId}</td>
                                                 {
                                                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                         <>
