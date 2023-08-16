@@ -125,27 +125,45 @@ const hdmf = (props: any) => {
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
                 Swal.close();
-                ErrorSwal.fire(
-                  'Error!',
-                  body.error.message,
-                  'error'
-                );
+                ErrorSwal.fire({
+                    title: 'Error!',
+                    text: body.error.message,
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "payrollsettinghdmf_errorconfirm_alertbtn"
+                    },
+                    icon: 'error',
+                })
               } else {
                 Swal.close();
                 getHdmfInfo(0)
-                ErrorSwal.fire(
-                  'Success!',
-                  body.data || "",
-                  'success'
-                );
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: body.data || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "payrollsettinghdmf_successconfirm_alertbtn"
+                  },
+                  icon: 'success',
+              })
               }
             } else {
               Swal.close();
-              ErrorSwal.fire(
-                'Error!',
-                'Something went wrong.',
-                'error'
-              );
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: "Something went wrong.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "payrollsettinghdmf_errorconfirm2_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
     } 
@@ -252,18 +270,30 @@ const hdmf = (props: any) => {
 
                           if (status === 200 || status === 201) {
                               console.log("update")
-                              if (body.error && body.error.message) {
-                                  ErrorSwal.fire(
-                                    'Error!',
-                                    (body.error && body.error.message) || "",
-                                    'error'
-                                  )
+                              if (body.error && body.error.message) {                              
+                                  ErrorSwal.fire({
+                                    title: 'Error!',
+                                    text: (body.error && body.error.message) || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "payrollsettinghdmf_errorconfirm3_alertbtn"
+                                    },
+                                    icon: 'error',
+                                })
                                 } else {
-                                  Swal.fire(
-                                    'Updated Successfully!',
-                                    (body.data || ""),
-                                    'success'
-                                  )
+                                  Swal.fire({
+                                      title: 'Updated Successfully!',
+                                      text: (body.data || ""),
+                                      didOpen: () => {
+                                        const confirmButton = Swal.getConfirmButton();
+                              
+                                        if(confirmButton)
+                                          confirmButton.id = "payrollsettinghdmf_successconfirm2_alertbtn"
+                                      },
+                                      icon: 'success',
+                                  })
                                   setModalShow(false)
                                   getHdmfInfo()
                                   values.id = null
@@ -272,11 +302,18 @@ const hdmf = (props: any) => {
                   
                                 }
                           }else {
-                              ErrorSwal.fire(
-                                  'Error!',
-                                  'Something Error.',
-                                  'error'
-                                )
+                              ErrorSwal.fire({
+                                  title: 'Error!',
+                                  text: "Something Error.",
+                                  didOpen: () => {
+                                    const confirmButton = Swal.getConfirmButton();
+                          
+                                    if(confirmButton)
+                                      confirmButton.id = "payrollsettinghdmf_errorconfirm4_alertbtn"
+                                  },
+                                  icon: 'error',
+                              })
+                              
                           }
                       })
                     }}
