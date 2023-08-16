@@ -61,6 +61,14 @@ const Mandatory = () => {
           <PhilHealthPage />
         </Tab>
       </Tabs>
+      {/* <SSSPage />
+      <TaxPage />
+      <HFMDPage />
+      <PhilHealthPage /> */}
+
+
+
+
     </div>
   );
 };

@@ -17,6 +17,7 @@ export const Payslip = (props: any) => {
     const [payroll, setPayroll] = useState<any>([]);
     const [modalShow, setModalShow] = React.useState(false);
     const [employee, setEmployee] = useState<any>([]);
+    const [employeeExport, setEmployeeExport] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
     const [payrollList, setPayrollList] = useState<any>([]);
     const selectRef = useRef(null);
@@ -32,7 +33,7 @@ export const Payslip = (props: any) => {
     const [userId, setUserId] = useState("");
     const [filename, setFileName] = useState("");
     const [isAnyCheckboxChecked, setIsAnyCheckboxChecked] = useState(false);
-    // const [selectedEmployee, setSelectedEmployee] = useState([]);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
 
 
 
@@ -74,6 +75,8 @@ export const Payslip = (props: any) => {
         const updatedEmployee = employee.map((item) => ({ ...item, isCheck: false }));
         setEmployee(updatedEmployee);
         setIsAnyCheckboxChecked(false);
+        setFilterData([]);
+        
     }, [employee]);
 
     const handleExportHide = () => {
@@ -155,7 +158,8 @@ export const Payslip = (props: any) => {
                             'Email sent successfully!',
                             'success'
                         );
-                        handleModalHide()
+                        handleModalHide();
+                        setFilterData([]);
 
                     }
                 }
@@ -320,6 +324,28 @@ export const Payslip = (props: any) => {
                                 })
                         });
                         setEmployee(tempArray)
+                    }
+                }
+            }
+        )
+        RequestAPI.getRequest(
+            `${Api.employeeList}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body) {
+                   if (body.error && body.error.message) {
+                    } else {
+                        let tempArray: any = []
+                        body.data.forEach((d: any, i: any) => {
+                                tempArray.push({
+                                    value: d.userAccountId,
+                                    label: d.lastname + "," + d.firstname + " " + d.middleName
+                                })
+                        });
+                        setEmployeeExport(tempArray)
                     }
                 }
             }
@@ -597,8 +623,8 @@ export const Payslip = (props: any) => {
                                         Select Employee
                                     </option>
                                     {employee &&
-                                        employee.length &&
-                                        employee.map((item: any, index: string) => {
+                                        employeeExport.length &&
+                                        employeeExport.map((item: any, index: string) => {
                                             return (
                                                 <option key={`${index}_${item.userId}`} value={item.value}>
                                                     {item.label}
