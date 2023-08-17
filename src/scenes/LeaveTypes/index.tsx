@@ -172,18 +172,29 @@ export const LeaveTypes = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200) {
                         getLeaveTypes()
-                        ErrorSwal.fire(
-                            'Deleted!',
-                            (body && body.data) || "",
-                            'success'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Deleted!',
+                            text: (body && body.data) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "leavetypes_successconfirm_alertbtn"
+                            },
+                            icon: 'success',
+                        })
                     } else {
-                        //error
-                        ErrorSwal.fire(
-                            'Failed!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Failed!',
+                            text: (body.error && body.error.message) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "leavetypes_errorconfirm_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -357,27 +368,45 @@ export const LeaveTypes = (props: any) => {
                                     const { status, body = { data: {}, error: {} } }: any = res
                                     if (status === 200 || status === 201) {
                                         if (body.error && body.error.message) {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "",
-                                                'error'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Error!',
+                                                text: (body.error && body.error.message) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "leavetypes_errorconfirm2_alertbtn"
+                                                },
+                                                icon: 'error',
+                                            })
                                         } else {
                                             getLeaveTypes(0, "")
-                                            ErrorSwal.fire(
-                                                'Success!',
-                                                (body.data) || "",
-                                                'success'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Success!',
+                                                text: (body.data) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "leavetypes_successconfirm2_alertbtn"
+                                                },
+                                                icon: 'success',
+                                            })
                                             setModalShow(false)
                                             formRef.current?.resetForm()
                                         }
                                     } else {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            (body.error && body.error.message) || "Something error!",
-                                            'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "Something error!",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "leavetypes_errorconfirm3_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     }
                                 })
                             } else {
@@ -385,27 +414,45 @@ export const LeaveTypes = (props: any) => {
                                     const { status, body = { data: {}, error: {} } }: any = res
                                     if (status === 200 || status === 201) {
                                         if (body.error && body.error.message) {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "",
-                                                'error'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Error!',
+                                                text: (body.error && body.error.message) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "leavetypes_errorconfirm4_alertbtn"
+                                                },
+                                                icon: 'error',
+                                            })
                                         } else {
                                             getLeaveTypes(0, "")
-                                            ErrorSwal.fire(
-                                                'Success!',
-                                                (body.data) || "",
-                                                'success'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Success!',
+                                                text: (body.data) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "leavetypes_successconfirm3_alertbtn"
+                                                },
+                                                icon: 'success',
+                                            })
                                             setModalShow(false)
                                             formRef.current?.resetForm()
                                         }
                                     } else {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            (body.error && body.error.message) || "Something error!",
-                                            'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "Something error",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "leavetypes_errorconfirm5_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     }
                                 })
                             }
@@ -501,27 +548,45 @@ export const LeaveTypes = (props: any) => {
                                 const { status, body = { data: {}, error: {} } }: any = res
                                 if (status === 200 || status === 201) {
                                     if (body.error && body.error.message) {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            (body.error && body.error.message) || "",
-                                            'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "leavetypes_errorconfirm6_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     } else {
-                                        ErrorSwal.fire(
-                                            'Success!',
-                                            (body.data) || "",
-                                            'success'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Success!',
+                                            text: (body.error && body.error.message) || "",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "leavetypes_successconfirm4_alertbtn"
+                                            },
+                                            icon: 'success',
+                                        })
                                         setCreditModal(false)
                                         setEditCredit(true)
                                         creditformRef.current?.resetForm()
                                     }
                                 } else {
-                                    ErrorSwal.fire(
-                                        'Error!',
-                                        (body.error && body.error.message) || "Something error!",
-                                        'error'
-                                    )
+                                    ErrorSwal.fire({
+                                        title: 'Error!',
+                                        text: (body.error && body.error.message) || "Something error!",
+                                        didOpen: () => {
+                                          const confirmButton = Swal.getConfirmButton();
+                                
+                                          if(confirmButton)
+                                            confirmButton.id = "leavetypes_errorconfirm7_alertbtn"
+                                        },
+                                        icon: 'error',
+                                    })
                                 }
                             })
 

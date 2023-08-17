@@ -123,7 +123,17 @@ const unsent = (props : any ) => {
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, proceed!'
+                    confirmButtonText: 'Yes, proceed!',
+                    didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        const cancelButton = Swal.getCancelButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "payslipunsent_resendemailconfirm_alertbtn"
+              
+                        if(cancelButton)
+                          cancelButton.id = "payslipunsent_resendemailcancel_alertbtn"
+                      },
                 }).then((result) =>{
                 if (result.isConfirmed) {
                 const loadingSwal = Swal.fire({
@@ -143,21 +153,32 @@ const unsent = (props : any ) => {
                             const { status, body = { data: {}} } = res;
                             if (body.error && body.error.message) {
                                 Swal.close();
-                                ErrorSwal.fire(
-                                    'Error!',
-                                    body.error.message,
-                                    'error'
-                                  );
+                                  ErrorSwal.fire({
+                                    title: 'Error!',
+                                    text: (body.error && body.error.message) || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "payslipunsent_errorconfirm_alertbtn"
+                                    },
+                                    icon: 'error',
+                                })
 
                             }else{
                                 getAllPayrollFailed(0);
                                 Swal.close();
-                                ErrorSwal.fire(
-                                    'Success!',
-                                    body.data || "",
-                                    'success'
-                                  );
-
+                                  ErrorSwal.fire({
+                                    title: 'Success!',
+                                    text: (body.data) || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "payslipunsent_successconfirm_alertbtn"
+                                    },
+                                    icon: 'success',
+                                })
                             }
                         }
                     )
