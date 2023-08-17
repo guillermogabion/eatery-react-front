@@ -463,20 +463,8 @@ export const ReimbursementList = (props: any) => {
                                                         <img id="" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
                                                     </label>
                                                     {
-                                                        item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" && item.status != "REVIEWED" && (
+                                                        item.status != "DECLINED" && item.status != "CANCELLED" && item.status != "REVIEWED" && (
                                                             <>
-                                                                {/* <label
-                                                                    onClick={() => {
-                                                                        approveReimbursement(item.id)
-                                                                    }}>
-                                                                    <img id="" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
-                                                                </label>
-                                                                <label
-                                                                    onClick={() => {
-                                                                        declineReimbursement(item.id)
-                                                                    }}>
-                                                                    <img id="" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-                                                                </label> */}
                                                                 <label
                                                                     onClick={() => {
                                                                         cancelReimbursement(item.id)
@@ -630,7 +618,7 @@ export const ReimbursementList = (props: any) => {
                             <div className="form-group col-md-4 mb-3" >
                                 <label>Status:</label> <br />
                                 <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
-                                
+
                             </div>
                             <div className="form-group col-md-6 mb-3" >
                                 <label>Type of Reimbursement:</label>
@@ -748,18 +736,8 @@ export const ReimbursementList = (props: any) => {
 
 
                         {
-                            !isEditReimbursement && reimbursementView && reimbursementView.status != "APPROVED" && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
+                            !isEditReimbursement && reimbursementView && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
                                 <>
-                                    {/* <button
-                                        onClick={() => approveReimbursement(reimbursementView.id)}
-                                        className="w-[150px] mr-2 rounded-md text-white bg-[#2EBF91]" style={{ borderColor: '#189FB5' }}>
-                                        Approve/Endorse
-                                    </button>
-                                    <button
-                                        onClick={() => declineReimbursement(reimbursementView.id)}
-                                        className="w-[150px] mr-2 rounded-md text-white bg-[#FF3838]" style={{ borderColor: '#189FB5' }}>
-                                        Decline
-                                    </button> */}
                                     <button
                                         onClick={() => cancelReimbursement(reimbursementView.id)}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
