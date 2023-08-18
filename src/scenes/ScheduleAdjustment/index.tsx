@@ -362,6 +362,7 @@ export const ScheduleAdjustment = (props: any) => {
             })
               getAllAdjustments(0, key)
             }
+          }else{
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
