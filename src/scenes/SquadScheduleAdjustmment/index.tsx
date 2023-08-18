@@ -239,27 +239,45 @@ export const SquadScheduleAdjustment = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadadj_errorconfirm_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadadj_successconfirm_alertbtn"
+                },
+                icon: 'success',
+            })
               getAllAdjustments(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadadj_errorconfirm2_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -299,27 +317,45 @@ export const SquadScheduleAdjustment = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadadj_errorconfirm3_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadadj_successconfirm2_alertbtn"
+                },
+                icon: 'success',
+            })
               getAllAdjustments(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadadj_errorconfirm4_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -360,27 +396,45 @@ export const SquadScheduleAdjustment = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadadj_errorconfirm5_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadadj_successconfirm3_alertbtn"
+                },
+                icon: 'success',
+            })
               getAllAdjustments(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadadj_errorconfirm6_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -739,29 +793,46 @@ export const SquadScheduleAdjustment = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadadj_errorconfirm7_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadadj_successconfirm4_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setAdjustmentBreakdown([])
                       getAllAdjustments(0, key)
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      body.error && body.error.message,
-                      // (body.error && body.error.message),
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "squadadj_errorconfirm8_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                 })
               } else {
@@ -769,32 +840,49 @@ export const SquadScheduleAdjustment = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadadj_errorconfirm9_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     }
 
 
                     else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadadj_successconfirm5_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setAdjustmentBreakdown([])
                       getAllAdjustments(0, key)
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      // 'Something Error.',
-                      body.error && body.error.message,
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "squadadj_errorconfirm10_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                 })
               }

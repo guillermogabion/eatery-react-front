@@ -161,27 +161,45 @@ export const SquadOvertime = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadot_errorconfirm_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
               getMyOT(0, key)
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadot_success_confirm_alertbtn"
+                },
+                icon: 'success',
+            })
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadot_errorconfirm2_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -220,27 +238,45 @@ export const SquadOvertime = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadot_errorconfirm3_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadot_successconfirm2_alertbtn"
+                },
+                icon: 'success',
+            })
               getMyOT(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadot_errorconfirm4_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -280,27 +316,45 @@ export const SquadOvertime = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadot_errorconfirm5_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
               getMyOT(0, key)
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadot_successconfirm3_alertbtn"
+                },
+                icon: 'success',
+            })
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadot_errorconfirm6_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -661,27 +715,45 @@ export const SquadOvertime = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadot_errorconfirm7_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
                       getMyOT(0, key)
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadot_successconfirm4_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "Something error!",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "Something error!",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "squadot_errorconfirm8_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                 })
               } else {
@@ -689,27 +761,45 @@ export const SquadOvertime = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadot_errorconfirm9_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
                       getMyOT(0, key)
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadot_successconfirm5_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "Something error!",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "Something error!",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "squadot_errorconfirm10_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                 })
               }
