@@ -283,7 +283,7 @@ const hdmf = (props: any) => {
                                     icon: 'error',
                                 })
                                 } else {
-                                  ErrorSwal.fire({
+                                  Swal.fire({
                                       title: 'Updated Successfully!',
                                       text: (body.data || ""),
                                       didOpen: () => {
@@ -292,7 +292,7 @@ const hdmf = (props: any) => {
                                         if(confirmButton)
                                           confirmButton.id = "payrollsettinghdmf_successconfirm2_alertbtn"
                                       },
-                                      icon: 'error',
+                                      icon: 'success',
                                   })
                                   setModalShow(false)
                                   getHdmfInfo()

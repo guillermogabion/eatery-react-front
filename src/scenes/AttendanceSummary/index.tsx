@@ -31,7 +31,7 @@ export const AttendanceSummary = (props: any) => {
   const [downloadModalShow, setDownloadModalShow] = React.useState(false);
   const [fromDate, setFromDate] = React.useState(moment().format('YYYY-MM-DD'));
   const [toDate, setToDate] = React.useState(moment().format('YYYY-MM-DD'));
-  const [ userid, setUserid] =  useState<any>(null)
+  const [userid, setUserid] = useState<any>(null)
   const [isSubmit, setIsSubmit] = React.useState(false);
   const [addBioModal, setAddBioModal] = React.useState(false);
   const [deleteBioModal, setDeleteBioModal] = React.useState(false);
@@ -42,7 +42,7 @@ export const AttendanceSummary = (props: any) => {
   const [employeeList, setEmployeeList] = useState<any>([]);
   const [userId, setUserId] = useState<any>("");
   const [updateData, setUpdateData] = useState<any>(null);
-  
+
   const [initialValues, setInitialValues] = useState<any>({
     "userid": 0,
     "shiftDate": "",
@@ -87,7 +87,7 @@ export const AttendanceSummary = (props: any) => {
     )
   };
 
-  const recalculate = (fromDate: any, toDate: any, userid : any) => {
+  const recalculate = (fromDate: any, toDate: any, userid: any) => {
     setIsSubmit(true)
 
     let queryString = ""
@@ -115,9 +115,9 @@ export const AttendanceSummary = (props: any) => {
       }
     )
 
-  console.log('DateFrom:', fromDate);
-  console.log('DateTo:', toDate);
-  console.log('userid:', userid);
+    console.log('DateFrom:', fromDate);
+    console.log('DateTo:', toDate);
+    console.log('userid:', userid);
   }
 
   const uploadExcel = () => {
@@ -193,19 +193,19 @@ export const AttendanceSummary = (props: any) => {
       {},
       {},
       async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 && body && body.data) {
-              if (body.error && body.error.message) {
-              } else {
-                  let tempArray: any = []
-                  body.data.forEach((d: any, i: any) => {
-                      tempArray.push({
-                          userId: d.userAccountId,
-                          label: d.firstname + " " + d.lastname
-                      })
-                  });
-                  setEmployee(tempArray)
-              }
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body && body.data) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.data.forEach((d: any, i: any) => {
+              tempArray.push({
+                userId: d.userAccountId,
+                label: d.firstname + " " + d.lastname
+              })
+            });
+            setEmployee(tempArray)
+          }
         }
       }
     )
@@ -322,9 +322,9 @@ export const AttendanceSummary = (props: any) => {
     const { name, value } = e.target
     if (setFieldValue) {
       setFieldValue(name, value)
-    }   
-}
- 
+    }
+  }
+
 
   const attendanceTable = useCallback(() => {
     return (
@@ -362,11 +362,11 @@ export const AttendanceSummary = (props: any) => {
                           <td id={"attendancesummary_schedule_allattendancedata_" + item.lastName + item.firstName}> {item.schedule} </td>
                           <td id={"attendancesummary_firstlogin_allattendancedata_" + item.lastName + item.firstName}> {item.firstLogin ? moment(item.firstLogin).format('MM-DD-YYYY hh:mm A') : "No Time In"} </td>
                           <td id={"attendancesummary_lastlogin_allattendancedata_" + item.lastName + item.firstName}> {item.lastLogin ? moment(item.lastLogin).format('MM-DD-YYYY hh:mm A') : "No Time Out"} </td>
-                          <td id={"attendancesummary_datatype_allattendancedata_" + item.lastName + item.firstName}> { Utility.removeUnderscore(item.dayType) } </td>
-                          <td id={"attendancesummary_status_allattendancedata_" + item.lastName + item.firstName}> {item.status} </td> 
+                          <td id={"attendancesummary_datatype_allattendancedata_" + item.lastName + item.firstName}> {Utility.removeUnderscore(item.dayType)} </td>
+                          <td id={"attendancesummary_status_allattendancedata_" + item.lastName + item.firstName}> {item.status} </td>
                           {
                             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                              <td> <label id={"attendancesummary_update_allattendancelabel_" + item.lastName + item.firstName+ item.date}
+                              <td> <label id={"attendancesummary_update_allattendancelabel_" + item.lastName + item.firstName + item.date}
                                 onClick={() => {
                                   setUpdateData(item)
                                   setInitialValues({
@@ -462,24 +462,17 @@ export const AttendanceSummary = (props: any) => {
 
           <div className="w-100 pt-4">
             <div className="fieldtext d-flex col-md-12">
-              {
-                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                  <>
-                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                      <label>Employee</label>
-                      <SingleSelect id="attendancesummary_employee_summaryselect"
-                        type="string"
-                        options={employeeList || []}
-                        placeholder={"Employee"}
-                        onChangeOption={singleChangeOption}
-                        name="userid"
-                        value={filterData && filterData['userid']}
-                      />
-                    </div>
-                  </>
-                  :
-                  null
-              }
+              <div className="" style={{ width: 200, marginRight: 10 }}>
+                <label>Employee</label>
+                <SingleSelect id="attendancesummary_employee_summaryselect"
+                  type="string"
+                  options={employeeList || []}
+                  placeholder={"Employee"}
+                  onChangeOption={singleChangeOption}
+                  name="userid"
+                  value={filterData && filterData['userid']}
+                />
+              </div>
 
               <div>
                 <label>Date From</label>
@@ -999,7 +992,7 @@ export const AttendanceSummary = (props: any) => {
                         value={values.type}
                         onChange={(e) => {
                           setFieldValue('type', e.target.value);
-                          if (updateData){
+                          if (updateData) {
                             updateLog(e.target.value)
                           }
                         }}>
@@ -1081,26 +1074,26 @@ export const AttendanceSummary = (props: any) => {
           <div className="form-group col-md-12 mb-3" >
             <label>Employee Name *</label>
             <select
-                className="form-select"
-                value={filterData && filterData['userid']}
-                onChange={(e) => {
-                  setUserid(e.target.value)
-                }}
-               
+              className="form-select"
+              value={filterData && filterData['userid']}
+              onChange={(e) => {
+                setUserid(e.target.value)
+              }}
+
             >
-                <option value="" disabled selected>
+              <option value="" disabled selected>
                 Select Employee
-                </option>
-                {employee &&
+              </option>
+              {employee &&
                 employee.length &&
                 employee.map((item: any, index: string) => (
-                    <option key={`${index}_${item.userId}`} value={item.userId}>
+                  <option key={`${index}_${item.userId}`} value={item.userId}>
                     {item.label}
-                    </option>
+                  </option>
                 ))}
             </select>
           </div>
-          
+
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
           <Button

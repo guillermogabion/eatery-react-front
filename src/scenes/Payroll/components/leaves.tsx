@@ -27,25 +27,18 @@ export default function Leaves(props: any) {
     ])
 
     useEffect(() => {
-        if (payrollData){
+        if (payrollData) {
             let data = { ...payrollData }
             let from = data.from
             let to = data.to
-            const filterObj: any = { ...filterData }        
+            const filterObj: any = { ...filterData }
             filterObj["dateFrom"] = from
             filterObj["dateTo"] = to
             setFilterData(filterObj)
+        }else{
+            getAllLeaves(0, pageSize)
         }
-        
     }, [])
-
-    useEffect(() => {
-        if (filterData){
-            getAllLeaves(0)
-        }
-        
-    }, [filterData])
-    
 
     const handlePageClick = (event: any) => {
         const selectedPage = event.selected;
@@ -58,6 +51,7 @@ export default function Leaves(props: any) {
     };
 
     const getAllLeaves = (page: any = 0, pageSize: any) => {
+        console.log("Test")
         let queryString = ""
         let filterDataTemp = { ...filterData }
 
@@ -88,7 +82,6 @@ export default function Leaves(props: any) {
                 }
             )
         } else {
-
             RequestAPI.getRequest(
                 `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
                 "",
@@ -181,36 +174,17 @@ export default function Leaves(props: any) {
                             />
                         </div>
                     </div>
-                    {/* <div>
-                        <label className="ml-[10px]">Status</label>
-                        <div className="input-container">
-                            <select
-                                className={`form-select`}
-                                name="status"
-                                id="status"
-                                value={filterData["status"]}
-                                onChange={(e) => makeFilterData(e)}>
-                                {statusList &&
-                                    statusList.length &&
-                                    statusList.map((item: any, index: string) => (
-                                        <option key={`${index}_${item}`} value={item}>
-                                            {Utility.capitalizeFirstLetter(item)}
-                                        </option>
-                                    ))}
-                            </select>
-                        </div>
-                    </div> */}
                     <div className="input-container col-md-3 pt-4">
                         <Button
-                        id="payrollgenerate_search_btn"
-                        style={{ width: 210 }}
-                        onClick={() => getAllLeaves(0)}
-                        className="btn btn-primary mx-2">
-                        Search
+                            id="payrollgenerate_search_btn"
+                            style={{ width: 210 }}
+                            onClick={() => getAllLeaves(0, pageSize)}
+                            className="btn btn-primary mx-2">
+                            Search
                         </Button>
                     </div>
                 </div>
-              
+
             </div>
             <Table responsive>
                 <thead>
@@ -240,7 +214,7 @@ export default function Leaves(props: any) {
                                         return (
                                             <tr>
                                                 <td id={"payrollgenerate_id_allleavesdata_" + item.id}>{item.id}</td>
-                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.id}>{item.id}</td>
+                                                <td id={"payrollgenerate_userid_allleavesdata_" + item.id}>{item.employeeId}</td>
                                                 {
                                                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                                         <>
@@ -274,34 +248,45 @@ export default function Leaves(props: any) {
                     null
             }
             <br />
-            <div className="d-flex ma-3">
-                <div className="d-flex ma-3">
-                    <span className="font-bold px-2 pt-2">Select Page Size:</span>
-                    <select id="pageSizeSelect" value={pageSize} className="form-control" style={{ fontSize: "16px", width: "60px" }} onChange={handlePageSizeChange}>
-                        <option value={10}>10</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                    </select>
+
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="justify-content-start">
+                        <div className="flex items-center">
+                            <span className="text-muted mr-3">Select Page Size:</span>
+                            <select id="pageSizeSelect" value={pageSize} className="form-select" style={{ fontSize: "16px", width: "150px" }} onChange={(e: any) => { handlePageSizeChange(e) }}>
+                                <option value={10}>10</option>
+                                <option value={50}>50</option>
+                                <option value={100}>100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="d-flex justify-content-end ">
+                        <div className="">
+                            <ReactPaginate
+                                className="d-flex justify-content-center align-items-center"
+                                breakLabel="..."
+                                nextLabel=">"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={5}
+                                pageCount={(allLeaves && allLeaves.totalPages) || 0}
+                                previousLabel="<"
+                                previousLinkClassName="prev-next-pagination"
+                                nextLinkClassName="prev-next-pagination"
+                                activeLinkClassName="active-page-link"
+                                disabledLinkClassName="prev-next-disabled"
+                                pageLinkClassName="page-link"
+                                renderOnZeroPageCount={null}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div className="d-flex justify-content-end">
-                <div className="">
-                    <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(allLeaves && allLeaves.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                    />
-                </div>
+
             </div>
         </div>);
 }

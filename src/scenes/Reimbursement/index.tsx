@@ -253,7 +253,7 @@ export const Reimbursement = (props: any) => {
 
     const getUploadedReceipts = (pageNo: any) => {
         RequestAPI.getRequest(
-            `${Api.createReimbursementReceiptList}/${60}?sort=id&sortDir=DESC`,
+            `${Api.createReimbursementReceiptList}/${data.profile.userId}?sort=id&sortDir=DESC`,
             "",
             {},
             {},

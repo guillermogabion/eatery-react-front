@@ -302,25 +302,18 @@ export const AllRequest = (props: any) => {
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
-                        {
-                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <>
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                                        <label>Employee</label>
-                                        <SingleSelect
-                                            id="allrequest_employee_leaveselect"
-                                            type="string"
-                                            options={employeeList || []}
-                                            placeholder={"Employee"}
-                                            onChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                        />
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                                id="allrequest_employee_leaveselect"
+                                type="string"
+                                options={employeeList || []}
+                                placeholder={"Employee"}
+                                onChangeOption={singleChangeOption}
+                                name="userId"
+                                value={filterData && filterData['userId']}
+                            />
+                        </div>
 
                         <div>
                             <label className="ml-[5px]">Date From</label>
@@ -549,25 +542,18 @@ export const AllRequest = (props: any) => {
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
-                        {
-                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <>
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                                        <label>Employee</label>
-                                        <SingleSelect
-                                            id="allrequest_employee_revselect"
-                                            type="string"
-                                            options={employeeList || []}
-                                            placeholder={"Employee"}
-                                            onChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                        />
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                                id="allrequest_employee_revselect"
+                                type="string"
+                                options={employeeList || []}
+                                placeholder={"Employee"}
+                                onChangeOption={singleChangeOption}
+                                name="userId"
+                                value={filterData && filterData['userId']}
+                            />
+                        </div>
 
                         <div>
                             <label className="ml-[5px]">Date From</label>
@@ -785,25 +771,18 @@ export const AllRequest = (props: any) => {
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
-                        {
-                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <>
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                                        <label>Employee</label>
-                                        <SingleSelect
-                                            id="allrequest_employee_otselect"
-                                            type="string"
-                                            options={employeeList || []}
-                                            placeholder={"Employee"}
-                                            onChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                        />
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                                id="allrequest_employee_otselect"
+                                type="string"
+                                options={employeeList || []}
+                                placeholder={"Employee"}
+                                onChangeOption={singleChangeOption}
+                                name="userId"
+                                value={filterData && filterData['userId']}
+                            />
+                        </div>
 
                         <div>
                             <label className="ml-[5px]">Date From</label>
@@ -1024,25 +1003,18 @@ export const AllRequest = (props: any) => {
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
-                        {
-                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <>
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                                        <label>Employee</label>
-                                        <SingleSelect
-                                            id="allrequest_employee_utstatus"
-                                            type="string"
-                                            options={employeeList || []}
-                                            placeholder={"Employee"}
-                                            onChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                        />
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                                id="allrequest_employee_utstatus"
+                                type="string"
+                                options={employeeList || []}
+                                placeholder={"Employee"}
+                                onChangeOption={singleChangeOption}
+                                name="userId"
+                                value={filterData && filterData['userId']}
+                            />
+                        </div>
 
                         <div>
                             <label className="ml-[5px]">Date From</label>
@@ -1179,7 +1151,7 @@ export const AllRequest = (props: any) => {
                         />
                     </div>
                 </div>
-            </div>);
+            </div >);
     }
 
     function ScheduleAdjustment(props: any) {
@@ -1263,25 +1235,18 @@ export const AllRequest = (props: any) => {
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
-                        {
-                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <>
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                                        <label>Employee</label>
-                                        <SingleSelect
-                                            id="allrequest_employee_sudselect"
-                                            type="string"
-                                            options={employeeList || []}
-                                            placeholder={"Employee"}
-                                            onChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                        />
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
+                        <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <label>Employee</label>
+                            <SingleSelect
+                                id="allrequest_employee_sudselect"
+                                type="string"
+                                options={employeeList || []}
+                                placeholder={"Employee"}
+                                onChangeOption={singleChangeOption}
+                                name="userId"
+                                value={filterData && filterData['userId']}
+                            />
+                        </div>
 
                         <div>
                             <label className="ml-[5px]">Date From</label>
