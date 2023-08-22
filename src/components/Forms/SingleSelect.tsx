@@ -139,7 +139,7 @@ const SingleSelect: FC<RSelectInterface> = React.memo((props) => {
       }
       // menuIsOpen={true}
       // value={value}
-      id={id}
+      inputId={id}
       closeMenuOnSelect={true}
       defaultValue={4}
       className="basic-single-select"
