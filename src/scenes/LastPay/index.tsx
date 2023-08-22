@@ -421,11 +421,11 @@ export const LastPay = (props: any) => {
                                                 <td id="lastpay_deminimis_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.deMinimis, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
-                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Allowance</td>
+                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Income</td>
                                                 <td id="lastpay_taxableallowance_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.taxableAllowance, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
-                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Allowance</td>
+                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Income</td>
                                                 <td id="lastpay_nontaxableallowance_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.nonTaxableAllowance, false)}</td>
                                             </tr>
                                         </tbody>
@@ -499,11 +499,11 @@ export const LastPay = (props: any) => {
                                                     <td id="lastpay_deminimis_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.deMinimis, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
-                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Income</td>
+                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Allowance</td>
                                                     <td id="lastpay_taxableincome_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.taxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
-                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Income</td>
+                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Allowance</td>
                                                     <td id="lastpay_nontaxableincome_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.nonTaxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
