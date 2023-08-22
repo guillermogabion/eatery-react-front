@@ -122,6 +122,12 @@ export const Reimbursement = (props: any) => {
                             title: "File Skipped!",
                             text: `"${element.name}" file size is greater than 3MB.`,
                             confirmButtonColor: "#73BF45",
+                            didOpen: () => {
+                                const confirmButton = Swal.getConfirmButton();
+                      
+                                if(confirmButton)
+                                  confirmButton.id = "reimbursement_fileskippedconfirm_alertbtn"
+                              },
                         })
                         delete files[i]
                     } else if (!allowedFormats.includes(element.type)) {
@@ -130,6 +136,12 @@ export const Reimbursement = (props: any) => {
                             title: "File Skipped!",
                             text: `"${element.name}" is not a valid file format.`,
                             confirmButtonColor: "#73BF45",
+                            didOpen: () => {
+                                const confirmButton = Swal.getConfirmButton();
+                      
+                                if(confirmButton)
+                                  confirmButton.id = "reimbursement_fileskippedconfirm2_alertbtn"
+                              },
                         });
                     } else {
                         storedFilesTemp.push(element);
@@ -217,6 +229,12 @@ export const Reimbursement = (props: any) => {
                     title: "Success!",
                     text: "Files Successfully uploaded.",
                     confirmButtonColor: "#73BF45",
+                    didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "reimbursement_fileuploadsuccessconfirm_alertbtn"
+                      },
                 }).then((e) => {
                     if (e.isConfirmed) {
                         location.reload()
@@ -346,11 +364,17 @@ export const Reimbursement = (props: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
             if (status === 200 || status === 201) {
                 if (body.error && body.error.message) {
-                    ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                    )
+                    ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "reimbursement_errorconfirm_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     setIsSubmitCreateReim(false)
                 } else {
                     let message: any = body.message
@@ -364,19 +388,30 @@ export const Reimbursement = (props: any) => {
                         const { status, body = { data: {}, error: {} } }: any = res
                         if (status === 200 || status === 201) {
                             if (body.error && body.error.message) {
-                                ErrorSwal.fire(
-                                    'Error!',
-                                    (body.error && body.error.message) || "",
-                                    'error'
-                                )
+                                ErrorSwal.fire({
+                                    title: 'Error!',
+                                    text: (body.error && body.error.message) || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm2_alertbtn"
+                                    },
+                                    icon: 'error',
+                                })
                                 setIsSubmitCreateReim(false)
                             } else {
-
-                                ErrorSwal.fire(
-                                    'Success!',
-                                    message,
-                                    'success'
-                                ).then((e) => {
+                                ErrorSwal.fire({
+                                    title: 'Success!',
+                                    text: message || "",
+                                    didOpen: () => {
+                                      const confirmButton = Swal.getConfirmButton();
+                            
+                                      if(confirmButton)
+                                        confirmButton.id = "reimbursement_successconfirm_alertbtn"
+                                    },
+                                    icon: 'success',
+                                }).then((e) => {
                                     setIsSubmitCreateReim(false)
                                     if (e.isConfirmed) {
                                         location.reload()
@@ -384,21 +419,33 @@ export const Reimbursement = (props: any) => {
                                 })
                             }
                         } else {
-                            ErrorSwal.fire(
-                                'Error!',
-                                'Something Error.',
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: "Something Error.",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "reimbursement_errorconfirm3_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                             setIsSubmitCreateReim(false)
                         }
                     })
                 }
             } else {
-                ErrorSwal.fire(
-                    'Error!',
-                    'Something Error.',
-                    'error'
-                )
+                ErrorSwal.fire({
+                    title: 'Error!',
+                    text: "Something Error.",
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "reimbursement_errorconfirm4_alertbtn"
+                    },
+                    icon: 'error',
+                })
                 setIsSubmitCreateReim(false)
             }
         })
@@ -448,11 +495,17 @@ export const Reimbursement = (props: any) => {
             }
         });
         if (hasBlank) {
-            ErrorSwal.fire(
-                'Warning',
-                'Please fill all fields.',
-                'warning'
-            )
+            ErrorSwal.fire({
+                title: 'Warning!',
+                text: "Please filla ll fields.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "reimbursement_warningconfirm_alertbtn"
+                },
+                icon: 'warning',
+            })
         } else {
             const valuesObj: any = { ...reimbursementParentValues }
             valuesObj.total = totalAmount
@@ -481,17 +534,29 @@ export const Reimbursement = (props: any) => {
         }
 
         if (hasBlank) {
-            ErrorSwal.fire(
-                'Warning',
-                'Please fill all fields.',
-                'warning'
-            )
+            ErrorSwal.fire({
+                title: 'Warning!',
+                text: "Please fill all fields.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "reimbursement_warningconfirm2_alertbtn"
+                },
+                icon: 'warning',
+            })
         } else if (invalidAmount) {
-            ErrorSwal.fire(
-                'Warning',
-                'Total amount should be 0 or less.',
-                'warning'
-            )
+            ErrorSwal.fire({
+                title: 'Warning!',
+                text: "Total amount should be 0 or less.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "reimbursement_warningconfirm3_alertbtn"
+                },
+                icon: 'warning',
+            })
         } else {
             setIsSubmitCreateReim(true)
             createReimbursement()

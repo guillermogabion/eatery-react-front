@@ -90,19 +90,30 @@ const Overtime = (props) => {
                 
             if (status === 200 || status == 201) {
                 if (body.error && body.error.message) {
-                    ErrorSwal.fire(
-                        "Error!",
-                        body.error.message || "",
-                        "error"
-        
-                    );
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "payrollsettingot_errorconfirm_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                 } else {
                     setModalShow(false)
-                    ErrorSwal.fire(
-                        "Updated Successfully!",
-                        body.data || "",
-                        "success"
-                    ).then((result) => {
+                    ErrorSwal.fire({
+                      title: 'Updated Successfully!',
+                      text: (body.data) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "payrollsettingot_successconfirm_alertbtn"
+                      },
+                      icon: 'success',
+                  }).then((result) => {
                         if (result.isConfirmed) {
                         location.reload();
                         }
@@ -110,7 +121,17 @@ const Overtime = (props) => {
                     // handleCloseModal();
                     }
             }else {
-                ErrorSwal.fire("Error!", "Something Error.", "error");
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: "Something Error.",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "payrollsettingot_errorconfirm2_alertbtn"
+                  },
+                  icon: 'error'
+              })
             }
         }
     )

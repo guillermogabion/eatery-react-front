@@ -53,6 +53,12 @@ export const Utility = {
       text: message || "",
       confirmButtonColor: "#73BF45",
       focusConfirm: true,
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+
+        if(confirmButton)
+          confirmButton.id = "util_errorconfirm_alertbtn"
+      },
     })
   },
   generatePassword(characterAmount: any) {

@@ -77,25 +77,47 @@ export const UploadReceipt = (props: any) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "reimbursementupload_deletereceiptconfirm_alertbtn"
+      
+                if(cancelButton)
+                  cancelButton.id = "reimbursementupload_deletereceiptcancel_alertbtn"
+              },
         }).then((result) => {
             if (result.isConfirmed) {
                 RequestAPI.deleteRequest(`${Api.deleteReimbursementReceipt}`, "", { "id": id }, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200) {
                         getUploadedReceipts(0)
-                        ErrorSwal.fire(
-                            'Deleted!',
-                            (body && body.data) || "",
-                            'success'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Deleted!',
+                            text: (body && body.data) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "reimbursementupload_successconfirm_alertbtn"
+                            },
+                            icon: 'success',
+                        })
                     } else {
                         //error
-                        ErrorSwal.fire(
-                            'Failed!',
-                            (body.error && body.error.message) || "",
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Failed!',
+                            text: (body.error && body.error.message) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "reimbursementupload_errorconfirm_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -120,27 +142,45 @@ export const UploadReceipt = (props: any) => {
                     const { status, body = { data: {}, error: {} } } = res;
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "reimbursementupload_errorconfirm2_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || body.data.message,
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || body.data.message,
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "reimbursementupload_successconfirm2_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getUploadedReceipts(0)
                             setIsEditReceipt(false)
                             setViewReceiptModal(false)
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "reimbursementupload_errorconfirm3_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 }
             );
@@ -209,7 +249,17 @@ export const UploadReceipt = (props: any) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "reimbursementupload_extractdataconfirm_alertbtn"
+      
+                if(cancelButton)
+                  cancelButton.id = "reimbursementupload_extractdatacancel_alertbtn"
+              },
         }).then((result) => {
             if (result.isConfirmed) {
                 const valuesObj: any = { ...reimbursementList }
@@ -230,26 +280,44 @@ export const UploadReceipt = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "reimbursementupload_errorconfirm4_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || (body.data.message),
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || body.data.message,
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "reimbursementupload_successconfirm3_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getUploadedReceipts(0)
                             setHasReceiptSelected(false)
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "reimbursementupload_errorconfirm5_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }

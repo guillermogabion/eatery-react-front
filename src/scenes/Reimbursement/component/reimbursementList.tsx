@@ -124,7 +124,17 @@ export const ReimbursementList = (props: any) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "reimbursementlist_approveconfirm_alertbtn"
+      
+                if(cancelButton)
+                  cancelButton.id = "reimbursementlist_approvecancel_alertbtn"
+              },
         }).then((result) => {
             if (result.isConfirmed) {
 
@@ -132,25 +142,43 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_successconfirm_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getReimbursements(0)
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "remibursementlist_errorconfirm2_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -165,7 +193,17 @@ export const ReimbursementList = (props: any) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "reimbursementlist_declineconfirm_alertbtn"
+      
+                if(cancelButton)
+                  cancelButton.id = "reimbursementlist_declinecancel_alertbtn"
+              },
         }).then((result) => {
             if (result.isConfirmed) {
                 RequestAPI.postRequest(Api.declineReimbursement, "", { "parentId": id }, {}, async (res: any) => {
@@ -173,25 +211,43 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_errorconfirm3_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_successconfirm2_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getReimbursements(0)
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "remibursementlist_errorconfirm4_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -206,7 +262,17 @@ export const ReimbursementList = (props: any) => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, proceed!'
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "reimbursementlist_cancelconfirm_alertbtn"
+      
+                if(cancelButton)
+                  cancelButton.id = "reimbursementlist_cancelcancel_alertbtn"
+              },
         }).then((result) => {
             if (result.isConfirmed) {
                 RequestAPI.postRequest(Api.cancelReimbursement, "", { "parentId": id }, {}, async (res: any) => {
@@ -214,26 +280,44 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_errorconfirm5_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_successconfirm3_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getReimbursements(0)
                             setViewReimbursementModal(false)
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "remibursementlist_errorconfirm6_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -260,27 +344,45 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } } = res;
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_errorconfirm7_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_successconfirm4_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getReimbursements(0)
                             setIsEditReimbursement(false)
                             setViewReimbursementModal(false)
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "remibursementlist_errorconfirm8_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 }
             );

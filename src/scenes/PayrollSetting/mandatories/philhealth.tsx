@@ -130,27 +130,45 @@ const philhealth = (props: any) => {
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
                 Swal.close();
-                ErrorSwal.fire(
-                  'Error!',
-                  body.error.message,
-                  'error'
-                );
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: body.error.message || '',
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "payrollsettingphilhealth_errorconfirm_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
                 Swal.close();
                 getPHInfo(0)
-                ErrorSwal.fire(
-                  'Success!',
-                  body.data || "",
-                  'success'
-                );
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: body.data || '',
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "payrollsettingphilhealth_successconfirm_alertbtn"
+                  },
+                  icon: 'success',
+              })
               }
             } else {
               Swal.close();
-              ErrorSwal.fire(
-                'Error!',
-                'Something went wrong.',
-                'error'
-              );
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: 'Somthing went wrong.',
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "payrollsettingphilhealth_errorconfirm2_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
     } 
@@ -264,28 +282,46 @@ const philhealth = (props: any) => {
 
                             if (status === 200 || status === 201) {
                             if (body.error && body.error.message) {
-                                ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                                )
+                                ErrorSwal.fire({
+                                  title: 'Error!',
+                                  text: (body.error && body.error.message) || '',
+                                  didOpen: () => {
+                                    const confirmButton = Swal.getConfirmButton();
+                          
+                                    if(confirmButton)
+                                      confirmButton.id = "payrollsettingphilhealth_errorconfirm3_alertbtn"
+                                  },
+                                  icon: 'error',
+                              })
                             } else {
-                                ErrorSwal.fire(
-                                    'Updated Successfully',
-                                    (body.data) || "",
-                                    'success'
-                                    )
+                                    ErrorSwal.fire({
+                                      title: 'Updated Successfully!',
+                                      text: (body.data) || '',
+                                      didOpen: () => {
+                                        const confirmButton = Swal.getConfirmButton();
+                              
+                                        if(confirmButton)
+                                          confirmButton.id = "payrollsettingphilhealth_successconfirm2_alertbtn"
+                                      },
+                                      icon: 'success',
+                                  })
                                 // getAllAdjustmentType(0)
                                 getPHInfo(0)
                                 setModalShow(false)
 
                             }
                             } else {
-                            ErrorSwal.fire(
-                                'Error!',
-                                'Something Error.',
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                              title: 'Error!',
+                              text: 'Something Error.',
+                              didOpen: () => {
+                                const confirmButton = Swal.getConfirmButton();
+                      
+                                if(confirmButton)
+                                  confirmButton.id = "payrollsettingphilhealth_errorconfirm4_alertbtn"
+                              },
+                              icon: 'error',
+                          })
                             }
                         })
                     }}

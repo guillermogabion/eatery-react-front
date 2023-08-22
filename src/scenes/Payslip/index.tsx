@@ -148,17 +148,30 @@ export const Payslip = (props: any) => {
                 console.log(valuesObj.ids)
                 if (status === 200 && body) {
                     if (body.error && body.error.message) {
-                        Swal.fire('Error',
-                            body.error.message,
-                            'error'
-                        );
+                        Swal.fire({
+                            title: 'Error!',
+                            text: (body.error && body.error.message) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "payslip_errorconfirm_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     } else {
-                        Swal.fire(
-                            'Success',
-                            'Email sent successfully!',
-                            'success'
-                        );
-                        handleModalHide();
+                        Swal.fire({
+                            title: 'Success!',
+                            text: "Email sent successfullly!",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "payslip_successconfirm_alertbtn"
+                            },
+                            icon: 'success',
+                        })
+                        handleModalHide()
                         setFilterData([]);
 
                     }
