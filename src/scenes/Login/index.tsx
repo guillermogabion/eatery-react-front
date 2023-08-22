@@ -88,9 +88,29 @@ function ChangePassword(props: any) {
 
             if (status === 200) {
               if (body.error && body.error.message) {
-                ErrorSwal.fire('Error', body.error.message, 'error');
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: (body.error.message) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "loginchangepass_errorconfirm_alertbtn"
+                  },
+                  icon: 'error',
+              })
               } else {
-                ErrorSwal.fire('Success', body.data || "", 'success').then(result => {
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: (body.data) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "loginchangepass_successconfirm_alertbtn"
+                  },
+                  icon: 'success',
+              }).then(result => {
                   if (result.isConfirmed) {
                     props.setIsNewAccount(false);
                   }
@@ -98,7 +118,17 @@ function ChangePassword(props: any) {
               }
             } else {
               if (body.error && body.error.message) {
-                ErrorSwal.fire('Error', body.error.message, 'error');
+                ErrorSwal.fire({
+                  title: 'Error!',
+                  text: (body.error.message) || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+          
+                    if(confirmButton)
+                      confirmButton.id = "loginchangepass_errorconfirm2_alertbtn"
+                  },
+                  icon: 'error',
+              })
               }
             }
           });
@@ -273,27 +303,45 @@ export const Login = () => {
         const { status, body } = res
         if (status === 200 || status === 201) {
           if (body.error && body.error.message) {
-            ErrorSwal.fire(
-              'Error!',
-              (body.error && body.error.message) || "",
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: (body.error && body.error.message) || "",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "loginchangepass_errorconfirm3_alertbtn"
+              },
+              icon: 'error',
+          })
             setForgotIsSubmit(false)
           } else {
-            ErrorSwal.fire(
-              'Success!',
-              (body.data) || "",
-              'success'
-            )
+            ErrorSwal.fire({
+              title: 'Success!',
+              text: (body.data) || "",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "loginchangepass_successconfirm2_alertbtn"
+              },
+              icon: 'success',
+          })
             setShowModal(false)
             setForgotIsSubmit(false)
           }
         } else {
-          ErrorSwal.fire(
-            'Error!',
-            'Something Error.',
-            'error'
-          )
+          ErrorSwal.fire({
+            title: 'Error!',
+            text: "Something Error.",
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+    
+              if(confirmButton)
+                confirmButton.id = "loginchangepass_errorconfirm4_alertbtn"
+            },
+            icon: 'error',
+        })
         }
       });
     }

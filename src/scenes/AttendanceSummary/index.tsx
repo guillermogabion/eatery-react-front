@@ -130,17 +130,57 @@ export const AttendanceSummary = (props: any) => {
         .then((response: any) => {
           const { data } = response
           if (data.error) {
-            ErrorSwal.fire("Failed!", (data.error.message || "Something error."), "error")
+            ErrorSwal.fire({
+              title: 'Failed!',
+              text: (data.error.message) || "Something error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "attendancesummary_failedconfirm_alertbtn"
+              },
+              icon: 'error',
+          })
           } else {
-            ErrorSwal.fire("Success!", "Successfully uploaded.", "success")
+            ErrorSwal.fire({
+              title: 'Success!',
+              text: "Successfully uploaded.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "attendancesummary_successconfirm_alertbtn"
+              },
+              icon: 'success',
+          })
             setImportModalShow(false)
           }
         })
         .catch(() => {
-          ErrorSwal.fire("Failed!", "Failed to upload.", "error")
+          ErrorSwal.fire({
+            title: 'Failed!',
+            text: "Failed to upload.",
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+    
+              if(confirmButton)
+                confirmButton.id = "attendancesummary_failedcatchconfirm_alertbtn"
+            },
+            icon: 'error',
+        })
         })
     } else {
-      ErrorSwal.fire("Warning!", "File is required.", "warning")
+      ErrorSwal.fire({
+        title: 'Warning!',
+        text: "File is required.",
+        didOpen: () => {
+          const confirmButton = Swal.getConfirmButton();
+
+          if(confirmButton)
+            confirmButton.id = "attendancesummary_warningconfirm_alertbtn"
+        },
+        icon: 'warning',
+    })
     }
   }
 
@@ -659,28 +699,46 @@ export const AttendanceSummary = (props: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200) {
                   if (body.error && body.error.message) {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "attendancesummary_errrconfirm_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                   } else {
-                    ErrorSwal.fire(
-                      'Success!',
-                      (body.data) || "",
-                      'success'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Success!',
+                      text: (body.data) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "attendancesummary_successconfirm2_alertbtn"
+                      },
+                      icon: 'success',
+                  })
                     getAllAttendance(0)
                     setDeleteBioModal(false)
                     deleteformRef.current?.resetForm()
                   }
                 } else {
                   //error
-                  ErrorSwal.fire(
-                    'Failed!',
-                    (body.error && body.error.message) || "",
-                    'error'
-                  )
+                  ErrorSwal.fire({
+                    title: 'Failed!',
+                    text: (body.error && body.error.message) || "",
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "attendancesummary_errrconfirm2_alertbtn"
+                    },
+                    icon: 'error',
+                })
                 }
               })
 
@@ -792,27 +850,45 @@ export const AttendanceSummary = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "attendancesummary_errrconfirm3_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "attendancesummary_successconfirm3_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       getAllAttendance(0)
                       setAddBioModal(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      'Something Error.',
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: "Something Error.",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "attendancesummary_errrconfirm4_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                 })
               } else {
@@ -820,26 +896,44 @@ export const AttendanceSummary = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "attendancesummary_errrconfirm5_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "attendancesummary_successconfirm4_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       getAllAttendance(0)
                       setAddBioModal(false)
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      'Something Error.',
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: "Something Error.",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "attendancesummary_errrconfirm6_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                 })
               }

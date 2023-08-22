@@ -145,25 +145,43 @@ export const Undertime = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "undertime_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
                             getMyUT(0, key)
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "undertime_successconfirm_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "undertime_errorconfirm2_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -203,27 +221,45 @@ export const Undertime = (props: any) => {
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
                             Swal.close()
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "undertime_errorconfirm3_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
                             Swal.close()
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "undertime_successconfirm2_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getMyUT(0, key)
                         }
                     } else {
                         Swal.close()
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "undertime_errorconfirm4_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -255,25 +291,43 @@ export const Undertime = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "undertime_errorconfirm5_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
                             getMyUT(0, key)
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "undertime_successconfirm3_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                         }
                     } else {
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "undertime_errorconfirm6_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -674,27 +728,45 @@ export const Undertime = (props: any) => {
                                     const { status, body = { data: {}, error: {} } }: any = res
                                     if (status === 200 || status === 201) {
                                         if (body.error && body.error.message) {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "",
-                                                'error'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Error!',
+                                                text: (body.error && body.error.message) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "undertime_errorconfirm7_alertbtn"
+                                                },
+                                                icon: 'error',
+                                            })
                                         } else {
                                             getMyUT(0, key)
-                                            ErrorSwal.fire(
-                                                'Success!',
-                                                (body.data) || "",
-                                                'success'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Success!',
+                                                text: (body.data) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "undertime_successconfirm4_alertbtn"
+                                                },
+                                                icon: 'success',
+                                            })
                                             setModalShow(false)
                                             formRef.current?.resetForm()
                                         }
                                     } else {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            (body.error && body.error.message) || "Something error!",
-                                            'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "Something error!",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "undertime_errorconfirm8_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     }
                                 })
                             } else {
@@ -703,27 +775,45 @@ export const Undertime = (props: any) => {
                                     const { status, body = { data: {}, error: {} } }: any = res
                                     if (status === 200 || status === 201) {
                                         if (body.error && body.error.message) {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "",
-                                                'error'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Error!',
+                                                text: (body.error && body.error.message) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "undertime_errorconfirm9_alertbtn"
+                                                },
+                                                icon: 'error',
+                                            })
                                         } else {
                                             getMyUT(0, key)
-                                            ErrorSwal.fire(
-                                                'Success!',
-                                                (body.data) || "",
-                                                'success'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Success!',
+                                                text: (body.data) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "undertime_successconfirm5_alertbtn"
+                                                },
+                                                icon: 'success',
+                                            })
                                             setModalShow(false)
                                             formRef.current?.resetForm()
                                         }
                                     } else {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            (body.error && body.error.message) || "Something error!",
-                                            'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "Something error!",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "undertime_errorconfirm10_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     }
                                 })
                             }

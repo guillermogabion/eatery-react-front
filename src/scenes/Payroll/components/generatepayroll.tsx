@@ -98,17 +98,29 @@ export default function GeneratePayroll(props: any) {
                     setIsSubmit(false)
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
-                            ErrorSwal.fire(
-                                "Error!",
-                                body.error.message || "",
-                                "error"
-                            );
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "payrollgenerate_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-                            ErrorSwal.fire(
-                                "Success",
-                                body.data || "",
-                                "success"
-                            ).then((result) => {
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "payrollgenerate_successconfirm_alertbtn"
+                                },
+                                icon: 'success',
+                            }).then((result) => {
                                 if (result.isConfirmed) {
                                     // item.isCheck
                                     selectAllEmployees(false)
@@ -120,16 +132,32 @@ export default function GeneratePayroll(props: any) {
                             });
                         }
                     } else {
-                        ErrorSwal.fire("Error!", "Something Error.", "error");
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "payrollgenerate_errorconfirm2_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 }
             );
         } else {
-            ErrorSwal.fire(
-                "Warning",
-                "No employee selected.",
-                "warning"
-            );
+            ErrorSwal.fire({
+                title: 'Warning!',
+                text: "No employee selected.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "payrollgenerate_warningconfirm_alertbtn"
+                },
+                icon: 'warning',
+            })
         }
     }
 
