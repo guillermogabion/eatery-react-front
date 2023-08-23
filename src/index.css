@@ -3587,9 +3587,8 @@ table thead tr th{
   background-repeat: repeat;
   background-size: cover;
   width: 100%;
-  overflow: hidden;
-  height: auto;
-  min-height: 100vh;
+  overflow: auto !important;
+  height: 100vh;
 }
 
 .dashboardMenuClose, .dashboardMenuToggle{
