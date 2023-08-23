@@ -469,7 +469,7 @@ export const Login = () => {
         </Modal.Header>
 
         <div className="modal-input">
-          <Form.Control type="text" value={forgotEmail} onChange={(e) => { setForgotEmail(e.target.value) }} placeholder="Employee Email Address" />
+          <Form.Control id="login_forgottextfield_input" type="text" value={forgotEmail} onChange={(e) => { setForgotEmail(e.target.value) }} placeholder="Employee Email Address" />
         </div>
         <div className="modal-btns w-100">
           <Button variant="primary"
