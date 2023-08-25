@@ -181,8 +181,8 @@ export const Employee = (props: any) => {
     "mealIsTaxable": true,
     "medicalAllowance": 0,
     "medicalIsTaxable": true,
-    "productivityAllowance": 0,
-    "prodIsTaxable": true,
+    "salesIncentive": 0,
+    "salesIncentiveIsTaxable": true,
     "conveyanceAllowance": 0,
     "convIsTaxable": true,
     "otherAllowance": 0,
@@ -2577,21 +2577,21 @@ export const Employee = (props: any) => {
               <div className="form-group col-md-6 mb-3 " >
                 <label>Sales Incentive</label>
                 <input type="text"
-                  name="productivityAllowance"
-                  id="productivityAllowance"
+                  name="salesIncentive"
+                  id="salesIncentive"
                   className="form-control"
-                  value={values.productivityAllowance}
+                  value={values.salesIncentive}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 />
-                {errors && errors.productivityAllowance && (
-                  <p id="employee_errorproductivityallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.productivityAllowance}</p>
+                {errors && errors.salesIncentive && (
+                  <p id="employee_errorsalesIncentive_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salesIncentive}</p>
                 )}
                 <Form.Check
                     type="checkbox"
                     label="Taxable (Sales Incentive)"
-                    name="prodIsTaxable"
-                    checked={values.prodIsTaxable}
-                    onChange={(e) => setFieldValue("prodIsTaxable", e.target.checked)}
+                    name="salesIncentiveIsTaxable"
+                    checked={values.salesIncentiveIsTaxable}
+                    onChange={(e) => setFieldValue("salesIncentiveIsTaxable", e.target.checked)}
                   />
               </div>
               <div className="form-group col-md-6 mb-3 " >
