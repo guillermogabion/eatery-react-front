@@ -532,7 +532,6 @@ export const AllRequest = (props: any) => {
 
     function Overtime(props: any) {
         const [myot, setMyOT] = useState<any>([]);
-        console.log("CALLED")
         useEffect(() => {
             getMyOT(0, "all")
         }, [])
