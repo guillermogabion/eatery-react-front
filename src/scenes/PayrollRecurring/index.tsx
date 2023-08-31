@@ -871,7 +871,7 @@ export const Recurring = (props: any) => {
                                     <Button
                                     id="payrollrecurring_search_btn"
                                     style={{ width: '100%' }}
-                                    onClick={() => getAllRecurringList(0)}
+                                    onClick={() => getAllRecurringList(0, pageSize)}
                                     className="btn btn-primary"
                                     >
                                     Search

@@ -284,89 +284,12 @@ export const AllRequest = (props: any) => {
             }
         }
 
-        const makeFilterData = (event: any) => {
-            const { name, value } = event.target
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && value !== "Select" ? value : ""
-            setFilterData(filterObj)
-        }
-
-        const singleChangeOption = (option: any, name: any) => {
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-            setFilterData(filterObj)
-        }
+     
 
 
         return (
             <div>
-                <div className="w-100">
-                    <div className="fieldtext d-flex col-md-12">
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Employee</label>
-                            <SingleSelect
-                                id="allrequest_employee_leaveselect"
-                                type="string"
-                                options={employeeList || []}
-                                placeholder={"Employee"}
-                                onChangeOption={singleChangeOption}
-                                name="userId"
-                                value={filterData && filterData['userId']}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[5px]">Date From</label>
-                            <input
-                                id="allrequest_datefrom_leaveinput"
-                                name="dateFrom"
-                                type="date"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                value={filterData["dateFrom"]}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[10px]">Date To</label>
-                            <div className="input-container">
-                                <input
-                                    id="allrequest_dateto_leaveinput"
-                                    name="dateTo"
-                                    type="date"
-                                    autoComplete="off"
-                                    className="formControl"
-                                    maxLength={40}
-                                    value={filterData["dateTo"]}
-                                    onChange={(e) => makeFilterData(e)}
-                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="ml-[10px]">Status</label>
-                            <div className="input-container">
-                                <select
-                                    className={`form-select`}
-                                    name="status"
-                                    id="status"
-                                    value={filterData["status"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {statusList &&
-                                        statusList.length &&
-                                        statusList.map((item: any, index: string) => (
-                                            <option key={`${index}_${item}`} value={item}>
-                                                {Utility.capitalizeFirstLetter(item)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -525,88 +448,10 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
-        const makeFilterData = (event: any) => {
-            const { name, value } = event.target
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && value !== "Select" ? value : ""
-            setFilterData(filterObj)
-        }
-
-        const singleChangeOption = (option: any, name: any) => {
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-            setFilterData(filterObj)
-        }
-
+     
         return (
             <div>
-                <div className="w-100">
-                    <div className="fieldtext d-flex col-md-12">
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Employee</label>
-                            <SingleSelect
-                                id="allrequest_employee_revselect"
-                                type="string"
-                                options={employeeList || []}
-                                placeholder={"Employee"}
-                                onChangeOption={singleChangeOption}
-                                name="userId"
-                                value={filterData && filterData['userId']}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[5px]">Date From</label>
-                            <input
-                                id="allrequest_datefrom_revinput"
-                                name="dateFrom"
-                                type="date"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                value={filterData["dateFrom"]}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[10px]">Date To</label>
-                            <div className="input-container">
-                                <input
-                                    id="allrequest_dateto_revinput"
-                                    name="dateTo"
-                                    type="date"
-                                    autoComplete="off"
-                                    className="formControl"
-                                    maxLength={40}
-                                    value={filterData["dateTo"]}
-                                    onChange={(e) => makeFilterData(e)}
-                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="ml-[10px]">Status</label>
-                            <div className="input-container">
-                                <select
-                                    className={`form-select`}
-                                    name="status"
-                                    id="status"
-                                    value={filterData["status"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {statusList &&
-                                        statusList.length &&
-                                        statusList.map((item: any, index: string) => (
-                                            <option key={`${index}_${item}`} value={item}>
-                                                {Utility.capitalizeFirstLetter(item)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -769,73 +614,7 @@ export const AllRequest = (props: any) => {
 
         return (
             <div>
-                <div className="w-100">
-                    <div className="fieldtext d-flex col-md-12">
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Employee</label>
-                            <SingleSelect
-                                id="allrequest_employee_otselect"
-                                type="string"
-                                options={employeeList || []}
-                                placeholder={"Employee"}
-                                onChangeOption={singleChangeOption}
-                                name="userId"
-                                value={filterData && filterData['userId']}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[5px]">Date From</label>
-                            <input
-                                id="allrequest_datefrom_otinput"
-                                name="dateFrom"
-                                type="date"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                value={filterData["dateFrom"]}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[10px]">Date To</label>
-                            <div className="input-container">
-                                <input
-                                    id="allrequest_dateto_otinput"
-                                    name="dateTo"
-                                    type="date"
-                                    autoComplete="off"
-                                    className="formControl"
-                                    maxLength={40}
-                                    value={filterData["dateTo"]}
-                                    onChange={(e) => makeFilterData(e)}
-                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="ml-[10px]">Status</label>
-                            <div className="input-container">
-                                <select
-                                    className={`form-select`}
-                                    name="status"
-                                    id="status"
-                                    value={filterData["status"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {statusList &&
-                                        statusList.length &&
-                                        statusList.map((item: any, index: string) => (
-                                            <option key={`${index}_${item}`} value={item}>
-                                                {Utility.capitalizeFirstLetter(item)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -986,88 +765,10 @@ export const AllRequest = (props: any) => {
             }
         }
 
-        const makeFilterData = (event: any) => {
-            const { name, value } = event.target
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && value !== "Select" ? value : ""
-            setFilterData(filterObj)
-        }
-
-        const singleChangeOption = (option: any, name: any) => {
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-            setFilterData(filterObj)
-        }
-
+        
         return (
             <div>
-                <div className="w-100">
-                    <div className="fieldtext d-flex col-md-12">
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Employee</label>
-                            <SingleSelect
-                                id="allrequest_employee_utstatus"
-                                type="string"
-                                options={employeeList || []}
-                                placeholder={"Employee"}
-                                onChangeOption={singleChangeOption}
-                                name="userId"
-                                value={filterData && filterData['userId']}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[5px]">Date From</label>
-                            <input
-                                id="allrequest_datefrom_utinput"
-                                name="dateFrom"
-                                type="date"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                value={filterData["dateFrom"]}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[10px]">Date To</label>
-                            <div className="input-container">
-                                <input
-                                    id="allrequest_dateto_utinput"
-                                    name="dateTo"
-                                    type="date"
-                                    autoComplete="off"
-                                    className="formControl"
-                                    maxLength={40}
-                                    value={filterData["dateTo"]}
-                                    onChange={(e) => makeFilterData(e)}
-                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="ml-[10px]">Status</label>
-                            <div className="input-container">
-                                <select
-                                    className={`form-select`}
-                                    name="status"
-                                    id="status"
-                                    value={filterData["status"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {statusList &&
-                                        statusList.length &&
-                                        statusList.map((item: any, index: string) => (
-                                            <option key={`${index}_${item}`} value={item}>
-                                                {Utility.capitalizeFirstLetter(item)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -1218,88 +919,11 @@ export const AllRequest = (props: any) => {
             }
         }
 
-        const makeFilterData = (event: any) => {
-            const { name, value } = event.target
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && value !== "Select" ? value : ""
-            setFilterData(filterObj)
-        }
-
-        const singleChangeOption = (option: any, name: any) => {
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-            setFilterData(filterObj)
-        }
+       
 
         return (
             <div>
-                <div className="w-100">
-                    <div className="fieldtext d-flex col-md-12">
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <label>Employee</label>
-                            <SingleSelect
-                                id="allrequest_employee_sudselect"
-                                type="string"
-                                options={employeeList || []}
-                                placeholder={"Employee"}
-                                onChangeOption={singleChangeOption}
-                                name="userId"
-                                value={filterData && filterData['userId']}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[5px]">Date From</label>
-                            <input
-                                id="allrequest_datefrom_sudinput"
-                                name="dateFrom"
-                                type="date"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                value={filterData["dateFrom"]}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="ml-[10px]">Date To</label>
-                            <div className="input-container">
-                                <input
-                                    id="allrequest_dateto_sudinput"
-                                    name="dateTo"
-                                    type="date"
-                                    autoComplete="off"
-                                    className="formControl"
-                                    maxLength={40}
-                                    value={filterData["dateTo"]}
-                                    onChange={(e) => makeFilterData(e)}
-                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="ml-[10px]">Status</label>
-                            <div className="input-container">
-                                <select
-                                    className={`form-select`}
-                                    name="status"
-                                    id="status"
-                                    value={filterData["status"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {statusList &&
-                                        statusList.length &&
-                                        statusList.map((item: any, index: string) => (
-                                            <option key={`${index}_${item}`} value={item}>
-                                                {Utility.capitalizeFirstLetter(item)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -1426,6 +1050,20 @@ export const AllRequest = (props: any) => {
             }
         )
     }
+
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+    }
+
+    const singleChangeOption = (option: any, name: any) => {
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
+
     return (
         // ContainerWrapper component Holds the Sidebar and the Topbar each naka component na
         // ContentWrapper component same as container it holds the contents and the contents can also be a component
@@ -1434,6 +1072,73 @@ export const AllRequest = (props: any) => {
                 <div className="col-md-12 px-5 py-5">
                     <>
                         <div>
+                        <div className="w-100">
+                                <div className="text-[#009FB5] text-lg ">
+                                    Search By:
+                                </div>
+                                <div className="row">
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label>Employee</label>
+                                        <SingleSelect
+                                            id="allrequest_employee_select"
+                                            type="string"
+                                            options={employeeList || []}
+                                            placeholder={"Employee"}
+                                            onChangeOption={singleChangeOption}
+                                            name="userId"
+                                            value={filterData && filterData['userId']}
+                                        />
+                                    </div>
+
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <label className="ml-[5px]">Date From</label>
+                                        <input
+                                            id="allrequest_datefrom_input"
+                                            name="dateFrom"
+                                            type="date"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            value={filterData["dateFrom"]}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                        />
+                                    </div>
+
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <label className="ml-[10px]">Date To</label>
+                                            <input
+                                                id="allrequest_dateto_input"
+                                                name="dateTo"
+                                                type="date"
+                                                autoComplete="off"
+                                                className="formControl"
+                                                maxLength={40}
+                                                value={filterData["dateTo"]}
+                                                onChange={(e) => makeFilterData(e)}
+                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                            />
+                                    </div>
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                                        <label className="ml-[10px]">Status</label>
+                                            <select
+                                                className={`form-select`}
+                                                name="status"
+                                                id="status"
+                                                value={filterData["status"]}
+                                                onChange={(e) => makeFilterData(e)}>
+                                                {statusList &&
+                                                    statusList.length &&
+                                                    statusList.map((item: any, index: string) => (
+                                                        <option key={`${index}_${item}`} value={item}>
+                                                            {Utility.capitalizeFirstLetter(item)}
+                                                        </option>
+                                                    ))}
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className=" pt-2">
                                 <Tabs
                                     id="controlled-tab-example"
