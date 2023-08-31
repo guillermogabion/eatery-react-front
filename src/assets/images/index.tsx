@@ -21,6 +21,20 @@ import cloud_upload from "./dist/cloud_upload.png"
 import add_reimbursement from "./AddReimbursement@2x.png"
 import inactive_review from "./Review&Submit@2x-1.png"
 import active_review from "./Review&Submit@2x-Fill.png"
+import Bundy_icon from "../images/dist/time-card/Bundy-Icon.png"
+import Bundy_icon_svg from "../images/dist/time-card/Bundy-Icon.svg"
+import TimeCard_Asset001 from "../images/dist/time-card/TimeCard-Asset001.svg"
+import vacation_leave from "../images/dist/leaves/ALC-Assets001.svg"
+import sick_leave from "../images/dist/leaves/ALC-Assets002.svg"
+import leave_button from "../images/dist/leaves/ReqTimeOff-Icon.svg"
+import approver_icon from "../images/dist/employee/Approver-Icon.svg"
+import email_icon from "../images/dist/employee/EmailIcon.svg"
+import join_icon from "../images/dist/employee/JoinedDate-Icon.svg"
+import phone_icon from "../images/dist/employee/PhoneIcon.svg"
+import photo from "../images/dist/employee/ProfilePhotoPlaceholder.png"
+import squad_icon from "../images/dist/employee/Squad-Icon.svg"
+import update_employee_icon from "../images/dist/employee/UpdateEmployeeDetails-Icon.svg"
+import hmo_icon from "../images/dist/hmo/HMO-Icon.svg"
 
 export {
   eye,
@@ -45,4 +59,18 @@ export {
   add_reimbursement,
   inactive_review,
   active_review,
+  Bundy_icon,
+  Bundy_icon_svg,
+  TimeCard_Asset001,
+  vacation_leave,
+  sick_leave,
+  leave_button,
+  approver_icon,
+  email_icon,
+  join_icon,
+  phone_icon,
+  photo,
+  squad_icon,
+  update_employee_icon,
+  hmo_icon
 }

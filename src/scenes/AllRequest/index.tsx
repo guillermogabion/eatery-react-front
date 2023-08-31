@@ -80,7 +80,18 @@ export const AllRequest = (props: any) => {
 
     const [dayTypes, setDayTypes] = useState<any>([]);
 
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+    }
 
+    const singleChangeOption = (option: any, name: any) => {
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
     const viewLeave = (id: any = 0) => {
         RequestAPI.getRequest(
             `${Api.getLeave}?id=${id}`,
@@ -217,7 +228,7 @@ export const AllRequest = (props: any) => {
                 setDayTypes(valuesObjDayType)
             }
         }
-    }
+        }
 
     function Leaves(props: any) {
         const [allLeaves, setAllLeaves] = useState<any>([]);
@@ -284,21 +295,23 @@ export const AllRequest = (props: any) => {
             }
         }
 
-        const makeFilterData = (event: any) => {
-            const { name, value } = event.target
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && value !== "Select" ? value : ""
-            setFilterData(filterObj)
-        }
+        // const makeFilterData = (event: any) => {
+        //     const { name, value } = event.target
+        //     const filterObj: any = { ...filterData }
+        //     filterObj[name] = name && value !== "Select" ? value : ""
+        //     setFilterData(filterObj)
+        // }
 
-        const singleChangeOption = (option: any, name: any) => {
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-            setFilterData(filterObj)
-        }
+        // const singleChangeOption = (option: any, name: any) => {
+        //     const filterObj: any = { ...filterData }
+        //     filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        //     setFilterData(filterObj)
+        // }
 
 
         return (
+
+            // leaves 
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
@@ -316,9 +329,9 @@ export const AllRequest = (props: any) => {
                         </div>
 
                         <div>
-                            <label className="ml-[5px]">Date From</label>
+                            <label className="ml-[5px]">Date From </label>
                             <input
-                                id="allrequest_datefrom_leaveinput"
+                                // id="allrequest_datefrom_leaveinput"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -326,7 +339,7 @@ export const AllRequest = (props: any) => {
                                 maxLength={40}
                                 value={filterData["dateFrom"]}
                                 onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                // onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                             />
                         </div>
 
@@ -365,6 +378,13 @@ export const AllRequest = (props: any) => {
                                 </select>
                             </div>
                         </div>
+                        <Button
+                        id="leaves_search_leavecreditsbtn"
+                        style={{ width: 120 }}
+                        onClick={() => getAllLeaves(0, key)}
+                        className="btn btn-primary mx-2 mt-4">
+                        Search
+                        </Button>
                     </div>
                 </div>
                 <Table responsive>
@@ -539,6 +559,7 @@ export const AllRequest = (props: any) => {
         }
 
         return (
+            // coa 
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
@@ -555,7 +576,7 @@ export const AllRequest = (props: any) => {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
                                 id="allrequest_datefrom_revinput"
@@ -568,9 +589,9 @@ export const AllRequest = (props: any) => {
                                 onChange={(e) => makeFilterData(e)}
                                 onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                             />
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
@@ -585,7 +606,7 @@ export const AllRequest = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div>
                             <label className="ml-[10px]">Status</label>
                             <div className="input-container">
@@ -768,6 +789,9 @@ export const AllRequest = (props: any) => {
         }
 
         return (
+            
+
+            // ot 
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
@@ -784,7 +808,7 @@ export const AllRequest = (props: any) => {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
                                 id="allrequest_datefrom_otinput"
@@ -797,9 +821,9 @@ export const AllRequest = (props: any) => {
                                 onChange={(e) => makeFilterData(e)}
                                 onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                             />
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
@@ -814,7 +838,7 @@ export const AllRequest = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div>
                             <label className="ml-[10px]">Status</label>
                             <div className="input-container">
@@ -1000,6 +1024,7 @@ export const AllRequest = (props: any) => {
         }
 
         return (
+            // ut 
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
@@ -1016,7 +1041,7 @@ export const AllRequest = (props: any) => {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
                                 id="allrequest_datefrom_utinput"
@@ -1029,9 +1054,9 @@ export const AllRequest = (props: any) => {
                                 onChange={(e) => makeFilterData(e)}
                                 onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                             />
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
@@ -1046,7 +1071,7 @@ export const AllRequest = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div>
                             <label className="ml-[10px]">Status</label>
                             <div className="input-container">
@@ -1232,6 +1257,7 @@ export const AllRequest = (props: any) => {
         }
 
         return (
+            // sched adj 
             <div>
                 <div className="w-100">
                     <div className="fieldtext d-flex col-md-12">
@@ -1248,7 +1274,7 @@ export const AllRequest = (props: any) => {
                             />
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[5px]">Date From</label>
                             <input
                                 id="allrequest_datefrom_sudinput"
@@ -1261,9 +1287,9 @@ export const AllRequest = (props: any) => {
                                 onChange={(e) => makeFilterData(e)}
                                 onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                             />
-                        </div>
+                        </div> */}
 
-                        <div>
+                        {/* <div>
                             <label className="ml-[10px]">Date To</label>
                             <div className="input-container">
                                 <input
@@ -1278,7 +1304,7 @@ export const AllRequest = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div>
                             <label className="ml-[10px]">Status</label>
                             <div className="input-container">

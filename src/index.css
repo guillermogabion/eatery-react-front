@@ -3752,9 +3752,196 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   display: none;
 }
 
-/* .overflow-auto {
-  overflow-x: hidden !important;
-} */
+.card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 20px; /* Add some space at the bottom of each card */
+  
+}
+.card-content {
+  /* padding: 20px; */
+}
 
+.widget > .col-sm-12,
+.widget > .col-md-6,
+.widget > .col-lg-4 {
+  padding: 0 10px; /* Add padding to columns to create spacing between cards */
+}
+.card-header {
+  background-color: #009FB5;
+  height: 50px;
+  color: white;
+  padding-left: 10%;
+  font-weight: 600;
+  width: 100%;
+  padding-top: 3%;
+}
+.card-profile { 
+  background-color: #023b42;
+  width: 100%;
+  height: 150px;
+  position: relative;
+  overflow: hidden; /* Hide any overflow from the circular shape */
 
+}
+.profile {
+  position: absolute;
+  top: 80px; /* Adjust this value based on your design */
+  left: 50%; /* Align the image to the center */
+  transform: translateX(-50%); /* Center horizontally */
+  width: 150px;
+  height: 150px;
+  border-radius: 50%; /* Create a circular shape */
+  background-color: #023b42; /* Match the card's background color */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
 
+.profile img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%; /* Match the circular shape */
+} 
+.card-body {
+  max-height: 400px;
+  min-height: 400px;
+  padding-top: 15%;
+}
+
+.basic-profile-widget > div > .profile-full-name {
+  color: #009FB5;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 0;
+}
+
+.card-time-card {
+  background-color: #f7fafa;
+  height: 250px;
+  position: relative;
+   /* overflow: hidden; Hide any overflow from the circular shape */
+
+}
+
+.time-card-date {
+  padding-left: 10%;
+  padding-top: 20%;
+}
+.time-card-date > .date-header > h6 {
+  padding-left: 5%;
+}
+.time-card-date > .date-header > h4 {
+  padding-left: 5%;
+  font-weight: 900;
+  font-size: 15px;
+  padding-top: 5%;
+  letter-spacing: 0.05em;
+}
+.time-card-date > .date-header > p { 
+  font-weight: 800;
+  font-size: 40px;
+  padding-top: 3%;
+  transform: scale( .9, 1);
+  display: inline-block;
+  text-align: left;
+}
+.time-card-image {
+  width: 100%;
+  padding-top: 15%;
+  padding-right: 10%;
+}
+.time-card-body {
+  max-height: 372px;
+  min-height: 372px;
+  padding-top: 25%;
+  width: 100%;
+}
+.time-card-width > div > .time-card-button {
+}
+.time-card-body > h6  {
+  padding-left: 10%;
+}
+.time-card-width {
+  min-height: 700px;
+  max-height: 700px;
+}
+.time-card-width > .time-card-body{
+  width: 100%;
+  padding-top: 5% !important;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.status_red {
+    background: #E9E9E9;
+    border: 1px solid red;
+    color: red;
+    border-radius: 5px;
+    text-align: right;
+    padding: 8px 15px;
+    margin-top: 16px;
+    border-color: red;
+}
+.status_blue {
+    background: #E9E9E9;
+    border: 1px solid blue;
+    color: blue;
+    border-radius: 5px;
+    text-align: right;
+    padding: 8px 15px;
+    margin-top: 16px;
+    border-color: blue;
+
+}
+.status_green {
+    background: #E9E9E9;
+    border: 1px solid red;
+    color: green;
+    border-radius: 5px;
+    text-align: right;
+    padding: 8px 15px;
+    margin-top: 16px;
+    border-color: green;
+    color: green;
+
+}
+.credit-record {
+  padding-top: 1%;
+}
+.card-leave {
+  height: 560px;
+  max-height: 560px;
+  position: relative;
+  margin-top: 10%;
+}
+.card-leave > div >.request-leave-button {
+ padding-top: 22%;
+ width: 100%; 
+}
+
+.card-leave-credit {
+  font-size: 70px;
+  color: #034a55;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1;
+
+}
+.leave-label {
+  padding-top: 0% !important;
+  line-height: 0;
+  font-weight: 600;
+}
+.update-employee-button {
+  width: 100%;
+}
+.custom-grey-button {
+  background-color: rgb(252, 248, 248);
+  border-color: grey;
+  color: rgb(10, 10, 10); 
+  padding: 10px 20px;
+  border-radius: 5px; 
+}
