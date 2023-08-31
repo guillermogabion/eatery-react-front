@@ -80,18 +80,7 @@ export const AllRequest = (props: any) => {
 
     const [dayTypes, setDayTypes] = useState<any>([]);
 
-    const makeFilterData = (event: any) => {
-        const { name, value } = event.target
-        const filterObj: any = { ...filterData }
-        filterObj[name] = name && value !== "Select" ? value : ""
-        setFilterData(filterObj)
-    }
-
-    const singleChangeOption = (option: any, name: any) => {
-        const filterObj: any = { ...filterData }
-        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-        setFilterData(filterObj)
-    }
+   
     const viewLeave = (id: any = 0) => {
         RequestAPI.getRequest(
             `${Api.getLeave}?id=${id}`,
