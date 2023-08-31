@@ -537,7 +537,6 @@ export const AllRequest = (props: any) => {
 
     function Overtime(props: any) {
         const [myot, setMyOT] = useState<any>([]);
-
         useEffect(() => {
             getMyOT(0, "all")
         }, [])
@@ -597,19 +596,6 @@ export const AllRequest = (props: any) => {
                 )
             }
 
-        }
-
-        const makeFilterData = (event: any) => {
-            const { name, value } = event.target
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && value !== "Select" ? value : ""
-            setFilterData(filterObj)
-        }
-
-        const singleChangeOption = (option: any, name: any) => {
-            const filterObj: any = { ...filterData }
-            filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
-            setFilterData(filterObj)
         }
 
         return (
@@ -1015,12 +1001,6 @@ export const AllRequest = (props: any) => {
                 </div>
             </div>);
     }
-
-    const adjustmentTable = useCallback(() => {
-        return (
-            <label htmlFor="">test</label>
-        )
-    }, [allAdjustments])
 
     useEffect(() => {
         getAllEmployee()
