@@ -284,8 +284,12 @@ export const AllRequest = (props: any) => {
             }
         }
 
+     
+
+
         return (
             <div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -444,9 +448,10 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
-
+     
         return (
             <div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -595,6 +600,7 @@ export const AllRequest = (props: any) => {
 
         return (
             <div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -745,8 +751,10 @@ export const AllRequest = (props: any) => {
             }
         }
 
+        
         return (
             <div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -896,8 +904,12 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
+
+       
+
         return (
             <div>
+                
                 <Table responsive>
                     <thead>
                         <tr>
@@ -1040,12 +1052,12 @@ export const AllRequest = (props: any) => {
                 <div className="col-md-12 px-5 py-5">
                     <>
                         <div>
-                            <div className="w-100">
+                        <div className="w-100">
                                 <div className="text-[#009FB5] text-lg ">
                                     Search By:
                                 </div>
-                                <div className="fieldtext d-flex col-md-12">
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                                <div className="row">
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                                         <label>Employee</label>
                                         <SingleSelect
                                             id="allrequest_employee_select"
@@ -1058,7 +1070,7 @@ export const AllRequest = (props: any) => {
                                         />
                                     </div>
 
-                                    <div>
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                         <label className="ml-[5px]">Date From</label>
                                         <input
                                             id="allrequest_datefrom_input"
@@ -1073,9 +1085,8 @@ export const AllRequest = (props: any) => {
                                         />
                                     </div>
 
-                                    <div>
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                         <label className="ml-[10px]">Date To</label>
-                                        <div className="input-container">
                                             <input
                                                 id="allrequest_dateto_input"
                                                 name="dateTo"
@@ -1087,11 +1098,9 @@ export const AllRequest = (props: any) => {
                                                 onChange={(e) => makeFilterData(e)}
                                                 onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                             />
-                                        </div>
                                     </div>
-                                    <div>
+                                    <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                         <label className="ml-[10px]">Status</label>
-                                        <div className="input-container">
                                             <select
                                                 className={`form-select`}
                                                 name="status"
@@ -1106,10 +1115,10 @@ export const AllRequest = (props: any) => {
                                                         </option>
                                                     ))}
                                             </select>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div className=" pt-2">
                                 <Tabs
                                     id="controlled-tab-example"
