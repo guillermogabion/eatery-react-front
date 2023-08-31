@@ -569,6 +569,7 @@ export const Reimbursement = (props: any) => {
                 <div className="mb-3 flex">
                     <Button
                         className="mr-3 flex items-center"
+                        id={"reimbursementindex_uploadreceipt_btn"}
                         onClick={() => {
                             setUploadModal(true)
                         }}>
@@ -576,6 +577,7 @@ export const Reimbursement = (props: any) => {
                         Upload Receipt
                     </Button>
                     <Button
+                        id={"reimbursementindex_createreimbursement_btn"}
                         className="flex items-center"
                         onClick={() => {
                             getUploadedReceipts(0)
@@ -616,7 +618,7 @@ export const Reimbursement = (props: any) => {
                         }}
                         className="mb-3"
                     >
-                        <Tab eventKey="reimbursement" title="Reimbursements">
+                        <Tab id={"reimbursementindex_reimbursementlist_tab"} eventKey="reimbursement" title="Reimbursements">
                             {
                                 key == 'reimbursement' ?
                                     <ReimbursementList />
@@ -624,7 +626,7 @@ export const Reimbursement = (props: any) => {
                                     null
                             }
                         </Tab>
-                        <Tab eventKey="uploadReceipt" title="Uploaded Receipt">
+                        <Tab id={"reimbursementindex_uploadreceipt_tab"} eventKey="uploadReceipt" title="Uploaded Receipt">
                             {
                                 key == 'uploadReceipt' ?
                                     <UploadReceipt />
@@ -646,7 +648,7 @@ export const Reimbursement = (props: any) => {
                     keyboard={false}
                     onHide={() => setUploadModal(false)}
                     dialogClassName="modal-90w"
-                    id="accessrights_authlist_modal"
+                    id="reimbursementindex_index_modal"
                 >
                     <Modal.Header className="text-center flex justify-center">
                         <Modal.Title id="contained-modal-title-vcenter" className="font-bold text-md">
@@ -657,7 +659,7 @@ export const Reimbursement = (props: any) => {
                         <div className="w-100 px-3 py-3 flex flex-column justify-center mb-5 bg-[#F2F2F2] cursor-pointer" >
                             <div className="bg-white rounded-md p-3 py-4 border border-dashed border-green-50 w-100 relative" onDrop={handleDrop}>
                                 <div className="flex justify-center">
-                                    <img src={cloud_upload} alt="Show" width={75} height="auto" />
+                                    <img id={"reimbursementindex_cloudupload_img"} src={cloud_upload} alt="Show" width={75} height="auto" />
                                 </div>
                                 <div className="text-center cursor-pointer">
                                     <h3 className="mt-3 text-sm font-bold text-[#189FB5]">Drag & Drop or choose file to upload</h3>
@@ -665,7 +667,7 @@ export const Reimbursement = (props: any) => {
                                     <label className="text-xs mt-[-10px] text-dark">Maximum file size per attachment: 3 mb.</label>
                                 </div>
                                 <input
-                                    id="fileInput"
+                                    id={"reimbursementindex_fileinput_modalinput"}
                                     className="fileInput bg-dark"
                                     type="file"
                                     multiple
@@ -681,15 +683,15 @@ export const Reimbursement = (props: any) => {
                                     return (
                                         <div className="row m-0 p-0 rounded-md border border-dashed border-green-50 p-3 flex mt-3 w-full">
                                             <div className="col-md-1 mt-[2px]">
-                                                <img src={gallery_img} width={60} />
+                                                <img id={"reimbursementindex_galleryimg_modalimg"} src={gallery_img} width={60} />
                                             </div>
                                             <div className="col-md-10">
                                                 <div className="flex justify-between">
-                                                    <label htmlFor="" className="flex"> {progressInfo.percentage == 100 ? <BsFillCheckCircleFill color={"#3BB273"} size={15} className="mr-1" /> : ""} {progressInfo.fileName}</label>
-                                                    <label htmlFor="">{progressInfo.fileSize}</label>
+                                                    <label id={"reimbursementindex_filename_modallabel"} htmlFor="" className="flex"> {progressInfo.percentage == 100 ? <BsFillCheckCircleFill color={"#3BB273"} size={15} className="mr-1" /> : ""} {progressInfo.fileName}</label>
+                                                    <label id={"reimbursementindex_filesize_modallabel"} htmlFor="">{progressInfo.fileSize}</label>
                                                 </div>
                                                 <div>
-                                                    <label htmlFor="" className="text-md text-[#189FB5] font-bold">{!onSubmit ? "Ready" : progressInfo.percentage == 100 ? "Uploaded" : "Uploading"}</label>
+                                                    <label id={"reimbursementindex_fileperc_modallabel"} htmlFor="" className="text-md text-[#189FB5] font-bold">{!onSubmit ? "Ready" : progressInfo.percentage == 100 ? "Uploaded" : "Uploading"}</label>
                                                     <ProgressBar now={progressInfo.percentage} className="bg-[#C2C2C2] h-[13px] mt-1" />
                                                 </div>
                                             </div>
@@ -715,11 +717,13 @@ export const Reimbursement = (props: any) => {
 
                         <div className="flex justify-center">
                             <Button
+                                id={"reimbursementindex_cancel_modalbtn"}
                                 onClick={() => setUploadModal(false)}
                                 className="w-[180px] mr-2">
                                 Cancel
                             </Button>
                             <Button
+                                id={"reimbursementindex_submit_modalbtn"}
                                 onClick={() => {
                                     setOnSubmit(true)
                                     uploadFiles()
@@ -775,6 +779,7 @@ export const Reimbursement = (props: any) => {
                                 <>
                                     <div className="w-full flex justify-end">
                                         <button
+                                            id={"reimbursementindex_additem_modalformbtn"}
                                             onClick={() => {
                                                 newItem()
                                             }}
@@ -830,7 +835,7 @@ export const Reimbursement = (props: any) => {
                                                                         <select
                                                                             className={`form-select ${data.receiptId == "" ? "border-1 border-red-500" : ""}`}
                                                                             name="receiptId"
-                                                                            id="receiptId"
+                                                                            id={"reimbursementindex_receiptid_modalforminput2"}
                                                                             value={data.receiptId}
                                                                             onChange={(e) => {
                                                                                 selectReceipt(index, 'receiptId', e.target.value)
@@ -872,7 +877,7 @@ export const Reimbursement = (props: any) => {
                                                                                     <label>OR/Invoice Number:</label>
                                                                                     <input type="text"
                                                                                         name="invoice"
-                                                                                        id="invoice"
+                                                                                        id={"reimbursementindex_invoice_modalforminput3"}
                                                                                         value={data.invoice}
                                                                                         className={`${data.invoice == "" || data.invoice == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
@@ -884,7 +889,7 @@ export const Reimbursement = (props: any) => {
                                                                                     <label>Company Name:</label>
                                                                                     <input type="text"
                                                                                         name="companyName"
-                                                                                        id="companyName"
+                                                                                        id={"reimbursementindex_companyname_modalforminput3"}
                                                                                         value={data.companyName}
                                                                                         className={`${data.companyName === "" || data.companyName == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"
                                                                                             }`}
@@ -897,7 +902,7 @@ export const Reimbursement = (props: any) => {
                                                                                     <label>TIN:</label>
                                                                                     <input type="text"
                                                                                         name="tin"
-                                                                                        id="tin"
+                                                                                        id={"reimbursementindex_tin_modalforminput3"}
                                                                                         value={data.tin}
                                                                                         className={`${data.tin == "" || data.tin == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
@@ -909,7 +914,7 @@ export const Reimbursement = (props: any) => {
                                                                                     <label>Transaction Date:</label>
                                                                                     <input type="date"
                                                                                         name="transactionDate"
-                                                                                        id="transactionDate"
+                                                                                        id={"reimbursementindex_transactiondate_modalforminput3"}
                                                                                         value={data.transactionDate}
                                                                                         className={`${data.transactionDate == "" || data.transactionDate == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
@@ -922,7 +927,7 @@ export const Reimbursement = (props: any) => {
                                                                                     <label>Amount: </label>
                                                                                     <input type="number"
                                                                                         name="amount"
-                                                                                        id="amount"
+                                                                                        id={"reimbursementindex_amount_modalforminput3"}
                                                                                         value={data.amount}
                                                                                         className={`${data.amount == "" || data.amount == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                                         onChange={(e) => {
@@ -941,7 +946,7 @@ export const Reimbursement = (props: any) => {
                                                                         <label>Transaction Date:</label>
                                                                         <input type="date"
                                                                             name="transactionDate"
-                                                                            id="transactionDate"
+                                                                            id={"reimbursementindex_transactiondate_modalforminput3"}
                                                                             className={`${data.transactionDate == "" || data.transactionDate == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                             value={data.transactionDate}
                                                                             onChange={(e) => {
@@ -954,7 +959,7 @@ export const Reimbursement = (props: any) => {
                                                                         <label>Payee Name:</label>
                                                                         <input type="text"
                                                                             name="companyName"
-                                                                            id="companyName"
+                                                                            id={"reimbursementindex_payeename_modalforminput3"}
                                                                             className={`${data.companyName == "" || data.companyName == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                             value={data.companyName}
                                                                             onChange={(e) => {
@@ -966,7 +971,7 @@ export const Reimbursement = (props: any) => {
                                                                         <label>Amount:</label>
                                                                         <input type="number"
                                                                             name="amount"
-                                                                            id="amount"
+                                                                            id={"reimbursementindex_amout_modalforminput4"}
                                                                             value={data.amount}
                                                                             className={`${data.amount == "" || data.amount == null ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                                                             onChange={(e) => {
@@ -984,12 +989,14 @@ export const Reimbursement = (props: any) => {
 
                                     <div className="flex justify-center mt-5">
                                         <Button
+                                            id={"reimbursementindex_cancel_modalformbtn2"}
                                             variant="secondary"
                                             onClick={() => setCreateReimbursementModal(false)}
                                             className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                                             Cancel
                                         </Button>
                                         <Button
+                                            id={"reimbursementindex_continue_modalformbtn2"}
                                             onClick={() => {
                                                 validateBreakdown()
                                             }}
@@ -1005,7 +1012,7 @@ export const Reimbursement = (props: any) => {
                                         <select
                                             className={`form-select ${reimbursementParentValues && (reimbursementParentValues.typeId == "" || reimbursementParentValues.typeId == null) ? "border-1 border-red-500" : ""}`}
                                             name="typeId"
-                                            id="typeId"
+                                            id={"reimbursementindex_typeid_modalforminput2"}
                                             value={reimbursementParentValues && reimbursementParentValues.typeId}
                                             onChange={(e) => {
                                                 updateParentData('typeId', e.target.value)
@@ -1028,7 +1035,7 @@ export const Reimbursement = (props: any) => {
                                         <label>Approve Budget:</label>
                                         <input type="text"
                                             name="approvedBudget"
-                                            id="approvedBudget"
+                                            id={"reimbursementindex_approvebudget_modalforminput2"}
                                             className={`${reimbursementParentValues  && (reimbursementParentValues.approvedBudget  == null || reimbursementParentValues.total  == "") ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                             value={reimbursementParentValues && reimbursementParentValues.approvedBudget}
                                             onChange={(e) => {
@@ -1040,7 +1047,7 @@ export const Reimbursement = (props: any) => {
                                         <label>Total Amount:</label>
                                         <input type="number"
                                             name="total"
-                                            id="total"
+                                            id={"reimbursementindex_amount_modalforminput2"}
                                             value={reimbursementParentValues && reimbursementParentValues.total}
                                             className={`${reimbursementParentValues  && (reimbursementParentValues.total  == null || reimbursementParentValues.total  == "") ? "form-control form-control-reimbursement-has-error" : "form-control form-control-reimbursement"}`}
                                             onChange={(e) => {
@@ -1052,7 +1059,7 @@ export const Reimbursement = (props: any) => {
                                         <label>Purpose:</label>
                                         <textarea
                                             name="purpose"
-                                            id="purpose"
+                                            id={"reimbursementindex_purpose_modalforminput2"}
                                             value={reimbursementParentValues && reimbursementParentValues.purpose}
                                             className={`${reimbursementParentValues  && (reimbursementParentValues.purpose  == null || reimbursementParentValues.purpose  == "") ? "form-control p-2 form-control-reimbursement-has-error" : "form-control form-control-reimbursement p-2"}`}
                                             style={{ minHeight: 100 }}
@@ -1079,13 +1086,13 @@ export const Reimbursement = (props: any) => {
                                                 reimbursementValues.map((data: any, index: any) => {
                                                     return (
                                                         <tr key={`reimBreakdown-${index}`}>
-                                                            <td>{data.receipt ? "Yes" : "No"}</td>
-                                                            <td>{data.invoice}</td>
-                                                            <td>{data.companyName}</td>
-                                                            <td>{data.tin}</td>
-                                                            <td>{data.transactionDate}</td>
-                                                            <td>{data.amount}</td>
-                                                            <td>{data.fileName}</td>
+                                                            <td id={"reimbursementindex_receipt_modaltable_" + index}>{data.receipt ? "Yes" : "No"}</td>
+                                                            <td id={"reimbursementindex_invoice_modaltable_" + index}>{data.invoice}</td>
+                                                            <td id={"reimbursementindex_companyname_modaltable_" + index}>{data.companyName}</td>
+                                                            <td id={"reimbursementindex_tin_modaltable_" + index}>{data.tin}</td>
+                                                            <td id={"reimbursementindex_transactiondate_modaltable_" + index}>{data.transactionDate}</td>
+                                                            <td id={"reimbursementindex_amount_modaltable_" + index}>{data.amount}</td>
+                                                            <td id={"reimbursementindex_filename_modaltable_" + index}>{data.fileName}</td>
                                                         </tr>
                                                     )
 
@@ -1095,12 +1102,14 @@ export const Reimbursement = (props: any) => {
 
                                     <div className="flex justify-center mt-5">
                                         <Button
+                                            id={"reimbursementindex_returntoprevious_modalformmodal5"}
                                             variant="secondary"
                                             onClick={() => setCreateStep(1)}
                                             className="w-[180px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                                             Return to Previous
                                         </Button>
                                         <Button
+                                            id={"reimbursementindex_validateparent_modalformmodal5"}
                                             onClick={() => {
                                                 validateParent()
                                             }}
