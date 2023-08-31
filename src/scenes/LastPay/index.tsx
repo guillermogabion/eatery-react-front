@@ -143,27 +143,43 @@ export const LastPay = (props: any) => {
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
 
-                            ErrorSwal.fire(
-                                'Error!',
-                                (body.error && body.error.message) || "",
-                                'error'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "lastpay_errorconfirm_alertbtn"
+                                },
+                                icon: 'error',
+                            })
                         } else {
-
-                            ErrorSwal.fire(
-                                'Success!',
-                                (body.data) || "",
-                                'success'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "lastpay_successconfirm_alertbtn"
+                                },
+                                icon: 'success',
+                            })
                             getLastPay(0)
                         }
                     } else {
-
-                        ErrorSwal.fire(
-                            'Error!',
-                            'Something Error.',
-                            'error'
-                        )
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "lastpay_errorconfirm2_alertbtn"
+                            },
+                            icon: 'error',
+                        })
                     }
                 })
             }
@@ -405,11 +421,11 @@ export const LastPay = (props: any) => {
                                                 <td id="lastpay_deminimis_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.deMinimis, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
-                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Allowance</td>
+                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Income</td>
                                                 <td id="lastpay_taxableallowance_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.taxableAllowance, false)}</td>
                                             </tr>
                                             <tr className="bg-white">
-                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Allowance</td>
+                                                <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Income</td>
                                                 <td id="lastpay_nontaxableallowance_sddata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.salaryDetails.nonTaxableAllowance, false)}</td>
                                             </tr>
                                         </tbody>
@@ -483,11 +499,11 @@ export const LastPay = (props: any) => {
                                                     <td id="lastpay_deminimis_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.deMinimis, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
-                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Income</td>
+                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Taxable Allowance</td>
                                                     <td id="lastpay_taxableincome_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.taxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">
-                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Income</td>
+                                                    <td className="text-[#125667] font-bold text-lg px-2 py-3">Non-Taxable Allowance</td>
                                                     <td id="lastpay_nontaxableincome_eanddcata" className="text-[#189FB5] font-bold text-lg px-2 py-3 text-end">{Utility.formatToCurrency(lastPayInfo.earningAndDeductions.nonTaxableIncome, false)}</td>
                                                 </tr>
                                                 <tr className="bg-white">

@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
+=======
+  "name": "",
+>>>>>>> 8e2c1c38471e47c3799ce1735d27febbee9e5c91
   "version": "1.4.4",
   "description": "A web application",
   "main": "index.js",

@@ -212,27 +212,45 @@ export const SquadAttendanceCorrection = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadattendancecorrection_errorconfirm_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadattendancecorrection_successconfirm_alertbtn"
+                },
+                icon: 'success',
+            })
               getAllCOARequest(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadattendancecorrection_errorconfirm2_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -271,27 +289,45 @@ export const SquadAttendanceCorrection = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadattendancecorrection_errorconfirm3_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadattendancecorrection_successconfirm2_alertbtn"
+                },
+                icon: 'success',
+            })
               getAllCOARequest(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadattendancecorrection_errorconfirm4_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -330,27 +366,45 @@ export const SquadAttendanceCorrection = (props: any) => {
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
               Swal.close()
-              ErrorSwal.fire(
-                'Error!',
-                (body.error && body.error.message) || "",
-                'error'
-              )
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadattendancecorrection_errorconfirm5_alertbtn"
+                },
+                icon: 'error',
+            })
             } else {
               Swal.close()
-              ErrorSwal.fire(
-                'Success!',
-                (body.data) || "",
-                'success'
-              )
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "squadattendancecorrection_successconfirm3_alertbtn"
+                },
+                icon: 'success',
+            })
               getAllCOARequest(0, key)
             }
           } else {
             Swal.close()
-            ErrorSwal.fire(
-              'Error!',
-              'Something Error.',
-              'error'
-            )
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+      
+                if(confirmButton)
+                  confirmButton.id = "squadattendancecorrection_errorconfirm6_alertbtn"
+              },
+              icon: 'error',
+          })
           }
         })
       }
@@ -621,28 +675,46 @@ export const SquadAttendanceCorrection = (props: any) => {
                   const { status, body = { data: {}, error: {} } }: any = res
                   if (status === 200 || status === 201) {
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadattendancecorrection_errorconfirm7_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadattendancecorrection_successconfirm4_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setCoaBreakdown([])
                       getAllCOARequest(0, key)
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
                   } else {
-                    ErrorSwal.fire(
-                      'Error!',
-                      'Something Error.',
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: "Something Error.",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+              
+                        if(confirmButton)
+                          confirmButton.id = "squadattendancecorrection_errorconfirm8_alertbtn"
+                      },
+                      icon: 'error',
+                  })
                   }
                   setCoaBreakdownCount(0);
 
@@ -655,21 +727,33 @@ export const SquadAttendanceCorrection = (props: any) => {
                   if (status === 200 || status === 201) {
                     console.log("Response body:", res);
                     if (body.error && body.error.message) {
-                      ErrorSwal.fire(
-                        'Error!',
-                        (body.error && body.error.message) || "",
-                        'error'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadattendancecorrection_errorconfirm9_alertbtn"
+                        },
+                        icon: 'error',
+                    })
                       setCoaBreakdown([])
                       getAllCOARequest(0, key)
                       setModalShow(false)
                       formRef.current?.resetForm()
                     } else {
-                      ErrorSwal.fire(
-                        'Success!',
-                        (body.data) || "",
-                        'success'
-                      )
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: (body.data) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                
+                          if(confirmButton)
+                            confirmButton.id = "squadattendancecorrection_successconfirm5_alertbtn"
+                        },
+                        icon: 'success',
+                    })
                       setCoaBreakdown([]);
                       getAllCOARequest(0, key);
                       setModalShow(false);

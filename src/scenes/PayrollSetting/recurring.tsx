@@ -139,27 +139,45 @@ const Recurring = (props: any) => {
             if (status === 200 || status === 201) {
               if (body.error && body.error.message) {
                 Swal.close();
-                ErrorSwal.fire(
-                  'Error!',
-                  body.error.message,
-                  'error'
-                );
+                ErrorSwal.fire({
+                    title: 'Error!',
+                    text: (body.error && body.error.message) || "",
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "payrollsettingrecurring_errorconfirm_alertbtn"
+                    },
+                    icon: 'error',
+                })
               } else {
                 Swal.close();
                 getAllRecurringType(0);
-                ErrorSwal.fire(
-                  'Success!',
-                  body.data || "",
-                  'success'
-                );
+                ErrorSwal.fire({
+                    title: 'Success!',
+                    text: (body.data) || "",
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+            
+                      if(confirmButton)
+                        confirmButton.id = "payrollsettingrecurring_successconfirm_alertbtn"
+                    },
+                    icon: 'success',
+                })
               }
             } else {
               Swal.close();
-              ErrorSwal.fire(
-                'Error!',
-                'Something went wrong.',
-                'error'
-              );
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: "Something went wrong.",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+        
+                  if(confirmButton)
+                    confirmButton.id = "payrollsettingrecurring_errorconfirm2_alertbtn"
+                },
+                icon: 'error',
+            })
             }
           })
     } 
@@ -440,11 +458,17 @@ const Recurring = (props: any) => {
                         }
 
                         if (hasError) {
-                            ErrorSwal.fire(
-                                'Warning!',
-                                'Please fill all the required fields',
-                                'warning'
-                            )
+                            ErrorSwal.fire({
+                                title: 'Warning!',
+                                text: "Please fill all the required fields",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "payrollsettingrecurring_warningconfirm_alertbtn"
+                                },
+                                icon: 'warning',
+                            })
                            }else{
 
                             if(values.id) {
@@ -456,27 +480,45 @@ const Recurring = (props: any) => {
                                     if (status === 200 || status === 201) {
                                         console.log("update")
                                         if (body.error && body.error.message) {
-                                            ErrorSwal.fire(
-                                                'Error!',
-                                                (body.error && body.error.message) || "",
-                                                'error'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Error!',
+                                                text: (body.error && body.error.message) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "payrollsettingrecurring_errorconfirm3_alertbtn"
+                                                },
+                                                icon: 'error',
+                                            })
                                             } else {
-                                            ErrorSwal.fire(
-                                                'Updated Successfully!',
-                                                (body.data || ""),
-                                                'success'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Updated Successfully!',
+                                                text: (body.data) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "payrollsettingrecurring_successconfirm2_alertbtn"
+                                                },
+                                                icon: 'success',
+                                            })
                                             setModalShow(false)
                                             getAllRecurringType(0, pageSize)
                                             values.id = null
                                             }
                                     }else {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            'Something Error.',
-                                            'error'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Error!',
+                                                text: "Something Error.",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "payrollsettingrecurring_errorconfirm4_alertbtn"
+                                                },
+                                                icon: 'error',
+                                            })
                                     }
                                 })
                         }else{
@@ -487,27 +529,45 @@ const Recurring = (props: any) => {
 
                                     if (status === 200 || status === 201) {
                                     if (body.error && body.error.message) {
-                                        ErrorSwal.fire(
-                                        'Error!',
-                                        (body.error && body.error.message) || "",
-                                        'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "payrollsettingrecurring_errorconfirm5_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     } else {
-                                        ErrorSwal.fire(
-                                            'Success!',
-                                            (body.data) || "",
-                                            'success'
-                                            )
+                                            ErrorSwal.fire({
+                                                title: 'Success!',
+                                                text: (body.data) || "",
+                                                didOpen: () => {
+                                                  const confirmButton = Swal.getConfirmButton();
+                                        
+                                                  if(confirmButton)
+                                                    confirmButton.id = "payrollsettingrecurring_successconfirm3_alertbtn"
+                                                },
+                                                icon: 'success',
+                                            })
                                         getAllRecurringType(0)
                                         setModalShow(false)
 
                                     }
                                     } else {
-                                    ErrorSwal.fire(
-                                        'Error!',
-                                        'Something Error.',
-                                        'error'
-                                    )
+                                    ErrorSwal.fire({
+                                        title: 'Error!',
+                                        text: "Something Error.",
+                                        didOpen: () => {
+                                          const confirmButton = Swal.getConfirmButton();
+                                
+                                          if(confirmButton)
+                                            confirmButton.id = "payrollsettingrecurring_errorconfirm6_alertbtn"
+                                        },
+                                        icon: 'error',
+                                    })
                                     }
                                 })
                             }

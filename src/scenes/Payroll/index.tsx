@@ -363,11 +363,17 @@ export const Payroll = (props: any) => {
                                 const { status, body } = res
                                 if (status === 200 || status === 201) {
                                     if (body.error && body.error.message) {
-                                        ErrorSwal.fire(
-                                            'Error!',
-                                            (body.error && body.error.message) || "",
-                                            'error'
-                                        )
+                                        ErrorSwal.fire({
+                                            title: 'Error!',
+                                            text: (body.error && body.error.message) || "",
+                                            didOpen: () => {
+                                              const confirmButton = Swal.getConfirmButton();
+                                    
+                                              if(confirmButton)
+                                                confirmButton.id = "payroll_errorconfirm_alertbtn"
+                                            },
+                                            icon: 'error',
+                                        })
                                     } else {
                                         ErrorSwal.fire({
                                             title: 'Success',
@@ -376,7 +382,17 @@ export const Payroll = (props: any) => {
                                             confirmButtonColor: '#3085d6',
                                             cancelButtonColor: '#d33',
                                             allowOutsideClick: false,
-                                            confirmButtonText: 'Proceed'
+                                            confirmButtonText: 'Proceed',
+                                            didOpen: () => {
+                                                const confirmButton = Swal.getConfirmButton();
+                                                const cancelButton = Swal.getCancelButton();
+                                      
+                                                if(confirmButton)
+                                                  confirmButton.id = "payroll_successactionconfirm_alertbtn"
+                                      
+                                                if(cancelButton)
+                                                  cancelButton.id = "payroll_successactioncancel_alertbtn"
+                                              },
                                         }).then((result: any) => {
                                             if (result.isConfirmed) {
                                                 setIsCreatePayroll(true)
@@ -389,11 +405,17 @@ export const Payroll = (props: any) => {
                                         })
                                     }
                                 } else {
-                                    ErrorSwal.fire(
-                                        'Error!',
-                                        'Something Error.',
-                                        'error'
-                                    )
+                                    ErrorSwal.fire({
+                                        title: 'Error!',
+                                        text: "Something Error.",
+                                        didOpen: () => {
+                                          const confirmButton = Swal.getConfirmButton();
+                                
+                                          if(confirmButton)
+                                            confirmButton.id = "payroll_errorconfirm2_alertbtn"
+                                        },
+                                        icon: 'error',
+                                    })
                                 }
                             });
                         }}>

@@ -195,13 +195,13 @@ export const ReimbursementList = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-      
-                if(confirmButton)
-                  confirmButton.id = "reimbursement_approvereimbconfirm_alertbtn"
-      
-                if(cancelButton)
-                  cancelButton.id = "accessrights_approvereimbcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "reimbursement_approvereimbconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "accessrights_approvereimbcancel_alertbtn"
+            },
         }).then((result) => {
             if (result.isConfirmed) {
                 RequestAPI.postRequest(Api.approveReimbursement, "", { "parentId": id }, {}, async (res: any) => {
@@ -212,10 +212,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -225,10 +225,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_successconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_successconfirm_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -241,10 +241,10 @@ export const ReimbursementList = (props: any) => {
                             title: 'Error!',
                             text: 'Something error',
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "reimbursement_errorconfirm2_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "reimbursement_errorconfirm2_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -269,13 +269,13 @@ export const ReimbursementList = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-      
-                if(confirmButton)
-                  confirmButton.id = "reimbursement_bulakapprovereimbconfirm_alertbtn"
-      
-                if(cancelButton)
-                  cancelButton.id = "reimbursement_bulkapprovereimbcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "reimbursement_bulakapprovereimbconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "reimbursement_bulkapprovereimbcancel_alertbtn"
+            },
         }).then((result) => {
             if (result.isConfirmed) {
 
@@ -291,10 +291,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm3_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm3_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -303,10 +303,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_successconfirm2_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_successconfirm2_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -317,10 +317,10 @@ export const ReimbursementList = (props: any) => {
                             title: 'Error!',
                             text: 'Something Error.',
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "reimbursement_errorconfirm4_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "reimbursement_errorconfirm4_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -342,13 +342,13 @@ export const ReimbursementList = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-      
-                if(confirmButton)
-                  confirmButton.id = "reimbursement_bulkdeclinereimbconfirm_alertbtn"
-      
-                if(cancelButton)
-                  cancelButton.id = "accessrights_bulkdeclinereimbcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "reimbursement_bulkdeclinereimbconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "accessrights_bulkdeclinereimbcancel_alertbtn"
+            },
         }).then((result) => {
             if (result.isConfirmed) {
 
@@ -364,10 +364,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm5_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm5_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -376,10 +376,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_successconfirm3_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_successconfirm3_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -390,10 +390,10 @@ export const ReimbursementList = (props: any) => {
                             title: 'Error!',
                             text: 'Something Error!',
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "reimbursement_errorconfirm6_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "reimbursement_errorconfirm6_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -415,13 +415,13 @@ export const ReimbursementList = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-      
-                if(confirmButton)
-                  confirmButton.id = "reimbursement_declinereimbconfirm_alertbtn"
-      
-                if(cancelButton)
-                  cancelButton.id = "accessrights_declinereimbcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "reimbursement_declinereimbconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "accessrights_declinereimbcancel_alertbtn"
+            },
         }).then((result) => {
             if (result.isConfirmed) {
                 RequestAPI.postRequest(Api.declineReimbursement, "", { "parentId": id }, {}, async (res: any) => {
@@ -433,10 +433,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm7_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm7_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -446,10 +446,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_successconfirm4_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_successconfirm4_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -462,10 +462,10 @@ export const ReimbursementList = (props: any) => {
                             title: 'Error!',
                             text: 'Something Error.',
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "reimbursement_errorconfirm8_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "reimbursement_errorconfirm8_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -490,13 +490,13 @@ export const ReimbursementList = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-      
-                if(confirmButton)
-                  confirmButton.id = "reimbursement_cancelreimbconfirm_alertbtn"
-      
-                if(cancelButton)
-                  cancelButton.id = "accessrights_cancelreimbcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "reimbursement_cancelreimbconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "accessrights_cancelreimbcancel_alertbtn"
+            },
         }).then((result) => {
             if (result.isConfirmed) {
                 RequestAPI.postRequest(Api.cancelReimbursement, "", { "parentId": id }, {}, async (res: any) => {
@@ -508,10 +508,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm9_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm9_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -521,10 +521,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_successconfirm5_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_successconfirm5_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -537,17 +537,17 @@ export const ReimbursementList = (props: any) => {
                             title: 'Error!',
                             text: 'Something Error.',
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "reimbursement_errorconfirm10_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "reimbursement_errorconfirm10_alertbtn"
                             },
                             icon: 'error',
                         })
                         setIsCancelling(false)
                     }
                 })
-            }else{
+            } else {
                 setIsCancelling(false)
             }
         })
@@ -578,10 +578,10 @@ export const ReimbursementList = (props: any) => {
                                     title: 'Error!',
                                     text: (body.error && body.error.message) || "",
                                     didOpen: () => {
-                                      const confirmButton = Swal.getConfirmButton();
-                            
-                                      if(confirmButton)
-                                        confirmButton.id = "reimbursement_errorconfirm11_alertbtn"
+                                        const confirmButton = Swal.getConfirmButton();
+
+                                        if (confirmButton)
+                                            confirmButton.id = "reimbursement_errorconfirm11_alertbtn"
                                     },
                                     icon: 'error',
                                 })
@@ -590,10 +590,10 @@ export const ReimbursementList = (props: any) => {
                                     title: 'Success!',
                                     text: (body.data) || "",
                                     didOpen: () => {
-                                      const confirmButton = Swal.getConfirmButton();
-                            
-                                      if(confirmButton)
-                                        confirmButton.id = "reimbursement_successconfirm6_alertbtn"
+                                        const confirmButton = Swal.getConfirmButton();
+
+                                        if (confirmButton)
+                                            confirmButton.id = "reimbursement_successconfirm6_alertbtn"
                                     },
                                     icon: 'success',
                                 })
@@ -606,10 +606,10 @@ export const ReimbursementList = (props: any) => {
                                 title: 'Error!',
                                 text: 'Something Error.',
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm12_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "reimbursement_errorconfirm12_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -621,10 +621,10 @@ export const ReimbursementList = (props: any) => {
                     title: 'Error!',
                     text: 'Total amount should not be 0 or blank.',
                     didOpen: () => {
-                      const confirmButton = Swal.getConfirmButton();
-            
-                      if(confirmButton)
-                        confirmButton.id = "reimbursement_errorconfirm13_alertbtn"
+                        const confirmButton = Swal.getConfirmButton();
+
+                        if (confirmButton)
+                            confirmButton.id = "reimbursement_errorconfirm13_alertbtn"
                     },
                     icon: 'error',
                 })
@@ -867,6 +867,12 @@ export const ReimbursementList = (props: any) => {
                                                                     }}>
                                                                     <img id="" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                                                 </label>
+                                                            </>
+                                                        )
+                                                    }
+                                                    {
+                                                        item.status != "DECLINED" && item.status != "CANCELLED" && (
+                                                            <>
                                                                 <label
                                                                     onClick={() => {
                                                                         cancelReimbursement(item.id)
@@ -1171,6 +1177,14 @@ export const ReimbursementList = (props: any) => {
                                             : "Decline"
                                         }
                                     </button>
+                                </>
+                                :
+                                null
+                        }
+
+                        {
+                            !isEditReimbursement && reimbursementView && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
+                                <>
                                     <button
                                         onClick={() => {
                                             setIsCancelling(true)
@@ -1185,7 +1199,8 @@ export const ReimbursementList = (props: any) => {
                                             </div>
                                             : "Retract/Cancel"
                                         }
-                                    </button></>
+                                    </button>
+                                </>
                                 :
                                 null
                         }

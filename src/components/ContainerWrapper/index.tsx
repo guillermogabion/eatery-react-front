@@ -6,8 +6,8 @@ const ContainerWrapper = (props: any) => {
     const { contents } = props
     const [isSideBarActive, setIsSideBarActive] = useState(false);
 
-    let active = "h-full w-[100%] md:w-[45%] sm:w-[45%] lg:w-[385px] lg:relative fixed z-20 sideBarMenu sideBarMenuActive"
-    let inactive = "h-full w-[100%] md:w-[45%] sm:w-[45%] lg:w-[385px] lg:relative fixed z-20 sideBarMenu"
+    let active = "h-[100vh] w-[100%]  overflow-auto md:w-[45%] sm:w-[45%] lg:w-[385px] lg:relative fixed z-20 sideBarMenu sideBarMenuActive"
+    let inactive = "h-[100vh] w-[100%]  overflow-auto md:w-[45%] sm:w-[45%] lg:w-[385px] lg:relative fixed z-20 sideBarMenu"
     
     return (
         <div className="body">
