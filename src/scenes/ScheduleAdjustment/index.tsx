@@ -658,10 +658,10 @@ export const ScheduleAdjustment = (props: any) => {
         </div>
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-3 w-100">
-              {
+            <div className="row d-flex">
+            {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="" style={{ width: 200, marginRight: 10 }}>
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="scheduleadjustment_employee_maindropdown"
@@ -674,59 +674,52 @@ export const ScheduleAdjustment = (props: any) => {
                   :
                   null
               }
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date From</label>
-                <div>
-                  <input
-                    id="scheduleadjustment_datefrom_maininput"
-                    name="dateFrom"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="scheduleadjustment_datefrom_maininput"
+                  name="dateFrom"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date To</label>
-                <div className="input-container">
-                  <input
-                    id="scheduleadjustment_dateto_maininput"
-                    name="dateTo"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="scheduleadjustment_dateto_maininput"
+                  name="dateTo"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date Filed</label>
-                <div className="input-container">
-                  <input
-                    id="scheduleadjustment_datefield_maininput"
-                    name="dateFiled"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="scheduleadjustment_datefield_maininput"
+                  name="dateFiled"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <Button
                   id="scheduleadjustment_search_mainbtn"
-                  style={{ width: 120 }}
+                  style={{ width: '100%' }}
                   onClick={() => getAllAdjustments(0, key, actionable)}
-                  className="btn btn-primary mx-2 mt-4">
+                  className="btn btn-primary mx-2 mt-4 mb-2">
                   Search
                 </Button>
               </div>
             </div>
-
 
             <Tabs
               id="controlled-tab-example"

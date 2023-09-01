@@ -1119,7 +1119,7 @@ export const AllRequest = (props: any) => {
                                 </div>
                             </div>
 
-                            <div className=" pt-2">
+                            <div className="tabs-container pt-2">
                                 <Tabs
                                     id="controlled-tab-example"
                                     activeKey={key}

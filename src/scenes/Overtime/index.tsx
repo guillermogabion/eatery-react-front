@@ -585,10 +585,10 @@ export const Overtime = (props: any) => {
       <div className="w-100 px-5 py-5">
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-3 w-100">
+            <div className="row d-flex">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="" style={{ width: 200, marginRight: 10 }}>
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="overtime_employee_myotformdropdown"
@@ -601,9 +601,8 @@ export const Overtime = (props: any) => {
                   :
                   null
               }
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date From</label>
-                <div>
                   <input
                     id="overtime_datefrom_myotforminput"
                     name="dateFrom"
@@ -613,46 +612,42 @@ export const Overtime = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date To</label>
-                <div className="input-container">
-                  <input
-                    id="overtime_dateto_myotforminput"
-                    name="dateTo"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="overtime_dateto_myotforminput"
+                  name="dateTo"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date Filed</label>
-                <div className="input-container">
-                  <input
-                    id="overtime_datefiled_myotforminput"
-                    name="dateFiled"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="overtime_datefiled_myotforminput"
+                  name="dateFiled"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 d-flex flex-wrap">
                 <Button
                   id="overtime_search_myotformbtn"
-                  style={{ width: 120 }}
+                  style={{ width: '100%' }}
                   onClick={() => getMyOT(0, key, actionable)}
-                  className="btn btn-primary mx-2 mt-4">
+                  className="btn btn-primary  mt-4">
                   Search
                 </Button>
               </div>
             </div>
+            
             <Tabs
               id="controlled-tab-example"
               activeKey={key}

@@ -340,7 +340,7 @@ export const UploadReceipt = (props: any) => {
                     Search By:
                 </div>
                 <div className="row m-0 p-0 d-flex col-md-12">
-                    <div className="col-md-2">
+                    <div className="col-md-3 col-lg-3">
                         <label className="">File Type</label>
                         <div >
                             <select
@@ -361,7 +361,7 @@ export const UploadReceipt = (props: any) => {
                             </select>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3 col-lg-2">
                         <label className="">Date From</label>
                         <input
                             id={"reimbursementuploadreceipt_datefrom_searchby"}
@@ -376,7 +376,7 @@ export const UploadReceipt = (props: any) => {
                         />
                     </div>
 
-                    <div className="col-md-2">
+                    <div className="col-md-3 col-lg-2">
                         <label className="">Date To</label>
                         <div >
                             <input
@@ -392,7 +392,7 @@ export const UploadReceipt = (props: any) => {
                             />
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-3 col-lg-2">
                         <label className="">Status</label>
                         <div >
                             <select
@@ -414,7 +414,7 @@ export const UploadReceipt = (props: any) => {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-2">
                     <Button
                         disabled={!hasReceiptSelected}
                         id={"reimbursementuploadreceipt_extractdata_searchbybtn"}

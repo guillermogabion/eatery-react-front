@@ -759,7 +759,7 @@ export const Recurring = (props: any) => {
                                 </div>
                             </div>
                             <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
+                                <div className="input-container">
                                     <label>Type</label>
                                     <select
                                     className="form-control"
@@ -790,7 +790,7 @@ export const Recurring = (props: any) => {
                                 </div>
                             </div>
                             <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
+                                <div className="input-container">
                                     <label>Recurring Name</label>
                                     <select
                                     className="formControl"

@@ -22,6 +22,8 @@ import ViewEmployee from "./view"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import { Utility } from "../../utils"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
+import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
+
 const ErrorSwal = withReactContent(Swal)
 
 interface Employee {
@@ -2706,23 +2708,20 @@ export const Employee = (props: any) => {
         <div>
           <div className="w-100 ">
 
-            <div className="fieldtext d-flex col-md-6">
-
-              <div className="input-container">
-                <div className="" style={{ width: 200, marginRight: 10 }}>
+            <div className="fieldtext">
+              <div className="row d-flex">
+                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                   <label>Employee</label>
-                  <EmployeeDropdown
-                    id="employee_employee_maindropdown"
-                    placeholder={"Employee"}
-                    singleChangeOption={singleChangeOption}
-                    name="userId"
-                    value={filterData && filterData['userId']}
-                    withEmployeeID={true}
-                  />
+                    <EmployeeDropdown
+                      id="employee_employee_maindropdown"
+                      placeholder={"Employee"}
+                      singleChangeOption={singleChangeOption}
+                      name="userId"
+                      value={filterData && filterData['userId']}
+                      withEmployeeID={true}
+                    />
                 </div>
-              </div>
-              <div className="input-container">
-                <div className="" style={{ width: 200, marginRight: 10 }}>
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <label>Squad Name</label>
                   <select
                     id="employee_squad_maindropdown"
@@ -2747,9 +2746,7 @@ export const Employee = (props: any) => {
                       ))}
                   </select>
                 </div>
-              </div>
-              <div className="input-container">
-                <div className="" style={{ width: 200, marginRight: 10 }}>
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <label>Gender</label>
                   <select
                     id="employee_gender_maindropdown"
@@ -2769,29 +2766,7 @@ export const Employee = (props: any) => {
                     <option value="female">Female</option>
                   </select>
                 </div>
-              </div>
-              {/* <div className="input-container">
-                <div className="" style={{ width: 200, marginRight: 10 }}>
-                  <label>Position</label>
-                  <select
-                      className="form-select"
-                      name="gender"
-                      value={filterData && filterData['position']}
-                      onChange={(e) => {
-                        makeFilterData(e)
-                      // setFieldValue('squadId', e.target.value);
-                    
-                      }}
-                  >
-                      <option value="" disabled selected>
-                      Select Employee Position
-                      </option>
-                      <option value="MANAGER">Manager</option>
-                      <option value="RANK_AND_FILE">Rank and FIle</option>
-                  </select>
-                </div> */}
-              <div className="input-container">
-                <div className="" style={{ width: 200, marginRight: 10 }}>
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <label>Employee Status</label>
                   <select
                     id="employee_employeestatus_maindropdown"
@@ -2824,16 +2799,26 @@ export const Employee = (props: any) => {
                     <option value="OJT_Ended">OJT Ended</option>
                   </select>
                 </div>
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 mt-1 pt-3">
+                  <Button
+                      id="employee_search_mainbtn"
+                      style={{ width: '100%' }}
+                      onClick={() => getAllEmployee(0, "")}
+                      className="btn btn-primary mx-2">
+                      Search
+                    </Button>
+                </div>
+
+              </div>
+              
+              <div className="input-container">
+                <div className="" style={{ width: 200, marginRight: 10 }}>
+                  
+                </div>
               </div>
               <div className="input-container">
                 <div className="mt-[22px]">
-                  <Button
-                    id="employee_search_mainbtn"
-                    style={{ width: 160 }}
-                    onClick={() => getAllEmployee(0, "")}
-                    className="btn btn-primary mx-2">
-                    Search
-                  </Button>
+                  
                 </div>
               </div>
             </div>
@@ -2873,7 +2858,7 @@ export const Employee = (props: any) => {
                               getEmployee(item.id)
                             }}
                             className="text-muted cursor-pointer">
-                            Update
+                              <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                           </label>
                           {
                             item.acctStatus == 'LOCKED' ?
@@ -2884,16 +2869,14 @@ export const Employee = (props: any) => {
                               :
                               null
                           }
-                          <br />
                           <label
                             id={"employee_view_mainbtn_" + item.id}
                             onClick={() => {
                               getEmployeeDetails(item.id)
                             }}
                             className="text-muted cursor-pointer">
-                            View
+                              <img id="leaves_eye_allleaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
                           </label>
-                          <br />
                           <label
                             id={"employee_changepassword_mainbtn_" + item.id}
                             onClick={() => {
@@ -2942,9 +2925,8 @@ export const Employee = (props: any) => {
             />
           </div>
         </div>
-        <div className="d-flex justify-content-end mt-3" >
-          <div>
-            <Button className="mx-2"
+        <div className="d-flex flex-wrap justify-content-end mt-3" >
+            <Button className="mx-2 my-1"
               id="employee_import_mainbtn"
               onClick={() => {
                 setModalUploadShow(true)
@@ -2952,16 +2934,15 @@ export const Employee = (props: any) => {
             >Import</Button>
             <Button
               id="employee_addnew_mainbtn"
-              className="mx-2"
+              className="mx-2 my-1"
               onClick={() => {
                 setModalShow(true)
               }}>Add New</Button>
             <Button
               id="employee_downloadexceltemplate_mainbtn"
-              className="mx-2"
+              className="mx-2 my-1"
               onClick={downloadTemplate}
             >Download Excel Template</Button>
-          </div>
         </div>
       </div>
       <Modal

@@ -638,7 +638,7 @@ export const AllReimbursement = (props: any) => {
                                                         <div className="form-group col-md-3 mb-3" >
                                                             <label>With Receipt?</label>
                                                             <div className="flex mt-3">
-                                                                <div className="flex items-center mr-3">
+                                                                <div className="d-flex flex-wrap items-center mr-3">
                                                                     <input
                                                                         name={"receipt" + index}
                                                                         id={"receipt1" + index}
