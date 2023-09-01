@@ -539,72 +539,81 @@ export const Undertime = (props: any) => {
             <div className="w-100 col-md-12 col-lg-10 px-5 py-5">
                 <div>
                     <div className="w-100 pt-2">
-                        <div className="fieldtext d-flex col-md-3 w-100">
-                            {
-                                data.profile.role == 'EXECUTIVE' ?
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
-                                        <label>Employee</label>
-                                        <EmployeeDropdown
-                                            id="undertime_employee_maindropdown"
-                                            placeholder={"Employee"}
-                                            singleChangeOption={singleChangeOption}
-                                            name="userId"
-                                            value={filterData && filterData['userId']}
-                                        />
-                                    </div>
-                                    :
-                                    null
-                            }
-                            <div>
+                        <div className="row d-flex">
+                        {
+                            data.profile.role == 'EXECUTIVE' ?
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                    <label>Employee</label>
+                                    <EmployeeDropdown
+                                        id="undertime_employee_maindropdown"
+                                        placeholder={"Employee"}
+                                        singleChangeOption={singleChangeOption}
+                                        name="userId"
+                                        value={filterData && filterData['userId']}
+                                    />
+                                </div>
+                                :
+                                null
+                        }
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <label>Date From</label>
-                                <div>
-                                    <input
-                                        id="undertime_datefrom_maininput"
-                                        name="dateFrom"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="undertime_datefrom_maininput"
+                                    name="dateFrom"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <label>Date To</label>
-                                <div className="input-container">
-                                    <input
-                                        id="undertime_dateto_maininput"
-                                        name="dateTo"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="undertime_dateto_maininput"
+                                    name="dateTo"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <label>Date Filed</label>
-                                <div className="input-container">
-                                    <input
-                                        id="undertime_datefiled_maininput"
-                                        name="dateFiled"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="undertime_datefiled_maininput"
+                                    name="dateFiled"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <Button
                                     id="undertime_search_mainbtn"
-                                    style={{ width: 120 }}
+                                    style={{ width: '100%' }}
                                     onClick={() => getMyUT(0, key, actionable)}
                                     className="btn btn-primary mx-2 mt-4">
                                     Search
                                 </Button>
+                            </div>
+                        </div>
+                        <div className="fieldtext d-flex col-md-3 w-100">
+                            
+                            <div>
+                                
+                            </div>
+                            <div>
+                                
+                            </div>
+                            <div>
+                                
+                            </div>
+                            <div>
+                                
                             </div>
                         </div>
 

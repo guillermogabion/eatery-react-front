@@ -384,8 +384,8 @@ export const MyAttendanceSummary = (props: any) => {
                     <h3>Attendance Summary</h3>
 
                     <div className="w-100 pt-4">
-                        <div className="fieldtext d-flex col-md-12">
-                            <div>
+                        <div className="row d-flex">
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                 <label>Date From</label>
                                 <input
                                     id="myattendancesummary_datefrom_attendancesummaryinput"
@@ -399,46 +399,48 @@ export const MyAttendanceSummary = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                 <label>Date To</label>
-                                <div className="input-container">
-                                    <input
-                                        id="myattendancesummary_dateto_attendancesummaryinput"
-                                        name="toDate"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        maxLength={40}
-                                        value={filterData["toDate"]}
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="myattendancesummary_dateto_attendancesummaryinput"
+                                    name="toDate"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    maxLength={40}
+                                    value={filterData["toDate"]}
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-
-                            <Button
-                                id="myattendancesummary_search_attendancesummarybtn"
-                                style={{ width: 120 }}
-                                onClick={() => getAllAttendance(0)}
-                                className="btn btn-primary mx-2 mt-4">
-                                Search
-                            </Button>
-                            {
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 d-flex">
+                                <Button
+                                    id="myattendancesummary_search_attendancesummarybtn"
+                                    style={{ width: '100%' }}
+                                    onClick={() => getAllAttendance(0)}
+                                    className="btn btn-primary my-2 mx-1 mt-4">
+                                    Search
+                                </Button>
+                                {
                                 data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                                     <Button
                                         id="myattendancesummary_addbiolog_attendancesummarybtn"
-                                        style={{ width: 130 }}
+                                        style={{ width: '100%' }}
                                         onClick={() => setAddBioModal(true)}
                                         disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                                        className="btn btn-primary mx-2 mt-4">
+                                        className="btn btn-primary mt-4 my-1">
                                         Add Bio Log
                                     </Button>
                                     :
                                     null
                             }
 
+                            </div>
+                           
+
+                            
                         </div>
+                       
 
                         {attendanceTable()}
 
