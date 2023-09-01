@@ -664,7 +664,7 @@ export const ReimbursementList = (props: any) => {
                         Search By:
                     </div>
                     <div className="row m-0 p-0 d-flex col-md-12">
-                        <div className="col-md-3 ">
+                        <div className="col-md-3 col-lg-3">
                             <label>Employee</label>
                             <EmployeeDropdown
                                 id="reimbursement_employee_maindropdown"
@@ -674,7 +674,7 @@ export const ReimbursementList = (props: any) => {
                                 value={filterData && filterData['userId']}
                             />
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3 col-lg-2">
                             <label className="">Date From</label>
                             <input
                                 id="reimbursement_datefrom_inputfield"
@@ -689,7 +689,7 @@ export const ReimbursementList = (props: any) => {
                             />
                         </div>
 
-                        <div className="col-md-2">
+                        <div className="col-md-3 col-lg-2">
                             <label className="">Date To</label>
                             <div >
                                 <input
@@ -705,7 +705,7 @@ export const ReimbursementList = (props: any) => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3 col-lg-2">
                             <label className="">Status</label>
                             <div >
                                 <select

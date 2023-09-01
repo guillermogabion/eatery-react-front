@@ -878,10 +878,10 @@ export const Leaves = (props: any) => {
             ) : (
               null
             )}
-            <div className="fieldtext d-flex col-md-6 w-100">
+            <div className="row d-flex">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="leaves_employee_leavecreditsdropdown"
@@ -895,7 +895,7 @@ export const Leaves = (props: any) => {
                   null
               }
 
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                 <label>Date From</label>
                 <input
                   id="leaves_datefrom_leavecreditsinput"
@@ -908,9 +908,8 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                 <label>Date To</label>
-                <div className="input-container">
                   <input
                     id="leaves_dateto_leavecreditsinput"
                     name="dateTo"
@@ -921,16 +920,18 @@ export const Leaves = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
+              </div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                <Button
+                  id="leaves_search_leavecreditsbtn"
+                  style={{ width: '100%' }}
+                  onClick={() => getAllLeaves(0, key, actionable)}
+                  className="btn btn-primary mx-2 mt-4">
+                  Search
+                </Button>
               </div>
 
-              <Button
-                id="leaves_search_leavecreditsbtn"
-                style={{ width: 120 }}
-                onClick={() => getAllLeaves(0, key, actionable)}
-                className="btn btn-primary mx-2 mt-4">
-                Search
-              </Button>
+             
             </div>
             <Tabs
               id="controlled-tab-example"

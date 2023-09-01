@@ -797,7 +797,7 @@ export const PayrollAdjustment = (props: any) => {
                                 </div>
                             </div>
                             <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
+                                <div className="input-container">
                                     <label>Type</label>
                                     <select
                                         className="form-control"
@@ -857,7 +857,7 @@ export const PayrollAdjustment = (props: any) => {
 
                            
                             <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
+                                <div className="input-container">
                                     <label>Select Month</label>
                                     <select
                                         placeholder="Month"
@@ -886,7 +886,7 @@ export const PayrollAdjustment = (props: any) => {
                                 </div>
                             </div>
                             <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
+                                <div className="input-container">
                                     <label>Select Year</label>
                                     <select
                                         className="form-control"

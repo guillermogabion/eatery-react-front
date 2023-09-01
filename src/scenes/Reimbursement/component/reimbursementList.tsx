@@ -443,7 +443,7 @@ export const ReimbursementList = (props: any) => {
                                 }
                             </select>
                         </div> */}
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <label className="">Date From</label>
                             <input
                                 id="dateFrom"
@@ -458,7 +458,7 @@ export const ReimbursementList = (props: any) => {
                             />
                         </div>
 
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <label className="">Date To</label>
                             <div >
                                 <input
@@ -474,7 +474,7 @@ export const ReimbursementList = (props: any) => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <label className="">Status</label>
                             <div >
                                 <select

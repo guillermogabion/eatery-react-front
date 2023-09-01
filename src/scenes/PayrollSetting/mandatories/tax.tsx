@@ -234,18 +234,18 @@ const tax = (props: any) => {
                     </Modal>
                     
                 </div>
-                <div className="d-flex justify-content-start mt-3 pb-4" >
+                <div className="d-flex flex-wrap justify-content-start mt-3 pb-4" >
                     <div>
                         <Button
                             id="payrollsettingstax_downloadtemplatemonthly_btn"
-                            className="mx-2"
+                            className="mx-2 my-1"
                             onClick={() => {setTaxAnnualModalShow(true)}}
                             >View Annual</Button>
                     </div>
                     <div>
                         <Button
                             id="payrollsettingstax_uploadtableformonthlytax_btn"
-                            className="mx-2"
+                            className="mx-2 my-1"
                             onClick={() => {setTaxMonthlyModalShow(true)}}
                             >
                                 View Monthly
@@ -254,13 +254,13 @@ const tax = (props: any) => {
                     <div>
                         <Button
                             id="payrollsettingstax_downloadtemplatemonthly_btn"
-                            className="mx-2"
+                            className="mx-2 my-1"
                             onClick={downloadMonthlyTemplate}>Download Template ( Monthly )</Button>
                     </div>
                     <div>
                         <Button
                             id="payrollsettingstax_uploadtableformonthlytax_btn"
-                            className="mx-2"
+                            className="mx-2 my-1"
                             onClick={() => {
                                 setModalMonthlyUploadShow(true)
                             }}>Upload Table for Monthly Tax</Button>
@@ -268,13 +268,13 @@ const tax = (props: any) => {
                     <div>
                         <Button
                             id="payrollsettingstax_downloadtemplateyearly_btn"
-                            className="mx-2"
+                            className="mx-2 my-1"
                             onClick={downloadYearlyTemplate}>Download Template ( Yearly )</Button>
                     </div>
                     <div>
                         <Button
                             id="payrollsettingstax_uploadtableforannualtax_btn"
-                            className="mx-2"
+                            className="mx-2 my-1"
                             onClick={() => {
                                 setModalYearlyUploadShow(true)
                             }}>Upload Table for Annual Tax</Button>

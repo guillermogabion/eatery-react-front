@@ -167,68 +167,82 @@ export const Holiday = (props: any) => {
           <h3>Holiday Tagging</h3>
           <div className="w-100 pt-2">
             <div>
-              <div className="fieldtext d-flex col-md-12">
-                <div className="" style={{ width: 200, marginRight: 10 }}>
-                  <label>Holiday Name</label>
-                  <input
-                    id="holiday_holidayname_input"
-                    name="holidayName"
-                    placeholder="Holiday Name"
-                    type="text"
-                    autoComplete="off"
-                    className="formControl"
-                    maxLength={40}
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
+              <div className="fieldtext">
+                <div className="row d-flex">
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                    <label>Holiday Name</label>
+                    <input
+                      id="holiday_holidayname_input"
+                      name="holidayName"
+                      placeholder="Holiday Name"
+                      type="text"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                  </div>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                    <label>Holiday Type</label>
+                    <select
+                      className={`form-select`}
+                      name="holidayType"
+                      id="holidayType"
+                      value={filterData && filterData['holidayType']}
+                      onChange={(e) => makeFilterData(e)}>
+                      <option key={`holidayTypeItem}`} value={""}>
+                        Select
+                      </option>
+                      {masterList.holidayType &&
+                        masterList.holidayType.length > 0 &&
+                        masterList.holidayType.map((item: any, index: string) => (
+                          <option key={`${index}_${item.item}`} value={item.item}>
+                            {item}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                    <label>Premium Type</label>
+                    <select
+                      className={`form-select`}
+                      name="premiumType"
+                      id="premiumType"
+                      value={filterData && filterData['premiumType']}
+                      onChange={(e) => makeFilterData(e)}>
+                      <option key={`holidayTypeItem}`} value={""}>
+                        Select
+                      </option>
+                      {masterList.premiumType &&
+                        masterList.premiumType.length > 0 &&
+                        masterList.premiumType.map((item: any, index: string) => (
+                          <option key={`${index}_${item.item}`} value={item.item}>
+                            {item}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                    <Button
+                      id="holiday_search_btn"
+                      style={{ width: '100%' }}
+                      onClick={() => getHolidays(0, "")}
+                      className="btn btn-primary mx-2 mt-4">
+                    Search
+                    </Button>
+                  </div>
+                </div>
+                <div className="col-">
+                  
                 </div>
                 <div className="" style={{ width: 200, marginRight: 10 }}>
-                  <label>Holiday Type</label>
-                  <select
-                    className={`form-select`}
-                    name="holidayType"
-                    id="holidayType"
-                    value={filterData && filterData['holidayType']}
-                    onChange={(e) => makeFilterData(e)}>
-                    <option key={`holidayTypeItem}`} value={""}>
-                      Select
-                    </option>
-                    {masterList.holidayType &&
-                      masterList.holidayType.length > 0 &&
-                      masterList.holidayType.map((item: any, index: string) => (
-                        <option key={`${index}_${item.item}`} value={item.item}>
-                          {item}
-                        </option>
-                      ))}
-                  </select>
+                  
                 </div>
                 <div className="" style={{ width: 200, marginRight: 10 }}>
-                  <label>Premium Type</label>
-                  <select
-                    className={`form-select`}
-                    name="premiumType"
-                    id="premiumType"
-                    value={filterData && filterData['premiumType']}
-                    onChange={(e) => makeFilterData(e)}>
-                    <option key={`holidayTypeItem}`} value={""}>
-                      Select
-                    </option>
-                    {masterList.premiumType &&
-                      masterList.premiumType.length > 0 &&
-                      masterList.premiumType.map((item: any, index: string) => (
-                        <option key={`${index}_${item.item}`} value={item.item}>
-                          {item}
-                        </option>
-                      ))}
-                  </select>
+                  
                 </div>
-                <Button
-                  id="holiday_search_btn"
-                  style={{ width: 120 }}
-                  onClick={() => getHolidays(0, "")}
-                  className="btn btn-primary mx-2 mt-4">
-                  Search
-                </Button>
+                
               </div>
               <Table responsive>
                 <thead>
