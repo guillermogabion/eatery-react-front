@@ -336,7 +336,7 @@ export const UploadReceipt = (props: any) => {
                             <select
                                 className={`form-select `}
                                 name="fileType"
-                                id="fileType"
+                                id={"reimbursementuploadreceipt_fileType_input"}
                                 style={{ height: 42 }}
                                 value={filterData["fileType"]}
                                 onChange={(e) => makeFilterData(e)}>
@@ -354,7 +354,7 @@ export const UploadReceipt = (props: any) => {
                     <div className="col-md-2">
                         <label className="">Date From</label>
                         <input
-                            id="dateFrom"
+                            id={"reimbursementuploadreceipt_datefrom_input"}
                             name="dateFrom"
                             type="date"
                             autoComplete="off"
@@ -370,7 +370,7 @@ export const UploadReceipt = (props: any) => {
                         <label className="">Date To</label>
                         <div >
                             <input
-                                id="dateTo"
+                                id={"reimbursementuploadreceipt_dateto_input"}
                                 name="dateTo"
                                 type="date"
                                 autoComplete="off"
@@ -388,7 +388,7 @@ export const UploadReceipt = (props: any) => {
                             <select
                                 className={`form-select `}
                                 name="status"
-                                id="status"
+                                id={"reimbursementuploadreceipt_status_input"}
                                 style={{ height: 42 }}
                                 value={filterData["status"]}
                                 onChange={(e) => makeFilterData(e)}>
@@ -407,6 +407,7 @@ export const UploadReceipt = (props: any) => {
                 <div className="flex justify-end">
                     <Button
                         disabled={!hasReceiptSelected}
+                        id={"reimbursementuploadreceipt_extractdata_btn"}
                         onClick={() => {
                             extractData()
                         }}
@@ -442,7 +443,7 @@ export const UploadReceipt = (props: any) => {
                                             <tr>
                                                 <td>
                                                     <Form.Check
-                                                        id="payrollgenerate_ischeck_employeelistdata4"
+                                                        id={"reimbursementuploadreceipt_ischeck_td_" + item.id}
                                                         type="checkbox"
                                                         label=""
                                                         checked={item.isCheck}
@@ -451,16 +452,16 @@ export const UploadReceipt = (props: any) => {
                                                         }}
                                                     />
                                                 </td>
-                                                <td> {item.id} </td>
-                                                <td> {item.fileName} </td>
-                                                <td> {item.fileContentType} </td>
-                                                <td> {item.companyName} </td>
-                                                <td> {Utility.formatDate(item.uploadDate, 'MM-DD-YYYY')}</td>
-                                                <td> {item.used} </td>
-                                                <td> <label className={`bg-[${Utility.uploadReceiptStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
+                                                <td id={"reimbursementuploadreceipt_id_td_" + item.id}> {item.id} </td>
+                                                <td id={"reimbursementuploadreceipt_filename_td_" + item.id}> {item.fileName} </td>
+                                                <td id={"reimbursementuploadreceipt_filecontenttype_td_" + item.id}> {item.fileContentType} </td>
+                                                <td id={"reimbursementuploadreceipt_companyname_td_" + item.id}> {item.companyName} </td>
+                                                <td id={"reimbursementuploadreceipt_uploaddate_td_" + item.id}> {Utility.formatDate(item.uploadDate, 'MM-DD-YYYY')}</td>
+                                                <td id={"reimbursementuploadreceipt_used_td_" + item.id}> {item.used} </td>
+                                                <td id={"reimbursementuploadreceipt_status_td_" + item.id}> <label className={`bg-[${Utility.uploadReceiptStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
-                                                        id="holiday_delete_btn"
+                                                        id={"reimbursementuploadreceipt_view_tdbtn_" + item.id}
                                                         onClick={() => {
                                                             console.log(item)
                                                             getReceiptImage(item.fileNamePath)
@@ -469,16 +470,16 @@ export const UploadReceipt = (props: any) => {
                                                             setViewReceiptModal(true)
                                                         }}
                                                         className="text-muted cursor-pointer">
-                                                        <img id="holiday_actiondecline_img" src={eye} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                                                        <img id={"reimbursementuploadreceipt_view_tdimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                     </label>
 
                                                     <label
-                                                        id="holiday_delete_btn"
+                                                        id={"reimbursementuploadreceipt_delete_tdbtn_" + item.id}
                                                         onClick={() => {
                                                             deleteReceipt(item.id)
                                                         }}
                                                         className="text-muted cursor-pointer">
-                                                        <img id="holiday_actiondecline_img" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                                                        <img id={"reimbursementuploadreceipt_delete_tdimg_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                     </label>
                                                 </td>
                                             </tr>
@@ -528,7 +529,7 @@ export const UploadReceipt = (props: any) => {
                 keyboard={false}
                 onHide={() => setViewReceiptModal(false)}
                 dialogClassName="modal-90w"
-                id="accessrights_authlist_modal"
+                id="reimbursementuploadreceipt_all_modal"
             >
                 <Modal.Header className="text-center flex justify-center">
                     <Modal.Title id="contained-modal-title-vcenter" className="font-bold text-md">
@@ -543,7 +544,7 @@ export const UploadReceipt = (props: any) => {
                                 <input type="text"
                                     disabled={true}
                                     name="reason"
-                                    id="reason"
+                                    id="reimbursementuploadreceipt_filename_modalinput"
                                     className="form-control"
                                     value={displayData && displayData.fileName}
                                 />
@@ -553,7 +554,7 @@ export const UploadReceipt = (props: any) => {
                                 <input type="text"
                                     disabled={true}
                                     name="reason"
-                                    id="reason"
+                                    id="reimbursementuploadreceipt_receiptuploaddate_modalinput"
                                     className="form-control"
                                     value={displayData && Utility.formatDate(displayData.uploadDate, 'MM-DD-YYYY')}
                                 />
@@ -563,7 +564,7 @@ export const UploadReceipt = (props: any) => {
                                 <input type="text"
                                     disabled={true}
                                     name="reason"
-                                    id="reason"
+                                    id="reimbursementuploadreceipt_status_modalinput"
                                     className="form-control"
                                     value={displayData && displayData.status}
                                 />
@@ -572,7 +573,7 @@ export const UploadReceipt = (props: any) => {
                                 <div className="flex items-center ">
                                     <Form.Check // prettier-ignore
                                         type="switch"
-                                        id="custom-switch"
+                                        id="reimbursementuploadreceipt_customswitch_modalinput"
                                         checked={isDisplayData}
                                         onChange={(e) => {
                                             setIsDisplayData(e.target.checked)
@@ -580,7 +581,7 @@ export const UploadReceipt = (props: any) => {
                                         style={{ fontSize: 18 }}
                                     />
 
-                                    <label className="mb-1" style={{ fontSize: 12 }} htmlFor="custom-switch">Display Extracted Data</label>
+                                    <label className="mb-1" style={{ fontSize: 12 }} htmlFor="reimbursementuploadreceipt_customswitch_modalinput">Display Extracted Data</label>
                                 </div>
                             </div>
                         </div>
@@ -592,7 +593,7 @@ export const UploadReceipt = (props: any) => {
                                         <input type="text"
                                             disabled={!isEditReceipt}
                                             name="companyName"
-                                            id="companyName"
+                                            id="reimbursementuploadreceipt_companyname_modalinput"
                                             className="form-control"
                                             value={displayData && displayData.companyName}
                                             onChange={(e) => {
@@ -605,7 +606,7 @@ export const UploadReceipt = (props: any) => {
                                         <input type="text"
                                             disabled={!isEditReceipt}
                                             name="invoice"
-                                            id="invoice"
+                                            id="reimbursementuploadreceipt_invoice_modalinput"
                                             className="form-control"
                                             value={displayData && displayData.invoice}
                                             onChange={(e) => {
@@ -618,7 +619,7 @@ export const UploadReceipt = (props: any) => {
                                         <input type="text"
                                             disabled={!isEditReceipt}
                                             name="tin"
-                                            id="tin"
+                                            id="reimbursementuploadreceipt_tin_modalinput"
                                             className="form-control"
                                             value={displayData && displayData.tin}
                                             onChange={(e) => {
@@ -631,7 +632,7 @@ export const UploadReceipt = (props: any) => {
                                         <input type="date"
                                             disabled={!isEditReceipt}
                                             name="transactionDate"
-                                            id="transactionDate"
+                                            id="reimbursementuploadreceipt_transactiondate_modalinput"
                                             className="form-control"
                                             value={displayData && displayData.transactionDate}
                                             onChange={(e) => {
@@ -644,7 +645,7 @@ export const UploadReceipt = (props: any) => {
                                         <input type="number"
                                             disabled={!isEditReceipt}
                                             name="amount"
-                                            id="amount"
+                                            id="reimbursementuploadreceipt_amount_modalinput"
                                             className="form-control"
                                             value={displayData && displayData.amount}
                                             onChange={(e) => {
@@ -660,13 +661,14 @@ export const UploadReceipt = (props: any) => {
                         <div>
                             <label>Receipt Preview</label>
                             <div className="w-full flex justify-center object-contain">
-                                <img src={`${receiptImage}`} alt="Base64 Image" />;
+                                <img id="reimbursementuploadreceipt_receiptimg_modalimg" src={`${receiptImage}`} alt="Base64 Image" />;
                             </div>
                         </div>
                     </div>
 
                     <div className="flex justify-center">
                         <Button
+                            id="reimbursementuploadreceipt_cancel_modalbtn"
                             variant="secondary"
                             onClick={() => {
                                 setViewReceiptModal(false)
@@ -676,6 +678,7 @@ export const UploadReceipt = (props: any) => {
                             Cancel
                         </Button>
                         <Button
+                            id="reimbursementuploadreceipt_save_modalbtn"
                             onClick={() => {
                                 if (isEditReceipt) {
                                     updateReceipt()
@@ -689,6 +692,7 @@ export const UploadReceipt = (props: any) => {
                         {
                             !isEditReceipt ?
                                 <button
+                                    id="reimbursementuploadreceipt_delete_modalbtn"
                                     onClick={() => {
                                         if (displayData) {
                                             deleteReceipt(displayData.id)
