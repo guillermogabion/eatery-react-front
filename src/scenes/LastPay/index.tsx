@@ -218,8 +218,7 @@ export const LastPay = (props: any) => {
         <ContainerWrapper contents={<>
             <>
                 <div className="w-100 px-5 py-5">
-                    <div className="fieldtext d-flex col-md-3 w-100">
-                        <div className="row d-flex">
+                        <div className="row d-flex mb-2">
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
                                 <label>Employee</label>
                                 <EmployeeDropdown
@@ -263,7 +262,6 @@ export const LastPay = (props: any) => {
                                 </select>
                             </div>
                         </div>
-                    </div>
                     <div>
                         <Table responsive>
                             <thead>
