@@ -276,7 +276,7 @@ export const Payroll = (props: any) => {
                                         }}
                                         className="mb-3 w-100 lg:w-[80vw]"
                                     >
-                                        <Tab id="payroll_timekeeping_audittabs" eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
+                                        <Tab id="payroll_timekeeping_audittabs" eventKey="timekeeping" title="Timesheet" className="w-full lg:w-[75vw] overflow-auto">
                                             {
                                                 key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
                                                     <Timekeeping payrollData={payrollData} />
@@ -284,7 +284,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_employeerequest_audittabs" eventKey="employee request" title="Employee Request">
+                                        <Tab id="payroll_employeerequest_audittabs" eventKey="employee request" title="Employee Leave">
                                             {
                                                 key == 'employee request' && Object.keys(payrollData).length != 0 ?
                                                     <Leaves payrollData={payrollData} />
@@ -292,7 +292,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_recurring_audittabs" eventKey="recurring" title="Recurring" >
+                                        <Tab id="payroll_recurring_audittabs" eventKey="recurring" title="Deduction & Loan Name" >
                                             {
                                                 key == 'recurring' ?
                                                     <Recurring payrollData={payrollData} />
@@ -300,7 +300,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_adjustment_audittabs" eventKey="adjustment" title="Adjustment">
+                                        <Tab id="payroll_adjustment_audittabs" eventKey="adjustment" title="Earning & Allowance Name">
                                             {
                                                 key == 'adjustment' ?
                                                     <Adjustment payrollData={payrollData} />

@@ -17,10 +17,10 @@ export const PayrollSetting = (props: any) => {
                         <Tab id="payrollsetting_mandatories_tab" eventKey="tab1" title="Mandatories">
                             <Mandatory />
                         </Tab>
-                        <Tab id="payrollsetting_adjustments_tab" eventKey="tab2" title="Adjustments">
+                        <Tab id="payrollsetting_adjustments_tab" eventKey="tab2" title="Earnings & Allowances ">
                             <Adjustment/>
                         </Tab>
-                        <Tab id="payrollsetting_recurring_tab" eventKey="tab3" title="Recurring">
+                        <Tab id="payrollsetting_recurring_tab" eventKey="tab3" title="Deduction or Loan">
                             <Recurring/>
                         </Tab>
                         <Tab id="payrollsetting_overtimesetting_tab" eventKey="tab4" title="Overtime Settings">

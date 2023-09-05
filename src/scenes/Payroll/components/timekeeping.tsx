@@ -27,10 +27,10 @@ export default function Timekeeping(props: any) {
         let data = { ...payrollData }
         let from = data.from
         let to = data.to
-        const startDate:any = new Date(from);
-        const endDate:any = new Date(to);
+        const startDate: any = new Date(from);
+        const endDate: any = new Date(to);
 
-        const dateRange:any = [];
+        const dateRange: any = [];
         let currentDate = startDate;
 
         while (currentDate <= endDate) {
@@ -105,58 +105,59 @@ export default function Timekeeping(props: any) {
                     </div>
                 </div>
             </div>
-            <Table className="w-full tableOverflow mt-[-20px]">
-                <thead className="custom-row">
-                    {
-                        timekeeping &&
-                            timekeeping.length > 0 ?
-                            <>
-                                <tr>
-                                    <td id="payrolltimekeeping_employeeid_timekeepingdata" className="daysInMonth">Employee ID</td>
-                                    <td id="payrolltimekeeping_employeename_timekeepingdata" className="daysInMonth">Employee Name</td>
+            <div className="timekeepingTable">
+                <Table className="w-full tableOverflow mt-[-20px]">
+                    <thead className="custom-row">
+                        {
+                            timekeeping &&
+                                timekeeping.length > 0 ?
+                                <>
+                                    <tr>
+                                        <td id="payrolltimekeeping_employeeid_timekeepingdata" className="daysInMonth">Employee ID</td>
+                                        <td id="payrolltimekeeping_employeename_timekeepingdata" className="daysInMonth">Employee Name</td>
+                                        {
+                                            daysInMonth.map((data: any, i: any) => {
+                                                return (
+                                                    <>
+                                                        <td id="payrolltimekeeping_daysinmonth_timekeepingdata" className="daysInMonth">{data}</td>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                    </tr>
                                     {
-                                        daysInMonth.map((data: any, i: any) => {
+                                        timekeeping &&
+                                        timekeeping.map((data: any, i: any) => {
                                             return (
                                                 <>
-                                                    <td id="payrolltimekeeping_daysinmonth_timekeepingdata" className="daysInMonth">{data}</td>
+                                                    <tr>
+                                                        <td id="payrolltimekeeping_employeeid_timekeeping2data" className="timeKeepingDates">{data.empId}</td>
+                                                        <td id="payrolltimekeeping_employeename_timekeeping2data" className="timeKeepingDates">{data.empName}</td>
+                                                        {
+                                                            data.dateList && data.dateList.length > 0 &&
+                                                            data.dateList.map((d: any, i: any) => {
+                                                                if (i == daysInMonth.length) {
+                                                                    return null
+                                                                }
+                                                                return (
+                                                                    <>
+                                                                        <td id="payrolltimekeeping_totalhours_timekeeping2data" className="">{d.totalHours}</td>
+                                                                    </>
+                                                                )
+                                                            })
+                                                        }
+                                                    </tr>
                                                 </>
                                             )
                                         })
                                     }
-                                </tr>
-                                {
-                                    timekeeping &&
-                                    timekeeping.map((data: any, i: any) => {
-                                        return (
-                                            <>
-                                                <tr>
-                                                    <td id="payrolltimekeeping_employeeid_timekeeping2data" className="timeKeepingDates">{data.empId}</td>
-                                                    <td id="payrolltimekeeping_employeename_timekeeping2data" className="timeKeepingDates">{data.empName}</td>
-                                                    {
-                                                        data.dateList && data.dateList.length > 0 &&
-                                                        data.dateList.map((d: any, i: any) => {
-                                                            if (i == daysInMonth.length) {
-                                                                return null
-                                                            }
-                                                            return (
-                                                                <>
-                                                                    <td id="payrolltimekeeping_totalhours_timekeeping2data" className="">{d.totalHours}</td>
-                                                                </>
-                                                            )
-                                                        })
-                                                    }
-                                                </tr>
-                                            </>
-                                        )
-                                    })
-                                }
-                            </>
-                            :
-                            null
-                    }
-                </thead>
-                <tbody className="custom-row">
-                    {/* {
+                                </>
+                                :
+                                null
+                        }
+                    </thead>
+                    <tbody className="custom-row">
+                        {/* {
                         timekeeping &&
                             timekeeping.length > 0 ?
                             <>
@@ -184,19 +185,21 @@ export default function Timekeeping(props: any) {
                             :
                             null
                     } */}
-                </tbody>
+                    </tbody>
 
-            </Table>
-            {
-                timekeeping &&
-                    timekeeping.content &&
-                    timekeeping.content.length == 0 ?
-                    <div className="w-100 text-center">
-                        <label htmlFor="">No Records Found</label>
-                    </div>
-                    :
-                    null
-            }
+                </Table>
+                {
+                    timekeeping &&
+                        timekeeping.content &&
+                        timekeeping.content.length == 0 ?
+                        <div className="w-100 text-center">
+                            <label htmlFor="">No Records Found</label>
+                        </div>
+                        :
+                        null
+                }
+            </div>
+
             <br />
             <div className="d-flex justify-content-end">
                 <div className="">

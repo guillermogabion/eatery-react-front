@@ -73,7 +73,7 @@ export const Recurring = (props: any) => {
         'Employee Name',
         'Amount',
         'End Date',
-        'Recurring Name',
+        'Deduction or Loan Name',
         'Status',
         'Action',
     ];
@@ -791,7 +791,7 @@ export const Recurring = (props: any) => {
                             </div>
                             <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
                                 <div className="input-container">
-                                    <label>Recurring Name</label>
+                                    <label>Deduction or Loan Name</label>
                                     <select
                                     className="formControl"
                                     name="recurringTypeName"
@@ -802,7 +802,7 @@ export const Recurring = (props: any) => {
                                     }}
                                     >
                                     <option value="" disabled selected>
-                                        Select Recurring Name
+                                        Select Deduction or Loan Name
                                     </option>
                                     {recurringName &&
                                         recurringName.length &&
@@ -949,7 +949,6 @@ export const Recurring = (props: any) => {
                 </div>
                 <div className="text-muted">
                     <h2>Total Amount: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.notDeductionAmount) : 0}</span></h2>
-                    <h2>Total deduction: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.deductionAmount) : 0}</span></h2>
                 </div>
             </div>
             <div className="row">
@@ -1001,13 +1000,13 @@ export const Recurring = (props: any) => {
                             // setModalUploadShow(true)
                             setModalShow(true)
                         }}
-                    >Add Recurring</Button>
+                    >Add Deduction or Loan</Button>
                     <Button
                         id="payrollrecurring_importrecurring_recurringlistbtn"
                         className="mx-2"
                         onClick={() => {
                             setUploadModalShow(true)
-                        }}>Import Recurring</Button>
+                        }}>Import Deduction or Loan</Button>
                     <Button
                         id="payrollrecurring_exportrecurring_recurringlistbtn"
                         className="mx-2"
@@ -1015,14 +1014,14 @@ export const Recurring = (props: any) => {
                             setDownloadModalShow(true)
                         }
                         }
-                    >Export Recurring</Button>
+                    >Export Deduction or Loan</Button>
                     <Button
                         id="payrollrecurring_downloadrecurringtemplate_recurringlistbtn"
                         className="mx-2"
                         onClick={
                             downloadTemplate
                         }
-                    >Download Recurring Template</Button>
+                    >Download Deduction or Loan Template</Button>
                 </div>
             </div>
             <Modal
@@ -1040,7 +1039,7 @@ export const Recurring = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        {userId ? 'Update Recurring' : 'Create Recurring'}
+                        {userId ? 'Update Deduction or Loan' : 'Create Deduction or Loan'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -1106,10 +1105,10 @@ export const Recurring = (props: any) => {
                                                     </select>
                                                 </div>
                                                 <div className="col-md-3 mb-3">
-                                                    <label>Recurring Name *</label>
+                                                    <label>Deduction or Loan Name *</label>
                                                     <select
                                                         disabled
-                                                        placeholder="Recurring Name"
+                                                        placeholder="Deduction or Loan Name"
                                                         className="form-select"
                                                         name="recurringTypeId"
                                                         id="payrollrecurring_recurringname"
@@ -1119,7 +1118,7 @@ export const Recurring = (props: any) => {
                                                         }}
                                                     >
                                                         <option value="" disabled selected>
-                                                            Select Recurring Name
+                                                            Select Deduction or Loan Name
                                                         </option>
                                                         {recurringTypes &&
                                                             recurringTypes.length &&
@@ -1189,7 +1188,7 @@ export const Recurring = (props: any) => {
                                                 return (
                                                     <div key={`recurring-${index}`}>
                                                         <div className="form-group row">
-                                                            <div className="col-md-3 mb-3">
+                                                            <div className="col-md-4 mb-3">
                                                                 <label>Employee *</label>
                                                                 <EmployeeDropdown
                                                                     id="payrollrecurring_recurringtypeemployee_recurringdropdown"
@@ -1203,10 +1202,10 @@ export const Recurring = (props: any) => {
                                                                 />
                                                             </div>
                                                             {/* <p>Selected Employee: {value ? value.userId : "None"}</p> */}
-                                                            <div className="col-md-3 mb-3">
-                                                                <label>Recurring Name *</label>
+                                                            <div className="col-md-4 mb-3">
+                                                                <label>Deduction or Loan Name *</label>
                                                                 <select
-                                                                    placeholder="Recurring Name"
+                                                                    placeholder="Deduction or Loan Name"
                                                                     className={`form-select ${touched.recurringTypeId && errors.recurringTypeId ? 'is-invalid' : ''}`}
                                                                     name="recurringTypeId"
                                                                     id="payrollrecurring_recurringname2"
@@ -1229,7 +1228,7 @@ export const Recurring = (props: any) => {
                                                                     }}
                                                                 >
                                                                     <option value="" disabled={!index} selected={!index}>
-                                                                        Select Recurring Name
+                                                                        Select Deduction or Loan Name
                                                                     </option>
                                                                     {recurringTypes &&
                                                                         recurringTypes.length &&
@@ -1243,47 +1242,6 @@ export const Recurring = (props: any) => {
                                                                     <p id="payrollrecurring_recurringtypeid_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.recurringTypeId}</p>
                                                                 )}
                                                             </div>
-
-                                                            {/* start of test  */}
-                                                            <div className="col-md-2 mb-3">
-                                                                <label>Recurring Action *</label>
-                                                                <select
-                                                                    disabled
-                                                                    placeholder="Recurring Name"
-                                                                    className="form-control"
-                                                                    name="recurringTypeId"
-                                                                    id="payrollrecurring_recurringaction"
-                                                                    value={values.recurringTypeId}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...recurring];
-                                                                        updatedFields[index].recurringTypeId = selectedValue;
-                                                                        setRecurring(updatedFields);
-                                                                        setFormField(e, setFieldValue);
-                                                                        const selectedType = recurringTypes.find(
-                                                                            (item) => item.recurringDeduction === selectedValue
-                                                                        );
-                                                                        const isDeductionField = document.getElementsByName('recurringDeduction')[0];
-                                                                        if (selectedType) {
-                                                                            isDeductionField.value = selectedType.recurringDeduction;
-                                                                        } else {
-                                                                            isDeductionField.value = '';
-                                                                        }
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled={!index} selected={!index}>
-                                                                        Recurring Action
-                                                                    </option>
-                                                                    {recurringTypes &&
-                                                                        recurringTypes.length &&
-                                                                        recurringTypes.map((item, index) => (
-                                                                            <option key={`${index}_${item.recurringTypeId}`} value={item.recurringTypeId}>
-                                                                                {item.recurringDeduction === true ? "Deduct" : "Add"}
-                                                                            </option>
-                                                                        ))}
-                                                                </select>
-                                                            </div>
-                                                            {/* end of test  */}
                                                             <div className="col-md-2 mb-3">
                                                                 <label>Amount</label>
                                                                 <input
