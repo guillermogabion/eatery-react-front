@@ -1,16 +1,9 @@
-import moment from "moment"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
-import Tab from 'react-bootstrap/Tab'
 import Table from 'react-bootstrap/Table'
-import Tabs from 'react-bootstrap/Tabs'
-import ReactPaginate from 'react-paginate'
-import { useSelector } from "react-redux"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { Api, RequestAPI } from "../../../api"
-import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../../assets/images"
-import { Utility } from "../../../utils"
 import EmployeeDropdown from "../../../components/EmployeeDropdown"
 const ErrorSwal = withReactContent(Swal)
 
@@ -39,7 +32,6 @@ export const TimeKeeping = (props: any) => {
                     if (status === 200 && body) {
                         if (body.error && body.error.message) {
                         } else {
-                            console.log(body.data)
                             setAllTimeKeeping(body.data)
                         }
                     }
@@ -180,9 +172,8 @@ export const TimeKeeping = (props: any) => {
                                 <tbody>
                                     {
                                         allTimeKeeping &&
-                                        allTimeKeeping.content &&
-                                        allTimeKeeping.content.length > 0 &&
-                                        allTimeKeeping.content.map((item: any, index: any) => {
+                                        allTimeKeeping.length > 0 &&
+                                        allTimeKeeping.map((item: any, index: any) => {
                                             return (
                                                 <tr>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.empId}</td>
@@ -219,25 +210,6 @@ export const TimeKeeping = (props: any) => {
                                     null
                             }
                         </div>
-                    </div>
-                </div>
-                <div className="d-flex justify-content-end mt-3 mr-[80px]">
-                    <div className="">
-                        <ReactPaginate
-                            className="d-flex justify-content-center align-items-center"
-                            breakLabel="..."
-                            nextLabel=">"
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={5}
-                            pageCount={(allTimeKeeping && allTimeKeeping.totalPages) || 0}
-                            previousLabel="<"
-                            previousLinkClassName="prev-next-pagination"
-                            nextLinkClassName="prev-next-pagination"
-                            activeLinkClassName="active-page-link"
-                            disabledLinkClassName="prev-next-disabled"
-                            pageLinkClassName="page-link"
-                            renderOnZeroPageCount={null}
-                        />
                     </div>
                 </div>
             </div>
