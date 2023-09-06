@@ -1,74 +1,84 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Api, RequestAPI } from "../../../api";
-import SingleSelect from "../../../components/Forms/SingleSelect";
-import { Table } from "react-bootstrap";
-import ReactPaginate from "react-paginate";
-import { Utility } from "../../../utils";
-import EmployeeDropdown from "../../../components/EmployeeDropdown";
-import moment from "moment";
+import moment from "moment"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Button } from "react-bootstrap"
+import Tab from 'react-bootstrap/Tab'
+import Table from 'react-bootstrap/Table'
+import Tabs from 'react-bootstrap/Tabs'
+import ReactPaginate from 'react-paginate'
+import { useSelector } from "react-redux"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+import { Api, RequestAPI } from "../../../api"
+import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../../assets/images"
+import { Utility } from "../../../utils"
+import EmployeeDropdown from "../../../components/EmployeeDropdown"
+const ErrorSwal = withReactContent(Swal)
 
-export default function Timekeeping(props: any) {
+
+export const TimeKeeping = (props: any) => {
     const { payrollData } = props
-    const [timekeeping, setAllTimekeeping] = useState<any>([]);
-    const { data } = useSelector((state: any) => state.rootReducer.userData)
-    const userData = useSelector((state: any) => state.rootReducer.userData)
+    const [allTimeKeeping, setAllTimeKeeping] = useState<any>([]);
     const [filterData, setFilterData] = React.useState([]);
-    const [daysInMonth, setDaysInMonth] = React.useState([]);
 
     useEffect(() => {
         if (payrollData) {
-            getAllTimekeeping(0)
-            mapDateRange()
+            let data = { ...payrollData }
+            let from = data.from
+            let to = data.to
+            const filterObj: any = { ...filterData }
+            filterObj["fromDate"] = from
+            filterObj["toDate"] = to
+            setFilterData(filterObj)
+            RequestAPI.getRequest(
+                `${Api.timekeepingReport}?size=10&fromDate=${from}&toDate=${to}&page=0&status=approved&sort=id&sortDir=desc`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            console.log(body.data)
+                            setAllTimeKeeping(body.data)
+                        }
+                    }
+                }
+            )
+        } else {
+            getAllTimeKeeping(0)
         }
+
     }, [])
 
-    const mapDateRange = () => {
-        let data = { ...payrollData }
-        let from = data.from
-        let to = data.to
-        const startDate: any = new Date(from);
-        const endDate: any = new Date(to);
-
-        const dateRange: any = [];
-        let currentDate = startDate;
-
-        while (currentDate <= endDate) {
-            dateRange.push(moment(new Date(currentDate)).format('MMMM DD'));
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-        setDaysInMonth(dateRange)
-    };
-
     const handlePageClick = (event: any) => {
-        getAllTimekeeping(event.selected)
+        getAllTimeKeeping(event.selected)
     };
 
-    useEffect(() => {
-        if (filterData) {
-            getAllTimekeeping(0)
-        }
-    }, [filterData])
+    const makeFilterData = (event: any) => {
+        const { name, value } = event.target
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && value !== "Select" ? value : ""
+        setFilterData(filterObj)
+    }
 
-    const getAllTimekeeping = (page: any = 0) => {
+    const getAllTimeKeeping = (page: any = 0) => {
         let queryString = ""
         let filterDataTemp = { ...filterData }
 
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp[d]) {
+
                     queryString += `&${d}=${filterDataTemp[d]}`
                 } else {
                     queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
                 }
             })
         }
-        let data = { ...payrollData }
-        let from = data.from
-        let to = data.to
-        queryString += `&fromDate=${from}&toDate=${to}`
+
         RequestAPI.getRequest(
-            `${Api.payrollTimekeeping}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
+            `${Api.timekeepingReport}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=approved`,
             "",
             {},
             {},
@@ -77,148 +87,160 @@ export default function Timekeeping(props: any) {
                 if (status === 200 && body) {
                     if (body.error && body.error.message) {
                     } else {
-                        setAllTimekeeping(body.data)
+                        setAllTimeKeeping(body.data)
                     }
                 }
             }
         )
+
     }
 
     const singleChangeOption = (option: any, name: any) => {
+
         const filterObj: any = { ...filterData }
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
 
     return (
-        <div className="w-100">
-            <div className="w-100 pt-2">
-                <div className="fieldtext d-flex ">
-                    <div className="mx-1 mb-3" style={{ width: 200, marginRight: 10 }}>
-                        <label>Employee Name</label>
-                        <EmployeeDropdown
-                            name="userId"
-                            placeholder={"Employee"}
-                            value={filterData && filterData['userId']}
-                            singleChangeOption={singleChangeOption}
+        <>
+            <div className="w-100 ">
+                <div>
+                    <div className="w-100 pt-2 overflow-hidden">
+                        <div className="row d-flex">
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-3">
+                                <label>Employee</label>
+                                <EmployeeDropdown
+                                    id="overtime_employee_allTimeKeepingformdropdown"
+                                    placeholder={"Employee"}
+                                    singleChangeOption={singleChangeOption}
+                                    name="userId"
+                                    value={filterData && filterData['userId']}
+                                />
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <label>Date From</label>
+                                <input
+                                    id="overtime_datefrom_allTimeKeepingforminput"
+                                    name="fromDate"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    value={filterData["fromDate"]}
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <label>Date To</label>
+                                <input
+                                    id="overtime_dateto_allTimeKeepingforminput"
+                                    name="toDate"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    value={filterData["toDate"]}
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 d-flex flex-wrap">
+                                <Button
+                                    id="overtime_search_allTimeKeepingformbtn"
+                                    onClick={() => getAllTimeKeeping(0)}
+                                    className="btn btn-primary px-4  mt-4">
+                                    Search
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="mt-3 ">
+                            <Table responsive bordered className="mr-[80px]">
+                                <thead>
+                                    <tr>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Employee ID</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Employee Name</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Total Hours</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Total Work Hours Required</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Absent (Day)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Tardiness (Mins)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Undertime (Mins)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Night Shift Differential (Hrs)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Overtime (Hrs)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">NDOT (Hrs)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Leave with Pay(Hrs)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Leave without Pay (Hrs)</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Rest Day</th>
+                                        <th style={{ width: 'auto', height: 'auto' }} colSpan={2} className="text-center px-0">Holiday (Hrs)</th>
+                                    </tr>
+                                    <tr>
+                                        <th style={{ height: 'auto', verticalAlign: 'middle' }} className="text-center">Special Holiday</th>
+                                        <th style={{ height: 'auto', verticalAlign: 'middle' }} className="text-center">Legal Holiday</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        allTimeKeeping &&
+                                        allTimeKeeping.content &&
+                                        allTimeKeeping.content.length > 0 &&
+                                        allTimeKeeping.content.map((item: any, index: any) => {
+                                            return (
+                                                <tr>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.empId}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{`${item.firstName} ${item.lastName}`}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.requiredWorkHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.absent}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalLate + item.totalUndertime}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalUndertime}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.nightShiftDiffHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalOtHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalNdotHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.leaveWithPayHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.leaveWithoutPayHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.restDay}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.specialHolidayHrs}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.legalHolidayHrs}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+
+
+                            {
+                                allTimeKeeping &&
+                                    allTimeKeeping.content &&
+                                    allTimeKeeping.content.length == 0 ?
+                                    <div className="w-100 text-center">
+                                        <label htmlFor="">No Records Found</label>
+                                    </div>
+                                    :
+                                    null
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div className="d-flex justify-content-end mt-3 mr-[80px]">
+                    <div className="">
+                        <ReactPaginate
+                            className="d-flex justify-content-center align-items-center"
+                            breakLabel="..."
+                            nextLabel=">"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={(allTimeKeeping && allTimeKeeping.totalPages) || 0}
+                            previousLabel="<"
+                            previousLinkClassName="prev-next-pagination"
+                            nextLinkClassName="prev-next-pagination"
+                            activeLinkClassName="active-page-link"
+                            disabledLinkClassName="prev-next-disabled"
+                            pageLinkClassName="page-link"
+                            renderOnZeroPageCount={null}
                         />
                     </div>
                 </div>
             </div>
-            <div className="timekeepingTable">
-                <Table className="w-full tableOverflow mt-[-20px]">
-                    <thead className="custom-row">
-                        {
-                            timekeeping &&
-                                timekeeping.length > 0 ?
-                                <>
-                                    <tr>
-                                        <td id="payrolltimekeeping_employeeid_timekeepingdata" className="daysInMonth">Employee ID</td>
-                                        <td id="payrolltimekeeping_employeename_timekeepingdata" className="daysInMonth">Employee Name</td>
-                                        {
-                                            daysInMonth.map((data: any, i: any) => {
-                                                return (
-                                                    <>
-                                                        <td id="payrolltimekeeping_daysinmonth_timekeepingdata" className="daysInMonth">{data}</td>
-                                                    </>
-                                                )
-                                            })
-                                        }
-                                    </tr>
-                                    {
-                                        timekeeping &&
-                                        timekeeping.map((data: any, i: any) => {
-                                            return (
-                                                <>
-                                                    <tr>
-                                                        <td id="payrolltimekeeping_employeeid_timekeeping2data" className="timeKeepingDates">{data.empId}</td>
-                                                        <td id="payrolltimekeeping_employeename_timekeeping2data" className="timeKeepingDates">{data.empName}</td>
-                                                        {
-                                                            data.dateList && data.dateList.length > 0 &&
-                                                            data.dateList.map((d: any, i: any) => {
-                                                                if (i == daysInMonth.length) {
-                                                                    return null
-                                                                }
-                                                                return (
-                                                                    <>
-                                                                        <td id="payrolltimekeeping_totalhours_timekeeping2data" className="">{d.totalHours}</td>
-                                                                    </>
-                                                                )
-                                                            })
-                                                        }
-                                                    </tr>
-                                                </>
-                                            )
-                                        })
-                                    }
-                                </>
-                                :
-                                null
-                        }
-                    </thead>
-                    <tbody className="custom-row">
-                        {/* {
-                        timekeeping &&
-                            timekeeping.length > 0 ?
-                            <>
-                                {
-                                    timekeeping.map((item: any, index: any) => {
-                                        return (
-                                            <tr>
-                                                {
-                                                    data.profile.role == 'ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                        <>
-                                                            <td> {item.lastName}, {item.firstName} </td>
-                                                        </> : null
-                                                }
-                                                <td> {item.type} </td>
-                                                <td> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
-                                                <td> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                <td> {item.reason} </td>
-                                                <td> {Utility.removeUnderscore(item.status)} </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-
-                            </>
-                            :
-                            null
-                    } */}
-                    </tbody>
-
-                </Table>
-                {
-                    timekeeping &&
-                        timekeeping.content &&
-                        timekeeping.content.length == 0 ?
-                        <div className="w-100 text-center">
-                            <label htmlFor="">No Records Found</label>
-                        </div>
-                        :
-                        null
-                }
-            </div>
-
-            <br />
-            <div className="d-flex justify-content-end">
-                <div className="">
-                    <ReactPaginate
-                        className="d-flex justify-content-center align-items-center"
-                        breakLabel="..."
-                        nextLabel=">"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={(timekeeping && timekeeping.totalPages) || 0}
-                        previousLabel="<"
-                        previousLinkClassName="prev-next-pagination"
-                        nextLinkClassName="prev-next-pagination"
-                        activeLinkClassName="active-page-link"
-                        disabledLinkClassName="prev-next-disabled"
-                        pageLinkClassName="page-link"
-                        renderOnZeroPageCount={null}
-                    />
-                </div>
-            </div>
-        </div>);
+        </>
+    )
 }

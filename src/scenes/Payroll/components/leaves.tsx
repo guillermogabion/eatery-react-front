@@ -35,14 +35,30 @@ export default function Leaves(props: any) {
             filterObj["dateFrom"] = from
             filterObj["dateTo"] = to
             setFilterData(filterObj)
+            RequestAPI.getRequest(
+                `${Api.allRequestLeave}?size=10&dateFrom=${from}&dateTo=${to}&page=0&status=approved&sort=id&sortDir=desc`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setAllLeaves(body.data)
+                        }
+                    }
+                }
+            )
         }else{
-            getAllLeaves(0, pageSize)
+            getAllLeaves(0, pageSize);
         }
     }, [])
 
     const handlePageClick = (event: any) => {
         const selectedPage = event.selected;
         getAllLeaves(selectedPage, pageSize)
+
     };
     const handlePageSizeChange = (event) => {
         const selectedPageSize = parseInt(event.target.value, 10);
@@ -51,10 +67,9 @@ export default function Leaves(props: any) {
     };
 
     const getAllLeaves = (page: any = 0, pageSize: any) => {
-        console.log("Test")
+
         let queryString = ""
         let filterDataTemp = { ...filterData }
-
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp[d]) {
@@ -65,39 +80,23 @@ export default function Leaves(props: any) {
             })
         }
 
-        if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
-            RequestAPI.getRequest(
-                `${Api.allRequestLeave}?size=${pageSize ? pageSize : '10'}${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
-                "",
-                {},
-                {},
-                async (res: any) => {
-                    const { status, body = { data: {}, error: {} } }: any = res
-                    if (status === 200 && body) {
-                        if (body.error && body.error.message) {
-                        } else {
-                            setAllLeaves(body.data)
-                        }
+
+        RequestAPI.getRequest(
+            `${Api.allRequestLeave}?size=${pageSize ? pageSize : '10'}${queryString}&page=${page}&status=approved&sort=id&sortDir=desc`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        console.log(body.data.totalPages)
+                        setAllLeaves(body.data)
                     }
                 }
-            )
-        } else {
-            RequestAPI.getRequest(
-                `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                "",
-                {},
-                {},
-                async (res: any) => {
-                    const { status, body = { data: {}, error: {} } }: any = res
-                    if (status === 200 && body) {
-                        if (body.error && body.error.message) {
-                        } else {
-                            setAllLeaves(body.data)
-                        }
-                    }
-                }
-            )
-        }
+            }
+        )
     }
 
     const makeFilterData = (event: any) => {
@@ -117,31 +116,16 @@ export default function Leaves(props: any) {
         <div>
             <div className="w-100">
                 <div className="fieldtext d-flex col-md-12">
-                    {
-                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                            <>
-                                <div className="" style={{ width: 200, marginRight: 10 }}>
-                                    <label>Employee</label>
-                                    <EmployeeDropdown
-                                        id="payrollgenerate_employee_dropdown"
-                                        name="userId"
-                                        placeholder={"Employee"}
-                                        value={filterData && filterData['userId']}
-                                        singleChangeOption={singleChangeOption}
-                                    />
-                                    {/* <SingleSelect
-                                        type="string"
-                                        options={employeeList || []}
-                                        placeholder={"Employee"}
-                                        onChangeOption={singleChangeOption}
-                                        name="userId"
-                                        value={filterData && filterData['userId']}
-                                    /> */}
-                                </div>
-                            </>
-                            :
-                            null
-                    }
+                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                        <label>Employee</label>
+                        <EmployeeDropdown
+                            id="payrollgenerate_employee_dropdown"
+                            name="userId"
+                            placeholder={"Employee"}
+                            value={filterData && filterData['userId']}
+                            singleChangeOption={singleChangeOption}
+                        />
+                    </div>
 
                     <div>
                         <label className="ml-[5px]">Date From</label>
@@ -174,12 +158,11 @@ export default function Leaves(props: any) {
                             />
                         </div>
                     </div>
-                    <div className="input-container col-md-3 pt-4">
+                    <div className="input-container col-md-2 pt-4">
                         <Button
                             id="payrollgenerate_search_btn"
-                            style={{ width: 210 }}
                             onClick={() => getAllLeaves(0, pageSize)}
-                            className="btn btn-primary mx-2">
+                            className="btn btn-primary mx-2 px-4">
                             Search
                         </Button>
                     </div>
@@ -189,14 +172,9 @@ export default function Leaves(props: any) {
             <Table responsive>
                 <thead>
                     <tr>
-                        {
-                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <>
-                                    <th>ID</th>
-                                    <th>Employee ID</th>
-                                    <th>Employee Name</th>
-                                </> : null
-                        }
+                        <th>ID</th>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
                         <th>Type</th>
                         <th>With Pay</th>
                         <th>Date From</th>
@@ -215,12 +193,7 @@ export default function Leaves(props: any) {
                                             <tr>
                                                 <td id={"payrollgenerate_id_allleavesdata_" + item.id}>{item.id}</td>
                                                 <td id={"payrollgenerate_userid_allleavesdata_" + item.id}>{item.employeeId}</td>
-                                                {
-                                                    data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                        <>
-                                                            <td id={"payrollgenerate_name_allleavesdata_" + item.id}> {item.lastName}, {item.firstName} </td>
-                                                        </> : null
-                                                }
+                                                <td id={"payrollgenerate_name_allleavesdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                 <td id={"payrollgenerate_type_allleavesdata_" + item.id}> {item.type} </td>
                                                 <td id={"payrollgenerate_withpay_allleavesdata_" + item.id}> {item.withPay == true ? "YES" : "NO"} </td>
                                                 <td id={"payrollgenerate_datefrom_allleavesdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
@@ -288,5 +261,5 @@ export default function Leaves(props: any) {
             <div className="d-flex justify-content-end">
 
             </div>
-        </div>);
+        </div >);
 }

@@ -497,7 +497,7 @@ export const Reimbursement = (props: any) => {
         if (hasBlank) {
             ErrorSwal.fire({
                 title: 'Warning!',
-                text: "Please filla ll fields.",
+                text: "Please fill all fields.",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
         

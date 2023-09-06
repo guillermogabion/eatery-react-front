@@ -18,11 +18,13 @@ import ContainerWrapper from "../../components/ContainerWrapper"
 import Leaves from "./components/leaves"
 import Recurring from "./components/recurring"
 import { Adjustment } from "./components/adjustments"
-import Timekeeping from "./components/timekeeping"
+import TimeSheet from "./components/timesheet"
 import GeneratePayroll from "./components/generatepayroll"
 import { Utility } from "../../utils"
 import Audit from "./components/audit"
 import { BsFillArrowLeftCircleFill } from "react-icons/bs"
+import { Overtime } from "./components/overtime"
+import { TimeKeeping } from "./components/timekeeping"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -166,6 +168,8 @@ export const Payroll = (props: any) => {
                                                                             "to": item.dateTo,
                                                                             "userIds": [],
                                                                             "id": item.id,
+                                                                            "locked": item.locked,
+                                                                            "isGenerated": item.isGenerated,
                                                                             "isUpdate": true,
                                                                         })
                                                                     }}
@@ -276,15 +280,15 @@ export const Payroll = (props: any) => {
                                         }}
                                         className="mb-3 w-100 lg:w-[80vw]"
                                     >
-                                        <Tab id="payroll_timekeeping_audittabs" eventKey="timekeeping" title="Timesheet" className="w-full lg:w-[75vw] overflow-auto">
+                                        <Tab id="payroll_timesheet_audittabs" eventKey="timesheet" title="Timesheet" className="w-full lg:w-[75vw] overflow-auto">
                                             {
-                                                key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
-                                                    <Timekeeping payrollData={payrollData} />
+                                                key == 'timesheet' && Object.keys(payrollData).length != 0 ?
+                                                    <TimeSheet payrollData={payrollData} />
                                                     :
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_employeerequest_audittabs" eventKey="employee request" title="Employee Leave">
+                                        <Tab id="payroll_employeerequest_audittabs" eventKey="employee request" title="Employee Leaves">
                                             {
                                                 key == 'employee request' && Object.keys(payrollData).length != 0 ?
                                                     <Leaves payrollData={payrollData} />
@@ -292,7 +296,23 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_recurring_audittabs" eventKey="recurring" title="Deduction & Loan Name" >
+                                        <Tab id="payroll_employeeovertime_audittabs" eventKey="employee overtime" title="Employee Overtime">
+                                            {
+                                                key == 'employee overtime' && Object.keys(payrollData).length != 0 ?
+                                                    <Overtime payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                        <Tab id="payroll_timekeeping_audittabs" eventKey="timekeeping" title="Timekeeping" className="w-full lg:w-[75vw] overflow-auto">
+                                            {
+                                                key == 'timekeeping' && Object.keys(payrollData).length != 0 ?
+                                                    <TimeKeeping payrollData={payrollData} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
+                                        <Tab id="payroll_recurring_audittabs" eventKey="recurring" title="Deduction & Loan" >
                                             {
                                                 key == 'recurring' ?
                                                     <Recurring payrollData={payrollData} />
@@ -300,7 +320,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_adjustment_audittabs" eventKey="adjustment" title="Earning & Allowance Name">
+                                        <Tab id="payroll_adjustment_audittabs" eventKey="adjustment" title="Earning & Allowance">
                                             {
                                                 key == 'adjustment' ?
                                                     <Adjustment payrollData={payrollData} />
@@ -400,6 +420,8 @@ export const Payroll = (props: any) => {
                                                 let valuesObj: any = { ...values }
                                                 valuesObj.id = body.id
                                                 valuesObj.isUpdate = false
+                                                valuesObj.locked = false
+                                                valuesObj.isGenerated = false
                                                 setPayrollData(valuesObj)
                                             }
                                         })

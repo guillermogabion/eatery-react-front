@@ -95,6 +95,7 @@ const Api: any = {
   mySchedule: process.env.REACT_APP_API_URL + "timekeeping/mySchedule",
   myAttendanceSummary: process.env.REACT_APP_API_URL + "timekeeping/myattendancesummary",
   getMissingLogs: process.env.REACT_APP_API_URL + "timekeeping/missinglogs",
+  timekeepingReport: process.env.REACT_APP_API_URL + "timekeeping/attendancesummary/detailed",
 
 
   // /request/ot/classifications
@@ -196,6 +197,7 @@ const Api: any = {
   auditPayroll: process.env.REACT_APP_API_URL + "payroll/audit",
   downloadPayrollRegister: process.env.REACT_APP_API_URL + "payroll/payollregister",
   downloadBankUpload: process.env.REACT_APP_API_URL + "payroll/bankupload",
+  lockPayroll: process.env.REACT_APP_API_URL + "payroll/lock",
 
 
   // payroll setting 

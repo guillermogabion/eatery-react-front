@@ -737,7 +737,7 @@ export const Recurring = (props: any) => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
                                 <div className="input-container">
                                     <label>Amount</label>
                                     <input
@@ -756,37 +756,6 @@ export const Recurring = (props: any) => {
                                         //   }}
                                         // onChange={handleOnChange}
                                     />
-                                </div>
-                            </div>
-                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="input-container">
-                                    <label>Type</label>
-                                    <select
-                                    className="form-control"
-                                    name="isDeduction"
-                                    id="payrollrecurring_type"
-                                    onChange={(e) => {
-                                        makeFilterData(e);
-                                        // handleOnChange(e);
-                                        setShowButton(e.target.value !== 'default');
-                                    }}
-                                    ref={selectRef}
-                                    >
-                                    <option value="default" disabled selected >
-                                        Type
-                                    </option>
-                                    <option value={false}>Add</option>
-                                    <option value={true}>Deduct</option>
-                                    </select>
-                                    {showButton && (
-                                    <span
-                                        id="payrollrecurring_closetype_span"
-                                        className="clear-icon-recurring"
-                                        onClick={reset}
-                                    >
-                                        X
-                                    </span>
-                                    )}
                                 </div>
                             </div>
                             <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
