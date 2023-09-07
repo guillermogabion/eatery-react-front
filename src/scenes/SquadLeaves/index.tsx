@@ -690,7 +690,7 @@ export const SquadLeaves = (props: any) => {
   }
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div className="row">
           <div className="col-md-12">
             {data.profile.role !== 'HR ADMIN' ? (

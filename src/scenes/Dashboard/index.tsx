@@ -217,7 +217,7 @@ export const Dashboard = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div>
           <h3 className="bold-text">Time Card</h3>
           <div className="d-flex">

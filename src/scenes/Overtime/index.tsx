@@ -168,10 +168,10 @@ export const Overtime = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "overtime_approveotconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "overtime_approveotcancel_alertbtn"
       },
       icon: 'warning',
@@ -181,47 +181,57 @@ export const Overtime = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.approveOT, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Error!',
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "overtime_errorconfirm_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
+              Swal.close()
               getMyOT(0, key)
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "overtime_successconfirm_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
             }
           } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "overtime_errorconfirm2_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -236,10 +246,10 @@ export const Overtime = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "overtime_declineotconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "overtime_declineotcancel_alertbtn"
       },
       icon: 'warning',
@@ -249,47 +259,57 @@ export const Overtime = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.declineOT, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Error!',
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "overtime_errorconfirm3_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
+              Swal.close()
               getMyOT(0, key)
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "overtime_successconfirm2_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
             }
           } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "overtime_errorconfirm4_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -304,10 +324,10 @@ export const Overtime = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "overtime_cancelotconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "overtime_cancelotcancel_alertbtn"
       },
       icon: 'warning',
@@ -317,7 +337,7 @@ export const Overtime = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
-        const loadingSwal = Swal.fire({
+        Swal.fire({
           title: '',
           allowOutsideClick: false,
           didOpen: () => {
@@ -334,12 +354,12 @@ export const Overtime = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "overtime_errorconfirm5_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               Swal.close()
               ErrorSwal.fire({
@@ -347,12 +367,12 @@ export const Overtime = (props: any) => {
                 text: (body.datt) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "overtime_successconfirm3_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getMyOT(0, key)
             }
           } else {
@@ -362,12 +382,12 @@ export const Overtime = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "overtime_errorconfirm6_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -478,7 +498,7 @@ export const Overtime = (props: any) => {
 
                       </label>
                       {
-                        item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED"  ?
+                        item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" ?
                           <>
                             {authorizations.includes("Request:Update") ? (
                               <>
@@ -582,13 +602,13 @@ export const Overtime = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div>
           <div className="w-100 pt-2">
             <div className="row d-flex">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                  <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="overtime_employee_myotformdropdown"
@@ -603,15 +623,15 @@ export const Overtime = (props: any) => {
               }
               <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date From</label>
-                  <input
-                    id="overtime_datefrom_myotforminput"
-                    name="dateFrom"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
+                <input
+                  id="overtime_datefrom_myotforminput"
+                  name="dateFrom"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
               <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date To</label>
@@ -647,7 +667,7 @@ export const Overtime = (props: any) => {
                 </Button>
               </div>
             </div>
-            
+
             <Tabs
               id="controlled-tab-example"
               activeKey={key}
@@ -777,12 +797,12 @@ export const Overtime = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "overtime_errorconfirm7_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     } else {
                       getMyOT(0, key)
                       ErrorSwal.fire({
@@ -790,12 +810,12 @@ export const Overtime = (props: any) => {
                         text: (body.data) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "overtime_successconfirm4_alertbtn"
                         },
                         icon: 'success',
-                    })
+                      })
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
@@ -805,12 +825,12 @@ export const Overtime = (props: any) => {
                       text: (body.error && body.error.message) || "Something error!",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "overtime_errorconfirm8_alertbtn"
                       },
                       icon: 'error',
-                  })
+                    })
                   }
                 })
               } else {
@@ -824,12 +844,12 @@ export const Overtime = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "overtime_errorconfirm9_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     } else {
                       getMyOT(0, key)
                       ErrorSwal.fire({
@@ -837,12 +857,12 @@ export const Overtime = (props: any) => {
                         text: (body.data) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "overtime_successconfirm5_alertbtn"
                         },
                         icon: 'success',
-                    })
+                      })
                       setModalShow(false)
                       formRef.current?.resetForm()
                     }
@@ -852,12 +872,12 @@ export const Overtime = (props: any) => {
                       text: (body.error && body.error.message) || "Something error!",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "overtime_errorconfirm10_alertbtn"
                       },
                       icon: 'error',
-                  })
+                    })
                   }
                 })
               }
@@ -1051,7 +1071,7 @@ export const Overtime = (props: any) => {
               })
             }
             onSubmit={(values, actions) => {
-              
+
             }}>
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (

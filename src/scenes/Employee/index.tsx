@@ -23,6 +23,7 @@ import ContainerWrapper from "../../components/ContainerWrapper"
 import { Utility } from "../../utils"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
+import { FaUnlockAlt, FaUserLock } from "react-icons/fa"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -445,10 +446,10 @@ export const Employee = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "employee_unlockconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "employee_unlockcancel_alertbtn"
       },
       icon: 'warning',
@@ -467,12 +468,12 @@ export const Employee = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "employee_errorconfirm_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               getAllEmployee(0)
               ErrorSwal.fire({
@@ -480,12 +481,12 @@ export const Employee = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "employee_successconfirm_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
             }
           } else {
             ErrorSwal.fire({
@@ -493,12 +494,12 @@ export const Employee = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "employee_errorconfirm2_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -522,12 +523,12 @@ export const Employee = (props: any) => {
                 text: (body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "employee_errorconfirm3_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
               handleCloseModal();
             } else {
               ErrorSwal.fire({
@@ -535,12 +536,12 @@ export const Employee = (props: any) => {
                 text: body.data || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "employee_successconfirm2_alertbtn"
                 },
                 icon: 'success',
-            }).then((result) => {
+              }).then((result) => {
                 if (result.isConfirmed) {
                   location.reload();
                 }
@@ -553,12 +554,12 @@ export const Employee = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "employee_errorconfirm4_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         }
       );
@@ -2372,24 +2373,24 @@ export const Employee = (props: any) => {
                   text: (body.error && body.error.message) || "",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "employee_errorconfirm5_alertbtn"
                   },
                   icon: 'error',
-              })
+                })
               } else {
                 ErrorSwal.fire({
                   title: 'Updated Successfully!',
                   text: (body.data) || "",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "employee_successconfirm3_alertbtn"
                   },
                   icon: 'success',
-              }).then((result) => {
+                }).then((result) => {
                   if (result.isConfirmed) {
                     location.reload()
                   }
@@ -2402,12 +2403,12 @@ export const Employee = (props: any) => {
                 text: "Something Error.",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "employee_errorconfirm6_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             }
           })
         } else {
@@ -2421,28 +2422,28 @@ export const Employee = (props: any) => {
                   text: (body.error && body.error.message) || "",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "employee_errorconfirm7_alertbtn"
                   },
                   icon: 'error',
-              })
+                })
               } else {
                 let messageBody = ""
                 if (body.data && body.data.username && body.data.password) {
-                  messageBody = "Username: " + body.data.username + "<br>" + "Password: " + body.data.password
+                  messageBody = "Username: " + body.data.username + " Password: " + body.data.password
                 }
                 ErrorSwal.fire({
                   title: 'Created Successfully!',
                   text: messageBody,
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "employee_successconfirm4_alertbtn"
                   },
                   icon: 'success',
-              }).then((result) => {
+                }).then((result) => {
                   if (result.isConfirmed) {
                     location.reload()
                   }
@@ -2455,12 +2456,12 @@ export const Employee = (props: any) => {
                 text: "Something Error.",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "employee_errorconfirm8_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             }
           })
         }
@@ -2488,13 +2489,13 @@ export const Employee = (props: any) => {
                 {errors && errors.clothingAllowance && (
                   <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
                 )}
-                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Clothing Allowance)"
-                    name="clothIsTaxable"
-                    checked={values.clothIsTaxable}
-                    onChange={(e) => setFieldValue("clothIsTaxable", e.target.checked)}
-                  />
+                <Form.Check
+                  type="checkbox"
+                  label="Taxable (Clothing Allowance)"
+                  name="clothIsTaxable"
+                  checked={values.clothIsTaxable}
+                  onChange={(e) => setFieldValue("clothIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Communication Allowance</label>
@@ -2509,12 +2510,12 @@ export const Employee = (props: any) => {
                   <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
                 )}
                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Communication Allowance)"
-                    name="commIsTaxable"
-                    checked={values.commIsTaxable}
-                    onChange={(e) => setFieldValue("commIsTaxable", e.target.checked)}
-                  />
+                  type="checkbox"
+                  label="Taxable (Communication Allowance)"
+                  name="commIsTaxable"
+                  checked={values.commIsTaxable}
+                  onChange={(e) => setFieldValue("commIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Discretionary Allowance</label>
@@ -2529,12 +2530,12 @@ export const Employee = (props: any) => {
                   <p id="employee_errordiscretionaryallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
                 )}
                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Discretionary Allowance)"
-                    name="discreIsTaxable"
-                    checked={values.discreIsTaxable}
-                    onChange={(e) => setFieldValue("discreIsTaxable", e.target.checked)}
-                  />
+                  type="checkbox"
+                  label="Taxable (Discretionary Allowance)"
+                  name="discreIsTaxable"
+                  checked={values.discreIsTaxable}
+                  onChange={(e) => setFieldValue("discreIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Meal Allowance</label>
@@ -2549,12 +2550,12 @@ export const Employee = (props: any) => {
                   <p id="employee_errormealallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
                 )}
                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Meal Allowance)"
-                    name="mealIsTaxable"
-                    checked={values.mealIsTaxable}
-                    onChange={(e) => setFieldValue("mealIsTaxable", e.target.checked)}
-                  />
+                  type="checkbox"
+                  label="Taxable (Meal Allowance)"
+                  name="mealIsTaxable"
+                  checked={values.mealIsTaxable}
+                  onChange={(e) => setFieldValue("mealIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Medical Allowance</label>
@@ -2568,13 +2569,13 @@ export const Employee = (props: any) => {
                 {errors && errors.medicalAllowance && (
                   <p id="employee_errormedicalallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
                 )}
-                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Medical Allowance)"
-                    name="medicalIsTaxable"
-                    checked={values.medicalIsTaxable}
-                    onChange={(e) => setFieldValue("medicalIsTaxable", e.target.checked)}
-                  />
+                <Form.Check
+                  type="checkbox"
+                  label="Taxable (Medical Allowance)"
+                  name="medicalIsTaxable"
+                  checked={values.medicalIsTaxable}
+                  onChange={(e) => setFieldValue("medicalIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Sales Incentive</label>
@@ -2589,12 +2590,12 @@ export const Employee = (props: any) => {
                   <p id="employee_errorsalesIncentive_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salesIncentive}</p>
                 )}
                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Sales Incentive)"
-                    name="salesIncentiveIsTaxable"
-                    checked={values.salesIncentiveIsTaxable}
-                    onChange={(e) => setFieldValue("salesIncentiveIsTaxable", e.target.checked)}
-                  />
+                  type="checkbox"
+                  label="Taxable (Sales Incentive)"
+                  name="salesIncentiveIsTaxable"
+                  checked={values.salesIncentiveIsTaxable}
+                  onChange={(e) => setFieldValue("salesIncentiveIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Conveyance Allowance</label>
@@ -2608,14 +2609,14 @@ export const Employee = (props: any) => {
                 {errors && errors.conveyanceAllowance && (
                   <p id="employee_errorconveyanceallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
                 )}
-             
-                  <Form.Check
-                    type="checkbox"
-                    label="Taxable (Conveyance Allowance)"
-                    name="convIsTaxable"
-                    checked={values.convIsTaxable}
-                    onChange={(e) => setFieldValue("convIsTaxable", e.target.checked)}
-                  />
+
+                <Form.Check
+                  type="checkbox"
+                  label="Taxable (Conveyance Allowance)"
+                  name="convIsTaxable"
+                  checked={values.convIsTaxable}
+                  onChange={(e) => setFieldValue("convIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Other Allowance</label>
@@ -2629,14 +2630,14 @@ export const Employee = (props: any) => {
                 {errors && errors.otherAllowance && (
                   <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
                 )}
-              
-                   <Form.Check
-                    type="checkbox"
-                    label="Taxable (Other Allowance)"
-                    name="otherIsTaxable"
-                    checked={values.otherIsTaxable}
-                    onChange={(e) => setFieldValue("otherIsTaxable", e.target.checked)}
-                  />
+
+                <Form.Check
+                  type="checkbox"
+                  label="Taxable (Other Allowance)"
+                  name="otherIsTaxable"
+                  checked={values.otherIsTaxable}
+                  onChange={(e) => setFieldValue("otherIsTaxable", e.target.checked)}
+                />
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>Miscellaneous Allowance</label>
@@ -2651,13 +2652,13 @@ export const Employee = (props: any) => {
                   <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
                 )}
                 <Form.Check
-                    type="checkbox"
-                    label="Taxable (Miscellaneous Allowance)"
-                    name="miscIsTaxable"
-                    checked={values.miscIsTaxable}
-                    onChange={(e) => setFieldValue("miscIsTaxable", e.target.checked)}
-                  />
-                 
+                  type="checkbox"
+                  label="Taxable (Miscellaneous Allowance)"
+                  name="miscIsTaxable"
+                  checked={values.miscIsTaxable}
+                  onChange={(e) => setFieldValue("miscIsTaxable", e.target.checked)}
+                />
+
               </div>
               <div className="form-group col-md-6 mb-3 " >
                 <label>RDO</label>
@@ -2672,7 +2673,7 @@ export const Employee = (props: any) => {
                   <p id="employee_errorrdo_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
                 )}
               </div>
-              
+
             </div>
             <br />
             <Modal.Footer>
@@ -2704,7 +2705,7 @@ export const Employee = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div>
           <div className="w-100 ">
 
@@ -2712,14 +2713,14 @@ export const Employee = (props: any) => {
               <div className="row d-flex">
                 <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                   <label>Employee</label>
-                    <EmployeeDropdown
-                      id="employee_employee_maindropdown"
-                      placeholder={"Employee"}
-                      singleChangeOption={singleChangeOption}
-                      name="userId"
-                      value={filterData && filterData['userId']}
-                      withEmployeeID={true}
-                    />
+                  <EmployeeDropdown
+                    id="employee_employee_maindropdown"
+                    placeholder={"Employee"}
+                    singleChangeOption={singleChangeOption}
+                    name="userId"
+                    value={filterData && filterData['userId']}
+                    withEmployeeID={true}
+                  />
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                   <label>Squad Name</label>
@@ -2801,24 +2802,24 @@ export const Employee = (props: any) => {
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 mt-1 pt-3">
                   <Button
-                      id="employee_search_mainbtn"
-                      style={{ width: '100%' }}
-                      onClick={() => getAllEmployee(0, "")}
-                      className="btn btn-primary mx-2">
-                      Search
-                    </Button>
+                    id="employee_search_mainbtn"
+                    style={{ width: '100%' }}
+                    onClick={() => getAllEmployee(0, "")}
+                    className="btn btn-primary mx-2">
+                    Search
+                  </Button>
                 </div>
 
               </div>
-              
+
               <div className="input-container">
                 <div className="" style={{ width: 200, marginRight: 10 }}>
-                  
+
                 </div>
               </div>
               <div className="input-container">
                 <div className="mt-[22px]">
-                  
+
                 </div>
               </div>
             </div>
@@ -2858,14 +2859,13 @@ export const Employee = (props: any) => {
                               getEmployee(item.id)
                             }}
                             className="text-muted cursor-pointer">
-                              <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                            <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                           </label>
                           {
                             item.acctStatus == 'LOCKED' ?
-                              <div>
-                                <label id={"employee_unlock_mainbtn_" + item.id} onClick={() => unlockEmployee(item.id)}>Unlock</label>
-                              </div>
-
+                              <label id={"employee_unlock_mainbtn_" + item.id} onClick={() => unlockEmployee(item.id)} className="mx-1 cursor-pointer">
+                                <FaUnlockAlt size={19} color="#189FB5" title="Unlock" />
+                              </label>
                               :
                               null
                           }
@@ -2874,16 +2874,16 @@ export const Employee = (props: any) => {
                             onClick={() => {
                               getEmployeeDetails(item.id)
                             }}
-                            className="text-muted cursor-pointer">
-                              <img id="leaves_eye_allleaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                            className="text-muted cursor-pointer mx-1">
+                            <img id="leaves_eye_allleaveimg" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
                           </label>
                           <label
                             id={"employee_changepassword_mainbtn_" + item.id}
                             onClick={() => {
                               changePassword(item.id)
                             }}
-                            className="text-muted cursor-pointer">
-                            Change Password
+                            className="cursor-pointer mx-1">
+                            <FaUserLock size={20} color="#189FB5" title="Change Password" />
                           </label>
 
                         </td>
@@ -2926,23 +2926,23 @@ export const Employee = (props: any) => {
           </div>
         </div>
         <div className="d-flex flex-wrap justify-content-end mt-3" >
-            <Button className="mx-2 my-1"
-              id="employee_import_mainbtn"
-              onClick={() => {
-                setModalUploadShow(true)
-              }}
-            >Import</Button>
-            <Button
-              id="employee_addnew_mainbtn"
-              className="mx-2 my-1"
-              onClick={() => {
-                setModalShow(true)
-              }}>Add New</Button>
-            <Button
-              id="employee_downloadexceltemplate_mainbtn"
-              className="mx-2 my-1"
-              onClick={downloadTemplate}
-            >Download Excel Template</Button>
+          <Button className="mx-2 my-1"
+            id="employee_import_mainbtn"
+            onClick={() => {
+              setModalUploadShow(true)
+            }}
+          >Import</Button>
+          <Button
+            id="employee_addnew_mainbtn"
+            className="mx-2 my-1"
+            onClick={() => {
+              setModalShow(true)
+            }}>Add New</Button>
+          <Button
+            id="employee_downloadexceltemplate_mainbtn"
+            className="mx-2 my-1"
+            onClick={downloadTemplate}
+          >Download Excel Template</Button>
         </div>
       </div>
       <Modal
@@ -3074,12 +3074,12 @@ export const Employee = (props: any) => {
                             text: (body.error && body.error.message) || "",
                             didOpen: () => {
                               const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
+
+                              if (confirmButton)
                                 confirmButton.id = "employee_errorconfirm9_alertbtn"
                             },
                             icon: 'error',
-                        })
+                          })
                         } else {
                           getAllEmployee(0)
                           ErrorSwal.fire({
@@ -3087,12 +3087,12 @@ export const Employee = (props: any) => {
                             text: (body.data) || "",
                             didOpen: () => {
                               const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
+
+                              if (confirmButton)
                                 confirmButton.id = "employee_successconfirm5_alertbtn"
                             },
                             icon: 'success',
-                        })
+                          })
                           setModalPasswordShow(false)
                           setPassword("")
                           setShowPassword(false)
@@ -3103,12 +3103,12 @@ export const Employee = (props: any) => {
                           text: "Something Error.",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "employee_errorconfirm10_alertbtn"
                           },
                           icon: 'error',
-                      })
+                        })
                         setModalPasswordShow(false)
                       }
                     }

@@ -76,14 +76,14 @@ export const Payslip = (props: any) => {
         setEmployee(updatedEmployee);
         setIsAnyCheckboxChecked(false);
         setFilterData([]);
-        
+
     }, [employee]);
 
     const handleExportHide = () => {
         setUserId('');
         setExportModal(false)
     }
-  
+
 
     const makeFilterData = (event: any) => {
         const { name, value } = event.target
@@ -152,10 +152,10 @@ export const Payslip = (props: any) => {
                             title: 'Error!',
                             text: (body.error && body.error.message) || "",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "payslip_errorconfirm_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "payslip_errorconfirm_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -164,10 +164,10 @@ export const Payslip = (props: any) => {
                             title: 'Success!',
                             text: "Email sent successfullly!",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "payslip_successconfirm_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "payslip_successconfirm_alertbtn"
                             },
                             icon: 'success',
                         })
@@ -313,7 +313,7 @@ export const Payslip = (props: any) => {
     };
 
 
-   
+
 
     useEffect(() => {
         getPayrollList()
@@ -327,14 +327,14 @@ export const Payslip = (props: any) => {
             async (res: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 && body) {
-                   if (body.error && body.error.message) {
+                    if (body.error && body.error.message) {
                     } else {
                         let tempArray: any = []
                         body.data.forEach((d: any, i: any) => {
-                                tempArray.push({
-                                    value: d.userAccountId,
-                                    label: d.lastname + "," + d.firstname + " " + d.middleName
-                                })
+                            tempArray.push({
+                                value: d.userAccountId,
+                                label: d.lastname + "," + d.firstname + " " + d.middleName
+                            })
                         });
                         setEmployee(tempArray)
                     }
@@ -349,21 +349,21 @@ export const Payslip = (props: any) => {
             async (res: any) => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 && body) {
-                   if (body.error && body.error.message) {
+                    if (body.error && body.error.message) {
                     } else {
                         let tempArray: any = []
                         body.data.forEach((d: any, i: any) => {
-                                tempArray.push({
-                                    value: d.userAccountId,
-                                    label: d.lastname + "," + d.firstname + " " + d.middleName
-                                })
+                            tempArray.push({
+                                value: d.userAccountId,
+                                label: d.lastname + "," + d.firstname + " " + d.middleName
+                            })
                         });
                         setEmployeeExport(tempArray)
                     }
                 }
             }
         )
-       
+
     }, [])
     const handlePageClick = (event: any) => {
         getAllPayroll(event.selected)
@@ -409,7 +409,7 @@ export const Payslip = (props: any) => {
 
     return (
         <ContainerWrapper contents={<>
-            <div className="w-100 px-5 py-5">
+            <div className="w-100 px-3 py-5">
                 <div className="w-100 pt-2">
                     <Tabs defaultActiveKey="tab1" id="my-tabs">
                         <Tab id="payslip_sent_tab" eventKey="tab1" title="Sent">
@@ -440,7 +440,7 @@ export const Payslip = (props: any) => {
             </div>
             <Modal
                 show={modalShow}
-                size="xl"
+                size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 backdrop="static"
@@ -580,7 +580,7 @@ export const Payslip = (props: any) => {
             </Modal>
             <Modal
                 show={exportModal}
-                size="lg"
+                size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 backdrop="static"
@@ -595,10 +595,24 @@ export const Payslip = (props: any) => {
                         Export Payslip
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
+                <Modal.Body className="row w-100 px-5 m-0">
                     <div className="px-3 h-400 overflow-auto">
-                        <div className="w-100 pt-2 pl-5 row">
-                            <div className="col-md-6">
+                        <div className="w-100 pt-2 pl-5 row items-center">
+                            <div className="col-md-12 mb-2">
+                                <label>Employee Name *</label>
+                                <EmployeeDropdown
+                                    id="payrollpayslipt_employee_dropdown"
+                                    placeholder={"Employee"}
+                                    singleChangeOption={(e: any) => {
+                                        setFieldValue('userId', e.value);
+                                        setFileName(e.label)
+                                    }}
+                                    name="userId"
+                                    value={userId}
+                                />
+                            </div>
+                            
+                            <div className="col-md-12">
                                 <label> Payroll List</label>
                                 <select
                                     className="form-select"
@@ -619,35 +633,8 @@ export const Payslip = (props: any) => {
 
                                 </select>
                             </div>
-                            <div className="col-md-6">
-                                <label>Employee Name *</label>
-                                <select
-                                    className="form-select"
-                                    value={userId}
-                                    onChange={(e) => {
-                                        const selectedValue = e.target.value;
-                                        setFieldValue('userId', e.target.value);
-                                        const selectedIndex = e.target.selectedIndex;
-                                        const label = e.target[selectedIndex].label;
-                                        setFileName(label)
-                                    }}
-                                >
-                                    <option value="" disabled selected>
-                                        Select Employee
-                                    </option>
-                                    {employee &&
-                                        employeeExport.length &&
-                                        employeeExport.map((item: any, index: string) => {
-                                            return (
-                                                <option key={`${index}_${item.userId}`} value={item.value}>
-                                                    {item.label}
-                                                </option>
-                                            )
 
-                                        })}
-                                </select>
-                            </div>
-                            <div className="pt-4 col-md-12 d-flex justify-content-center">
+                            <div className="pt-5 pb-5 col-md-12 d-flex justify-content-center">
                                 <Button
                                     style={{ width: 300 }}
                                     onClick={() => exportPayslip(payrollId, userId)}

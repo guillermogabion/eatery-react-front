@@ -1048,8 +1048,8 @@ export const AllRequest = (props: any) => {
         // ContainerWrapper component Holds the Sidebar and the Topbar each naka component na
         // ContentWrapper component same as container it holds the contents and the contents can also be a component
         <ContainerWrapper contents={<>
-            <div className="row m-0 p-0">
-                <div className="col-md-12 px-5 py-5">
+            <div className="row m-0 p-0 px-3">
+                <div className="col-md-12 px-3 py-5">
                     <>
                         <div>
                         <div className="w-100">

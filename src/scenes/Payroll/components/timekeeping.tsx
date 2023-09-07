@@ -145,14 +145,14 @@ export const TimeKeeping = (props: any) => {
                                 </Button>
                             </div>
                         </div>
-                        <div className="mt-3 ">
-                            <Table responsive bordered className="mr-[80px]">
+                        <div className="timekeepingTable p-0 pt-0 mt-3">
+                            <Table responsive bordered className="w-full tableOverflow">
                                 <thead>
                                     <tr>
                                         <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Employee ID</th>
                                         <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Employee Name</th>
-                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Total Hours</th>
                                         <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Total Work Hours Required</th>
+                                        <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Total Hours</th>
                                         <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Absent (Day)</th>
                                         <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Tardiness (Mins)</th>
                                         <th style={{ width: 'auto', height: 'auto', verticalAlign: 'middle' }} rowSpan={2} className="text-center">Undertime (Mins)</th>
@@ -178,8 +178,8 @@ export const TimeKeeping = (props: any) => {
                                                 <tr>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.empId}</td>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{`${item.firstName} ${item.lastName}`}</td>
-                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalHours}</td>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.requiredWorkHours}</td>
+                                                    <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalHours}</td>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.absent}</td>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalLate + item.totalUndertime}</td>
                                                     <td style={{ width: 'auto', height: '20px', verticalAlign: 'middle' }} className="text-center">{item.totalUndertime}</td>

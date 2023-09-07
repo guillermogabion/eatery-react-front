@@ -204,10 +204,18 @@ export const ReimbursementList = (props: any) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.approveReimbursement, "", { "parentId": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -221,6 +229,7 @@ export const ReimbursementList = (props: any) => {
                             })
                             setIsApproving(false)
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || "",
@@ -237,6 +246,7 @@ export const ReimbursementList = (props: any) => {
                             setIsApproving(false)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something error',
@@ -278,7 +288,13 @@ export const ReimbursementList = (props: any) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 let payload: any = {
                     "ids": isBulkPayload && isBulkPayload.ids
                 }
@@ -287,6 +303,7 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -299,6 +316,7 @@ export const ReimbursementList = (props: any) => {
                                 icon: 'error',
                             })
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -313,6 +331,7 @@ export const ReimbursementList = (props: any) => {
                             getReimbursements(0)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error.',
@@ -351,7 +370,13 @@ export const ReimbursementList = (props: any) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 let payload: any = {
                     "ids": isBulkPayload && isBulkPayload.ids
                 }
@@ -360,6 +385,7 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -372,6 +398,7 @@ export const ReimbursementList = (props: any) => {
                                 icon: 'error',
                             })
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -386,6 +413,7 @@ export const ReimbursementList = (props: any) => {
                             getReimbursements(0)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error!',
@@ -424,11 +452,19 @@ export const ReimbursementList = (props: any) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.declineReimbursement, "", { "parentId": id }, {}, async (res: any) => {
-                    Swal.close()
+
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -442,6 +478,7 @@ export const ReimbursementList = (props: any) => {
                             })
                             setIsDeclining(false)
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -458,6 +495,7 @@ export const ReimbursementList = (props: any) => {
                             setIsDeclining(false)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error.',
@@ -499,11 +537,19 @@ export const ReimbursementList = (props: any) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.cancelReimbursement, "", { "parentId": id }, {}, async (res: any) => {
-                    Swal.close()
+
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -517,6 +563,7 @@ export const ReimbursementList = (props: any) => {
                             })
                             setIsCancelling(false)
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -533,6 +580,7 @@ export const ReimbursementList = (props: any) => {
                             setIsCancelling(false)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error.',
@@ -565,6 +613,13 @@ export const ReimbursementList = (props: any) => {
                     "typeId": valuesObj.typeId,
                     "parentId": valuesObj.parentId,
                 }
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.putRequest(
                     Api.updateReimbursement,
                     "",
@@ -574,6 +629,7 @@ export const ReimbursementList = (props: any) => {
                         const { status, body = { data: {}, error: {} } } = res;
                         if (status === 200 || status === 201) {
                             if (body.error && body.error.message) {
+                                Swal.close()
                                 ErrorSwal.fire({
                                     title: 'Error!',
                                     text: (body.error && body.error.message) || "",
@@ -586,6 +642,7 @@ export const ReimbursementList = (props: any) => {
                                     icon: 'error',
                                 })
                             } else {
+                                Swal.close()
                                 ErrorSwal.fire({
                                     title: 'Success!',
                                     text: (body.data) || "",
@@ -602,6 +659,7 @@ export const ReimbursementList = (props: any) => {
                                 setViewReimbursementModal(false)
                             }
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: 'Something Error.',
@@ -803,7 +861,7 @@ export const ReimbursementList = (props: any) => {
                                                 <td>
                                                     <Form.Check
                                                         id={"payrollgenerate_ischeck_employeelistdata_" + item.id}
-                                                        type="checkbox" 
+                                                        type="checkbox"
                                                         label=""
                                                         checked={item.isCheck}
                                                         onChange={(e) => {

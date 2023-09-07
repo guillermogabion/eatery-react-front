@@ -374,7 +374,7 @@ export const Access = (props: any) => {
     <ContainerWrapper
       contents={
         <>
-          <div className="w-100 px-5 py-5">
+          <div className="w-100 px-3 py-5">
             <div>
               <div className="w-100 pt-2">
               

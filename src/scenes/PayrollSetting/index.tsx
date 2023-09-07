@@ -10,7 +10,7 @@ import Settings from "./settings"
 export const PayrollSetting = (props: any) => {
     return (
         <ContainerWrapper contents={<>
-            <div className="w-100 px-5 py-5">
+            <div className="w-100 px-3 py-5">
               <div>
                 <div className="w-100 pt-2">
                     <Tabs defaultActiveKey="tab1" id="my-tabs">

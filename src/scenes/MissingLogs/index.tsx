@@ -178,7 +178,7 @@ export const MissingLogs = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="col-md-12 col-lg-10 px-5 py-5">
+      <div className="col-md-12 col-lg-10 px-3 py-5">
         <div>
           <h3>Missing Logs</h3>
 

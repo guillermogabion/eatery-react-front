@@ -108,7 +108,7 @@ export const Payroll = (props: any) => {
             {
                 !isCreatePayroll ?
                     <>
-                        <div className="w-100 px-5 py-5">
+                        <div className="w-100 px-3 py-5">
                             <div>
                                 <div className="w-100 flex mb-[10px]">
                                     <Button

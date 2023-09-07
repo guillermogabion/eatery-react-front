@@ -217,7 +217,7 @@ export const LastPay = (props: any) => {
     return (
         <ContainerWrapper contents={<>
             <>
-                <div className="w-100 px-5 py-5">
+                <div className="w-100 px-3 py-5">
                         <div className="row d-flex mb-2">
                             <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
                                 <label>Employee</label>

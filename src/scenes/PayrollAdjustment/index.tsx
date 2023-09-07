@@ -67,14 +67,7 @@ export const PayrollAdjustment = (props: any) => {
         }));
     }
     const isButtonDisabled = !(values.userId && values.adjustmentTypeId && values.amount && values.payrollMonth && values.payrollYear);
-
-
-
-
-
-
     const [initialValues, setInitialValues] = useState<any>({
-
         adjustments: [
             {
                 "userId": "",
@@ -83,17 +76,12 @@ export const PayrollAdjustment = (props: any) => {
                 "periodMonth": "",
                 "periodYear": "",
             }
-
         ],
         "userId": "",
         "adjustmentTypeId": "",
         "adjustmentAmount": "",
         "periodMonth": "",
         "periodYear": "",
-
-
-
-
     })
     const tableHeaders = [
         'ID',
@@ -350,12 +338,7 @@ export const PayrollAdjustment = (props: any) => {
                 }
             }
         );
-
-        // Return statement
-
-
     }
-
 
     const deleteAdjustment = (id: any = 0) => {
         ErrorSwal.fire({
@@ -468,23 +451,23 @@ export const PayrollAdjustment = (props: any) => {
         setSelectedMonth(selectedValue);
     };
 
-    const executeSubmit = (values, actions) => {
+    const executeSubmit = (values: any, actions: any) => {
 
 
-        const adjustmentTransactions = adjustment.map((item) => ({
+        const adjustmentTransactions = adjustment.map((item: any) => ({
             userId: item.userId,
             adjustmentTypeId: item.adjustmentTypeId,
             adjustmentAmount: item.adjustmentAmount,
             // endDate: item.endDate,
             periodMonth: item.periodMonth,
             periodYear: item.periodYear,
+            startDate: item.startDate,
+            endDate: item.endDate,
             active: item.active
         }));
         const payload = {
             adjustments: adjustmentTransactions
         };
-
-
 
         let hasError = false
         if (!values.userId) {
@@ -496,6 +479,12 @@ export const PayrollAdjustment = (props: any) => {
                     hasError = true
                 }
                 if (element.adjustmentAmount == undefined || element.adjustmentAmount == "") {
+                    hasError = true
+                }
+                if (element.startDate == undefined || element.startDate == "") {
+                    hasError = true
+                }
+                if (element.endDate == undefined || element.endDate == "") {
                     hasError = true
                 }
 
@@ -521,7 +510,7 @@ export const PayrollAdjustment = (props: any) => {
                         Swal.showLoading();
                     }
                 });
-                
+
                 RequestAPI.postRequest(Api.payrollAdjustmentCreate, "", payload, {}, async (res: any) => {
                     Swal.close();
                     const { status, body = { data: {}, error: {} } }: any = res
@@ -757,14 +746,16 @@ export const PayrollAdjustment = (props: any) => {
         )
     }
 
-
     return (
         <ContainerWrapper contents={<>
-            <div className="w-100 px-5 pt-5 pb-1">
+            <div className="w-100 px-3 pt-5 pb-1">
                 <div>
-                    <div className="w-100 pt-2">
+                    <div className="w-100 bg-white rounded-md p-3 mb-3">
+                        <div className="text-[#009FB5] text-lg ">
+                            Search By:
+                        </div>
                         <div className="fieldtext row">
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                 <div className="input-container">
                                     <label>Employee</label>
                                     <EmployeeDropdown
@@ -777,19 +768,7 @@ export const PayrollAdjustment = (props: any) => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-                                <div className="input-container">
-                                    <label>Amount</label>
-                                    <input type="text"
-                                        id="payrolladjustment_amount_input"
-                                        className="formControl"
-                                        name="amount"
-                                        placeholder="Amount"
-                                        onChange={(e) => makeFilterData(e)}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 clearable-select">
                                 <div className="input-container">
                                     <label>Earnings & Allowances Name</label>
                                     <select
@@ -817,6 +796,44 @@ export const PayrollAdjustment = (props: any) => {
                                             X
                                         </span>
                                     )}
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Start Date</label>
+                                    <input
+                                        type="date"
+                                        id="payrollrecurring_startdate_input"
+                                        className="form-control"
+                                        name="startDate"
+                                        placeholder="Start Date"
+                                        onChange={(e) => makeFilterData(e)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>End Date</label>
+                                    <input
+                                        type="date"
+                                        id="payrollrecurring_enddate_input"
+                                        className="form-control"
+                                        name="endDate"
+                                        placeholder="End Date"
+                                        onChange={(e) => makeFilterData(e)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Amount</label>
+                                    <input type="text"
+                                        id="payrolladjustment_amount_input"
+                                        className="formControl"
+                                        name="amount"
+                                        placeholder="Amount"
+                                        onChange={(e) => makeFilterData(e)}
+                                    />
                                 </div>
                             </div>
                             <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 text-center">
@@ -898,7 +915,7 @@ export const PayrollAdjustment = (props: any) => {
 
 
                 <div className="text-muted mb-4">
-                    <h2>Total Amount: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.notDeductionAmount) : 0}</span></h2>
+                    <h2>Total Amount: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.amount) : 0}</span></h2>
                 </div>
 
             </div>
@@ -945,7 +962,7 @@ export const PayrollAdjustment = (props: any) => {
 
             <div className="d-flex justify-content-end mt-3 pr-5" >
                 <div>
-                    <Button className="mx-2"
+                    <Button className="mx-2 my-1"
                         id="payrolladjustment_addadjustment_modalbtn"
                         onClick={() => {
                             // setModalUploadShow(true)
@@ -954,13 +971,13 @@ export const PayrollAdjustment = (props: any) => {
                     >Add Earnings & Allowances</Button>
                     <Button
                         id="payrolladjustment_importadjustment_modalbtn"
-                        className="mx-2"
+                        className="mx-2 my-1"
                         onClick={() => {
                             setUploadModalShow(true)
                         }}>Import Earnings & Allowances</Button>
                     <Button
                         id="payrolladjustment_exportadjustment_modalbtn"
-                        className="mx-2"
+                        className="mx-2 my-1"
                         onClick={() => {
                             setDownloadModalShow(true)
                         }
@@ -968,7 +985,7 @@ export const PayrollAdjustment = (props: any) => {
                     >Export Earnings & Allowances</Button>
                     <Button
                         id="payrolladjustment_downloadadjustmenttemplate_modalbtn"
-                        className="mx-2"
+                        className="mx-2 my-1"
                         onClick={
                             downloadTemplate
                         }
@@ -1029,7 +1046,6 @@ export const PayrollAdjustment = (props: any) => {
                                                 <label>Employee Name *</label>
                                                 <select
                                                     id="payrolladjustment_employeename_createadjustmentinput"
-                                                    disabled
                                                     placeholder="Employee Name"
                                                     className="formControl"
                                                     value={values.userId}
@@ -1066,7 +1082,6 @@ export const PayrollAdjustment = (props: any) => {
                                             </div>
                                             <div className="col-md-4 mb-3 mt-4">
                                                 <select
-                                                    disabled
                                                     placeholder="Earnings & Allowances Name"
                                                     className="form-select"
                                                     name="adjustmentTypeId"
@@ -1110,6 +1125,38 @@ export const PayrollAdjustment = (props: any) => {
                                                         setFieldValue('amount', e.target.value);
                                                     }}
                                                 />
+                                            </div>
+                                            <div className="col-md-4 mb-3">
+                                                <label>Start Date</label>
+                                                <input
+                                                    id="payrolladjustment_startdate_recurringinput"
+                                                    type="date"
+                                                    className={`form-control ${touched.startDate && errors.startDate ? 'is-invalid' : ''}`}
+                                                    name="startDate"
+                                                    value={values.startDate}
+                                                    onChange={(e) => {
+                                                        setFieldValue('startDate', e.target.value);
+                                                    }}
+                                                />
+                                                {errors && errors.startDate && (
+                                                    <p id="payrollrecurring_errorstartdate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.startDate}</p>
+                                                )}
+                                            </div>
+                                            <div className="col-md-4 mb-3">
+                                                <label>End Date</label>
+                                                <input
+                                                    id="payrolladjustment_enddate_recurringinput"
+                                                    type="date"
+                                                    className={`form-control ${touched.endDate && errors.endDate ? 'is-invalid' : ''}`}
+                                                    name="endDate"
+                                                    value={values.endDate}
+                                                    onChange={(e) => {
+                                                        setFieldValue('endDate', e.target.value);
+                                                    }}
+                                                />
+                                                {errors && errors.endDate && (
+                                                    <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
+                                                )}
                                             </div>
                                         </div>
                                     ) :
@@ -1190,6 +1237,40 @@ export const PayrollAdjustment = (props: any) => {
                                                                     }}
                                                                 />
                                                             </div>
+                                                            <div className="col-md-4 mb-3">
+                                                                <label>Start Date</label>
+                                                                <input
+                                                                    id="payrolladjustment_startdate_recurringinput"
+                                                                    type="date"
+                                                                    className={`form-control ${touched.startDate && errors.startDate ? 'is-invalid' : ''}`}
+                                                                    name="startDate"
+                                                                    value={values.startDate}
+                                                                    onChange={(e) => {
+                                                                        setFieldValue('startDate', e.target.value);
+                                                                    }}
+                                                                />
+                                                                {errors && errors.startDate && (
+                                                                    <p id="payrollrecurring_errorstartdate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.startDate}</p>
+                                                                )}
+                                                            </div>
+                                                            <div className="col-md-4 mb-3">
+                                                                <label>End Date</label>
+                                                                <input
+                                                                    id="payrolladjustment_enddate_recurringinput"
+                                                                    type="date"
+                                                                    className={`form-control ${touched.endDate && errors.endDate ? 'is-invalid' : ''}`}
+                                                                    name="endDate"
+                                                                    value={values.endDate}
+                                                                    onChange={(e) => {
+                                                                        setFieldValue('endDate', e.target.value);
+                                                                    }}
+                                                                />
+                                                                {errors && errors.endDate && (
+                                                                    <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
+                                                                )}
+                                                            </div>
+                                                            <div className="col-md-4 mb-3"></div>
+
                                                             {adjustment.length > 1 && (
                                                                 <div className="col-md-3 mb-3">
                                                                     <label>&nbsp;</label>
