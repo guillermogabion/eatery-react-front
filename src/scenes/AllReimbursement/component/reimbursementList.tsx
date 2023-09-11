@@ -197,10 +197,10 @@ export const ReimbursementList = (props: any) => {
                 const cancelButton = Swal.getCancelButton();
 
                 if (confirmButton)
-                    confirmButton.id = "reimbursement_approvereimbconfirm_alertbtn"
+                    confirmButton.id = "reimbursementl_approvereimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_approvereimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_approvereimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -366,7 +366,7 @@ export const ReimbursementList = (props: any) => {
                     confirmButton.id = "reimbursement_bulkdeclinereimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_bulkdeclinereimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_bulkdeclinereimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -448,7 +448,7 @@ export const ReimbursementList = (props: any) => {
                     confirmButton.id = "reimbursement_declinereimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_declinereimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_declinereimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -533,7 +533,7 @@ export const ReimbursementList = (props: any) => {
                     confirmButton.id = "reimbursement_cancelreimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_cancelreimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_cancelreimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
@@ -1165,13 +1165,13 @@ export const ReimbursementList = (props: any) => {
                                             reimbursementValues.map((data: any, index: any) => {
                                                 return (
                                                     <tr key={`reimBreakdown-${index}`}>
-                                                        <td id={"reimbursement_receipt_modaltable"}>{data.receipt ? "Yes" : "No"}</td>
-                                                        <td id={"reimbursement_invoice_modaltable"}>{data.invoice}</td>
-                                                        <td id={"reimbursement_companyname_modaltable"}>{data.companyName}</td>
-                                                        <td id={"reimbursement_tin_modaltable"}>{data.tin}</td>
-                                                        <td id={"reimbursement_transactionDate_modaltable"}>{data.transactionDate}</td>
-                                                        <td id={"reimbursement_amount_modaltable"}>{Utility.formatToCurrency(data.amount)}</td>
-                                                        <td id={"reimbursement_filename_modaltable"}>{data.fileName}</td>
+                                                        <td id={"reimbursement_receipt_modaltable_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
+                                                        <td id={"reimbursement_invoice_modaltable_" + data.invoice}>{data.invoice}</td>
+                                                        <td id={"reimbursement_companyname_modaltable_" + data.invoice}>{data.companyName}</td>
+                                                        <td id={"reimbursement_tin_modaltable_" + data.invoice}>{data.tin}</td>
+                                                        <td id={"reimbursement_transactionDate_modaltable_" + data.invoice}>{data.transactionDate}</td>
+                                                        <td id={"reimbursement_amount_modaltable_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
+                                                        <td id={"reimbursement_filename_modaltable_" + data.invoice}>{data.fileName}</td>
                                                     </tr>
                                                 )
 

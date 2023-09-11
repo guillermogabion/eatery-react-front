@@ -522,7 +522,7 @@ export const AllReimbursement = (props: any) => {
                                     <label className="text-xs mt-[-10px] text-dark">Maximum file size per attachment: 3 mb.</label>
                                 </div>
                                 <input
-                                    id="fileInput"
+                                    id="allreimbursement_fileInput_input"
                                     className="fileInput bg-dark"
                                     type="file"
                                     multiple
@@ -572,11 +572,13 @@ export const AllReimbursement = (props: any) => {
 
                         <div className="flex justify-center">
                             <Button
+                                id="allreimbursement_btncancel_cancel"
                                 onClick={() => setUploadModal(false)}
                                 className="w-[180px] mr-2">
                                 Cancel
                             </Button>
                             <Button
+                                id="allreimbursement_btnsubmit_submit"
                                 onClick={() => {
                                     setOnSubmit(true)
                                     uploadFiles()
@@ -620,6 +622,7 @@ export const AllReimbursement = (props: any) => {
                                 <>
                                     <div className="w-full flex justify-end">
                                         <button
+                                            id="allreimbursement_btnnewitem_item"
                                             onClick={() => {
                                                 newItem()
                                             }}
@@ -641,7 +644,7 @@ export const AllReimbursement = (props: any) => {
                                                                 <div className="d-flex flex-wrap items-center mr-3">
                                                                     <input
                                                                         name={"receipt" + index}
-                                                                        id={"receipt1" + index}
+                                                                        id={"allreimbursement_receipt1" + index}
                                                                         type="radio"
                                                                         checked={data.receipt == true}
                                                                         onChange={() => {
@@ -653,7 +656,7 @@ export const AllReimbursement = (props: any) => {
                                                                 <div className="flex items-center">
                                                                     <input
                                                                         name={"receipt" + index}
-                                                                        id={"receipt2" + index}
+                                                                        id={"allreimbursement_receipt2" + index}
                                                                         type="radio"
                                                                         checked={data.receipt == false}
                                                                         onChange={() => {
@@ -673,7 +676,7 @@ export const AllReimbursement = (props: any) => {
                                                                         <select
                                                                             className={`form-select`}
                                                                             name="receiptId"
-                                                                            id="receiptId"
+                                                                            id="allreimbursement_receiptId"
                                                                             value={data.receiptId}
                                                                             onChange={(e) => {
                                                                                 selectReceipt(index, 'receiptId', e.target.value)
@@ -695,7 +698,7 @@ export const AllReimbursement = (props: any) => {
                                                                         <div className="flex items-center ">
                                                                             <Form.Check // prettier-ignore
                                                                                 type="switch"
-                                                                                id={"custom-switch" + index}
+                                                                                id={"allreimbursement_custom-switch" + index}
                                                                                 checked={data.isDisplayData}
                                                                                 onChange={(e) => {
                                                                                     updateData(index, 'isDisplayData', e.target.checked)
@@ -712,7 +715,7 @@ export const AllReimbursement = (props: any) => {
                                                                                     <label>OR/Invoice Number:</label>
                                                                                     <input type="text"
                                                                                         name="invoice"
-                                                                                        id="invoice"
+                                                                                        id="allreimbursement_invoice_inv"
                                                                                         value={data.invoice}
                                                                                         className="form-control"
                                                                                         onChange={(e) => {
@@ -724,7 +727,7 @@ export const AllReimbursement = (props: any) => {
                                                                                     <label>Company Name:</label>
                                                                                     <input type="text"
                                                                                         name="companyName"
-                                                                                        id="companyName"
+                                                                                        id="allreimbursement_companyName_allr"
                                                                                         value={data.companyName}
                                                                                         className="form-control"
                                                                                         onChange={(e) => {
@@ -748,7 +751,7 @@ export const AllReimbursement = (props: any) => {
                                                                                     <label>Transaction Date:</label>
                                                                                     <input type="date"
                                                                                         name="transactionDate"
-                                                                                        id="transactionDate"
+                                                                                        id="allreimbursement_transactionDate_allr"
                                                                                         value={data.transactionDate}
                                                                                         className="form-control"
                                                                                         onChange={(e) => {
@@ -760,7 +763,7 @@ export const AllReimbursement = (props: any) => {
                                                                                     <label>Amount:</label>
                                                                                     <input type="number"
                                                                                         name="amount"
-                                                                                        id="amount"
+                                                                                        id="allreimbursement_amount_allr"
                                                                                         value={data.amount}
                                                                                         className="form-control"
                                                                                         onChange={(e) => {
@@ -779,7 +782,7 @@ export const AllReimbursement = (props: any) => {
                                                                         <label>Transaction Date:</label>
                                                                         <input type="date"
                                                                             name="transactionDate"
-                                                                            id="transactionDate"
+                                                                            id="allreimbursement_transactionDate_allr"
                                                                             className="form-control"
                                                                             value={data.transactionDate}
                                                                             onChange={(e) => {
@@ -791,7 +794,7 @@ export const AllReimbursement = (props: any) => {
                                                                         <label>Payee Name:</label>
                                                                         <input type="text"
                                                                             name="companyName"
-                                                                            id="companyName"
+                                                                            id="allreimbursement_payeename_allr"
                                                                             className="form-control"
                                                                             value={data.companyName}
                                                                             onChange={(e) => {
@@ -803,7 +806,7 @@ export const AllReimbursement = (props: any) => {
                                                                         <label>Amount:</label>
                                                                         <input type="number"
                                                                             name="amount"
-                                                                            id="amount"
+                                                                            id="allreimbursement_amount_allr2"
                                                                             value={data.amount}
                                                                             className="form-control"
                                                                             onChange={(e) => {
@@ -822,11 +825,13 @@ export const AllReimbursement = (props: any) => {
                                     <div className="flex justify-center mt-5">
                                         <Button
                                             variant="secondary"
+                                            id="allreimbursement_cancelbtn_allrbtn"
                                             onClick={() => setCreateReimbursementModal(false)}
                                             className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                                             Cancel
                                         </Button>
                                         <Button
+                                            id="allreimbursement_cntnuebtn_allrbtn"
                                             onClick={() => {
                                                 setCreateStep(2)
                                             }}
@@ -842,7 +847,7 @@ export const AllReimbursement = (props: any) => {
                                         <select
                                             className={`form-select`}
                                             name="typeId"
-                                            id="typeId"
+                                            id="allreimbursement_typeId_allr"
                                             value={reimbursementParentValues && reimbursementParentValues.typeId}
                                             onChange={(e) => {
                                                 updateParentData('typeId', e.target.value)
@@ -865,7 +870,7 @@ export const AllReimbursement = (props: any) => {
                                         <label>Approve Budget:</label>
                                         <input type="text"
                                             name="approvedBudget"
-                                            id="approvedBudget"
+                                            id="allreimbursement_approvedBudget_allr"
                                             value={reimbursementParentValues && reimbursementParentValues.approvedBudget}
                                             className="form-control"
                                             onChange={(e) => {
@@ -877,7 +882,7 @@ export const AllReimbursement = (props: any) => {
                                         <label>Total Amount:</label>
                                         <input type="text"
                                             name="total"
-                                            id="total"
+                                            id="allreimbursement_total_allrtotal"
                                             value={reimbursementParentValues && reimbursementParentValues.total}
                                             className="form-control"
                                             onChange={(e) => {
@@ -889,7 +894,7 @@ export const AllReimbursement = (props: any) => {
                                         <label>Purpose:</label>
                                         <textarea
                                             name="purpose"
-                                            id="purpose"
+                                            id="allreimbursement_purpose_allr"
                                             value={reimbursementParentValues && reimbursementParentValues.purpose}
                                             className="form-control p-2"
                                             style={{ minHeight: 100 }}
@@ -916,13 +921,13 @@ export const AllReimbursement = (props: any) => {
                                                 reimbursementValues.map((data: any, index: any) => {
                                                     return (
                                                         <tr key={`reimBreakdown-${index}`}>
-                                                            <td>{data.receipt ? "Yes" : "No"}</td>
-                                                            <td>{data.invoice}</td>
-                                                            <td>{data.companyName}</td>
-                                                            <td>{data.tin}</td>
-                                                            <td>{data.transactionDate}</td>
-                                                            <td>{data.amount}</td>
-                                                            <td>{data.fileName}</td>
+                                                            <td id={"allreimbursement_receipt_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
+                                                            <td id={"allreimbursement_invoice_" + data.invoice}>{data.invoice}</td>
+                                                            <td id={"allreimbursement_companyname_" + data.invoice}>{data.companyName}</td>
+                                                            <td id={"allreimbursement_tin_" + data.invoice}>{data.tin}</td>
+                                                            <td id={"allreimbursement_transactiondate_" + data.invoice}>{data.transactionDate}</td>
+                                                            <td id={"allreimbursement_amount_" + data.invoice}>{data.amount}</td>
+                                                            <td id={"allreimbursement_filename_" + data.invoice}>{data.fileName}</td>
                                                         </tr>
                                                     )
 
@@ -933,11 +938,13 @@ export const AllReimbursement = (props: any) => {
                                     <div className="flex justify-center mt-5">
                                         <Button
                                             variant="secondary"
+                                            id={"allreimbursement_returntoprevious_btn"}
                                             onClick={() => setCreateStep(1)}
                                             className="w-[180px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                                             Return to Previous
                                         </Button>
                                         <Button
+                                            id={"allreimbursement_submitcreatereim_btn"}
                                             onClick={() => {
                                                 createReimbursement()
                                             }}

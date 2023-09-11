@@ -126,7 +126,7 @@ export const Reimbursement = (props: any) => {
                                 const confirmButton = Swal.getConfirmButton();
                       
                                 if(confirmButton)
-                                  confirmButton.id = "reimbursement_fileskippedconfirm_alertbtn"
+                                  confirmButton.id = "reimbursementindex_fileskippedconfirm_alertbtn"
                               },
                         })
                         delete files[i]
@@ -140,7 +140,7 @@ export const Reimbursement = (props: any) => {
                                 const confirmButton = Swal.getConfirmButton();
                       
                                 if(confirmButton)
-                                  confirmButton.id = "reimbursement_fileskippedconfirm2_alertbtn"
+                                  confirmButton.id = "reimbursementindex_fileskippedconfirm2_alertbtn"
                               },
                         });
                     } else {
@@ -233,7 +233,7 @@ export const Reimbursement = (props: any) => {
                         const confirmButton = Swal.getConfirmButton();
               
                         if(confirmButton)
-                          confirmButton.id = "reimbursement_fileuploadsuccessconfirm_alertbtn"
+                          confirmButton.id = "reimbursementindex_fileuploadsuccessconfirm_alertbtn"
                       },
                 }).then((e) => {
                     if (e.isConfirmed) {
@@ -371,7 +371,7 @@ export const Reimbursement = (props: any) => {
                           const confirmButton = Swal.getConfirmButton();
                 
                           if(confirmButton)
-                            confirmButton.id = "reimbursement_errorconfirm_alertbtn"
+                            confirmButton.id = "reimbursementindex_errorconfirm_alertbtn"
                         },
                         icon: 'error',
                     })
@@ -395,7 +395,7 @@ export const Reimbursement = (props: any) => {
                                       const confirmButton = Swal.getConfirmButton();
                             
                                       if(confirmButton)
-                                        confirmButton.id = "reimbursement_errorconfirm2_alertbtn"
+                                        confirmButton.id = "reimbursementindex_errorconfirm2_alertbtn"
                                     },
                                     icon: 'error',
                                 })
@@ -408,7 +408,7 @@ export const Reimbursement = (props: any) => {
                                       const confirmButton = Swal.getConfirmButton();
                             
                                       if(confirmButton)
-                                        confirmButton.id = "reimbursement_successconfirm_alertbtn"
+                                        confirmButton.id = "reimbursementindex_successconfirm_alertbtn"
                                     },
                                     icon: 'success',
                                 }).then((e) => {
@@ -426,7 +426,7 @@ export const Reimbursement = (props: any) => {
                                   const confirmButton = Swal.getConfirmButton();
                         
                                   if(confirmButton)
-                                    confirmButton.id = "reimbursement_errorconfirm3_alertbtn"
+                                    confirmButton.id = "reimbursementindex_errorconfirm3_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -442,7 +442,7 @@ export const Reimbursement = (props: any) => {
                       const confirmButton = Swal.getConfirmButton();
             
                       if(confirmButton)
-                        confirmButton.id = "reimbursement_errorconfirm4_alertbtn"
+                        confirmButton.id = "reimbursementindex_errorconfirm4_alertbtn"
                     },
                     icon: 'error',
                 })
@@ -502,7 +502,7 @@ export const Reimbursement = (props: any) => {
                   const confirmButton = Swal.getConfirmButton();
         
                   if(confirmButton)
-                    confirmButton.id = "reimbursement_warningconfirm_alertbtn"
+                    confirmButton.id = "reimbursementindex_warningconfirm_alertbtn"
                 },
                 icon: 'warning',
             })
@@ -541,7 +541,7 @@ export const Reimbursement = (props: any) => {
                   const confirmButton = Swal.getConfirmButton();
         
                   if(confirmButton)
-                    confirmButton.id = "reimbursement_warningconfirm2_alertbtn"
+                    confirmButton.id = "reimbursementindex_warningconfirm2_alertbtn"
                 },
                 icon: 'warning',
             })
@@ -553,7 +553,7 @@ export const Reimbursement = (props: any) => {
                   const confirmButton = Swal.getConfirmButton();
         
                   if(confirmButton)
-                    confirmButton.id = "reimbursement_warningconfirm3_alertbtn"
+                    confirmButton.id = "reimbursementindex_warningconfirm3_alertbtn"
                 },
                 icon: 'warning',
             })
@@ -1086,13 +1086,13 @@ export const Reimbursement = (props: any) => {
                                                 reimbursementValues.map((data: any, index: any) => {
                                                     return (
                                                         <tr key={`reimBreakdown-${index}`}>
-                                                            <td id={"reimbursementindex_receipt_modaltable_" + index}>{data.receipt ? "Yes" : "No"}</td>
-                                                            <td id={"reimbursementindex_invoice_modaltable_" + index}>{data.invoice}</td>
-                                                            <td id={"reimbursementindex_companyname_modaltable_" + index}>{data.companyName}</td>
-                                                            <td id={"reimbursementindex_tin_modaltable_" + index}>{data.tin}</td>
-                                                            <td id={"reimbursementindex_transactiondate_modaltable_" + index}>{data.transactionDate}</td>
-                                                            <td id={"reimbursementindex_amount_modaltable_" + index}>{data.amount}</td>
-                                                            <td id={"reimbursementindex_filename_modaltable_" + index}>{data.fileName}</td>
+                                                            <td id={"reimbursementindex_receipt_modaltable_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
+                                                            <td id={"reimbursementindex_invoice_modaltable_" + data.invoice}>{data.invoice}</td>
+                                                            <td id={"reimbursementindex_companyname_modaltable_" + data.invoice}>{data.companyName}</td>
+                                                            <td id={"reimbursementindex_tin_modaltable_" + data.invoice}>{data.tin}</td>
+                                                            <td id={"reimbursementindex_transactiondate_modaltable_" + data.invoice}>{data.transactionDate}</td>
+                                                            <td id={"reimbursementindex_amount_modaltable_" + data.invoice}>{data.amount}</td>
+                                                            <td id={"reimbursementindex_filename_modaltable_" + data.invoice}>{data.fileName}</td>
                                                         </tr>
                                                     )
 
