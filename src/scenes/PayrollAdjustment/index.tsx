@@ -732,7 +732,7 @@ export const PayrollAdjustment = (props: any) => {
         RequestAPI.getFileAsync(
             `${Api.exportAdjustment}?fromDate=${fromDate}&toDate=${toDate}`,
             "",
-            "AdjustmentTransactions.xlsx",
+            "EarningAllowanceReport.xlsx",
             async (res: any) => {
                 if (res) {
                     setIsSubmit(false)
