@@ -875,7 +875,7 @@ export const PayrollAdjustment = (props: any) => {
                                             <td id="payrolladjustment_id_adjustmentlistdata"> {item.id} </td>
                                             <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
                                             <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
-                                            <td id="payrolladjustment_amount_adjustmentlistdata"> {Utility.formatToCurrency(item.amount)} </td>
+                                            <td id="payrolladjustment_amount_adjustmentlistdata"> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
                                             <td id="payrolladjustment_adjustmentname_adjustmentlistdata"> {item.adjustmentName} </td>
                                             <td>
                                                 <label
