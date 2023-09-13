@@ -119,7 +119,7 @@ export const ScheduleAdjustment = (props: any) => {
       })
     }
 
-    if (isActionable) {
+    if (status == 'actionable') {
       queryString += '&actionableOnly=true'
     }
 

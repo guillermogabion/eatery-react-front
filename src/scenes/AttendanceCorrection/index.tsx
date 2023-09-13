@@ -122,7 +122,7 @@ export const AttendanceCorrection = (props: any) => {
       })
     }
 
-    if (isActionable) {
+    if (status == 'actionable') {
       queryString += '&actionableOnly=true'
     }
 

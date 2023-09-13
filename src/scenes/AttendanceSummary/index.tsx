@@ -963,32 +963,6 @@ export const AttendanceSummary = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
-                      <label>Date Logged</label>
-                      <input type="date"
-                        name="tkDate"
-                        id="tkDate"
-                        className="form-control"
-                        value={values.tkDate}
-                        onChange={handleChange}
-                      />
-                      {errors && errors.tkDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <label>Time Logged</label>
-                      <input type="time"
-                        name="tkTime"
-                        id="tkTime"
-                        className="form-control"
-                        value={values.tkTime}
-                        onChange={handleChange}
-                      />
-                      {errors && errors.tkTime && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
                       <label>Type</label>
                       <select
                         className={`form-select`}
@@ -1017,6 +991,33 @@ export const AttendanceSummary = (props: any) => {
                         <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Date Logged</label>
+                      <input type="date"
+                        name="tkDate"
+                        id="tkDate"
+                        className="form-control"
+                        value={values.tkDate}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.tkDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Time Logged</label>
+                      <input type="time"
+                        name="tkTime"
+                        id="tkTime"
+                        className="form-control"
+                        value={values.tkTime}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.tkTime && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
+                      )}
+                    </div>
+                    
                   </div>
                   <br />
                   <Modal.Footer>
