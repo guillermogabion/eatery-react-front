@@ -675,7 +675,7 @@ export const Recurring = (props: any) => {
         RequestAPI.getFileAsync(
             `${Api.templateRecurring}`,
             "",
-            "recurringexceltemplate.xlsx",
+            "DeductionLoansTemplate.xlsx",
             async (res: any) => {
                 if (res) {
                 }

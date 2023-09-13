@@ -3405,6 +3405,11 @@ td.pendingLabel .active {
   overflow-y: auto;  
 }
 
+.emp-modal-content{
+  max-height: 60vh !important;
+  overflow-y: auto;  
+}
+
 .prev-next-pagination{
   color: #189FB5;
   font-weight: bolder;

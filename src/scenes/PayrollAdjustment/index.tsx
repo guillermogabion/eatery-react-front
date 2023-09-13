@@ -719,7 +719,7 @@ export const PayrollAdjustment = (props: any) => {
         RequestAPI.getFileAsync(
             `${Api.downloadTemplateAdjustment}`,
             "",
-            "adjustmentexceltemplate.xlsx",
+            "EarningAllowanceTemplate.xlsx",
             async (res: any) => {
                 if (res) {
                 }
@@ -1027,12 +1027,12 @@ export const PayrollAdjustment = (props: any) => {
                                     id="_formid"
                                     autoComplete="off"
                                 >
-                                    <div className="d-flex justify-content-end px-5">
+                                    <div className="d-flex justify-content-end">
                                         {values.userId ? null : (
                                             <button
                                                 id="payrolladjustment_btn_addform"
                                                 type="button"
-                                                className="btn btn btn-outline-primary me-2 mb-2 mt-2"
+                                                className="btn btn btn-outline-primary px-5 mb-2 mt-2"
                                                 onClick={handleAddField}
                                             >
                                                 Add
@@ -1048,6 +1048,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     id="payrolladjustment_employeename_createadjustmentinput"
                                                     placeholder="Employee Name"
                                                     className="formControl"
+                                                    disabled={true}
                                                     value={values.userId}
                                                     onChange={(e) => {
                                                         const selectedValue = e.target.value;
@@ -1086,6 +1087,7 @@ export const PayrollAdjustment = (props: any) => {
                                                     className="form-select"
                                                     name="adjustmentTypeId"
                                                     id="payrolladjustment_name"
+                                                    disabled={true}
                                                     value={values.adjustmentTypeId}
                                                     onChange={(e) => {
                                                         const selectedValue = e.target.value;

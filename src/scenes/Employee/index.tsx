@@ -705,182 +705,184 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-            <div className="col-md-12 row p-0 m-0" >
-              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                <h5>Employee Information</h5>
+            <div className="emp-modal-content">
+              <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Employee Information</h5>
+                </div>
               </div>
-            </div>
-            <div className="row w-100 px-5">
-              <div className="form-group col-md-6 mb-3 " >
-                <label>First name</label>
-                <input type="text"
-                  name="firstName"
-                  id="firstName"
-                  className={`form-control ${touched.firstName && errors.firstName ? 'is-invalid' : ''}`}
-                  value={values.firstName}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.firstName && (
-                  <p id="employee_errorfirstname_p" style={{ color: "red", fontSize: "12px" }}>{errors.firstName}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Last name</label>
-                <input type="text"
-                  name="lastName"
-                  id="lastName"
-                  value={values.lastName}
-                  className={`form-control ${touched.lastName && errors.lastName ? 'is-invalid' : ''}`}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.lastName && (
-                  <p id="employee_errorlastname_p" style={{ color: "red", fontSize: "12px" }}>{errors.lastName}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Middle name</label>
-                <input
-                  type="text"
-                  name="middleName"
-                  id="middleName"
-                  className={`form-control ${touched.middleName && errors.middleName ? 'is-invalid' : ''}`}
-                  value={values.middleName}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors.middleName && <div id="employee_errormiddlename_div" className="error-text">{String(errors.middleName)}</div>}
+              <div className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>First name</label>
+                  <input type="text"
+                    name="firstName"
+                    id="firstName"
+                    className={`form-control ${touched.firstName && errors.firstName ? 'is-invalid' : ''}`}
+                    value={values.firstName}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.firstName && (
+                    <p id="employee_errorfirstname_p" style={{ color: "red", fontSize: "12px" }}>{errors.firstName}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Last name</label>
+                  <input type="text"
+                    name="lastName"
+                    id="lastName"
+                    value={values.lastName}
+                    className={`form-control ${touched.lastName && errors.lastName ? 'is-invalid' : ''}`}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.lastName && (
+                    <p id="employee_errorlastname_p" style={{ color: "red", fontSize: "12px" }}>{errors.lastName}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Middle name</label>
+                  <input
+                    type="text"
+                    name="middleName"
+                    id="middleName"
+                    className={`form-control ${touched.middleName && errors.middleName ? 'is-invalid' : ''}`}
+                    value={values.middleName}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors.middleName && <div id="employee_errormiddlename_div" className="error-text">{String(errors.middleName)}</div>}
 
+                </div>
+                <div className="form-group col-md-3 mb-3" >
+                  <label>Gender</label>
+                  <select
+                    className={`form-select ${touched.gender && errors.gender ? 'is-invalid' : ''}`}
+                    name="gender"
+                    id="gender"
+                    value={values.gender}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.genders &&
+                      masterList.genders.length &&
+                      masterList.genders.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.gender && (
+                    <p id="employee_errorgender_p" style={{ color: "red", fontSize: "12px" }}>{errors.gender}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-3 mb-3" >
+                  <label>Civil Status</label>
+                  <select
+                    className="form-select"
+                    name="civilStatus"
+                    id="civilStatus"
+                    value={values.civilStatus}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.civilStatus &&
+                      masterList.civilStatus.length &&
+                      masterList.civilStatus.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.civilStatus && (
+                    <p id="employee_errorcivilstatus_p" style={{ color: "red", fontSize: "12px" }}>{errors.civilStatus}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Date of Birth</label>
+                  <input type="date"
+                    name="birthDay"
+                    id="birthDay"
+                    className={`form-control ${touched.birthDay && errors.birthDay ? 'is-invalid' : ''}`}
+                    value={values.birthDay}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.birthDay && (
+                    <p id="employee_errorbirthday_p" style={{ color: "red", fontSize: "12px" }}>{errors.birthDay}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Contact Number</label>
+                  <input type="text"
+                    name="contactNumber"
+                    id="contactNumber"
+                    className={`form-control ${touched.contactNumber && errors.contactNumber ? 'is-invalid' : ''}`}
+                    value={values.contactNumber}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.contactNumber && (
+                    <p id="employee_contactnumber_p" style={{ color: "red", fontSize: "12px" }}>{errors.contactNumber}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Email Address</label>
+                  <input type="text"
+                    name="emailAddress"
+                    id="emailAddress"
+                    className={`form-control ${touched.emailAddress && errors.emailAddress ? 'is-invalid' : ''}`}
+                    value={values.emailAddress}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.emailAddress && (
+                    <p id="employee_emailaddress_p" style={{ color: "red", fontSize: "12px" }}>{errors.emailAddress}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>PRC License No</label>
+                  <input type="text"
+                    name="prclicenseNo"
+                    id="prclicenseNo"
+                    className="form-control"
+                    value={values.prclicenseNo}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.prclicenseNo && (
+                    <p id="employee_errorprclicenseno_p" style={{ color: "red", fontSize: "12px" }}>{errors.prclicenseNo}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Passport No</label>
+                  <input type="text"
+                    name="passportNo"
+                    id="passportNo"
+                    className="form-control"
+                    value={values.passportNo}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.passportNo && (
+                    <p id="employee_passportno_p" style={{ color: "red", fontSize: "12px" }}>{errors.passportNo}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>User Role</label>
+                  <select
+                    className="form-select"
+                    name="roleId"
+                    id="roleId"
+                    value={values.roleId}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.roleList &&
+                      masterList.roleList.length &&
+                      masterList.roleList.map((item: any, index: string) => (
+                        <option key={`${index}_`} value={item.id}>
+                          {item.roleName}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.roleId && (
+                    <p id="employee_errorroleid_p" style={{ color: "red", fontSize: "12px" }}>{errors.roleId}</p>
+                  )}
+                </div>
               </div>
-              <div className="form-group col-md-3 mb-3" >
-                <label>Gender</label>
-                <select
-                  className={`form-select ${touched.gender && errors.gender ? 'is-invalid' : ''}`}
-                  name="gender"
-                  id="gender"
-                  value={values.gender}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.genders &&
-                    masterList.genders.length &&
-                    masterList.genders.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.gender && (
-                  <p id="employee_errorgender_p" style={{ color: "red", fontSize: "12px" }}>{errors.gender}</p>
-                )}
-              </div>
-              <div className="form-group col-md-3 mb-3" >
-                <label>Civil Status</label>
-                <select
-                  className="form-select"
-                  name="civilStatus"
-                  id="civilStatus"
-                  value={values.civilStatus}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.civilStatus &&
-                    masterList.civilStatus.length &&
-                    masterList.civilStatus.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.civilStatus && (
-                  <p id="employee_errorcivilstatus_p" style={{ color: "red", fontSize: "12px" }}>{errors.civilStatus}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Date of Birth</label>
-                <input type="date"
-                  name="birthDay"
-                  id="birthDay"
-                  className={`form-control ${touched.birthDay && errors.birthDay ? 'is-invalid' : ''}`}
-                  value={values.birthDay}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.birthDay && (
-                  <p id="employee_errorbirthday_p" style={{ color: "red", fontSize: "12px" }}>{errors.birthDay}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Contact Number</label>
-                <input type="text"
-                  name="contactNumber"
-                  id="contactNumber"
-                  className={`form-control ${touched.contactNumber && errors.contactNumber ? 'is-invalid' : ''}`}
-                  value={values.contactNumber}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.contactNumber && (
-                  <p id="employee_contactnumber_p" style={{ color: "red", fontSize: "12px" }}>{errors.contactNumber}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Email Address</label>
-                <input type="text"
-                  name="emailAddress"
-                  id="emailAddress"
-                  className={`form-control ${touched.emailAddress && errors.emailAddress ? 'is-invalid' : ''}`}
-                  value={values.emailAddress}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.emailAddress && (
-                  <p id="employee_emailaddress_p" style={{ color: "red", fontSize: "12px" }}>{errors.emailAddress}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>PRC License No</label>
-                <input type="text"
-                  name="prclicenseNo"
-                  id="prclicenseNo"
-                  className="form-control"
-                  value={values.prclicenseNo}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.prclicenseNo && (
-                  <p id="employee_errorprclicenseno_p" style={{ color: "red", fontSize: "12px" }}>{errors.prclicenseNo}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Passport No</label>
-                <input type="text"
-                  name="passportNo"
-                  id="passportNo"
-                  className="form-control"
-                  value={values.passportNo}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.passportNo && (
-                  <p id="employee_passportno_p" style={{ color: "red", fontSize: "12px" }}>{errors.passportNo}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>User Role</label>
-                <select
-                  className="form-select"
-                  name="roleId"
-                  id="roleId"
-                  value={values.roleId}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.roleList &&
-                    masterList.roleList.length &&
-                    masterList.roleList.map((item: any, index: string) => (
-                      <option key={`${index}_`} value={item.id}>
-                        {item.roleName}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.roleId && (
-                  <p id="employee_errorroleid_p" style={{ color: "red", fontSize: "12px" }}>{errors.roleId}</p>
-                )}
-              </div>
+              <br />
             </div>
-            <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 {userId ?
@@ -929,85 +931,88 @@ export const Employee = (props: any) => {
             id="_formid1"
             autoComplete="off"
           >
-            <div className="col-md-12 row p-0 m-0" >
-              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                <h5>Address Information</h5>
+            <div className="emp-modal-content">
+              <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Address Information</h5>
+                </div>
               </div>
+              <div className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Region</label>
+                  <input type="text"
+                    name="addressRegion"
+                    id="addressRegion"
+                    className="form-control"
+                    value={values.addressRegion}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>City/Province</label>
+                  <input type="text"
+                    name="addressProvince"
+                    id="addressProvince"
+                    className="form-control"
+                    value={values.addressProvince}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Municipality</label>
+                  <input type="text"
+                    name="addressMunicipality"
+                    id="addressMunicipality"
+                    className="form-control"
+                    value={values.addressMunicipality}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Barangay</label>
+                  <input type="text"
+                    name="addressBarangay"
+                    id="addressBarangay"
+                    className="form-control"
+                    value={values.addressBarangay}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Street</label>
+                  <input type="text"
+                    name="addressStreet"
+                    id="addressStreet"
+                    className="form-control"
+                    value={values.addressStreet}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Zipcode</label>
+                  <input type="text"
+                    name="addressZipCode"
+                    id="addressZipCode"
+                    className="form-control"
+                    value={values.addressZipCode}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Address Type</label>
+                  <input type="text"
+                    name="addressType"
+                    id="addressType"
+                    className="form-control"
+                    value={values.addressType}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                </div>
+              </div>
+              <br />
             </div>
-            <div className="row w-100 px-5">
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Region</label>
-                <input type="text"
-                  name="addressRegion"
-                  id="addressRegion"
-                  className="form-control"
-                  value={values.addressRegion}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>City/Province</label>
-                <input type="text"
-                  name="addressProvince"
-                  id="addressProvince"
-                  className="form-control"
-                  value={values.addressProvince}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Municipality</label>
-                <input type="text"
-                  name="addressMunicipality"
-                  id="addressMunicipality"
-                  className="form-control"
-                  value={values.addressMunicipality}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Barangay</label>
-                <input type="text"
-                  name="addressBarangay"
-                  id="addressBarangay"
-                  className="form-control"
-                  value={values.addressBarangay}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Street</label>
-                <input type="text"
-                  name="addressStreet"
-                  id="addressStreet"
-                  className="form-control"
-                  value={values.addressStreet}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Zipcode</label>
-                <input type="text"
-                  name="addressZipCode"
-                  id="addressZipCode"
-                  className="form-control"
-                  value={values.addressZipCode}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Address Type</label>
-                <input type="text"
-                  name="addressType"
-                  id="addressType"
-                  className="form-control"
-                  value={values.addressType}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-              </div>
-            </div>
-            <br />
+
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 {userId ?
@@ -1063,76 +1068,78 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid1" autoComplete="off">
-            <div className="col-md-12 row p-0 m-0" >
-              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                <h5>Emergency Contact</h5>
+            <div className="emp-modal-content">
+              <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Emergency Contact</h5>
+                </div>
               </div>
-            </div>
-            <div className="row w-100 px-5">
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Contact No.</label>
-                <input type="text"
-                  name="emergencyContactNo"
-                  id="emergencyContactNo"
-                  className="form-control"
-                  value={values.emergencyContactNo}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.emergencyContactNo && (
-                  <p id="employee_erroremergencycontactno_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactNo}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Contact Name</label>
-                <input type="text"
-                  name="emergencyContactName"
-                  id="emergencyContactName"
-                  className="form-control"
-                  value={values.emergencyContactName}
-                  onChange={(e) => setFormField(e, setFieldValue)}
+              <div className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Contact No.</label>
+                  <input type="text"
+                    name="emergencyContactNo"
+                    id="emergencyContactNo"
+                    className="form-control"
+                    value={values.emergencyContactNo}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.emergencyContactNo && (
+                    <p id="employee_erroremergencycontactno_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactNo}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Contact Name</label>
+                  <input type="text"
+                    name="emergencyContactName"
+                    id="emergencyContactName"
+                    className="form-control"
+                    value={values.emergencyContactName}
+                    onChange={(e) => setFormField(e, setFieldValue)}
 
-                />
-                {errors && errors.emergencyContactName && (
-                  <p id="employee_erroremergencycontactname_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactName}</p>
-                )}
+                  />
+                  {errors && errors.emergencyContactName && (
+                    <p id="employee_erroremergencycontactname_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactName}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Contact Address</label>
+                  <input type="text"
+                    name="emergencyContactAddress"
+                    id="emergencyContactAddress"
+                    className="form-control"
+                    value={values.emergencyContactAddress}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.emergencyContactAddress && (
+                    <p id="employee_erroremergencycontactaddress_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactAddress}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Contact Relationship</label>
+                  <select
+                    className="form-select"
+                    name="emergencyContactRelationship"
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                    value={values.emergencyContactRelationship}
+                    id="emergencyContactRelationship">
+                    {masterList &&
+                      masterList.emergencyRelationship &&
+                      masterList.emergencyRelationship.length &&
+                      masterList.emergencyRelationship.map((item: any, index: string) => (
+                        <option key={`${index}_${item}1`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.emergencyContactRelationship && (
+                    <p id="employee_erroremergencycontactrelationship_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactRelationship}</p>
+                  )}
+                </div>
               </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Contact Address</label>
-                <input type="text"
-                  name="emergencyContactAddress"
-                  id="emergencyContactAddress"
-                  className="form-control"
-                  value={values.emergencyContactAddress}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.emergencyContactAddress && (
-                  <p id="employee_erroremergencycontactaddress_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactAddress}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Contact Relationship</label>
-                <select
-                  className="form-select"
-                  name="emergencyContactRelationship"
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                  value={values.emergencyContactRelationship}
-                  id="emergencyContactRelationship">
-                  {masterList &&
-                    masterList.emergencyRelationship &&
-                    masterList.emergencyRelationship.length &&
-                    masterList.emergencyRelationship.map((item: any, index: string) => (
-                      <option key={`${index}_${item}1`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.emergencyContactRelationship && (
-                  <p id="employee_erroremergencycontactrelationship_p" style={{ color: "red", fontSize: "12px" }}>{errors.emergencyContactRelationship}</p>
-                )}
-              </div>
+              <br />
             </div>
-            <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 {userId ?
@@ -1203,607 +1210,609 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid2" autoComplete="off">
-            <div className="col-md-12 row p-0 m-0" >
-              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                <h5>Employment Information</h5>
+            <div className="emp-modal-content">
+              <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Employment Information</h5>
+                </div>
               </div>
-            </div>
-            <div className="row w-100 px-5">
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Employee ID</label>
-                <input type="text"
-                  name="employeeId"
-                  id="employeeId"
-                  className={`form-control ${touched.employeeId && errors.employeeId ? 'is-invalid' : ''}`}
-                  value={values.employeeId}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.employeeId && (
-                  <p id="employee_erroremployeeid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeId}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Biometrics ID</label>
-                <input type="text"
-                  name="biometricsId"
-                  id="biometricsId"
-                  className={`form-control ${touched.biometricsId && errors.biometricsId ? 'is-invalid' : ''}`}
-                  value={values.biometricsId}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.biometricsId && (
-                  <p id="employee_errorbiometricsid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.biometricsId}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Company Email</label>
-                <input type="text"
-                  name="companyEmail"
-                  id="companyEmail"
-                  className={`form-control ${touched.companyEmail && errors.companyEmail ? 'is-invalid' : ''}`}
-                  value={values.companyEmail}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.companyEmail && (
-                  <p id="employee_errorcompanyemail_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.companyEmail}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Employee Type</label>
-                <select
-                  className="form-select"
-                  name="employeeType"
-                  id="employeeType"
-                  value={values.employeeType}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.employeeType &&
-                    masterList.employeeType.length &&
-                    masterList.employeeType.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.employeeType && (
-                  <p id="employee_erroremployeetype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeType}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Job Title</label>
-                <input type="text"
-                  name="jobTitle"
-                  id="jobTitle"
-                  className={`form-control ${touched.jobTitle && errors.jobTitle ? 'is-invalid' : ''}`}
-                  value={values.jobTitle}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.jobTitle && (
-                  <p id="employee_errorjobtitle_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobTitle}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>User Level</label>
-                <select
-                  className="form-select"
-                  name="userLevel"
-                  id="userLevel"
-                  value={values.userLevel}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.userLevel &&
-                    masterList.userLevel.length &&
-                    masterList.userLevel.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.userLevel && (
-                  <p id="employee_erroruserlevel_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.userLevel}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Immediate Superior ID</label>
-                <SingleSelect
-                  id="employee_immediatesupervisorid_otherinfoselect"
-                  type="string"
-                  options={immediateEmployeeList || []}
-                  placeholder={"Immediate Supervisor"}
-                  onChangeOption={(e: any) => {
-                    setFieldValue('immediateSuperiorId', e.value)
-                  }}
-                  name="immediateSuperiorId"
-                  value={values.immediateSuperiorId}
-                />
-                {/* <input type="text"
+              <div className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Employee ID</label>
+                  <input type="text"
+                    name="employeeId"
+                    id="employeeId"
+                    className={`form-control ${touched.employeeId && errors.employeeId ? 'is-invalid' : ''}`}
+                    value={values.employeeId}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.employeeId && (
+                    <p id="employee_erroremployeeid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeId}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Biometrics ID</label>
+                  <input type="text"
+                    name="biometricsId"
+                    id="biometricsId"
+                    className={`form-control ${touched.biometricsId && errors.biometricsId ? 'is-invalid' : ''}`}
+                    value={values.biometricsId}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.biometricsId && (
+                    <p id="employee_errorbiometricsid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.biometricsId}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Company Email</label>
+                  <input type="text"
+                    name="companyEmail"
+                    id="companyEmail"
+                    className={`form-control ${touched.companyEmail && errors.companyEmail ? 'is-invalid' : ''}`}
+                    value={values.companyEmail}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.companyEmail && (
+                    <p id="employee_errorcompanyemail_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.companyEmail}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Employee Type</label>
+                  <select
+                    className="form-select"
+                    name="employeeType"
+                    id="employeeType"
+                    value={values.employeeType}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.employeeType &&
+                      masterList.employeeType.length &&
+                      masterList.employeeType.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.employeeType && (
+                    <p id="employee_erroremployeetype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeType}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Job Title</label>
+                  <input type="text"
+                    name="jobTitle"
+                    id="jobTitle"
+                    className={`form-control ${touched.jobTitle && errors.jobTitle ? 'is-invalid' : ''}`}
+                    value={values.jobTitle}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.jobTitle && (
+                    <p id="employee_errorjobtitle_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobTitle}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>User Level</label>
+                  <select
+                    className="form-select"
+                    name="userLevel"
+                    id="userLevel"
+                    value={values.userLevel}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.userLevel &&
+                      masterList.userLevel.length &&
+                      masterList.userLevel.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.userLevel && (
+                    <p id="employee_erroruserlevel_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.userLevel}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Immediate Superior ID</label>
+                  <SingleSelect
+                    id="employee_immediatesupervisorid_otherinfoselect"
+                    type="string"
+                    options={immediateEmployeeList || []}
+                    placeholder={"Immediate Supervisor"}
+                    onChangeOption={(e: any) => {
+                      setFieldValue('immediateSuperiorId', e.value)
+                    }}
+                    name="immediateSuperiorId"
+                    value={values.immediateSuperiorId}
+                  />
+                  {/* <input type="text"
                   name="immediateSuperiorId"
                   id="immediateSuperiorId"
                   className="form-control"
                   value={values.immediateSuperiorId}
                   onChange={(e) => setFormField(e, setFieldValue)}
                 /> */}
-                {errors && errors.immediateSuperiorId && (
-                  <p id="employee_errorimmediatesupervisorid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.immediateSuperiorId}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Employee Status</label>
-                <select
-                  className="form-select"
-                  name="employeeStatus"
-                  id="employeeStatus"
-                  value={values.employeeStatus}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.employmentStatus &&
-                    masterList.employmentStatus.length &&
-                    masterList.employmentStatus.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.employeeStatus && (
-                  <p id="employee_erroremployeestatus_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeStatus}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Effectivity Date</label>
-                <input type="date"
-                  name="employmentStatusEffectivityDate"
-                  id="employmentStatusEffectivityDate"
-                  className="form-control"
-                  value={values.employmentStatusEffectivityDate}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.employmentStatusEffectivityDate && (
-                  <p id="employee_erroremployeeeffectivedate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employmentStatusEffectivityDate}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Hire Date</label>
-                <input type="date"
-                  name="hireDate"
-                  id="hireDate"
-                  className={`form-control ${touched.hireDate && errors.hireDate ? 'is-invalid' : ''}`}
-                  value={values.hireDate}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.hireDate && (
-                  <p id="employee_errorhiredate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.hireDate}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Bank Account Type</label>
-                <select
-                  className="form-select"
-                  name="bankAcctType"
-                  id="bankAcctType"
-                  value={values.bankAcctType}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.bankType &&
-                    masterList.bankType.length &&
-                    masterList.bankType.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.bankAcctType && (
-                  <p id="employee_errorbankaccttype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.bankAcctType}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Bank Account Number</label>
-                <input type="text"
-                  name="bankAccountNumber"
-                  id="bankAccountNumber"
-                  className="form-control"
-                  value={values.bankAccountNumber}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.bankAccountNumber && (
-                  <p id="employee_errorbankaccountnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.bankAccountNumber}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Tin Number</label>
-                <input type="text"
-                  name="tinNumber"
-                  id="tinNumber"
-                  className={`form-control ${touched.tinNumber && errors.tinNumber ? 'is-invalid' : ''}`}
-                  value={values.tinNumber}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.tinNumber && (
-                  <p id="employee_errortinnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.tinNumber}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Position</label>
-                <input type="text"
-                  name="position"
-                  id="position"
-                  className="form-control"
-                  value={values.position}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.position && (
-                  <p id="employee_errorposition_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.position}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Regularization Date</label>
-                <input type="date"
-                  name="regularizationDate"
-                  id="regularizationDate"
-                  className="form-control"
-                  value={values.regularizationDate}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.regularizationDate && (
-                  <p id="employee_errorregularizationdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.regularizationDate}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Status Date</label>
-                <input type="date"
-                  name="statusDate"
-                  id="statusDate"
-                  className="form-control"
-                  value={values.statusDate}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.statusDate && (
-                  <p id="employee_errorstatusdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.statusDate}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Department</label>
-                <select
-                  className="form-select"
-                  name="department"
-                  id="department"
-                  value={values.department}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.department &&
-                    masterList.department.length &&
-                    masterList.department.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.department && (
-                  <p id="employee_errordepartment_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.department}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Cost Center</label>
-                <input type="text"
-                  name="costCenter"
-                  id="costCenter"
-                  className="form-control"
-                  value={values.costCenter}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.costCenter && (
-                  <p id="employee_errorcostcenter_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.costCenter}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Separation Date</label>
-                <input type="date"
-                  name="seperationDate"
-                  id="seperationDate"
-                  className="form-control"
-                  value={values.seperationDate}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.seperationDate && (
-                  <p id="employee_errorseparationdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.seperationDate}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>SSS Number</label>
-                <input type="text"
-                  name="sssNumber"
-                  id="sssNumber"
-                  className="form-control"
-                  value={values.sssNumber}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.sssNumber && (
-                  <p id="employee_errorsssnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.sssNumber}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Philhealth ID</label>
-                <input type="text"
-                  name="philHealthId"
-                  id="philHealthId"
-                  className="form-control"
-                  value={values.philHealthId}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.philHealthId && (
-                  <p id="employee_errorphilhealthid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.philHealthId}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Hdmf Number</label>
-                <input type="text"
-                  name="hdmfNumber"
-                  id="hdmfNumber"
-                  className="form-control"
-                  value={values.hdmfNumber}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.hdmfNumber && (
-                  <p id="employee_errorhdmfnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.hdmfNumber}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Squad</label>
-                <select
-                  className="form-select"
-                  name="squadId"
-                  id="squadId"
-                  value={values.squadId}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {squadList &&
-                    squadList.length &&
-                    squadList.map((_data: any, index: string) => {
-                      return (
-                        <option key={_data.squadName} value={_data.squadId}>
-                          {_data.squadName}
+                  {errors && errors.immediateSuperiorId && (
+                    <p id="employee_errorimmediatesupervisorid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.immediateSuperiorId}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Employee Status</label>
+                  <select
+                    className="form-select"
+                    name="employeeStatus"
+                    id="employeeStatus"
+                    value={values.employeeStatus}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.employmentStatus &&
+                      masterList.employmentStatus.length &&
+                      masterList.employmentStatus.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
                         </option>
-                      )
+                      ))}
+                  </select>
+                  {errors && errors.employeeStatus && (
+                    <p id="employee_erroremployeestatus_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employeeStatus}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Effectivity Date</label>
+                  <input type="date"
+                    name="employmentStatusEffectivityDate"
+                    id="employmentStatusEffectivityDate"
+                    className="form-control"
+                    value={values.employmentStatusEffectivityDate}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.employmentStatusEffectivityDate && (
+                    <p id="employee_erroremployeeeffectivedate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.employmentStatusEffectivityDate}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Hire Date</label>
+                  <input type="date"
+                    name="hireDate"
+                    id="hireDate"
+                    className={`form-control ${touched.hireDate && errors.hireDate ? 'is-invalid' : ''}`}
+                    value={values.hireDate}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.hireDate && (
+                    <p id="employee_errorhiredate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.hireDate}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Bank Account Type</label>
+                  <select
+                    className="form-select"
+                    name="bankAcctType"
+                    id="bankAcctType"
+                    value={values.bankAcctType}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.bankType &&
+                      masterList.bankType.length &&
+                      masterList.bankType.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.bankAcctType && (
+                    <p id="employee_errorbankaccttype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.bankAcctType}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Bank Account Number</label>
+                  <input type="text"
+                    name="bankAccountNumber"
+                    id="bankAccountNumber"
+                    className="form-control"
+                    value={values.bankAccountNumber}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.bankAccountNumber && (
+                    <p id="employee_errorbankaccountnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.bankAccountNumber}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Tin Number</label>
+                  <input type="text"
+                    name="tinNumber"
+                    id="tinNumber"
+                    className={`form-control ${touched.tinNumber && errors.tinNumber ? 'is-invalid' : ''}`}
+                    value={values.tinNumber}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.tinNumber && (
+                    <p id="employee_errortinnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.tinNumber}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Position</label>
+                  <input type="text"
+                    name="position"
+                    id="position"
+                    className="form-control"
+                    value={values.position}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.position && (
+                    <p id="employee_errorposition_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.position}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Regularization Date</label>
+                  <input type="date"
+                    name="regularizationDate"
+                    id="regularizationDate"
+                    className="form-control"
+                    value={values.regularizationDate}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.regularizationDate && (
+                    <p id="employee_errorregularizationdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.regularizationDate}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Status Date</label>
+                  <input type="date"
+                    name="statusDate"
+                    id="statusDate"
+                    className="form-control"
+                    value={values.statusDate}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.statusDate && (
+                    <p id="employee_errorstatusdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.statusDate}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Department</label>
+                  <select
+                    className="form-select"
+                    name="department"
+                    id="department"
+                    value={values.department}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.department &&
+                      masterList.department.length &&
+                      masterList.department.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.department && (
+                    <p id="employee_errordepartment_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.department}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Cost Center</label>
+                  <input type="text"
+                    name="costCenter"
+                    id="costCenter"
+                    className="form-control"
+                    value={values.costCenter}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.costCenter && (
+                    <p id="employee_errorcostcenter_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.costCenter}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Separation Date</label>
+                  <input type="date"
+                    name="seperationDate"
+                    id="seperationDate"
+                    className="form-control"
+                    value={values.seperationDate}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.seperationDate && (
+                    <p id="employee_errorseparationdate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.seperationDate}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>SSS Number</label>
+                  <input type="text"
+                    name="sssNumber"
+                    id="sssNumber"
+                    className="form-control"
+                    value={values.sssNumber}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.sssNumber && (
+                    <p id="employee_errorsssnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.sssNumber}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Philhealth ID</label>
+                  <input type="text"
+                    name="philHealthId"
+                    id="philHealthId"
+                    className="form-control"
+                    value={values.philHealthId}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.philHealthId && (
+                    <p id="employee_errorphilhealthid_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.philHealthId}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Hdmf Number</label>
+                  <input type="text"
+                    name="hdmfNumber"
+                    id="hdmfNumber"
+                    className="form-control"
+                    value={values.hdmfNumber}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.hdmfNumber && (
+                    <p id="employee_errorhdmfnumber_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.hdmfNumber}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Squad</label>
+                  <select
+                    className="form-select"
+                    name="squadId"
+                    id="squadId"
+                    value={values.squadId}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {squadList &&
+                      squadList.length &&
+                      squadList.map((_data: any, index: string) => {
+                        return (
+                          <option key={_data.squadName} value={_data.squadId}>
+                            {_data.squadName}
+                          </option>
+                        )
 
-                    })
-                  }
-                </select>
-                {errors && errors.squadId && (
-                  <p id="employee_errorsquad_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.squadId}</p>
-                )}
+                      })
+                    }
+                  </select>
+                  {errors && errors.squadId && (
+                    <p id="employee_errorsquad_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.squadId}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>OT Computation Table</label>
+                  <input type="text"
+                    name="otComputationTable"
+                    id="otComputationTable"
+                    className="form-control"
+                    value={values.otComputationTable}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.otComputationTable && (
+                    <p id="employee_errorotcomupatationtable_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otComputationTable}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Minimum Wage Earner</label>
+                  <input type="text"
+                    name="minimumWageEarner"
+                    id="minimumWageEarner"
+                    className="form-control"
+                    value={values.minimumWageEarner}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.minimumWageEarner && (
+                    <p id="employee_errorminimumwageearner_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.minimumWageEarner}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Total Work Hours per Day</label>
+                  <input type="text"
+                    name="totalWorkHrsPerDay"
+                    id="totalWorkHrsPerDay"
+                    className={`form-control ${touched.totalWorkHrsPerDay && errors.totalWorkHrsPerDay ? 'is-invalid' : ''}`}
+                    value={values.totalWorkHrsPerDay}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.totalWorkHrsPerDay && (
+                    <p id="employee_errortotalworkhrsperday_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.totalWorkHrsPerDay}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Work Days Per Year</label>
+                  <input type="text"
+                    name="workDaysPerYear"
+                    id="workDaysPerYear"
+                    className={`form-control ${touched.workDaysPerYear && errors.workDaysPerYear ? 'is-invalid' : ''}`}
+                    value={values.workDaysPerYear}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.workDaysPerYear && (
+                    <p id="employee_errorworkdaysperyear_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.workDaysPerYear}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Cosultant Percent tax</label>
+                  <select
+                    className="form-select"
+                    name="consultantPercentTax"
+                    id="consultantPercentTax"
+                    value={values.consultantPercentTax}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.consultantPerTax &&
+                      masterList.consultantPerTax.length &&
+                      masterList.consultantPerTax.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.consultantPercentTax && (
+                    <p id="employee_errorconsultantpercenttax_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.consultantPercentTax}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Client Name</label>
+                  <input type="text"
+                    name="clientName"
+                    id="clientName"
+                    className="form-control"
+                    value={values.clientName}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.clientName && (
+                    <p id="employee_errorclientname_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clientName}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Job Code</label>
+                  <input type="text"
+                    name="jobCode"
+                    id="jobCode"
+                    className="form-control"
+                    value={values.jobCode}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.jobCode && (
+                    <p id="employee_errorjobcode_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobCode}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Job Grade</label>
+                  <select
+                    className="form-select"
+                    name="jobGrade"
+                    id="jobGrade"
+                    value={values.jobGrade}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.jobGrade &&
+                      masterList.jobGrade.length &&
+                      masterList.jobGrade.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.jobGrade && (
+                    <p id="employee_errorjobgrade_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobGrade}</p>
+                  )}
+                </div><div className="form-group col-md-6 mb-3" >
+                  <label>Billability</label>
+                  <input type="text"
+                    name="billability"
+                    id="billability"
+                    className="form-control"
+                    value={values.billability}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.billability && (
+                    <p id="employee_errorbillability_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.billability}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Payroll Role</label>
+                  <select
+                    className="form-select"
+                    name="payrollRole"
+                    id="payrollRole"
+                    value={values.payrollRole}
+                    onChange={(e) => setFormField(e, setFieldValue)}>
+                    {masterList &&
+                      masterList.payrollRole &&
+                      masterList.payrollRole.length &&
+                      masterList.payrollRole.map((item: any, index: string) => (
+                        <option key={`${index}_${item}`} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                  </select>
+                  {errors && errors.payrollRole && (
+                    <p id="employee_errorpayrollrole_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payrollRole}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Pay Group</label>
+                  <input type="text"
+                    name="payGroup"
+                    id="payGroup"
+                    className="form-control"
+                    value={values.payGroup}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.payGroup && (
+                    <p id="employee_errorpaygroup_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payGroup}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Payroll Run Type</label>
+                  <input type="text"
+                    name="payrollRunType"
+                    id="payrollRunType"
+                    className={`form-control ${touched.payrollRunType && errors.payrollRunType ? 'is-invalid' : ''}`}
+                    value={values.payrollRunType}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.payrollRunType && (
+                    <p id="employee_errorpayrollruntype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payrollRunType}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Basic Monthly Salary</label>
+                  <input type="text"
+                    name="basicMonthlySalary"
+                    id="basicMonthlySalary"
+                    className={`form-control ${touched.basicMonthlySalary && errors.basicMonthlySalary ? 'is-invalid' : ''}`}
+                    value={values.basicMonthlySalary}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.basicMonthlySalary && (
+                    <p id="employee_errorbasicmonthlysalary_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.basicMonthlySalary}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Salary Effectivity Date</label>
+                  <input type="date"
+                    name="salaryEffectivityDate"
+                    id="salaryEffectivityDate"
+                    className="form-control"
+                    value={values.salaryEffectivityDate}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.salaryEffectivityDate && (
+                    <p id="employee_errorsalaryeffectivedate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salaryEffectivityDate}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Monthly De Mininmis Benefits</label>
+                  <input type="text"
+                    name="monthlyDeMinimisBenefits"
+                    id="monthlyDeMinimisBenefits"
+                    className="form-control"
+                    value={values.monthlyDeMinimisBenefits}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.monthlyDeMinimisBenefits && (
+                    <p id="employee_errormonthlydeminimis_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.monthlyDeMinimisBenefits}</p>
+                  )}
+                </div>
+                <div className="form-group col-md-6 mb-3" >
+                  <label>Ecola</label>
+                  <input type="text"
+                    name="ecola"
+                    id="ecola"
+                    className="form-control"
+                    value={values.ecola}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.ecola && (
+                    <p id="employee_errorecola_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.ecola}</p>
+                  )}
+                </div>
               </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>OT Computation Table</label>
-                <input type="text"
-                  name="otComputationTable"
-                  id="otComputationTable"
-                  className="form-control"
-                  value={values.otComputationTable}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.otComputationTable && (
-                  <p id="employee_errorotcomupatationtable_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otComputationTable}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Minimum Wage Earner</label>
-                <input type="text"
-                  name="minimumWageEarner"
-                  id="minimumWageEarner"
-                  className="form-control"
-                  value={values.minimumWageEarner}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.minimumWageEarner && (
-                  <p id="employee_errorminimumwageearner_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.minimumWageEarner}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Total Work Hours per Day</label>
-                <input type="text"
-                  name="totalWorkHrsPerDay"
-                  id="totalWorkHrsPerDay"
-                  className={`form-control ${touched.totalWorkHrsPerDay && errors.totalWorkHrsPerDay ? 'is-invalid' : ''}`}
-                  value={values.totalWorkHrsPerDay}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.totalWorkHrsPerDay && (
-                  <p id="employee_errortotalworkhrsperday_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.totalWorkHrsPerDay}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Work Days Per Year</label>
-                <input type="text"
-                  name="workDaysPerYear"
-                  id="workDaysPerYear"
-                  className={`form-control ${touched.workDaysPerYear && errors.workDaysPerYear ? 'is-invalid' : ''}`}
-                  value={values.workDaysPerYear}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.workDaysPerYear && (
-                  <p id="employee_errorworkdaysperyear_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.workDaysPerYear}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Cosultant Percent tax</label>
-                <select
-                  className="form-select"
-                  name="consultantPercentTax"
-                  id="consultantPercentTax"
-                  value={values.consultantPercentTax}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.consultantPerTax &&
-                    masterList.consultantPerTax.length &&
-                    masterList.consultantPerTax.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.consultantPercentTax && (
-                  <p id="employee_errorconsultantpercenttax_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.consultantPercentTax}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Client Name</label>
-                <input type="text"
-                  name="clientName"
-                  id="clientName"
-                  className="form-control"
-                  value={values.clientName}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.clientName && (
-                  <p id="employee_errorclientname_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clientName}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Job Code</label>
-                <input type="text"
-                  name="jobCode"
-                  id="jobCode"
-                  className="form-control"
-                  value={values.jobCode}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.jobCode && (
-                  <p id="employee_errorjobcode_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobCode}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Job Grade</label>
-                <select
-                  className="form-select"
-                  name="jobGrade"
-                  id="jobGrade"
-                  value={values.jobGrade}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.jobGrade &&
-                    masterList.jobGrade.length &&
-                    masterList.jobGrade.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.jobGrade && (
-                  <p id="employee_errorjobgrade_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.jobGrade}</p>
-                )}
-              </div><div className="form-group col-md-6 mb-3" >
-                <label>Billability</label>
-                <input type="text"
-                  name="billability"
-                  id="billability"
-                  className="form-control"
-                  value={values.billability}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.billability && (
-                  <p id="employee_errorbillability_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.billability}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Payroll Role</label>
-                <select
-                  className="form-select"
-                  name="payrollRole"
-                  id="payrollRole"
-                  value={values.payrollRole}
-                  onChange={(e) => setFormField(e, setFieldValue)}>
-                  {masterList &&
-                    masterList.payrollRole &&
-                    masterList.payrollRole.length &&
-                    masterList.payrollRole.map((item: any, index: string) => (
-                      <option key={`${index}_${item}`} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                </select>
-                {errors && errors.payrollRole && (
-                  <p id="employee_errorpayrollrole_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payrollRole}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Pay Group</label>
-                <input type="text"
-                  name="payGroup"
-                  id="payGroup"
-                  className="form-control"
-                  value={values.payGroup}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.payGroup && (
-                  <p id="employee_errorpaygroup_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payGroup}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Payroll Run Type</label>
-                <input type="text"
-                  name="payrollRunType"
-                  id="payrollRunType"
-                  className={`form-control ${touched.payrollRunType && errors.payrollRunType ? 'is-invalid' : ''}`}
-                  value={values.payrollRunType}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.payrollRunType && (
-                  <p id="employee_errorpayrollruntype_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.payrollRunType}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Basic Monthly Salary</label>
-                <input type="text"
-                  name="basicMonthlySalary"
-                  id="basicMonthlySalary"
-                  className={`form-control ${touched.basicMonthlySalary && errors.basicMonthlySalary ? 'is-invalid' : ''}`}
-                  value={values.basicMonthlySalary}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.basicMonthlySalary && (
-                  <p id="employee_errorbasicmonthlysalary_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.basicMonthlySalary}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Salary Effectivity Date</label>
-                <input type="date"
-                  name="salaryEffectivityDate"
-                  id="salaryEffectivityDate"
-                  className="form-control"
-                  value={values.salaryEffectivityDate}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.salaryEffectivityDate && (
-                  <p id="employee_errorsalaryeffectivedate_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salaryEffectivityDate}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Monthly De Mininmis Benefits</label>
-                <input type="text"
-                  name="monthlyDeMinimisBenefits"
-                  id="monthlyDeMinimisBenefits"
-                  className="form-control"
-                  value={values.monthlyDeMinimisBenefits}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.monthlyDeMinimisBenefits && (
-                  <p id="employee_errormonthlydeminimis_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.monthlyDeMinimisBenefits}</p>
-                )}
-              </div>
-              <div className="form-group col-md-6 mb-3" >
-                <label>Ecola</label>
-                <input type="text"
-                  name="ecola"
-                  id="ecola"
-                  className="form-control"
-                  value={values.ecola}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.ecola && (
-                  <p id="employee_errorecola_otherinfop" style={{ color: "red", fontSize: "12px" }}>{errors.ecola}</p>
-                )}
-              </div>
+              <br />
             </div>
-            <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 {userId ?
@@ -1859,465 +1868,465 @@ export const Employee = (props: any) => {
             id="_formid1"
             autoComplete="off"
           >
-            <div className="col-md-12 row-p-0 m-0">
-              <div className="form-group col-md-12 pt-3 d-flex justify-content-center align-items-center flex-column">
-                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                <h5>Schedule Information</h5>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row w-100 px-5">
-                <div className="form-group col-md-6 mb-3">
-                  <label>Schedule Type</label>
-                  <input
-                    type="text"
-                    name="scheduleType"
-                    id="scheduleType"
-                    className="form-control"
-                    value={values.scheduleType}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-md-6 mb-3">
-                  <label>Working Hours</label>
-                  <input
-                    type="text"
-                    name="workingHours"
-                    id="workingHours"
-                    className="form-control"
-                    value={values.workingHours}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
+            <div className="emp-modal-content">
+              <div className="col-md-12 row-p-0 m-0">
+                <div className="form-group col-md-12 pt-3 d-flex justify-content-center align-items-center flex-column">
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Schedule Information</h5>
                 </div>
               </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_mondayrestday"
-                    type="checkbox"
-                    label="Monday Rest Day"
-                    name="mondayRestDay"
-                    checked={values.mondayRestDay}
-                    onChange={(e) => setFieldValue("mondayRestDay", e.target.checked)}
-                  />
+              <div className="container">
+                <div className="row w-100 px-5">
+                  <div className="form-group col-md-6 mb-3">
+                    <label>Schedule Type</label>
+                    <input
+                      type="text"
+                      name="scheduleType"
+                      id="scheduleType"
+                      className="form-control"
+                      value={values.scheduleType}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-md-6 mb-3">
+                    <label>Working Hours</label>
+                    <input
+                      type="text"
+                      name="workingHours"
+                      id="workingHours"
+                      className="form-control"
+                      value={values.workingHours}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
                 </div>
-                <div className="form-group col-sm-3 mb-3">
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_mondayrestday"
+                      type="checkbox"
+                      label="Monday Rest Day"
+                      name="mondayRestDay"
+                      checked={values.mondayRestDay}
+                      onChange={(e) => setFieldValue("mondayRestDay", e.target.checked)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
 
-                  <label>Monday Start Shift</label>
-                  <input
-                    id="employee_mondaystartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="mondayStartShift"
-                    className="form-control"
-                    value={values.mondayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Monday Start Break</label>
-                  <input
-                    id="employee_mondaystartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="mondayStartBreak"
-                    className="form-control"
-                    value={values.mondayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Monday End Break</label>
-                  <input
-                    id="employee_mondayendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="mondayEndBreak"
-                    className="form-control"
-                    value={values.mondayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Monday End Shift</label>
-                  <input
-                    id="employee_mondayendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="mondayEndShift"
-                    className="form-control"
-                    value={values.mondayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                {/* tuesday  */}
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_tuesdayrestday"
-                    type="checkbox"
-                    label="Tuesday Rest Day"
-                    name="tuesdayRestDay"
-                    checked={values.tuesdayRestDay}
-                    onChange={(e) => setFieldValue("tuesdayRestDay", e.target.checked)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Tuesday Start Shift</label>
-                  <input
-                    id="employee_tuesdaystartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="tuesdayStartShift"
-                    className="form-control"
-                    value={values.tuesdayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Tuesday Start Break</label>
-                  <input
-                    id="employee_tuesdaystartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="tuesdayStartBreak"
-                    className="form-control"
-                    value={values.tuesdayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Tuesday End Break</label>
-                  <input
-                    id="employee_tuesdayendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="tuesdayEndBreak"
-                    className="form-control"
-                    value={values.tuesdayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Tuesday End Shift</label>
-                  <input
-                    id="employee_tuesdayendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="tuesdayEndShift"
-                    className="form-control"
-                    value={values.tuesdayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
+                    <label>Monday Start Shift</label>
+                    <input
+                      id="employee_mondaystartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="mondayStartShift"
+                      className="form-control"
+                      value={values.mondayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Monday Start Break</label>
+                    <input
+                      id="employee_mondaystartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="mondayStartBreak"
+                      className="form-control"
+                      value={values.mondayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Monday End Break</label>
+                    <input
+                      id="employee_mondayendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="mondayEndBreak"
+                      className="form-control"
+                      value={values.mondayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Monday End Shift</label>
+                    <input
+                      id="employee_mondayendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="mondayEndShift"
+                      className="form-control"
+                      value={values.mondayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  {/* tuesday  */}
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_tuesdayrestday"
+                      type="checkbox"
+                      label="Tuesday Rest Day"
+                      name="tuesdayRestDay"
+                      checked={values.tuesdayRestDay}
+                      onChange={(e) => setFieldValue("tuesdayRestDay", e.target.checked)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday Start Shift</label>
+                    <input
+                      id="employee_tuesdaystartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="tuesdayStartShift"
+                      className="form-control"
+                      value={values.tuesdayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday Start Break</label>
+                    <input
+                      id="employee_tuesdaystartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="tuesdayStartBreak"
+                      className="form-control"
+                      value={values.tuesdayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday End Break</label>
+                    <input
+                      id="employee_tuesdayendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="tuesdayEndBreak"
+                      className="form-control"
+                      value={values.tuesdayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Tuesday End Shift</label>
+                    <input
+                      id="employee_tuesdayendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="tuesdayEndShift"
+                      className="form-control"
+                      value={values.tuesdayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
 
-                {/* wednesday  */}
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_wedrestday"
-                    type="checkbox"
-                    label="Wednesday Rest Day"
-                    name="wednesdayRestDay"
-                    checked={values.wednesdayRestDay}
-                    onChange={(e) => setFieldValue("wednesdayRestDay", e.target.checked)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Wednesday Start Shift</label>
-                  <input
-                    id="employee_wedstartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="wednesdayStartShift"
-                    className="form-control"
-                    value={values.wednesdayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Wednesday Start Break</label>
-                  <input
-                    id="employee_wedstartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="wednesdayStartBreak"
-                    className="form-control"
-                    value={values.wednesdayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Wednesday End Break</label>
-                  <input
-                    id="employee_wedendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="wednesdayEndBreak"
-                    className="form-control"
-                    value={values.wednesdayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Wednesday End Shift</label>
-                  <input
-                    id="employee_wedendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="wednesdayEndShift"
-                    className="form-control"
-                    value={values.wednesdayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                {/* thursday  */}
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_thursdayrestday"
-                    type="checkbox"
-                    label="Thursday Rest Day"
-                    name="thursdayRestDay"
-                    checked={values.thursdayRestDay}
-                    onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
-                  />
-                </div>
+                  {/* wednesday  */}
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_wedrestday"
+                      type="checkbox"
+                      label="Wednesday Rest Day"
+                      name="wednesdayRestDay"
+                      checked={values.wednesdayRestDay}
+                      onChange={(e) => setFieldValue("wednesdayRestDay", e.target.checked)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday Start Shift</label>
+                    <input
+                      id="employee_wedstartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="wednesdayStartShift"
+                      className="form-control"
+                      value={values.wednesdayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday Start Break</label>
+                    <input
+                      id="employee_wedstartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="wednesdayStartBreak"
+                      className="form-control"
+                      value={values.wednesdayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday End Break</label>
+                    <input
+                      id="employee_wedendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="wednesdayEndBreak"
+                      className="form-control"
+                      value={values.wednesdayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Wednesday End Shift</label>
+                    <input
+                      id="employee_wedendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="wednesdayEndShift"
+                      className="form-control"
+                      value={values.wednesdayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  {/* thursday  */}
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_thursdayrestday"
+                      type="checkbox"
+                      label="Thursday Rest Day"
+                      name="thursdayRestDay"
+                      checked={values.thursdayRestDay}
+                      onChange={(e) => setFieldValue("thursdayRestDay", e.target.checked)}
+                    />
+                  </div>
 
-                <div className="form-group col-sm-3 mb-3">
+                  <div className="form-group col-sm-3 mb-3">
 
-                  <label>Thursday Start Shift</label>
-                  <input
-                    id="employee_thurstartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="thursdayStartShift"
-                    className="form-control"
-                    value={values.thursdayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Thursday Start Break</label>
-                  <input
-                    id="employee_thurstartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="thursdayStartBreak"
-                    className="form-control"
-                    value={values.thursdayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Thursday End Break</label>
-                  <input
-                    id="employee_thursendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="thursdayEndBreak"
-                    className="form-control"
-                    value={values.thursdayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Thursday End Shift</label>
-                  <input
-                    id="employee_thursendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="thursdayEndShift"
-                    className="form-control"
-                    value={values.thursdayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
+                    <label>Thursday Start Shift</label>
+                    <input
+                      id="employee_thurstartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="thursdayStartShift"
+                      className="form-control"
+                      value={values.thursdayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday Start Break</label>
+                    <input
+                      id="employee_thurstartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="thursdayStartBreak"
+                      className="form-control"
+                      value={values.thursdayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday End Break</label>
+                    <input
+                      id="employee_thursendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="thursdayEndBreak"
+                      className="form-control"
+                      value={values.thursdayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Thursday End Shift</label>
+                    <input
+                      id="employee_thursendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="thursdayEndShift"
+                      className="form-control"
+                      value={values.thursdayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
 
-                {/* friday  */}
+                  {/* friday  */}
 
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_fridayrestday"
-                    type="checkbox"
-                    label="Friday Rest Day"
-                    name="fridayRestDay"
-                    checked={values.fridayRestDay}
-                    onChange={(e) => setFieldValue("fridayRestDay", e.target.checked)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_fridayrestday"
+                      type="checkbox"
+                      label="Friday Rest Day"
+                      name="fridayRestDay"
+                      checked={values.fridayRestDay}
+                      onChange={(e) => setFieldValue("fridayRestDay", e.target.checked)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
 
-                  <label>Friday Start Shift</label>
-                  <input
-                    id="employee_fristartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="fridayStartShift"
-                    className="form-control"
-                    value={values.fridayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday Start Break</label>
-                  <input
-                    id="employee_fristartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="fridayStartBreak"
-                    className="form-control"
-                    value={values.fridayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday End Break</label>
-                  <input
-                    id="employee_friendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="fridayEndBreak"
-                    className="form-control"
-                    value={values.fridayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Friday End Shift</label>
-                  <input
-                    id="employee_friendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="fridayEndShift"
-                    className="form-control"
-                    value={values.fridayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                {/* saturday  */}
+                    <label>Friday Start Shift</label>
+                    <input
+                      id="employee_fristartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="fridayStartShift"
+                      className="form-control"
+                      value={values.fridayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Friday Start Break</label>
+                    <input
+                      id="employee_fristartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="fridayStartBreak"
+                      className="form-control"
+                      value={values.fridayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Friday End Break</label>
+                    <input
+                      id="employee_friendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="fridayEndBreak"
+                      className="form-control"
+                      value={values.fridayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Friday End Shift</label>
+                    <input
+                      id="employee_friendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="fridayEndShift"
+                      className="form-control"
+                      value={values.fridayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  {/* saturday  */}
 
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_saturdayrestday"
-                    type="checkbox"
-                    label="Saturday Rest Day"
-                    name="saturdayRestDay"
-                    checked={values.saturdayRestDay}
-                    onChange={(e) => setFieldValue("saturdayRestDay", e.target.checked)}
-                  />
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_saturdayrestday"
+                      type="checkbox"
+                      label="Saturday Rest Day"
+                      name="saturdayRestDay"
+                      checked={values.saturdayRestDay}
+                      onChange={(e) => setFieldValue("saturdayRestDay", e.target.checked)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Saturday Start Shift</label>
+                    <input
+                      id="employee_satstartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="saturdayStartShift"
+                      className="form-control"
+                      value={values.saturdayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Saturday Start Break</label>
+                    <input
+                      id="employee_satstartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="saturdayStartBreak"
+                      className="form-control"
+                      value={values.saturdayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Saturday End Break</label>
+                    <input
+                      id="employee_satendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="saturdayEndBreak"
+                      className="form-control"
+                      value={values.saturdayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Saturday End Shift</label>
+                    <input
+                      id="employee_satendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="saturdayEndShift"
+                      className="form-control"
+                      value={values.saturdayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  {/* Sunday  */}
+                  <div className="form-group col-sm-12 mb-12">
+                    <Form.Check
+                      id="employee_checkbox_sundayrestday"
+                      type="checkbox"
+                      label="Sunday Rest Day"
+                      name="sundayRestDay"
+                      checked={values.sundayRestDay}
+                      onChange={(e) => setFieldValue("sundayRestDay", e.target.checked)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Sunday Start Shift</label>
+                    <input
+                      id="employee_sunstartshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="sundayStartShift"
+                      className="form-control"
+                      value={values.sundayStartShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Sunday Start Break</label>
+                    <input
+                      id="employee_sunstartbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="saturdayStartBreak"
+                      className="form-control"
+                      value={values.saturdayStartBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Sunday End Break</label>
+                    <input
+                      id="employee_sunendbreak_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="saturdayEndBreak"
+                      className="form-control"
+                      value={values.saturdayEndBreak}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
+                  <div className="form-group col-sm-3 mb-3">
+                    <label>Sunday End Shift</label>
+                    <input
+                      id="employee_sunendshift_schedinfoinput"
+                      step={1}
+                      type="time"
+                      name="sundayEndShift"
+                      className="form-control"
+                      value={values.sundayEndShift}
+                      onChange={(e) => setFormField(e, setFieldValue)}
+                    />
+                  </div>
                 </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday Start Shift</label>
-                  <input
-                    id="employee_satstartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="saturdayStartShift"
-                    className="form-control"
-                    value={values.saturdayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday Start Break</label>
-                  <input
-                    id="employee_satstartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="saturdayStartBreak"
-                    className="form-control"
-                    value={values.saturdayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday End Break</label>
-                  <input
-                    id="employee_satendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="saturdayEndBreak"
-                    className="form-control"
-                    value={values.saturdayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Saturday End Shift</label>
-                  <input
-                    id="employee_satendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="saturdayEndShift"
-                    className="form-control"
-                    value={values.saturdayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                {/* Sunday  */}
-                <div className="form-group col-sm-12 mb-12">
-                  <Form.Check
-                    id="employee_checkbox_sundayrestday"
-                    type="checkbox"
-                    label="Sunday Rest Day"
-                    name="sundayRestDay"
-                    checked={values.sundayRestDay}
-                    onChange={(e) => setFieldValue("sundayRestDay", e.target.checked)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday Start Shift</label>
-                  <input
-                    id="employee_sunstartshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="sundayStartShift"
-                    className="form-control"
-                    value={values.sundayStartShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday Start Break</label>
-                  <input
-                    id="employee_sunstartbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="saturdayStartBreak"
-                    className="form-control"
-                    value={values.saturdayStartBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday End Break</label>
-                  <input
-                    id="employee_sunendbreak_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="saturdayEndBreak"
-                    className="form-control"
-                    value={values.saturdayEndBreak}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-                <div className="form-group col-sm-3 mb-3">
-                  <label>Sunday End Shift</label>
-                  <input
-                    id="employee_sunendshift_schedinfoinput"
-                    step={1}
-                    type="time"
-                    name="sundayEndShift"
-                    className="form-control"
-                    value={values.sundayEndShift}
-                    onChange={(e) => setFormField(e, setFieldValue)}
-                  />
-                </div>
-
-
-
               </div>
             </div>
+
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 {userId ?
@@ -2470,212 +2479,214 @@ export const Employee = (props: any) => {
       {({ values, setFieldValue, handleSubmit, errors, touched }) => {
         return (
           <Form noValidate onSubmit={handleSubmit} id="_formid2" autoComplete="off">
-            <div className="col-md-12 row p-0 m-0" >
-              <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
-                <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
-                <h5>Payroll Information</h5>
+            <div className="emp-modal-content">
+              <div className="col-md-12 row p-0 m-0" >
+                <div className="form-group col-md-12 pt-3 mb-3 d-flex justify-content-center align-items-center flex-column" >
+                  <img src="https://via.placeholder.com/300/09f.png/ffffff" className="rounded-circle mb-1" width={50} height={50} ></img>
+                  <h5>Payroll Information</h5>
+                </div>
               </div>
+              <div className="row w-100 px-5">
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Clothing Allowance</label>
+                  <input type="text"
+                    name="clothingAllowance"
+                    id="clothingAllowance"
+                    className="form-control"
+                    value={values.clothingAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.clothingAllowance && (
+                    <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Clothing Allowance)"
+                    name="clothIsTaxable"
+                    checked={values.clothIsTaxable}
+                    onChange={(e) => setFieldValue("clothIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Communication Allowance</label>
+                  <input type="text"
+                    name="communicationAllowance"
+                    id="communicationAllowance"
+                    className="form-control"
+                    value={values.communicationAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.communicationAllowance && (
+                    <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Communication Allowance)"
+                    name="commIsTaxable"
+                    checked={values.commIsTaxable}
+                    onChange={(e) => setFieldValue("commIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Discretionary Allowance</label>
+                  <input type="text"
+                    name="discretionaryAllowance"
+                    id="discretionaryAllowance"
+                    className="form-control"
+                    value={values.discretionaryAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.discretionaryAllowance && (
+                    <p id="employee_errordiscretionaryallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Discretionary Allowance)"
+                    name="discreIsTaxable"
+                    checked={values.discreIsTaxable}
+                    onChange={(e) => setFieldValue("discreIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Meal Allowance</label>
+                  <input type="text"
+                    name="mealAllowance"
+                    id="mealAllowance"
+                    className="form-control"
+                    value={values.mealAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.mealAllowance && (
+                    <p id="employee_errormealallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Meal Allowance)"
+                    name="mealIsTaxable"
+                    checked={values.mealIsTaxable}
+                    onChange={(e) => setFieldValue("mealIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Medical Allowance</label>
+                  <input type="text"
+                    name="medicalAllowance"
+                    id="medicalAllowance"
+                    className="form-control"
+                    value={values.medicalAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.medicalAllowance && (
+                    <p id="employee_errormedicalallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Medical Allowance)"
+                    name="medicalIsTaxable"
+                    checked={values.medicalIsTaxable}
+                    onChange={(e) => setFieldValue("medicalIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Sales Incentive</label>
+                  <input type="text"
+                    name="salesIncentive"
+                    id="salesIncentive"
+                    className="form-control"
+                    value={values.salesIncentive}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.salesIncentive && (
+                    <p id="employee_errorsalesIncentive_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salesIncentive}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Sales Incentive)"
+                    name="salesIncentiveIsTaxable"
+                    checked={values.salesIncentiveIsTaxable}
+                    onChange={(e) => setFieldValue("salesIncentiveIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Conveyance Allowance</label>
+                  <input type="text"
+                    name="conveyanceAllowance"
+                    id="conveyanceAllowance"
+                    className="form-control"
+                    value={values.conveyanceAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.conveyanceAllowance && (
+                    <p id="employee_errorconveyanceallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
+                  )}
+
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Conveyance Allowance)"
+                    name="convIsTaxable"
+                    checked={values.convIsTaxable}
+                    onChange={(e) => setFieldValue("convIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Other Allowance</label>
+                  <input type="text"
+                    name="otherAllowance"
+                    id="otherAllowance"
+                    className="form-control"
+                    value={values.otherAllowance}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.otherAllowance && (
+                    <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
+                  )}
+
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Other Allowance)"
+                    name="otherIsTaxable"
+                    checked={values.otherIsTaxable}
+                    onChange={(e) => setFieldValue("otherIsTaxable", e.target.checked)}
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>Miscellaneous Allowance</label>
+                  <input type="text"
+                    name="miscellaneous"
+                    id="miscellaneous"
+                    className="form-control"
+                    value={values.miscellaneous}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.miscellaneous && (
+                    <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
+                  )}
+                  <Form.Check
+                    type="checkbox"
+                    label="Taxable (Miscellaneous Allowance)"
+                    name="miscIsTaxable"
+                    checked={values.miscIsTaxable}
+                    onChange={(e) => setFieldValue("miscIsTaxable", e.target.checked)}
+                  />
+
+                </div>
+                <div className="form-group col-md-6 mb-3 " >
+                  <label>RDO</label>
+                  <input type="text"
+                    name="rdo"
+                    id="rdo"
+                    className="form-control"
+                    value={values.rdo}
+                    onChange={(e) => setFormField(e, setFieldValue)}
+                  />
+                  {errors && errors.rdo && (
+                    <p id="employee_errorrdo_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
+                  )}
+                </div>
+
+              </div>
+              <br />
             </div>
-            <div className="row w-100 px-5">
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Clothing Allowance</label>
-                <input type="text"
-                  name="clothingAllowance"
-                  id="clothingAllowance"
-                  className="form-control"
-                  value={values.clothingAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.clothingAllowance && (
-                  <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.clothingAllowance}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Clothing Allowance)"
-                  name="clothIsTaxable"
-                  checked={values.clothIsTaxable}
-                  onChange={(e) => setFieldValue("clothIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Communication Allowance</label>
-                <input type="text"
-                  name="communicationAllowance"
-                  id="communicationAllowance"
-                  className="form-control"
-                  value={values.communicationAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.communicationAllowance && (
-                  <p id="employee_errorclothingallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.communicationAllowance}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Communication Allowance)"
-                  name="commIsTaxable"
-                  checked={values.commIsTaxable}
-                  onChange={(e) => setFieldValue("commIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Discretionary Allowance</label>
-                <input type="text"
-                  name="discretionaryAllowance"
-                  id="discretionaryAllowance"
-                  className="form-control"
-                  value={values.discretionaryAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.discretionaryAllowance && (
-                  <p id="employee_errordiscretionaryallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.discretionaryAllowance}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Discretionary Allowance)"
-                  name="discreIsTaxable"
-                  checked={values.discreIsTaxable}
-                  onChange={(e) => setFieldValue("discreIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Meal Allowance</label>
-                <input type="text"
-                  name="mealAllowance"
-                  id="mealAllowance"
-                  className="form-control"
-                  value={values.mealAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.mealAllowance && (
-                  <p id="employee_errormealallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.mealAllowance}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Meal Allowance)"
-                  name="mealIsTaxable"
-                  checked={values.mealIsTaxable}
-                  onChange={(e) => setFieldValue("mealIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Medical Allowance</label>
-                <input type="text"
-                  name="medicalAllowance"
-                  id="medicalAllowance"
-                  className="form-control"
-                  value={values.medicalAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.medicalAllowance && (
-                  <p id="employee_errormedicalallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.medicalAllowance}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Medical Allowance)"
-                  name="medicalIsTaxable"
-                  checked={values.medicalIsTaxable}
-                  onChange={(e) => setFieldValue("medicalIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Sales Incentive</label>
-                <input type="text"
-                  name="salesIncentive"
-                  id="salesIncentive"
-                  className="form-control"
-                  value={values.salesIncentive}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.salesIncentive && (
-                  <p id="employee_errorsalesIncentive_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.salesIncentive}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Sales Incentive)"
-                  name="salesIncentiveIsTaxable"
-                  checked={values.salesIncentiveIsTaxable}
-                  onChange={(e) => setFieldValue("salesIncentiveIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Conveyance Allowance</label>
-                <input type="text"
-                  name="conveyanceAllowance"
-                  id="conveyanceAllowance"
-                  className="form-control"
-                  value={values.conveyanceAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.conveyanceAllowance && (
-                  <p id="employee_errorconveyanceallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.conveyanceAllowance}</p>
-                )}
-
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Conveyance Allowance)"
-                  name="convIsTaxable"
-                  checked={values.convIsTaxable}
-                  onChange={(e) => setFieldValue("convIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Other Allowance</label>
-                <input type="text"
-                  name="otherAllowance"
-                  id="otherAllowance"
-                  className="form-control"
-                  value={values.otherAllowance}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.otherAllowance && (
-                  <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
-                )}
-
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Other Allowance)"
-                  name="otherIsTaxable"
-                  checked={values.otherIsTaxable}
-                  onChange={(e) => setFieldValue("otherIsTaxable", e.target.checked)}
-                />
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>Miscellaneous Allowance</label>
-                <input type="text"
-                  name="miscellaneous"
-                  id="miscellaneous"
-                  className="form-control"
-                  value={values.miscellaneous}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.miscellaneous && (
-                  <p id="employee_errorotherallowance_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.otherAllowance}</p>
-                )}
-                <Form.Check
-                  type="checkbox"
-                  label="Taxable (Miscellaneous Allowance)"
-                  name="miscIsTaxable"
-                  checked={values.miscIsTaxable}
-                  onChange={(e) => setFieldValue("miscIsTaxable", e.target.checked)}
-                />
-
-              </div>
-              <div className="form-group col-md-6 mb-3 " >
-                <label>RDO</label>
-                <input type="text"
-                  name="rdo"
-                  id="rdo"
-                  className="form-control"
-                  value={values.rdo}
-                  onChange={(e) => setFormField(e, setFieldValue)}
-                />
-                {errors && errors.rdo && (
-                  <p id="employee_errorrdo_payrollinfop" style={{ color: "red", fontSize: "12px" }}>{errors.rdo}</p>
-                )}
-              </div>
-
-            </div>
-            <br />
             <Modal.Footer>
               <div className="d-flex justify-content-end px-5">
                 <button
@@ -2695,8 +2706,6 @@ export const Employee = (props: any) => {
                 </button>
               </div>
             </Modal.Footer>
-
-
           </Form>
         )
       }}

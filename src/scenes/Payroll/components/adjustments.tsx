@@ -10,6 +10,7 @@ import { Formik } from "formik"
 import { Utility } from "../../../utils"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import { action_edit } from "../../../assets/images"
 const ErrorSwal = withReactContent(Swal)
 
 export const Adjustment = (props: any) => {
@@ -167,6 +168,7 @@ export const Adjustment = (props: any) => {
                                             <td id={"payrolladjustment_adjustmentname_adjlist_" + item.id}> {item.adjustmentName} </td>
                                             <td id={"payrolladjustment_type_adjlist_" + item.id}> {Utility.removeUnderscore(item.type)} </td>
                                             <td>
+                                                
                                                 <label
                                                     id={"payrolladjustment_update_adjbtn_" + item.id}
                                                     onClick={() => {
@@ -185,7 +187,7 @@ export const Adjustment = (props: any) => {
                                                         setModalShow(true)
                                                     }}
                                                     className="text-muted cursor-pointer">
-                                                    Update
+                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                 </label>
                                             </td>
 
@@ -257,7 +259,7 @@ export const Adjustment = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Update Adjustment
+                        Update Earning and Allowance
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 m-0 px-5">

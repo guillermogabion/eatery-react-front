@@ -244,7 +244,7 @@ export const Holiday = (props: any) => {
                 </div>
                 
               </div>
-              <Table responsive>
+              <Table responsive className="tableFixHead">
                 <thead>
                   <tr>
                     <th style={{ width: 'auto' }}>Name</th>

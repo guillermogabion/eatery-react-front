@@ -10,6 +10,7 @@ const ErrorSwal = withReactContent(Swal)
 import { Formik } from "formik"
 import { Utility } from "../../../utils"
 import EmployeeDropdown from "../../../components/EmployeeDropdown"
+import { action_edit } from "../../../assets/images"
 
 export default function Recurring(props: any) {
     const { payrollData } = props
@@ -248,7 +249,7 @@ export default function Recurring(props: any) {
                                                         setModalShow(true)
                                                     }}
                                                     className="text-muted cursor-pointer">
-                                                    Update
+                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                 </label>
                                             </td>
                                         </tr>
@@ -320,7 +321,7 @@ export default function Recurring(props: any) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Update Recurring
+                        Update Deduction and Loan
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 m-0 px-5">
