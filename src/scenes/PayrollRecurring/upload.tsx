@@ -29,14 +29,14 @@ const Upload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
       didOpen: () => {
         const confirmButton = Swal.getConfirmButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "payrolrecurring_showconfirm_alertbtn"
       },
     });
   };
 
   const close = async () => {
-    onCloseModal(); 
+    onCloseModal();
   };
 
   const upload = async () => {
@@ -54,10 +54,14 @@ const Upload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
         });
 
         if (response.status === 200) {
-          console.log("File uploaded successfully!");
-          showAlert("Success", "File uploaded successfully!", "success");
-          onCloseModal();
-          location.reload();
+          if (response.error && response.error.message) {
+            showAlert("Error", `${response.error.message}`, "error");
+          } else {
+            console.log("File uploaded successfully!");
+            showAlert("Success", "File uploaded successfully!", "success");
+            onCloseModal();
+            location.reload();
+          }
         } else {
           console.error(`File upload failed with status ${response.status}`);
           showAlert("Error", `File upload failed with status ${response.status}`, "error");
