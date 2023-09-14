@@ -176,7 +176,7 @@ export const Adjustment = (props: any) => {
                                                             "id": item.id,
                                                             "userId": item.userId,
                                                             "adjustmentTypeId": item.adjustmentTypeId,
-                                                            "adjustmentAmount": item.amount,
+                                                            "adjustmentAmount": item.adjustmentAmount,
                                                             "periodMonth": item.payrollMonth,
                                                             "periodYear": item.payrollYear,
                                                             "employeeId": item.employeeId,
@@ -365,7 +365,7 @@ export const Adjustment = (props: any) => {
                                             />
                                         </div>
                                         <div className="w-full mb-3">
-                                            <label>Adjustment Type</label>
+                                            <label>Type</label>
                                             <input
                                                 id="payrolladjustment_adjustmenttype_forminput"
                                                 disabled

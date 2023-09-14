@@ -54,7 +54,7 @@ export const PayrollAdjustment = (props: any) => {
     const [values, setValues] = useState({
         userId: '',
         adjustmentTypeId: '',
-        amount: '',
+        adjustmentAmount: '',
         payrollMonth: '',
         payrollYear: '',
     });
@@ -66,7 +66,7 @@ export const PayrollAdjustment = (props: any) => {
             [name]: value
         }));
     }
-    const isButtonDisabled = !(values.userId && values.adjustmentTypeId && values.amount && values.payrollMonth && values.payrollYear);
+    const isButtonDisabled = !(values.userId && values.adjustmentTypeId && values.adjustmentAmount && values.payrollMonth && values.payrollYear);
     const [initialValues, setInitialValues] = useState<any>({
         adjustments: [
             {
@@ -324,7 +324,6 @@ export const PayrollAdjustment = (props: any) => {
             {},
             {},
             async (res: any) => {
-                console.log("Response:", res);
                 const { status, body = { data: {}, error: {} } }: any = res;
                 if (status === 200 && body && body.data) {
                     if (body.error && body.error.message) {
@@ -569,11 +568,8 @@ export const PayrollAdjustment = (props: any) => {
             const valuesObj: any = { ...values }
             valuesObj.periodMonth = valuesObj.payrollMonth
             valuesObj.periodYear = valuesObj.payrollYear
-            valuesObj.adjustmentAmount = valuesObj.amount
             delete valuesObj.payrollMonth;
             delete valuesObj.payrollYear;
-            delete valuesObj.amount;
-
 
             if (valuesObj.adjustmentAmount == undefined || valuesObj.adjustmentAmount == "") {
                 hasError = true
@@ -1120,11 +1116,11 @@ export const PayrollAdjustment = (props: any) => {
                                                 <input
                                                     id="payrolladjustment_amount_createadjustmentinput"
                                                     type="number"
-                                                    className={`form-control ${touched.amount && errors.amount ? 'is-invalid' : ''}`}
-                                                    name="amount"
-                                                    value={values.amount}
+                                                    className={`form-control ${touched.adjustmentAmount && errors.adjustmentAmount ? 'is-invalid' : ''}`}
+                                                    name="adjustmentAmount"
+                                                    value={values.adjustmentAmount}
                                                     onChange={(e) => {
-                                                        setFieldValue('amount', e.target.value);
+                                                        setFieldValue('adjustmentAmount', e.target.value);
                                                     }}
                                                 />
                                             </div>
@@ -1228,9 +1224,9 @@ export const PayrollAdjustment = (props: any) => {
                                                                 <input
                                                                     id="payrolladjustment_amount_adjustmentminput"
                                                                     type="number"
-                                                                    className={`form-control ${touched.amount && values.amount == "" ? 'is-invalid' : ''}`}
+                                                                    className={`form-control ${touched.adjustmentAmount && values.adjustmentAmount == "" ? 'is-invalid' : ''}`}
                                                                     name="adjustmentAmount"
-                                                                    value={values.adjustmentAmount ? values.adjustmentAmount : values.amount}
+                                                                    value={values.adjustmentAmount}
                                                                     onChange={(e) => {
                                                                         setFieldValue('adjustmentAmount', e.target.value);
                                                                         const updatedFields = [...adjustment];
@@ -1249,6 +1245,9 @@ export const PayrollAdjustment = (props: any) => {
                                                                     value={values.startDate}
                                                                     onChange={(e) => {
                                                                         setFieldValue('startDate', e.target.value);
+                                                                        const updatedFields = [...adjustment];
+                                                                        updatedFields[index].startDate = e.target.value;
+                                                                        setAdjustment(updatedFields);
                                                                     }}
                                                                 />
                                                                 {errors && errors.startDate && (
@@ -1265,6 +1264,9 @@ export const PayrollAdjustment = (props: any) => {
                                                                     value={values.endDate}
                                                                     onChange={(e) => {
                                                                         setFieldValue('endDate', e.target.value);
+                                                                        const updatedFields = [...adjustment];
+                                                                        updatedFields[index].endDate = e.target.value;
+                                                                        setAdjustment(updatedFields);
                                                                     }}
                                                                 />
                                                                 {errors && errors.endDate && (

@@ -429,7 +429,7 @@ export default function Recurring(props: any) {
                                             />
                                         </div>
                                         <div className="w-full mb-3">
-                                            <label>Recurring Type</label>
+                                            <label>Type</label>
                                             <input
                                                 id="payrollrecurring_recurringtype_forminput"
                                                 disabled
