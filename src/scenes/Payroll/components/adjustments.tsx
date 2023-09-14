@@ -164,7 +164,7 @@ export const Adjustment = (props: any) => {
                                             <td id={"payrolladjustment_id_adjlist_" + item.id}> {item.id} </td>
                                             <td id={"payrolladjustment_employeeid_adjlist_" + item.id}> {item.employeeId} </td>
                                             <td id={"payrolladjustment_employeename_adjlist_" + item.id}> {item.employeeName} </td>
-                                            <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.amount)} </td>
+                                            <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
                                             <td id={"payrolladjustment_adjustmentname_adjlist_" + item.id}> {item.adjustmentName} </td>
                                             <td id={"payrolladjustment_type_adjlist_" + item.id}> {Utility.removeUnderscore(item.type)} </td>
                                             <td>
