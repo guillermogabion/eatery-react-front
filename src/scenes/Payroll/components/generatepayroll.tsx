@@ -335,12 +335,13 @@ export default function GeneratePayroll(props: any) {
             </div>
             <div className="px-3 mt-5 flex">
                 {
-                    payroll.isUpdate && payroll.isGenerated && !payroll.locked ?
+                    payroll.isUpdate && payroll.isGenerated ?
                         <Button
                             id="payrollgenerate_regeneratepayroll_btn"
                             onClick={() => {
                                 generatePayroll(true)
                             }}
+                            disabled={payroll.locked}
                             className="btn btn-primary mr-3">
                             {isSubmit ?
                                 <div className="d-flex justify-content-center">
