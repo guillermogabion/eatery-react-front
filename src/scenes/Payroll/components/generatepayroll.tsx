@@ -342,7 +342,7 @@ export default function GeneratePayroll(props: any) {
                                 generatePayroll(true)
                             }}
                             disabled={payroll.locked}
-                            className="btn btn-primary mr-3">
+                            className={`btn btn-primary mr-3 ${payroll.locked ? 'd-none': ''}`}>
                             {isSubmit ?
                                 <div className="d-flex justify-content-center">
                                     <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
