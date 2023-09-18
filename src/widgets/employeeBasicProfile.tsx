@@ -51,21 +51,21 @@ const EmployeeBasicProfile = () => {
                 
             </div>
             <div className="profile">
-                <img src={photo} className="rounded-circle" width={250} height={250} ></img>
+                <img src={photo} className="rounded-circle" width={200} height={200} ></img>
             </div>
-            <div className="card-body basic-profile-widget">
+            <div className="card-body basic-profile-widget card-body-profile">
                 <div className="employee-space">
-                    <div style={{ paddingBottom: "10%"}}>
+                    <div style={{ paddingBottom: "2%"}}>
                         <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName}</span>
                         <br />
-                        <span className="" style={{fontWeight: 'bold', paddingBottom: '5%'}}>{userData.data.profile.jobTitle}</span>
+                        <span className="" style={{fontWeight: 'bold', paddingBottom: '2%'}}>{userData.data.profile.jobTitle}</span>
                     </div>
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '5px'}} className="text-primary font-bold">
                         <img src={squad_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.squad}
                     </span>   
                     {
                         userData.data.profile.role == 'ADMIN' ? " " :
-                        <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px', flexWrap: 'wrap'}} className="text-primary font-bold">
+                        <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '5px', flexWrap: 'wrap'}} className="text-primary font-bold">
                             <img src={join_icon} alt="" style={{marginRight: '10px'}} /> 
                             <p style={{marginRight: "5px", fontSize: '80%'}}>
                                 Joined {formattedDate}
@@ -78,13 +78,13 @@ const EmployeeBasicProfile = () => {
                         </span>
                     }
                     
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '10px'}} className="text-primary font-bold">
                         <img src={approver_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.approver}
                     </span>   
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '10px'}} className="text-primary font-bold">
                         <img src={phone_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.mobileNo}
                     </span>   
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px'}} className="text-primary font-bold">
                         <img src={email_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.email}
                     </span> 
                 </div>
@@ -93,7 +93,7 @@ const EmployeeBasicProfile = () => {
             </div>
             <div className="d-flex justify-content-center">
                 <div className="col-12 employee-button px-4">
-                    <Button id=""
+                    <Button disabled id=""
                         style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         // onClick={() => makeAttendance('time out')}
                         >

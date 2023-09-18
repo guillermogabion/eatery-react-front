@@ -205,7 +205,7 @@ const TimeCard = () => {
                                 <h4>{currentDayOfWeek}, {currentDate}</h4>
                             </div>
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
-                                <p>{currentTime}</p>
+                                <span className="time-size">{currentTime}</span>
                             </div>
 
                         </div>
@@ -224,22 +224,22 @@ const TimeCard = () => {
                             <h6 id="dashboard_shiftschedule_label" className="bold-text pt-2 pl-7 text-primary">Shift Schedule:</h6>
                         </div>
                         <div className="">
-                            <h6 id="dashboard_firstlogin_label" className="bold-text pt-4 pl-7 text-primary">First login:</h6>
+                            <h6 id="dashboard_firstlogin_label" className="bold-text pt-3 pl-7 text-primary">First login:</h6>
                         </div>
                         <div className="">
-                            <h6 id="dashboard_lastlogout_label" className="bold-text pt-4 pl-7 text-primary">Last logout:</h6>
+                            <h6 id="dashboard_lastlogout_label" className="bold-text pt-3 pl-7 text-primary">Last logout:</h6>
                         </div>
                         <div className="">
-                            <h6 id="dashboard_attendancestatus_label" className="bold-text pt-4 pl-7 text-primary">Attendance Status:</h6>
+                            <h6 id="dashboard_attendancestatus_label" className="bold-text pt-3 pl-7 text-primary">Attendance Status:</h6>
                         </div>
                     </div>
                     <div className="col-6 " style={{ textAlign: 'right' }}>
                         <h6 id="dashboard_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
-                        <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-4">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'Not Timed In'}</h6>
-                        <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-4">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'Not Logged Out'}</h6>
+                        <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-3">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'Not Timed In'}</h6>
+                        <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-3">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'Not Logged Out'}</h6>
                         <label
                             id="dashboard_attendancestatus_value"
-                            className={`bold-text p-2 px-3 pt-2 mt-4 ${(!hasTimeIn && !hasTimeOut) ? 'status_blue' : (hasTimeIn && !hasTimeOut) ? 'status_red' : (hasTimeIn && hasTimeOut) ? 'status_green' : ''}`}
+                            className={`bold-text p-2 px-3 pt-2 mt-2  ${(!hasTimeIn && !hasTimeOut) ? 'status_blue' : (hasTimeIn && !hasTimeOut) ? 'status_red' : (hasTimeIn && hasTimeOut) ? 'status_green' : ''}`}
                             style={{
                                 background: '#E9E9E9',
                                 borderRadius: 5,

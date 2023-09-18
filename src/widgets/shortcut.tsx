@@ -97,39 +97,42 @@ const Shortcut = () => {
             <div className="card-header">
                 <span className="">Quick Shortcut</span>
             </div>
-            <div className="time-card-body">
-                <div className="row d-flex pr-2">
-                    {
-                        shortcut && shortcut.length > 0 ? (
-                            shortcut.map((item: any, index: any) => (
-                            <div key={index} className="col-6 pb-2">
-                                <Link
-                                    className="non-transparent-border"
-                                    to={item.endpoint}
-                                    >
+            <div className="time-card-body" style={{ height: '400px', overflowY: 'auto' }}>
+                <div  >
 
-                                    <span style={{ lineHeight: "0%", color: "white" }}>
-                                        {item.name}
-                                    </span>
-                                    
-                                    </Link>
-                                </div>
-                            ))
-                        ) : ""
-                    }
+                    <div className="row d-flex pr-2">
+                        {
+                            shortcut && shortcut.length > 0 ? (
+                                shortcut.map((item: any, index: any) => (
+                                <div key={index} className="col-6 pb-2">
+                                    <Link
+                                        className="non-transparent-border"
+                                        to={item.endpoint}
+                                        >
+
+                                        <span style={{ lineHeight: "0%", color: "white" }}>
+                                            {item.name}
+                                        </span>
+                                        
+                                        </Link>
+                                    </div>
+                                ))
+                            ) : ""
+                        }
+                            
+
+                        <div className="col-6 ">
+                            <p className="transparent-border"
+                            onClick={() => setModalShow(true)}
+                            style={{cursor:'pointer'}}
+                            >
+                                <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
+                                <br />
+                                <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
+                            </p>
+                        </div>
                         
-
-                    <div className="col-6 ">
-                        <p className="transparent-border"
-                        onClick={() => setModalShow(true)}
-                        style={{cursor:'pointer'}}
-                        >
-                            <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
-                            <br />
-                            <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
-                        </p>
                     </div>
-                    
                 </div>
 
                
@@ -169,6 +172,7 @@ const Shortcut = () => {
                                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                                     <div className="row w-100 px-5">
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <label>Shortcut Name</label>
                                             <input
                                                 type="text"
                                                 name="name"
@@ -182,7 +186,7 @@ const Shortcut = () => {
                                         </div>
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                           
-                                        
+                                            <label>Shortcut Link</label>
                                             <select
                                                 className="form-select"
                                                 name="endpoint"

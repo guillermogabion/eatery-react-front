@@ -224,112 +224,7 @@ const AvailableLeaveCredits = () => {
         }
       };
 
-      // const handleSubmit = (values) => {
-
-      //   const dateFromChecker = new Date(values.dateFrom);
-      //   const currentDateChecker = new Date();
-
-      //   const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
-      //   // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
-      //   const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
-      //   const breakdownLength = leaveBreakdown.length;
-      //   console.log("breakdownLength:", breakdownLength);
-
-      //   const formData = new FormData();
-      //   const leave_dataJSON = JSON.stringify({
-      //     "dateFrom" : values.dateFrom,
-      //     "dateTo" : values.dateTo,
-      //     "type" : values.type,
-      //     "status" : values.status,
-      //     "reason" : values.reason,
-      //     "breakdown": leaveBreakdown.map((item) => ({
-      //       "date": item.date,
-      //       "credit": item.credit,
-      //       "dayType": item.dayType,
-      //     })),
-          
-         
-      //   })
-      //   // console.log("breakdownLength:", leave_dataJSON.breakdownLength); 
-      //   if(breakdownLength >=8 && JSON.parse(leave_dataJSON).type === 1 ) {
-      //     ErrorSwal.fire({
-      //       title: 'Error!',
-      //       text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${breakdownLength} days`,
-      //       didOpen: () => {
-      //         const confirmButton = Swal.getConfirmButton();
     
-      //         if(confirmButton)
-      //           confirmButton.id = "login_errorconfirm13_alertbtn"
-      //       },
-      //       icon: 'error',
-      //     })
-      //   }else if (timeDifferenceInDays >=7 && JSON.parse(leave_dataJSON).type === 1){
-      //     ErrorSwal.fire({
-      //       title: 'Error!',
-      //       text: "Selected 'Date From' must be within 7 working days from the date of selection.",
-      //       didOpen: () => {
-      //         const confirmButton = Swal.getConfirmButton();
-    
-      //         if(confirmButton)
-      //           confirmButton.id = "login_errorconfirm14_alertbtn"
-      //       },
-      //       icon: 'error',
-      //   })
-      //   }else {
-      //     const loadingSwal = Swal.fire({
-      //       title: '',
-      //       allowOutsideClick: false,
-      //       didOpen: () => {
-      //         Swal.showLoading();
-      //       },
-      //     });
-      //   }
-      //   formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
-      
-      //   if (values.file) {
-      //     formData.append("file", values.file);
-      //   } 
-      
-      //   return http
-      //     .post(`${Api.requestLeaveCreate}`, formData, {
-            
-      //       headers: {
-      //         "Content-Type": "multipart/form-data",
-      //         Authorization: `Bearer ${Utility.getUserToken() || ""}`,
-      //         credentials: true,
-      //       },
-      //     })
-      //     .then((response) => {
-      //       console.log("Response Data:", response.data);
-      //       Swal.fire({
-      //         title: 'Success!',
-      //         text: (response.data) || "",
-      //         didOpen: () => {
-      //           const confirmButton = Swal.getConfirmButton();
-      
-      //           if(confirmButton)
-      //             confirmButton.id = "login_successconfirm4_alertbtn"
-      //         },
-      //         icon: 'success', 
-      //       });
-      
-      //       return response;
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error:", error);
-      //       ErrorSwal.fire({
-      //         title: 'Error!',
-      //         text: (error.message) || "",
-      //         didOpen: () => {
-      //           const confirmButton = Swal.getConfirmButton();
-      
-      //           if(confirmButton)
-      //             confirmButton.id = "login_errorconfirm8_alertbtn"
-      //         },
-      //         icon: 'error',
-      //     })
-      //     });
-      // };
 
       const handleSubmit = (values) => {
         const dateFromChecker = new Date(values.dateFrom);
@@ -438,10 +333,10 @@ const AvailableLeaveCredits = () => {
             </div>
             <div className="card-leave">
                 <div className="row credit-record">
-                    <div className="col-6 pl-8 pt-10 mt-4">
-                        <img src={vacation_leave} width={200} alt="" />
+                    <div className="col-6 pl-12">
+                        <img src={vacation_leave} width={120} alt="" />
                     </div>
-                    <div className="col-6 pt-12 pl-8 ">
+                    <div className="col-6 pl-12">
                     {getMyLeaves.map((leave: any) => (
                         <div key={leave.id}>
                             <p className="card-leave-credit" id="leaves_name_leavecreditsp">
@@ -455,10 +350,10 @@ const AvailableLeaveCredits = () => {
                     }
                   
                     </div>
-                    <div className="col-6 pl-8 pt-10 mt-4">
-                        <img src={sick_leave} width={200} alt="" />
+                    <div className="col-6 pl-12">
+                        <img src={sick_leave} width={120} alt="" />
                     </div>
-                    <div className="col-6 pt-12 pl-8 mt-3">
+                    <div className="col-6 pl-12">
                     {getMyLeaves.map((leave: any) => (
                         <div key={leave.id}>
                             <p className="card-leave-credit" id="leaves_name_leavecreditsp">
@@ -475,7 +370,7 @@ const AvailableLeaveCredits = () => {
                 </div>
                 <div className="d-flex justify-content-center ">
                     <div className="row request-leave-button">
-                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-4">
+                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-4 pt-1 pb-2">
                             <Button id=""
                             style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             onClick={() => {setShowModal(true)}}
@@ -632,16 +527,14 @@ const AvailableLeaveCredits = () => {
                                         )}
                                     </div>
                                     <div className="mt-5 pt-5">
-                                        <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" className="file-input-style" onChange={(e) => {
-                                          // Set the 'file' property in form values to the selected file
+                                        <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" style={{width: '100%', marginBottom: '0'}} className="file-input-style" onChange={(e) => {
                                           setFieldValue("file", e.currentTarget.files[0]);
                                         }} />
-                                        <br />
-                                        <small className="form-text text-muted ">(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
+                                        <small className="form-text text-muted " style={{lineHeight: '0'}}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
                                     </div>
                                 </div>
                                 
-
+ 
                             </div>
                             <div className="pt-4">
                                 <span className="font-bold">BREAKDOWN</span>

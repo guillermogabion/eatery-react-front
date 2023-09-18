@@ -29,7 +29,8 @@ const EmployeeDropdown = (props: any) => {
                                 } else {
                                     tempArray.push({
                                         value: d.userAccountId,
-                                        label: d.lastname + ", " + d.firstname + " " + d.middleName
+                                        // label: d.lastname + ", " + d.firstname + " " + d.middleName
+                                        label: d.lastname + ", " + d.firstname 
                                     })
                                 }
                             });

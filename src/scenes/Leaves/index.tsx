@@ -1164,7 +1164,7 @@ export const Leaves = (props: any) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                   <div className="row w-100 px-5">
-                    <div className="form-group col-md-12 mb-3 " >
+                    <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3 " >
                       <label>Leave Type</label>
                       <select
                         className="form-select"
@@ -1190,6 +1190,13 @@ export const Leaves = (props: any) => {
                       {errors && errors.type && (
                         <p id="leaves_errortype_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
+                    </div>
+                    <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 pt-4 mb-2">
+                        <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" style={{width: '100%'}} className="file-input-style" onChange={(e) => {
+                          // Set the 'file' property in form values to the selected file
+                          setFieldValue("file", e.currentTarget.files[0]);
+                        }} />
+                        <small className="text-muted" style={{lineHeight: "0"}}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Date From </label>

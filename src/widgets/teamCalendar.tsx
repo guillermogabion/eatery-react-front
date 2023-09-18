@@ -9,6 +9,19 @@ import Accordion from 'react-bootstrap/Accordion';
 import Carousel from 'react-bootstrap/Carousel';
 import moment from "moment";
 import { async } from "validate.js";
+
+function CustomHeader({ date }) {
+    // Extract the month and year from the selected date
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+  
+    return (
+      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <h2 style={{ marginRight: '10px' }}>{month}</h2>
+        <h2>{year}</h2>
+      </div>
+    );
+  }
 const CalendarComponent = () => {
 
   const [date, setDate] = useState(new Date());
@@ -41,24 +54,30 @@ const CalendarComponent = () => {
     }
   }, [selectedMonth]);
 
-  const handleMonthSelect = (month) => {
-    setSelectedMonth(month);
-    // Update the calendar's displayed month
-    const newDate = new Date(date);
-    newDate.setMonth(month - 1); // JavaScript months are 0-based
-    newDate.setDate(1); // Set the day of the month to 1
-    setDate(newDate);
-  };
 
-  const handleDateClick = (clickedDate) => {
-    setSelectedDate(clickedDate);
 
-    const dateClickedFrom = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
-    const dateClickedTo = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
-    setFromDate(dateClickedFrom);
-    setToDate(dateClickedTo);
+    const handleMonthSelect = (month) => {
+        setSelectedMonth(month);
+        // Update the calendar's displayed month
+        const newDate = new Date(date);
+        newDate.setMonth(month - 1); // JavaScript months are 0-based
+        newDate.setDate(1); // Set the day of the month to 1
+        setDate(newDate);
+    };
+
+    const handleDateClick = (clickedDate) => {
+        setSelectedDate(clickedDate);
+
+        const dateClickedFrom = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
+        const dateClickedTo = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
+        setFromDate(dateClickedFrom);
+        setToDate(dateClickedTo);
+    
+    };
+
+
   
-  };
+  
   function getCurrentDate() {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
@@ -144,10 +163,11 @@ const CalendarComponent = () => {
     }
   };
 
+  
 
   return (
     <div>
-      <Dropdown style={{ backgroundColor: '', position: 'absolute', fontSize: '5px' }} className="custom-calendar-dropdown">
+      {/* <Dropdown style={{ backgroundColor: '', position: 'absolute', fontSize: '5px' }} className="custom-calendar-dropdown">
         <Dropdown.Toggle id="month-selector" style={{ color: '' }} className="text-primary dropdown-text">
           {selectedMonth !== null ? new Date(date.getFullYear(), selectedMonth - 1, 1).toLocaleDateString('en-US', { month: 'long' }) : 'Select Month'}
         </Dropdown.Toggle>
@@ -168,8 +188,8 @@ const CalendarComponent = () => {
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
-      </Dropdown>
-      <div className="d-flex calendar-button " style={{ position: 'absolute', justifyContent: 'flex-end' }}>
+      </Dropdown> */}
+      {/* <div className="d-flex calendar-button " style={{ position: 'absolute', justifyContent: 'flex-end' }}>
         <div className="arrow-button left" style={{ marginRight: '25px' }}>
           <div
             onClick={() => {
@@ -190,18 +210,22 @@ const CalendarComponent = () => {
             className="triangle-right text-primary"
           ></div>
         </div>
-      </div>
-      <div className="calendar-container">
-        <Calendar
-          onChange={setDate}
-          calendarType="US"
-          value={date}
-          className="custom-calendar"
-          onClickDay={handleDateClick}
-        />
-      </div>
+      </div> */}
       <div>
-        <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-calendar">
+        <div className="calendar-container">
+            <Calendar
+            onChange={setDate}
+            calendarType="US"
+            value={date}
+            className="custom-calendar"
+            onClickDay={handleDateClick}
+            tileContent={() => <div />} // Disable tile content for this example
+            renderHeader={({ date }) => <CustomHeader date={date} />}
+            />
+        </div>
+      </div>
+      <div className="pt-12 mt-4">
+        <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-calendar pt-5  mt-4">
           <Tab className="custom-tabs"  eventKey="tab1" title="Holiday">
           {hasHolidaysThisWeek ? (
             dataMonth.map((item, index) => (
@@ -570,7 +594,7 @@ const TeamCalendar = () => {
       <div className="card-header">
         <span className="">Employee Calendar</span>
       </div>
-      <div className="time-card-body">
+      <div className="calendar-card-body">
         <div className="row d-flex">
           { activeWeekTab === 'tab1' && (
             <div className="col-6">
@@ -615,7 +639,7 @@ const TeamCalendar = () => {
                 eventKey="tab1"
                 title={<img src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
             >
-                <div>
+                <div style={{ height: '380px', overflowY: 'auto' }}>
                     <div className="row d-flex">
                     <div className="col-1">
                         <div className="arrow-button left">
@@ -698,50 +722,6 @@ const TeamCalendar = () => {
                     </Accordion.Item>
                     <Accordion.Item style={{paddingBottom: '10px'}} eventKey="2">
                         <Accordion.Header className="accordion-leave-header">
-                          
-                          {/* Who's Out
-                        <div style={{paddingLeft: 'auto', justifyItems: 'right'}}>
-                        {hasLeavesThisWeek ? (
-                            dataWeek.map((item, index) => (
-                                <div key={index}>
-                                {item.leavesList && item.leavesList.length > 0 && (
-                                    <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
-                                    {item.leavesList.slice(0, 2).map((leaveItem, leaveIndex) => (
-                                      <li key={leaveIndex} style={{ display: 'inline-block', marginRight: '5px' }}>
-                                        <img src={user} alt="" width={40} />
-                                      </li>
-                                    ))}
-                                  </ul>
-                                )}
-                                </div>
-                            ))
-                            ) : (
-                         null
-                            )}
-                            </div>
-
-                           {dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
-                              <div style={{ marginLeft: '1px', position: 'relative' }}>
-                               <div
-                                  style={{
-                                    width: '40px',
-                                    height: '40px',
-                                    borderRadius: '50%',
-                                    backgroundColor: 'white',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'black',
-                                    fontSize: '15px',
-                                    fontWeight: 'bold',
-                                    marginBottom: '5px'
-                                  }}
-                                >
-                                  +{dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
-                                </div>
-                              </div>
-                            )} */}
-
                             <div style={{ textAlign: 'left' }}>
                               Who's Out
                             </div>
@@ -887,7 +867,9 @@ const TeamCalendar = () => {
                 eventKey="tab2"
                 title={<img src={activeWeekTab !== 'tab1' ? activeCalendar : inactiveCalendar} alt="Tab 2" />}
             >
-                <CalendarComponent />
+                <div style={{ height: '350px', overflowY: 'auto' }}>
+                    <CalendarComponent />
+                </div>
             </Tab>
             </Tabs>
         </div>

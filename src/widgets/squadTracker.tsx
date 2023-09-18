@@ -8,6 +8,7 @@ import { Tabs, Tab, Table, Button } from "react-bootstrap"
 import { tr } from "date-fns/locale";
 import user from "../assets/images/dist/User1.png"
 import { Search } from "../assets/images";
+import EmployeeDropdown from "../components/EmployeeDropdown";
 
 
 
@@ -27,7 +28,7 @@ const SquadTracker = () => {
                 <div className="card-header">
                     <span className="">Squad Tracker ({userData.data.profile.squad})</span>
                 </div>
-            <div className="time-card-body">
+            <div className="tracker-card-body">
 
              
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
@@ -105,16 +106,26 @@ const All = () => {
         )
          // all 
     }, [])
+    const singleChangeOption = (option: any, name: any) => {
+
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
 
     return (
         <div>
             <div className="row">
-                <div className="pt-6 col-9">
-                    <input type="text"
-                        className="form-control"
-                        name="searchName"
-                        onChange={(e) => makeFilterData(e)}
-                    />
+                <div className="pt-6 col-9 ml-3">
+                    <div className="" style={{ width: '100%', marginRight: '5' }}>
+                        <EmployeeDropdown
+                            squad={true}
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                        />
+                    </div>
                 </div>
                 <div className="pt-6 col-2">
                     <Button
@@ -127,7 +138,7 @@ const All = () => {
                 </div>
             </div>
             <Table responsive>
-                <div style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px' }}>
+                <div style={{ minHeight: '310px', maxHeight: '310px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
                     <tbody>
                         {allMember && allMember.length > 0 ? (
                         allMember.map((item: any, index: any) => (
@@ -146,9 +157,9 @@ const All = () => {
                             </tr>
                         ))
                         ) : (
-                        <tr>
-                            <td>No members found</td>
-                        </tr>
+                        <div className="w-100 text-center">
+                            <label htmlFor="">No Member Found</label>
+                        </div>
                         )}
                     
                     </tbody>
@@ -160,6 +171,7 @@ const All = () => {
 }
 const OnLeave = () => {
     const [ allMember , setAllMember ] = useState<any>([]);
+     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
 
     useEffect (() => {
          // all 
@@ -176,20 +188,57 @@ const OnLeave = () => {
             }
         )
     }, [])
+    const singleChangeOption = (option: any, name: any) => {
+
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
+    const getAll = () => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
+        RequestAPI.getRequest(
+            `${Api.getAllSquadMember}?status=on_leave${queryString}`,
+            "",
+            {},
+            {},
+            async(res:any) => {
+                const {status, body = { data : {}, error: {} }}: any = res
+                if (status === 200 && body && body.data) {
+                    setAllMember(body.data)
+                }
+            }
+        )
+
+    }
 
     return (
         <div>
             <div className="row">
-                <div className="pt-6 col-9">
-                    <input type="text"
-                        className="form-control"
-                        name="searchName"
-                        // onChange={(e) => makeFilterData(e)}
-                    />
+                <div className="pt-6 col-9 ml-3">
+                    <div className="" style={{ width: '100%', marginRight: 10 }}>
+                        <EmployeeDropdown
+                            squad={true}
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                        />
+                    </div>
                 </div>
                 <div className="pt-6 col-2">
                     <Button
-                        // onClick={() => getAll()}
+                        onClick={() => getAll()}
                         style={{width: '70px'}}
                         >
                             <img src={Search} alt="" />
@@ -198,7 +247,7 @@ const OnLeave = () => {
                 </div>
             </div>
             <Table responsive>
-                <div  style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px' }}>
+                <div  style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px'  }}>
                 <tbody>
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
@@ -214,9 +263,9 @@ const OnLeave = () => {
                         </tr>
                     ))
                     ) : (
-                    <tr>
-                        <td>No members found</td>
-                    </tr>
+                    <div className="w-100 text-center">
+                        <label htmlFor="">No Member Found</label>
+                    </div>
                     )}
                 </tbody>
                 </div>
@@ -227,6 +276,8 @@ const OnLeave = () => {
 }
 const Absent = () => {
     const [ allMember , setAllMember ] = useState<any>([]);
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
+
 
     useEffect (() => {
          // all 
@@ -243,20 +294,57 @@ const Absent = () => {
             }
         )
     }, [])
+    const getAll = () => {
+        let queryString = ""
+        let filterDataTemp = { ...filterData }
+        if (filterDataTemp) {
+            Object.keys(filterDataTemp).forEach((d: any) => {
+                if (filterDataTemp[d]) {
+
+                    queryString += `&${d}=${filterDataTemp[d]}`
+                } else {
+                    queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
+                }
+            })
+        }
+        RequestAPI.getRequest(
+            `${Api.getAllSquadMember}?status=absent${queryString}`,
+            "",
+            {},
+            {},
+            async(res:any) => {
+                const {status, body = { data : {}, error: {} }}: any = res
+                if (status === 200 && body && body.data) {
+                    setAllMember(body.data)
+                }
+            }
+        )
+
+    }
+    const singleChangeOption = (option: any, name: any) => {
+
+        const filterObj: any = { ...filterData }
+        filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
+        setFilterData(filterObj)
+    }
 
     return (
         <div>
             <div className="row">
-                <div className="pt-6 col-9">
-                    <input type="text"
-                        className="form-control"
-                        name="searchName"
-                        // onChange={(e) => makeFilterData(e)}
-                    />
+                <div className="pt-6 col-9 ml-3">
+                    <div className="" style={{ width: '100%', marginRight: 10 }}>
+                        <EmployeeDropdown
+                            squad={true}
+                            placeholder={"Employee"}
+                            singleChangeOption={singleChangeOption}
+                            name="userId"
+                            value={filterData && filterData['userId']}
+                        />
+                    </div>
                 </div>
                 <div className="pt-6 col-2">
                     <Button
-                        // onClick={() => getAll()}
+                        onClick={() => getAll()}
                         style={{width: '70px'}}
                         >
                             <img src={Search} alt="" />
@@ -265,7 +353,7 @@ const Absent = () => {
                 </div>
             </div>
             <Table responsive>
-            <div  style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px' }}>
+            <div  style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px'  }}>
                 <tbody>
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
@@ -281,9 +369,9 @@ const Absent = () => {
                         </tr>
                     ))
                     ) : (
-                    <tr>
-                        <td>No members found</td>
-                    </tr>
+                    <div className="w-100 text-center">
+                        <label htmlFor="">No Member Found</label>
+                    </div>
                     )}
                 </tbody>
                 </div>
