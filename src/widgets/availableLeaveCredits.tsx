@@ -11,6 +11,7 @@ import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import { useSelector } from "react-redux"
 import moment from "moment"
+import http from "../helpers/axios"
 
 
 
@@ -18,12 +19,15 @@ import moment from "moment"
 const ErrorSwal = withReactContent(Swal)
 
 let initialPayload = {
+  
     "dateFrom": "",
     "dateTo": "",
     "type": 1,
     "status": "PENDING",
     "reason": "",
-    "breakdown": []
+    "leaveBreakdown": [],
+   
+   "file": null 
   }
 
 
@@ -37,6 +41,8 @@ const AvailableLeaveCredits = () => {
     const [holidays, setHolidays] = useState<any>([])
     const [dayTypes, setDayTypes] = useState<any>([]);
     const [leaveId, setLeaveId] = useState<any>("");
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
 
 
 
@@ -186,7 +192,7 @@ const AvailableLeaveCredits = () => {
             async (res: any) => {
               const { status, body = { data: {}, error: {} } }: any = res
               if (status === 200 && body && body.data) {
-                setLeaveDayTypes(body.data)
+                setLeaveTypes(body.data)
               } else {
               }
             }
@@ -211,6 +217,220 @@ const AvailableLeaveCredits = () => {
             }
           )
       }, [])
+
+      const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+          setSelectedFile(event.target.files[0]);
+        }
+      };
+
+      // const handleSubmit = (values) => {
+
+      //   const dateFromChecker = new Date(values.dateFrom);
+      //   const currentDateChecker = new Date();
+
+      //   const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+      //   // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+      //   const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
+      //   const breakdownLength = leaveBreakdown.length;
+      //   console.log("breakdownLength:", breakdownLength);
+
+      //   const formData = new FormData();
+      //   const leave_dataJSON = JSON.stringify({
+      //     "dateFrom" : values.dateFrom,
+      //     "dateTo" : values.dateTo,
+      //     "type" : values.type,
+      //     "status" : values.status,
+      //     "reason" : values.reason,
+      //     "breakdown": leaveBreakdown.map((item) => ({
+      //       "date": item.date,
+      //       "credit": item.credit,
+      //       "dayType": item.dayType,
+      //     })),
+          
+         
+      //   })
+      //   // console.log("breakdownLength:", leave_dataJSON.breakdownLength); 
+      //   if(breakdownLength >=8 && JSON.parse(leave_dataJSON).type === 1 ) {
+      //     ErrorSwal.fire({
+      //       title: 'Error!',
+      //       text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${breakdownLength} days`,
+      //       didOpen: () => {
+      //         const confirmButton = Swal.getConfirmButton();
+    
+      //         if(confirmButton)
+      //           confirmButton.id = "login_errorconfirm13_alertbtn"
+      //       },
+      //       icon: 'error',
+      //     })
+      //   }else if (timeDifferenceInDays >=7 && JSON.parse(leave_dataJSON).type === 1){
+      //     ErrorSwal.fire({
+      //       title: 'Error!',
+      //       text: "Selected 'Date From' must be within 7 working days from the date of selection.",
+      //       didOpen: () => {
+      //         const confirmButton = Swal.getConfirmButton();
+    
+      //         if(confirmButton)
+      //           confirmButton.id = "login_errorconfirm14_alertbtn"
+      //       },
+      //       icon: 'error',
+      //   })
+      //   }else {
+      //     const loadingSwal = Swal.fire({
+      //       title: '',
+      //       allowOutsideClick: false,
+      //       didOpen: () => {
+      //         Swal.showLoading();
+      //       },
+      //     });
+      //   }
+      //   formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
+      
+      //   if (values.file) {
+      //     formData.append("file", values.file);
+      //   } 
+      
+      //   return http
+      //     .post(`${Api.requestLeaveCreate}`, formData, {
+            
+      //       headers: {
+      //         "Content-Type": "multipart/form-data",
+      //         Authorization: `Bearer ${Utility.getUserToken() || ""}`,
+      //         credentials: true,
+      //       },
+      //     })
+      //     .then((response) => {
+      //       console.log("Response Data:", response.data);
+      //       Swal.fire({
+      //         title: 'Success!',
+      //         text: (response.data) || "",
+      //         didOpen: () => {
+      //           const confirmButton = Swal.getConfirmButton();
+      
+      //           if(confirmButton)
+      //             confirmButton.id = "login_successconfirm4_alertbtn"
+      //         },
+      //         icon: 'success', 
+      //       });
+      
+      //       return response;
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error:", error);
+      //       ErrorSwal.fire({
+      //         title: 'Error!',
+      //         text: (error.message) || "",
+      //         didOpen: () => {
+      //           const confirmButton = Swal.getConfirmButton();
+      
+      //           if(confirmButton)
+      //             confirmButton.id = "login_errorconfirm8_alertbtn"
+      //         },
+      //         icon: 'error',
+      //     })
+      //     });
+      // };
+
+      const handleSubmit = (values) => {
+        const dateFromChecker = new Date(values.dateFrom);
+        const currentDateChecker = new Date();
+        const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+        const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
+        const breakdownLength = leaveBreakdown.length;
+        console.log("breakdownLength:", breakdownLength);
+      
+        if (breakdownLength >= 8 && values.type === 1) {
+          ErrorSwal.fire({
+            title: 'Error!',
+            text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${breakdownLength} days`,
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+              if (confirmButton)
+                confirmButton.id = "login_errorconfirm13_alertbtn";
+            },
+            icon: 'error',
+          });
+        } else if (timeDifferenceInDays >= 7 && values.type === 1) {
+          ErrorSwal.fire({
+            title: 'Error!',
+            text: "Selected 'Date From' must be within 7 working days from the date of selection.",
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+              if (confirmButton)
+                confirmButton.id = "login_errorconfirm14_alertbtn";
+            },
+            icon: 'error',
+          });
+        } else {
+          const loadingSwal = Swal.fire({
+            title: '',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          const formData = new FormData();
+          const leave_dataJSON = JSON.stringify({
+            "dateFrom": values.dateFrom,
+            "dateTo": values.dateTo,
+            "type": values.type,
+            "status": values.status,
+            "reason": values.reason,
+            "breakdown": leaveBreakdown.map((item) => ({
+              "date": item.date,
+              "credit": item.credit,
+              "dayType": item.dayType,
+            })),
+          });
+      
+          formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
+        
+          if (values.file) {
+            formData.append("file", values.file);
+          }
+        
+          return http
+            .post(`${Api.requestLeaveCreate}`, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${Utility.getUserToken() || ""}`,
+                credentials: true,
+              },
+            })
+            .then((response) => {
+              console.log("Response Data:", response.data);
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: response.data.data || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+                  if (confirmButton)
+                    confirmButton.id = "login_successconfirm4_alertbtn";
+                },
+                icon: 'success',
+              });
+              return response;
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: error.data.data || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+                  if (confirmButton)
+                    confirmButton.id = "login_errorconfirm8_alertbtn";
+                },
+                icon: 'error',
+              });
+            });
+        };
+        }
+      
+        
+      
+      
+      
     return (
         <div className="time-card-width">
             <div className="card-header">
@@ -218,10 +438,10 @@ const AvailableLeaveCredits = () => {
             </div>
             <div className="card-leave">
                 <div className="row credit-record">
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 py-4 pl-8">
+                    <div className="col-6 pl-8 pt-10 mt-4">
                         <img src={vacation_leave} width={200} alt="" />
                     </div>
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 py-4 pl-8 ">
+                    <div className="col-6 pt-12 pl-8 ">
                     {getMyLeaves.map((leave: any) => (
                         <div key={leave.id}>
                             <p className="card-leave-credit" id="leaves_name_leavecreditsp">
@@ -235,10 +455,10 @@ const AvailableLeaveCredits = () => {
                     }
                   
                     </div>
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 pt-12 pl-8">
+                    <div className="col-6 pl-8 pt-10 mt-4">
                         <img src={sick_leave} width={200} alt="" />
                     </div>
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 pt-12 pl-8">
+                    <div className="col-6 pt-12 pl-8 mt-3">
                     {getMyLeaves.map((leave: any) => (
                         <div key={leave.id}>
                             <p className="card-leave-credit" id="leaves_name_leavecreditsp">
@@ -254,7 +474,7 @@ const AvailableLeaveCredits = () => {
                     
                 </div>
                 <div className="d-flex justify-content-center ">
-                    <div className="row mt-3 request-leave-button">
+                    <div className="row request-leave-button">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-4">
                             <Button id=""
                             style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -287,77 +507,27 @@ const AvailableLeaveCredits = () => {
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
                 <Formik
-                    innerRef={formRef}
-                    initialValues={initialValues}
-                    enableReinitialize={true}
-                    validationSchema={
-                    Yup.object().shape({
-                        dateFrom: Yup.string().required("Date from is required !"),
-                        dateTo: Yup.string().required("Date to is required !"),
-                        status: Yup.string().required("Status is required !"),
-                        type: Yup.string().required("Status is required !"),
-                        reason: Yup.string().required('Reason is required').max(250, 'Reason must be at most 200 characters'),
-                    })
-                    }
-                    onSubmit={(values, actions) => {
-                        const dateFromChecker = new Date(values.dateFrom);
-                        const currentDateChecker = new Date();
-          
-                        const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
-                        // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
-                        const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
-          
-          
-                        const valuesObj: any = { ...values }
-                        valuesObj.breakdown = leaveBreakdown
-                        if (valuesObj.breakdown.length >= 8 && values.type === 1) {
-                          Swal.fire(
-                            "Error!",
-                            `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
-                            "error"
-                          );
-                        } else if (timeDifferenceInDays >= 7 && values.type === 1) {
-                          Swal.fire(
-                            "Error!",
-                            "Selected 'Date From' must be within 7 working days from the date of selection.",
-                            "error"
-                          );
-                        } else {
-                          const loadingSwal = Swal.fire({
-                            title: '',
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                              Swal.showLoading();
-                            },
-                          });
-                        
-                          
-                            RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                              Swal.close();
-                              const { status, body = { data: {}, error: {} } }: any = res;
-                              if (status === 200 || status === 201) {
-                                if (body.error && body.error.message) {
-                                  Swal.fire('Error!', body.error.message, 'error');
-                                } else {
-                                  Swal.fire('Success!', body.data || "", 'success');
-                                  setLeaveBreakdown([]);
-                                  setShowModal(false);
-                                  formRef.current?.resetForm();
-                                }
-                              } else {
-                                Swal.fire('Error!', body.error && body.error.message, 'error');
-                              }
-                            });
-                        }
-
-                }}>
+                  innerRef={formRef}
+                  initialValues={initialValues}
+                  enableReinitialize={true}
+                  validationSchema={
+                  Yup.object().shape({
+                      dateFrom: Yup.string().required("Date from is required !"),
+                      dateTo: Yup.string().required("Date to is required !"),
+                      status: Yup.string().required("Status is required !"),
+                      type: Yup.string().required("Status is required !"),
+                      reason: Yup.string().required('Reason is required').max(250, 'Reason must be at most 200 characters'),
+                  })
+                  }
+                  onSubmit={handleSubmit}
+                >
                 {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                     return (
                         <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                          <div className="row w-100 px-5">
+                          <div className="px-5">
                             <div className="row pb-3">
-                            <div className="col-md-6">
-                                <div className="pb-5">
+                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div className="pb-2">
                                     <label>Leave Type</label>
                                     <select
                                     className="form-select"
@@ -382,14 +552,14 @@ const AvailableLeaveCredits = () => {
                                 
                                
                             </div>
-                            <div className="col-md-6">
-                                <div className="pb-7">
+                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div className="pb-2">
                                 <label>Remaining Leave Credits</label>
                                     {getMyLeaves.map((leave: any) => (
                                         <div key={leave.id}>
                                             <div className="row">
-                                                <div className="col-md-6">{leave.leaveName} :</div>
-                                                <div className="col-md-6" style={{textAlign: 'right'}}> {leave.creditsLeft}</div>
+                                                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">{leave.leaveName} :</div>
+                                                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" style={{textAlign: 'right'}}> {leave.creditsLeft}</div>
                                             </div>
                                         </div>
                                         ))
@@ -400,7 +570,7 @@ const AvailableLeaveCredits = () => {
                             </div>
                             
                             <div className="row">
-                                <div className="col-md-6">
+                                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div className="pb-5">
                                         <label>Date(s)</label>
                                         <input type="date"
@@ -438,7 +608,7 @@ const AvailableLeaveCredits = () => {
                                         <small className="form-text text-muted">{values.reason.length}/250 characters</small>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div className="mt-4">
                                         <input type="date"
                                             name="dateTo"
@@ -462,17 +632,10 @@ const AvailableLeaveCredits = () => {
                                         )}
                                     </div>
                                     <div className="mt-5 pt-5">
-                                        <input
-                                            type="file"
-                                            id="file"
-                                            name="file"
-                                            onChange={(event) => {
-                                                if (event.currentTarget.files && event.currentTarget.files.length > 0) {
-                                                setFieldValue("file", event.currentTarget.files[0]);
-                                                }
-                                            }}
-                                            className=""
-                                        />
+                                        <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" className="file-input-style" onChange={(e) => {
+                                          // Set the 'file' property in form values to the selected file
+                                          setFieldValue("file", e.currentTarget.files[0]);
+                                        }} />
                                         <br />
                                         <small className="form-text text-muted ">(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
                                     </div>
@@ -576,7 +739,7 @@ const AvailableLeaveCredits = () => {
                                     Cancel
                                 </button>
         
-                              {
+                              {/* {
                                 leaveBreakdown && leaveBreakdown.length == 0 && leaveBreakdown.length > 30  ?
         
                                   <button
@@ -593,7 +756,15 @@ const AvailableLeaveCredits = () => {
                                   >
                                     Save
                                   </button>
-                              }
+                              } */}
+                              <button
+                                id="leaves_save_leavebreakdownbtn"
+                                type="submit"
+                                className="btn btn-primary"
+                                disabled={leaveBreakdown.length === 0 || leaveBreakdown.length > 30}
+                              >
+                                Save
+                              </button>
                             </div>
                           </Modal.Footer>
                         </Form>

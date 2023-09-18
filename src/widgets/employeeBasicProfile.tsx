@@ -54,37 +54,45 @@ const EmployeeBasicProfile = () => {
                 <img src={photo} className="rounded-circle" width={250} height={250} ></img>
             </div>
             <div className="card-body basic-profile-widget">
-                <div style={{ paddingBottom: "10%"}}>
-                    <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName}</span>
-                    <br />
-                    <span className="" style={{fontWeight: 'bold', paddingBottom: '5%'}}>{userData.data.profile.jobTitle}</span>
-                </div>
-                <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
-                    <img src={squad_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.squad}
-                </span>   
-                {
-                    userData.data.profile.role == 'ADMIN' ? " " :
+                <div className="employee-space">
+                    <div style={{ paddingBottom: "10%"}}>
+                        <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName}</span>
+                        <br />
+                        <span className="" style={{fontWeight: 'bold', paddingBottom: '5%'}}>{userData.data.profile.jobTitle}</span>
+                    </div>
                     <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
-                        <img src={join_icon} alt="" style={{marginRight: '10px'}} /> Joined {formattedDate} 
-                        <p style={{marginLeft: "5px"}}>{yearEmployed == 0 ? "" : yearEmployed + " " + "years"}</p>
-                        <p style={{marginLeft: "5px"}}> {monthEmployed == 0 ? "" : monthEmployed + " " + "months" }</p>
-                        <p style={{marginLeft: "5px"}}>{daysEmployed} days</p>
-                    </span>
-                }
-                  
-                <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
-                    <img src={approver_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.approver}
-                </span>   
-                <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
-                    <img src={phone_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.mobileNo}
-                </span>   
-                <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px'}} className="text-primary font-bold">
-                    <img src={email_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.email}
-                </span> 
+                        <img src={squad_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.squad}
+                    </span>   
+                    {
+                        userData.data.profile.role == 'ADMIN' ? " " :
+                        <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px', flexWrap: 'wrap'}} className="text-primary font-bold">
+                            <img src={join_icon} alt="" style={{marginRight: '10px'}} /> 
+                            <p style={{marginRight: "5px", fontSize: '80%'}}>
+                                Joined {formattedDate}
+                            </p> 
+                            <p style={{fontSize: '80%'}}>(</p> 
+                            <p style={{marginLeft: "", fontSize: '80%'}}>{yearEmployed == 0 ? "" : yearEmployed + " " + "years"}</p>
+                            <p style={{marginLeft: "5px", fontSize: '80%'}}> {monthEmployed == 0 ? "" : monthEmployed + " " + "months" }</p>
+                            <p style={{marginLeft: "5px", fontSize: '80%'}}>{daysEmployed} days</p>
+                            <p style={{fontSize: '80%'}}>)</p>
+                        </span>
+                    }
+                    
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
+                        <img src={approver_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.approver}
+                    </span>   
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '10px'}} className="text-primary font-bold">
+                        <img src={phone_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.mobileNo}
+                    </span>   
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px'}} className="text-primary font-bold">
+                        <img src={email_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.email}
+                    </span> 
+                </div>
+                
                   
             </div>
             <div className="d-flex justify-content-center">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-4 pb-4 pt-1">
+                <div className="col-12 employee-button px-4">
                     <Button id=""
                         style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         // onClick={() => makeAttendance('time out')}

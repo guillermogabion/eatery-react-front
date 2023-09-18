@@ -210,30 +210,30 @@ const TimeCard = () => {
 
                         </div>
                     </div>
-                    <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 time-card-image-section">
                         <div className="time-card-image">
                             <img src={TimeCard_Asset001} width={500} className="" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="time-card-body row">
+            <div className="time-card-body row time-space">
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" style={{ textAlign: 'left' }}>
-                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div className="col-6" style={{ textAlign: 'left' }}>
+                        <div className="">
                             <h6 id="dashboard_shiftschedule_label" className="bold-text pt-2 pl-7 text-primary">Shift Schedule:</h6>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div className="">
                             <h6 id="dashboard_firstlogin_label" className="bold-text pt-4 pl-7 text-primary">First login:</h6>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div className="">
                             <h6 id="dashboard_lastlogout_label" className="bold-text pt-4 pl-7 text-primary">Last logout:</h6>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div className="">
                             <h6 id="dashboard_attendancestatus_label" className="bold-text pt-4 pl-7 text-primary">Attendance Status:</h6>
                         </div>
                     </div>
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 " style={{ textAlign: 'right' }}>
+                    <div className="col-6 " style={{ textAlign: 'right' }}>
                         <h6 id="dashboard_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
                         <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-4">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
                         <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-4">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
@@ -251,20 +251,19 @@ const TimeCard = () => {
                         </label>
                     </div>
                     
-                    <div className="d-flex justify-content-center">
-                      <div className="time-card-button mt-5 pt-8">
-                          <div className="row">
-                          <Button id="dashboard_timein_btn" className={hasTimeIn ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
-                              style={{ width: 120 }}
-                              onClick={() => makeAttendance('time in')}
-                          >Time in</Button>
-                          <Button id="dashboard_timeout_btn" className={hasTimeOut ? "mx-2 has-timeout-timeint-btn" : "mx-2"}
-                              style={{ width: 120 }}
-                              onClick={() => makeAttendance('time out')}>Time out</Button>
-                          </div>
-                      </div>
-                    </div>
+                    
             </div>
+              <div className="row d-flex justify-content-center mx-2">
+                <Button id="dashboard_timein_btn" className={hasTimeIn ? " has-timeout-timeint-btn col-6 mx-2 mr-2" : "mx-2 col-6"}
+                    style={{ width: "45%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    onClick={() => makeAttendance('time in')}
+                >Time in</Button>
+                <Button id="dashboard_timeout_btn" className={hasTimeOut ? " has-timeout-timeint-btn mx-2 col-6" : "col-6 mx-2"}
+                    style={{ width: "45%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    onClick={() => makeAttendance('time out')}>Time out</Button>
+              </div>
+
+           
             
         </div>
        

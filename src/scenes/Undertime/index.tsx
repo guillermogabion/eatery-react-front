@@ -556,7 +556,11 @@ export const Undertime = (props: any) => {
 
     return (
         <ContainerWrapper contents={<>
+<<<<<<< Updated upstream
             <div className="w-100 col-md-12 col-lg-10 px-3 py-5">
+=======
+            <div className="w-100 col-md-12 col-lg-10 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
+>>>>>>> Stashed changes
                 <div>
                     <div className="w-100 pt-2">
                         <div className="row d-flex">

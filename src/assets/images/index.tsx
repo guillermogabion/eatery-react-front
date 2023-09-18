@@ -35,6 +35,11 @@ import photo from "../images/dist/employee/ProfilePhotoPlaceholder.png"
 import squad_icon from "../images/dist/employee/Squad-Icon.svg"
 import update_employee_icon from "../images/dist/employee/UpdateEmployeeDetails-Icon.svg"
 import hmo_icon from "../images/dist/hmo/HMO-Icon.svg"
+import activeWeek from "../images/dist/calendar/week-active.svg"
+import inactiveWeek from "../images/dist/calendar/week-inactive.svg"
+import inactiveCalendar from "../images/dist/calendar/month-inactive.svg"
+import activeCalendar from "../images/dist/calendar/month-active.svg"
+import Search from "../images/dist/SearchBtn.png"
 
 export {
   eye,
@@ -72,5 +77,10 @@ export {
   photo,
   squad_icon,
   update_employee_icon,
-  hmo_icon
+  hmo_icon,
+  inactiveWeek,
+  activeWeek,
+  activeCalendar,
+  inactiveCalendar,
+  Search
 }

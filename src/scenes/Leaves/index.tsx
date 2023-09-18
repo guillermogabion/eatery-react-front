@@ -19,6 +19,8 @@ import EmployeeDropdown from "../../components/EmployeeDropdown"
 import TimeDate from "../../components/TimeDate"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import { Utility } from "../../utils"
+import http from "../../helpers/axios"
+
 const ErrorSwal = withReactContent(Swal)
 
 export const Leaves = (props: any) => {
@@ -29,7 +31,8 @@ export const Leaves = (props: any) => {
     "type": 1,
     "status": "PENDING",
     "reason": "",
-    "breakdown": []
+    "breakdown": [],
+    "file" : null
   }
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
@@ -880,7 +883,11 @@ export const Leaves = (props: any) => {
   return (
 
     <ContainerWrapper contents={<>
+<<<<<<< Updated upstream
       <div className="w-100 px-3 py-5">
+=======
+      <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
+>>>>>>> Stashed changes
         <div>
           <div className="w-100 pt-2">
             {data.profile.role !== 'EXECUTIVE' ? (
@@ -1064,38 +1071,51 @@ export const Leaves = (props: any) => {
 
               const dateFromChecker = new Date(values.dateFrom);
               const currentDateChecker = new Date();
-
               const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
-              // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
               const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
-
-
-              const valuesObj: any = { ...values }
-              valuesObj.breakdown = leaveBreakdown
-              if (valuesObj.breakdown.length >= 8 && values.type === 1) {
+              const breakdownLength = leaveBreakdown.length;
+              console.log("breakdownLength:", breakdownLength);
+            
+              if (breakdownLength >= 8 && values.type === 1) {
                 ErrorSwal.fire({
                   title: 'Error!',
-                  text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
+                  text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${breakdownLength} days`,
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
+<<<<<<< Updated upstream
 
                     if (confirmButton)
                       confirmButton.id = "login_errorconfirm13_alertbtn"
                   },
                   icon: 'error',
                 })
+=======
+                    if (confirmButton)
+                      confirmButton.id = "login_errorconfirm13_alertbtn";
+                  },
+                  icon: 'error',
+                });
+>>>>>>> Stashed changes
               } else if (timeDifferenceInDays >= 7 && values.type === 1) {
                 ErrorSwal.fire({
                   title: 'Error!',
                   text: "Selected 'Date From' must be within 7 working days from the date of selection.",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
+<<<<<<< Updated upstream
 
                     if (confirmButton)
                       confirmButton.id = "login_errorconfirm14_alertbtn"
                   },
                   icon: 'error',
                 })
+=======
+                    if (confirmButton)
+                      confirmButton.id = "login_errorconfirm14_alertbtn";
+                  },
+                  icon: 'error',
+                });
+>>>>>>> Stashed changes
               } else {
                 const loadingSwal = Swal.fire({
                   title: '',
@@ -1104,6 +1124,7 @@ export const Leaves = (props: any) => {
                     Swal.showLoading();
                   },
                 });
+<<<<<<< Updated upstream
 
                 if (leaveId) {
                   delete valuesObj.userId;
@@ -1205,6 +1226,64 @@ export const Leaves = (props: any) => {
                 }
               }
 
+=======
+                const formData = new FormData();
+                const leave_dataJSON = JSON.stringify({
+                  "dateFrom": values.dateFrom,
+                  "dateTo": values.dateTo,
+                  "type": values.type,
+                  "status": values.status,
+                  "reason": values.reason,
+                  "breakdown": leaveBreakdown.map((item) => ({
+                    "date": item.date,
+                    "credit": item.credit,
+                    "dayType": item.dayType,
+                  })),
+                });
+            
+                formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
+              
+                if (values.file) {
+                  formData.append("file", values.file);
+                }
+              
+                return http
+                  .post(`${Api.requestLeaveCreate}`, formData, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                      Authorization: `Bearer ${Utility.getUserToken() || ""}`,
+                      credentials: true,
+                    },
+                  })
+                  .then((response) => {
+                    console.log("Response Data:", response.data);
+                    ErrorSwal.fire({
+                      title: 'Success!',
+                      text: response.data.data || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                          confirmButton.id = "login_successconfirm4_alertbtn";
+                      },
+                      icon: 'success',
+                    });
+                    return response;
+                  })
+                  .catch((error) => {
+                    console.error("Error:", error);
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: error.data.data || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                          confirmButton.id = "login_errorconfirm8_alertbtn";
+                      },
+                      icon: 'error',
+                    });
+                  });
+              };
+>>>>>>> Stashed changes
 
             }}>
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {

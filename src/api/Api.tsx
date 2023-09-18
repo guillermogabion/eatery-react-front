@@ -314,7 +314,32 @@ const Api: any = {
 
 
   getFile : process.env.REACT_APP_API_URL + "file/getUrl",
+
+  // widgets
+
+  // squad tracker widget 
+
+  getAllSquadMember : process.env.REACT_APP_API_URL + "widget/squad-tracker",
+
+  // employee calendar widget 
+  getDataWeekWidget : process.env.REACT_APP_API_URL + "team/calendar",
+
+  // announcement widget 
+  getAllAnnouncements : process.env.REACT_APP_API_URL + "announcement/view/all",
+  getEvents : process.env.REACT_APP_API_URL + "announcement/view/upcoming-events",
+  getIT : process.env.REACT_APP_API_URL + "announcement/view/it-security",
+  getTraining : process.env.REACT_APP_API_URL + "announcement/view/training-and-developments",
+  getPolicy : process.env.REACT_APP_API_URL + "announcement/view/policy-updates",
+  getAnnouncementDropdown : process.env.REACT_APP_API_URL + "announcement/dropdown",
+  createAnnouncement : process.env.REACT_APP_API_URL + "announcement/create",
+  viewAnnouncement : process.env.REACT_APP_API_URL + "announcement/view/today",
   
+  // shortcut 
+
+  getShortcut : process.env.REACT_APP_API_URL + "shortcut/get/list",
+  addShortcut : process.env.REACT_APP_API_URL + "shortcut/save"
+
+
 
 }
 
