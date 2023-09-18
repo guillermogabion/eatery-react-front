@@ -197,17 +197,25 @@ export const ReimbursementList = (props: any) => {
                 const cancelButton = Swal.getCancelButton();
 
                 if (confirmButton)
-                    confirmButton.id = "reimbursement_approvereimbconfirm_alertbtn"
+                    confirmButton.id = "reimbursementl_approvereimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_approvereimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_approvereimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.approveReimbursement, "", { "parentId": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -221,6 +229,7 @@ export const ReimbursementList = (props: any) => {
                             })
                             setIsApproving(false)
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || "",
@@ -237,6 +246,7 @@ export const ReimbursementList = (props: any) => {
                             setIsApproving(false)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something error',
@@ -278,7 +288,13 @@ export const ReimbursementList = (props: any) => {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 let payload: any = {
                     "ids": isBulkPayload && isBulkPayload.ids
                 }
@@ -287,6 +303,7 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -299,6 +316,7 @@ export const ReimbursementList = (props: any) => {
                                 icon: 'error',
                             })
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -313,6 +331,7 @@ export const ReimbursementList = (props: any) => {
                             getReimbursements(0)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error.',
@@ -347,11 +366,17 @@ export const ReimbursementList = (props: any) => {
                     confirmButton.id = "reimbursement_bulkdeclinereimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_bulkdeclinereimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_bulkdeclinereimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
-
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 let payload: any = {
                     "ids": isBulkPayload && isBulkPayload.ids
                 }
@@ -360,6 +385,7 @@ export const ReimbursementList = (props: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -372,6 +398,7 @@ export const ReimbursementList = (props: any) => {
                                 icon: 'error',
                             })
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -386,6 +413,7 @@ export const ReimbursementList = (props: any) => {
                             getReimbursements(0)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error!',
@@ -420,15 +448,23 @@ export const ReimbursementList = (props: any) => {
                     confirmButton.id = "reimbursement_declinereimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_declinereimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_declinereimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.declineReimbursement, "", { "parentId": id }, {}, async (res: any) => {
-                    Swal.close()
+
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -442,6 +478,7 @@ export const ReimbursementList = (props: any) => {
                             })
                             setIsDeclining(false)
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -458,6 +495,7 @@ export const ReimbursementList = (props: any) => {
                             setIsDeclining(false)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error.',
@@ -495,15 +533,23 @@ export const ReimbursementList = (props: any) => {
                     confirmButton.id = "reimbursement_cancelreimbconfirm_alertbtn"
 
                 if (cancelButton)
-                    cancelButton.id = "accessrights_cancelreimbcancel_alertbtn"
+                    cancelButton.id = "reimbursement_cancelreimbcancel_alertbtn"
             },
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.cancelReimbursement, "", { "parentId": id }, {}, async (res: any) => {
-                    Swal.close()
+
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
@@ -517,6 +563,7 @@ export const ReimbursementList = (props: any) => {
                             })
                             setIsCancelling(false)
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || (body.data.message),
@@ -533,6 +580,7 @@ export const ReimbursementList = (props: any) => {
                             setIsCancelling(false)
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: 'Something Error.',
@@ -565,6 +613,13 @@ export const ReimbursementList = (props: any) => {
                     "typeId": valuesObj.typeId,
                     "parentId": valuesObj.parentId,
                 }
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.putRequest(
                     Api.updateReimbursement,
                     "",
@@ -574,6 +629,7 @@ export const ReimbursementList = (props: any) => {
                         const { status, body = { data: {}, error: {} } } = res;
                         if (status === 200 || status === 201) {
                             if (body.error && body.error.message) {
+                                Swal.close()
                                 ErrorSwal.fire({
                                     title: 'Error!',
                                     text: (body.error && body.error.message) || "",
@@ -586,6 +642,7 @@ export const ReimbursementList = (props: any) => {
                                     icon: 'error',
                                 })
                             } else {
+                                Swal.close()
                                 ErrorSwal.fire({
                                     title: 'Success!',
                                     text: (body.data) || "",
@@ -602,6 +659,7 @@ export const ReimbursementList = (props: any) => {
                                 setViewReimbursementModal(false)
                             }
                         } else {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: 'Something Error.',
@@ -664,7 +722,7 @@ export const ReimbursementList = (props: any) => {
                         Search By:
                     </div>
                     <div className="row m-0 p-0 d-flex col-md-12">
-                        <div className="col-md-3 ">
+                        <div className="col-md-3 col-lg-3">
                             <label>Employee</label>
                             <EmployeeDropdown
                                 id="reimbursement_employee_maindropdown"
@@ -674,10 +732,10 @@ export const ReimbursementList = (props: any) => {
                                 value={filterData && filterData['userId']}
                             />
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3 col-lg-2">
                             <label className="">Date From</label>
                             <input
-                                id="dateFrom"
+                                id="reimbursement_datefrom_inputfield"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -689,11 +747,11 @@ export const ReimbursementList = (props: any) => {
                             />
                         </div>
 
-                        <div className="col-md-2">
+                        <div className="col-md-3 col-lg-2">
                             <label className="">Date To</label>
                             <div >
                                 <input
-                                    id="dateTo"
+                                    id="reimbursement_dateto_inputfield"
                                     name="dateTo"
                                     type="date"
                                     autoComplete="off"
@@ -705,13 +763,13 @@ export const ReimbursementList = (props: any) => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3 col-lg-2">
                             <label className="">Status</label>
                             <div >
                                 <select
                                     className={`form-select `}
                                     name="status"
-                                    id="status"
+                                    id="reimbursement_status_inputfield"
                                     style={{ height: 42 }}
                                     value={filterData["status"]}
                                     onChange={(e) => makeFilterData(e)}>
@@ -736,25 +794,28 @@ export const ReimbursementList = (props: any) => {
                             </div>
                             <div className="flex">
                                 <button
+                                    id="reimbursement_bulkapprove_inputbtn"
                                     onClick={() => {
                                         bulkApproveReimbursement()
                                     }}
                                     className="px-3 py-2 mr-2 rounded-md text-white bg-[#3BB273] flex items-center" style={{ borderColor: '#189FB5' }}>
-                                    <BsFillCheckCircleFill size={15} color="#fff" className="mr-1" /> Approve All Selected({isBulkPayload && isBulkPayload.count})
+                                    <BsFillCheckCircleFill id="reimbursement_approveall_inputcbox" size={15} color="#fff" className="mr-1" /> Approve All Selected({isBulkPayload && isBulkPayload.count})
                                 </button>
                                 <button
+                                    id="reimbursement_bulkdecline_inputbtn"
                                     onClick={() => {
                                         bulkDeclineReimbursement()
                                     }}
                                     className="px-3 py-2 rounded-md text-white bg-[#E15554] flex items-center" style={{ borderColor: '#189FB5' }}>
-                                    <FaTimesCircle size={15} color="#fff" className="mr-1" /> Decline All Selected({isBulkPayload && isBulkPayload.count})
+                                    <FaTimesCircle id="reimbursement_declineall_inputcbox" size={15} color="#fff" className="mr-1" /> Decline All Selected({isBulkPayload && isBulkPayload.count})
                                 </button>
                                 <button
+                                    id="reimbursement_unselectall_inputbtn"
                                     onClick={() => {
                                         unSelectAll()
                                     }}
                                     className="px-3 py-2 rounded-md">
-                                    <FaTimes size={30} color="#323232" />
+                                    <FaTimes id="reimbursement_unselectall_inputcbox" size={30} color="#323232" />
                                 </button>
                             </div>
                         </div>
@@ -799,7 +860,7 @@ export const ReimbursementList = (props: any) => {
                                             <tr>
                                                 <td>
                                                     <Form.Check
-                                                        id="payrollgenerate_ischeck_employeelistdata"
+                                                        id={"payrollgenerate_ischeck_employeelistdata_" + item.id}
                                                         type="checkbox"
                                                         label=""
                                                         checked={item.isCheck}
@@ -808,14 +869,15 @@ export const ReimbursementList = (props: any) => {
                                                         }}
                                                     />
                                                 </td>
-                                                <td> {`${item.firstName} ${item.lastName}`} </td>
-                                                <td> {item.typeName} </td>
+                                                <td id={"reimbursement_name_tdtable_" + item.id}> {`${item.firstName} ${item.lastName}`} </td>
+                                                <td id={"reimbursement_typename_tdtable_" + item.id}> {item.typeName} </td>
                                                 {/* <td> {item.approvedBudget} </td> */}
-                                                <td> {Utility.formatToCurrency(item.total)} </td>
-                                                <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                <td> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
+                                                <td id={"reimbursement_total_tdtable_" + item.id}> {Utility.formatToCurrency(item.total)} </td>
+                                                <td id={"reimbursement_filedate_tdtable_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                <td id={"reimbursement_status_tdtable_" + item.id}> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
+                                                        id={"reimbursement_setreimburse_btn_" + item.id}
                                                         onClick={() => {
                                                             if (item.breakdown.length > 0) {
                                                                 let tempValues: any = []
@@ -850,22 +912,24 @@ export const ReimbursementList = (props: any) => {
                                                             setReimbursementView(item)
                                                             setViewReimbursementModal(true)
                                                         }}>
-                                                        <img id="" src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                        <img id={"reimbursement_setreimburse_img_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
                                                     </label>
                                                     {
                                                         item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" && (
                                                             <>
                                                                 <label
+                                                                    id={"reimbursement_approvereimburse_labelbtn_" + item.id}
                                                                     onClick={() => {
                                                                         approveReimbursement(item.id)
                                                                     }}>
-                                                                    <img id="" src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
+                                                                    <img id={"reimbursement_approvereimburse_img_" + item.id} src={action_approve} width={20} className="hover-icon-pointer mx-1" title="Approve" />
                                                                 </label>
                                                                 <label
+                                                                    id={"reimbursement_declinereimburse_labelbtn_" + item.id}
                                                                     onClick={() => {
                                                                         declineReimbursement(item.id)
                                                                     }}>
-                                                                    <img id="" src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
+                                                                    <img id={"reimbursement_declinereimburse_img_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
                                                                 </label>
                                                             </>
                                                         )
@@ -874,10 +938,11 @@ export const ReimbursementList = (props: any) => {
                                                         item.status != "DECLINED" && item.status != "CANCELLED" && (
                                                             <>
                                                                 <label
+                                                                    id={"reimbursement_cancelreimburse_labelbtn_" + item.id}
                                                                     onClick={() => {
                                                                         cancelReimbursement(item.id)
                                                                     }}>
-                                                                    <img id="undertime_eye_myutimg" src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
+                                                                    <img id={"reimbursement_cancelreimburse_img_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                                 </label>
                                                             </>
                                                         )
@@ -939,11 +1004,11 @@ export const ReimbursementList = (props: any) => {
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-3 m-0">
                     <div className="col-md-3 bg-[#F6F6F6] py-2 px-2">
-                        <label className="text-lg font-bold">Reimbursement Progress</label>
+                        <label className="text-lg font-bold" id={"reimbursement_reimbursementprogress_modallabel"}>Reimbursement Progress</label>
                         <div className="mt-3 flex">
                             <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
                             <div className="ml-3 ">
-                                <label className="font-bold">Submitted for Approval
+                                <label className="font-bold" id={"reimbursement_submittedforapproval_modallabel"}>Submitted for Approval
                                 </label>
                             </div>
                         </div>
@@ -953,7 +1018,7 @@ export const ReimbursementList = (props: any) => {
                                     <div className="mt-3 flex">
                                         <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
                                         <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.reviewerFirstName} ${reimbursementView.reviewerLastName}`} <br />
+                                            <label className="font-bold" id={"reimbursement_name_modallabel"}>{`${reimbursementView.reviewerFirstName} ${reimbursementView.reviewerLastName}`} <br />
                                             </label>
                                         </div>
                                     </div>
@@ -967,7 +1032,7 @@ export const ReimbursementList = (props: any) => {
                                     <div className="mt-3 flex">
                                         <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
                                         <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.endorserFirstName} ${reimbursementView.endorserLastName}`} <br />
+                                            <label className="font-bold" id={"reimbursement_name2_modallabel"}>{`${reimbursementView.endorserFirstName} ${reimbursementView.endorserLastName}`} <br />
                                             </label>
                                         </div>
                                     </div>
@@ -982,7 +1047,7 @@ export const ReimbursementList = (props: any) => {
                                     <div className="mt-3 flex">
                                         <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
                                         <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.approverFirstName} ${reimbursementView.approverFirstName}`} <br />
+                                            <label className="font-bold" id={"reimbursement_name3_modallabel"}>{`${reimbursementView.approverFirstName} ${reimbursementView.approverFirstName}`} <br />
                                             </label>
                                         </div>
                                     </div>
@@ -998,7 +1063,7 @@ export const ReimbursementList = (props: any) => {
                                         <FaTimesCircle color={reimbursementView.status == 'DECLINED' ? "#FF3838" : "#B8B8B8"} size={30} />
                                         {/* <img id="" src={action_decline} width={30} className="hover-icon-pointer" title="Decline" /> */}
                                         <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.declinerFirstName} ${reimbursementView.declinerLastName}`} <br />
+                                            <label className="font-bold" id={"reimbursement_name4_modallabel"}>{`${reimbursementView.declinerFirstName} ${reimbursementView.declinerLastName}`} <br />
                                             </label>
                                         </div>
                                     </div>
@@ -1013,7 +1078,7 @@ export const ReimbursementList = (props: any) => {
                                 <label>Employee Name:</label>
                                 <input type="text"
                                     name="companyName"
-                                    id="companyName"
+                                    id={"reimbursement_companyname_modalinput"}
                                     className="form-control"
                                     disabled={true}
                                     value={reimbursementParentValues && reimbursementParentValues.employeeName}
@@ -1026,7 +1091,7 @@ export const ReimbursementList = (props: any) => {
                             </div>
                             <div className="form-group col-md-4 mb-3" >
                                 <label>Status:</label><br />
-                                <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
+                                <label id={"reimbursement_status_modalinput"} className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
 
                             </div>
                             <div className="form-group col-md-6 mb-3" >
@@ -1034,7 +1099,7 @@ export const ReimbursementList = (props: any) => {
                                 <select
                                     className={`form-select`}
                                     name="typeId"
-                                    id="typeId"
+                                    id={"reimbursement_typeid_modalinput"}
                                     disabled={true}
                                     value={reimbursementParentValues && reimbursementParentValues.typeId}
                                     onChange={(e) => {
@@ -1058,7 +1123,7 @@ export const ReimbursementList = (props: any) => {
                                 <label>Total Amount:</label>
                                 <input type="number"
                                     name="total"
-                                    id="total"
+                                    id={"reimbursement_total_modalinput"}
                                     className="form-control"
                                     disabled={!isEditReimbursement}
                                     value={reimbursementParentValues && reimbursementParentValues.total}
@@ -1071,7 +1136,7 @@ export const ReimbursementList = (props: any) => {
                                 <label>Purpose:</label>
                                 <textarea
                                     name="purpose"
-                                    id="purpose"
+                                    id={"reimbursement_purpose_modalinput"}
                                     className="form-control p-2"
                                     disabled={true}
                                     value={reimbursementParentValues && reimbursementParentValues.purpose}
@@ -1100,13 +1165,13 @@ export const ReimbursementList = (props: any) => {
                                             reimbursementValues.map((data: any, index: any) => {
                                                 return (
                                                     <tr key={`reimBreakdown-${index}`}>
-                                                        <td>{data.receipt ? "Yes" : "No"}</td>
-                                                        <td>{data.invoice}</td>
-                                                        <td>{data.companyName}</td>
-                                                        <td>{data.tin}</td>
-                                                        <td>{data.transactionDate}</td>
-                                                        <td>{Utility.formatToCurrency(data.amount)}</td>
-                                                        <td>{data.fileName}</td>
+                                                        <td id={"reimbursement_receipt_modaltable_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
+                                                        <td id={"reimbursement_invoice_modaltable_" + data.invoice}>{data.invoice}</td>
+                                                        <td id={"reimbursement_companyname_modaltable_" + data.invoice}>{data.companyName}</td>
+                                                        <td id={"reimbursement_tin_modaltable_" + data.invoice}>{data.tin}</td>
+                                                        <td id={"reimbursement_transactionDate_modaltable_" + data.invoice}>{data.transactionDate}</td>
+                                                        <td id={"reimbursement_amount_modaltable_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
+                                                        <td id={"reimbursement_filename_modaltable_" + data.invoice}>{data.fileName}</td>
                                                     </tr>
                                                 )
 
@@ -1123,6 +1188,7 @@ export const ReimbursementList = (props: any) => {
                                 setViewReimbursementModal(false)
                                 setIsEditReimbursement(false)
                             }}
+                            id={"reimbursement_close_modalbtn"}
                             className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
                             Close
                         </Button>
@@ -1136,6 +1202,7 @@ export const ReimbursementList = (props: any) => {
                                             setIsEditReimbursement(true)
                                         }
                                     }}
+                                    id={"reimbursement_savechanges_modalbtn"}
                                     className="w-[150px] mr-2 rounded-md text-white bg-[#125667]" style={{ borderColor: '#189FB5' }}>
                                     {isEditReimbursement ? "Save Changes" : "Modify"}
                                 </button>
@@ -1153,6 +1220,7 @@ export const ReimbursementList = (props: any) => {
                                             approveReimbursement(reimbursementView.id)
                                         }}
                                         disabled={isApproving}
+                                        id={"reimbursement_approvendorse_modalbtn"}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#2EBF91]" style={{ borderColor: '#189FB5' }}>
                                         {isApproving ?
                                             <div className="d-flex justify-content-center">
@@ -1168,6 +1236,7 @@ export const ReimbursementList = (props: any) => {
                                             declineReimbursement(reimbursementView.id)
                                         }}
                                         disabled={isDeclining}
+                                        id={"reimbursement_decline_modalbtn"}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#FF3838]" style={{ borderColor: '#189FB5' }}>
                                         {isDeclining ?
                                             <div className="d-flex justify-content-center">
@@ -1191,6 +1260,7 @@ export const ReimbursementList = (props: any) => {
                                             cancelReimbursement(reimbursementView.id)
                                         }}
                                         disabled={isCancelling}
+                                        id={"reimbursement_retractcancel_modalbtn"}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
                                         {isCancelling ?
                                             <div className="d-flex justify-content-center">

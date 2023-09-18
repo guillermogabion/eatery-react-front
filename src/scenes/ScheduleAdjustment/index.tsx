@@ -119,7 +119,7 @@ export const ScheduleAdjustment = (props: any) => {
       })
     }
 
-    if (isActionable) {
+    if (status == 'actionable') {
       queryString += '&actionableOnly=true'
     }
 
@@ -252,10 +252,10 @@ export const ScheduleAdjustment = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "scheduleadjustment_approveconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "scheduleadjustment_approvecancel_alertbtn"
       },
       icon: 'warning',
@@ -265,47 +265,58 @@ export const ScheduleAdjustment = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
         RequestAPI.postRequest(Api.approveScheduleAdjustment, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Error!',
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "scheduleadjustment_errorconfirm_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "scheduleadjustment_successconfirm_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllAdjustments(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "scheduleadjustment_errorconfirm2_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -320,10 +331,10 @@ export const ScheduleAdjustment = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "scheduleadjustment_declineconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "scheduleadjustment_declinecancel_alertbtn"
       },
       icon: 'warning',
@@ -333,47 +344,57 @@ export const ScheduleAdjustment = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.declineScheduleAdjustment, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Error!',
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "scheduleadjustment_errorconfirm3_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "scheduleadjustment_successconfirm2_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllAdjustments(0, key)
             }
-          }else{
+          } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "scheduleadjustment_errorconfirm4_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -389,10 +410,10 @@ export const ScheduleAdjustment = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "scheduleadjustment_canceladjconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "scheduleadjustment_canceladjcancel_alertbtn"
       },
       icon: 'warning',
@@ -419,12 +440,12 @@ export const ScheduleAdjustment = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "scheduleadjustment_errorconfirm5_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
               getAllAdjustments(0, key)
             } else {
               Swal.close()
@@ -433,12 +454,12 @@ export const ScheduleAdjustment = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "scheduleadjustment_successconfirm3_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
             }
           } else {
             Swal.close()
@@ -447,12 +468,12 @@ export const ScheduleAdjustment = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "scheduleadjustment_errorconfirm6_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -513,7 +534,7 @@ export const ScheduleAdjustment = (props: any) => {
                               }}
                             >
                               <img id={"scheduleadjustment_eye_alladjimg_" + item.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
- 
+
                             </label>
 
                             {
@@ -641,7 +662,7 @@ export const ScheduleAdjustment = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div className="row">
           <div className="col-md-12">
             <h3><b>Adjustment of Schedule</b></h3>
@@ -658,10 +679,10 @@ export const ScheduleAdjustment = (props: any) => {
         </div>
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-3 w-100">
+            <div className="row d-flex">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="scheduleadjustment_employee_maindropdown"
@@ -674,59 +695,52 @@ export const ScheduleAdjustment = (props: any) => {
                   :
                   null
               }
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date From</label>
-                <div>
-                  <input
-                    id="scheduleadjustment_datefrom_maininput"
-                    name="dateFrom"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="scheduleadjustment_datefrom_maininput"
+                  name="dateFrom"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date To</label>
-                <div className="input-container">
-                  <input
-                    id="scheduleadjustment_dateto_maininput"
-                    name="dateTo"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="scheduleadjustment_dateto_maininput"
+                  name="dateTo"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <label>Date Filed</label>
-                <div className="input-container">
-                  <input
-                    id="scheduleadjustment_datefield_maininput"
-                    name="dateFiled"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="scheduleadjustment_datefield_maininput"
+                  name="dateFiled"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                 <Button
                   id="scheduleadjustment_search_mainbtn"
-                  style={{ width: 120 }}
+                  style={{ width: '100%' }}
                   onClick={() => getAllAdjustments(0, key, actionable)}
-                  className="btn btn-primary mx-2 mt-4">
+                  className="btn btn-primary mx-2 mt-4 mb-2">
                   Search
                 </Button>
               </div>
             </div>
-
 
             <Tabs
               id="controlled-tab-example"
@@ -859,24 +873,24 @@ export const ScheduleAdjustment = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "scheduleadjustment_errorconfirm7_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     } else {
                       ErrorSwal.fire({
                         title: 'Success!',
                         text: (body.data) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "scheduleadjustment_successconfirm4_alertbtn"
                         },
                         icon: 'success',
-                    })
+                      })
                       setAdjustmentBreakdown([])
                       getAllAdjustments(0, key)
                       setModalShow(false)
@@ -888,12 +902,12 @@ export const ScheduleAdjustment = (props: any) => {
                       text: "Please enter a valid time format",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "scheduleadjustment_errorconfirm8_alertbtn"
                       },
                       icon: 'error',
-                  })
+                    })
                   }
                 })
               } else {
@@ -907,12 +921,12 @@ export const ScheduleAdjustment = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "scheduleadjustment_errorconfirm9_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     }
 
 
@@ -922,12 +936,12 @@ export const ScheduleAdjustment = (props: any) => {
                         text: (body.data) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "scheduleadjustment_successconfirm5_alertbtn"
                         },
                         icon: 'success',
-                    })
+                      })
                       setAdjustmentBreakdown([])
                       getAllAdjustments(0, key)
                       setModalShow(false)
@@ -939,12 +953,12 @@ export const ScheduleAdjustment = (props: any) => {
                       text: "Please enter a valid time format",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "scheduleadjustment_errorconfirm10_alertbtn"
                       },
                       icon: 'error',
-                  })
+                    })
                   }
                 })
               }

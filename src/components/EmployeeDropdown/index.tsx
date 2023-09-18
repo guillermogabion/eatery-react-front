@@ -24,12 +24,12 @@ const EmployeeDropdown = (props: any) => {
                                     tempArray.push({
                                         value: d.userAccountId,
                                         // label: d.firstname + " " + d.lastname + ` - ${d.employeeId ? d.employeeId: ""}`
-                                        label: d.lastname + "," + d.firstname + " " + d.middleName + ` - ${d.employeeId ? d.employeeId : ""}`
+                                        label: d.lastname + ", " + d.firstname + " " + d.middleName + ` - ${d.employeeId ? d.employeeId : ""}`
                                     })
                                 } else {
                                     tempArray.push({
                                         value: d.userAccountId,
-                                        label: d.lastname + "," + d.firstname + " " + d.middleName
+                                        label: d.lastname + ", " + d.firstname + " " + d.middleName
                                     })
                                 }
                             });
@@ -54,12 +54,12 @@ const EmployeeDropdown = (props: any) => {
                                 if (withEmployeeID) {
                                     tempArray.push({
                                         value: d.userAccountId,
-                                        label: d.lastname + "," + d.firstname + " " + d.middleName + ` - ${d.employeeId ? d.employeeId : ""}`
+                                        label: d.lastname + ", " + d.firstname + " " + d.middleName + ` - ${d.employeeId ? d.employeeId : ""}`
                                     })
                                 } else {
                                     tempArray.push({
                                         value: d.userAccountId,
-                                        label: d.lastname + "," + d.firstname + " " + d.middleName
+                                        label: d.lastname + ", " + d.firstname + " " + d.middleName
                                     })
                                 }
                             });

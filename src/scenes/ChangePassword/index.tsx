@@ -114,7 +114,7 @@ export const ChangePassword = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5 ">
+      <div className="w-100 px-3 py-5 ">
         <div className="p-0 m-0 flex justify-center">
           <div className="w-100 px-0 pt-2 ">
             <div className="px-5 py-5">

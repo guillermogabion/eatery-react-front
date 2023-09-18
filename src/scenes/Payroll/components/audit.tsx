@@ -74,7 +74,7 @@ export default function Audit(props: any) {
     }
 
     return (
-        <div className="w-100 px-5 py-5">
+        <div className="w-100 px-3 py-5">
             <div className="w-100 flex mb-[10px]">
                 <div className="flex items-center cursor-pointer" style={{ color: '#009FB5' }} onClick={()=>{
                     props.goBack()

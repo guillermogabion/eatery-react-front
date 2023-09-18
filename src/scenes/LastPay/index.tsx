@@ -217,10 +217,9 @@ export const LastPay = (props: any) => {
     return (
         <ContainerWrapper contents={<>
             <>
-                <div className="w-100 px-5 py-5">
-                    <div className="fieldtext d-flex col-md-3 w-100">
-                        <div className="" style={{ width: 200, marginRight: 10 }}>
-                            <div>
+                <div className="w-100 px-3 py-5">
+                        <div className="row d-flex mb-2">
+                            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
                                 <label>Employee</label>
                                 <EmployeeDropdown
                                     id="lastpay_employee_dropdown"
@@ -231,22 +230,20 @@ export const LastPay = (props: any) => {
                                     withEmployeeID={true}
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <label>Separation Date</label>
-                            <input
-                                id="lastpay_datefrom_leavecreditsinput"
-                                name="seperationDate"
-                                type="date"
-                                autoComplete="off"
-                                className="formControl"
-                                maxLength={40}
-                                onChange={(e) => makeFilterData(e)}
-                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                            />
-                        </div>
-                        <div className="ml-2">
-                            <div className="" style={{ width: 200, marginRight: 10 }}>
+                            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                <label>Separation Date</label>
+                                <input
+                                    id="lastpay_datefrom_leavecreditsinput"
+                                    name="seperationDate"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    maxLength={40}
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3">
                                 <label>Last Pay Generated</label>
                                 <select
                                     id="employee_gender_maindropdown"
@@ -265,7 +262,6 @@ export const LastPay = (props: any) => {
                                 </select>
                             </div>
                         </div>
-                    </div>
                     <div>
                         <Table responsive>
                             <thead>

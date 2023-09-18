@@ -10,6 +10,7 @@ const ErrorSwal = withReactContent(Swal)
 import { Formik } from "formik"
 import { Utility } from "../../../utils"
 import EmployeeDropdown from "../../../components/EmployeeDropdown"
+import { action_edit } from "../../../assets/images"
 
 export default function Recurring(props: any) {
     const { payrollData } = props
@@ -44,9 +45,8 @@ export default function Recurring(props: any) {
         'Employee ID',
         'Employee Name',
         'Amount',
-        'Recurring Name',
+        'Deduction & Loan Name',
         'Type',
-        'Deduct',
         'Action',
     ];
 
@@ -210,23 +210,6 @@ export default function Recurring(props: any) {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="mx-1">
-                                <label>Deduction</label>
-                                <select
-                                    className={`form-select`}
-                                    name="isDeduction"
-                                    id="isDeduction"
-                                    value={filterData["isDeduction"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {recurringTypeOption &&
-                                        recurringTypeOption.length &&
-                                        recurringTypeOption.map((item: any, index: string) => (
-                                            <option key={`${index}_${item.value}`} value={item.value}>
-                                                {Utility.capitalizeFirstLetter(item.name)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
                         </div>
                     </div>
                     <Table responsive>
@@ -258,7 +241,6 @@ export default function Recurring(props: any) {
                                             <td id={"payrollrecurring_adjustmentamount_recurringlistdata_" + item.employeeId}> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
                                             <td id={"payrollrecurring_recurringname_recurringlistdata_" + item.employeeId}> {item.recurringName} </td>
                                             <td id={"payrollrecurring_typeaction_recurringlistdata_" + item.employeeId}>{Utility.removeUnderscore(item.typeAction)}</td>
-                                            <td id={"payrollrecurring_typeisdeduction_recurringlistdata_" + item.employeeId}>{item.typeIsDeduction ? "YES" : "NO" }</td>
                                             <td>
                                                 <label
                                                     id={"payrollrecurring_update_recurringlistlabel_" + item.employeeId}
@@ -267,7 +249,7 @@ export default function Recurring(props: any) {
                                                         setModalShow(true)
                                                     }}
                                                     className="text-muted cursor-pointer">
-                                                    Update
+                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                 </label>
                                             </td>
                                         </tr>
@@ -339,7 +321,7 @@ export default function Recurring(props: any) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Update Recurring
+                        Update Deduction and Loan
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 m-0 px-5">
@@ -437,7 +419,7 @@ export default function Recurring(props: any) {
                                             />
                                         </div>
                                         <div className="w-full mb-3">
-                                            <label>Recurring Name</label>
+                                            <label>Deduction & Loan Name</label>
                                             <input
                                                 id="payrollrecurring_recurringname_forminput"
                                                 disabled
@@ -447,7 +429,7 @@ export default function Recurring(props: any) {
                                             />
                                         </div>
                                         <div className="w-full mb-3">
-                                            <label>Recurring Type</label>
+                                            <label>Type</label>
                                             <input
                                                 id="payrollrecurring_recurringtype_forminput"
                                                 disabled

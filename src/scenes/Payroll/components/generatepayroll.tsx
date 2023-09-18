@@ -102,10 +102,10 @@ export default function GeneratePayroll(props: any) {
                                 title: 'Error!',
                                 text: (body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollgenerate_errorconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollgenerate_errorconfirm_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -114,10 +114,10 @@ export default function GeneratePayroll(props: any) {
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollgenerate_successconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollgenerate_successconfirm_alertbtn"
                                 },
                                 icon: 'success',
                             }).then((result) => {
@@ -125,7 +125,7 @@ export default function GeneratePayroll(props: any) {
                                     // item.isCheck
                                     selectAllEmployees(false)
                                     setIsSelectAll(false)
-                                    if (!isRegenerate){
+                                    if (!isRegenerate) {
                                         props.back()
                                     }
                                 }
@@ -136,10 +136,10 @@ export default function GeneratePayroll(props: any) {
                             title: 'Error!',
                             text: "Something Error.",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "payrollgenerate_errorconfirm2_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "payrollgenerate_errorconfirm2_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -151,10 +151,10 @@ export default function GeneratePayroll(props: any) {
                 title: 'Warning!',
                 text: "No employee selected.",
                 didOpen: () => {
-                  const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
-                    confirmButton.id = "payrollgenerate_warningconfirm_alertbtn"
+                    const confirmButton = Swal.getConfirmButton();
+
+                    if (confirmButton)
+                        confirmButton.id = "payrollgenerate_warningconfirm_alertbtn"
                 },
                 icon: 'warning',
             })
@@ -188,6 +188,83 @@ export default function GeneratePayroll(props: any) {
             }
         )
     }
+
+    const lockPayroll = () => {
+        ErrorSwal.fire({
+            title: 'Are you sure?',
+            text: "You want to lock this payroll.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!',
+            didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                const cancelButton = Swal.getCancelButton();
+
+                if (confirmButton)
+                    confirmButton.id = "generatepayroll_lockconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "generatepayroll_lockcancel_alertbtn"
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                payroll
+                RequestAPI.postRequest(
+                    Api.lockPayroll,
+                    "",
+                    { "id": payroll.id },
+                    {},
+                    async (res) => {
+                        const { status, body = { data: {}, error: {} } } = res;
+                        if (status === 200 || status === 201) {
+                            if (body.error && body.error.message) {
+                                ErrorSwal.fire({
+                                    title: 'Error!',
+                                    text: (body.error.message) || "",
+                                    didOpen: () => {
+                                        const confirmButton = Swal.getConfirmButton();
+
+                                        if (confirmButton)
+                                            confirmButton.id = "payrollgenerate_errorconfirm_alertbtn"
+                                    },
+                                    icon: 'error',
+                                })
+                            } else {
+                                props.back()
+                                ErrorSwal.fire({
+                                    title: 'Success!',
+                                    text: (body.data) || "",
+                                    didOpen: () => {
+                                        const confirmButton = Swal.getConfirmButton();
+
+                                        if (confirmButton)
+                                            confirmButton.id = "payrollgenerate_successconfirm_alertbtn"
+                                    },
+                                    icon: 'success',
+                                })
+                            }
+                        } else {
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: "Something Error.",
+                                didOpen: () => {
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollgenerate_errorconfirm2_alertbtn"
+                                },
+                                icon: 'error',
+                            })
+                        }
+                    }
+                );
+            }
+        })
+    }
+
+
 
 
     return (
@@ -223,7 +300,7 @@ export default function GeneratePayroll(props: any) {
                                                 <tr>
                                                     <td>
                                                         <Form.Check
-                                                            id="payrollgenerate_ischeck_employeelistdata"
+                                                            id="payrollgenerate_ischeck_employeelistdata3"
                                                             type="checkbox"
                                                             label=""
                                                             checked={item.isCheck}
@@ -258,13 +335,14 @@ export default function GeneratePayroll(props: any) {
             </div>
             <div className="px-3 mt-5 flex">
                 {
-                    payroll.isUpdate ?
+                    payroll.isUpdate && payroll.isGenerated ?
                         <Button
                             id="payrollgenerate_regeneratepayroll_btn"
                             onClick={() => {
                                 generatePayroll(true)
                             }}
-                            className="btn btn-primary mr-3">
+                            disabled={payroll.locked}
+                            className={`btn btn-primary mr-3 ${payroll.locked ? 'd-none': ''}`}>
                             {isSubmit ?
                                 <div className="d-flex justify-content-center">
                                     <span className="spinner-border spinner-border-sm mx-1 mt-1" role="status" aria-hidden="true"> </span>
@@ -292,7 +370,7 @@ export default function GeneratePayroll(props: any) {
                 }
 
                 {
-                    payroll.isUpdate ?
+                    payroll.isUpdate && payroll.isGenerated ?
                         <>
                             <Button
                                 id="payrollgenerate_downloadpayrollregister_btn"
@@ -326,6 +404,21 @@ export default function GeneratePayroll(props: any) {
                                     : "Download for Bank Transmittal"
                                 }
 
+                            </Button>
+                        </> :
+                        null
+                }
+
+                {
+                    payroll.locked == false && payroll.isGenerated ?
+                        <>
+                            <Button
+                                id="payrollgenerate_lock_btn"
+                                onClick={() => {
+                                    lockPayroll()
+                                }}
+                                className="btn btn-primary mr-3">
+                                Lock Payroll
                             </Button>
                         </> :
                         null

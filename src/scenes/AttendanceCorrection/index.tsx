@@ -122,7 +122,7 @@ export const AttendanceCorrection = (props: any) => {
       })
     }
 
-    if (isActionable) {
+    if (status == 'actionable') {
       queryString += '&actionableOnly=true'
     }
 
@@ -192,10 +192,10 @@ export const AttendanceCorrection = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "attendancecorrections_approveconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "attendancecorrections_approvecancel_alertbtn"
       },
       icon: 'warning',
@@ -205,47 +205,57 @@ export const AttendanceCorrection = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.approveCoa, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
-                  title: 'Error!',
-                  text: (body.error && body.error.message) || "",
-                  didOpen: () => {
-                    const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
-                      confirmButton.id = "attendancecorrection_errorconfirm_alertbtn"
-                  },
-                  icon: 'error',
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
+
+                  if (confirmButton)
+                    confirmButton.id = "attendancecorrection_errorconfirm_alertbtn"
+                },
+                icon: 'error',
               })
             } else {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "attendancecorrection_successconfirm_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllCOARequest(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "attendancecorrection_errorconfirm2_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -260,10 +270,10 @@ export const AttendanceCorrection = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "attendancecorrections_cancelarconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "attendancecorrections_cancelarcancel_alertbtn"
       },
       icon: 'warning',
@@ -291,12 +301,12 @@ export const AttendanceCorrection = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "attendancecorrection_errorconfirm3_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               Swal.close()
               ErrorSwal.fire({
@@ -304,12 +314,12 @@ export const AttendanceCorrection = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "attendancecorrection_successconfirm2_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllCOARequest(0, key)
             }
           } else {
@@ -319,12 +329,12 @@ export const AttendanceCorrection = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "attendancecorrection_errorconfirm4_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -364,10 +374,10 @@ export const AttendanceCorrection = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "attendancecorrections_declinecoaconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "attendancecorrections_declinecoacancel_alertbtn"
       },
       icon: 'warning',
@@ -377,47 +387,57 @@ export const AttendanceCorrection = (props: any) => {
       confirmButtonText: 'Yes, proceed!'
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.declineCoa, "", { "id": id }, {}, async (res: any) => {
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Error!',
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "attendancecorrection_errorconfirm5_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "attendancecorrection_successconfirm3_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllCOARequest(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "attendancecorrection_errorconfirm6_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -609,7 +629,7 @@ export const AttendanceCorrection = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div>
           <div className="w-100 pt-2">
             <div className="fieldtext d-flex col-md-3 w-100">
@@ -768,12 +788,12 @@ export const AttendanceCorrection = (props: any) => {
                   text: "Please fill all the required fields.",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "attendancecorrection_warningconfirm_alertbtn"
                   },
                   icon: 'warning',
-              })
+                })
               } else {
                 const loadingSwal = Swal.fire({
                   title: '',
@@ -796,24 +816,24 @@ export const AttendanceCorrection = (props: any) => {
                           text: (body.error && body.error.message) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "attendancecorrection_errorconfirm7_alertbtn"
                           },
                           icon: 'error',
-                      })
+                        })
                       } else {
                         ErrorSwal.fire({
                           title: 'Success!',
                           text: (body.data) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "attendancecorrection_successconfirm3_alertbtn"
                           },
                           icon: 'success',
-                      })
+                        })
                         setCoaBreakdown([])
                         getAllCOARequest(0, key)
                         setModalShow(false)
@@ -825,12 +845,12 @@ export const AttendanceCorrection = (props: any) => {
                         text: "Something Error.",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "attendancecorrection_errorconfirm8_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     }
                     setCoaBreakdownCount(0);
                   })
@@ -846,12 +866,12 @@ export const AttendanceCorrection = (props: any) => {
                           text: (body.error && body.error.message) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "attendancecorrection_errorconfirm9_alertbtn"
                           },
                           icon: 'error',
-                      })
+                        })
                         setCoaBreakdown([])
                         getAllCOARequest(0, key)
                         setModalShow(false)
@@ -862,12 +882,12 @@ export const AttendanceCorrection = (props: any) => {
                           text: (body.data) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "attendancecorrection_errorconfirm4_alertbtn"
                           },
                           icon: 'success',
-                      })
+                        })
                         setCoaBreakdown([]);
                         getAllCOARequest(0, key);
                         setModalShow(false);
@@ -1077,7 +1097,7 @@ export const AttendanceCorrection = (props: any) => {
         </Modal.Body>
 
       </Modal>
-      
+
       <Modal
         size="lg"
         show={modalViewShow}

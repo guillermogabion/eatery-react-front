@@ -28,6 +28,7 @@ const customStyles = {
       paddingLeft: 11,
       fontSize: 14,
       minHeight: 40,
+      zIndex:100,
       font: "normal normal normal 16px/20px Source Sans Pro, sans-serif",
       "&:hover": {
         backgroundColor: "#7bc0d0",

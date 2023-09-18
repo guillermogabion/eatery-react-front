@@ -60,7 +60,7 @@ export const SquadRequest = (props: any) => {
                     </div>
                     <div className="contentContainer row p-0 m-0" style={{ minHeight: '100vh' }}>
                         <DashboardMenu />
-                        <div className="col-md-12 col-lg-10 px-5 py-5">
+                        <div className="col-md-12 col-lg-10 px-3 py-5">
                             <div>
                                 <h3>Request</h3>
 

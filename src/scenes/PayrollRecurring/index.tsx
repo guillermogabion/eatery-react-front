@@ -50,7 +50,6 @@ export const Recurring = (props: any) => {
 
     const [recurringTotal, setRecurringTotal] = useState<any>({});
     const [initialValues, setInitialValues] = useState<any>({
-
         recurring: [
             {
                 "userId": "",
@@ -73,7 +72,7 @@ export const Recurring = (props: any) => {
         'Employee Name',
         'Amount',
         'End Date',
-        'Recurring Name',
+        'Deduction or Loan Name',
         'Status',
         'Action',
     ];
@@ -308,13 +307,13 @@ export const Recurring = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-        
-                if(confirmButton)
-                  confirmButton.id = "payrollrecurring_deleteconfirm_alertbtn"
-        
-                if(cancelButton)
-                  cancelButton.id = "payrollrecurring_deletecancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "payrollrecurring_deleteconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "payrollrecurring_deletecancel_alertbtn"
+            },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -339,10 +338,10 @@ export const Recurring = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollrecurring_errorconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollrecurring_errorconfirm_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -353,10 +352,10 @@ export const Recurring = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollrecurring_successconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollrecurring_successconfirm_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -367,10 +366,10 @@ export const Recurring = (props: any) => {
                             title: 'Error!',
                             text: "Something went wrong.",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "payrollrecurring_errorconfirm2_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "payrollrecurring_errorconfirm2_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -407,13 +406,13 @@ export const Recurring = (props: any) => {
     }, []);
 
 
-    const executeSubmit = (values, actions) => {
-
-
-        const recurringTransactions = recurring.map((item) => ({
+    const executeSubmit = (values: any, actions: any) => {
+        const recurringTransactions = recurring.map((item: any) => ({
             userId: item.userId,
             recurringTypeId: item.recurringTypeId,
             adjustmentAmount: item.adjustmentAmount,
+            totalAmount: item.totalAmount,
+            startDate: item.startDate,
             endDate: item.endDate,
             active: item.active
         }));
@@ -421,13 +420,10 @@ export const Recurring = (props: any) => {
         const payload = {
             recurring: recurringTransactions
         };
-
-
         let hasError = false
 
         if (!values.userId) {
             payload.recurring.forEach((element: any, index: any) => {
-
                 if (element.userId == undefined) {
                     hasError = true;
                 }
@@ -437,13 +433,18 @@ export const Recurring = (props: any) => {
                 if (element.adjustmentAmount == undefined) {
                     hasError = true
                 }
+                if (element.totalAmount == undefined) {
+                    hasError = true
+                }
+                if (element.startDate == undefined) {
+                    hasError = true
+                }
                 if (element.endDate == undefined) {
                     hasError = true
                 }
                 if (element.active == undefined) {
                     element.active = true
                 }
-
             });
 
             if (hasError) {
@@ -451,10 +452,9 @@ export const Recurring = (props: any) => {
                     title: 'Warning!',
                     text: "Please fill all the required fields",
                     didOpen: () => {
-                      const confirmButton = Swal.getConfirmButton();
-            
-                      if(confirmButton)
-                        confirmButton.id = "payrollrecurring_warnconfirm_alertbtn"
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                            confirmButton.id = "payrollrecurring_warnconfirm_alertbtn"
                     },
                     icon: 'warning',
                 })
@@ -478,10 +478,10 @@ export const Recurring = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollrecurring_errorconfirm3_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollrecurring_errorconfirm3_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -493,10 +493,10 @@ export const Recurring = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollrecurring_successconfirm2_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollrecurring_successconfirm2_alertbtn"
                                 },
                                 icon: 'success',
                             }).then((result) => {
@@ -511,10 +511,10 @@ export const Recurring = (props: any) => {
                             title: 'Error!',
                             text: "Something Error.",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "payrollrecurring_errorconfirm4_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "payrollrecurring_errorconfirm4_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -527,16 +527,19 @@ export const Recurring = (props: any) => {
             if (valuesObj.adjustmentAmount == undefined || valuesObj.adjustmentAmount == "") {
                 hasError = true
             }
+            if (valuesObj.totalAmount == undefined || valuesObj.totalAmount == "") {
+                hasError = true
+            }
 
             if (hasError) {
                 ErrorSwal.fire({
                     title: 'Warning!',
                     text: "Please Enter a valid Amount",
                     didOpen: () => {
-                      const confirmButton = Swal.getConfirmButton();
-            
-                      if(confirmButton)
-                        confirmButton.id = "payrollrecurring_warningconfirm2_alertbtn"
+                        const confirmButton = Swal.getConfirmButton();
+
+                        if (confirmButton)
+                            confirmButton.id = "payrollrecurring_warningconfirm2_alertbtn"
                     },
                     icon: 'warning',
                 })
@@ -554,10 +557,10 @@ export const Recurring = (props: any) => {
                                     title: 'Error!',
                                     text: (body.error && body.error.message) || "",
                                     didOpen: () => {
-                                      const confirmButton = Swal.getConfirmButton();
-                            
-                                      if(confirmButton)
-                                        confirmButton.id = "payrollrecurring_errorconfirm5_alertbtn"
+                                        const confirmButton = Swal.getConfirmButton();
+
+                                        if (confirmButton)
+                                            confirmButton.id = "payrollrecurring_errorconfirm5_alertbtn"
                                     },
                                     icon: 'error',
                                 })
@@ -568,10 +571,10 @@ export const Recurring = (props: any) => {
                                     title: 'Updated Successfully!',
                                     text: (body.data) || "",
                                     didOpen: () => {
-                                      const confirmButton = Swal.getConfirmButton();
-                            
-                                      if(confirmButton)
-                                        confirmButton.id = "payrollrecurring_successconfirm3_alertbtn"
+                                        const confirmButton = Swal.getConfirmButton();
+
+                                        if (confirmButton)
+                                            confirmButton.id = "payrollrecurring_successconfirm3_alertbtn"
                                     },
                                     icon: 'success',
                                 }).then((result) => {
@@ -586,10 +589,10 @@ export const Recurring = (props: any) => {
                                 title: 'Error!',
                                 text: "Something Error.",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "payrollrecurring_errorconfirm6_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "payrollrecurring_errorconfirm6_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -654,7 +657,7 @@ export const Recurring = (props: any) => {
         RequestAPI.getFileAsync(
             `${Api.exportRecurring}?fromDate=${fromDate}&toDate=${toDate}`,
             "",
-            "Recurringtransactions.xlsx",
+            "DeductionLoansReport.xlsx",
             async (res: any) => {
                 if (res) {
 
@@ -672,7 +675,7 @@ export const Recurring = (props: any) => {
         RequestAPI.getFileAsync(
             `${Api.templateRecurring}`,
             "",
-            "recurringexceltemplate.xlsx",
+            "DeductionLoansTemplate.xlsx",
             async (res: any) => {
                 if (res) {
                 }
@@ -691,7 +694,7 @@ export const Recurring = (props: any) => {
     //         [name]: value,
     //       }));
     //     }
-    
+
     //         getAllRecurringList(0, pageSize);
 
     //         clearTimeout(typingTimer);
@@ -706,38 +709,40 @@ export const Recurring = (props: any) => {
     // useEffect(() => {
 
     //     // handleOnChange(filterData);
-        
+
     //     const timer = setTimeout(() => {
     //         handleOnChange(filterData);
     //       }, 3000);
-      
+
     //       return () => clearTimeout(timer);
     // }, [filterData]);
     // useEffect(() => {
     //     return () => clearTimeout(typingTimer);
     // }, []);
-    
+
     return (
         <ContainerWrapper contents={<>
-            <div className="w-100 px-5 py-5">
+            <div className="w-100 px-3 py-5">
                 <div>
-                    <div className="w-100">
+                    <div className="w-100 bg-white rounded-md p-3 mb-3">
+                        <div className="text-[#009FB5] text-lg ">
+                            Search By:
+                        </div>
                         <div className="fieldtext row">
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                 <div className="input-container">
                                     <label>Employee</label>
                                     <EmployeeDropdown
-                                    id="payrollrecurring_employee_dropdown"
-                                    placeholder={"Employee"}
-                                    singleChangeOption={singleChangeOption}
-                                    name="userId"
-                                    value={filterData && filterData['userId']}
-                                    withEmployeeID={true}
-                                    
+                                        id="payrollrecurring_employee_dropdown"
+                                        placeholder={"Employee"}
+                                        singleChangeOption={singleChangeOption}
+                                        name="userId"
+                                        value={filterData && filterData['userId']}
+                                        withEmployeeID={true}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12">
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                 <div className="input-container">
                                     <label>Amount</label>
                                     <input
@@ -747,136 +752,119 @@ export const Recurring = (props: any) => {
                                         name="adjustmentAmount"
                                         placeholder="Amount"
                                         onChange={(e) => makeFilterData(e)}
-                                        // onChange={(e) => {
-                                        //     // Call handleChange to update filterData
-                                        //     makeFilterData(e);
-                                        //     // Call handleOnChange as you've updated filterData
-                                        //     // (handleOnChange is now also triggered when Amount field changes)
-                                        //     handleOnChange();
-                                        //   }}
-                                        // onChange={handleOnChange}
+                                    // onChange={(e) => {
+                                    //     // Call handleChange to update filterData
+                                    //     makeFilterData(e);
+                                    //     // Call handleOnChange as you've updated filterData
+                                    //     // (handleOnChange is now also triggered when Amount field changes)
+                                    //     handleOnChange();
+                                    //   }}
+                                    // onChange={handleOnChange}
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-1 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
-                                    <label>Type</label>
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                                <div className="input-container">
+                                    <label>Deduction or Loan Name</label>
                                     <select
-                                    className="form-control"
-                                    name="isDeduction"
-                                    id="payrollrecurring_type"
-                                    onChange={(e) => {
-                                        makeFilterData(e);
-                                        // handleOnChange(e);
-                                        setShowButton(e.target.value !== 'default');
-                                    }}
-                                    ref={selectRef}
+                                        className="formControl"
+                                        name="recurringTypeName"
+                                        id="typeName"
+                                        onChange={(e) => {
+                                            makeFilterData(e);
+                                            setShowButtonRecurring(e.target.value !== 'default');
+                                        }}
                                     >
-                                    <option value="default" disabled selected >
-                                        Type
-                                    </option>
-                                    <option value={false}>Add</option>
-                                    <option value={true}>Deduct</option>
-                                    </select>
-                                    {showButton && (
-                                    <span
-                                        id="payrollrecurring_closetype_span"
-                                        className="clear-icon-recurring"
-                                        onClick={reset}
-                                    >
-                                        X
-                                    </span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
-                                <div className="">
-                                    <label>Recurring Name</label>
-                                    <select
-                                    className="formControl"
-                                    name="recurringTypeName"
-                                    id="typeName"
-                                    onChange={(e) => {
-                                        makeFilterData(e);
-                                        setShowButtonRecurring(e.target.value !== 'default');
-                                    }}
-                                    >
-                                    <option value="" disabled selected>
-                                        Select Recurring Name
-                                    </option>
-                                    {recurringName &&
-                                        recurringName.length &&
-                                        recurringName.map((item: any, index: string) => (
-                                        <option key={`${index}_${item.name}`} value={item.name}>
-                                            {item.name}
+                                        <option value="" disabled selected>
+                                            Select Deduction or Loan Name
                                         </option>
-                                        ))}
+                                        {recurringName &&
+                                            recurringName.length &&
+                                            recurringName.map((item: any, index: string) => (
+                                                <option key={`${index}_${item.name}`} value={item.name}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
                                     </select>
                                     {showButtonRecurring && (
-                                    <span
-                                        id="payrollrecurring_closerecurringname_span"
-                                        className="clear-icon-recurring"
-                                        onClick={resetRecurring}
-                                    >
-                                        X
-                                    </span>
+                                        <span
+                                            id="payrollrecurring_closerecurringname_span"
+                                            className="clear-icon-recurring"
+                                            onClick={resetRecurring}
+                                        >
+                                            X
+                                        </span>
                                     )}
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-                                <div className="input-container">
-                                    <label>End Date</label>
-                                    <input
-                                    type="date"
-                                    id="payrollrecurring_enddate_input"
-                                    className="form-control"
-                                    name="endDate"
-                                    placeholder="End Date"
-                                    onChange={(e) => makeFilterData(e)}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-lg-2 col-md-4 col-sm-6 col-xs-12 clearable-select">
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 clearable-select">
                                 <div className="input-container">
                                     <label>Status</label>
                                     <select
-                                    className="form-control"
-                                    name="status"
-                                    id="status1"
-                                    onChange={(e) => {
-                                        makeFilterData(e);
-                                        setShowButtonStatus(e.target.value !== 'default');
-                                    }}
-                                    ref={selectRef}
+                                        className="form-control"
+                                        name="status"
+                                        id="status1"
+                                        onChange={(e) => {
+                                            makeFilterData(e);
+                                            setShowButtonStatus(e.target.value !== 'default');
+                                        }}
+                                        ref={selectRef}
                                     >
-                                    <option value="default" disabled selected>
-                                        Status
-                                    </option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
+                                        <option value="default" disabled selected>
+                                            Status
+                                        </option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
                                     </select>
                                     {showButtonStatus && (
-                                    <span
-                                        id="payrollrecurring_closestatus_span"
-                                        className="clear-icon-recurring"
-                                        onClick={resetStatus}
-                                    >
-                                        X
-                                    </span>
+                                        <span
+                                            id="payrollrecurring_closestatus_span"
+                                            className="clear-icon-recurring"
+                                            onClick={resetStatus}
+                                        >
+                                            X
+                                        </span>
                                     )}
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 text-center">
-                                <div className="input-container pt-4">
-                                    <Button
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>Start Date</label>
+                                    <input
+                                        type="date"
+                                        id="payrollrecurring_startdate_input"
+                                        className="form-control"
+                                        name="startDate"
+                                        placeholder="Start Date"
+                                        onChange={(e) => makeFilterData(e)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div className="input-container">
+                                    <label>End Date</label>
+                                    <input
+                                        type="date"
+                                        id="payrollrecurring_enddate_input"
+                                        className="form-control"
+                                        name="endDate"
+                                        placeholder="End Date"
+                                        onChange={(e) => makeFilterData(e)}
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-md-2 text-center">
+                            <div className="input-container pt-2">
+                                <Button
                                     id="payrollrecurring_search_btn"
                                     style={{ width: '100%' }}
                                     onClick={() => getAllRecurringList(0, pageSize)}
                                     className="btn btn-primary"
-                                    >
+                                >
                                     Search
-                                    </Button>
-                                </div>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -900,7 +888,6 @@ export const Recurring = (props: any) => {
                                 recurringList.content &&
                                 recurringList.content.length > 0 &&
                                 recurringList.content.map((item: any, index: any) => {
-
                                     return (
                                         <tr>
                                             <td id="payrollrecurring_id_recurringlistdata"> {item.id} </td>
@@ -910,7 +897,6 @@ export const Recurring = (props: any) => {
                                             <td id="payrollrecurring_enddate_recurringlistdata"> {item.endDate} </td>
                                             <td id="payrollrecurring_recurringname_recurringlistdata"> {item.recurringName} </td>
                                             <td id="payrollrecurring_active_recurringlistdata"> {item.active == true ? "ACTIVE" : "INACTIVE"} </td>
-
                                             <td>
                                                 <label
                                                     id="payrollrecurring_update_recurringlistlabel"
@@ -929,7 +915,6 @@ export const Recurring = (props: any) => {
                                                     <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
                                                 </label>
                                             </td>
-
                                         </tr>
                                     )
                                 })
@@ -948,8 +933,7 @@ export const Recurring = (props: any) => {
                     }
                 </div>
                 <div className="text-muted">
-                    <h2>Total Amount: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.notDeductionAmount) : 0}</span></h2>
-                    <h2>Total deduction: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.deductionAmount) : 0}</span></h2>
+                    <h2>Total Amount: <span>{recurringTotal ? Utility.formatToCurrency(recurringTotal.amount) : 0}</span></h2>
                 </div>
             </div>
             <div className="row">
@@ -965,7 +949,6 @@ export const Recurring = (props: any) => {
                                 <option value={100}>100</option>
                             </select>
                         </div>
-
                     </div>
                 </div>
                 <div className="col-md-6">
@@ -990,39 +973,36 @@ export const Recurring = (props: any) => {
                     </div>
                 </div>
             </div>
-
-
-
             <div className="d-flex justify-content-end mt-3 pr-5 mb-5" >
                 <div>
-                    <Button className="mx-2"
+                    <Button className="mx-2 my-1"
                         id="payrollrecurring_addrecurring_recurringlistbtn"
                         onClick={() => {
                             // setModalUploadShow(true)
                             setModalShow(true)
                         }}
-                    >Add Recurring</Button>
+                    >Add Deduction or Loan</Button>
                     <Button
                         id="payrollrecurring_importrecurring_recurringlistbtn"
-                        className="mx-2"
+                        className="mx-2 my-1"
                         onClick={() => {
                             setUploadModalShow(true)
-                        }}>Import Recurring</Button>
+                        }}>Import Deduction or Loan</Button>
                     <Button
                         id="payrollrecurring_exportrecurring_recurringlistbtn"
-                        className="mx-2"
+                        className="mx-2 my-1"
                         onClick={() => {
                             setDownloadModalShow(true)
                         }
                         }
-                    >Export Recurring</Button>
+                    >Export Deduction or Loan</Button>
                     <Button
                         id="payrollrecurring_downloadrecurringtemplate_recurringlistbtn"
-                        className="mx-2"
+                        className="mx-2 my-1"
                         onClick={
                             downloadTemplate
                         }
-                    >Download Recurring Template</Button>
+                    >Download Deduction or Loan Template</Button>
                 </div>
             </div>
             <Modal
@@ -1040,7 +1020,7 @@ export const Recurring = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        {userId ? 'Update Recurring' : 'Create Recurring'}
+                        {userId ? 'Update Deduction or Loan' : 'Create Deduction or Loan'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">
@@ -1051,9 +1031,6 @@ export const Recurring = (props: any) => {
                         initialValues={initialValues}
                         onSubmit={executeSubmit}
                     >
-
-
-
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (
                                 <Form
@@ -1062,12 +1039,12 @@ export const Recurring = (props: any) => {
                                     id="_formid"
                                     autoComplete="off"
                                 >
-                                    <div className="d-flex justify-content-end px-5">
+                                    <div className="d-flex justify-content-end">
                                         {values.userId ? null : (
                                             <button
                                                 id="payrollrecurring_add_createrecurringbtn"
                                                 type="button"
-                                                className="btn btn btn-outline-primary me-2 mb-2 mt-2"
+                                                className="btn btn btn-outline-primary px-5 mb-2 mt-2"
                                                 onClick={handleAddField}
                                             >
                                                 Add
@@ -1078,7 +1055,7 @@ export const Recurring = (props: any) => {
                                     {values.id ? (
                                         <div>
                                             <div className="form-group row">
-                                                <div className="col-md-3 mb-3">
+                                                <div className="col-md-4 mb-3">
                                                     <label>Employee Name *</label>
                                                     <select
                                                         id="payrollrecurring_employeename_formselect"
@@ -1105,11 +1082,11 @@ export const Recurring = (props: any) => {
                                                             ))}
                                                     </select>
                                                 </div>
-                                                <div className="col-md-3 mb-3">
-                                                    <label>Recurring Name *</label>
+                                                <div className="col-md-4 mb-3">
+                                                    <label>Deduction or Loan Name *</label>
                                                     <select
                                                         disabled
-                                                        placeholder="Recurring Name"
+                                                        placeholder="Deduction or Loan Name"
                                                         className="form-select"
                                                         name="recurringTypeId"
                                                         id="payrollrecurring_recurringname"
@@ -1119,7 +1096,7 @@ export const Recurring = (props: any) => {
                                                         }}
                                                     >
                                                         <option value="" disabled selected>
-                                                            Select Recurring Name
+                                                            Select Deduction or Loan Name
                                                         </option>
                                                         {recurringTypes &&
                                                             recurringTypes.length &&
@@ -1131,7 +1108,7 @@ export const Recurring = (props: any) => {
                                                     </select>
                                                 </div>
 
-                                                <div className="col-md-2 mb-3">
+                                                <div className="col-md-4 mb-3">
                                                     <label>Amount</label>
                                                     <input
                                                         type="number"
@@ -1150,7 +1127,20 @@ export const Recurring = (props: any) => {
                                                     />
 
                                                 </div>
-                                                <div className="col-md-2 mb-3">
+                                                <div className="col-md-4 mb-3">
+                                                    <label>Start Date</label>
+                                                    <input
+                                                        id="payrollrecurring_enddate_recurringinput"
+                                                        type="date"
+                                                        className={`form-control ${touched.startDate && errors.startDate ? 'is-invalid' : ''}`}
+                                                        name="startDate"
+                                                        value={values.startDate}
+                                                        onChange={(e) => {
+                                                            setFieldValue('startDate', e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4 mb-3">
                                                     <label>End Date</label>
                                                     <input
                                                         id="payrollrecurring_enddate_forminput"
@@ -1163,7 +1153,25 @@ export const Recurring = (props: any) => {
                                                         }}
                                                     />
                                                 </div>
-                                                <div className="col-md-2 mb-3">
+                                                <div className="col-md-4 mb-3">
+                                                    <label>Total Amount</label>
+                                                    <input
+                                                        id="payrollrecurring_total_amount_recurringinput"
+                                                        type="number"
+                                                        name="totalAmount"
+                                                        className={`form-control ${touched.totalAmount && errors.totalAmount ? 'is-invalid' : ''}`}
+                                                        value={values.totalAmount}
+                                                        onChange={(e) => {
+                                                            setFieldValue('totalAmount', e.target.value);
+                                                        }}
+                                                        onKeyPress={(e) => {
+                                                            if (e.key === '-' || e.key === '+') {
+                                                                e.preventDefault();
+                                                            }
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4 mb-3">
                                                     <label>Status</label>
                                                     <select
                                                         id="payrollrecurring_status_formstatus"
@@ -1178,8 +1186,26 @@ export const Recurring = (props: any) => {
                                                         <option value={false}>Inactive</option>
                                                     </select>
                                                 </div>
+                                                <div className="col-md-4 mb-3">
+                                                    <label>Accumulated Amount</label>
+                                                    <input
+                                                        id="payrollrecurring_total_amount_recurringinput"
+                                                        type="number"
+                                                        name="accumulatedAmount"
+                                                        className={`form-control ${touched.accumulatedAmount && errors.accumulatedAmount ? 'is-invalid' : ''}`}
+                                                        value={values.accumulatedAmount}
+                                                        disabled={true}
+                                                        onChange={(e) => {
+                                                            setFieldValue('accumulatedAmount', e.target.value);
+                                                        }}
+                                                        onKeyPress={(e) => {
+                                                            if (e.key === '-' || e.key === '+') {
+                                                                e.preventDefault();
+                                                            }
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
-
                                         </div>
 
                                     ) :
@@ -1189,7 +1215,7 @@ export const Recurring = (props: any) => {
                                                 return (
                                                     <div key={`recurring-${index}`}>
                                                         <div className="form-group row">
-                                                            <div className="col-md-3 mb-3">
+                                                            <div className="col-md-4 mb-3">
                                                                 <label>Employee *</label>
                                                                 <EmployeeDropdown
                                                                     id="payrollrecurring_recurringtypeemployee_recurringdropdown"
@@ -1203,10 +1229,10 @@ export const Recurring = (props: any) => {
                                                                 />
                                                             </div>
                                                             {/* <p>Selected Employee: {value ? value.userId : "None"}</p> */}
-                                                            <div className="col-md-3 mb-3">
-                                                                <label>Recurring Name *</label>
+                                                            <div className="col-md-4 mb-3">
+                                                                <label>Deduction or Loan Name *</label>
                                                                 <select
-                                                                    placeholder="Recurring Name"
+                                                                    placeholder="Deduction or Loan Name"
                                                                     className={`form-select ${touched.recurringTypeId && errors.recurringTypeId ? 'is-invalid' : ''}`}
                                                                     name="recurringTypeId"
                                                                     id="payrollrecurring_recurringname2"
@@ -1229,7 +1255,7 @@ export const Recurring = (props: any) => {
                                                                     }}
                                                                 >
                                                                     <option value="" disabled={!index} selected={!index}>
-                                                                        Select Recurring Name
+                                                                        Select Deduction or Loan Name
                                                                     </option>
                                                                     {recurringTypes &&
                                                                         recurringTypes.length &&
@@ -1243,48 +1269,7 @@ export const Recurring = (props: any) => {
                                                                     <p id="payrollrecurring_recurringtypeid_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.recurringTypeId}</p>
                                                                 )}
                                                             </div>
-
-                                                            {/* start of test  */}
-                                                            <div className="col-md-2 mb-3">
-                                                                <label>Recurring Action *</label>
-                                                                <select
-                                                                    disabled
-                                                                    placeholder="Recurring Name"
-                                                                    className="form-control"
-                                                                    name="recurringTypeId"
-                                                                    id="payrollrecurring_recurringaction"
-                                                                    value={values.recurringTypeId}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...recurring];
-                                                                        updatedFields[index].recurringTypeId = selectedValue;
-                                                                        setRecurring(updatedFields);
-                                                                        setFormField(e, setFieldValue);
-                                                                        const selectedType = recurringTypes.find(
-                                                                            (item) => item.recurringDeduction === selectedValue
-                                                                        );
-                                                                        const isDeductionField = document.getElementsByName('recurringDeduction')[0];
-                                                                        if (selectedType) {
-                                                                            isDeductionField.value = selectedType.recurringDeduction;
-                                                                        } else {
-                                                                            isDeductionField.value = '';
-                                                                        }
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled={!index} selected={!index}>
-                                                                        Recurring Action
-                                                                    </option>
-                                                                    {recurringTypes &&
-                                                                        recurringTypes.length &&
-                                                                        recurringTypes.map((item, index) => (
-                                                                            <option key={`${index}_${item.recurringTypeId}`} value={item.recurringTypeId}>
-                                                                                {item.recurringDeduction === true ? "Deduct" : "Add"}
-                                                                            </option>
-                                                                        ))}
-                                                                </select>
-                                                            </div>
-                                                            {/* end of test  */}
-                                                            <div className="col-md-2 mb-3">
+                                                            <div className="col-md-4 mb-3">
                                                                 <label>Amount</label>
                                                                 <input
                                                                     id="payrollrecurring_amount_recurringinput"
@@ -1308,7 +1293,26 @@ export const Recurring = (props: any) => {
                                                                     <p id="payrollrecurring_erroradjustmentamount_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.adjustmentAmount}</p>
                                                                 )}
                                                             </div>
-                                                            <div className="col-md-2 mb-3">
+                                                            <div className="col-md-4 mb-3">
+                                                                <label>Start Date</label>
+                                                                <input
+                                                                    id="payrollrecurring_enddate_recurringinput"
+                                                                    type="date"
+                                                                    className={`form-control ${touched.startDate && errors.startDate ? 'is-invalid' : ''}`}
+                                                                    name="startDate"
+                                                                    value={values.startDate}
+                                                                    onChange={(e) => {
+                                                                        setFieldValue('startDate', e.target.value);
+                                                                        const updatedFields = [...recurring];
+                                                                        updatedFields[index].startDate = e.target.value;
+                                                                        setRecurring(updatedFields);
+                                                                    }}
+                                                                />
+                                                                {errors && errors.startDate && (
+                                                                    <p id="payrollrecurring_errorstartdate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.startDate}</p>
+                                                                )}
+                                                            </div>
+                                                            <div className="col-md-4 mb-3">
                                                                 <label>End Date</label>
                                                                 <input
                                                                     id="payrollrecurring_enddate_recurringinput"
@@ -1327,29 +1331,30 @@ export const Recurring = (props: any) => {
                                                                     <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
                                                                 )}
                                                             </div>
-                                                            {/* <div className="col-md-4 mb-3">
-                                            <label>Status</label>
-                                            <select
-                                                id="payrollrecurring_status_recurringselect"
-                                                name="active"
-                                                className="form-select"
-                                                value={values.active === undefined ? true : false}
-                                                onChange={(e) => {
-                                                const selectedValue = e.target.value;
-                                                setFieldValue('active', selectedValue);
-                                                const updatedFields = [...recurring];
-                                                updatedFields[index].active = e.target.value;
-                                                setRecurring(updatedFields);
-                                                }}
-                                            >
-                                                <option value={true}>Active</option>
-                                                <option value={false}>Inactive</option>
-                                            </select>
-                                            
-                                            </div> */}
-
-                                                            {values.employeeId}
-
+                                                            <div className="col-md-4 mb-3">
+                                                                <label>Total Amount</label>
+                                                                <input
+                                                                    id="payrollrecurring_total_amount_recurringinput"
+                                                                    type="number"
+                                                                    name="totalAmount"
+                                                                    className={`form-control ${touched.totalAmount && errors.totalAmount ? 'is-invalid' : ''}`}
+                                                                    value={values.totalAmount}
+                                                                    onChange={(e) => {
+                                                                        setFieldValue('totalAmount', e.target.value);
+                                                                        const updatedFields = [...recurring];
+                                                                        updatedFields[index].totalAmount = e.target.value;
+                                                                        setRecurring(updatedFields);
+                                                                    }}
+                                                                    onKeyPress={(e) => {
+                                                                        if (e.key === '-' || e.key === '+') {
+                                                                            e.preventDefault();
+                                                                        }
+                                                                    }}
+                                                                />
+                                                                {errors && errors.totalAmount && (
+                                                                    <p id="payrollrecurring_erroradjustmentamount_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.totalAmount}</p>
+                                                                )}
+                                                            </div>
                                                             {recurring.length > 1 && (
                                                                 <div className="col-md-3 mb-3">
                                                                     <label>&nbsp;</label>

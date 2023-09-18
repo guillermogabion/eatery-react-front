@@ -456,108 +456,113 @@ export const AttendanceSummary = (props: any) => {
 
   return (
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div>
           <h3>Attendance Summary</h3>
 
           <div className="w-100 pt-4">
-            <div className="fieldtext d-flex col-md-12">
-              <div className="" style={{ width: 200, marginRight: 10 }}>
-                <label>Employee</label>
-                <SingleSelect id="attendancesummary_employee_summaryselect"
-                  type="string"
-                  options={employeeList || []}
-                  placeholder={"Employee"}
-                  onChangeOption={singleChangeOption}
-                  name="userid"
-                  value={filterData && filterData['userid']}
-                />
-              </div>
-
-              <div>
-                <label>Date From</label>
-                <input
-                  id="attendancesummary_datefrom_summaryinput"
-                  name="fromDate"
-                  type="date"
-                  autoComplete="off"
-                  className="formControl"
-                  maxLength={40}
-                  value={filterData["fromDate"]}
-                  onChange={(e) => makeFilterData(e)}
-                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                />
-              </div>
-
-              <div>
-                <label>Date To</label>
-                <div className="input-container">
+            <div className="fieldtext">
+              <div className="row  d-flex">
+                <div className="col-xs-12 col-sm-12 col-md-4 col-lg-3  mb-2">
+                  <label>Employee</label>
+                  <SingleSelect id="attendancesummary_employee_summaryselect"
+                    type="string"
+                    options={employeeList || []}
+                    placeholder={"Employee"}
+                    onChangeOption={singleChangeOption}
+                    name="userid"
+                    value={filterData && filterData['userid']}
+                  />
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-4 col-lg-2 mb-2">
+                  <label>Date From</label>
                   <input
-                    id="attendancesummary_dateto_summaryinput"
-                    name="toDate"
+                    id="attendancesummary_datefrom_summaryinput"
+                    name="fromDate"
                     type="date"
                     autoComplete="off"
                     className="formControl"
                     maxLength={40}
-                    value={filterData["toDate"]}
+                    value={filterData["fromDate"]}
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
                 </div>
-              </div>
-
-              <Button
-                id="attendancesummary_search_summarybtn"
-                style={{ width: 120 }}
-                onClick={() => getAllAttendance(0)}
-                className="btn btn-primary mx-2 mt-4">
-                Search
-              </Button>
-              {
-                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                <div className="col-xs-12 col-sm-12 col-md-4 col-lg-2 mb-2">
+                  <label>Date To</label>
+                    <input
+                      id="attendancesummary_dateto_summaryinput"
+                      name="toDate" 
+                      type="date"
+                      autoComplete="off"
+                      className="formControl"
+                      maxLength={40}
+                      value={filterData["toDate"]}
+                      onChange={(e) => makeFilterData(e)}
+                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                    />
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-3 mb-2 d-flex">
                   <Button
-                    id="attendancesummary_addbiolog_summarybtn"
-                    onClick={() => setAddBioModal(true)}
-                    disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                    className="btn btn-primary mx-2 mt-4 w-auto">
-                    Add Biometric Log
+                    id="attendancesummary_search_summarybtn"
+                    style={{ width: '100%' }}
+                    onClick={() => getAllAttendance(0)}
+                    className="btn btn-primary mt-4 mr-2">
+                    Search
                   </Button>
-                  :
-                  null
-              }
+                  {
+                    data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                      <Button
+                        id="attendancesummary_addbiolog_summarybtn"
+                        style={{ width: '100%' }}
+                        onClick={() => setAddBioModal(true)}
+                        disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
+                        className="btn btn-primary mt-4">
+                        Add Biometric Log
+                      </Button>
+                      :
+                      null
+                  }
+                </div>
 
+              </div>
             </div>
 
             {attendanceTable()}
             {
               data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
                 <>
-                  <div className="d-flex justify-content-end mt-3" >
-                    <div>
-                      <Button
-                        id="attendancesummary_import_summarybtn"
-                        className="mx-2"
-                        onClick={() => {
-                          setImportModalShow(true)
-                        }}>Import</Button>
-                      <Button
-                        id="attendancesummary_export_summarybtn"
-                        className="mx-2"
-                        onClick={() => {
-                          setDownloadModalShow(true)
-                        }}>Export</Button>
-                      <Button
-                        id="attendancesummary_recalculate_summarybtn"
-                        className="mx-2"
-                        onClick={() => {
-                          setRecalculateModal(true)
-                        }}>Recalculate</Button>
-                      <Button
-                        id="attendancesummary_downloadtemplate_summarybtn"
-                        className="mx-2"
-                        onClick={
-                          downloadTemplate
-                        }>Download Template</Button>
+                  <div className=" mt-3" >
+                    <div className="">
+                      <div className="col-12 d-flex flex-wrap justify-content-end">
+                        <Button
+                          id="attendancesummary_import_summarybtn"
+                          className="mx-2 my-2"
+                          onClick={() => {
+                            setImportModalShow(true)
+                          }}>Import</Button>
+                    
+                        <Button
+                          id="attendancesummary_export_summarybtn"
+                          className="mx-2 my-2"
+                          onClick={() => {
+                            setDownloadModalShow(true)
+                          }}>Export</Button>
+                     
+                        <Button
+                          id="attendancesummary_recalculate_summarybtn"
+                          className="mx-2 my-2"
+                          onClick={() => {
+                            setRecalculateModal(true)
+                          }}>Recalculate</Button>
+                    
+                        <Button
+                          id="attendancesummary_downloadtemplate_summarybtn"
+                          className="mx-2 my-2"
+                          onClick={
+                            downloadTemplate
+                          }>Download Template</Button>
+                      </div>
                     </div>
                   </div>
                 </>
@@ -958,32 +963,6 @@ export const AttendanceSummary = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-md-12 mb-3" >
-                      <label>Date Logged</label>
-                      <input type="date"
-                        name="tkDate"
-                        id="tkDate"
-                        className="form-control"
-                        value={values.tkDate}
-                        onChange={handleChange}
-                      />
-                      {errors && errors.tkDate && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <label>Time Logged</label>
-                      <input type="time"
-                        name="tkTime"
-                        id="tkTime"
-                        className="form-control"
-                        value={values.tkTime}
-                        onChange={handleChange}
-                      />
-                      {errors && errors.tkTime && (
-                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
                       <label>Type</label>
                       <select
                         className={`form-select`}
@@ -1012,6 +991,33 @@ export const AttendanceSummary = (props: any) => {
                         <p style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Date Logged</label>
+                      <input type="date"
+                        name="tkDate"
+                        id="tkDate"
+                        className="form-control"
+                        value={values.tkDate}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.tkDate && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkDate}</p>
+                      )}
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                      <label>Time Logged</label>
+                      <input type="time"
+                        name="tkTime"
+                        id="tkTime"
+                        className="form-control"
+                        value={values.tkTime}
+                        onChange={handleChange}
+                      />
+                      {errors && errors.tkTime && (
+                        <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
+                      )}
+                    </div>
+                    
                   </div>
                   <br />
                   <Modal.Footer>

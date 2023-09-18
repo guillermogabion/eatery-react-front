@@ -3,7 +3,7 @@ import UserTopMenu from "../../components/UserTopMenu"
 
 import { Formik } from "formik"
 import moment from "moment"
-import { Button, Form, Modal} from "react-bootstrap"
+import { Button, Form, Modal } from "react-bootstrap"
 import Tab from 'react-bootstrap/Tab'
 import Table from 'react-bootstrap/Table'
 import Tabs from 'react-bootstrap/Tabs'
@@ -51,7 +51,7 @@ export const Leaves = (props: any) => {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
-  
+
 
   const formRef: any = useRef()
 
@@ -169,7 +169,7 @@ export const Leaves = (props: any) => {
       })
     }
 
-    if (isActionable) {
+    if (status == 'actionable') {
       queryString += '&actionableOnly=true'
     }
 
@@ -274,11 +274,11 @@ export const Leaves = (props: any) => {
     let dayTypesArray = [];
     let diffInDays = date2.diff(date1, 'days') + 1;
     let dateCounter = 0;
-  
+
     for (let index = 1; index <= diffInDays; index++) {
       var added_date = moment(dFrom).add(dateCounter, 'days');
       let new_date = new Date(added_date.format('YYYY-MM-DD'));
-  
+
       if (new_date.getDay() == 0 || new_date.getDay() == 6) {
         dateCounter += 1;
       } else if (new_date.getDay() == 6) {
@@ -296,10 +296,10 @@ export const Leaves = (props: any) => {
         dateCounter += 1;
       }
     }
-  
+
     setDayTypes(dayTypesArray);
     setLeaveBreakdown(leavesBreakdown);
-  
+
     if (leavesBreakdown.length <= 30) {
       console.log(leavesBreakdown.length);
     } else {
@@ -309,11 +309,11 @@ export const Leaves = (props: any) => {
         setLeaveBreakdown([]);
         setDayTypes([]);
         formRef.current?.resetForm();
-      }else{
-        leavesBreakdown.pop(); 
+      } else {
+        leavesBreakdown.pop();
         setModalShow(false)
       }
-     
+
       Swal.fire({
         title: 'Error',
         text: 'Total number of leave should not exceed 30 days',
@@ -322,13 +322,13 @@ export const Leaves = (props: any) => {
         didOpen: () => {
           const confirmButton = Swal.getConfirmButton();
 
-          if(confirmButton)
+          if (confirmButton)
             confirmButton.id = "leaves_errorconfirm_alertbtn"
         }
       });
     }
   };
-  
+
 
 
 
@@ -340,7 +340,7 @@ export const Leaves = (props: any) => {
   //   let dayTypesArray = []
   //   let diffInDays = date2.diff(date1, 'days') + 1;
   //   let dateCounter = 0
- 
+
   //   if (diffInDays >= 1 && leavesBreakdown.length <= 30) {
   //     for (let index = 1; index <= diffInDays; index++) {
   //       var added_date = moment(dFrom).add(dateCounter, 'days');
@@ -385,9 +385,9 @@ export const Leaves = (props: any) => {
   //     });
 
 
-    
+
   //   }
-    
+
   //   else {
   //     setDayTypes([])
   //     setLeaveBreakdown([])
@@ -431,58 +431,68 @@ export const Leaves = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "leaves_approveleaveconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "leaves_approveleavecancel_alertbtn"
       },
     }).then((result) => {
       if (result.isConfirmed) {
+        // Swal.fire({
+        //   title: '',
+        //   allowOutsideClick: false,
+        //   didOpen: () => {
+        //     Swal.showLoading();
+        //   }
+        // });
+        getAllLeaves(0, key)
+        // RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
+        //   const { status, body = { data: {}, error: {} } }: any = res
+        //   if (status === 200 || status === 201) {
+        //     if (body.error && body.error.message) {
+        //       Swal.close()
+        //       ErrorSwal.fire({
+        //         title: 'Error!',
+        //         text: (body.error && body.error.message) || "",
+        //         didOpen: () => {
+        //           const confirmButton = Swal.getConfirmButton();
 
-        RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 || status === 201) {
-            if (body.error && body.error.message) {
-              ErrorSwal.fire({
-                title: 'Error!',
-                text: (body.error && body.error.message) || "",
-                didOpen: () => {
-                  const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
-                    confirmButton.id = "login_errorconfirm2_alertbtn"
-                },
-                icon: 'error',
-            })
-            } else {
-              ErrorSwal.fire({
-                title: 'Success!',
-                text: (body.data) || "",
-                didOpen: () => {
-                  const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
-                    confirmButton.id = "login_successconfirm_alertbtn"
-                },
-                icon: 'success',
-            })
-              getAllLeaves(0, key)
-            }
-          } else {
-            ErrorSwal.fire({
-              title: 'Error!',
-              text: "Something Error.",
-              didOpen: () => {
-                const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
-                  confirmButton.id = "login_errorconfirm3_alertbtn"
-              },
-              icon: 'error',
-          })
-          }
-        })
+        //           if (confirmButton)
+        //             confirmButton.id = "login_errorconfirm2_alertbtn"
+        //         },
+        //         icon: 'error',
+        //       })
+        //     } else {
+        //       Swal.close()
+        //       ErrorSwal.fire({
+        //         title: 'Success!',
+        //         text: (body.data) || "",
+        //         didOpen: () => {
+        //           const confirmButton = Swal.getConfirmButton();
+
+        //           if (confirmButton)
+        //             confirmButton.id = "login_successconfirm_alertbtn"
+        //         },
+        //         icon: 'success',
+        //       })
+        //       getAllLeaves(0, key)
+        //     }
+        //   } else {
+        //     Swal.close()
+        //     ErrorSwal.fire({
+        //       title: 'Error!',
+        //       text: "Something Error.",
+        //       didOpen: () => {
+        //         const confirmButton = Swal.getConfirmButton();
+
+        //         if (confirmButton)
+        //           confirmButton.id = "login_errorconfirm3_alertbtn"
+        //       },
+        //       icon: 'error',
+        //     })
+        //   }
+        // })
       }
     })
   }
@@ -500,64 +510,71 @@ export const Leaves = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "leaves_declineleaveconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "leaves_declineleavecancel_alertbtn"
       }
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
         RequestAPI.postRequest(Api.declineLeave, "", { "id": id }, {}, async (res: any) => {
-          Swal.close()
+
           const { status, body = { data: {}, error: {} } }: any = res
           if (status === 200 || status === 201) {
             if (body.error && body.error.message) {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Error!',
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "login_errorconfirm4_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
+              Swal.close()
               ErrorSwal.fire({
                 title: 'Success!',
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "login_successconfirm2_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllLeaves(0, key)
             }
           } else {
+            Swal.close()
             ErrorSwal.fire({
               title: 'Error!',
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "login_errorconfirm5_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
     })
   }
-
-
-
 
   const cancelLeave = (id: any = 0) => {
     ErrorSwal.fire({
@@ -572,15 +589,15 @@ export const Leaves = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "leaves_cancelleaveconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "leaves_cancelleavecancel_alertbtn"
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        const loadingSwal = Swal.fire({
+        Swal.fire({
           title: '',
           allowOutsideClick: false,
           didOpen: () => {
@@ -598,12 +615,12 @@ export const Leaves = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "login_errorconfirm6_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               Swal.close()
               ErrorSwal.fire({
@@ -611,12 +628,12 @@ export const Leaves = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "login_successconfirm3_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllLeaves(0, key)
             }
           } else {
@@ -626,12 +643,12 @@ export const Leaves = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "login_errorconfirm7_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -666,7 +683,7 @@ export const Leaves = (props: any) => {
   function calculateWorkingDays(startDate, endDate) {
     let currentDate = new Date(startDate);
     let totalDays = 0;
-  
+
     while (currentDate <= endDate) {
       const dayOfWeek = currentDate.getDay();
       if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Exclude Sundays (0) and Saturdays (6)
@@ -674,7 +691,7 @@ export const Leaves = (props: any) => {
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
-  
+
     return totalDays;
   }
 
@@ -743,7 +760,7 @@ export const Leaves = (props: any) => {
 
                             </label>
                             {
-                              item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED"  ?
+                              item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" ?
                                 <>
                                   {authorizations.includes("Request:Update") ? (
                                     <>
@@ -863,7 +880,7 @@ export const Leaves = (props: any) => {
   return (
 
     <ContainerWrapper contents={<>
-      <div className="w-100 px-5 py-5">
+      <div className="w-100 px-3 py-5">
         <div>
           <div className="w-100 pt-2">
             {data.profile.role !== 'EXECUTIVE' ? (
@@ -878,10 +895,10 @@ export const Leaves = (props: any) => {
             ) : (
               null
             )}
-            <div className="fieldtext d-flex col-md-6 w-100">
+            <div className="row d-flex">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="" style={{ width: 200, marginRight: 10 }}>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="leaves_employee_leavecreditsdropdown"
@@ -895,7 +912,7 @@ export const Leaves = (props: any) => {
                   null
               }
 
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                 <label>Date From</label>
                 <input
                   id="leaves_datefrom_leavecreditsinput"
@@ -908,29 +925,30 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                 <label>Date To</label>
-                <div className="input-container">
-                  <input
-                    id="leaves_dateto_leavecreditsinput"
-                    name="dateTo"
-                    type="date"
-                    autoComplete="off"
-                    className="formControl"
-                    maxLength={40}
-                    onChange={(e) => makeFilterData(e)}
-                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                  />
-                </div>
+                <input
+                  id="leaves_dateto_leavecreditsinput"
+                  name="dateTo"
+                  type="date"
+                  autoComplete="off"
+                  className="formControl"
+                  maxLength={40}
+                  onChange={(e) => makeFilterData(e)}
+                  onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                />
+              </div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                <Button
+                  id="leaves_search_leavecreditsbtn"
+                  style={{ width: '100%' }}
+                  onClick={() => getAllLeaves(0, key, actionable)}
+                  className="btn btn-primary mx-2 mt-4">
+                  Search
+                </Button>
               </div>
 
-              <Button
-                id="leaves_search_leavecreditsbtn"
-                style={{ width: 120 }}
-                onClick={() => getAllLeaves(0, key, actionable)}
-                className="btn btn-primary mx-2 mt-4">
-                Search
-              </Button>
+
             </div>
             <Tabs
               id="controlled-tab-example"
@@ -1060,24 +1078,24 @@ export const Leaves = (props: any) => {
                   text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "login_errorconfirm13_alertbtn"
                   },
                   icon: 'error',
-              })
+                })
               } else if (timeDifferenceInDays >= 7 && values.type === 1) {
                 ErrorSwal.fire({
                   title: 'Error!',
                   text: "Selected 'Date From' must be within 7 working days from the date of selection.",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
-          
-                    if(confirmButton)
+
+                    if (confirmButton)
                       confirmButton.id = "login_errorconfirm14_alertbtn"
                   },
                   icon: 'error',
-              })
+                })
               } else {
                 const loadingSwal = Swal.fire({
                   title: '',
@@ -1086,10 +1104,10 @@ export const Leaves = (props: any) => {
                     Swal.showLoading();
                   },
                 });
-              
+
                 if (leaveId) {
                   delete valuesObj.userId;
-              
+
                   RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res;
                     if (status === 200 || status === 201) {
@@ -1099,24 +1117,24 @@ export const Leaves = (props: any) => {
                           text: (body.error.message) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "login_errorconfirm8_alertbtn"
                           },
                           icon: 'error',
-                      })
+                        })
                       } else {
                         ErrorSwal.fire({
                           title: 'Success!',
                           text: (body.data) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "login_successconfirm4_alertbtn"
                           },
                           icon: 'success',
-                      })
+                        })
                         setLeaveBreakdown([]);
                         getAllLeaves(0, key);
                         setModalShow(false);
@@ -1128,12 +1146,12 @@ export const Leaves = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "login_errorconfirm9_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     }
                   });
                 } else {
@@ -1147,24 +1165,24 @@ export const Leaves = (props: any) => {
                           text: (body.error.message) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "login_errorconfirm10_alertbtn"
                           },
                           icon: 'error',
-                      })
+                        })
                       } else {
                         ErrorSwal.fire({
                           title: 'Success!',
                           text: (body.data) || "",
                           didOpen: () => {
                             const confirmButton = Swal.getConfirmButton();
-                  
-                            if(confirmButton)
+
+                            if (confirmButton)
                               confirmButton.id = "login_successconfirm5_alertbtn"
                           },
                           icon: 'success',
-                      })
+                        })
                         setLeaveBreakdown([]);
                         getAllLeaves(0, key);
                         setModalShow(false);
@@ -1176,17 +1194,17 @@ export const Leaves = (props: any) => {
                         text: "Something Error.",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "login_errorconfirm11_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     }
                   });
                 }
               }
-            
+
 
             }}>
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
@@ -1362,7 +1380,7 @@ export const Leaves = (props: any) => {
                     <div className="d-flex justify-content-end px-5">
 
                       {
-                        leaveBreakdown && leaveBreakdown.length == 0 && leaveBreakdown.length > 30  ?
+                        leaveBreakdown && leaveBreakdown.length == 0 && leaveBreakdown.length > 30 ?
 
                           <button
                             id="leaves_save1_leavebreakdownbtn"
@@ -1478,7 +1496,7 @@ export const Leaves = (props: any) => {
                         max={values.type == 1 ? getNextWeekday(new Date(!values.dateFrom ? new Date(Date.now()).toISOString().split("T")[0] : values.dateFrom), 6).toISOString().split('T')[0] : values.dateTo}
 
                         placeholder="dd/mm/yyyy"
-                        maxLength={10}  
+                        maxLength={10}
                       />
                       {errors && errors.dateFrom && (
                         <p id="leaves_errordatefrom_leavereqp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
@@ -1487,7 +1505,7 @@ export const Leaves = (props: any) => {
                     <div className="form-group col-md-6 mb-3" >
                       <label>Date To</label>
                       <input type="date"
-                      disabled={true}
+                        disabled={true}
                         onKeyDown={(e) => e.preventDefault()}
                         name="dateTo"
                         id="dateTo"
@@ -1510,7 +1528,7 @@ export const Leaves = (props: any) => {
                     <div className="form-group col-md-12 mb-3" >
                       <label>Reason</label>
                       <input type="text"
-                      disabled={true}
+                        disabled={true}
                         name="reason"
                         id="reason"
                         className="form-control"

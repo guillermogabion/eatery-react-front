@@ -10,6 +10,7 @@ import { Formik } from "formik"
 import { Utility } from "../../../utils"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import { action_edit } from "../../../assets/images"
 const ErrorSwal = withReactContent(Swal)
 
 export const Adjustment = (props: any) => {
@@ -49,9 +50,8 @@ export const Adjustment = (props: any) => {
         'Employee ID',
         'Employee Name',
         'Amount',
-        'Adjustment Name',
+        'Earning & Allowance Name',
         'Type',
-        'Deduct',
         'Action',
     ];
 
@@ -136,23 +136,6 @@ export const Adjustment = (props: any) => {
                                     singleChangeOption={singleChangeOption}
                                 />
                             </div>
-                            <div className="mx-1" style={{ width: 200, marginRight: 10 }}>
-                                <label>Deduct</label>
-                                <select
-                                    className={`form-select`}
-                                    name="used"
-                                    id="used"
-                                    value={filterData["used"]}
-                                    onChange={(e) => makeFilterData(e)}>
-                                    {usedOption &&
-                                        usedOption.length &&
-                                        usedOption.map((item: any, index: string) => (
-                                            <option key={`${index}_${item.value}`} value={item.value}>
-                                                {Utility.capitalizeFirstLetter(item.name)}
-                                            </option>
-                                        ))}
-                                </select>
-                            </div>
                         </div>
                     </div>
                     <Table responsive>
@@ -181,11 +164,11 @@ export const Adjustment = (props: any) => {
                                             <td id={"payrolladjustment_id_adjlist_" + item.id}> {item.id} </td>
                                             <td id={"payrolladjustment_employeeid_adjlist_" + item.id}> {item.employeeId} </td>
                                             <td id={"payrolladjustment_employeename_adjlist_" + item.id}> {item.employeeName} </td>
-                                            <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.amount)} </td>
+                                            <td id={"payrolladjustment_amount_adjlist_" + item.id}> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
                                             <td id={"payrolladjustment_adjustmentname_adjlist_" + item.id}> {item.adjustmentName} </td>
                                             <td id={"payrolladjustment_type_adjlist_" + item.id}> {Utility.removeUnderscore(item.type)} </td>
-                                            <td id={"payrolladjustment_deduc_adjlist_" + item.id}> {item.deduc ? "YES" : "NO"} </td>
                                             <td>
+                                                
                                                 <label
                                                     id={"payrolladjustment_update_adjbtn_" + item.id}
                                                     onClick={() => {
@@ -193,7 +176,7 @@ export const Adjustment = (props: any) => {
                                                             "id": item.id,
                                                             "userId": item.userId,
                                                             "adjustmentTypeId": item.adjustmentTypeId,
-                                                            "adjustmentAmount": item.amount,
+                                                            "adjustmentAmount": item.adjustmentAmount,
                                                             "periodMonth": item.payrollMonth,
                                                             "periodYear": item.payrollYear,
                                                             "employeeId": item.employeeId,
@@ -204,7 +187,7 @@ export const Adjustment = (props: any) => {
                                                         setModalShow(true)
                                                     }}
                                                     className="text-muted cursor-pointer">
-                                                    Update
+                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                                                 </label>
                                             </td>
 
@@ -276,7 +259,7 @@ export const Adjustment = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        Update Adjustment
+                        Update Earning and Allowance
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 m-0 px-5">
@@ -372,7 +355,7 @@ export const Adjustment = (props: any) => {
                                             />
                                         </div>
                                         <div className="w-full mb-3">
-                                            <label>Adjustment Name</label>
+                                            <label>Earning & Allowance Name</label>
                                             <input
                                                 id="payrolladjustment_adjustmentname_forminput"
                                                 disabled
@@ -382,7 +365,7 @@ export const Adjustment = (props: any) => {
                                             />
                                         </div>
                                         <div className="w-full mb-3">
-                                            <label>Adjustment Type</label>
+                                            <label>Type</label>
                                             <input
                                                 id="payrolladjustment_adjustmenttype_forminput"
                                                 disabled

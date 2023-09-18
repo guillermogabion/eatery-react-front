@@ -81,7 +81,7 @@ export const Undertime = (props: any) => {
             })
         }
 
-        if (isActionable) {
+        if (status == 'actionable') {
             queryString += '&actionableOnly=true'
         }
 
@@ -127,13 +127,13 @@ export const Undertime = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-        
-                if(confirmButton)
-                  confirmButton.id = "undertime_approveutconfirm_alertbtn"
-        
-                if(cancelButton)
-                  cancelButton.id = "undertime_approveutcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "undertime_approveutconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "undertime_approveutcancel_alertbtn"
+            },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -141,44 +141,54 @@ export const Undertime = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.approveUT, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "undertime_errorconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "undertime_errorconfirm_alertbtn"
                                 },
                                 icon: 'error',
                             })
                         } else {
+                            Swal.close()
                             getMyUT(0, key)
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "undertime_successconfirm_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "undertime_successconfirm_alertbtn"
                                 },
                                 icon: 'success',
                             })
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: "Something Error.",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "undertime_errorconfirm2_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "undertime_errorconfirm2_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -195,13 +205,13 @@ export const Undertime = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-        
-                if(confirmButton)
-                  confirmButton.id = "undertime_cancelutconfirm_alertbtn"
-        
-                if(cancelButton)
-                  cancelButton.id = "undertime_cancelutcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "undertime_cancelutconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "undertime_cancelutcancel_alertbtn"
+            },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -225,10 +235,10 @@ export const Undertime = (props: any) => {
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "undertime_errorconfirm3_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "undertime_errorconfirm3_alertbtn"
                                 },
                                 icon: 'error',
                             })
@@ -238,10 +248,10 @@ export const Undertime = (props: any) => {
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "undertime_successconfirm2_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "undertime_successconfirm2_alertbtn"
                                 },
                                 icon: 'success',
                             })
@@ -253,10 +263,10 @@ export const Undertime = (props: any) => {
                             title: 'Error!',
                             text: "Something Error.",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "undertime_errorconfirm4_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "undertime_errorconfirm4_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -273,13 +283,13 @@ export const Undertime = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-        
-                if(confirmButton)
-                  confirmButton.id = "undertime_declineutconfirm_alertbtn"
-        
-                if(cancelButton)
-                  cancelButton.id = "undertime_declineutcancel_alertbtn"
-              },
+
+                if (confirmButton)
+                    confirmButton.id = "undertime_declineutconfirm_alertbtn"
+
+                if (cancelButton)
+                    cancelButton.id = "undertime_declineutcancel_alertbtn"
+            },
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -287,44 +297,54 @@ export const Undertime = (props: any) => {
             confirmButtonText: 'Yes, proceed!'
         }).then((result) => {
             if (result.isConfirmed) {
+                Swal.fire({
+                    title: '',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
                 RequestAPI.postRequest(Api.declineUT, "", { "id": id }, {}, async (res: any) => {
                     const { status, body = { data: {}, error: {} } }: any = res
                     if (status === 200 || status === 201) {
                         if (body.error && body.error.message) {
+                            Swal.close()
                             ErrorSwal.fire({
                                 title: 'Error!',
                                 text: (body.error && body.error.message) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "undertime_errorconfirm5_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "undertime_errorconfirm5_alertbtn"
                                 },
                                 icon: 'error',
                             })
                         } else {
+                            Swal.close()
                             getMyUT(0, key)
                             ErrorSwal.fire({
                                 title: 'Success!',
                                 text: (body.data) || "",
                                 didOpen: () => {
-                                  const confirmButton = Swal.getConfirmButton();
-                        
-                                  if(confirmButton)
-                                    confirmButton.id = "undertime_successconfirm3_alertbtn"
+                                    const confirmButton = Swal.getConfirmButton();
+
+                                    if (confirmButton)
+                                        confirmButton.id = "undertime_successconfirm3_alertbtn"
                                 },
                                 icon: 'success',
                             })
                         }
                     } else {
+                        Swal.close()
                         ErrorSwal.fire({
                             title: 'Error!',
                             text: "Something Error.",
                             didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                    
-                              if(confirmButton)
-                                confirmButton.id = "undertime_errorconfirm6_alertbtn"
+                                const confirmButton = Swal.getConfirmButton();
+
+                                if (confirmButton)
+                                    confirmButton.id = "undertime_errorconfirm6_alertbtn"
                             },
                             icon: 'error',
                         })
@@ -536,13 +556,13 @@ export const Undertime = (props: any) => {
 
     return (
         <ContainerWrapper contents={<>
-            <div className="w-100 col-md-12 col-lg-10 px-5 py-5">
+            <div className="w-100 col-md-12 col-lg-10 px-3 py-5">
                 <div>
                     <div className="w-100 pt-2">
-                        <div className="fieldtext d-flex col-md-3 w-100">
+                        <div className="row d-flex">
                             {
                                 data.profile.role == 'EXECUTIVE' ?
-                                    <div className="" style={{ width: 200, marginRight: 10 }}>
+                                    <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                         <label>Employee</label>
                                         <EmployeeDropdown
                                             id="undertime_employee_maindropdown"
@@ -555,56 +575,65 @@ export const Undertime = (props: any) => {
                                     :
                                     null
                             }
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <label>Date From</label>
-                                <div>
-                                    <input
-                                        id="undertime_datefrom_maininput"
-                                        name="dateFrom"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="undertime_datefrom_maininput"
+                                    name="dateFrom"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <label>Date To</label>
-                                <div className="input-container">
-                                    <input
-                                        id="undertime_dateto_maininput"
-                                        name="dateTo"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="undertime_dateto_maininput"
+                                    name="dateTo"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <label>Date Filed</label>
-                                <div className="input-container">
-                                    <input
-                                        id="undertime_datefiled_maininput"
-                                        name="dateFiled"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="undertime_datefiled_maininput"
+                                    name="dateFiled"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
                                 <Button
                                     id="undertime_search_mainbtn"
-                                    style={{ width: 120 }}
+                                    style={{ width: '100%' }}
                                     onClick={() => getMyUT(0, key, actionable)}
                                     className="btn btn-primary mx-2 mt-4">
                                     Search
                                 </Button>
+                            </div>
+                        </div>
+                        <div className="fieldtext d-flex col-md-3 w-100">
+
+                            <div>
+
+                            </div>
+                            <div>
+
+                            </div>
+                            <div>
+
+                            </div>
+                            <div>
+
                             </div>
                         </div>
 
@@ -732,10 +761,10 @@ export const Undertime = (props: any) => {
                                                 title: 'Error!',
                                                 text: (body.error && body.error.message) || "",
                                                 didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "undertime_errorconfirm7_alertbtn"
+                                                    const confirmButton = Swal.getConfirmButton();
+
+                                                    if (confirmButton)
+                                                        confirmButton.id = "undertime_errorconfirm7_alertbtn"
                                                 },
                                                 icon: 'error',
                                             })
@@ -745,10 +774,10 @@ export const Undertime = (props: any) => {
                                                 title: 'Success!',
                                                 text: (body.data) || "",
                                                 didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "undertime_successconfirm4_alertbtn"
+                                                    const confirmButton = Swal.getConfirmButton();
+
+                                                    if (confirmButton)
+                                                        confirmButton.id = "undertime_successconfirm4_alertbtn"
                                                 },
                                                 icon: 'success',
                                             })
@@ -760,10 +789,10 @@ export const Undertime = (props: any) => {
                                             title: 'Error!',
                                             text: (body.error && body.error.message) || "Something error!",
                                             didOpen: () => {
-                                              const confirmButton = Swal.getConfirmButton();
-                                    
-                                              if(confirmButton)
-                                                confirmButton.id = "undertime_errorconfirm8_alertbtn"
+                                                const confirmButton = Swal.getConfirmButton();
+
+                                                if (confirmButton)
+                                                    confirmButton.id = "undertime_errorconfirm8_alertbtn"
                                             },
                                             icon: 'error',
                                         })
@@ -779,10 +808,10 @@ export const Undertime = (props: any) => {
                                                 title: 'Error!',
                                                 text: (body.error && body.error.message) || "",
                                                 didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "undertime_errorconfirm9_alertbtn"
+                                                    const confirmButton = Swal.getConfirmButton();
+
+                                                    if (confirmButton)
+                                                        confirmButton.id = "undertime_errorconfirm9_alertbtn"
                                                 },
                                                 icon: 'error',
                                             })
@@ -792,10 +821,10 @@ export const Undertime = (props: any) => {
                                                 title: 'Success!',
                                                 text: (body.data) || "",
                                                 didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "undertime_successconfirm5_alertbtn"
+                                                    const confirmButton = Swal.getConfirmButton();
+
+                                                    if (confirmButton)
+                                                        confirmButton.id = "undertime_successconfirm5_alertbtn"
                                                 },
                                                 icon: 'success',
                                             })
@@ -807,10 +836,10 @@ export const Undertime = (props: any) => {
                                             title: 'Error!',
                                             text: (body.error && body.error.message) || "Something error!",
                                             didOpen: () => {
-                                              const confirmButton = Swal.getConfirmButton();
-                                    
-                                              if(confirmButton)
-                                                confirmButton.id = "undertime_errorconfirm10_alertbtn"
+                                                const confirmButton = Swal.getConfirmButton();
+
+                                                if (confirmButton)
+                                                    confirmButton.id = "undertime_errorconfirm10_alertbtn"
                                             },
                                             icon: 'error',
                                         })
@@ -932,7 +961,7 @@ export const Undertime = (props: any) => {
                             })
                         }
                         onSubmit={(values, actions) => {
-                            
+
                         }}>
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (

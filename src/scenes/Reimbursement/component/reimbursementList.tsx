@@ -443,10 +443,10 @@ export const ReimbursementList = (props: any) => {
                                 }
                             </select>
                         </div> */}
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <label className="">Date From</label>
                             <input
-                                id="dateFrom"
+                                id="reimbursementlist_dateFrom_searchby"
                                 name="dateFrom"
                                 type="date"
                                 autoComplete="off"
@@ -458,12 +458,12 @@ export const ReimbursementList = (props: any) => {
                             />
                         </div>
 
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <label className="">Date To</label>
                             <div >
                                 <input
                                     id="dateTo"
-                                    name="dateTo"
+                                    name="reimbursementlist_dateTo_searchby"
                                     type="date"
                                     autoComplete="off"
                                     className="formControl"
@@ -474,13 +474,13 @@ export const ReimbursementList = (props: any) => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-3">
                             <label className="">Status</label>
                             <div >
                                 <select
                                     className={`form-select `}
                                     name="status"
-                                    id="status"
+                                    id="reimbursementlist_status_searchby"
                                     style={{ height: 42 }}
                                     value={filterData["status"]}
                                     onChange={(e) => makeFilterData(e)}>
@@ -520,14 +520,15 @@ export const ReimbursementList = (props: any) => {
                                     reimbursementList.content.map((item: any, index: any) => {
                                         return (
                                             <tr>
-                                                <td> {item.id} </td>
-                                                <td> {item.typeName} </td>
+                                                <td id={"reimbursementlist_id_td_" + item.id}> {item.id} </td>
+                                                <td id={"reimbursementlist_typename_td_" + item.id}> {item.typeName} </td>
                                                 {/* <td> {item.approvedBudget} </td> */}
-                                                <td> {Utility.formatToCurrency(item.total)} </td>
-                                                <td> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                                <td> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
+                                                <td id={"reimbursementlist_total_td_" + item.id}> {Utility.formatToCurrency(item.total)} </td>
+                                                <td id={"reimbursementlist_filedate_td_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                                                <td id={"reimbursementlist_status_td_" + item.id}> <label className={`bg-[${Utility.reimbursementStatus(item.status)}] rounded-md px-3 py-1 text-white`}>{item.status}</label>  </td>
                                                 <td>
                                                     <label
+                                                        id={"reimbursementlist_setreimbursement_btn_" + item.id}
                                                         onClick={() => {
                                                             if (item.breakdown.length > 0) {
                                                                 let tempValues: any = []
@@ -568,6 +569,7 @@ export const ReimbursementList = (props: any) => {
                                                         item.status != "DECLINED" && item.status != "CANCELLED" && item.status != "REVIEWED" && (
                                                             <>
                                                                 <label
+                                                                    id={"reimbursementlist_cancelreimbursement_btn_" + item.id}
                                                                     onClick={() => {
                                                                         cancelReimbursement(item.id)
                                                                     }}>
@@ -706,7 +708,7 @@ export const ReimbursementList = (props: any) => {
                                 <label>Employee Name:</label>
                                 <input type="text"
                                     name="companyName"
-                                    id="companyName"
+                                    id="reimbursementlist_companyName_input"
                                     className="form-control"
                                     disabled={true}
                                     value={reimbursementParentValues && reimbursementParentValues.employeeName}
@@ -727,7 +729,7 @@ export const ReimbursementList = (props: any) => {
                                 <select
                                     className={`form-select`}
                                     name="typeId"
-                                    id="typeId"
+                                    id="reimbursementlist_typeId_input"
                                     disabled={!isEditReimbursement}
                                     value={reimbursementParentValues && reimbursementParentValues.typeId}
                                     onChange={(e) => {
@@ -751,7 +753,7 @@ export const ReimbursementList = (props: any) => {
                                 <label>Total Amount:</label>
                                 <input type="number"
                                     name="total"
-                                    id="total"
+                                    id="reimbursementlist_total_input"
                                     className="form-control"
                                     disabled={!isEditReimbursement}
                                     value={reimbursementParentValues && reimbursementParentValues.total}
@@ -764,7 +766,7 @@ export const ReimbursementList = (props: any) => {
                                 <label>Purpose:</label>
                                 <textarea
                                     name="purpose"
-                                    id="purpose"
+                                    id="reimbursementlist_purpose_btn"
                                     className="form-control p-2"
                                     disabled={!isEditReimbursement}
                                     value={reimbursementParentValues && reimbursementParentValues.purpose}
@@ -793,13 +795,13 @@ export const ReimbursementList = (props: any) => {
                                             reimbursementValues.map((data: any, index: any) => {
                                                 return (
                                                     <tr key={`reimBreakdown-${index}`}>
-                                                        <td>{data.receipt ? "Yes" : "No"}</td>
-                                                        <td>{data.invoice}</td>
-                                                        <td>{data.companyName}</td>
-                                                        <td>{data.tin}</td>
-                                                        <td>{data.transactionDate}</td>
-                                                        <td>{Utility.formatToCurrency(data.amount)}</td>
-                                                        <td>{data.fileName}</td>
+                                                        <td id={"reimbursementlist_receipt_invoicetd_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
+                                                        <td id={"reimbursementlist_invoice_invoicetd_" + data.invoice}>{data.invoice}</td>
+                                                        <td id={"reimbursementlist_companyname_invoicetd_" + data.invoice}>{data.companyName}</td>
+                                                        <td id={"reimbursementlist_tin_invoicetd_" + data.invoice}>{data.tin}</td>
+                                                        <td id={"reimbursementlist_transactiondate_invoicetd_" + data.invoice}>{data.transactionDate}</td>
+                                                        <td id={"reimbursementlist_amount_invoicetd_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
+                                                        <td id={"reimbursementlist_filename_invoicetd_" + data.invoice}>{data.fileName}</td>
                                                     </tr>
                                                 )
 
@@ -812,6 +814,7 @@ export const ReimbursementList = (props: any) => {
                     <div className="flex justify-center mt-5">
                         <Button
                             variant="secondary"
+                            id={"reimbursementlist_close_btn"}
                             onClick={() => {
                                 setViewReimbursementModal(false)
                                 setIsEditReimbursement(false)
@@ -841,6 +844,7 @@ export const ReimbursementList = (props: any) => {
                             !isEditReimbursement && reimbursementView && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
                                 <>
                                     <button
+                                        id={"reimbursementlist_retract_btn"}
                                         onClick={() => cancelReimbursement(reimbursementView.id)}
                                         className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
                                         Retract/Cancel
