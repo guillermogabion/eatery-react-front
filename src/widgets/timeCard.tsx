@@ -235,8 +235,8 @@ const TimeCard = () => {
                     </div>
                     <div className="col-6 " style={{ textAlign: 'right' }}>
                         <h6 id="dashboard_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
-                        <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-4">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
-                        <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-4">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'N/A'}</h6>
+                        <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-4">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'Not Timed In'}</h6>
+                        <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-4">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'Not Logged Out'}</h6>
                         <label
                             id="dashboard_attendancestatus_value"
                             className={`bold-text p-2 px-3 pt-2 mt-4 ${(!hasTimeIn && !hasTimeOut) ? 'status_blue' : (hasTimeIn && !hasTimeOut) ? 'status_red' : (hasTimeIn && hasTimeOut) ? 'status_green' : ''}`}
