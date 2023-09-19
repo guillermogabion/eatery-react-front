@@ -33,13 +33,13 @@ const SquadTracker = () => {
              
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
                 <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab">
-                    <Tab className="custom-tabs"  eventKey="tab1" title="All">
+                    <Tab id="dashboardsquadtracker_tab1" className="custom-tabs"  eventKey="tab1" title="All">
                         <All />
                     </Tab>
-                    <Tab  className="custom-tabs" eventKey="tab2" title="On-Leave">
+                    <Tab id="dashboardsquadtracker_tab2" className="custom-tabs" eventKey="tab2" title="On-Leave">
                         <OnLeave />
                     </Tab>
-                    <Tab  className="custom-tabs" eventKey="tab3" title="Absent">
+                    <Tab id="dashboardsquadtracker_tab3" className="custom-tabs" eventKey="tab3" title="Absent">
                         <Absent />
                     </Tab>
                 </Tabs>
@@ -119,6 +119,7 @@ const All = () => {
                 <div className="pt-6 col-9 ml-3">
                     <div className="" style={{ width: '100%', marginRight: '5' }}>
                         <EmployeeDropdown
+                            id="dashboardsquadtracker_search_input"
                             squad={true}
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
@@ -129,6 +130,7 @@ const All = () => {
                 </div>
                 <div className="pt-6 col-2">
                     <Button
+                        id="dashboardsquadtracker_search_input"
                         onClick={() => getAll()}
                         style={{width: '70px'}}
                         >
@@ -228,6 +230,7 @@ const OnLeave = () => {
                 <div className="pt-6 col-9 ml-3">
                     <div className="" style={{ width: '100%', marginRight: 10 }}>
                         <EmployeeDropdown
+                            id="dashboardsquadtracker_search_input2"
                             squad={true}
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
@@ -237,7 +240,8 @@ const OnLeave = () => {
                     </div>
                 </div>
                 <div className="pt-6 col-2">
-                    <Button
+                    <Button 
+                        id="dashboardsquadtracker_getallsearch_btn"
                         onClick={() => getAll()}
                         style={{width: '70px'}}
                         >
@@ -334,6 +338,7 @@ const Absent = () => {
                 <div className="pt-6 col-9 ml-3">
                     <div className="" style={{ width: '100%', marginRight: 10 }}>
                         <EmployeeDropdown
+                            id="dashboardsquadtracker_search_input3"
                             squad={true}
                             placeholder={"Employee"}
                             singleChangeOption={singleChangeOption}
@@ -344,6 +349,7 @@ const Absent = () => {
                 </div>
                 <div className="pt-6 col-2">
                     <Button
+                        id="dashboardsquadtracker_getall2_btn"
                         onClick={() => getAll()}
                         style={{width: '70px'}}
                         >

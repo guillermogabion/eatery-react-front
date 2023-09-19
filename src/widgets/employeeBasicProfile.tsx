@@ -93,7 +93,7 @@ const EmployeeBasicProfile = () => {
             </div>
             <div className="d-flex justify-content-center">
                 <div className="col-12 employee-button px-4">
-                    <Button disabled id=""
+                    <Button disabled id="employeebasicprofile_update_btn"
                         style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         // onClick={() => makeAttendance('time out')}
                         >

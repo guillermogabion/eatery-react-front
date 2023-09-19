@@ -142,11 +142,15 @@ const AvailableLeaveCredits = () => {
             setShowModal(false)
           }
          
-          Swal.fire({
-            title: 'Error',
+          ErrorSwal.fire({
+            title: 'Error!',
             text: 'Total number of leave should not exceed 30 days',
+            didOpen: () => {
+              const confirmButton = Swal.getConfirmButton();
+              if (confirmButton)
+                confirmButton.id = "availableleavecredits_errorconfirm_alertbtn";
+            },
             icon: 'error',
-            confirmButtonText: 'OK'
           });
         }
     };
@@ -241,7 +245,7 @@ const AvailableLeaveCredits = () => {
             didOpen: () => {
               const confirmButton = Swal.getConfirmButton();
               if (confirmButton)
-                confirmButton.id = "login_errorconfirm13_alertbtn";
+                confirmButton.id = "availableleavecredits_errorconfirm2_alertbtn";
             },
             icon: 'error',
           });
@@ -252,7 +256,7 @@ const AvailableLeaveCredits = () => {
             didOpen: () => {
               const confirmButton = Swal.getConfirmButton();
               if (confirmButton)
-                confirmButton.id = "login_errorconfirm14_alertbtn";
+                confirmButton.id = "availableleavecredits_errorconfirm3_alertbtn";
             },
             icon: 'error',
           });
@@ -294,12 +298,12 @@ const AvailableLeaveCredits = () => {
             .then((response) => {
               if (response.data.error){
                 ErrorSwal.fire({
-                  title: 'Success!',
+                  title: 'Error!',
                   text: response.data.error.message || "",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
                     if (confirmButton)
-                      confirmButton.id = "leave_errorconfirm4_alertbtn";
+                      confirmButton.id = "availableleavecredits_errorconfirm4_alertbtn";
                   },
                   icon: 'error',
                 });
@@ -312,7 +316,7 @@ const AvailableLeaveCredits = () => {
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
                     if (confirmButton)
-                      confirmButton.id = "leave_successconfirm4_alertbtn";
+                      confirmButton.id = "availableleavecredits_successconfirm_alertbtn";
                   },
                   icon: 'success',
                 });
@@ -329,7 +333,7 @@ const AvailableLeaveCredits = () => {
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
                   if (confirmButton)
-                    confirmButton.id = "login_errorconfirm8_alertbtn";
+                    confirmButton.id = "availableleavecredits_errorconfirm5_alertbtn";
                 },
                 icon: 'error',
               });
@@ -386,7 +390,7 @@ const AvailableLeaveCredits = () => {
                 <div className="d-flex justify-content-center ">
                     <div className="row request-leave-button">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-4 pt-1 pb-2">
-                            <Button id=""
+                            <Button id="availableleavecredits_requestimeoff_btn"
                             style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             onClick={() => {setShowModal(true)}}
                             >
@@ -442,7 +446,7 @@ const AvailableLeaveCredits = () => {
                                     <select
                                     className="form-select"
                                     name="type"
-                                    id="leaves_leavetype"
+                                    id="availableleavecredits_leavetype_input"
                                     value={values.type}
                                     // onChange={(e) => setFormField(e, setFieldValue)}>
                                     onChange={(e) => {
@@ -485,7 +489,7 @@ const AvailableLeaveCredits = () => {
                                         <label>Date(s)</label>
                                         <input type="date"
                                             name="dateFrom"
-                                            id="dateFrom"
+                                            id="availableleavecredits_datefrom_input"
                                             className="form-control"
                                             value={values.dateFrom}
                                             // max={(new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0]}
@@ -496,7 +500,7 @@ const AvailableLeaveCredits = () => {
                                             placeholder="dd/mm/yyyy"
                                         />
                                         {errors && errors.dateFrom && (
-                                            <p id="leaves_errordatefrom_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
+                                            <p id="availableleavecredits_leavetypeerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                                         )}
                                         
                                     </div>
@@ -507,13 +511,13 @@ const AvailableLeaveCredits = () => {
                                         <textarea
                                             rows={4}
                                             name="reason"
-                                            id="reason"
+                                            id="availableleavecredits_reason_input"
                                             className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
                                             value={values.reason}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                         />
                                         {errors && errors.reason && (
-                                            <p id="leaves_reason_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                                            <p id="availableleavecredits_reasonerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                                         )}
                                         <small className="form-text text-muted">{values.reason.length}/250 characters</small>
                                     </div>
@@ -522,7 +526,7 @@ const AvailableLeaveCredits = () => {
                                     <div className="mt-4">
                                         <input type="date"
                                             name="dateTo"
-                                            id="dateTo"
+                                            id="availableleavecredits_dateto_input"
                                             className="form-control"
                                             value={values.dateTo}
                                             min={values.dateFrom}
@@ -538,7 +542,7 @@ const AvailableLeaveCredits = () => {
                     
                     
                                         {errors && errors.dateTo && (
-                                            <p id="leaves_errordateto_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                                            <p id="availableleavecredits_datetoerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
                                         )}
                                     </div>
                                     <div className="mt-5 pt-5">
@@ -573,7 +577,7 @@ const AvailableLeaveCredits = () => {
                                             <input
                                               type="radio"
                                               name={"leaveCredit" + index.toString()}
-                                              id={"leaveCreditWhole" + index.toString()}
+                                              id={"availleaveCreditWhole" + index.toString()}
                                               checked={item.credit == 1}
                                               onChange={() => {
                                                 setDateOption(index, 1, 'WHOLEDAY')
@@ -584,7 +588,7 @@ const AvailableLeaveCredits = () => {
                                             <input
                                               type="radio"
                                               name={"leaveCredit" + index.toString()}
-                                              id={"leaveCreditDay" + index.toString()}
+                                              id={"availleaveCreditDay" + index.toString()}
                                               checked={item.credit == 0.5}
                                               onChange={() => {
                                                 setDateOption(index, .5, "FIRST_HALF")
@@ -598,7 +602,7 @@ const AvailableLeaveCredits = () => {
                                                   <input
                                                     type="radio"
                                                     name={"dayTypes" + index.toString()}
-                                                    id={"leaveCreditWhole1" + index.toString()}
+                                                    id={"availleaveCreditWhole1" + index.toString()}
                                                     checked={item.dayType == 'FIRST_HALF'}
                                                     onChange={() => setDateOption(index, .5, "FIRST_HALF")}
                                                   />
@@ -608,10 +612,10 @@ const AvailableLeaveCredits = () => {
                                                     type="radio"
                                                     name={"dayTypes" + index.toString()}
                                                     checked={item.dayType == 'SECOND_HALF'}
-                                                    id={"leaveCreditDay1" + index.toString()}
+                                                    id={"availleaveCreditDay1" + index.toString()}
                                                     onChange={() => setDateOption(index, .5, "SECOND_HALF")}
                                                   />
-                                                  <label id="leaves_leavecreditsecondhalf_leavebreakdownlabel" htmlFor={"leaveCreditDay1" + index.toString()}
+                                                  <label id="availleaves_leavecreditsecondhalf_leavebreakdownlabel" htmlFor={"leaveCreditDay1" + index.toString()}
                                                     style={{ paddingTop: -10 }}>Second Half</label>
                                                 </>
                                                 :
@@ -643,6 +647,7 @@ const AvailableLeaveCredits = () => {
                                     onClick={() => {
                                         setShowModal(false)
                                     }}
+                                    id="availableleavecredits_btn_cancel"
                                     type="button"
                                     className="btn btn-outline custom-grey-button mr-3">
                                     Cancel
@@ -667,7 +672,7 @@ const AvailableLeaveCredits = () => {
                                   </button>
                               } */}
                               <button
-                                id="leaves_save_leavebreakdownbtn"
+                                id="availableleavecredits_save_btn"
                                 type="submit"
                                 className="btn btn-primary"
                                 disabled={leaveBreakdown.length === 0 || leaveBreakdown.length > 30}

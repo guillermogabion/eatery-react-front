@@ -1455,7 +1455,7 @@ export const Leaves = (props: any) => {
                       <input type="date"
                         onKeyDown={(e) => e.preventDefault()}
                         name="dateFrom"
-                        id="dateFrom"
+                        id="leaves_inputdate_dateFrom"
                         className="form-control"
                         disabled={true}
                         value={values.dateFrom}
@@ -1482,7 +1482,7 @@ export const Leaves = (props: any) => {
                         disabled={true}
                         onKeyDown={(e) => e.preventDefault()}
                         name="dateTo"
-                        id="dateTo"
+                        id="leaves_inputdate_dateTo"
                         className="form-control"
                         value={values.dateTo}
                         min={values.dateFrom}
@@ -1504,7 +1504,7 @@ export const Leaves = (props: any) => {
                       <input type="text"
                         disabled={true}
                         name="reason"
-                        id="reason"
+                        id="leaves_inputtype_reason"
                         className="form-control"
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}

@@ -46,18 +46,27 @@ const Shortcut = () => {
                 const { status, body = {data : {}, error: {}}} = res;
                 if (status === 200 || status == 201) {
                     if (body.error && body.error.message) {
-                        ErrorSwal.fire({
-                          title: 'Error!',
-                          text: (body.error && body.error.message) || "",
-                         
-                          icon: 'error',
-                      })
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                          if (confirmButton)
+                            confirmButton.id = "dashboardshortcut_errorconfirm_alertbtn";
+                        },
+                        icon: 'error',
+                      });
                     }else{
                         ErrorSwal.fire({
-                            title: 'Created Successfully!',
+                            title: 'Create Successfully!!',
                             text: (body.data) || "",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                              if (confirmButton)
+                                confirmButton.id = "dashboardshortcut_succsessconfirm_alertbtn";
+                            },
                             icon: 'success',
-                        }).then((result) => {
+                          }).then((result) => {
                               if (result.isConfirmed) {
                               location.reload();
                               }
@@ -104,10 +113,11 @@ const Shortcut = () => {
                         {
                             shortcut && shortcut.length > 0 ? (
                                 shortcut.map((item: any, index: any) => (
-                                <div key={index} className="col-6 pb-2">
+                                <div key={index} id={"dashboardshortcut_div_"+item.endpoint} className="col-6 pb-2">
                                     <Link
                                         className="non-transparent-border"
                                         to={item.endpoint}
+                                        id={"dashboardshortcut_link_"+item.endpoint}
                                         >
 
                                         <span style={{ lineHeight: "0%", color: "white" }}>
@@ -123,6 +133,7 @@ const Shortcut = () => {
 
                         <div className="col-6 ">
                             <p className="transparent-border"
+                            id={"dashboardshortcut_addshortcut_btn"}
                             onClick={() => setModalShow(true)}
                             style={{cursor:'pointer'}}
                             >
@@ -176,6 +187,7 @@ const Shortcut = () => {
                                             <input
                                                 type="text"
                                                 name="name"
+                                                id={"dashboardshortcut_shortcutname_input"}
                                                 className={`form-control ${touched.name && errors.name ? 'is-invalid' : ''}`}
                                                 value={values.name}
                                                 onChange={(e) => {
@@ -188,6 +200,7 @@ const Shortcut = () => {
                                           
                                             <label>Shortcut Link</label>
                                             <select
+                                                id={"dashboardshortcut_shortcutlink_input"}
                                                 className="form-select"
                                                 name="endpoint"
                                                 value={values.endpoint}
@@ -214,6 +227,7 @@ const Shortcut = () => {
                                     </div>
                                     <div className="d-flex justify-content-center px-5">
                                         <button
+                                            id={"dashboardshortcut_save_btn"}
                                             type="submit"
                                             className="btn btn-primary mx-2 mt-3"
                                             style={{width: '120px'}}

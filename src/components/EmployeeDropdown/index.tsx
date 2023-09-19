@@ -80,7 +80,7 @@ const EmployeeDropdown = (props: any) => {
         onChangeOption={singleChangeOption}
         name={name}
         value={value}
-        id={id}
+        id={'employeedropdownselect_'+id}
         styles={styles}
         isClearable={true}
     />
