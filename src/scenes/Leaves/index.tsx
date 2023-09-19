@@ -1131,17 +1131,34 @@ export const Leaves = (props: any) => {
                     },
                   })
                   .then((response) => {
-                    console.log("Response Data:", response.data);
-                    ErrorSwal.fire({
-                      title: 'Success!',
-                      text: response.data.data || "",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-                        if (confirmButton)
-                          confirmButton.id = "login_successconfirm4_alertbtn";
-                      },
-                      icon: 'success',
-                    });
+                    if (response.data.error){
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: response.data.error.message || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                          if (confirmButton)
+                            confirmButton.id = "leave_errorconfirm4_alertbtn";
+                        },
+                        icon: 'error',
+                      });
+                      return 
+      
+                    }else{
+                      ErrorSwal.fire({
+                        title: 'Success!',
+                        text: response.data.data || "",
+                        didOpen: () => {
+                          const confirmButton = Swal.getConfirmButton();
+                          if (confirmButton)
+                            confirmButton.id = "leave_successconfirm4_alertbtn";
+                        },
+                        icon: 'success',
+                      });
+                      setLeaveId(null);
+                      setModalShow(false)
+                    }
+                    
                     return response;
                   })
                   .catch((error) => {
@@ -1174,10 +1191,7 @@ export const Leaves = (props: any) => {
                         // onChange={(e) => setFormField(e, setFieldValue)}>
                         onChange={(e) => {
                           setFormField(e, setFieldValue);
-
                         }}
-
-
                       >
                         {leaveTypes &&
                           leaveTypes.length &&
