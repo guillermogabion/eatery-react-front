@@ -277,7 +277,6 @@ const AvailableLeaveCredits = () => {
               "dayType": item.dayType,
             })),
           });
-      
           formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
         
           if (values.file) {
@@ -293,17 +292,33 @@ const AvailableLeaveCredits = () => {
               },
             })
             .then((response) => {
-              console.log("Response Data:", response.data);
-              ErrorSwal.fire({
-                title: 'Success!',
-                text: response.data.data || "",
-                didOpen: () => {
-                  const confirmButton = Swal.getConfirmButton();
-                  if (confirmButton)
-                    confirmButton.id = "login_successconfirm4_alertbtn";
-                },
-                icon: 'success',
-              });
+              if (response.data.error){
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: response.data.error.message || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+                    if (confirmButton)
+                      confirmButton.id = "leave_errorconfirm4_alertbtn";
+                  },
+                  icon: 'error',
+                });
+                return 
+
+              }else{
+                ErrorSwal.fire({
+                  title: 'Success!',
+                  text: response.data.data || "",
+                  didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+                    if (confirmButton)
+                      confirmButton.id = "leave_successconfirm4_alertbtn";
+                  },
+                  icon: 'success',
+                });
+                setShowModal(false)
+              }
+              
               return response;
             })
             .catch((error) => {
@@ -628,6 +643,7 @@ const AvailableLeaveCredits = () => {
                                     onClick={() => {
                                         setShowModal(false)
                                     }}
+                                    type="button"
                                     className="btn btn-outline custom-grey-button mr-3">
                                     Cancel
                                 </button>
