@@ -568,6 +568,22 @@ h1 {
   text-decoration: none;
   color: rgb(0, 0, 0);
 }
+.NotifActionsLink {
+  position: absolute;
+  z-index: 10;
+  left: -480px;
+  top: 100%;
+  width: 500px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 3px 1px rgb(51 51 51 / 30%);
+  padding: 15px 25px;
+}
+
+.NotifActionsLink a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
 
 .mainSearch {
   width: 244px;
@@ -3817,8 +3833,8 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   border-radius: 50%;
 } 
 .card-body {
-  max-height: 280px;
-  min-height: 280px;
+  max-height: 278px;
+  min-height: 278px;
   padding-top: 15%;
 }
 /* .card-body-profile > {
@@ -3942,8 +3958,8 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   padding-top: 1%;
 }
 .card-leave {
-  height: 560px;
-  max-height: 560px;
+  min-height: 580px;
+  max-height: 580px;
   position: relative;
   margin-top: 10%;
 }
@@ -4119,6 +4135,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 
 .custom-calendar-tabs {
   border: none !important;
+  width: 98%;
 }
 .custom-calendar-tab {
   border: none !important;
@@ -4214,12 +4231,27 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 
 }
 .time-size {
-  font-size: 40px ;
+  font-size: 30px ;
   font-weight: bold;
   padding-left: 10px;
 }
 
 @media screen and (max-width: 600px) and (max-width: 767px) {
+  .NotifActionsLink {
+    position: absolute;
+    z-index: 10;
+    left: -280px;
+    top: 100%;
+    width: 400px;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 1px rgb(51 51 51 / 30%);
+    padding: 15px 25px;
+  }
+  
+  .user-name {
+    display: none;
+  }
  
   .time-card-image-section {
     display: none;
@@ -4610,4 +4642,67 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .react-calendar__year-view__title {
   text-align: left !important;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}
+
+.custom-calendar {
+  width: 400px;
+  line-height: 15px;
+  max-width: 100%;
+ 
+}
+.react-calendar__month-view__weekdays{
+  text-align: center;
+}
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none !important;
+}
+
+.custom-accordion {
+  width: 100%;
+}
+.notif-button {
+  background-color: transparent !important;
+  color:  #189FB5 !important;
+  border: 2px solid #189FB5 !important;
+}
+
+@media screen and (min-width : 1600px) {
+  .day-date {
+    font-size: 20px;
+    /* font-weight: bold; */
+  }
+  .day-name {
+    font-size: 13px;
+  }
+  /* .request-leave-button {
+    padding-bottom: 15px;
+  } */
+  /* .credit-record {
+    min-height: 345px;
+    max-height: 345px;
+  } */
+  
+  
+}
+
+@media screen and (max-width : 1600px) {
+  .request-leave-button {
+    padding-top: 10px !important;
+  }
+  
+}
+.button-space {
+  min-height: 10px;
+  max-height: 10px;
+}
+.search-bttn {
+  background-color: transparent !important;
 }

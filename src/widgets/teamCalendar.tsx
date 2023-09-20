@@ -212,7 +212,7 @@ const CalendarComponent = () => {
         </div>
       </div> */}
       <div>
-        <div className="calendar-container">
+        <div className="calendar-container mb-2">
             <Calendar
             onChange={setDate}
             calendarType="US"
@@ -225,7 +225,7 @@ const CalendarComponent = () => {
         </div>
       </div>
       <div className="pt-12 mt-4">
-        <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-calendar pt-5  mt-4">
+        <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-calendar pt-1  mt-4">
           <Tab id="teamcalendar_tab1" className="custom-tabs"  eventKey="tab1" title="Holiday">
           {hasHolidaysThisWeek ? (
             dataMonth.map((item, index) => (
@@ -586,6 +586,14 @@ const TeamCalendar = () => {
     }
   };
 
+  const handleLeftArrowClick = () => {
+    setSelectedWeek(selectedWeek === 1 ? 52 : selectedWeek - 1);
+  };
+
+  const handleRightArrowClick = () => {
+    setSelectedWeek((selectedWeek + 1) % 53 || 1);
+  };
+
   
 
 
@@ -640,11 +648,11 @@ const TeamCalendar = () => {
                 eventKey="tab1"
                 title={<img src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
             >
-                <div style={{ height: '380px', overflowY: 'auto' }}>
+                <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden'  }}>
                     <div className="row d-flex">
                     <div className="col-1">
                         <div className="arrow-button left">
-                          <div onClick={() => changeWeek(-1)} className="triangle-left text-primary"></div>
+                          <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left text-primary"></div>
                         </div>
                     </div>
                     <div className="col-10">
@@ -670,15 +678,15 @@ const TeamCalendar = () => {
                     </div>
                     <div className="col-1">
                         <div className="arrow-button right">
-                            <div id="teamcalendar_changeweek_btn" onClick={() => changeWeek(1)} className="triangle-right text-primary"></div>
+                            <div id="teamcalendar_changeweek_btn" onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
                         </div>
                     </div>
                 </div>
 
 {/* leaves  */} 
                 <div className="pt-4">
-                <Accordion defaultActiveKey="0" style={{border: 'none'}} >
-                    <Accordion.Item style={{paddingBottom: '10px'}} className="holiday-accordion"  id="dashboarteamcalendar_accordion1" eventKey="0">
+                <Accordion defaultActiveKey="" style={{border: 'none'}} className="custom-accordion">
+                    <Accordion.Item style={{paddingBottom: '10px'}} className="holiday-accordion" id="dashboarteamcalendar_accordion1" eventKey="0">
                         <Accordion.Header className="accordion-custom-header" >Holidays</Accordion.Header>
                         <Accordion.Body style={{borderRadius: '10px'}}>
                         {hasHolidaysThisWeek ? (
@@ -734,8 +742,8 @@ const TeamCalendar = () => {
                                     {item.leavesList && item.leavesList.length > 0 && (
                                         <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
                                         {item.leavesList.slice(0, 2).map((leaveItem, leaveIndex) => (
-                                          <li key={leaveIndex} style={{ display: 'inline-block', marginRight: '5px' }}>
-                                            <img src={user} alt="" width={40} />
+                                          <li key={leaveIndex} style={{ display: 'inline-block', margin: '5px'}}>
+                                            <img src={user} alt="" width={30} />
                                           </li>
                                         ))}
                                       </ul>

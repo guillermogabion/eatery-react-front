@@ -21,6 +21,7 @@ import AnnouncementBoard from "../../widgets/announcementBoard"
 import SquadTracker from "../../widgets/squadTracker"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import Shortcut from "../../widgets/shortcut"
+import Reimbursement from "../../widgets/Reimbursement"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -100,6 +101,11 @@ export const Dashboard = (props: any) => {
           <div className="col-sm-12 col-md-6 col-lg-4">
             <div className="card">
               <SquadTracker />
+            </div>
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-4">
+            <div className="card">
+              <Reimbursement />
             </div>
           </div>
           <div className="col-sm-12 col-md-6 col-lg-4">

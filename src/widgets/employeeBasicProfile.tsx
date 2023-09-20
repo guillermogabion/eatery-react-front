@@ -6,6 +6,7 @@ import { async } from "validate.js";
 import { Card, Button } from "react-bootstrap";
 import { email_icon, approver_icon, join_icon, phone_icon, photo, squad_icon, update_employee_icon } from "../assets/images";
 import moment from "moment";
+import { formatDate } from "react-calendar/dist/cjs/shared/dateFormatter";
 
 
 
@@ -21,7 +22,7 @@ const EmployeeBasicProfile = () => {
     const monthEmployed = diffDuration.months();
     const daysEmployed = diffDuration.days();
     
-    const [year, month, day] = dateString.split("-");
+    const [year, month, day] = dateString ? dateString.split("-") : ["", "", ""];
 
     const date = new Date(year, month - 1, day);
     const monthNames = [
@@ -68,7 +69,7 @@ const EmployeeBasicProfile = () => {
                         <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '5px', flexWrap: 'wrap'}} className="text-primary font-bold">
                             <img src={join_icon} alt="" style={{marginRight: '10px'}} /> 
                             <p style={{marginRight: "5px", fontSize: '80%'}}>
-                                Joined {formattedDate}
+                                Joined {formattedDate == undefined ? " " : formattedDate}
                             </p> 
                             <p style={{fontSize: '80%'}}>(</p> 
                             <p style={{marginLeft: "", fontSize: '80%'}}>{yearEmployed == 0 ? "" : yearEmployed + " " + "years"}</p>
@@ -92,7 +93,7 @@ const EmployeeBasicProfile = () => {
                   
             </div>
             <div className="d-flex justify-content-center">
-                <div className="col-12 employee-button px-4">
+                <div className="col-12 employee-button px-4 mb-4">
                     <Button disabled id="employeebasicprofile_update_btn"
                         style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         // onClick={() => makeAttendance('time out')}

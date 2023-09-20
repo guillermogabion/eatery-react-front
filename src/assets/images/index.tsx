@@ -7,6 +7,7 @@ import action_cancel from "./dist/action/action_cancel.png"
 import action_decline from "./dist/action/action_decline.png"
 import action_edit from "./dist/action/action_edit.png"
 import icon_search_grey from "./icon_search_grey.png"
+import icon_search_white from "./icon_search_white.png"
 import user from "./dist/User.png"
 import show_password_dark from "./dist/action/show_password_dark.svg"
 import hide_password_dark from "./dist/action/icon_show_password.svg"
@@ -40,6 +41,9 @@ import inactiveWeek from "../images/dist/calendar/week-inactive.svg"
 import inactiveCalendar from "../images/dist/calendar/month-inactive.svg"
 import activeCalendar from "../images/dist/calendar/month-active.svg"
 import Search from "../images/dist/SearchBtn.png"
+import mail from "../images/dist/topmenu/mail.svg"
+import bell from "../images/dist/topmenu/bell.svg"
+import bell_red from "../images/dist/topmenu/bell_red.svg"
 
 export {
   eye,
@@ -82,5 +86,9 @@ export {
   activeWeek,
   activeCalendar,
   inactiveCalendar,
-  Search
+  Search,
+  mail,
+  bell,
+  bell_red,
+  icon_search_white
 }

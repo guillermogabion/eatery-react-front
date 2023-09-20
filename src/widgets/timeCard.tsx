@@ -233,7 +233,7 @@ const TimeCard = () => {
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
                                 <h4>{currentDayOfWeek}, {currentDate}</h4>
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
+                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex date-header">
                                 <span className="time-size">{currentTime}</span>
                             </div>
 
@@ -283,13 +283,19 @@ const TimeCard = () => {
                     
             </div>
               <div className="row d-flex justify-content-center mx-2">
-                <Button id="dashboardwidg_timein_btn" className={hasTimeIn ? " has-timeout-timeint-btn col-6 mx-2 mr-2" : "mx-2 col-6"}
-                    style={{ width: "45%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                    onClick={() => makeAttendance('time in')}
-                >Time in</Button>
-                <Button id="dashboardwidg_timeout_btn" className={hasTimeOut ? " has-timeout-timeint-btn mx-2 col-6" : "col-6 mx-2"}
-                    style={{ width: "45%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                    onClick={() => makeAttendance('time out')}>Time out</Button>
+                <div className="col-6">
+                  <Button id="dashboardwidg_timein_btn" className={hasTimeIn ? " has-timeout-timeint-btn" : ""}
+                      style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      onClick={() => makeAttendance('time in')}
+                  >Time in</Button>
+                </div>
+                <div className="col-6">
+                  <Button id="dashboardwidg_timeout_btn" className={hasTimeOut ? " has-timeout-timeint-btn" : ""}
+                      style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      onClick={() => makeAttendance('time out')}>Time out</Button>
+                </div>
+                
+                
               </div>
 
            

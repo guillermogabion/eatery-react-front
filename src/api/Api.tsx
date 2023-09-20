@@ -337,7 +337,11 @@ const Api: any = {
   // shortcut 
 
   getShortcut : process.env.REACT_APP_API_URL + "shortcut/get/list",
-  addShortcut : process.env.REACT_APP_API_URL + "shortcut/save"
+  addShortcut : process.env.REACT_APP_API_URL + "shortcut/save",
+
+  // activity logs 
+
+  allActivity : process.env.REACT_APP_API_URL + "activity/all"
 
 
 

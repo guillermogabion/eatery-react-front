@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { Tabs, Tab, Table, Button } from "react-bootstrap"
 import { tr } from "date-fns/locale";
 import user from "../assets/images/dist/User1.png"
-import { Search } from "../assets/images";
+import { Search} from "../assets/images";
+import icon_search_white from "../assets/images/icon_search_white.png"
 import EmployeeDropdown from "../components/EmployeeDropdown";
 
 
@@ -130,17 +131,30 @@ const All = () => {
                 </div>
                 <div className="pt-6 col-2">
                     <Button
+<<<<<<< HEAD
                         id="dashboardsquadtracker_search_input"
                         onClick={() => getAll()}
                         style={{width: '70px'}}
                         >
                             <img src={Search} alt="" />
+=======
+                    onClick={() => getAll()}
+                    style={{ width: '100%',
+                     padding: '0',
+                     height: '40px',
+                     display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    }} 
+                    >
+                        <img src={icon_search_white} alt="" width={20} />
+>>>>>>> c91409ae6b7151e6506db6f430e9c2f4d6ef409e
                     </Button>
 
                 </div>
             </div>
             <Table responsive>
-                <div style={{ minHeight: '310px', maxHeight: '310px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
+                <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
                     <tbody>
                         {allMember && allMember.length > 0 ? (
                         allMember.map((item: any, index: any) => (
@@ -240,18 +254,32 @@ const OnLeave = () => {
                     </div>
                 </div>
                 <div className="pt-6 col-2">
+<<<<<<< HEAD
                     <Button 
                         id="dashboardsquadtracker_getallsearch_btn"
                         onClick={() => getAll()}
                         style={{width: '70px'}}
                         >
                             <img src={Search} alt="" />
+=======
+                    <Button
+                    onClick={() => getAll()}
+                    style={{ width: '100%',
+                     padding: '0',
+                     height: '40px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    }} 
+                    >
+                        <img src={icon_search_white} alt="" width={20} />
+>>>>>>> c91409ae6b7151e6506db6f430e9c2f4d6ef409e
                     </Button>
 
                 </div>
             </div>
             <Table responsive>
-                <div  style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px'  }}>
+            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
                 <tbody>
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
@@ -336,7 +364,7 @@ const Absent = () => {
         <div>
             <div className="row">
                 <div className="pt-6 col-9 ml-3">
-                    <div className="" style={{ width: '100%', marginRight: 10 }}>
+                    <div className="" style={{ width: '100%', marginRight: 10}}>
                         <EmployeeDropdown
                             id="dashboardsquadtracker_search_input3"
                             squad={true}
@@ -349,17 +377,22 @@ const Absent = () => {
                 </div>
                 <div className="pt-6 col-2">
                     <Button
-                        id="dashboardsquadtracker_getall2_btn"
-                        onClick={() => getAll()}
-                        style={{width: '70px'}}
-                        >
-                            <img src={Search} alt="" />
+                    id="dashboardsquadtracker_getall2_btn"
+                    onClick={() => getAll()}
+                    style={{ width: '100%', padding: '0',
+                    height: '40px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    }} 
+                    >
+                        <img src={icon_search_white} alt="" width={20} />
                     </Button>
 
                 </div>
             </div>
             <Table responsive>
-            <div  style={{ maxHeight: '450px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px'  }}>
+            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
                 <tbody>
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
