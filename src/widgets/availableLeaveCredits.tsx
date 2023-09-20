@@ -347,7 +347,7 @@ const AvailableLeaveCredits = () => {
                 <span>Available Leave Credits</span>
             </div>
             <div className="card-leave">
-                <div className="row credit-record">
+                <div className="row credit-record ">
                     <div className="col-6 pl-12">
                         <img src={vacation_leave} width={120} alt="" />
                     </div>
@@ -383,18 +383,14 @@ const AvailableLeaveCredits = () => {
                     </div>
                     
                 </div>
-                <div className="d-flex justify-content-center ">
-                    <div className="row request-leave-button">
-                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 px-4 pt-1 pb-2">
-                            <Button id=""
-                            style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            onClick={() => {setShowModal(true)}}
-                            >
-                                <img src={leave_button} width={20} alt="" style={{ marginRight: '8px' }}/>
-                                Request Time-Off
-                            </Button>
-                        </div>
-                    </div>
+                <div className="d-flex justify-content-center row request-leave-button mx-3 ">
+                    <Button id=""
+                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    onClick={() => {setShowModal(true)}}
+                    >
+                        <img src={leave_button} width={20} alt="" style={{ marginRight: '8px' }}/>
+                        Request Time-Off
+                    </Button>
                 </div>
             </div>
             <Modal

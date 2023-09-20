@@ -188,7 +188,7 @@ const Shortcut = () => {
                                           
                                             <label>Shortcut Link</label>
                                             <select
-                                                className="form-select"
+                                                className={`form-control ${touched.endpoint && errors.endpoint ? 'is-invalid' : ''}`}
                                                 name="endpoint"
                                                 value={values.endpoint}
                                                 onChange={(e) => {
