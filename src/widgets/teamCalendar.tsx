@@ -226,7 +226,7 @@ const CalendarComponent = () => {
       </div>
       <div className="pt-12 mt-4">
         <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-calendar pt-1  mt-4">
-          <Tab className="custom-tabs"  eventKey="tab1" title="Holiday">
+          <Tab id="teamcalendar_tab1" className="custom-tabs"  eventKey="tab1" title="Holiday">
           {hasHolidaysThisWeek ? (
             dataMonth.map((item, index) => (
                 <div key={index}>
@@ -245,7 +245,7 @@ const CalendarComponent = () => {
             <p>Not a holiday today</p>
             )}
           </Tab>
-          <Tab  className="custom-tabs" eventKey="tab2" title="Birthday">
+          <Tab id="teamcalendar_tab2" className="custom-tabs" eventKey="tab2" title="Birthday">
             {hasBirthdaysThisWeek ? (
               dataMonth.map((item, index) => (
                   <div key={index}>
@@ -297,12 +297,12 @@ const CalendarComponent = () => {
                   {item.leavesList && item.leavesList.length > 3 ? (
                   <div className="horizontal-scroll">
                     <div className="d-flex justify-content-start">
-                      <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
+                      <button id="teamcalendar_hasleaves_btn1" className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
                         &#9664;
                       </button>
                     </div>
                     <div className="d-flex justify-content-end" >
-                      <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
+                      <button id="teamcalendar_hasleaves_btn2" className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
                         &#9654;
                       </button>
                     </div>
@@ -350,7 +350,7 @@ const CalendarComponent = () => {
           )}
 
           </Tab>
-          <Tab  className="custom-tabs" eventKey="tab4" title="New Hire">
+          <Tab id="teamcalendar_4" className="custom-tabs" eventKey="tab4" title="New Hire">
           {hasNewHiresThisWeek ? (
             dataMonth.map((item, index) => (
                 <div key={index}>
@@ -606,7 +606,7 @@ const TeamCalendar = () => {
         <div className="row d-flex">
           { activeWeekTab === 'tab1' && (
             <div className="col-6">
-              <Dropdown style={{backgroundColor: "", position: 'absolute', fontSize:"5px"}}  className="custom-dropdown">
+              <Dropdown id="teamcalendar_dropdown_input" style={{backgroundColor: "", position: 'absolute', fontSize:"5px"}}  className="custom-dropdown">
                   <Dropdown.Toggle id="week-selector" style={{ color: '' }}  className="text-primary dropdown-text">
                   {selectedWeek === null ? `Today ${formatWeekLabelForDates(weekDays[0], weekDays[6])}` : formatWeekLabel(selectedWeek)}
                   </Dropdown.Toggle>
@@ -643,6 +643,7 @@ const TeamCalendar = () => {
             onSelect={handleWeekTabSelect}
           >
           <Tab
+                id="teamcalendar_tab_tab1"
                 className="custom-calendar-tabs"
                 eventKey="tab1"
                 title={<img src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
@@ -658,6 +659,7 @@ const TeamCalendar = () => {
                         <div className="week-days ">
                         {weekDays.map((day) => (
                             <div
+                            id="teamcalendar_handledateclick_btn"
                             key={day.toDateString()}
                             className={`day ${selectedDate && day.toDateString() === selectedDate.toDateString() ? "current-day" : ""}`}
                             onClick={() => handleDateClick(day)}
@@ -676,7 +678,7 @@ const TeamCalendar = () => {
                     </div>
                     <div className="col-1">
                         <div className="arrow-button right">
-                            <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
+                            <div id="teamcalendar_changeweek_btn" onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
                         </div>
                     </div>
                 </div>
@@ -684,7 +686,7 @@ const TeamCalendar = () => {
 {/* leaves  */} 
                 <div className="pt-4">
                 <Accordion defaultActiveKey="" style={{border: 'none'}} className="custom-accordion">
-                    <Accordion.Item style={{paddingBottom: '10px'}} className="holiday-accordion"   eventKey="0">
+                    <Accordion.Item style={{paddingBottom: '10px'}} className="holiday-accordion" id="dashboarteamcalendar_accordion1" eventKey="0">
                         <Accordion.Header className="accordion-custom-header" >Holidays</Accordion.Header>
                         <Accordion.Body style={{borderRadius: '10px'}}>
                         {hasHolidaysThisWeek ? (
@@ -706,7 +708,7 @@ const TeamCalendar = () => {
                             )}
                         </Accordion.Body>
                     </Accordion.Item>
-                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="1">
+                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="1" id="dashboarteamcalendar_accordion2">
                         <Accordion.Header className="accordion-birthday-header">Birthdays</Accordion.Header>
                         <Accordion.Body>
                         {hasBirthdaysThisWeek ? (
@@ -728,7 +730,7 @@ const TeamCalendar = () => {
                             )}
                         </Accordion.Body>
                     </Accordion.Item>
-                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="2">
+                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="2" id="dashboarteamcalendar_accordion3">
                         <Accordion.Header className="accordion-leave-header">
                             <div style={{ textAlign: 'left' }}>
                               Who's Out
@@ -787,12 +789,12 @@ const TeamCalendar = () => {
                                 {item.leavesList && item.leavesList.length > 3 ? (
                                 <div className="horizontal-scroll">
                                   <div className="d-flex justify-content-start">
-                                    <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
+                                    <button id="dashboarteamcalendar_btn_btn1" className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
                                       &#9664;
                                     </button>
                                   </div>
                                   <div className="d-flex justify-content-end" >
-                                    <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
+                                    <button id="dashboarteamcalendar_btn_btn2" className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
                                       &#9654;
                                     </button>
                                   </div>
@@ -840,7 +842,7 @@ const TeamCalendar = () => {
                         )}
                         </Accordion.Body>
                     </Accordion.Item>
-                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="3">
+                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="3" id="dashboarteamcalendar_accordion4">
                         <Accordion.Header className="accordion-hire-header">New Hires
                           
                         </Accordion.Header>
