@@ -33,7 +33,7 @@ const CalendarComponent = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const hasLeavesThisWeek = dataMonth.some((item) => item.leavesList && item.leavesList.length > 0);
   const hasHolidaysThisWeek = dataMonth.some((item) => item.holidaysList && item.holidaysList.length > 0);
-  const hasBirthdaysThisWeek = dataMonth.some((item) => item.bdaysList && item.bdayList.length > 0);
+  const hasBirthdaysThisWeek = dataMonth.some((item) => item.bdayList && item.bdayList.length > 0);
   const hasNewHiresThisWeek = dataMonth.some((item) => item.newHiresList && item.newHiresList.length > 0);
   
 
@@ -212,7 +212,7 @@ const CalendarComponent = () => {
         </div>
       </div> */}
       <div>
-        <div className="calendar-container mb-2">
+        <div className="calendar-container mb-2 pb-6">
             <Calendar
             onChange={setDate}
             calendarType="US"
@@ -249,9 +249,9 @@ const CalendarComponent = () => {
             {hasBirthdaysThisWeek ? (
               dataMonth.map((item, index) => (
                   <div key={index}>
-                  {item.bdaysList && item.bdaysList.length > 0 && (
+                  {item.bdayList && item.bdayList.length > 0 && (
                       <ul>
-                      {item.bdaysList.map((bdayItem, bdayIndex) => (
+                      {item.bdayList.map((bdayItem, bdayIndex) => (
                           <li key={bdayIndex}>
                           {bdayItem.firstName} {bdayItem.lastName}
                           </li>
@@ -397,7 +397,7 @@ const TeamCalendar = () => {
 
   const hasLeavesThisWeek = dataWeek.some((item) => item.leavesList && item.leavesList.length > 0);
   const hasHolidaysThisWeek = dataWeek.some((item) => item.holidaysList && item.holidaysList.length > 0);
-  const hasBirthdaysThisWeek = dataWeek.some((item) => item.bdaysList && item.bdayList.length > 0);
+  const hasBirthdaysThisWeek = dataWeek.some((item) => item.bdayList && item.bdayList.length > 0);
   const hasNewHiresThisWeek = dataWeek.some((item) => item.newHiresList && item.newHiresList.length > 0);
   
   function getCurrentWeekNumber() {
@@ -712,9 +712,9 @@ const TeamCalendar = () => {
                         {hasBirthdaysThisWeek ? (
                             dataWeek.map((item, index) => (
                                 <div key={index}>
-                                {item.bdaysList && item.bdaysList.length > 0 && (
+                                {item.bdayList && item.bdayList.length > 0 && (
                                     <ul>
-                                    {item.bdaysList.map((bdayItem, bdayIndex) => (
+                                    {item.bdayList.map((bdayItem, bdayIndex) => (
                                         <li key={bdayIndex}>
                                         {bdayItem.firstName} {bdayItem.lastName}
                                         </li>

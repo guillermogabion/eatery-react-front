@@ -4706,3 +4706,17 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .search-bttn {
   background-color: transparent !important;
 }
+
+.widget-pagination-link {
+  /* border: none !important; */
+  color: #189FB5;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-weight: bold;
+  border: none !important;
+  padding: 2px 10px;
+  margin: 1px 1px;
+}
+.widget-pagination-link-active {
+  border-radius: 100px;
+}

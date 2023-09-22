@@ -153,7 +153,7 @@ const All = () => {
                             
                             <td className="text-primary font-bold d-flex">
                                 <img src={user} width={30} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
-                                {item.fullname} <br /> {item.role}</td>
+                                {item.fullname} <br /> {item.jobTitle}</td>
                             <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                                 {item.status == null && item.todaysTimeIn != null ? (
                                     <>
@@ -265,7 +265,7 @@ const OnLeave = () => {
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold">{item.fullname} <br /> {item.role}</td>
+                        <td className="text-primary font-bold">{item.fullname} <br /> {item.jobTitle}</td>
                         <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                             {item.status == null && item.todaysTimeIn != null ? (
                                 <>
@@ -376,7 +376,7 @@ const Absent = () => {
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold "> <p className="table-mobile"> {item.fullname} </p> <br /> {item.role}</td>
+                        <td className="text-primary font-bold "> <p className="table-mobile"> {item.fullname} </p> <br /> {item.jobTitle}</td>
                         <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                             {item.status == null && item.todaysTimeIn != null ? (
                                 <>
