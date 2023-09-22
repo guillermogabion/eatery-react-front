@@ -90,10 +90,10 @@ const TimeCard = () => {
               const cancelButton = Swal.getCancelButton();
     
               if(confirmButton)
-                confirmButton.id = "dashboard_loginconfirm_alertbtn"
+                confirmButton.id = "dashboardwidg_loginconfirm_alertbtn"
     
               if(cancelButton)
-                cancelButton.id = "dashboard_logincancel_alertbtn"
+                cancelButton.id = "dashboardwidg_logincancel_alertbtn"
             },
             icon: 'warning',
             showCancelButton: true,
@@ -106,25 +106,40 @@ const TimeCard = () => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 || status === 201) {
                   if (body.error && body.error.message) {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                          confirmButton.id = "dashboardwidg_loginconfirmerr_alertbtn";
+                      },
+                      icon: 'error',
+                    });
                   } else {
-                    ErrorSwal.fire(
-                      'Success!',
-                      (body.data) || "",
-                      'success'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Success!',
+                      text: (body.data) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                          confirmButton.id = "dashboardwidg_loginconfirmsuccess_alertbtn";
+                      },
+                      icon: 'success',
+                    });
                     getFetchData(0)
                   }
                 } else {
-                  ErrorSwal.fire(
-                    'Error!',
-                    (body.error && body.error.message) || 'Something Error.',
-                    'error'
-                  )
+                  ErrorSwal.fire({
+                    title: 'Error!',
+                    text: (body.error && body.error.message) || 'Something Error.',
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+                      if (confirmButton)
+                        confirmButton.id = "dashboardwidg_loginconfirmerr2_alertbtn";
+                    },
+                    icon: 'error',
+                  });
                 }
               })
     
@@ -141,10 +156,10 @@ const TimeCard = () => {
               const cancelButton = Swal.getCancelButton();
     
               if(confirmButton)
-                confirmButton.id = "dashboard_logoutconfirm_alertbtn"
+                confirmButton.id = "dashboardwidg_logoutconfirm_alertbtn"
     
               if(cancelButton)
-                cancelButton.id = "dashboard_logoutcancel_alertbtn"
+                cancelButton.id = "dashboardwidg_logoutcancel_alertbtn"
             },
             icon: 'warning',
             showCancelButton: true,
@@ -157,26 +172,40 @@ const TimeCard = () => {
                 const { status, body = { data: {}, error: {} } }: any = res
                 if (status === 200 || status === 201) {
                   if (body.error && body.error.message) {
-                    ErrorSwal.fire(
-                      'Error!',
-                      (body.error && body.error.message) || "",
-                      'error'
-                    )
+                    ErrorSwal.fire({
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                          confirmButton.id = "dashboardwidg_logoutconfirmerr_alertbtn";
+                      },
+                      icon: 'error',
+                    });
                   } else {
                     getFetchData(0)
-                    ErrorSwal.fire(
-                      'Success!',
-                      (body.data) || "",
-                      'success'
-                    )
-    
+                    ErrorSwal.fire({
+                      title: 'Success!',
+                      text: (body.data) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+                        if (confirmButton)
+                          confirmButton.id = "dashboardwidg_logoutconfirmsuccess_alertbtn";
+                      },
+                      icon: 'success',
+                    });
                   }
                 } else {
-                  ErrorSwal.fire(
-                    'Error!',
-                    (body.error && body.error.message) || 'Something Error.',
-                    'error'
-                  )
+                  ErrorSwal.fire({
+                    title: 'Error!',
+                    text: (body.error && body.error.message) || 'Something Error.',
+                    didOpen: () => {
+                      const confirmButton = Swal.getConfirmButton();
+                      if (confirmButton)
+                        confirmButton.id = "dashboardwidg_logoutconfirmerr2_alertbtn";
+                    },
+                    icon: 'error',
+                  });
                 }
               })
     
@@ -221,24 +250,24 @@ const TimeCard = () => {
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
                     <div className="col-6" style={{ textAlign: 'left' }}>
                         <div className="">
-                            <h6 id="dashboard_shiftschedule_label" className="bold-text pt-2 pl-7 text-primary">Shift Schedule:</h6>
+                            <h6 id="dashboardwidg_shiftschedule_label" className="bold-text pt-2 pl-7 text-primary">Shift Schedule:</h6>
                         </div>
                         <div className="">
-                            <h6 id="dashboard_firstlogin_label" className="bold-text pt-3 pl-7 text-primary">First login:</h6>
+                            <h6 id="dashboardwidg_firstlogin_label" className="bold-text pt-3 pl-7 text-primary">First login:</h6>
                         </div>
                         <div className="">
-                            <h6 id="dashboard_lastlogout_label" className="bold-text pt-3 pl-7 text-primary">Last logout:</h6>
+                            <h6 id="dashboardwidg_lastlogout_label" className="bold-text pt-3 pl-7 text-primary">Last logout:</h6>
                         </div>
                         <div className="">
-                            <h6 id="dashboard_attendancestatus_label" className="bold-text pt-3 pl-7 text-primary">Attendance Status:</h6>
+                            <h6 id="dashboardwidg_attendancestatus_label" className="bold-text pt-3 pl-7 text-primary">Attendance Status:</h6>
                         </div>
                     </div>
                     <div className="col-6 " style={{ textAlign: 'right' }}>
-                        <h6 id="dashboard_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
-                        <h6 id="dashboard_firstlogin_value" className="font-weight-bold pt-3">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'Not Timed In'}</h6>
-                        <h6 id="dashboard_lastlogout_value" className="font-weight-bold pt-3">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'Not Logged Out'}</h6>
+                        <h6 id="dashboardwidg_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
+                        <h6 id="dashboardwidg_firstlogin_value" className="font-weight-bold pt-3">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'Not Timed In'}</h6>
+                        <h6 id="dashboardwidg_lastlogout_value" className="font-weight-bold pt-3">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'Not Logged Out'}</h6>
                         <label
-                            id="dashboard_attendancestatus_value"
+                            id="dashboardwidg_attendancestatus_value"
                             className={`bold-text p-2 px-3 pt-2 mt-2  ${(!hasTimeIn && !hasTimeOut) ? 'status_blue' : (hasTimeIn && !hasTimeOut) ? 'status_red' : (hasTimeIn && hasTimeOut) ? 'status_green' : ''}`}
                             style={{
                                 background: '#E9E9E9',
@@ -255,13 +284,13 @@ const TimeCard = () => {
             </div>
               <div className="row d-flex justify-content-center mx-2">
                 <div className="col-6">
-                  <Button id="dashboard_timein_btn" className={hasTimeIn ? " has-timeout-timeint-btn" : ""}
+                  <Button id="dashboardwidg_timein_btn" className={hasTimeIn ? " has-timeout-timeint-btn" : ""}
                       style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                       onClick={() => makeAttendance('time in')}
                   >Time in</Button>
                 </div>
                 <div className="col-6">
-                  <Button id="dashboard_timeout_btn" className={hasTimeOut ? " has-timeout-timeint-btn" : ""}
+                  <Button id="dashboardwidg_timeout_btn" className={hasTimeOut ? " has-timeout-timeint-btn" : ""}
                       style={{ width: "100%", display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                       onClick={() => makeAttendance('time out')}>Time out</Button>
                 </div>
