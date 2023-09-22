@@ -27,6 +27,8 @@ const ErrorSwal = withReactContent(Swal)
 
 export const Dashboard = (props: any) => {
   const [ viewAnnouncement, setViewAnnouncement] = useState<any>([])
+  const { data } = useSelector((state: any) => state.rootReducer.userData)
+  
 
   
 
@@ -103,11 +105,17 @@ export const Dashboard = (props: any) => {
               <SquadTracker />
             </div>
           </div>
-          <div className="col-sm-12 col-md-6 col-lg-4">
-            <div className="card">
-              <Reimbursement />
+          { data.profile.role != 'EMPLOYEE' ? (
+            <>
+             <div className="col-sm-12 col-md-6 col-lg-4">
+              <div className="card">
+                <Reimbursement />
+              </div>
             </div>
-          </div>
+            
+            </> 
+          ) : null}
+         
           <div className="col-sm-12 col-md-6 col-lg-4">
             <div className="card">
               <Shortcut />
