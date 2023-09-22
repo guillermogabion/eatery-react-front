@@ -215,7 +215,7 @@ const Shortcut = () => {
                                                 {userData.data.profile.menus.flatMap((menuItem, index) => (
                                                 menuItem.menu.map((submenuItem, subIndex) => (
                                                     <option key={`${index}-${subIndex}`} value={submenuItem.route}>
-                                                    {submenuItem.route}
+                                                    {submenuItem.label}
                                                     </option>
                                                 ))
                                                 ))}

@@ -4720,3 +4720,6 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .widget-pagination-link-active {
   border-radius: 100px;
 }
+.arrow-page {
+  border: none !important; 
+}

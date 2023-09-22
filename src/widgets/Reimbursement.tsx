@@ -27,11 +27,6 @@ const Reimbursement = () => {
     const [isCancelling, setIsCancelling] = useState<any>(false);
 
 
-    const tableHeaders = [
-        'Employee Name',
-        'Amount',
-        'Action'
-    ]
 
     const getReimbursements = (pageNo: any) => {
         let queryString = ""
@@ -344,15 +339,10 @@ const Reimbursement = () => {
                 <Table responsive>
                     <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white' }}>
                         <tr>
-                            {tableHeaders &&
-                                tableHeaders.length &&
-                                tableHeaders.map((item: any, index: any) => {
-                                    return (
-                                        <th key={index} style={{ width: 'auto' }}>
-                                            {item}
-                                        </th>
-                                    );
-                                })}
+                            
+                                <th>Employee</th>
+                                <th>Amount</th>
+                                <th>Action</th>
                         </tr>
                     </thead>
                 </Table>
@@ -367,10 +357,10 @@ const Reimbursement = () => {
                                         <td style={{width: 'auto'}} id={"reimbursement_name_tdtable_" + item.id}>
                                             {`${item.firstName} ${item.lastName}`}
                                         </td>
-                                        <td style={{width: 'auto'}} id={"reimbursement_total_tdtable_" + item.id}>
+                                        <td style={{width: 'auto', paddingLeft: '20px'}} id={"reimbursement_total_tdtable_" + item.id}>
                                             {Utility.formatToCurrency(item.total)}
                                         </td>
-                                        <td>
+                                        <td style={{width: 'auto'}}>
                                         {
                                             item.status != "APPROVED" && item.status != "DECLINED" && item.status != "CANCELLED" && (
                                                 <>
@@ -433,9 +423,9 @@ const Reimbursement = () => {
                 marginPagesDisplayed={1}
                 pageCount={(reimbursementList && reimbursementList.totalPages) || 0}
                 previousLabel="<"
-                previousLinkClassName="prev-next-pagination"
-                nextLinkClassName="prev-next-pagination"
-                activeLinkClassName="active-page-link"
+                previousLinkClassName="prev-next-pagination arrow-page"
+                nextLinkClassName="prev-next-pagination arrow-page"
+                activeLinkClassName="active-page-link  widget-pagination-link-active"
                 disabledLinkClassName="prev-next-disabled"
                 pageLinkClassName="page-link widget-pagination-link"
                 renderOnZeroPageCount={null}
