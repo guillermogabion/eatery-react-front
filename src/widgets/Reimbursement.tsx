@@ -413,7 +413,7 @@ const Reimbursement = () => {
                     null
             }
             <div className="row">
-                <div className="col-6">
+                <div className="col-8">
                     <div className="d-flex justify-content-start">
                         <div className="">
                             <ReactPaginate
@@ -421,7 +421,7 @@ const Reimbursement = () => {
                             breakLabel="..."
                             nextLabel=">"
                             onPageChange={handlePageClick}
-                            pageRangeDisplayed={2}
+                            pageRangeDisplayed={1}
                             marginPagesDisplayed={1}
                             pageCount={(reimbursementList && reimbursementList.totalPages) || 0}
                             previousLabel="<"
@@ -435,9 +435,9 @@ const Reimbursement = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-6">
+                <div className="col-4">
                     <div className="d-flex justify-content-end">
-                        <span className="text-primary font-bold"> Showing {reimbursementList.numberOfElements} of {reimbursementList.totalElements} </span>
+                        <span className="text-primary font-bold items-count" > Showing {reimbursementList.numberOfElements} of {reimbursementList.totalElements} </span>
                     </div>
                 </div>
             </div>
