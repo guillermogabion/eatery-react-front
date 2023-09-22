@@ -131,13 +131,6 @@ const All = () => {
                 </div>
                 <div className="pt-6 col-2">
                     <Button
-<<<<<<< HEAD
-                        id="dashboardsquadtracker_search_input"
-                        onClick={() => getAll()}
-                        style={{width: '70px'}}
-                        >
-                            <img src={Search} alt="" />
-=======
                     onClick={() => getAll()}
                     style={{ width: '100%',
                      padding: '0',
@@ -148,7 +141,6 @@ const All = () => {
                     }} 
                     >
                         <img src={icon_search_white} alt="" width={20} />
->>>>>>> c91409ae6b7151e6506db6f430e9c2f4d6ef409e
                     </Button>
 
                 </div>
@@ -254,14 +246,6 @@ const OnLeave = () => {
                     </div>
                 </div>
                 <div className="pt-6 col-2">
-<<<<<<< HEAD
-                    <Button 
-                        id="dashboardsquadtracker_getallsearch_btn"
-                        onClick={() => getAll()}
-                        style={{width: '70px'}}
-                        >
-                            <img src={Search} alt="" />
-=======
                     <Button
                     onClick={() => getAll()}
                     style={{ width: '100%',
@@ -273,7 +257,6 @@ const OnLeave = () => {
                     }} 
                     >
                         <img src={icon_search_white} alt="" width={20} />
->>>>>>> c91409ae6b7151e6506db6f430e9c2f4d6ef409e
                     </Button>
 
                 </div>
@@ -376,7 +359,7 @@ const Absent = () => {
                     </div>
                 </div>
                 <div className="pt-6 col-2">
-                    <Button
+                    <Button 
                     id="dashboardsquadtracker_getall2_btn"
                     onClick={() => getAll()}
                     style={{ width: '100%', padding: '0',

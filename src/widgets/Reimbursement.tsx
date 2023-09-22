@@ -335,7 +335,7 @@ const Reimbursement = () => {
             </div>
             <div className="time-card-body row">
             <div>
-            <div >
+            <div style={{ paddingLeft: '15px'}}>
                 <Table responsive>
                     <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white' }}>
                         <tr>
@@ -412,26 +412,36 @@ const Reimbursement = () => {
                     :
                     null
             }
-            <div className="d-flex justify-content-start">
-            <div className="">
-                <ReactPaginate
-                className="d-flex justify-content-center align-items-center widget-pagination"
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={2}
-                marginPagesDisplayed={1}
-                pageCount={(reimbursementList && reimbursementList.totalPages) || 0}
-                previousLabel="<"
-                previousLinkClassName="prev-next-pagination arrow-page"
-                nextLinkClassName="prev-next-pagination arrow-page"
-                activeLinkClassName="active-page-link  widget-pagination-link-active"
-                disabledLinkClassName="prev-next-disabled"
-                pageLinkClassName="page-link widget-pagination-link"
-                renderOnZeroPageCount={null}
-                />
+            <div className="row">
+                <div className="col-6">
+                    <div className="d-flex justify-content-start">
+                        <div className="">
+                            <ReactPaginate
+                            className="d-flex justify-content-center align-items-center widget-pagination"
+                            breakLabel="..."
+                            nextLabel=">"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={2}
+                            marginPagesDisplayed={1}
+                            pageCount={(reimbursementList && reimbursementList.totalPages) || 0}
+                            previousLabel="<"
+                            previousLinkClassName="prev-next-pagination arrow-page"
+                            nextLinkClassName="prev-next-pagination arrow-page"
+                            activeLinkClassName="active-page-link  widget-pagination-link-active"
+                            disabledLinkClassName="prev-next-disabled"
+                            pageLinkClassName="page-link widget-pagination-link"
+                            renderOnZeroPageCount={null}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-6">
+                    <div className="d-flex justify-content-end">
+                        <span className="text-primary font-bold"> Showing {reimbursementList.numberOfElements} of {reimbursementList.totalElements} </span>
+                    </div>
+                </div>
             </div>
-            </div>
+           
         </div>
                 
     </div>
