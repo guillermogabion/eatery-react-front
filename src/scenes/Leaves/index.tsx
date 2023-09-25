@@ -32,7 +32,7 @@ export const Leaves = (props: any) => {
     "status": "PENDING",
     "reason": "",
     "breakdown": [],
-    "file" : null
+    "file": null
   }
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   const { authorizations } = data?.profile
@@ -1071,7 +1071,7 @@ export const Leaves = (props: any) => {
               const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
               const breakdownLength = leaveBreakdown.length;
               console.log("breakdownLength:", breakdownLength);
-            
+
               if (breakdownLength >= 8 && values.type === 1) {
                 ErrorSwal.fire({
                   title: 'Error!',
@@ -1103,25 +1103,22 @@ export const Leaves = (props: any) => {
                   },
                 });
                 const formData = new FormData();
-                const leave_dataJSON = JSON.stringify({
-                  "dateFrom": values.dateFrom,
-                  "dateTo": values.dateTo,
-                  "type": values.type,
-                  "status": values.status,
-                  "reason": values.reason,
-                  "breakdown": leaveBreakdown.map((item) => ({
-                    "date": item.date,
-                    "credit": item.credit,
-                    "dayType": item.dayType,
-                  })),
-                });
-            
-                formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
-              
+                formData.append('dateFrom', values.dateFrom);
+                formData.append('dateTo', values.dateTo);
+                formData.append('type', values.type);
+                formData.append('status', values.status);
+                formData.append('reason', values.reason);
+
+                leaveBreakdown.forEach((item: any, index: any) => {
+                  formData.append(`breakdown[${index}].date`, item.date);
+                  formData.append(`breakdown[${index}].credit`, item.credit);
+                  formData.append(`breakdown[${index}].dayType`, item.dayType);
+                })
+
                 if (values.file) {
                   formData.append("file", values.file);
                 }
-              
+
                 return http
                   .post(`${Api.requestLeaveCreate}`, formData, {
                     headers: {
@@ -1131,7 +1128,7 @@ export const Leaves = (props: any) => {
                     },
                   })
                   .then((response) => {
-                    if (response.data.error){
+                    if (response.data.error) {
                       ErrorSwal.fire({
                         title: 'Success!',
                         text: response.data.error.message || "",
@@ -1142,9 +1139,9 @@ export const Leaves = (props: any) => {
                         },
                         icon: 'error',
                       });
-                      return 
-      
-                    }else{
+                      return
+
+                    } else {
                       ErrorSwal.fire({
                         title: 'Success!',
                         text: response.data.data || "",
@@ -1158,7 +1155,7 @@ export const Leaves = (props: any) => {
                       setLeaveId(null);
                       setModalShow(false)
                     }
-                    
+
                     return response;
                   })
                   .catch((error) => {
@@ -1206,11 +1203,11 @@ export const Leaves = (props: any) => {
                       )}
                     </div>
                     <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 pt-4 mb-2">
-                        <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" style={{width: '100%'}} className="file-input-style" onChange={(e) => {
-                          // Set the 'file' property in form values to the selected file
-                          setFieldValue("file", e.currentTarget.files[0]);
-                        }} />
-                        <small className="text-muted" style={{lineHeight: "0"}}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
+                      <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" style={{ width: '100%' }} className="file-input-style" onChange={(e) => {
+                        // Set the 'file' property in form values to the selected file
+                        setFieldValue("file", e.currentTarget.files[0]);
+                      }} />
+                      <small className="text-muted" style={{ lineHeight: "0" }}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Date From </label>

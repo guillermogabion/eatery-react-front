@@ -269,19 +269,18 @@ const AvailableLeaveCredits = () => {
             },
           });
           const formData = new FormData();
-          const leave_dataJSON = JSON.stringify({
-            "dateFrom": values.dateFrom,
-            "dateTo": values.dateTo,
-            "type": values.type,
-            "status": values.status,
-            "reason": values.reason,
-            "breakdown": leaveBreakdown.map((item) => ({
-              "date": item.date,
-              "credit": item.credit,
-              "dayType": item.dayType,
-            })),
-          });
-          formData.append('leave_data', new Blob([leave_dataJSON], { type: 'application/json' }));
+
+          formData.append('dateFrom', values.dateFrom);
+          formData.append('dateTo', values.dateTo);
+          formData.append('type', values.type);
+          formData.append('status', values.status);
+          formData.append('reason', values.reason);
+
+          leaveBreakdown.forEach((item:any, index:any) => {
+              formData.append(`breakdown[${index}].date`, item.date);
+              formData.append(`breakdown[${index}].credit`, item.credit);
+              formData.append(`breakdown[${index}].dayType`, item.dayType);
+          })
         
           if (values.file) {
             formData.append("file", values.file);
