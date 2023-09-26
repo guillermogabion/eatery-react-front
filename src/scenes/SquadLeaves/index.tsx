@@ -524,6 +524,13 @@ export const SquadLeaves = (props: any) => {
       }
     })
   }
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
 
 
 
@@ -558,7 +565,7 @@ export const SquadLeaves = (props: any) => {
                           <td id={"squadleaves_type_alleavesdata_" + item.id}> {item.type} </td>
                           <td id={"squadleaves_datefrom_alleavesdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_dateto_alleavesdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id={"squadleaves_reason_alleavesdata_" + item.id}> {item.reason} </td>
+                          <td id={"squadleaves_reason_alleavesdata_" + item.id}> {limitText(item.reason, 20)} </td>
                           <td id={"squadleaves_statuschangedby_alleavesdata_" + item.id}> {item.statusChangedBy} </td>
                           <td id={"squadleaves_status_alleavesdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td>
@@ -572,7 +579,7 @@ export const SquadLeaves = (props: any) => {
 
                             </label>
                             <>
-                              {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
+                              {/* {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
                                   <label
                                     id={"squadleaves_actionedit_alleaveslabel_" + item.id}
@@ -584,7 +591,7 @@ export const SquadLeaves = (props: any) => {
 
                                   </label>
                                 </>
-                              ) : null}
+                              ) : null} */}
 
                               {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
@@ -707,18 +714,12 @@ export const SquadLeaves = (props: any) => {
               // This code block will be rendered for all other users
               null
             )}
-
-            {/* {getMyLeaves.map((leave: any) => (
-                  <div key={leave.id}>
-                    <p><b>{leave.leaveName} : {leave.creditsLeft}</b></p>
-                  </div>
-                ))} */}
           </div>
         </div>
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-6 w-100">
-              <div className="" style={{ width: 200, marginRight: 10 }}>
+            <div className="d-flex row">
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                 <label>Employee</label>
                 <EmployeeDropdown
                   id="squadleaves_employee_maindropdown"
@@ -729,7 +730,7 @@ export const SquadLeaves = (props: any) => {
                   value={filterData && filterData['userId']}
                 />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pr-0 pl-2 m-0">
                 <label>Date From</label>
                 <input
                   id="squadleaves_datefrom_maininput"
@@ -742,7 +743,7 @@ export const SquadLeaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0 m-0">
                 <label>Date To</label>
                 <div className="input-container">
                   <input
@@ -757,7 +758,7 @@ export const SquadLeaves = (props: any) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0 m-0">
                 <label>Leave Type</label>
                 <select
                   className="form-select"
@@ -777,14 +778,16 @@ export const SquadLeaves = (props: any) => {
                   ))}
                 </select>
               </div>
+              <div  className="col-xs-12 col-sm-12 col-md-3 col-lg-1 p-0 m-0">
+                <Button
+                  id="squadleaves_search_mainbtn"
+                  style={{ width: 120 }}
+                  onClick={() => getAllLeaves(0, key)}
+                  className="btn btn-primary mx-2 mt-4">
+                  Search
+                </Button>
+              </div>
 
-              <Button
-                id="squadleaves_search_mainbtn"
-                style={{ width: 120 }}
-                onClick={() => getAllLeaves(0, key)}
-                className="btn btn-primary mx-2 mt-4">
-                Search
-              </Button>
             </div>
             <Tabs
               id="controlled-tab-example"
@@ -838,307 +841,7 @@ export const SquadLeaves = (props: any) => {
         ) : null}
 
       </div>
-      <Modal
-        show={modalShow}
-        size="xl"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-          setLeaveId(null);
-          setModalShow(false)
-        }}
-        dialogClassName="modal-90w"
-      >
-        <Modal.Header closeButton>
-          {/* <Modal.Title id="contained-modal-title-vcenter">
-              Request For Leave/Time-off
-            </Modal.Title> */}
-          <Modal.Title id="contained-modal-title-vcenter">
-            {leaveId ? 'Edit Leave/Time-off Request' : 'Request For Leave/Time-off'}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
-          <Formik
-            innerRef={formRef}
-            initialValues={initialValues}
-            enableReinitialize={true}
-            validationSchema={
-              Yup.object().shape({
-                dateFrom: Yup.string().required("Date from is required !"),
-                dateTo: Yup.string().required("Date to is required !"),
-                reason: Yup.string().required("Reason is required !"),
-                status: Yup.string().required("Status is required !"),
-                type: Yup.string().required("Status is required !"),
-              })
-            }
-            onSubmit={(values, actions) => {
-              const valuesObj: any = { ...values }
-              valuesObj.breakdown = leaveBreakdown
-              if (leaveId) {
-                delete valuesObj.userId
-
-                RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadleaves_errorconfirm7_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    } else {
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadleaves_successconfirm4_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setLeaveBreakdown([])
-                      getAllLeaves(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: (body.error && body.error.message) || "",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadleaves_errorconfirm8_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                })
-              } else {
-                RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadleaves_errorconfirm9_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    } else {
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadleaves_successconfirm5_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setLeaveBreakdown([])
-                      getAllLeaves(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: (body.error && body.error.message) || "",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadleaves_errorconfirm10_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                })
-              }
-
-            }}>
-            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-              return (
-                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
-                    <div className="form-group col-md-12 mb-3 " >
-                      <label>Leave Type</label>
-                      <select
-                        className="form-select"
-                        name="type"
-                        id="squadleaves_type2"
-                        value={values.type}
-                        onChange={(e) => setFormField(e, setFieldValue)}>
-                        {leaveTypes &&
-                          leaveTypes.length &&
-                          leaveTypes.map((item: any, index: string) => (
-                            <option key={`${index}_${item.id}`} value={item.id}>
-                              {item.name}
-                            </option>
-                          ))}
-                      </select>
-                      {errors && errors.type && (
-                        <p id="squadleaves_errortype_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>Date From</label>
-                      <input type="date"
-                        name="dateFrom"
-                        id="dateFrom"
-                        className="form-control"
-                        value={values.dateFrom}
-                        min={moment().format("YYYY-MM-DD")}
-                        onChange={(e) => {
-                          setFormField(e, setFieldValue)
-                          // setDateFrom(e.target.value)
-                          dateBreakdown(e.target.value, values.dateTo)
-                        }}
-                      />
-                      {errors && errors.dateFrom && (
-                        <p id="squadleaves_errordatefrom_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>Date To</label>
-                      <input type="date"
-                        name="dateTo"
-                        id="dateTo"
-                        className="form-control"
-                        value={values.dateTo}
-                        min={values.dateFrom}
-                        onChange={(e) => {
-                          // setDateTo(e.target.value)
-                          setFormField(e, setFieldValue)
-                          dateBreakdown(values.dateFrom, e.target.value)
-                        }}
-                      />
-                      {errors && errors.dateTo && (
-                        <p id="squadleaves_errordateto_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <label>Reason</label>
-                      <input type="text"
-                        name="reason"
-                        id="reason"
-                        className="form-control"
-                        value={values.reason}
-                        onChange={(e) => setFormField(e, setFieldValue)}
-                      />
-                      {errors && errors.reason && (
-                        <p id="squadleaves_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <Table responsive style={{ maxHeight: '100vh' }}>
-                        <thead>
-                          <tr>
-                            <th style={{ width: 'auto' }}>Date Breakdown</th>
-                            <th style={{ width: 'auto' }}>Options</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {
-                            leaveBreakdown &&
-                            leaveBreakdown.length &&
-                            leaveBreakdown.map((item: any, index: any) => {
-                              const { date } = item
-                              return (
-                                <tr>
-                                  <td key={index + 'date'} >{date}</td>
-                                  <td key={index} >
-                                    <input
-                                      type="radio"
-                                      name={"leaveCredit" + index.toString()}
-                                      id={"leaveCreditWhole" + index.toString()}
-                                      checked={item.credit == 1}
-                                      onChange={() => {
-                                        setDateOption(index, 1, 'WHOLEDAY')
-                                      }}
-                                    />
-                                    <label htmlFor={"leaveCreditWhole" + index.toString()}
-                                      style={{ marginRight: 10 }}>Whole Day</label>
-                                    <input
-                                      type="radio"
-                                      name={"leaveCredit" + index.toString()}
-                                      id={"leaveCreditDay" + index.toString()}
-                                      checked={item.credit == 0.5}
-                                      onChange={() => {
-                                        setDateOption(index, .5, "FIRST_HALF")
-                                      }}
-                                    /> <label htmlFor={"leaveCreditDay" + index.toString()}
-                                      style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
-                                    {
-                                      item.dayType != 'WHOLEDAY' ?
-                                        <>
-                                          <br />
-                                          <input
-                                            type="radio"
-                                            name={"dayTypes" + index.toString()}
-                                            id={"leaveCreditWhole1" + index.toString()}
-                                            checked={item.dayType == 'FIRST_HALF'}
-                                            onChange={() => setDateOption(index, .5, "FIRST_HALF")}
-                                          />
-                                          <label htmlFor={"leaveCreditWhole1" + index.toString()}
-                                            style={{ marginRight: 10 }}>First Half</label>
-                                          <input
-                                            type="radio"
-                                            name={"dayTypes" + index.toString()}
-                                            checked={item.dayType == 'SECOND_HALF'}
-                                            id={"leaveCreditDay1" + index.toString()}
-                                            onChange={() => setDateOption(index, .5, "SECOND_HALF")}
-                                          />
-                                          <label htmlFor={"leaveCreditDay1" + index.toString()}
-                                            style={{ paddingTop: -10 }}>Second Half</label>
-                                        </>
-                                        :
-                                        null
-                                    }
-                                  </td>
-                                </tr>
-                              )
-                            })
-                          }
-                        </tbody>
-                      </Table>
-                    </div>
-                  </div>
-                  <br />
-                  <Modal.Footer>
-                    <div className="d-flex justify-content-end px-5">
-                      <button
-                        id="squadleaves_save_modalbtn"
-                        type="submit"
-                        className="btn btn-primary">
-                        Save
-                      </button>
-                    </div>
-                  </Modal.Footer>
-                </Form>
-              )
-            }}
-          </Formik>
-        </Modal.Body>
-      </Modal>
+     
 
       <Modal
         show={viewModalShow}
@@ -1161,7 +864,7 @@ export const SquadLeaves = (props: any) => {
             View Leave/Time-off Request
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-3">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -1181,7 +884,7 @@ export const SquadLeaves = (props: any) => {
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
+                  <div className="row px-2">
                     <div className="form-group col-md-12 mb-3 " >
                       <label>Leave Type</label>
                       <select

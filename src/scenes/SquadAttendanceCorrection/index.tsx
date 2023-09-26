@@ -437,7 +437,13 @@ export const SquadAttendanceCorrection = (props: any) => {
     time: Yup.date().required('Time is required'),
   });
 
-
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
 
   const COATable = useCallback(() => {
     return (
@@ -463,7 +469,7 @@ export const SquadAttendanceCorrection = (props: any) => {
                   <tr>
                     <td id={"squadattendancecorrection_name_allcoadata_" + item.id}> {item.lastName}, {item.firstName}</td>
                     <td id={"squadattendancecorrection_type_allcoadata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
-                    <td id={"squadattendancecorrection_reason_allcoadata_" + item.id}> {item.reason} </td>
+                    <td id={"squadattendancecorrection_reason_allcoadata_" + item.id}> {limitText(item.reason, 20)} </td>
                     <td id={"squadattendancecorrection_statuschangedby_allcoadata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"squadattendancecorrection_status_allcoadata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td>
@@ -478,19 +484,6 @@ export const SquadAttendanceCorrection = (props: any) => {
 
                       </label>
                       <>
-                        {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
-                          <>
-                            <label
-                              id={"squadattendancecorrection_actionedit_allcoalabel_" + item.id}
-                              onClick={() => {
-                                getCoa(item.id)
-                              }}
-                              className="text-muted cursor-pointer">
-                              <img id={"squadattendancecorrection_actionedit_allcoaimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
-                            </label>
-                          </>
-                        ) : null}
-
                         {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                           <>
                             <label
@@ -564,7 +557,7 @@ export const SquadAttendanceCorrection = (props: any) => {
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-3 w-100">
+            <div className="d-flex col-md-3 w-100">
               <div className="" style={{ width: 200, marginRight: 10 }}>
                 <label>Employee</label>
                 <EmployeeDropdown
@@ -635,303 +628,7 @@ export const SquadAttendanceCorrection = (props: any) => {
           </div>
         </div>
       </div>
-      <Modal
-        show={modalShow}
-        size="xl"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-          setCoaId(null);
-          setModalShow(false)
-          setShowReason(false);
-
-
-        }}
-        dialogClassName="modal-90w"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Attendance Reversal
-            {/* {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'} */}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
-          <Formik
-            innerRef={formRef}
-            enableReinitialize={true}
-            initialValues={initialValues}
-            validationSchema={null}
-            onSubmit={(values, actions) => {
-              actions.resetForm();
-              actions.setErrors({});
-              const valuesObj: any = { ...values }
-              valuesObj.coaBd = coaBreakdown
-              if (coaId) {
-                console.log(valuesObj)
-                delete valuesObj.userId
-                RequestAPI.putRequest(Api.UpdateCOA, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadattendancecorrection_errorconfirm7_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    } else {
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadattendancecorrection_successconfirm4_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setCoaBreakdown([])
-                      getAllCOARequest(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: "Something Error.",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadattendancecorrection_errorconfirm8_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                  setCoaBreakdownCount(0);
-
-                })
-
-
-              } else {
-                RequestAPI.postRequest(Api.CreateCOA, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    console.log("Response body:", res);
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadattendancecorrection_errorconfirm9_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                      setCoaBreakdown([])
-                      getAllCOARequest(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    } else {
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadattendancecorrection_successconfirm5_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setCoaBreakdown([]);
-                      getAllCOARequest(0, key);
-                      setModalShow(false);
-                      formRef.current?.resetForm()
-
-                    }
-                    setCoaBreakdownCount(0);
-
-                  }
-                })
-
-              }
-
-
-            }}
-          >
-            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-              return (
-                <Form
-                  noValidate
-                  onSubmit={handleSubmit}
-                  id="_formid"
-                  autoComplete="off"
-                >
-                  <div>
-                    <label>Type</label>
-
-                    <select
-                      className="form-select"
-                      name="type"
-                      id="squadattendancecorrection_types"
-                      onChange={(e) => {
-                        setFieldValue('type', e.target.value);
-                        setShowReason(e.target.value === 'Others');
-                      }}
-                      value={values.type}
-                    >
-                      <option value="Biometric_Device_Malfunction">Biometric Device Malfunction</option>
-                      <option value="Power_Outage">Power Outage</option>
-                      <option value="Others">Others</option>
-                    </select>
-                    <div className="form-group col-md-12 mb-3">
-                      <label>Reason</label>
-                      <textarea
-                        name="reason"
-                        id="reason"
-                        value={values.reason}
-                        className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
-                        style={{ height: "100px" }}
-                        onChange={(e) => {
-                          setFieldValue("reason", e.target.value);
-                        }}
-                      />
-                    </div>
-                    {touched.errors && errors.reason && (
-                      <p id="squadattendancecorrection_errorreason_mainp" style={{ color: "red", fontSize: "10px" }}>{errors.reason}</p>
-                    )}
-
-                  </div>
-
-                  {coaBreakdown.map((values, index) => (
-                    <div key={`coaBreakdown-${index}`}>
-                      <div className="form-group row">
-                        <div className="col-md-4 mb-3">
-                          <label>Date</label>
-                          <input
-                            id="squadattendancecorrection_date_maininput"
-                            type="date"
-                            name="date"
-                            value={values.date}
-                            onChange={(e) => {
-                              const updatedFields = [...coaBreakdown];
-                              updatedFields[index].date = e.target.value;
-                              setCoaBreakdown(updatedFields);
-                            }}
-                            className={`form-control ${touched.date && errors.date ? 'is-invalid' : ''}`}
-                          />
-                        </div>
-
-                        <div className="col-md-4 mb-3 mt-4">
-                          <select
-                            id="squadattendancecorrection_coabdtype_mainselect"
-                            name="coaBdType"
-                            value={values.coaBdType}
-                            onChange={(e) => {
-                              const updatedFields = [...coaBreakdown];
-                              updatedFields[index].coaBdType = e.target.value;
-                              setCoaBreakdown(updatedFields);
-                            }}
-                            className={`form-control ${touched.coaBdType && errors.coaBdType ? 'is-invalid' : ''}`}
-                          >
-                            {options.map(option => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div className="col-md-4 mb-3">
-                          <label>Time</label>
-                          <input
-                            id="squadattendancecorrection_time_maininput"
-                            type="time"
-                            name="time"
-                            value={values.time}
-                            onChange={(e) => {
-                              const updatedFields = [...coaBreakdown];
-                              updatedFields[index].time = e.target.value;
-                              setCoaBreakdown(updatedFields);
-                            }}
-                            className={`form-control ${touched.time && errors.time ? 'is-invalid' : ''}`}
-
-                          />
-
-
-                        </div>
-
-                      </div>
-                      <div className="form-group row">
-                        <div className="col-md-4 mb-3">
-                          {touched.errors && errors.date && (
-                            <p id="squadattendancecorrection_errordate_mainp" style={{ color: "red", fontSize: "10px" }}>{errors.date}</p>
-                          )}
-                        </div>
-                        <div className="col-md-4 mb-3">
-                          {touched.errors && errors.coaBdType && (
-                            <p id="squadattendancecorrection_errorcoabdtype_mainp" style={{ color: "red", fontSize: "10px" }}>{errors.coaBdType}</p>
-                          )}
-                        </div>
-                        <div className="col-md-4 mb-3">
-                          {touched.errors && errors.time && (
-                            <p id="squadattendancecorrection_time_mainp" style={{ color: "red", fontSize: "10px" }}>{errors.time}</p>
-                          )}
-                        </div>
-
-                      </div>
-
-                      <button
-                        id="squadattendancecorrection_remove_mainbtn"
-                        className="btn btn btn-outline-primary me-2 mb-2"
-                        onClick={() => handleRemoveItem(index)}>Remove</button>
-                    </div>
-                  ))}
-
-                  <div className="d-flex justify-content-end px-5">
-                    <button
-                      id="squadattendancecorrection_addfield_mainbtn"
-                      type="button"
-                      className="btn btn btn-outline-primary me-2 mb-2 mt-2 "
-                      onClick={handleAddField}
-
-                    >
-                      Add Field
-                    </button>
-                  </div>
-                  <Modal.Footer>
-                    <div className="d-flex justify-content-end px-5">
-                      <button
-                        id="squadattendancecorrection_save_mainbtn"
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={!coaBreakdown.length}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </Modal.Footer>
-                </Form>
-              )
-
-            }
-            }
-          </Formik>
-
-        </Modal.Body>
-
-      </Modal>
+     
       <Modal
         size="lg"
         show={modalViewShow}

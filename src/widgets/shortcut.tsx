@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { RequestAPI, Api } from "../api";
 import { async } from "validate.js";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -18,6 +18,8 @@ const Shortcut = () => {
 
     const [ modalShow, setModalShow] = useState(false)
     const [ shortcut, setShortcut] = useState<any>([]) 
+    const [showShortcut, setShowShortcut] = useState(true);
+    const [showManage, setShowManage] = useState(false);
     const dispatch = useDispatch()
     const userData = useSelector((state: any) => state.rootReducer.userData)
 
@@ -101,50 +103,130 @@ const Shortcut = () => {
         }
     }
 
+    const toggleDivs = () => {
+        setShowShortcut(!showShortcut);
+        setShowManage(!showManage);
+      };
+
     return (
         <div className="time-card-width">
             <div className="card-header">
                 <span className="">Quick Shortcut</span>
             </div>
-            <div className="time-card-body" style={{ height: '400px', overflowY: 'auto' }}>
-                <div  >
+            <div className="shortcut-card-body">
+                {showShortcut && 
+                    <div className="">
+                        <div className="shortcut-inner-body">
 
-                    <div className="row d-flex pr-2">
-                        {
-                            shortcut && shortcut.length > 0 ? (
-                                shortcut.map((item: any, index: any) => (
-                                <div key={index} id={"dashboardshortcut_div_"+item.endpoint} className="col-6 pb-2">
-                                    <Link
-                                        className="non-transparent-border"
-                                        to={item.endpoint}
-                                        id={"dashboardshortcut_link_"+item.endpoint}
-                                        >
+                            <div className="row d-flex pr-2">
+                                {
+                                    shortcut && shortcut.length > 0 ? (
+                                        shortcut.map((item: any, index: any) => (
+                                        <div key={index} id={"dashboardshortcut_div_"+item.endpoint} className="col-6 pb-2">
+                                            <Link
+                                                className="non-transparent-border"
+                                                to={item.endpoint}
+                                                id={"dashboardshortcut_link_"+item.endpoint}
+                                                >
 
-                                        <span style={{ lineHeight: "0%", color: "white" }}>
-                                            {item.name}
-                                        </span>
-                                        
-                                        </Link>
-                                    </div>
-                                ))
-                            ) : ""
-                        }
-                            
+                                                <span style={{ lineHeight: "0%", color: "white" }}>
+                                                    {item.name}
+                                                </span>
+                                                
+                                                </Link>
+                                            </div>
+                                        ))
+                                    ) : ""
+                                }
+                                    
 
-                        <div className="col-6 ">
-                            <p className="transparent-border"
-                            id={"dashboardshortcut_addshortcut_btn"}
-                            onClick={() => setModalShow(true)}
-                            style={{cursor:'pointer'}}
-                            >
-                                <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
-                                <br />
-                                <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
-                            </p>
+                                {/* <div className="col-6 ">
+                                    <p className="transparent-border"
+                                    id={"dashboardshortcut_addshortcut_btn"}
+                                    onClick={() => setModalShow(true)}
+                                    style={{cursor:'pointer'}}
+                                    >
+                                        <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
+                                        <br />
+                                        <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
+                                    </p>
+                                </div> */}
+                                
+                            </div>
                         </div>
-                        
+                       
                     </div>
-                </div>
+                }
+                { showManage && 
+                    <div className="shortcut-inner-body">
+
+                        <Table responsive>
+                            <thead>
+                                <tr>
+                                    <th style={{margin: '0', padding: '0'}}>Parent</th>
+                                    <th style={{margin: '0', padding: '0'}}>Page Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {userData.data.profile.menus.flatMap((menuItem, index) => (
+                                menuItem.menu.map((submenuItem, subIndex) => {
+                                    // Check if submenuItem.route exists in shortcut data
+                                    // const isRouteInShortcut = shortcut.some(
+                                    // console.log(item.route);
+                                    // return item.route === submenuItem.route
+                                    // );
+
+                                    const isRouteInShortcut = shortcut.some((item) => {
+                                        // console.log(item.route);
+                                        console.log('dawdaw', submenuItem.route); // Log submenuItem.route
+                                        return item.route === submenuItem.route;
+                                      });
+
+                                    // Define a CSS class based on the condition
+                                    const tdClass = isRouteInShortcut ? 'italic-text' : '';
+
+                                    return (
+                                    <tr key={`${index}-${subIndex}`}>
+                                        <td className={tdClass}>
+                                        {submenuItem.type.charAt(0).toUpperCase() +
+                                            submenuItem.type.slice(1).toLowerCase()}/
+                                        </td>
+                                        <td className={tdClass}>{submenuItem.label}</td>
+                                        <td>{submenuItem.route}</td>
+                                    </tr>
+                                    );
+                                })
+                                ))}
+                            </tbody>
+
+                        </Table>
+                        
+                       
+                    </div>
+                }
+
+                {showShortcut &&
+                    <div className="col-12 pt-12 mt-3">
+                        <Button
+                        style={{width:'100%'}}
+                        onClick={toggleDivs}
+                        className="btn btn-primary"
+                        >Shortcut</Button>
+                    </div>
+                }
+                 { showManage && 
+                    <div>
+                        <div className="col-12 pt-12 mt-3">
+                            <Button
+                            style={{width:'100%'}}
+                            onClick={toggleDivs}
+                            className="btn btn-primary"
+                            >Manage</Button>
+                        </div>
+                    </div>
+                }
+                
 
                
             </div>

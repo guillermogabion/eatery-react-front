@@ -697,11 +697,13 @@ export const Leaves = (props: any) => {
 
     return totalDays;
   }
-
-
-
-
-
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
   const leaveTable = useCallback(() => {
     return (
       <div>
@@ -747,7 +749,7 @@ export const Leaves = (props: any) => {
                           <td> {item.dateTo} </td> */}
                           <td id="leaves_datefrom_allleavedata"> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td id="leaves_dateto_allleavedata"> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id="leaves_reason_allleavedata"> {item.reason} </td>
+                          <td id="leaves_reason_allleavedata"> {limitText(item.reason, 20)} </td>
                           <td id="leaves_filedate_allleavedata"> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td id="leaves_statuschangedby_allleavedata"> {item.statusChangedBy} </td>
                           {/* <td> {item.status} </td> */}
@@ -898,7 +900,7 @@ export const Leaves = (props: any) => {
             ) : (
               null
             )}
-            <div className="row d-flex">
+            <div className="row d-flex pb-1">
               {
                 data.profile.role == 'EXECUTIVE' ?
                   <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
@@ -915,7 +917,7 @@ export const Leaves = (props: any) => {
                   null
               }
 
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-2" : "col-xs-12 col-sm-12 col-md-4 col-lg-2"} style={{ margin: '0', paddingRight: '0' }}>
                 <label>Date From</label>
                 <input
                   id="leaves_datefrom_leavecreditsinput"
@@ -928,7 +930,7 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-2" : "col-xs-12 col-sm-12 col-md-4 col-lg-2"} style={{ margin: '0', paddingRight: '0' }}>
                 <label>Date To</label>
                 <input
                   id="leaves_dateto_leavecreditsinput"
@@ -941,12 +943,12 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-2" : "col-xs-12 col-sm-12 col-md-4 col-lg-1"} style={{ margin: '0', paddingLeft: '8px' }}>
                 <Button
                   id="leaves_search_leavecreditsbtn"
-                  style={{ width: '100%' }}
+                  style={{ width: '100%'}}
                   onClick={() => getAllLeaves(0, key, actionable)}
-                  className="btn btn-primary mx-2 mt-4">
+                  className="btn btn-primary mx-1 customed-button">
                   Search
                 </Button>
               </div>
@@ -1049,7 +1051,7 @@ export const Leaves = (props: any) => {
             {leaveId ? 'Edit Leave/Time-off Request' : 'Request For Leave/Time-off'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-3">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -1177,8 +1179,8 @@ export const Leaves = (props: any) => {
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
-                    <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3 " >
+                  <div className="row px-2">
+                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3 " >
                       <label>Leave Type</label>
                       <select
                         className="form-select"
@@ -1252,12 +1254,13 @@ export const Leaves = (props: any) => {
                     </div>
                     <div className="form-group col-md-12 mb-3" >
                       <label>Reason</label>
-                      <input type="text"
+                      <textarea
                         name="reason"
                         id="reason"
                         className="form-control"
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
+                        style={{height: '150px'}}
                       />
                       {errors && errors.reason && (
                         <p id="leaves_reason_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
@@ -1399,7 +1402,7 @@ export const Leaves = (props: any) => {
             View Leave/Time-off Request
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-3">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -1419,7 +1422,7 @@ export const Leaves = (props: any) => {
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
+                  <div className="row px-2">
                     <div className="form-group col-md-12 mb-3 " >
                       <label>Leave Type</label>
                       <select

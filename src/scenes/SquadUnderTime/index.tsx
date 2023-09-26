@@ -373,6 +373,13 @@ export const SquadUndertime = (props: any) => {
             }
         )
     }
+    function limitText(text, limit) {
+        if (text.length <= limit) {
+          return text;
+        } else {
+          return text.substring(0, limit) + '...';
+        }
+      }
 
     const underTimeTable = useCallback(() => {
         return (
@@ -405,7 +412,7 @@ export const SquadUndertime = (props: any) => {
                                         <td id={"squadschedadj_utstart_myutdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"squadschedadj_utend_myutdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"squadschedadj_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id={"squadschedadj_reason_myutdata_" + item.id}> {item.reason} </td>
+                                        <td id={"squadschedadj_reason_myutdata_" + item.id}> {limitText(item.reason, 20)} </td>
                                         <td id={"squadschedadj_statuschangedby_myutdata_" + item.id}> {item.statusChangedBy} </td>
                                         <td id={"squadschedadj_status_myutdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td>
@@ -419,7 +426,7 @@ export const SquadUndertime = (props: any) => {
 
                                             </label>
                                             <>
-                                                {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
+                                                {/* {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
                                                             id={"squadschedadj_update_myutlabel_" + item.id}
@@ -431,7 +438,7 @@ export const SquadUndertime = (props: any) => {
 
                                                         </label>
                                                     </>
-                                                ) : null}
+                                                ) : null} */}
                                                 {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                                     <>
                                                         <label
@@ -516,8 +523,8 @@ export const SquadUndertime = (props: any) => {
             <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
                 <div>
                     <div className="w-100 pt-2">
-                        <div className="fieldtext d-flex col-md-3 w-100">
-                            <div className="" style={{ width: 200, marginRight: 10 }}>
+                        <div className="d-flex row">
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                                 <label>Employee</label>
                                 <EmployeeDropdown
                                     id="squadschedadj_employee_maindropdown"
@@ -528,23 +535,20 @@ export const SquadUndertime = (props: any) => {
                                     value={filterData && filterData['userId']}
                                 />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pr-0 m-0">
                                 <label>Date From</label>
-                                <div>
-                                    <input
-                                        id="squadschedadj_datefrom_maininput"
-                                        name="dateFrom"
-                                        type="date"
-                                        autoComplete="off"
-                                        className="formControl"
-                                        onChange={(e) => makeFilterData(e)}
-                                        onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                    />
-                                </div>
+                                <input
+                                    id="squadschedadj_datefrom_maininput"
+                                    name="dateFrom"
+                                    type="date"
+                                    autoComplete="off"
+                                    className="formControl"
+                                    onChange={(e) => makeFilterData(e)}
+                                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                />
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pr-0 m-0">
                                 <label>Date To</label>
-                                <div className="input-container">
                                     <input
                                         id="squadschedadj_dateto_maininput"
                                         name="dateTo"
@@ -554,11 +558,9 @@ export const SquadUndertime = (props: any) => {
                                         onChange={(e) => makeFilterData(e)}
                                         onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                     />
-                                </div>
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pr-0 m-0">
                                 <label>Date Filed</label>
-                                <div className="input-container">
                                     <input
                                         id="squadschedadj_datefiled_maininput"
                                         name="dateFiled"
@@ -568,9 +570,8 @@ export const SquadUndertime = (props: any) => {
                                         onChange={(e) => makeFilterData(e)}
                                         onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                     />
-                                </div>
                             </div>
-                            <div>
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 pr-0 m-0">
                                 <Button
                                     id="squadschedadj_search_mainbtn"
                                     style={{ width: 120 }}
@@ -635,217 +636,7 @@ export const SquadUndertime = (props: any) => {
                 ) : null}
 
             </div>
-            <Modal
-                show={modalShow}
-                size="xl"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                backdrop="static"
-                keyboard={false}
-                onHide={() => setModalShow(false)}
-                dialogClassName="modal-90w"
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        {/* Request Undertime */}
-                        {utId ? 'Update Undertime Request' : 'Create Undertime Request'}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
-                    <Formik
-                        innerRef={formRef}
-                        initialValues={initialValues}
-                        enableReinitialize={true}
-                        validationSchema={
-                            Yup.object().shape({
-                                shiftDate: Yup.string().required("Shift date is required !"),
-                                utStart: Yup.string().required("Undertime start is required !"),
-                                utEnd: Yup.string().required("Undertime end is required !"),
-                                reason: Yup.string().required("Reason is required !"),
-                            })
-                        }
-                        onSubmit={(values, actions) => {
-                            const valuesObj: any = { ...values }
-                            setOnSubmit(true)
-                            if (utId) {
-                                valuesObj.id = utId
-                                RequestAPI.putRequest(Api.updateUT, "", valuesObj, {}, async (res: any) => {
-                                    const { status, body = { data: {}, error: {} } }: any = res
-                                    if (status === 200 || status === 201) {
-                                        if (body.error && body.error.message) {
-                                            ErrorSwal.fire({
-                                                title: 'Error!',
-                                                text: (body.error && body.error.message) || "",
-                                                didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "squadut_errorconfirm7_alertbtn"
-                                                },
-                                                icon: 'error',
-                                            })
-                                        } else {
-                                            getMyUT(0, key)
-                                            ErrorSwal.fire({
-                                                title: 'Success!',
-                                                text: (body.data) || "",
-                                                didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "squadut_successconfirm4_alertbtn"
-                                                },
-                                                icon: 'success',
-                                            })
-                                            setModalShow(false)
-                                            formRef.current?.resetForm()
-                                        }
-                                    } else {
-                                        ErrorSwal.fire({
-                                            title: 'Error!',
-                                            text: (body.error && body.error.message) || "Something error!",
-                                            didOpen: () => {
-                                              const confirmButton = Swal.getConfirmButton();
-                                    
-                                              if(confirmButton)
-                                                confirmButton.id = "squadut_errorconfirm8_alertbtn"
-                                            },
-                                            icon: 'error',
-                                        })
-                                    }
-                                })
-                            } else {
-                                RequestAPI.postRequest(Api.UTCreate, "", valuesObj, {}, async (res: any) => {
-                                    const { status, body = { data: {}, error: {} } }: any = res
-                                    if (status === 200 || status === 201) {
-                                        if (body.error && body.error.message) {
-                                            ErrorSwal.fire({
-                                                title: 'Error!',
-                                                text: (body.error && body.error.message) || "",
-                                                didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "squadut_errorconfirm9_alertbtn"
-                                                },
-                                                icon: 'error',
-                                            })
-                                        } else {
-                                            getMyUT(0, key)
-                                            ErrorSwal.fire({
-                                                title: 'Success!',
-                                                text: (body.data) || "",
-                                                didOpen: () => {
-                                                  const confirmButton = Swal.getConfirmButton();
-                                        
-                                                  if(confirmButton)
-                                                    confirmButton.id = "squadut_successconfir5m_alertbtn"
-                                                },
-                                                icon: 'success',
-                                            })
-                                            setModalShow(false)
-                                            formRef.current?.resetForm()
-                                        }
-                                    } else {
-                                        ErrorSwal.fire({
-                                            title: 'Error!',
-                                            text: (body.error && body.error.message) || "Something error!",
-                                            didOpen: () => {
-                                              const confirmButton = Swal.getConfirmButton();
-                                    
-                                              if(confirmButton)
-                                                confirmButton.id = "squadut_errorconfirm10_alertbtn"
-                                            },
-                                            icon: 'error',
-                                        })
-                                    }
-                                })
-                            }
-                            setOnSubmit(false)
-                        }}>
-                        {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-                            return (
-                                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                                    <div className="row w-100 px-5">
-
-                                        <div className="form-group col-md-12 mb-3" >
-                                            <label>Date</label>
-                                            <input type="date"
-                                                name="shiftDate"
-                                                id="shiftDate"
-                                                className="form-control"
-                                                value={values.shiftDate}
-                                                onChange={(e) => {
-                                                    setFormField(e, setFieldValue)
-                                                }}
-                                            />
-                                            {errors && errors.shiftDate && (
-                                                <p id="squadschedadj_errorshiftdate_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
-                                            )}
-                                        </div>
-                                        <div className="form-group col-md-6 mb-3" >
-                                            <label>Start</label>
-                                            <input type="time"
-                                                name="utStart"
-                                                id="utStart"
-                                                className="form-control"
-                                                value={values.utStart}
-                                                onChange={(e) => {
-                                                    setFormField(e, setFieldValue)
-                                                }}
-                                            />
-                                            {errors && errors.utStart && (
-                                                <p id="squadschedadj_errorutstart_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.utStart}</p>
-                                            )}
-                                        </div>
-                                        <div className="form-group col-md-6 mb-3" >
-                                            <label>End</label>
-                                            <input type="time"
-                                                name="utEnd"
-                                                id="utEnd"
-                                                className="form-control"
-                                                value={values.utEnd}
-                                                onChange={(e) => {
-                                                    setFormField(e, setFieldValue)
-                                                }}
-                                            />
-                                            {errors && errors.utEnd && (
-                                                <p id="squadschedadj_errorutend_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.utEnd}</p>
-                                            )}
-                                        </div>
-                                        <div className="form-group col-md-12 mb-3" >
-                                            <label>Reason</label>
-                                            <textarea
-                                                name="reason"
-                                                id="reason"
-                                                className="form-control p-2"
-                                                style={{ minHeight: 100 }}
-                                                value={values.reason}
-                                                onChange={(e) => setFormField(e, setFieldValue)}
-                                            />
-                                            {errors && errors.reason && (
-                                                <p id="squadschedadj_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <Modal.Footer>
-                                        <div className="d-flex justify-content-end px-5">
-                                            <button
-                                                id="squadschedadj_save_modalbtn"
-                                                type="submit"
-                                                disabled={onSubmit}
-                                                className="btn btn-primary">
-                                                Save
-                                            </button>
-                                        </div>
-                                    </Modal.Footer>
-                                </Form>
-                            )
-                        }}
-                    </Formik>
-                </Modal.Body>
-            </Modal>
+           
 
             <Modal
                 show={viewModalShow}
@@ -862,7 +653,7 @@ export const SquadUndertime = (props: any) => {
                         View Undertime
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
+                <Modal.Body className="row px-3">
                     <Formik
                         innerRef={formRef}
                         initialValues={initialValues}
@@ -881,7 +672,7 @@ export const SquadUndertime = (props: any) => {
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (
                                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                                    <div className="row w-100 px-5">
+                                    <div className="row px-2">
 
                                         <div className="form-group col-md-12 mb-3" >
                                             <label>Date</label>

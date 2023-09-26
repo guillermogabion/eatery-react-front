@@ -484,7 +484,13 @@ export const AttendanceCorrection = (props: any) => {
     })
   }, [])
 
-
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
 
   const COATable = useCallback(() => {
     return (
@@ -521,7 +527,7 @@ export const AttendanceCorrection = (props: any) => {
                         </> : null
                     }
                     <td id={"attendancecorrection_type_data_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
-                    <td id={"attendancecorrection_reason_data_" + item.id}> {item.reason} </td>
+                    <td id={"attendancecorrection_reason_data_" + item.id}> {limitText(item.reason, 20)} </td>
                     <td id={"attendancecorrection_filedate_data_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')}</td>
                     <td id={"attendancecorrection_statuschangedby_data_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"attendancecorrection_status_data_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
@@ -756,7 +762,7 @@ export const AttendanceCorrection = (props: any) => {
             {/* {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'} */}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-3">
           <Formik
             innerRef={formRef}
             enableReinitialize={true}
@@ -986,6 +992,7 @@ export const AttendanceCorrection = (props: any) => {
                         </div>
 
                         <div className="col-md-3 mb-3 mt-4">
+                          <label>Log Type *</label>
                           <select
                             id="attendancecorrection_coabdtype_coabreakdownselect"
                             name="coaBdType"

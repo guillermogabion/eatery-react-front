@@ -4707,6 +4707,28 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .items-count {
   font-size: 12px;
 }
+.customed-button {
+  padding: 0 !important;
+  height: 42px;
+  margin-top: 25px;
+}
+.shortcut-body {
+  max-height: 372px;
+  min-height: 372px;
+  padding-top: 25%;
+  width: 100%;
+}
+.shortcut-inner-body {
+  max-height: 300px;
+  min-height: 300px;
+  /* padding-top: 25%;
+  width: 100%; */
+}
+.shortcut-card-body {
+  height: 390px;
+  padding: 5% 2%;
+  width: 100%;
+}
 @media screen and (min-width : 1600px) {
   .day-date {
     font-size: 20px;

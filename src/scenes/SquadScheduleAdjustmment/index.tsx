@@ -441,7 +441,13 @@ export const SquadScheduleAdjustment = (props: any) => {
     })
   }
 
-
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
 
   const adjustmentTable = useCallback(() => {
     return (
@@ -474,7 +480,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                           <td id={"squadschedadj_name_alladjdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                           <td id={"squadschedadj_datefrom_alladjdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td id={"squadschedadj_dateto_alladjdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                          <td id={"squadschedadj_reason_alladjdata_" + item.id}> {item.reason} </td>
+                          <td id={"squadschedadj_reason_alladjdata_" + item.id}> {limitText(item.reason, 20)} </td>
                           <td id={"squadschedadj_filedate_alladjdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td id={"squadschedadj_statuschangedby_alladjdata_" + item.id}> {item.statusChangedBy} </td>
                           <td id={"squadschedadj_status_alladjdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
@@ -489,7 +495,7 @@ export const SquadScheduleAdjustment = (props: any) => {
 
                             </label>
                             <>
-                              {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
+                              {/* {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                                 <>
                                   <label
                                     id={"squadschedadj_actionedit_alladjlabel_" + item.id}
@@ -504,7 +510,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                                   </label>
                                   <br />
                                 </>
-                              ) : null}
+                              ) : null} */}
 
                               {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                                 <>
@@ -620,8 +626,8 @@ export const SquadScheduleAdjustment = (props: any) => {
         </div>
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-3 w-100">
-              <div className="" style={{ width: 200, marginRight: 10 }}>
+            <div className="d-flex row">
+            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                 <label>Employee</label>
                 <EmployeeDropdown
                   id="squadschedadj_employee_maindropdown"
@@ -632,7 +638,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                   value={filterData && filterData['userId']}
                 />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                 <label>Date From</label>
                 <div>
                   <input
@@ -646,9 +652,8 @@ export const SquadScheduleAdjustment = (props: any) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                 <label>Date To</label>
-                <div className="input-container">
                   <input
                     id="squadschedadj_dateto_maininput"
                     name="dateTo"
@@ -658,9 +663,8 @@ export const SquadScheduleAdjustment = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0 m-0">
                 <label>Date Filed</label>
                 <div className="input-container">
                   <input
@@ -674,7 +678,7 @@ export const SquadScheduleAdjustment = (props: any) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 p-0 m-0">
                 <Button
                   id="squadschedadj_search_mainbtn"
                   style={{ width: 120 }}
@@ -738,321 +742,6 @@ export const SquadScheduleAdjustment = (props: any) => {
         ) : null}
 
       </div>
-
-      <Modal
-        show={modalShow}
-        size="xl"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => {
-          setAdjustmentId(null);
-          setModalShow(false)
-        }}
-        dialogClassName="modal-90w"
-      >
-        <Modal.Header closeButton>
-          {/* <Modal.Title id="contained-modal-title-vcenter">
-              Request For Leave/Time-off
-            </Modal.Title> */}
-          <Modal.Title id="contained-modal-title-vcenter">
-            {adjustmentId ? 'Edit Schedule Adjustment Request' : 'Request For Schedule Adjustment'}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
-          <Formik
-            innerRef={formRef}
-            initialValues={initialValues}
-            enableReinitialize={true}
-            validationSchema={
-              Yup.object().shape({
-                dateFrom: Yup.string().required("Date from is required !"),
-                dateTo: Yup.string().required("Date to is required !"),
-                reason: Yup.string().required("Reason is required !"),
-
-              })
-            }
-            onSubmit={(values, actions) => {
-              const valuesObj: any = { ...values }
-              valuesObj.breakdown = adjustmentBreakdown
-              // valuesObj.breakdown = adjustmentBreakdown.map((item: any) => {
-
-              //   return {
-              //     ...item,
-              //     startShift: /^\d{2}:\d{2}$/.test(item.startShift) ? item.startShift + ":00" : item.startShift,
-              //     startBreak: /^\d{2}:\d{2}$/.test(item.startBreak) ? item.startBreak + ":00" : item.startBreak,
-              //     endBreak: /^\d{2}:\d{2}$/.test(item.endBreak) ? item.endBreak + ":00" : item.endBreak,
-              //     endShift: /^\d{2}:\d{2}$/.test(item.endShift) ? item.endShift + ":00" : item.endShift,
-              // }
-              //   })
-
-              if (adjustmentId) {
-                delete valuesObj.userId
-                RequestAPI.putRequest(Api.updateScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadadj_errorconfirm7_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    } else {
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadadj_successconfirm4_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setAdjustmentBreakdown([])
-                      getAllAdjustments(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: (body.error && body.error.message) || "",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadadj_errorconfirm8_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                })
-              } else {
-                RequestAPI.postRequest(Api.createScheduleAdjustment, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadadj_errorconfirm9_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    }
-
-
-                    else {
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadadj_successconfirm5_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setAdjustmentBreakdown([])
-                      getAllAdjustments(0, key)
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: (body.error && body.error.message) || "",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadadj_errorconfirm10_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                })
-              }
-
-
-
-            }}>
-            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-              return (
-                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>Date From</label>
-                      <input type="date"
-                        name="dateFrom"
-                        id="dateFrom"
-                        className="form-control"
-                        value={values.dateFrom}
-                        onChange={(e) => {
-                          setFormField(e, setFieldValue)
-                          dateBreakdown(e.target.value, values.dateTo)
-                        }}
-                      />
-                      {errors && errors.dateFrom && (
-                        <p id="squadschedadj_errordatefrom_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>Date To</label>
-                      <input type="date"
-                        name="dateTo"
-                        id="dateTo"
-                        className="form-control"
-                        value={values.dateTo}
-                        min={values.dateFrom}
-                        onChange={(e) => {
-                          setFormField(e, setFieldValue)
-                          dateBreakdown(values.dateFrom, e.target.value)
-                        }}
-                      />
-                      {errors && errors.dateTo && (
-                        <p id="squadschedadj_errordateto_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <label>Reason</label>
-                      <input type="text"
-                        name="reason"
-                        id="reason"
-                        className="form-control"
-                        value={values.reason}
-                        onChange={(e) => setFormField(e, setFieldValue)}
-                      />
-                      {errors && errors.reason && (
-                        <p id="squadschedadj_errorreason_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <Table responsive style={{ maxHeight: '100vh' }}>
-                        <thead>
-                          <tr>
-                            <th style={{ width: 'auto' }}>Date</th>
-                            <th style={{ width: 'auto' }}>Start Shift</th>
-                            <th style={{ width: 'auto' }}>Start Break</th>
-                            <th style={{ width: 'auto' }}>End Break</th>
-                            <th style={{ width: 'auto' }}>End Shift</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {
-                            adjustmentBreakdown &&
-                            adjustmentBreakdown.length > 0 &&
-                            adjustmentBreakdown.map((item: any, index: any) => {
-                              const { date } = item
-                              return (
-                                <tr>
-                                  <td id="squadschedadj_date_modaldata" key={index + 'date'} >{date}</td>
-                                  <td id="squadschedadj_startshift_modaldata" key={index + 'startShift'} >
-                                    <input
-                                      type="time"
-                                      name={"startShift" + index.toString()}
-                                      id={"startShift" + index.toString()}
-                                      key={"startShift" + index.toString()}
-                                      value={item.startShift}
-                                      step={"1"}
-                                      onChange={(e) => {
-                                        setDateOption(index, 'startShift', e.target.value)
-                                      }}
-
-
-
-                                    />
-                                    {errors && errors.startShift && (
-                                      <p id="squadschedadj_errorstartshift_modalp" style={{ color: "red", fontSize: "12px" }}>{errors.startShift}</p>
-                                    )}
-                                  </td>
-                                  <td key={index + 'startBreak'} >
-                                    <input
-                                      type="time"
-                                      name={"startBreak" + index.toString()}
-                                      id={"startBreak" + index.toString()}
-                                      key={"startBreak" + index.toString()}
-                                      step={"1"}
-                                      value={item.startBreak}
-                                      onChange={(e) => {
-                                        setDateOption(index, 'startBreak', e.target.value)
-                                      }}
-                                    />
-                                  </td>
-                                  <td key={index + 'endBreak'} >
-                                    <input
-                                      type="time"
-                                      name={"endBreak" + index.toString()}
-                                      id={"endBreak" + index.toString()}
-                                      key={"endBreak" + index.toString()}
-                                      step={"1"}
-                                      value={item.endBreak}
-                                      onChange={(e) => {
-                                        setDateOption(index, 'endBreak', e.target.value)
-                                      }}
-                                    />
-                                  </td>
-                                  <td key={index + 'endShift'} >
-                                    <input
-                                      type="time"
-                                      name={"endShift" + index.toString()}
-                                      id={"endShift" + index.toString()}
-                                      key={"endShift" + index.toString()}
-                                      step={"1"}
-                                      value={item.endShift}
-                                      onChange={(e) => {
-                                        setDateOption(index, 'endShift', e.target.value)
-                                      }}
-                                    />
-                                  </td>
-
-                                </tr>
-                              )
-                            })
-                          }
-                        </tbody>
-                      </Table>
-                      {
-                        adjustmentBreakdown &&
-                          adjustmentBreakdown.length == 0 ?
-                          <div className="w-100 text-center">
-                            <label htmlFor="">No Records Found</label>
-                          </div>
-                          :
-                          null
-                      }
-                    </div>
-                  </div>
-                  <br />
-                  <Modal.Footer>
-                    <div className="d-flex justify-content-end px-5">
-                      <button
-                        id="squadschedadj_save_modalbtn"
-                        type="submit"
-                        className="btn btn-primary">
-                        Save
-                      </button>
-                    </div>
-                  </Modal.Footer>
-                </Form>
-              )
-            }}
-          </Formik>
-        </Modal.Body>
-      </Modal>
 
       <Modal
         show={modalViewShow}

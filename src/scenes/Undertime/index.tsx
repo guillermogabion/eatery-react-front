@@ -401,6 +401,13 @@ export const Undertime = (props: any) => {
             }
         )
     }
+    function limitText(text, limit) {
+        if (text.length <= limit) {
+          return text;
+        } else {
+          return text.substring(0, limit) + '...';
+        }
+      }
 
     const underTimeTable = useCallback(() => {
         return (
@@ -442,7 +449,7 @@ export const Undertime = (props: any) => {
                                         <td id={"undertime_utstart_myutdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"undertime_utend_myutdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"undertime_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id={"undertime_reason_myutdata_" + item.id}> {item.reason} </td>
+                                        <td id={"undertime_reason_myutdata_" + item.id}> {limitText(item.reason, 20)} </td>
                                         <td id={"undertime_statuschangedby_myutdata_" + item.id}> {item.statusChangedBy} </td>
                                         <td id={"undertime_status_myutdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td className="d-flex">
@@ -553,13 +560,14 @@ export const Undertime = (props: any) => {
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
+    
 
     return (
         <ContainerWrapper contents={<>
-            <div className="w-100 col-md-12 col-lg-10 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
+            <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
                 <div>
                     <div className="w-100 pt-2">
-                        <div className="row d-flex">
+                        <div className="row d-flex pb-1">
                             {
                                 data.profile.role == 'EXECUTIVE' ?
                                     <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
@@ -575,7 +583,7 @@ export const Undertime = (props: any) => {
                                     :
                                     null
                             }
-                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                            <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-2" : "col-xs-12 col-sm-12 col-md-3 col-lg-2"} style={{ margin: '0', paddingRight: '0' }}>
                                 <label>Date From</label>
                                 <input
                                     id="undertime_datefrom_maininput"
@@ -587,7 +595,7 @@ export const Undertime = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                            <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-2" : "col-xs-12 col-sm-12 col-md-3 col-lg-2"} style={{ margin: '0', paddingRight: '0' }}>
                                 <label>Date To</label>
                                 <input
                                     id="undertime_dateto_maininput"
@@ -599,7 +607,7 @@ export const Undertime = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                            <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-2" : "col-xs-12 col-sm-12 col-md-3 col-lg-2"} style={{ margin: '0', paddingRight: '0' }}>
                                 <label>Date Filed</label>
                                 <input
                                     id="undertime_datefiled_maininput"
@@ -611,32 +619,16 @@ export const Undertime = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                            <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-1" : "col-xs-12 col-sm-12 col-md-3 col-lg-1"} style={{ margin: '0', paddingLeft: '5px' }}>
                                 <Button
                                     id="undertime_search_mainbtn"
                                     style={{ width: '100%' }}
                                     onClick={() => getMyUT(0, key, actionable)}
-                                    className="btn btn-primary mx-2 mt-4">
+                                    className="btn btn-primary mx-2 mt-4 customed-button">
                                     Search
                                 </Button>
                             </div>
                         </div>
-                        <div className="fieldtext d-flex col-md-3 w-100">
-
-                            <div>
-
-                            </div>
-                            <div>
-
-                            </div>
-                            <div>
-
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-
                         <Tabs
                             id="controlled-tab-example"
                             activeKey={key}
@@ -727,7 +719,7 @@ export const Undertime = (props: any) => {
                         {utId ? 'Update Undertime Request' : 'Create Undertime Request'}
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
+                <Modal.Body className="row px-3">
                     <Formik
                         innerRef={formRef}
                         initialValues={initialValues}
@@ -851,9 +843,9 @@ export const Undertime = (props: any) => {
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (
                                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                                    <div className="row w-100 px-5">
+                                    <div className="row px-2">
 
-                                        <div className="form-group col-md-12 mb-3" >
+                                        <div className="col-md-12 mb-3" >
                                             <label>Date</label>
                                             <input type="date"
                                                 name="shiftDate"
@@ -947,7 +939,7 @@ export const Undertime = (props: any) => {
                         View Undertime
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="row w-100 px-5">
+                <Modal.Body className="row px-3">
                     <Formik
                         innerRef={formRef}
                         initialValues={initialValues}
@@ -966,7 +958,7 @@ export const Undertime = (props: any) => {
                         {({ values, setFieldValue, handleSubmit, errors, touched }) => {
                             return (
                                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                                    <div className="row w-100 px-5">
+                                    <div className="row px-2">
 
                                         <div className="form-group col-md-12 mb-3" >
                                             <label>Date</label>

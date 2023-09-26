@@ -408,6 +408,13 @@ export const SquadOvertime = (props: any) => {
       }
     )
   }
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
 
   const overTimeTable = useCallback(() => {
     return (
@@ -420,7 +427,7 @@ export const SquadOvertime = (props: any) => {
                 null
               }
               <th style={{ width: 'auto' }}>Shift Date</th>
-              <th style={{ width: 'auto' }}>Classification</th>
+              {/* <th style={{ width: 'auto' }}>Classification</th> */}
               <th style={{ width: 'auto' }}>OT Start</th>
               <th style={{ width: 'auto' }}>OT End</th>
               <th style={{ width: 'auto' }}>Duration</th>
@@ -445,12 +452,12 @@ export const SquadOvertime = (props: any) => {
                       null
                     }
                     <td id={"squadot_shiftdate_myotdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                    <td id={"squadot_classification_myotdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td>
+                    {/* <td id={"squadot_classification_myotdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td> */}
                     <td id={"squadot_otstart_myotdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"squadot_otend_myotdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"squadot_totalduration_myotdata_" + item.id}> {item.totalDuration} </td>
                     <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td id={"squadot_reason_myotdata_" + item.id}> {item.reason} </td>
+                    <td id={"squadot_reason_myotdata_" + item.id}> {limitText(item.reason, 20)} </td>
                     <td id={"squadot_statuschangedby_myotdata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"squadot_status_myotdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td>
@@ -464,7 +471,7 @@ export const SquadOvertime = (props: any) => {
 
                       </label>
                       <>
-                        {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
+                        {/* {authorizations.includes("Request:Update") && item.status == "PENDING" ? (
                           <>
                             <label
                               id={"squadot_actionedit_myotlabel_" + item.id}
@@ -475,7 +482,7 @@ export const SquadOvertime = (props: any) => {
                               <img id={"squadot_actionedit_myotimg_" + item.id} src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
                             </label>
                           </>
-                        ) : null}
+                        ) : null} */}
                         {authorizations.includes("Request:Approve") && item.status == "PENDING" ? (
                           <>
                             <label
@@ -558,8 +565,8 @@ export const SquadOvertime = (props: any) => {
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <div>
           <div className="w-100 pt-2">
-            <div className="fieldtext d-flex col-md-3 w-100 ">
-              <div className="" style={{ width: 200, marginRight: 10 }}>
+            <div className=" d-flex row pb-1">
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{ width: 200, margin: '0', paddingRight: '8px' }}>
                 <label>Employee</label>
                 <EmployeeDropdown
                   id="squadot_employee_maindropdown"
@@ -570,7 +577,7 @@ export const SquadOvertime = (props: any) => {
                   value={filterData && filterData['userId']}
                 />
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2"  style={{margin: '0', padding: '0'}}>
                 <label>Date From</label>
                 <div>
                   <input
@@ -584,7 +591,7 @@ export const SquadOvertime = (props: any) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2"  style={{margin: '0', padding: '0'}}>
                 <label>Date To</label>
                 <div className="input-container">
                   <input
@@ -598,9 +605,8 @@ export const SquadOvertime = (props: any) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2"  style={{margin: '0', padding: '0'}}>
                 <label>Date Filed</label>
-                <div className="input-container">
                   <input
                     id="squadot_datefiled_maininput"
                     name="dateFiled"
@@ -610,9 +616,8 @@ export const SquadOvertime = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
               </div>
-              <div>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-1"  style={{margin: '0', padding: '0'}}>
                 <Button
                   id="squadot_search_maininput"
                   style={{ width: 120 }}
@@ -677,235 +682,6 @@ export const SquadOvertime = (props: any) => {
 
       </div>
       <Modal
-        show={modalShow}
-        size="xl"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-        keyboard={false}
-        onHide={() => setModalShow(false)}
-        dialogClassName="modal-90w"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Request Overtime
-            {/* {otId ? 'Update Overtime Request' : 'Create Overtime Request'} */}
-
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
-          <Formik
-            innerRef={formRef}
-            initialValues={initialValues}
-            enableReinitialize={true}
-            validationSchema={
-              Yup.object().shape({
-                shiftDate: Yup.string().required("Shift date is required !"),
-                classification: Yup.string().required("Classification is required !"),
-                otStart: Yup.string().required("OT Start is required !"),
-                otEnd: Yup.string().required("OT End is required !"),
-              })
-            }
-            onSubmit={(values, actions) => {
-              setOnSubmit(true)
-              const valuesObj: any = { ...values }
-              if (otId) {
-                valuesObj.id = otId
-                RequestAPI.putRequest(Api.updateOT, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadot_errorconfirm7_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    } else {
-                      getMyOT(0, key)
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadot_successconfirm4_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: (body.error && body.error.message) || "Something error!",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadot_errorconfirm8_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                })
-              } else {
-                RequestAPI.postRequest(Api.OTCreate, "", valuesObj, {}, async (res: any) => {
-                  const { status, body = { data: {}, error: {} } }: any = res
-                  if (status === 200 || status === 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadot_errorconfirm9_alertbtn"
-                        },
-                        icon: 'error',
-                    })
-                    } else {
-                      getMyOT(0, key)
-                      ErrorSwal.fire({
-                        title: 'Success!',
-                        text: (body.data) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "squadot_successconfirm5_alertbtn"
-                        },
-                        icon: 'success',
-                    })
-                      setModalShow(false)
-                      formRef.current?.resetForm()
-                    }
-                  } else {
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: (body.error && body.error.message) || "Something error!",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
-                          confirmButton.id = "squadot_errorconfirm10_alertbtn"
-                      },
-                      icon: 'error',
-                  })
-                  }
-                })
-              }
-              setOnSubmit(false)
-            }}>
-            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
-              return (
-                <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
-                    <div className="form-group col-md-6 mb-3 " >
-                      <label>OT Classification</label>
-                      <select
-                        className="form-select"
-                        name="classification"
-                        id="classification"
-                        value={values.classification}
-                        onChange={(e) => setFormField(e, setFieldValue)}>
-                        {otClassification &&
-                          otClassification.length &&
-                          otClassification.map((item: any, index: string) => (
-                            <option key={`${index}_${item.item}`} value={item.item}>
-                              {item}
-                            </option>
-                          ))}
-                      </select>
-                      {errors && errors.classification && (
-                        <p id="squadot_errorclassification_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.classification}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>Shift Date</label>
-                      <input type="date"
-                        name="shiftDate"
-                        id="shiftDate"
-                        className="form-control"
-                        value={values.shiftDate}
-                        onChange={(e) => {
-                          setFormField(e, setFieldValue)
-                        }}
-                      />
-                      {errors && errors.shiftDate && (
-                        <p id="squadot_errorshiftdate_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.shiftDate}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>Start</label>
-                      <input type="time"
-                        name="otStart"
-                        id="otStart"
-                        className="form-control"
-                        value={values.otStart}
-                        onChange={(e) => {
-                          setFormField(e, setFieldValue)
-                        }}
-                      />
-                      {errors && errors.otStart && (
-                        <p id="squadot_errorotstart_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.otStart}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
-                      <label>End</label>
-                      <input type="time"
-                        name="otEnd"
-                        id="otEnd"
-                        className="form-control"
-                        value={values.otEnd}
-                        onChange={(e) => {
-                          setFormField(e, setFieldValue)
-                        }}
-                      />
-                      {errors && errors.otEnd && (
-                        <p id="squadot_errorotend_reqotp" style={{ color: "red", fontSize: "12px" }}>{errors.otEnd}</p>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 mb-3" >
-                      <label>Indicate Ticket Number (If Applicable) and Reason</label>
-                      <textarea
-                        name="reason"
-                        id="reason"
-                        className="form-control p-2"
-                        style={{ minHeight: 100 }}
-                        value={values.reason}
-                        onChange={(e) => setFormField(e, setFieldValue)}
-                      />
-                    </div>
-                  </div>
-                  <br />
-                  <Modal.Footer>
-                    <div className="d-flex justify-content-end px-5">
-                      <button
-                        id="squadot_save_reqotbtn"
-                        type="submit"
-                        disabled={onSubmit}
-                        className="btn btn-primary">
-                        Save
-                      </button>
-                    </div>
-                  </Modal.Footer>
-                </Form>
-              )
-            }}
-          </Formik>
-        </Modal.Body>
-      </Modal>
-
-      <Modal
         show={viewModalShow}
         size="xl"
         aria-labelledby="contained-modal-title-vcenter"
@@ -920,7 +696,7 @@ export const SquadOvertime = (props: any) => {
             View Overtime
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-3">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -938,7 +714,7 @@ export const SquadOvertime = (props: any) => {
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
+                  <div className="row px-2">
                     <div className="form-group col-md-6 mb-3 " >
                       <label>OT Classification</label>
                       <select

@@ -441,6 +441,13 @@ export const Overtime = (props: any) => {
       }
     )
   }
+  function limitText(text, limit) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.substring(0, limit) + '...';
+    }
+  }
 
   const overTimeTable = useCallback(() => {
     return (
@@ -453,7 +460,7 @@ export const Overtime = (props: any) => {
                 null
               }
               <th style={{ width: 'auto' }}>Shift Date</th>
-              <th style={{ width: 'auto' }}>Classification</th>
+              {/* <th style={{ width: 'auto' }}>Classification</th> */}
               <th style={{ width: 'auto' }}>OT Start</th>
               <th style={{ width: 'auto' }}>OT End</th>
               <th style={{ width: 'auto' }}>Duration</th>
@@ -478,13 +485,13 @@ export const Overtime = (props: any) => {
                       null
                     }
                     <td id={"overtime_shiftdate_myotdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
-                    <td id={"overtime_classification_myotdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td>
+                    {/* <td id={"overtime_classification_myotdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td> */}
                     <td id={"overtime_otstart_myotdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"overtime_otend_myotdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"overtime_totalduration_myotdata_" + item.id}> {item.totalDuration} </td>
                     {/* <td> {item.totalDuration.split(':').map(value => value.padStart(2, '0')).slice(0, 2).join(':')}</td> */}
                     <td id={"overtime_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td id={"overtime_reason_myotdata_" + item.id}> {item.reason} </td>
+                    <td id={"overtime_reason_myotdata_" + item.id}> {limitText(item.reason, 20)} </td>
                     <td id={"overtime_statuschangedby_myotdata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"overtime_status_myotdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
@@ -605,7 +612,7 @@ export const Overtime = (props: any) => {
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <div>
           <div className="w-100 pt-2">
-            <div className="row d-flex">
+            <div className="row d-flex pb-1">
               {
                 data.profile.role == 'EXECUTIVE' ?
                   <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
@@ -621,7 +628,8 @@ export const Overtime = (props: any) => {
                   :
                   null
               }
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-2" : "col-xs-12 col-sm-12 col-md-3 col-lg-2"} style={{margin: '0', paddingRight: '0'}} >
                 <label>Date From</label>
                 <input
                   id="overtime_datefrom_myotforminput"
@@ -633,7 +641,7 @@ export const Overtime = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-2" : "col-xs-12 col-sm-12 col-md-3 col-lg-2"} style={{margin: '0', paddingRight: '0'}}>
                 <label>Date To</label>
                 <input
                   id="overtime_dateto_myotforminput"
@@ -645,7 +653,7 @@ export const Overtime = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-2" : "col-xs-12 col-sm-12 col-md-3 col-lg-2"} style={{margin: '0', paddingRight: '0'}}>
                 <label>Date Filed</label>
                 <input
                   id="overtime_datefiled_myotforminput"
@@ -657,12 +665,12 @@ export const Overtime = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 d-flex flex-wrap">
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-1 d-flex flex-wrap" : "col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex flex-wrap"} style={{margin: '0', paddingLeft: '10px'}}>
                 <Button
                   id="overtime_search_myotformbtn"
                   style={{ width: '100%' }}
                   onClick={() => getMyOT(0, key, actionable)}
-                  className="btn btn-primary  mt-4">
+                  className="btn btn-primary customed-button  ">
                   Search
                 </Button>
               </div>
@@ -759,7 +767,7 @@ export const Overtime = (props: any) => {
 
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-2">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -886,8 +894,8 @@ export const Overtime = (props: any) => {
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
-                    <div className="form-group col-md-6 mb-3 " >
+                  <div className="row px-3">
+                    <div className="col-md-6 mb-3 " >
                       <label>OT Classification </label>
                       <span className="text-danger ml-2 text-md">*</span>
                       <select
@@ -1054,7 +1062,7 @@ export const Overtime = (props: any) => {
             View Overtime
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-2">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -1076,8 +1084,8 @@ export const Overtime = (props: any) => {
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                  <div className="row w-100 px-5">
-                    <div className="form-group col-md-6 mb-3 " >
+                  <div className="row px-3">
+                    <div className="col-md-6 mb-3 " >
                       <label>OT Classification </label>
                       <span className="text-danger ml-2 text-md">*</span>
                       <select
