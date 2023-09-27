@@ -340,10 +340,14 @@ const Api: any = {
 
   getShortcut : process.env.REACT_APP_API_URL + "shortcut/get/list",
   addShortcut : process.env.REACT_APP_API_URL + "shortcut/save",
-
+  viewMenu : process.env.REACT_APP_API_URL + "widget/menu",
   // activity logs 
 
-  allActivity : process.env.REACT_APP_API_URL + "activity/all"
+  allActivity : process.env.REACT_APP_API_URL + "activity/all",
+
+  // employee directory 
+  getEmployeeDirectory : process.env.REACT_APP_API_URL + "widget/employee-directory",
+
 
 
 

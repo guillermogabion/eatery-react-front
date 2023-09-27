@@ -4471,6 +4471,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   overflow: hidden;
   position: relative;
   white-space: nowrap;
+  overflow-x: auto;
 }
 
 .horizontal-scroll-list {
@@ -4607,7 +4608,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
   height: 100px;
-  
+  border-radius: 10px;
 }
 
 /* Marquee container */
@@ -4707,28 +4708,6 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .items-count {
   font-size: 12px;
 }
-.customed-button {
-  padding: 0 !important;
-  height: 42px;
-  margin-top: 25px;
-}
-.shortcut-body {
-  max-height: 372px;
-  min-height: 372px;
-  padding-top: 25%;
-  width: 100%;
-}
-.shortcut-inner-body {
-  max-height: 300px;
-  min-height: 300px;
-  /* padding-top: 25%;
-  width: 100%; */
-}
-.shortcut-card-body {
-  height: 390px;
-  padding: 5% 2%;
-  width: 100%;
-}
 @media screen and (min-width : 1600px) {
   .day-date {
     font-size: 20px;
@@ -4760,5 +4739,35 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     padding-top: 10px;
     font-size: 12px;
   }
+  
+}
+
+
+.scrollable-row {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap; 
+}
+
+.scrollable-row > div {
+  margin-right: 10px;
+}
+.slick-prev:before, .slick-next:before {
+  color: black !important;
+}
+
+.custom-slider-item {
+  margin: 0 10px !important;
+}
+
+.custom-slider {
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+}
+
+.shortcut-inner-body {
+  height: 320px;
+  max-height: 320px;
+  padding: 10px;
   
 }

@@ -15,13 +15,14 @@ import TimeCard from "../../widgets/timeCard"
 import AvailableLeaveCredits from "../../widgets/availableLeaveCredits"
 import EmployeeBasicProfile from "../../widgets/employeeBasicProfile"
 import MyBenefits from "../../widgets/myBenefits"
-import SquadDirectory from "../../widgets/squadDirectory"
+import SquadDirectory from "../../widgets/employeeDirectory"
 import TeamCalendar from "../../widgets/teamCalendar"
 import AnnouncementBoard from "../../widgets/announcementBoard"
 import SquadTracker from "../../widgets/squadTracker"
 import ContainerWrapper from "../../components/ContainerWrapper"
 import Shortcut from "../../widgets/shortcut"
 import Reimbursement from "../../widgets/Reimbursement"
+import EmployeeDirectory from "../../widgets/employeeDirectory"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -116,6 +117,11 @@ export const Dashboard = (props: any) => {
             </> 
           ) : null}
          
+          <div className="col-sm-12 col-md-6 col-lg-4">
+            <div className="card">
+              <EmployeeDirectory />
+            </div>
+          </div>
           <div className="col-sm-12 col-md-6 col-lg-4">
             <div className="card">
               <Shortcut />

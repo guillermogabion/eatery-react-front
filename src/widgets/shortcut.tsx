@@ -18,10 +18,13 @@ const Shortcut = () => {
 
     const [ modalShow, setModalShow] = useState(false)
     const [ shortcut, setShortcut] = useState<any>([]) 
+    const [ menu, setMenu] = useState<any>([]) 
     const [showShortcut, setShowShortcut] = useState(true);
     const [showManage, setShowManage] = useState(false);
     const dispatch = useDispatch()
     const userData = useSelector((state: any) => state.rootReducer.userData)
+    const [clickedSubmenuItem, setClickedSubmenuItem] = useState(null);
+    const [submenuItemInputValue, setSubmenuItemInputValue] = useState("");
 
 
     const formRef = useRef();
@@ -95,6 +98,20 @@ const Shortcut = () => {
                 }
             }
         )
+        RequestAPI.getRequest(
+            `${Api.viewMenu}`,
+            "",
+            {},
+            {},
+            async(res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                setMenu(body.data)
+                console.log(body.data);
+                } else {
+                }
+            }
+        )
     }, [])
     const setFormField = (e: any, setFieldValue: any) => {
         const { name, value } = e.target
@@ -106,7 +123,32 @@ const Shortcut = () => {
     const toggleDivs = () => {
         setShowShortcut(!showShortcut);
         setShowManage(!showManage);
+    };
+    const hasSimilarShortcut = (submenuItem) => {
+        const trimmedSubmenuItemRoute = submenuItem.route.trim().toLowerCase();
+      
+        const hasSimilar = shortcut.some((item) => {
+          const trimmedShortcutEndpoint = item.endpoint.trim().toLowerCase();
+          return trimmedShortcutEndpoint.includes(trimmedSubmenuItemRoute);
+        });
+      
+        return hasSimilar;
       };
+      const handleSubmenuItemClick = (submenuItem) => {
+        if (clickedSubmenuItem === submenuItem) {
+          // If clicking on the same submenuItem, clear the input and reset the clicked state
+          setClickedSubmenuItem(null);
+          setSubmenuItemInputValue("");
+        } else {
+          // Clicking on a different submenuItem, set it as the clicked one and update the input value
+          setClickedSubmenuItem(submenuItem);
+          setSubmenuItemInputValue(submenuItem.label);
+        }
+      };
+
+      
+
+      
 
     return (
         <div className="time-card-width">
@@ -163,40 +205,64 @@ const Shortcut = () => {
                         <Table responsive>
                             <thead>
                                 <tr>
-                                    <th style={{margin: '0', padding: '0'}}>Parent</th>
-                                    <th style={{margin: '0', padding: '0'}}>Page Name</th>
+                                    <th style={{textAlign:'right', padding: '0', margin: '0'}}>Parent </th>
+                                    <th style={{textAlign: 'left', padding: '0', margin: '0' }}>/  Page Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {userData.data.profile.menus.flatMap((menuItem, index) => (
-                                menuItem.menu.map((submenuItem, subIndex) => {
-                                    // Check if submenuItem.route exists in shortcut data
-                                    // const isRouteInShortcut = shortcut.some(
-                                    // console.log(item.route);
-                                    // return item.route === submenuItem.route
-                                    // );
+                            {/* {menu.flatMap((menuItem, index) => (
+                                menuItem.menu
+                                .filter(submenuItem => !hasSimilarShortcut(submenuItem))
+                                .map((submenuItem, subIndex) => (
+                                    <tr
+                                    key={`${index}-${subIndex}`}
+                                    style={{ fontWeight: 'normal', fontStyle: 'normal' }}
+                                    >
+                                    <td className="">
+                                        {submenuItem.type.charAt(0).toUpperCase() +
+                                        submenuItem.type.slice(1).toLowerCase()}/
+                                    </td>
+                                    <td className="">{submenuItem.label}</td>
+                                    <td>{submenuItem.route}</td>
+                                    </tr>
+                                ))
+                            ))} */}
 
-                                    const isRouteInShortcut = shortcut.some((item) => {
-                                        // console.log(item.route);
-                                        console.log('dawdaw', submenuItem.route); // Log submenuItem.route
-                                        return item.route === submenuItem.route;
-                                      });
-
-                                    // Define a CSS class based on the condition
-                                    const tdClass = isRouteInShortcut ? 'italic-text' : '';
+                                {menu.flatMap((menuItem, index) => (
+                                    menuItem.menu.map((submenuItem, subIndex) => {
+                                    const hasSimilar = hasSimilarShortcut(submenuItem);
 
                                     return (
-                                    <tr key={`${index}-${subIndex}`}>
-                                        <td className={tdClass}>
-                                        {submenuItem.type.charAt(0).toUpperCase() +
+                                        <tr
+                                        key={`${index}-${subIndex}`}
+                                        >
+                                        <td className="" style={{ fontWeight: hasSimilar ? 'bold' : 'normal', fontStyle: hasSimilar ? 'italic' : 'normal', padding: '0', margin: '0', textAlign: 'right'  }}>
+                                            {submenuItem.type.charAt(0).toUpperCase() +
                                             submenuItem.type.slice(1).toLowerCase()}/
                                         </td>
-                                        <td className={tdClass}>{submenuItem.label}</td>
+                                        <td className="" style={{ fontWeight: hasSimilar ? 'bold' : 'normal', fontStyle: hasSimilar ? 'italic' : 'normal', padding: '0', margin: '0', textAlign: 'left'  }}>
+                                        {clickedSubmenuItem === submenuItem ? (
+                                            <input
+                                            className="formControl"
+                                            type="text"
+                                            value={submenuItemInputValue}
+                                            onChange={(e) => setSubmenuItemInputValue(e.target.value)}
+                                            onBlur={() => setClickedSubmenuItem(null)}
+                                            />
+                                        ) : (
+                                            <span
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => handleSubmenuItemClick(submenuItem)}
+                                            >
+                                            {submenuItem.label}
+                                            </span>
+                                        )}
+                                        </td>
                                         <td>{submenuItem.route}</td>
-                                    </tr>
+                                        </tr>
                                     );
-                                })
+                                    })
                                 ))}
                             </tbody>
 
@@ -207,7 +273,7 @@ const Shortcut = () => {
                 }
 
                 {showShortcut &&
-                    <div className="col-12 pt-12 mt-3">
+                    <div className="col-12 pt-12 px-2 pb-1 mt-3">
                         <Button
                         style={{width:'100%'}}
                         onClick={toggleDivs}

@@ -31,7 +31,7 @@ const TimeCard = () => {
         const now = moment();
         const intervalId = setInterval(() => {
         setCurrentTime(moment().format("hh:mm:ss A"));
-        setCurrentDate(moment().format("MMMM DD, YYYY"));
+        setCurrentDate(moment().format("DD MMMM YYYY"));
         setCurrentDayOfWeek(now.format("dddd"));
         }, 1000);
         

@@ -56,19 +56,19 @@ const EmployeeBasicProfile = () => {
             </div>
             <div className="card-body basic-profile-widget card-body-profile">
                 <div className="employee-space">
-                    <div style={{ paddingBottom: "2%"}}>
-                        <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName}</span>
+                    <div style={{ paddingBottom: '2%', paddingTop: '15px'}}>
+                        <span className="profile-full-name text-primary" style={{fontWeight: 'bold', fontSize: '20px'}}>{userData.data.profile.firstName} {userData.data.profile.lastName}</span>
                         <br />
-                        <span className="" style={{fontWeight: 'bold', paddingBottom: '2%'}}>{userData.data.profile.jobTitle}</span>
+                        <span className="" style={{fontWeight: 'bold', paddingBottom: '2%', fontSize: '13px'}}>{userData.data.profile.jobTitle}</span>
                     </div>
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '5px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '3px'}} className="text-primary font-bold">
                         <img src={squad_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.squad}
                     </span>   
                     {
                         userData.data.profile.role == 'ADMIN' ? " " :
                         <span style={{ display: 'flex', alignItems: 'center', fontSize: '15px', paddingBottom: '5px', flexWrap: 'wrap'}} className="text-primary font-bold">
                             <img src={join_icon} alt="" style={{marginRight: '10px'}} /> 
-                            <p style={{marginRight: "5px", fontSize: '80%'}}>
+                            <p style={{marginRight: "5px", fontSize: '12px'}}>
                                 Joined {formattedDate == undefined ? " " : formattedDate}
                             </p> 
                             <p style={{fontSize: '80%'}}>(</p> 
@@ -79,10 +79,10 @@ const EmployeeBasicProfile = () => {
                         </span>
                     }
                     
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '10px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '5px'}} className="text-primary font-bold">
                         <img src={approver_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.approver}
                     </span>   
-                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '10px'}} className="text-primary font-bold">
+                    <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px', paddingBottom: '5px'}} className="text-primary font-bold">
                         <img src={phone_icon} alt="" style={{marginRight: '10px'}} /> {userData.data.profile.mobileNo}
                     </span>   
                     <span style={{ display: 'flex', alignItems: 'center', fontSize: '12px'}} className="text-primary font-bold">
