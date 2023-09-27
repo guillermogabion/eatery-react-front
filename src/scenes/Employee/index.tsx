@@ -80,6 +80,7 @@ export const Employee = (props: any) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [headerList, setHeaderList] = React.useState([]);
   const [selectedHeaderList, setSelectedHeaderList] = React.useState([]);
+  const [isExporting, setIsExporting] = useState(false)
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
     "status": "ACTIVE",
@@ -3270,7 +3271,9 @@ export const Employee = (props: any) => {
             <Button id="employee_information_submit"
               type="button"
               className=" btn btn-primary px-5"
+              disabled={isExporting}
               onClick={() => {
+                setIsExporting(true)
                 RequestAPI.postFileAsync(
                   `${Api.employeeExportReport}`,
                   "",
@@ -3278,11 +3281,11 @@ export const Employee = (props: any) => {
                     'data': selectedHeaderList
                   },
                   `Employee Report (${moment().format('YYYY-MM-DD')}).xlsx`,
-                  async (res: any) => {}
+                  async (res: any) => { setIsExporting(false) }
                 )
               }}
             >
-              Submit
+              {isExporting ? <span><span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Submitting</span> : "Submit"}
             </Button>
           </div>
         </Modal.Body>

@@ -190,6 +190,8 @@ const RequestAPI = {
   postFileAsync(path: any, key: any, body: any, filename: any, callBack: (res: any) => Promise<void | any | undefined>) {
     const myHeaders = new Headers()
     myHeaders.append("Authorization", `Bearer ${key ? key : Utility.getUserToken() || ""}`)
+    myHeaders.append("Content-Type", `application/json`)
+    myHeaders.append("Accept", "application/json")
 
     let body_string = body
     if (Object.keys(body).length) {
@@ -207,6 +209,7 @@ const RequestAPI = {
       requestCert: true,
       agent: false,
       strictSSL: false,
+      
     }
 
     fetch(path, requestOptions)
