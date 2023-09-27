@@ -143,6 +143,8 @@ const Api: any = {
   // employee 
 
   employeeChangePassword: process.env.REACT_APP_API_URL + "employee/changepassword",
+  employeeHeaderList: process.env.REACT_APP_API_URL + "employee/report/headerlist",
+  employeeExportReport: process.env.REACT_APP_API_URL + "employee/report",
 
 
 

@@ -86,6 +86,8 @@ export default function GeneratePayroll(props: any) {
             endpoint = Api.reGeneratePayroll
         }
 
+        valuesObj.reimbursementIds = props.reimbursementIds
+
         if (userIds.length > 0) {
             setIsSubmit(true)
             RequestAPI.postRequest(

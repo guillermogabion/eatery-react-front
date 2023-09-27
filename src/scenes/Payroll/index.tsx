@@ -25,6 +25,7 @@ import Audit from "./components/audit"
 import { BsFillArrowLeftCircleFill } from "react-icons/bs"
 import { Overtime } from "./components/overtime"
 import { TimeKeeping } from "./components/timekeeping"
+import Reimbursement from "./components/reimbursement"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -43,6 +44,7 @@ export const Payroll = (props: any) => {
     const [filterData, setFilterData] = React.useState([]);
     const [userId, setUserId] = React.useState("");
     const [payrollData, setPayrollData] = React.useState({});
+    const [reimbursementIds, setReimbursementIds] = React.useState([]);
     const [pageSize, setPageSize] = useState(10);
 
     const tableHeaders = [
@@ -171,7 +173,9 @@ export const Payroll = (props: any) => {
                                                                             "locked": item.locked,
                                                                             "isGenerated": item.isGenerated,
                                                                             "isUpdate": true,
+                                                                            "reimbursementIds": item.reimbursementIds || []
                                                                         })
+                                                                        setReimbursementIds(item.reimbursementIds || [])
                                                                     }}
                                                                     className="text-muted cursor-pointer">
                                                                     View
@@ -189,7 +193,9 @@ export const Payroll = (props: any) => {
                                                                             "userIds": [],
                                                                             "id": item.id,
                                                                             "isUpdate": false,
+                                                                            "reimbursementIds": item.reimbursementIds || []
                                                                         })
+                                                                        setReimbursementIds(item.reimbursementIds || [])
                                                                         setIsAudit(true)
                                                                     }}
                                                                     className="text-muted cursor-pointer">
@@ -267,6 +273,7 @@ export const Payroll = (props: any) => {
                                     <div className="w-100 flex mb-[10px]">
                                         <div className="flex items-center cursor-pointer" style={{ color: '#009FB5' }} onClick={() => {
                                             setIsCreatePayroll(false)
+                                            setReimbursementIds([])
                                         }}>
                                             <BsFillArrowLeftCircleFill className="mr-2" size={20} />
                                             <label className="text-lg cursor-pointer">Back</label>
@@ -328,13 +335,23 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
+                                        <Tab id="payroll_reimbursement_audittabs" eventKey="reimbursement" title="Reimbursements">
+                                            {
+                                                key == 'reimbursement' ?
+                                                    <Reimbursement payrollData={payrollData} setReimbursementIds={(data:any)=>{
+                                                        setReimbursementIds(data)
+                                                    }} reimbursementIds={reimbursementIds} />
+                                                    :
+                                                    null
+                                            }
+                                        </Tab>
                                         <Tab id="payroll_payroll_audittabs" eventKey="payroll" title="Payroll">
                                             {
                                                 key == 'payroll' && Object.keys(payrollData).length != 0 ?
                                                     <GeneratePayroll back={() => {
                                                         setIsCreatePayroll(false)
                                                         getPayroll(0, pageSize)
-                                                    }} payrollData={payrollData} />
+                                                    }} payrollData={payrollData} reimbursementIds={reimbursementIds} />
                                                     :
                                                     null
                                             }
@@ -422,6 +439,7 @@ export const Payroll = (props: any) => {
                                                 valuesObj.isUpdate = false
                                                 valuesObj.locked = false
                                                 valuesObj.isGenerated = false
+                                                valuesObj.reimbursementIds = []
                                                 setPayrollData(valuesObj)
                                             }
                                         })

@@ -75,6 +75,7 @@ export const AttendanceSummary = (props: any) => {
       }
     )
   }
+
   const downloadTemplate = () => {
     RequestAPI.getFileAsync(
       `${Api.downloadExcelTimekeepingTemplate}`,
@@ -108,16 +109,28 @@ export const AttendanceSummary = (props: any) => {
       "",
       {},
       async (res: any) => {
-        if (res) {
+        if (res && res.body) {
           setIsSubmit(false)
+          if (res.body.data) {
+            ErrorSwal.fire({
+              title: 'Success!!',
+              text: res.body.data || "",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
+                if (confirmButton)
+                  confirmButton.id = "recalculate_successconfirm_alertbtn"
+              },
+              icon: 'success',
+            }).then((e) => {
+              if (e.isConfirmed) {
+                setRecalculateModal(false)
+              }
+            })
+          }
         }
 
       }
     )
-
-    console.log('DateFrom:', fromDate);
-    console.log('DateTo:', toDate);
-    console.log('userid:', userid);
   }
 
   const uploadExcel = () => {
@@ -135,24 +148,24 @@ export const AttendanceSummary = (props: any) => {
               text: (data.error.message) || "Something error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "attendancesummary_failedconfirm_alertbtn"
               },
               icon: 'error',
-          })
+            })
           } else {
             ErrorSwal.fire({
               title: 'Success!',
               text: "Successfully uploaded.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "attendancesummary_successconfirm_alertbtn"
               },
               icon: 'success',
-          })
+            })
             setImportModalShow(false)
           }
         })
@@ -162,12 +175,12 @@ export const AttendanceSummary = (props: any) => {
             text: "Failed to upload.",
             didOpen: () => {
               const confirmButton = Swal.getConfirmButton();
-    
-              if(confirmButton)
+
+              if (confirmButton)
                 confirmButton.id = "attendancesummary_failedcatchconfirm_alertbtn"
             },
             icon: 'error',
-        })
+          })
         })
     } else {
       ErrorSwal.fire({
@@ -176,11 +189,11 @@ export const AttendanceSummary = (props: any) => {
         didOpen: () => {
           const confirmButton = Swal.getConfirmButton();
 
-          if(confirmButton)
+          if (confirmButton)
             confirmButton.id = "attendancesummary_warningconfirm_alertbtn"
         },
         icon: 'warning',
-    })
+      })
     }
   }
 
@@ -490,17 +503,17 @@ export const AttendanceSummary = (props: any) => {
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-4 col-lg-2 mb-2">
                   <label>Date To</label>
-                    <input
-                      id="attendancesummary_dateto_summaryinput"
-                      name="toDate" 
-                      type="date"
-                      autoComplete="off"
-                      className="formControl"
-                      maxLength={40}
-                      value={filterData["toDate"]}
-                      onChange={(e) => makeFilterData(e)}
-                      onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                    />
+                  <input
+                    id="attendancesummary_dateto_summaryinput"
+                    name="toDate"
+                    type="date"
+                    autoComplete="off"
+                    className="formControl"
+                    maxLength={40}
+                    value={filterData["toDate"]}
+                    onChange={(e) => makeFilterData(e)}
+                    onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                  />
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-3 mb-2 d-flex">
                   <Button
@@ -541,21 +554,21 @@ export const AttendanceSummary = (props: any) => {
                           onClick={() => {
                             setImportModalShow(true)
                           }}>Import</Button>
-                    
+
                         <Button
                           id="attendancesummary_export_summarybtn"
                           className="mx-2 my-2"
                           onClick={() => {
                             setDownloadModalShow(true)
                           }}>Export</Button>
-                     
+
                         <Button
                           id="attendancesummary_recalculate_summarybtn"
                           className="mx-2 my-2"
                           onClick={() => {
                             setRecalculateModal(true)
                           }}>Recalculate</Button>
-                    
+
                         <Button
                           id="attendancesummary_downloadtemplate_summarybtn"
                           className="mx-2 my-2"
@@ -705,15 +718,15 @@ export const AttendanceSummary = (props: any) => {
                 if (status === 200) {
                   if (body.error && body.error.message) {
                     ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
-                            confirmButton.id = "attendancesummary_errrconfirm_alertbtn"
-                        },
-                        icon: 'error',
+                      title: 'Error!',
+                      text: (body.error && body.error.message) || "",
+                      didOpen: () => {
+                        const confirmButton = Swal.getConfirmButton();
+
+                        if (confirmButton)
+                          confirmButton.id = "attendancesummary_errrconfirm_alertbtn"
+                      },
+                      icon: 'error',
                     })
                   } else {
                     ErrorSwal.fire({
@@ -721,12 +734,12 @@ export const AttendanceSummary = (props: any) => {
                       text: (body.data) || "",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "attendancesummary_successconfirm2_alertbtn"
                       },
                       icon: 'success',
-                  })
+                    })
                     getAllAttendance(0)
                     setDeleteBioModal(false)
                     deleteformRef.current?.resetForm()
@@ -738,12 +751,12 @@ export const AttendanceSummary = (props: any) => {
                     text: (body.error && body.error.message) || "",
                     didOpen: () => {
                       const confirmButton = Swal.getConfirmButton();
-            
-                      if(confirmButton)
+
+                      if (confirmButton)
                         confirmButton.id = "attendancesummary_errrconfirm2_alertbtn"
                     },
                     icon: 'error',
-                })
+                  })
                 }
               })
 
@@ -860,24 +873,24 @@ export const AttendanceSummary = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "attendancesummary_errrconfirm3_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     } else {
                       ErrorSwal.fire({
                         title: 'Success!',
                         text: (body.data) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "attendancesummary_successconfirm3_alertbtn"
                         },
                         icon: 'success',
-                    })
+                      })
                       getAllAttendance(0)
                       setAddBioModal(false)
                       formRef.current?.resetForm()
@@ -888,12 +901,12 @@ export const AttendanceSummary = (props: any) => {
                       text: "Something Error.",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "attendancesummary_errrconfirm4_alertbtn"
                       },
                       icon: 'error',
-                  })
+                    })
                   }
                 })
               } else {
@@ -906,24 +919,24 @@ export const AttendanceSummary = (props: any) => {
                         text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "attendancesummary_errrconfirm5_alertbtn"
                         },
                         icon: 'error',
-                    })
+                      })
                     } else {
                       ErrorSwal.fire({
                         title: 'Success!',
                         text: (body.data) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
-                
-                          if(confirmButton)
+
+                          if (confirmButton)
                             confirmButton.id = "attendancesummary_successconfirm4_alertbtn"
                         },
                         icon: 'success',
-                    })
+                      })
                       getAllAttendance(0)
                       setAddBioModal(false)
                     }
@@ -933,12 +946,12 @@ export const AttendanceSummary = (props: any) => {
                       text: "Something Error.",
                       didOpen: () => {
                         const confirmButton = Swal.getConfirmButton();
-              
-                        if(confirmButton)
+
+                        if (confirmButton)
                           confirmButton.id = "attendancesummary_errrconfirm6_alertbtn"
                       },
                       icon: 'error',
-                  })
+                    })
                   }
                 })
               }
@@ -1017,7 +1030,7 @@ export const AttendanceSummary = (props: any) => {
                         <p style={{ color: "red", fontSize: "12px" }}>{errors.tkTime}</p>
                       )}
                     </div>
-                    
+
                   </div>
                   <br />
                   <Modal.Footer>
