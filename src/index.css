@@ -4762,3 +4762,8 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   
 }
+
+
+input[type="date"]{
+  text-transform: uppercase;
+}
