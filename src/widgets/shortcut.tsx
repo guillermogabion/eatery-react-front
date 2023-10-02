@@ -8,7 +8,8 @@ import withReactContent from "sweetalert2-react-content";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
-import { action_decline } from "../assets/images"
+import { trash, plus, check, action_edit, check_circle, save } from "../assets/images"
+import { tr } from "date-fns/locale";
 
 
 
@@ -21,11 +22,14 @@ const Shortcut = () => {
     const [ menu, setMenu] = useState<any>([]) 
     const [showShortcut, setShowShortcut] = useState(true);
     const [showManage, setShowManage] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
     const dispatch = useDispatch()
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const [clickedSubmenuItem, setClickedSubmenuItem] = useState(null);
     const [submenuItemInputValue, setSubmenuItemInputValue] = useState("");
-
+    const [isSwitchOn, setSwitchOn] = useState(false);
+    const [initialSubmenuItemInputValue, setInitialSubmenuItemInputValue] = useState("");
+    
 
     const formRef = useRef();
 
@@ -35,55 +39,78 @@ const Shortcut = () => {
         "endpoint" : ""
     })
 
-    const AddShortcut = (values, actions) => {
-        const loading = Swal.fire({
-            title: '',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        })
+    const AddShortcut = (name : any, endpoint: any, parent: any) => {
 
-        const valuesObj : any = { ...values }
-        
-        RequestAPI.postRequest(Api.addShortcut, "", valuesObj, {},
+        console.log(name)
+        console.log(endpoint)
+        console.log(parent)
+
+        RequestAPI.postRequest(
+            Api.addShortcut,
+            "",
+            { name: name, endpoint : endpoint, parent : parent },
+            {},
             async (res) => {
-                const { status, body = {data : {}, error: {}}} = res;
-                if (status === 200 || status == 201) {
-                    if (body.error && body.error.message) {
-                      ErrorSwal.fire({
-                        title: 'Error!',
-                        text: (body.error && body.error.message) || "",
-                        didOpen: () => {
-                          const confirmButton = Swal.getConfirmButton();
-                          if (confirmButton)
-                            confirmButton.id = "dashboardshortcut_errorconfirm_alertbtn";
-                        },
-                        icon: 'error',
-                      });
-                    }else{
-                        ErrorSwal.fire({
-                            title: 'Create Successfully!!',
-                            text: (body.data) || "",
-                            didOpen: () => {
-                              const confirmButton = Swal.getConfirmButton();
-                              if (confirmButton)
-                                confirmButton.id = "dashboardshortcut_succsessconfirm_alertbtn";
-                            },
-                            icon: 'success',
-                          }).then((result) => {
-                              if (result.isConfirmed) {
-                              location.reload();
-                              }
-                        });
-                    }
-                 
+                const { status, body = { data: {}, error: {} } } = res;
+                if (status === 200 || status === 201) {
+                getShortcut();
+                console.log('success');
+                } else {
+                console.log("Failed to update");
                 }
             }
         )
+        // const loading = Swal.fire({
+        //     title: '',
+        //     allowOutsideClick: false,
+        //     didOpen: () => {
+        //         Swal.showLoading();
+        //     }
+        // })
+
+        // const valuesObj : any = { ...values }
+        
+        // RequestAPI.postRequest(Api.addShortcut, "", valuesObj, {},
+        //     async (res) => {
+        //         const { status, body = {data : {}, error: {}}} = res;
+        //         if (status === 200 || status == 201) {
+        //             if (body.error && body.error.message) {
+        //               ErrorSwal.fire({
+        //                 title: 'Error!',
+        //                 text: (body.error && body.error.message) || "",
+        //                 didOpen: () => {
+        //                   const confirmButton = Swal.getConfirmButton();
+        //                   if (confirmButton)
+        //                     confirmButton.id = "dashboardshortcut_errorconfirm_alertbtn";
+        //                 },
+        //                 icon: 'error',
+        //               });
+        //             }else{
+        //                 ErrorSwal.fire({
+        //                     title: 'Create Successfully!!',
+        //                     text: (body.data) || "",
+        //                     didOpen: () => {
+        //                       const confirmButton = Swal.getConfirmButton();
+        //                       if (confirmButton)
+        //                         confirmButton.id = "dashboardshortcut_succsessconfirm_alertbtn";
+        //                     },
+        //                     icon: 'success',
+        //                   }).then((result) => {
+        //                       if (result.isConfirmed) {
+        //                       location.reload();
+        //                       }
+        //                 });
+        //             }
+                 
+        //         }
+        //     }
+        // )
+
+
+        console.log('test')
     }
 
-    useEffect (() => {
+    const getShortcut = () => {
         RequestAPI.getRequest(
             `${Api.getShortcut}`,
             "",
@@ -98,6 +125,10 @@ const Shortcut = () => {
                 }
             }
         )
+    }
+
+    useEffect (() => {
+        getShortcut()
         RequestAPI.getRequest(
             `${Api.viewMenu}`,
             "",
@@ -124,30 +155,129 @@ const Shortcut = () => {
         setShowShortcut(!showShortcut);
         setShowManage(!showManage);
     };
+    const toggleDivs2 = () => {
+        setShowAdd(!showAdd);
+        setShowManage(!showManage);
+    };
+    const toggleDivs3 = () => {
+        setShowAdd(!showAdd);
+        setShowShortcut(!showShortcut);
+    };
     const hasSimilarShortcut = (submenuItem) => {
-        const trimmedSubmenuItemRoute = submenuItem.route.trim().toLowerCase();
-      
-        const hasSimilar = shortcut.some((item) => {
-          const trimmedShortcutEndpoint = item.endpoint.trim().toLowerCase();
-          return trimmedShortcutEndpoint.includes(trimmedSubmenuItemRoute);
+    const trimmedSubmenuItemRoute = submenuItem.route.trim().toLowerCase();
+    
+    const hasSimilar = shortcut.some((item) => {
+        const trimmedShortcutEndpoint = item.endpoint.trim().toLowerCase();
+        return trimmedShortcutEndpoint.includes(trimmedSubmenuItemRoute);
         });
-      
+    
         return hasSimilar;
-      };
-      const handleSubmenuItemClick = (submenuItem) => {
+    };
+    const handleSubmenuItemClick = (submenuItem) => {
+        setInitialSubmenuItemInputValue(submenuItemInputValue);
+        
         if (clickedSubmenuItem === submenuItem) {
-          // If clicking on the same submenuItem, clear the input and reset the clicked state
-          setClickedSubmenuItem(null);
-          setSubmenuItemInputValue("");
+            setClickedSubmenuItem(null);
+            setSubmenuItemInputValue("");
         } else {
-          // Clicking on a different submenuItem, set it as the clicked one and update the input value
-          setClickedSubmenuItem(submenuItem);
-          setSubmenuItemInputValue(submenuItem.label);
+            setClickedSubmenuItem(submenuItem);
+            setSubmenuItemInputValue(submenuItem.label);
         }
-      };
+    };
 
+    const initialVisibilityStates = {};
+    shortcut.forEach((item) => {
+    initialVisibilityStates[item.id] = item.isVisible;
+    });
       
 
+    const visibility = (id : any) => {
+        RequestAPI.postRequest(
+          Api.changeVisibility,
+          "",
+          { id: id },
+          {},
+            async (res) => {
+                const { status, body = { data: {}, error: {} } } = res;
+                if (status === 200 || status === 201) {
+                    getShortcut()
+                console.log("success");
+                } else {
+                console.log("failed");
+                }
+            }
+        );
+    };
+    const deleteItem = (id: any) => {
+        RequestAPI.deleteRequest(
+            // Api.deleteShortcut,
+            `${Api.deleteShortcut}?id=${id}`,
+            "",  // This is an empty string, which is the second argument
+            {},  // This is an empty object, which is the third argument
+            async (res) => {
+                const { status, body = { data: {}, error: {} } } = res;
+                if (status === 200 || status === 201) {
+                    getShortcut();
+                    console.log(id + ' deleted');
+                } else {
+                    console.log("Failed");
+                }
+            }
+        );
+    };
+    
+
+    const changeName = () => {
+
+    }
+
+
+    const handleToggle = (id) => {
+        console.log("Toggling visibility for item with id:", id);
+        setVisibilityStates((prevStates) => ({
+          ...prevStates,
+          [id]: !prevStates[id],
+        }));
+      };  
+        // Rest of your code...
+    const [visibilityStates, setVisibilityStates] = useState(() => {
+        return shortcut.reduce((acc, item) => {
+            acc[item.id] = item.isVisible;
+            return acc;
+        }, {});
+    });
+
+    const saveSecondaryName = (id: any, secondaryName: any) => {
+        console.log('dwadaw')
+        // RequestAPI.postRequest(
+        //   Api.changeName,
+        //   "",
+        //   { id: id, secondaryName: secondaryName }, // Include the secondaryName in the request body
+        //   {},
+        //   async (res) => {
+        //     const { status, body = { data: {}, error: {} } } = res;
+        //     if (status === 200 || status === 201) {
+        //       getShortcut();
+        //       console.log(id + ' updated');
+        //     } else {
+        //       console.log("Failed to update");
+        //     }
+        //   }
+        // );
+        console.log('Saving secondary name:', id, secondaryName);
+      };
+      
+    //   const handleSaveButtonClick = (id: any) => {
+    //     const secondaryName = submenuItemInputValue; 
+    //     // console.log(secondaryName)
+    //     console.log(id)
+    //     saveSecondaryName(id, secondaryName);
+
+    //     // console.log('read')
+    //   };
+
+
+          
       
 
     return (
@@ -159,117 +289,183 @@ const Shortcut = () => {
                 {showShortcut && 
                     <div className="">
                         <div className="shortcut-inner-body">
-
-                            <div className="row d-flex pr-2">
+                            <div style={{ maxHeight: '320px', overflowY: 'auto', overflowX: 'hidden'}}>
+                            <div className="row d-flex pr-2" >
                                 {
                                     shortcut && shortcut.length > 0 ? (
                                         shortcut.map((item: any, index: any) => (
-                                        <div key={index} id={"dashboardshortcut_div_"+item.endpoint} className="col-6 pb-2">
-                                            <Link
-                                                className="non-transparent-border"
-                                                to={item.endpoint}
-                                                id={"dashboardshortcut_link_"+item.endpoint}
-                                                >
-
-                                                <span style={{ lineHeight: "0%", color: "white" }}>
-                                                    {item.name}
-                                                </span>
-                                                
-                                                </Link>
-                                            </div>
+                                            item.isVisible ? (
+                                                <div key={index} id={"dashboardshortcut_div_" + item.endpoint} className="col-6 pb-2">
+                                                  <Link
+                                                    className="non-transparent-border"
+                                                    to={item.endpoint}
+                                                    id={"dashboardshortcut_link_" + item.endpoint}
+                                                  >
+                                                    <span style={{ lineHeight: "0%", color: "white" }}>
+                                                      {item.name}
+                                                    </span>
+                                                  </Link>
+                                                </div>
+                                              ) : null
                                         ))
                                     ) : ""
                                 }
-                                    
-
-                                {/* <div className="col-6 ">
+                                <div className="col-6 ">
                                     <p className="transparent-border"
                                     id={"dashboardshortcut_addshortcut_btn"}
-                                    onClick={() => setModalShow(true)}
+                                    onClick={toggleDivs3}
                                     style={{cursor:'pointer'}}
                                     >
                                         <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
                                         <br />
                                         <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
                                     </p>
-                                </div> */}
-                                
+                                </div>
+
                             </div>
+                            </div>
+                           
                         </div>
                        
                     </div>
                 }
                 { showManage && 
                     <div className="shortcut-inner-body">
+                        <div>
+                            <Table>
+                                <div style={{ height: '320px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '30px' }}>
 
-                        <Table responsive>
-                            <thead>
-                                <tr>
-                                    <th style={{textAlign:'right', padding: '0', margin: '0'}}>Parent </th>
-                                    <th style={{textAlign: 'left', padding: '0', margin: '0' }}>/  Page Name</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {/* {menu.flatMap((menuItem, index) => (
-                                menuItem.menu
-                                .filter(submenuItem => !hasSimilarShortcut(submenuItem))
-                                .map((submenuItem, subIndex) => (
-                                    <tr
-                                    key={`${index}-${subIndex}`}
-                                    style={{ fontWeight: 'normal', fontStyle: 'normal' }}
-                                    >
-                                    <td className="">
-                                        {submenuItem.type.charAt(0).toUpperCase() +
-                                        submenuItem.type.slice(1).toLowerCase()}/
-                                    </td>
-                                    <td className="">{submenuItem.label}</td>
-                                    <td>{submenuItem.route}</td>
-                                    </tr>
-                                ))
-                            ))} */}
-
-                                {menu.flatMap((menuItem, index) => (
-                                    menuItem.menu.map((submenuItem, subIndex) => {
-                                    const hasSimilar = hasSimilarShortcut(submenuItem);
-
-                                    return (
-                                        <tr
-                                        key={`${index}-${subIndex}`}
-                                        >
-                                        <td className="" style={{ fontWeight: hasSimilar ? 'bold' : 'normal', fontStyle: hasSimilar ? 'italic' : 'normal', padding: '0', margin: '0', textAlign: 'right'  }}>
-                                            {submenuItem.type.charAt(0).toUpperCase() +
-                                            submenuItem.type.slice(1).toLowerCase()}/
-                                        </td>
-                                        <td className="" style={{ fontWeight: hasSimilar ? 'bold' : 'normal', fontStyle: hasSimilar ? 'italic' : 'normal', padding: '0', margin: '0', textAlign: 'left'  }}>
-                                        {clickedSubmenuItem === submenuItem ? (
-                                            <input
-                                            className="formControl"
-                                            type="text"
-                                            value={submenuItemInputValue}
-                                            onChange={(e) => setSubmenuItemInputValue(e.target.value)}
-                                            onBlur={() => setClickedSubmenuItem(null)}
-                                            />
-                                        ) : (
-                                            <span
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => handleSubmenuItemClick(submenuItem)}
-                                            >
-                                            {submenuItem.label}
-                                            </span>
-                                        )}
-                                        </td>
-                                        <td>{submenuItem.route}</td>
+                                    <thead>
+                                        <tr>
+                                            <th>Shortcut Name</th>
+                                            <th>Display</th>
+                                            <th>Action</th>
                                         </tr>
-                                    );
-                                    })
-                                ))}
-                            </tbody>
+                                    </thead>
+                                    <tbody>
+                                       
+                                        { shortcut &&
+                                            shortcut.length > 0 ?
+                                            shortcut.map((item: any, index: any) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{item.name}</td>
+                                                        <td>
+                                                            <label className="switch">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={item.isVisible}
+                                                                onClick={() => {visibility(item.id)}}
+                                                                style={{height: '10px'}}
+                                                            />
+                                                            <span className="slider round" style={{height: '25px'}}></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <img src={trash} alt="Delete Shortcut"  onClick={() => {deleteItem(item.id)}} width={50} style={{cursor: 'pointer'}} />
+                                                            </label>
+                                                        </td>
 
-                        </Table>
-                        
-                       
+                                                    </tr>
+                                                )
+                                            }) :  (
+                                                <div className="w-100 text-center">
+                                                    <label>No Shortcuts Added Yet</label>
+                                                </div>
+                                            )
+                                        }
+                                          
+                                    </tbody>
+                                </div>
+                            </Table>
+                        </div>
                     </div>
+                }
+
+                { showAdd &&
+                    <div className="shortcut-inner-body">
+                    <div>
+                        <Table responsive style={{ width: '100%' }}>
+                            <div style={{ height: '350px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '30px' }}>
+                                <thead>
+                                    <tr style={{ border: 'none' }}>
+                                        <th style={{ width: 'auto'}}>Parent / Page Name</th>
+                                        <th style={{ width: 'auto', textAlign: 'center'}}>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {menu.flatMap((menuItem, index) => (
+                                        menuItem.menu.map((submenuItem, subIndex) => {
+                                            const hasSimilar = hasSimilarShortcut(submenuItem);
+
+                                            return (
+                                                <tr
+                                                    key={`${index}-${subIndex}`}
+                                                    style={{ border: 'none' }}
+                                                >
+                                                    <td
+                                                    className=""
+                                                    style={{
+                                                        fontWeight: hasSimilar ? 'bold' : 'normal',
+                                                        fontStyle: hasSimilar ? 'italic' : 'normal',
+                                                        padding: '8px 0 8px 0',
+                                                        margin: '0',
+                                                        textAlign: 'left',
+                                                        height: '25px',
+                                                    }}
+                                                    >
+                                                        {clickedSubmenuItem === submenuItem ? (
+                                                            hasSimilar && (
+                                                                <div style={{ whiteSpace: 'nowrap' }}>
+                                                                    <span style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', margin: '0' }} onClick={() => hasSimilar && handleSubmenuItemClick(submenuItem)}>
+                                                                        {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/
+                                                                    </span>
+                                                                    <input
+                                                                        className="formControl mx-1"
+                                                                        type="text"
+                                                                        name="secondaryName"
+                                                                        value={submenuItemInputValue}
+                                                                        onChange={(e) => setSubmenuItemInputValue(e.target.value)}
+                                                                        onBlur={() => setClickedSubmenuItem(null)}
+                                                                        style={{ height: '25px', fontSize: '15px', maxWidth: '200px' }}
+                                                                    />
+                                                                 
+                                                                </div>
+                                                            )
+                                                        ) : (
+                                                            <div style={{ whiteSpace: 'nowrap' }}>
+                                                                <span
+                                                                style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', paddingRight: '100px' }}
+                                                                onClick={() => hasSimilar && handleSubmenuItemClick(submenuItem)}
+                                                                >
+                                                                    {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label}
+                                                                </span>
+                                                            </div>
+                                                            
+                                                        )}
+                                                    </td>
+                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'center' }}>
+                                                        <label>
+                                                            {hasSimilar ? (
+                                                                clickedSubmenuItem !== submenuItem ? (
+                                                                    <img src={check_circle} alt="" width={20} style={{ cursor: 'pointer' }} />
+                                                                ) : <img src={save} onClick={() => saveSecondaryName(submenuItem.id, submenuItemInputValue)} alt="" width={20} style={{ cursor: 'pointer', position: 'relative', zIndex: '9999' }} />
+                                                            ) : (
+                                                                <img src={plus} alt="" onClick={() => {AddShortcut(submenuItem.label, submenuItem.route, submenuItem.type)}} width={20}  style={{ cursor: 'pointer' }} />
+                                                            )}
+                                                        </label>
+                                                    </td>
+
+                                                </tr>
+                                            );
+                                        })
+                                    ))}
+                                </tbody>
+                            </div>
+                        </Table>
+                    </div>
+                </div>
                 }
 
                 {showShortcut &&
@@ -278,17 +474,44 @@ const Shortcut = () => {
                         style={{width:'100%'}}
                         onClick={toggleDivs}
                         className="btn btn-primary"
-                        >Shortcut</Button>
+                        >Manage Quick Shortcut</Button>
                     </div>
                 }
                  { showManage && 
-                    <div>
-                        <div className="col-12 pt-12 mt-3">
-                            <Button
-                            style={{width:'100%'}}
+                    <div className="row d-flex mx-1 pt-12 mt-4">
+                        <div className="col-6">
+                            <button
+                            style={{width:'100%', height: '45px'}}
                             onClick={toggleDivs}
+                            className="btn btn btn-outline-primary"
+                            >Back to Previous</button>
+                        </div>
+                        <div className="col-6">
+                            <button
+                            style={{width:'100%'}}
+                            onClick={toggleDivs2}
                             className="btn btn-primary"
-                            >Manage</Button>
+                            >Add Shortcut</button>
+                        </div>
+                    </div>
+                }
+                 { showAdd && 
+                    <div>
+                        <div className="row d-flex  mx-1 pt-12 mt-4">
+                            <div className="col-6">
+                                <button
+                                style={{width:'100%', height: '45px'}}
+                                onClick={toggleDivs2}
+                                className="btn btn btn-outline-primary"
+                                >Back to Previous</button>
+                            </div>
+                            <div className="col-6">
+                                <button
+                                style={{width:'100%'}}
+                                onClick={toggleDivs3}
+                                className="btn btn-primary"
+                                >Shortcut List</button>
+                            </div>  
                         </div>
                     </div>
                 }

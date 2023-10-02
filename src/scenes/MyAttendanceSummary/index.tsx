@@ -385,7 +385,7 @@ export const MyAttendanceSummary = (props: any) => {
 
                     <div className="w-100 pt-4">
                         <div className="row d-flex">
-                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2" style={{margin: '0', paddingLeft: '8px'}}>
                                 <label>Date From</label>
                                 <input
                                     id="myattendancesummary_datefrom_attendancesummaryinput"
@@ -399,7 +399,7 @@ export const MyAttendanceSummary = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2" style={{margin: '0', padding: '0'}}>
                                 <label>Date To</label>
                                 <input
                                     id="myattendancesummary_dateto_attendancesummaryinput"
@@ -413,7 +413,7 @@ export const MyAttendanceSummary = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3 d-flex">
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex">
                                 <Button
                                     id="myattendancesummary_search_attendancesummarybtn"
                                     style={{ width: '100%' }}

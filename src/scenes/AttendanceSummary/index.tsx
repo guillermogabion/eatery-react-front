@@ -515,7 +515,7 @@ export const AttendanceSummary = (props: any) => {
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-3 mb-2 d-flex">
+                <div className="col-xs-12 col-sm-12 col-md-1 col-lg-1 mb-2">
                   <Button
                     id="attendancesummary_search_summarybtn"
                     style={{ width: '100%' }}

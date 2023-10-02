@@ -410,7 +410,7 @@ const Adjustment = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
-                        {id ? 'Update Deduction or Loan' : 'Create Deduction or Loan'}
+                        {id ? 'Update New Earnings & Allowances Type' : 'Create New Earnings & Allowances Type'}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row w-100 px-5">

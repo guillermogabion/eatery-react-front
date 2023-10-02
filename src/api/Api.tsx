@@ -341,12 +341,20 @@ const Api: any = {
   getShortcut : process.env.REACT_APP_API_URL + "shortcut/get/list",
   addShortcut : process.env.REACT_APP_API_URL + "shortcut/save",
   viewMenu : process.env.REACT_APP_API_URL + "widget/menu",
+  changeVisibility : process.env.REACT_APP_API_URL + "shortcut/change-visibility",
+  deleteShortcut : process.env.REACT_APP_API_URL + "shortcut/delete",
+  changeName : process.env.REACT_APP_API_URL + "shortcut/change-name",
   // activity logs 
 
   allActivity : process.env.REACT_APP_API_URL + "activity/all",
 
   // employee directory 
   getEmployeeDirectory : process.env.REACT_APP_API_URL + "widget/employee-directory",
+
+
+  // new hire widget 
+  getNewHire : process.env.REACT_APP_API_URL + "widget/new-hires-tracker",
+
 
 
 

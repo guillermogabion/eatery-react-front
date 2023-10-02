@@ -665,7 +665,7 @@ export const Overtime = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-1 d-flex flex-wrap" : "col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex flex-wrap"} style={{margin: '0', paddingLeft: '10px'}}>
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-1 flex-wrap mt-4" : "col-xs-12 col-sm-12 col-md-3 col-lg-1 flex-wrap mt-4"} style={{margin: '0', paddingLeft: '10px'}}>
                 <Button
                   id="overtime_search_myotformbtn"
                   style={{ width: '100%' }}

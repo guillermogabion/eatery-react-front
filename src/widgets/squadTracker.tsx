@@ -33,8 +33,8 @@ const SquadTracker = () => {
 
              
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
-                <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab">
-                    <Tab id="dashboardsquadtracker_tab1" className="custom-tabs"  eventKey="tab1" title="All">
+                <Tabs defaultActiveKey="tab1" id="my-tabs" style={{fontSize: '10px'}} className="custom-tab justify-content-center">
+                    <Tab id="dashboardsquadtracker_tab1"  className="custom-tabs"  eventKey="tab1" title="All">
                         <All />
                     </Tab>
                     <Tab id="dashboardsquadtracker_tab2" className="custom-tabs" eventKey="tab2" title="On-Leave">
@@ -115,9 +115,9 @@ const All = () => {
     }
 
     return (
-        <div>
-            <div className="row">
-                <div className="pt-6 col-9 ml-3">
+        <div style={{marginLeft: '20px', marginRight: '20px'}}>
+            <div className="row tracker-input">
+                <div className="col-9 ml-3">
                     <div className="" style={{ width: '100%', marginRight: '5' }}>
                         <EmployeeDropdown
                             id="dashboardsquadtracker_search_input"
@@ -129,7 +129,7 @@ const All = () => {
                         />
                     </div>
                 </div>
-                <div className="pt-6 col-2">
+                <div className="col-2">
                     <Button
                     onClick={() => getAll()}
                     style={{ width: '100%',
@@ -152,9 +152,14 @@ const All = () => {
                         allMember.map((item: any, index: any) => (
                             <tr key={index}>
                             
-                            <td className="text-primary font-bold d-flex">
-                                <img src={user} width={30} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
-                                {item.fullname} <br /> {item.jobTitle}</td>
+                            <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
+                                <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                                <div className="pt-2">
+                                    {item.fullname}
+                                    <br />
+                                    <span>{item.jobTitle}</span>
+                                </div>
+                            </td>
                             <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                                 {item.status == null && item.todaysTimeIn != null ? (
                                     <>
@@ -232,8 +237,8 @@ const OnLeave = () => {
 
     return (
         <div>
-            <div className="row">
-                <div className="pt-6 col-9 ml-3">
+            <div className="row tracker-input">
+                <div className="col-9 ml-3">
                     <div className="" style={{ width: '100%', marginRight: 10 }}>
                         <EmployeeDropdown
                             id="dashboardsquadtracker_search_input2"
@@ -245,7 +250,7 @@ const OnLeave = () => {
                         />
                     </div>
                 </div>
-                <div className="pt-6 col-2">
+                <div className="col-2">
                     <Button
                     onClick={() => getAll()}
                     style={{ width: '100%',
@@ -345,8 +350,8 @@ const Absent = () => {
 
     return (
         <div>
-            <div className="row">
-                <div className="pt-6 col-9 ml-3">
+            <div className="row tracker-input">
+                <div className="col-9 ml-3">
                     <div className="" style={{ width: '100%', marginRight: 10}}>
                         <EmployeeDropdown
                             id="dashboardsquadtracker_search_input3"
@@ -358,7 +363,7 @@ const Absent = () => {
                         />
                     </div>
                 </div>
-                <div className="pt-6 col-2">
+                <div className="col-2">
                     <Button 
                     id="dashboardsquadtracker_getall2_btn"
                     onClick={() => getAll()}

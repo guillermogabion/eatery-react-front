@@ -259,7 +259,7 @@ const AnnouncementBoard = () => {
             </div>
             <div className="time-card-body">
                 <div className="announcement-space">
-                    <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-announcement">
+                    <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-announcement justify-content-center">
                         <Tab className="custom-tabs"  eventKey="tab1" title="All">
                         <AllAnnouncement/>
                         </Tab>

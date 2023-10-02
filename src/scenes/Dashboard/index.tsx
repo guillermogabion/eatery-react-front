@@ -23,6 +23,7 @@ import ContainerWrapper from "../../components/ContainerWrapper"
 import Shortcut from "../../widgets/shortcut"
 import Reimbursement from "../../widgets/Reimbursement"
 import EmployeeDirectory from "../../widgets/employeeDirectory"
+import NewHire from "../../widgets/newHire"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -120,6 +121,11 @@ export const Dashboard = (props: any) => {
           <div className="col-sm-12 col-md-6 col-lg-4">
             <div className="card">
               <EmployeeDirectory />
+            </div>
+          </div>
+          <div className="col-sm-12 col-md-6 col-lg-4">
+            <div className="card">
+              <NewHire />
             </div>
           </div>
           <div className="col-sm-12 col-md-6 col-lg-4">

@@ -991,7 +991,7 @@ export const AttendanceCorrection = (props: any) => {
                           />
                         </div>
 
-                        <div className="col-md-3 mb-3 mt-4">
+                        <div className="col-md-3 mb-3">
                           <label>Log Type *</label>
                           <select
                             id="attendancecorrection_coabdtype_coabreakdownselect"

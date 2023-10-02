@@ -225,7 +225,7 @@ const CalendarComponent = () => {
         </div>
       </div>
       <div className="pt-12 mt-4">
-        <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-calendar pt-1  mt-4">
+        <Tabs defaultActiveKey="tab1" id="my-tabs" className=" justify-content-center custom-tab-calendar pt-1  mt-4">
           <Tab className="custom-tabs"  eventKey="tab1" title="Holiday">
           {hasHolidaysThisWeek ? (
             dataMonth.map((item, index) => (

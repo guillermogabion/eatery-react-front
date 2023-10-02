@@ -44,6 +44,11 @@ import Search from "../images/dist/SearchBtn.png"
 import mail from "../images/dist/topmenu/mail.svg"
 import bell from "../images/dist/topmenu/bell.svg"
 import bell_red from "../images/dist/topmenu/bell_red.svg"
+import plus from "../images/dist/shortcut/plus_circle.png"
+import check from "../images/dist/shortcut/check.png"
+import check_circle from "../images/dist/shortcut/check_circle.png"
+import trash from "../images/dist/shortcut/delete.png"
+import save from "../images/dist/shortcut/save.png"
 
 export {
   eye,
@@ -90,5 +95,10 @@ export {
   mail,
   bell,
   bell_red,
-  icon_search_white
+  icon_search_white,
+  plus,
+  check,
+  check_circle,
+  trash, 
+  save
 }

@@ -710,6 +710,10 @@ export const Employee = (props: any) => {
 
 
   };
+  const handleModalHide = () => {
+    setUserId(null); 
+    setModalShow(false);
+  };
 
 
   const information = (
@@ -1161,7 +1165,7 @@ export const Employee = (props: any) => {
                       masterList.emergencyRelationship.length &&
                       masterList.emergencyRelationship.map((item: any, index: string) => (
                         <option key={`${index}_${item}1`} value={item}>
-                          {item}
+                          {Utility.removeUnderscore(item)} 
                         </option>
                       ))}
                   </select>
@@ -1302,7 +1306,8 @@ export const Employee = (props: any) => {
                       masterList.employeeType.length &&
                       masterList.employeeType.map((item: any, index: string) => (
                         <option key={`${index}_${item}`} value={item}>
-                          {item}
+
+                          {Utility.removeUnderscore(item)}
                         </option>
                       ))}
                   </select>
@@ -1381,7 +1386,7 @@ export const Employee = (props: any) => {
                       masterList.employmentStatus.length &&
                       masterList.employmentStatus.map((item: any, index: string) => (
                         <option key={`${index}_${item}`} value={item}>
-                          {item}
+                          {Utility.removeUnderscore(item)}
                         </option>
                       ))}
                   </select>
@@ -1756,7 +1761,7 @@ export const Employee = (props: any) => {
                       masterList.payrollRole.length &&
                       masterList.payrollRole.map((item: any, index: string) => (
                         <option key={`${index}_${item}`} value={item}>
-                          {item}
+                          {Utility.removeUnderscore(item)}
                         </option>
                       ))}
                   </select>
@@ -1770,7 +1775,7 @@ export const Employee = (props: any) => {
                     name="payGroup"
                     id="payGroup"
                     className="form-control"
-                    value={values.payGroup}
+                    value={Utility.removeUnderscore(values.payGroup)}
                     onChange={(e) => setFormField(e, setFieldValue)}
                   />
                   {errors && errors.payGroup && (
@@ -1916,7 +1921,7 @@ export const Employee = (props: any) => {
                       name="scheduleType"
                       id="scheduleType"
                       className="form-control"
-                      value={values.scheduleType}
+                      value={Utility.removeUnderscore(values.scheduleType)}
                       onChange={(e) => setFormField(e, setFieldValue)}
                     />
                   </div>
@@ -2999,7 +3004,7 @@ export const Employee = (props: any) => {
         centered
         backdrop="static"
         keyboard={false}
-        onHide={() => setModalShow(false)}
+        onHide={handleModalHide}
         dialogClassName="modal-90w"
       >
         <Modal.Header closeButton>

@@ -332,7 +332,7 @@ export const PayrollAdjustment = (props: any) => {
                         const valueObj: any = body.data;
                         setInitialValues(valueObj);
                         setModalShow(true);
-                        setId(true)
+                        setId(body.data.id)
                     }
                 }
             }
@@ -421,6 +421,7 @@ export const PayrollAdjustment = (props: any) => {
 
     const handleModalHide = useCallback(() => {
         setModalShow(false);
+        setId(null)
         formRef.current?.resetForm();
         setAdjustment([]);
         setInitialValues({
@@ -1004,6 +1005,7 @@ export const PayrollAdjustment = (props: any) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-v-center">
+                       
                         {id ? "Update Earnings & Allowances" : "Create Earnings & Allowances"}
                     </Modal.Title>
                 </Modal.Header>
