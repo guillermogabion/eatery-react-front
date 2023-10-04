@@ -457,7 +457,7 @@ export const SquadOvertime = (props: any) => {
                     <td id={"squadot_otend_myotdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"squadot_totalduration_myotdata_" + item.id}> {item.totalDuration} </td>
                     <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td id={"squadot_reason_myotdata_" + item.id}> {limitText(item.reason, 20)} </td>
+                    <td id={"squadot_reason_myotdata_" + item.id}> {item.reason ? limitText(item.reason, 20) : "" } </td>
                     <td id={"squadot_statuschangedby_myotdata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"squadot_status_myotdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td>
