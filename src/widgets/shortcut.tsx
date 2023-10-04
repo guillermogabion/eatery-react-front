@@ -247,39 +247,25 @@ const Shortcut = () => {
         }, {});
     });
 
-    const saveSecondaryName = (id: any, secondaryName: any) => {
-        console.log('dwadaw')
-        // RequestAPI.postRequest(
-        //   Api.changeName,
-        //   "",
-        //   { id: id, secondaryName: secondaryName }, // Include the secondaryName in the request body
-        //   {},
-        //   async (res) => {
-        //     const { status, body = { data: {}, error: {} } } = res;
-        //     if (status === 200 || status === 201) {
-        //       getShortcut();
-        //       console.log(id + ' updated');
-        //     } else {
-        //       console.log("Failed to update");
-        //     }
-        //   }
-        // );
-        console.log('Saving secondary name:', id, secondaryName);
+    const saveSecondaryName = (endpoint: any, secondaryName: any) => {
+        console.log('Attempting to save secondary name:', endpoint, secondaryName);
+        RequestAPI.postRequest(
+          Api.changeName,
+          "",
+          { endpoint: endpoint, secondaryName: secondaryName },
+          {},
+          async (res) => {
+            const { status, body = { data: {}, error: {} } } = res;
+            if (status === 200 || status === 201) {
+              console.log(endpoint + ' updated');
+              getShortcut();
+            } else {
+              console.log("Failed to update. Response:", res);
+            }
+          }
+        );
+        console.log('Save attempt completed:', endpoint, secondaryName);
       };
-      
-    //   const handleSaveButtonClick = (id: any) => {
-    //     const secondaryName = submenuItemInputValue; 
-    //     // console.log(secondaryName)
-    //     console.log(id)
-    //     saveSecondaryName(id, secondaryName);
-
-    //     // console.log('read')
-    //   };
-
-
-          
-      
-
     return (
         <div className="time-card-width">
             <div className="card-header">
@@ -426,7 +412,9 @@ const Shortcut = () => {
                                                                         type="text"
                                                                         name="secondaryName"
                                                                         value={submenuItemInputValue}
-                                                                        onChange={(e) => setSubmenuItemInputValue(e.target.value)}
+                                                                        onChange={(e) => {setSubmenuItemInputValue(e.target.value)
+                                                                                        saveSecondaryName(submenuItem.route, submenuItemInputValue)
+                                                                        }}
                                                                         onBlur={() => setClickedSubmenuItem(null)}
                                                                         style={{ height: '25px', fontSize: '15px', maxWidth: '200px' }}
                                                                     />
@@ -450,7 +438,7 @@ const Shortcut = () => {
                                                             {hasSimilar ? (
                                                                 clickedSubmenuItem !== submenuItem ? (
                                                                     <img src={check_circle} alt="" width={20} style={{ cursor: 'pointer' }} />
-                                                                ) : <img src={save} onClick={() => saveSecondaryName(submenuItem.id, submenuItemInputValue)} alt="" width={20} style={{ cursor: 'pointer', position: 'relative', zIndex: '9999' }} />
+                                                                ) : <img src={save} onClick={() => saveSecondaryName(submenuItem.route, submenuItemInputValue)} alt="" width={20} style={{ cursor: 'pointer', position: 'relative', zIndex: '9999' }} />
                                                             ) : (
                                                                 <img src={plus} alt="" onClick={() => {AddShortcut(submenuItem.label, submenuItem.route, submenuItem.type)}} width={20}  style={{ cursor: 'pointer' }} />
                                                             )}

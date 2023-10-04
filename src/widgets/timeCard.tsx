@@ -227,16 +227,15 @@ const TimeCard = () => {
                 <div className="row">
                     <div className="col-xs-7 col-sm-7 col-md-7 col-lg-7">
                         <div className=" text-primary time-card-date" style={{textAlign: left}}>
-                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
-                                <h6>Today is</h6>
-                            </div>
-                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
-                                <h4>{currentDayOfWeek}, {currentDate}</h4>
-                            </div>
-                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex date-header">
-                                <span className="time-size">{currentTime}</span>
-                            </div>
-
+                          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
+                            <h6>Today is</h6>
+                          </div>
+                          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 date-header">
+                            <h4>{currentDayOfWeek}, {currentDate}</h4>
+                          </div>
+                          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 d-flex date-header">
+                            <span className="time-size">{currentTime}</span>
+                          </div>
                         </div>
                     </div>
                     <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 time-card-image-section">

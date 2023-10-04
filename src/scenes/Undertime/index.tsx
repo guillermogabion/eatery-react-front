@@ -619,12 +619,12 @@ export const Undertime = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-1" : "col-xs-12 col-sm-12 col-md-3 col-lg-1"} style={{ margin: '0', paddingLeft: '5px' }}>
+                            <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-2 col-lg-1 mt-4" : "col-xs-12 col-sm-12 col-md-3 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '10px' }}>
                                 <Button
                                     id="undertime_search_mainbtn"
                                     style={{ width: '100%' }}
                                     onClick={() => getMyUT(0, key, actionable)}
-                                    className="btn btn-primary mx-2 mt-4 customed-button">
+                                    className="btn btn-primary customed-button">
                                     Search
                                 </Button>
                             </div>
