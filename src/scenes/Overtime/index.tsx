@@ -491,7 +491,7 @@ export const Overtime = (props: any) => {
                     <td id={"overtime_totalduration_myotdata_" + item.id}> {item.totalDuration} </td>
                     {/* <td> {item.totalDuration.split(':').map(value => value.padStart(2, '0')).slice(0, 2).join(':')}</td> */}
                     <td id={"overtime_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                    <td id={"overtime_reason_myotdata_" + item.id}> {limitText(item.reason, 20)} </td>
+                    <td id={"overtime_reason_myotdata_" + item.id}> {item.reason ? limitText(item.reason, 20) : "" } </td>
                     <td id={"overtime_statuschangedby_myotdata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"overtime_status_myotdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td className="d-flex">
