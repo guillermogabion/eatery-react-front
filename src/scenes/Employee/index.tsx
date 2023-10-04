@@ -24,6 +24,7 @@ import { Utility } from "../../utils"
 import EmployeeDropdown from "../../components/EmployeeDropdown"
 import { action_approve, action_cancel, action_decline, action_edit, eye } from "../../assets/images"
 import { FaUnlockAlt, FaUserLock } from "react-icons/fa"
+import MultiSelectOption from "../../components/MultiSelect"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -60,6 +61,7 @@ export const Employee = (props: any) => {
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = React.useState(false);
   const [modalUploadShow, setModalUploadShow] = React.useState(false);
+  const [modalDownloadInformation, setModalDownloadInformation] = React.useState(false);
   const [modalViewShow, setModalViewShow] = React.useState(false);
   const [modalPasswordShow, setModalPasswordShow] = React.useState(false);
   const formikRef: any = useRef();
@@ -76,6 +78,9 @@ export const Employee = (props: any) => {
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [headerList, setHeaderList] = React.useState([]);
+  const [selectedHeaderList, setSelectedHeaderList] = React.useState([]);
+  const [isExporting, setIsExporting] = useState(false)
   const [initialValues, setInitialValues] = useState<any>({
     "roleId": 2,
     "status": "ACTIVE",
@@ -270,11 +275,38 @@ export const Employee = (props: any) => {
   useEffect(() => {
     getAllEmployee(0)
     getAllImmediateEmpList()
+    getEmployeeHeaderList()
   }, [])
 
   useEffect(() => {
     getOptionEmployee()
   }, [])
+
+  const getEmployeeHeaderList = () => {
+    RequestAPI.getRequest(
+      `${Api.employeeHeaderList}`,
+      "",
+      {},
+      {},
+      async (res: any) => {
+        const { status, body = { data: {}, error: {} } }: any = res
+        if (status === 200 && body) {
+          if (body.error && body.error.message) {
+          } else {
+            let tempArray: any = []
+            body.headerList.forEach((d: any, i: any) => {
+              tempArray.push({
+                value: d,
+                label: d
+              })
+            });
+            setHeaderList(tempArray)
+          }
+        }
+      }
+    )
+  }
+
 
   const getOptionEmployee = () => {
     RequestAPI.getRequest(
@@ -2950,9 +2982,15 @@ export const Employee = (props: any) => {
           <Button
             id="employee_downloadexceltemplate_mainbtn"
             className="mx-2 my-1"
+            onClick={() => { setModalDownloadInformation(true) }}
+          >Download Employee Information</Button>
+          <Button
+            id="employee_downloadexceltemplate_mainbtn"
+            className="mx-2 my-1"
             onClick={downloadTemplate}
-          >Download Excel Template</Button>
+          >Download Employee Template</Button>
         </div>
+
       </div>
       <Modal
         show={modalShow}
@@ -3025,9 +3063,6 @@ export const Employee = (props: any) => {
           <div >
             {employee && <ViewEmployee employee={employee} />}
           </div>
-
-
-
         </Modal.Body>
 
 
@@ -3209,6 +3244,54 @@ export const Employee = (props: any) => {
           </div>
         </Modal.Body>
       </Modal>
+
+
+      <Modal
+        show={modalDownloadInformation}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setModalDownloadInformation(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Employee Information
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex flex-column align-items-center justify-content-center">
+          <div className="w-full  p-2 px-3 m-0">
+            <MultiSelectOption options={headerList} selectedOptions={(values: any) => {
+              setSelectedHeaderList(values)
+            }} />
+          </div>
+          <br />
+          <div className="d-flex justify-content-center">
+            <Button id="employee_information_submit"
+              type="button"
+              className=" btn btn-primary px-5"
+              disabled={isExporting}
+              onClick={() => {
+                setIsExporting(true)
+                RequestAPI.postFileAsync(
+                  `${Api.employeeExportReport}`,
+                  "",
+                  {
+                    'data': selectedHeaderList
+                  },
+                  `Employee Report (${moment().format('YYYY-MM-DD')}).xlsx`,
+                  async (res: any) => { setIsExporting(false) }
+                )
+              }}
+            >
+              {isExporting ? <span><span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Submitting</span> : "Submit"}
+            </Button>
+          </div>
+        </Modal.Body>
+
+      </Modal>
+
     </>} />
   )
 }

@@ -42,7 +42,7 @@ const RequestAPI = {
           callBack(handleResponse(response, response.data, blob))
         })
         .catch((er) => {
-          
+
           if (er.response !== undefined) {
             const { data } = er.response
             const { message, code } = data.error
@@ -165,13 +165,46 @@ const RequestAPI = {
         fileDownload(result, filename)
       })
   },
-  getFileAsync(path: any, key: any, filename: any,callBack: (res: any) => Promise<void | any | undefined>) {
+  getFileAsync(path: any, key: any, filename: any, callBack: (res: any) => Promise<void | any | undefined>) {
     const myHeaders = new Headers()
     myHeaders.append("Authorization", `Bearer ${key ? key : Utility.getUserToken() || ""}`)
 
     const requestOptions: any = {
       method: "GET",
       headers: myHeaders,
+      redirect: "follow",
+      rejectUnauthorized: false,
+      requestCert: true,
+      agent: false,
+      strictSSL: false,
+    }
+
+    fetch(path, requestOptions)
+      .then((response) => response.blob())
+      .then((result) => {
+        const fileDownload = require("js-file-download")
+        fileDownload(result, filename)
+        callBack("Done")
+      })
+  },
+  postFileAsync(path: any, key: any, body: any, filename: any, callBack: (res: any) => Promise<void | any | undefined>) {
+    const myHeaders = new Headers()
+    myHeaders.append("Authorization", `Bearer ${key ? key : Utility.getUserToken() || ""}`)
+    myHeaders.append("Content-Type", `application/json`)
+    myHeaders.append("Accept", "application/json")
+
+
+    let body_string = body
+    if (Object.keys(body).length) {
+      body_string = JSON.stringify(body)
+    } else if (Array.isArray(body)) {
+      body_string = "[]"
+    }
+
+    const requestOptions: any = {
+      method: "POST",
+      headers: myHeaders,
+      body: body_string,
       redirect: "follow",
       rejectUnauthorized: false,
       requestCert: true,
@@ -240,7 +273,7 @@ const RequestAPI = {
     body: any,
     filename: any
   ) {
-  
+
     var myHeaders: any = new Headers()
     myHeaders.append("Authorization", `Bearer ${key ? key : Utility.getUserToken() || ""}`);
     myHeaders.append("Accept", "application/json");
@@ -250,11 +283,11 @@ const RequestAPI = {
     var requestOptions: any = {
       method: 'PUT',
       headers: myHeaders,
-       body: Object.keys(body).length ? JSON.stringify(body) :  JSON.stringify({}),
+      body: Object.keys(body).length ? JSON.stringify(body) : JSON.stringify({}),
       redirect: 'follow'
     };
 
-   
+
 
     fetch(path, requestOptions)
       .then((response) => response.blob())
