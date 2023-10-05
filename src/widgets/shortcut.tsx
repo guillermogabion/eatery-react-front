@@ -249,23 +249,36 @@ const Shortcut = () => {
 
     const saveSecondaryName = (endpoint: any, secondaryName: any) => {
         console.log('Attempting to save secondary name:', endpoint, secondaryName);
-        RequestAPI.postRequest(
-          Api.changeName,
-          "",
-          { endpoint: endpoint, secondaryName: secondaryName },
-          {},
-          async (res) => {
-            const { status, body = { data: {}, error: {} } } = res;
-            if (status === 200 || status === 201) {
-              console.log(endpoint + ' updated');
-              getShortcut();
-            } else {
-              console.log("Failed to update. Response:", res);
+      
+        // Add a delay of, for example, 1000 milliseconds (1 second)
+        setTimeout(() => {
+          RequestAPI.postRequest(
+            Api.changeName,
+            "",
+            { endpoint: endpoint, secondaryName: secondaryName },
+            {},
+            async (res) => {
+              const { status, body = { data: {}, error: {} } } = res;
+              if (status === 200 || status === 201) {
+                console.log(endpoint + ' updated');
+                getShortcut();
+              } else {
+                console.log("Failed to update. Response:", res);
+              }
             }
-          }
-        );
-        console.log('Save attempt completed:', endpoint, secondaryName);
+          );
+      
+          console.log('Save attempt completed:', endpoint, secondaryName);
+        }, 10000); // Adjust the delay time as needed (in milliseconds)
       };
+
+      function limitText(text, limit) {
+        if (text.length <= limit) {
+          return text;
+        } else {
+          return text.substring(0, limit) + '...';
+        }
+      }
     return (
         <div className="time-card-width">
             <div className="card-header">
@@ -372,12 +385,12 @@ const Shortcut = () => {
                 { showAdd &&
                     <div className="shortcut-inner-body">
                     <div>
-                        <Table responsive style={{ width: '100%' }}>
-                            <div style={{ height: '350px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '30px' }}>
+                        <Table responsive style={{ width: '100%',overflowX: 'hidden', }}>
+                            <div style={{ height: '350px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '10px' }}>
                                 <thead>
                                     <tr style={{ border: 'none' }}>
                                         <th style={{ width: 'auto'}}>Parent / Page Name</th>
-                                        <th style={{ width: 'auto', textAlign: 'center'}}>Action</th>
+                                        <th style={{ width: 'auto'}}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -391,6 +404,7 @@ const Shortcut = () => {
                                                     style={{ border: 'none' }}
                                                 >
                                                     <td
+                                                    
                                                     className=""
                                                     style={{
                                                         fontWeight: hasSimilar ? 'bold' : 'normal',
@@ -424,10 +438,10 @@ const Shortcut = () => {
                                                         ) : (
                                                             <div style={{ whiteSpace: 'nowrap' }}>
                                                                 <span
-                                                                style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', paddingRight: '100px' }}
+                                                                style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', paddingRight: '0px' }}
                                                                 onClick={() => hasSimilar && handleSubmenuItemClick(submenuItem)}
                                                                 >
-                                                                    {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label}
+                                                                    {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label && limitText(submenuItem.label, 20)}
                                                                 </span>
                                                             </div>
                                                             
