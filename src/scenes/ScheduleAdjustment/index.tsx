@@ -839,7 +839,7 @@ export const ScheduleAdjustment = (props: any) => {
           {/* <Modal.Title id="contained-modal-title-vcenter">
               Request For Leave/Time-off
             </Modal.Title> */}
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
             {adjustmentId ? 'Edit Schedule Adjustment Request' : 'Request For Schedule Adjustment'}
           </Modal.Title>
         </Modal.Header>

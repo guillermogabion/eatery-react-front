@@ -713,10 +713,11 @@ export const Undertime = (props: any) => {
                 onHide={() => setModalShow(false)}
                 dialogClassName="modal-90w"
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        {/* Request Undertime */}
-                        {utId ? 'Update Undertime Request' : 'Create Undertime Request'}
+                <Modal.Header closeButton>      
+                    <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
+
+                        Request Undertime
+                        {/* {utId ? 'Update Undertime Request' : 'Create Undertime Request'} */}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="row px-3">

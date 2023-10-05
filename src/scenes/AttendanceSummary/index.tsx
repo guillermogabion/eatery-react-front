@@ -649,7 +649,7 @@ export const AttendanceSummary = (props: any) => {
         dialogClassName="modal-90w"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
             Import
           </Modal.Title>
         </Modal.Header>

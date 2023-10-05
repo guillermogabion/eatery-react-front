@@ -761,7 +761,7 @@ export const Overtime = (props: any) => {
         dialogClassName="modal-90w"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
             Request Overtime
             {/* {otId ? 'Update Overtime Request' : 'Create Overtime Request'} */}
 
@@ -897,7 +897,6 @@ export const Overtime = (props: any) => {
                   <div className="row px-3">
                     <div className="col-md-6 mb-3 " >
                       <label>OT Classification </label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         className="form-select"
                         name="classification"
@@ -918,7 +917,6 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Shift Date</label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="date"
                         name="shiftDate"
                         id="shiftDate"
@@ -934,7 +932,6 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>Start</label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="time"
                         name="otStart"
                         id="otStart"
@@ -950,7 +947,6 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3" >
                       <label>End</label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <input type="time"
                         name="otEnd"
                         id="otEnd"
@@ -966,7 +962,6 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Work Type</label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         id="overtime_worktype_reqovertimeselect"
                         className="form-select"
@@ -988,7 +983,6 @@ export const Overtime = (props: any) => {
                     </div>
                     <div className="form-group col-md-6 mb-3">
                       <label>Breaktime Duration (minutes)</label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <select
                         id="overtime_breaktimeduratino_reqovertimeselect"
                         className="form-select"
@@ -1014,7 +1008,6 @@ export const Overtime = (props: any) => {
                     <div className="form-group col-md-6 mb-3"></div>
                     <div className="form-group col-md-12 mb-3" >
                       <label>Indicate Ticket Number (If Applicable) and Reason</label>
-                      <span className="text-danger ml-2 text-md">*</span>
                       <textarea
                         name="reason"
                         id="reason"

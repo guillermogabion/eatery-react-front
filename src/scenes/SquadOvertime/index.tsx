@@ -431,8 +431,8 @@ export const SquadOvertime = (props: any) => {
               <th style={{ width: 'auto' }}>OT Start</th>
               <th style={{ width: 'auto' }}>OT End</th>
               <th style={{ width: 'auto' }}>Duration</th>
-              <th style={{ width: 'auto' }}>File Date</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -456,8 +456,8 @@ export const SquadOvertime = (props: any) => {
                     <td id={"squadot_otstart_myotdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"squadot_otend_myotdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                     <td id={"squadot_totalduration_myotdata_" + item.id}> {item.totalDuration} </td>
-                    <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td id={"squadot_reason_myotdata_" + item.id}> {item.reason ? limitText(item.reason, 20) : "" } </td>
+                    <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td id={"squadot_statuschangedby_myotdata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"squadot_status_myotdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td>
@@ -577,7 +577,7 @@ export const SquadOvertime = (props: any) => {
                   value={filterData && filterData['userId']}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2"  style={{margin: '0', padding: '0'}}>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 pr-0 pl-2 m-0">
                 <label>Date From</label>
                 <div>
                   <input
@@ -591,9 +591,8 @@ export const SquadOvertime = (props: any) => {
                   />
                 </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2"  style={{margin: '0', padding: '0'}}>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 pr-0 pl-2 m-0">
                 <label>Date To</label>
-                <div className="input-container">
                   <input
                     id="squadot_dateto_maininput"
                     name="dateTo"
@@ -603,9 +602,8 @@ export const SquadOvertime = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2"  style={{margin: '0', padding: '0'}}>
+              <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 pr-0 pl-2 m-0">
                 <label>Date Filed</label>
                   <input
                     id="squadot_datefiled_maininput"

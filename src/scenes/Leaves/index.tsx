@@ -1047,8 +1047,8 @@ export const Leaves = (props: any) => {
           {/* <Modal.Title id="contained-modal-title-vcenter">
               Request For Leave/Time-off
             </Modal.Title> */}
-          <Modal.Title id="contained-modal-title-vcenter">
-            {leaveId ? 'Edit Leave/Time-off Request' : 'Request For Leave/Time-off'}
+          <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
+            {leaveId ? 'Edit Leave/Time-off Request' : 'Request Leave/Time-off'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="row px-3">

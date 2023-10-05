@@ -546,6 +546,7 @@ export const SquadLeaves = (props: any) => {
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -566,6 +567,7 @@ export const SquadLeaves = (props: any) => {
                           <td id={"squadleaves_datefrom_alleavesdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_dateto_alleavesdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_reason_alleavesdata_" + item.id}> {limitText(item.reason, 20)} </td>
+                          <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_statuschangedby_alleavesdata_" + item.id}> {item.statusChangedBy} </td>
                           <td id={"squadleaves_status_alleavesdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td>
@@ -743,9 +745,8 @@ export const SquadLeaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0 m-0">
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pr-0 pl-2 m-0">
                 <label>Date To</label>
-                <div className="input-container">
                   <input
                     id="squadleaves_dateto_maininput"
                     name="dateTo"
@@ -756,9 +757,8 @@ export const SquadLeaves = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0 m-0">
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pr-0 pl-2 m-0">
                 <label>Leave Type</label>
                 <select
                   className="form-select"

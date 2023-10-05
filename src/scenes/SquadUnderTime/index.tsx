@@ -391,8 +391,8 @@ export const SquadUndertime = (props: any) => {
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>UT Start</th>
                             <th style={{ width: 'auto' }}>UT End</th>
-                            <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Reason</th>
+                            <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Action Taken By</th>
                             <th style={{ width: 'auto' }}>Status</th>
                             <th style={{ width: 'auto' }}>Action</th>
@@ -411,8 +411,8 @@ export const SquadUndertime = (props: any) => {
                                         <td id={"squadschedadj_shiftdate_myutdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
                                         <td id={"squadschedadj_utstart_myutdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"squadschedadj_utend_myutdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
-                                        <td id={"squadschedadj_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td id={"squadschedadj_reason_myutdata_" + item.id}> {limitText(item.reason, 20)} </td>
+                                        <td id={"squadschedadj_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td id={"squadschedadj_statuschangedby_myutdata_" + item.id}> {item.statusChangedBy} </td>
                                         <td id={"squadschedadj_status_myutdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td>

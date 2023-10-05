@@ -4009,21 +4009,21 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .custom-tab .nav-link.active {
   border: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #189FB5;
   font-weight: bold !important;
   font-size: 20px;
-  color: #007bff ;
+  color: #189FB5 ;
 }
 .custom-tab-calendar .nav-link.active {
   border: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #189FB5;
   font-weight: bold !important;
   font-size: 20px;
-  color: #007bff ;
+  color: #189FB5 ;
 }
 .custom-tab-notif .nav-link.active {
   border: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #189FB5;
   font-weight: bold !important;
   font-size: 20px;
   color: #007bff ;
@@ -4344,10 +4344,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .custom-tab-calendar .nav-link.active {
     border: none;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #189FB5;
     font-weight: bold !important;
     font-size: 15px;
-    color: #007bff ;
+    color: #189FB5 ;
   }
   .custom-tab-notif .nav-link{
     color: #030303 !important ;
@@ -4356,7 +4356,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .custom-tab-notif .nav-link.active {
     border: none;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #189FB5;
     font-weight: bold !important;
     font-size: 15px;
   
@@ -4559,10 +4559,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .custom-tab-announcement .nav-link.active {
   border: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #189FB5;
   font-weight: bold !important;
   font-size: 20px;
-  color: #007bff ;
+  color: #189FB5 ;
 }
 .custom-tab-calendar .nav-link {
   color: #030303;
@@ -4575,10 +4575,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .custom-tab-calendar .nav-link.active {
   border: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 2px solid #189FB5;
   font-weight: bold !important;
   font-size: 20px;
-  color: #007bff ;
+  color: #189FB5 ;
 }
 .react-calendar__tile--now,
 .react-calendar__tile--active {
@@ -4840,4 +4840,10 @@ input:checked + .slider:before {
 }
 .tracker-input{
   padding-top: 0.5em !important;
+}
+input[type="date"]{
+  text-transform: uppercase;
+}
+.modal-header .btn-close {
+  margin: 0 !important;
 }

@@ -1519,7 +1519,7 @@ export const Employee = (props: any) => {
                       masterList.department.length &&
                       masterList.department.map((item: any, index: string) => (
                         <option key={`${index}_${item}`} value={item}>
-                          {item}
+                          { Utility.removeUnderscore(item)}
                         </option>
                       ))}
                   </select>

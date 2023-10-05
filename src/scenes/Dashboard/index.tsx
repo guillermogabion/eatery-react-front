@@ -24,6 +24,7 @@ import Shortcut from "../../widgets/shortcut"
 import Reimbursement from "../../widgets/Reimbursement"
 import EmployeeDirectory from "../../widgets/employeeDirectory"
 import NewHire from "../../widgets/newHire"
+import Statistics from "../../widgets/statistics"
 
 const ErrorSwal = withReactContent(Swal)
 
@@ -137,6 +138,11 @@ export const Dashboard = (props: any) => {
             
             </> 
           ) : null}
+          <div className="col-sm-12 col-md-6 col-lg-4">
+            <div className="card">
+              <Statistics />
+            </div>
+          </div>
           <div className="col-sm-12 col-md-6 col-lg-4">
             <div className="card">
               <Shortcut />

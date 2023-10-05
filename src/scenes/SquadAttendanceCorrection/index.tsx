@@ -454,6 +454,7 @@ export const SquadAttendanceCorrection = (props: any) => {
               <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Filed Date</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -470,6 +471,7 @@ export const SquadAttendanceCorrection = (props: any) => {
                     <td id={"squadattendancecorrection_name_allcoadata_" + item.id}> {item.lastName}, {item.firstName}</td>
                     <td id={"squadattendancecorrection_type_allcoadata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
                     <td id={"squadattendancecorrection_reason_allcoadata_" + item.id}> {limitText(item.reason, 20)} </td>
+                    <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td id={"squadattendancecorrection_statuschangedby_allcoadata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"squadattendancecorrection_status_allcoadata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                     <td>
