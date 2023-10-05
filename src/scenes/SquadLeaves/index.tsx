@@ -567,7 +567,7 @@ export const SquadLeaves = (props: any) => {
                           <td id={"squadleaves_datefrom_alleavesdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_dateto_alleavesdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_reason_alleavesdata_" + item.id}> {limitText(item.reason, 20)} </td>
-                          <td id={"squadot_filedate_myotdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
+                          <td id={"squadleaves_filedate_alleavesdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td id={"squadleaves_statuschangedby_alleavesdata_" + item.id}> {item.statusChangedBy} </td>
                           <td id={"squadleaves_status_alleavesdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td>

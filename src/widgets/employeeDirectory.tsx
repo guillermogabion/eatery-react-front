@@ -173,6 +173,7 @@ const EmployeeDirectory = () => {
                         {allSquadWithAllOption &&
                         allSquadWithAllOption.map((item, index) => (
                             <div
+                            id="dashboardemployeedirectory_div_slider"
                             key={item.id}
                             className={`pa-1 text-primary text-bold custom-slider-item ${clickedItem === index ? 'underline' : ''}`}
                             style={{
@@ -192,7 +193,7 @@ const EmployeeDirectory = () => {
                         <div className="pt-6 col-9 ml-3">
                             <div className="" style={{ width: '100%', marginRight: 10 }}>
                                 <EmployeeDropdown
-                                    id="dashboardsquadtracker_search_input2"
+                                    id="dashboardemployeedirectory_search_input2"
                                     squad={false}
                                     placeholder={"Employee"}
                                     singleChangeOption={singleChangeOption}
@@ -204,6 +205,7 @@ const EmployeeDirectory = () => {
                         <div className="pt-6 col-2">
                             <Button
                             onClick={() => employeeList(clickedItem)}
+                            id="dashboardemployeedirectory_search_btn"
                             style={{ width: '100%',
                             padding: '0',
                             height: '40px',
@@ -223,11 +225,11 @@ const EmployeeDirectory = () => {
                             {allEmployee.map((item: any, index: any) => {
                                 return (
                                     <tr key={item.id}>
-                                        <td className="text-primary font-bold d-flex" style={{width: '300px'}}>
+                                        <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold d-flex" style={{width: '300px'}}>
                                           <img src={user} width={30} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
                                           <span style={{ marginTop: '22px' }}>{item.name}</span>
                                           </td>
-                                        <td style={{width: '100%'}}>{item.squadName}</td>
+                                        <td id={"dashboardemployeedirectory_td_squadname_"} style={{width: '100%'}}>{item.squadName}</td>
                                     </tr>
                                 )
                             })}

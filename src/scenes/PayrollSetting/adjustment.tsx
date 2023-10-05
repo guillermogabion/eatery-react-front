@@ -570,7 +570,7 @@ const Adjustment = (props: any) => {
                                             <label>Name</label>
                                             <input type="text"
                                                 name="name"
-                                                id="name"
+                                                id="payrollsettings_adj_name"
                                                 className="form-control"
                                                 value={values.name}
                                                 onChange={(e) => setFormField(e, setFieldValue)}
