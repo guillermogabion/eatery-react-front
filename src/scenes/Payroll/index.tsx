@@ -335,7 +335,7 @@ export const Payroll = (props: any) => {
                                                     null
                                             }
                                         </Tab>
-                                        <Tab id="payroll_reimbursement_audittabs" eventKey="reimbursement" title="Reimbursements">
+                                        {/* <Tab id="payroll_reimbursement_audittabs" eventKey="reimbursement" title="Reimbursements">
                                             {
                                                 key == 'reimbursement' ?
                                                     <Reimbursement payrollData={payrollData} setReimbursementIds={(data:any)=>{
@@ -344,7 +344,7 @@ export const Payroll = (props: any) => {
                                                     :
                                                     null
                                             }
-                                        </Tab>
+                                        </Tab> */}
                                         <Tab id="payroll_payroll_audittabs" eventKey="payroll" title="Payroll">
                                             {
                                                 key == 'payroll' && Object.keys(payrollData).length != 0 ?
