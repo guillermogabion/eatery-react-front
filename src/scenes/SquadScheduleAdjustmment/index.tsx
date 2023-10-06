@@ -610,20 +610,6 @@ export const SquadScheduleAdjustment = (props: any) => {
   return (
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
-        <div className="row">
-          <div className="col-md-12">
-            {/* <h2><b>Adjustment of Schedule</b></h2> */}
-            <div className="row p-0 m-0 pt-4 ">
-              <div className="col-md-4">
-                {/* <h5>Current Work Schedule:</h5> */}
-              {/* </div>
-              <div className="col-md-8"> */}
-                {/* <h5 id="squadschedadj_startshift_mainlabel">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5> */}
-              </div>
-
-            </div>
-          </div>
-        </div>
         <div>
           <div className="w-100 pt-2">
             <div className="d-flex row">
