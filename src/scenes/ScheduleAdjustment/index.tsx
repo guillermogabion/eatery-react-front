@@ -507,6 +507,7 @@ export const ScheduleAdjustment = (props: any) => {
               <th style={{ width: 'auto' }}>Date From</th>
               <th style={{ width: 'auto' }}>Date To</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>
@@ -532,6 +533,7 @@ export const ScheduleAdjustment = (props: any) => {
                           <td id={"scheduleadjustment_datefrom_alladjdata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                           <td id={"scheduleadjustment_dateto_alladjdata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                           <td id={"scheduleadjustment_reason_alladjdata_" + item.id}> {limitText(item.reason, 20)} </td>
+                          <td id={"squadschedadj_filedate_myutdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                           <td id={"scheduleadjustment_statuschangedby_alladjdata_" + item.id}> {item.statusChangedBy} </td>
                           <td id={"scheduleadjustment_status_alladjdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                           <td className="d-flex">
@@ -672,14 +674,13 @@ export const ScheduleAdjustment = (props: any) => {
     <ContainerWrapper contents={<>
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <div className="row">
-            <h3><b>Adjustment of Schedule</b></h3>
+            {/* <h3><b>Adjustment of Schedule</b></h3> */}
             <div className="row p-0 m-0 pt-4 ">
-              <div className="col-md-4">
-                <h5>Current Work Schedule:</h5>
-              </div>
-              <div className="col-md-8">
-                <h5 id="scheduleadjustment_startshift_mainlabel">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h5>
-              </div>
+            <div className="">
+              <h5 id="scheduleadjustment_startshift_mainlabel">Current Work Schedule: &nbsp;
+                {`${moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - ${moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}`}
+              </h5>
+            </div>
 
           </div>
         </div>

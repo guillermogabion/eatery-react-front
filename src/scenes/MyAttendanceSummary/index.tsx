@@ -381,7 +381,7 @@ export const MyAttendanceSummary = (props: any) => {
         <ContainerWrapper contents={<>
             <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
                 <div>
-                    <h3>Attendance Summary</h3>
+                    {/* <h3>Attendance Summary</h3> */}
 
                     <div className="w-100 pt-4">
                         <div className="row d-flex">
