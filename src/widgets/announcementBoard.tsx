@@ -261,16 +261,16 @@ const AnnouncementBoard = () => {
             <div className="time-card-body">
                 <div className="announcement-space">
                     <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab-announcement justify-content-center">
-                        <Tab className="custom-tabs"  eventKey="tab1" title="All">
+                        <Tab className="custom-tabs" id="announcementboards_tab_all"  eventKey="tab1" title="All">
                         <AllAnnouncement/>
                         </Tab>
-                        <Tab  className="custom-tabs" eventKey="tab2" title="Events">
+                        <Tab  className="custom-tabs" id="announcementboards_tab_events" eventKey="tab2" title="Events">
                             <Events />
                         </Tab>
-                        <Tab  className="custom-tabs" eventKey="tab3" title="IT Security">
+                        <Tab  className="custom-tabs" id="announcementboards_tab_itsecurity" eventKey="tab3" title="IT Security">
                             <IT/>
                         </Tab>
-                        <Tab  className="custom-tabs" eventKey="tab4" title="Policy Updates">
+                        <Tab  className="custom-tabs" id="announcementboards_tab_policyupdates" eventKey="tab4" title="Policy Updates">
                             <Policy/>
                         </Tab>
                     </Tabs>
@@ -280,7 +280,8 @@ const AnnouncementBoard = () => {
                 { data.profile.role != 'EMPLOYEE' ?
                     <>
                         <div className="col-12 announcement-button">
-                            <Button id=""
+                            <Button 
+                                id="announcementboards_btn_createannouncement"
                                 style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 onClick={() => setModalShow(true)}
                                 >
@@ -324,6 +325,7 @@ const AnnouncementBoard = () => {
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 my-2">
                                             <label>Types</label>
                                             <select 
+                                            id="announcementboards_types_input"
                                             className="form-select"
                                             name="type"
                                             value={values.type}
@@ -348,6 +350,7 @@ const AnnouncementBoard = () => {
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 my-2">
                                             <label>Audiences</label>
                                             <select 
+                                                id="announcementboards_audience_input"
                                                 className="form-select"
                                                 name="audience"
                                                 value={values.audience}
@@ -369,6 +372,7 @@ const AnnouncementBoard = () => {
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 my-2">
                                             <label>Target</label>
                                             <input 
+                                            id="announcementboards_target_input"
                                             className="form-control"
                                             type="text" 
                                             name="target"
@@ -381,14 +385,14 @@ const AnnouncementBoard = () => {
                                         </div>
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 my-2">
                                             <label>Subject</label>
-                                            <textarea name="subject" id="" className="form-control" value={values.subject} 
+                                            <textarea id="announcementboards_subject_input" name="subject" className="form-control" value={values.subject} 
                                              onChange={(e) => {
                                                 setFormField(e, setFieldValue)
                                             }}/>
                                         </div>
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 my-2">
                                             <label>Description</label>
-                                            <textarea name="description" id="" className="form-control" value={values.description} 
+                                            <textarea name="description" id="announcementboards_description_input" className="form-control" value={values.description} 
                                              onChange={(e) => {
                                                 setFormField(e, setFieldValue)
                                             }}/>
@@ -398,6 +402,7 @@ const AnnouncementBoard = () => {
                                             <input 
                                             className="form-control"
                                             type="date" 
+                                            id="announcementboards_startdate_input"
                                             name="startDate"
                                             value={values.startDate}
                                             onChange={(e) => {
@@ -411,6 +416,7 @@ const AnnouncementBoard = () => {
                                             <input 
                                             className="form-control"
                                             type="date" 
+                                            id="announcementboards_enddate_input"
                                             name="endDate"
                                             value={values.endDate}
                                             onChange={(e) => {
@@ -424,7 +430,7 @@ const AnnouncementBoard = () => {
                                             <input
                                                 className="form-control"
                                                 type="file"
-                                                id="fileInput"
+                                                id="announcementboards_file_input"
                                                 name="file"
                                                 // value={values.file}
                                                 accept=".jpg, .png, .pdf, .doc"
@@ -439,6 +445,7 @@ const AnnouncementBoard = () => {
                                     </div>
                                     <div className="d-flex justify-content-end">
                                     <button
+                                        id="announcementboards_save_btn"
                                         type="submit"
                                         className="btn btn-primary"
                                     >
