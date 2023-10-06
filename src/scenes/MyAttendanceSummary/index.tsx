@@ -413,25 +413,25 @@ export const MyAttendanceSummary = (props: any) => {
                                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                                 />
                             </div>
-                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex">
+                            <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex " >
                                 <Button
                                     id="myattendancesummary_search_attendancesummarybtn"
                                     style={{ width: '100%' }}
                                     onClick={() => getAllAttendance(0)}
-                                    className="btn btn-primary my-2 mx-1 mt-4">
+                                    className="btn btn-primary my-2 mt-4">
                                     Search
                                 </Button>
 
                             </div>
                                 {
                                 data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex">
+                                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 d-flex p-0 m-0">
                                     <Button
                                         id="myattendancesummary_addbiolog_attendancesummarybtn"
-                                        style={{ width: '100%' }}
+                                        style={{ width: 'auto', margin: '0'}}
                                         onClick={() => setAddBioModal(true)}
                                         disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                                        className="btn btn-primary mt-4 my-1">
+                                        className="btn btn-primary mt-4">
                                         Add Bio Log
                                     </Button>
                                 </div>

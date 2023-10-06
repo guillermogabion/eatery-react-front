@@ -650,9 +650,8 @@ export const SquadScheduleAdjustment = (props: any) => {
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
               </div>
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 p-0 m-0">
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                 <label>Date Filed</label>
-                <div className="input-container">
                   <input
                     id="squadschedadj_datefiled_maininput"
                     name="dateFiled"
@@ -662,7 +661,6 @@ export const SquadScheduleAdjustment = (props: any) => {
                     onChange={(e) => makeFilterData(e)}
                     onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                   />
-                </div>
               </div>
               <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 p-0 m-0">
                 <Button

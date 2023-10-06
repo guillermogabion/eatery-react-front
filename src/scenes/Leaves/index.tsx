@@ -943,7 +943,7 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-2 mt-4" : "col-xs-12 col-sm-12 col-md-4 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '8px' }}>
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-1 mt-4" : "col-xs-12 col-sm-12 col-md-4 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '8px' }}>
                 <Button
                   id="leaves_search_leavecreditsbtn"
                   style={{ width: '100%'}}

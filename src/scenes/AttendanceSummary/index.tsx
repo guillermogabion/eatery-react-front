@@ -523,21 +523,24 @@ export const AttendanceSummary = (props: any) => {
                     className="btn btn-primary mt-4 mr-2">
                     Search
                   </Button>
+                </div>
+                  
                   {
                     data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                      <Button
-                        id="attendancesummary_addbiolog_summarybtn"
-                        style={{ width: '100%' }}
-                        onClick={() => setAddBioModal(true)}
-                        disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
-                        className="btn btn-primary mt-4">
-                        Add Biometric Log
-                      </Button>
+                    <div className="col-xs-12 col-sm-12 col-md-1 col-lg-2 mb-2">
+                      
+                        <Button
+                          id="attendancesummary_addbiolog_summarybtn"
+                          style={{ width: '100%' }}
+                          onClick={() => setAddBioModal(true)}
+                          disabled={!filterData['userid'] || (filterData['userid'] && filterData['userid'] == "")}
+                          className="btn btn-primary mt-4">
+                          Add Biometric Log
+                        </Button>
+                    </div>
                       :
                       null
                   }
-                </div>
-
               </div>
             </div>
 
