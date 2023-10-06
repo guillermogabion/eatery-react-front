@@ -688,7 +688,7 @@ export const ScheduleAdjustment = (props: any) => {
             <div className="row d-flex pb-1">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                  <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2" style={{paddingRight: '0'}}>
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="scheduleadjustment_employee_maindropdown"

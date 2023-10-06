@@ -421,8 +421,11 @@ export const MyAttendanceSummary = (props: any) => {
                                     className="btn btn-primary my-2 mx-1 mt-4">
                                     Search
                                 </Button>
+
+                            </div>
                                 {
                                 data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
+                                <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1 d-flex">
                                     <Button
                                         id="myattendancesummary_addbiolog_attendancesummarybtn"
                                         style={{ width: '100%' }}
@@ -431,11 +434,10 @@ export const MyAttendanceSummary = (props: any) => {
                                         className="btn btn-primary mt-4 my-1">
                                         Add Bio Log
                                     </Button>
+                                </div>
                                     :
                                     null
                             }
-
-                            </div>
                            
 
                             
@@ -702,7 +704,7 @@ export const MyAttendanceSummary = (props: any) => {
                     {/* <Modal.Title id="contained-modal-title-vcenter">
               Request For Leave/Time-off
             </Modal.Title> */}
-                    <Modal.Title id="contained-modal-title-vcenter">
+                    <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
                         {updateData ? "Update Biometric Logs" : "Add Biometric Logs"}
                     </Modal.Title>
                 </Modal.Header>
