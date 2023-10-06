@@ -209,7 +209,6 @@ const RequestAPI = {
       requestCert: true,
       agent: false,
       strictSSL: false,
-      
     }
 
     fetch(path, requestOptions)
