@@ -2846,7 +2846,7 @@ export const Employee = (props: any) => {
                     <option value="OJT_Ended">OJT Ended</option>
                   </select>
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 mt-1 pt-3">
+                <div className="col-xs-12 col-sm-12 col-md-2 col-lg-1 mt-1 pt-3">
                   <Button
                     id="employee_search_mainbtn"
                     style={{ width: '100%' }}

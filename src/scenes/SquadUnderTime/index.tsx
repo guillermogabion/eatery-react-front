@@ -523,7 +523,7 @@ export const SquadUndertime = (props: any) => {
             <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
                 <div>
                     <div className="w-100 pt-2">
-                        <div className="d-flex row">
+                        <div className="d-flex row pb-1">
                             <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2 pl-3 pr-0 m-0">
                                 <label>Employee</label>
                                 <EmployeeDropdown

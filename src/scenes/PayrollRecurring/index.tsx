@@ -855,7 +855,7 @@ export const Recurring = (props: any) => {
                             </div>
 
                         </div>
-                        <div className="col-md-2 text-center">
+                        <div className="col-md-1 text-center">
                             <div className="input-container pt-2">
                                 <Button
                                     id="payrollrecurring_search_btn"

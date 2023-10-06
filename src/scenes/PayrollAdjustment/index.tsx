@@ -833,7 +833,7 @@ export const PayrollAdjustment = (props: any) => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 text-center">
+                            <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 text-center">
                                 <div className="input-container pt-4">
                                     <Button
                                         id="payrolladjustment_search_button"

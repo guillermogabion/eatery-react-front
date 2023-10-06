@@ -488,7 +488,7 @@ export const Payslip = (props: any) => {
                                     withEmployeeID={true}
                                 />
                             </div>
-                            <div className="col-md-2 pt-4">
+                            <div className="col-md-1 pt-4">
                                 <Button
                                     id="payslip_search_modalbtn"
                                     style={{ width: 100 }}

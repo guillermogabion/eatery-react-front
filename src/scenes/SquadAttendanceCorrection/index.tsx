@@ -559,7 +559,7 @@ export const SquadAttendanceCorrection = (props: any) => {
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <div>
           <div className="w-100 pt-2">
-            <div className="d-flex col-md-3 w-100">
+            <div className="d-flex col-md-3 pb-1">
               <div className="" style={{ width: 200, marginRight: 10 }}>
                 <label>Employee</label>
                 <EmployeeDropdown

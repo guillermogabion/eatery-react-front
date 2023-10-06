@@ -223,7 +223,7 @@ export const Holiday = (props: any) => {
                         ))}
                     </select>
                   </div>
-                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-1">
                     <Button
                       id="holiday_search_btn"
                       style={{ width: '100%' }}

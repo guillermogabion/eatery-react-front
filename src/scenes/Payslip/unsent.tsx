@@ -264,7 +264,6 @@ const unsent = (props : any ) => {
                         <div className="w-100 pt-2">
                             <div className="fieldtext row ">
                             <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12">
-                                <div className="input-container">
                                     <label>Employee Name</label>
                                     <EmployeeDropdown
                                         placeholder={"Employee"}
@@ -273,10 +272,8 @@ const unsent = (props : any ) => {
                                         value={filterData && filterData['userId']}
                                         withEmployeeID={true}
                                     />
-                                </div>
                             </div>
                             <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12 clearable-select">
-                                <div className="input-container">
                                 <label> Month </label>
                                     <select 
                                         name="payrollMonth" 
@@ -308,11 +305,9 @@ const unsent = (props : any ) => {
                                         X
                                         </span>
                                     )}
-                                </div>
                             
                             </div>
                             <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12 clearable-select">
-                            <div className="input-container">
                                 <label>Year</label>
                                     <select
                                         className={`form-select`}
@@ -342,38 +337,35 @@ const unsent = (props : any ) => {
                                         X
                                         </span>
                                     )}
-                                </div>
                             </div>
                             <div className="col-lg-2 col-md-6 col-sm-12 col-xs-12 clearable-select">
-                                <div className="input-container">
-                                    <label> Status </label>
-                                    <select 
-                                        name="status" 
-                                        id="status"
-                                        onChange={(e) => { makeFilterData(e)
-                                            setShowButtonStatus(e.target.value !== 'default')
-                                        }}
-                                        className="formControl"
-                                        >
-                                            <option value="default" disabled selected>
-                                                Status
-                                            </option>
-                                            <option value="completed">Completed</option>
-                                            <option value="incomplete">Incomplete</option>
-                                        </select>
-                                        {showButtonStatus && (
-                                            <span id="payslipunsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
-                                            X
-                                            </span>
-                                        )}
-                                </div>
+                                <label> Status </label>
+                                <select 
+                                    name="status" 
+                                    id="status"
+                                    onChange={(e) => { makeFilterData(e)
+                                        setShowButtonStatus(e.target.value !== 'default')
+                                    }}
+                                    className="formControl"
+                                    >
+                                        <option value="default" disabled selected>
+                                            Status
+                                        </option>
+                                        <option value="completed">Completed</option>
+                                        <option value="incomplete">Incomplete</option>
+                                </select>
+                                {showButtonStatus && (
+                                    <span id="payslipunsent_closestatus_span" className="clear-icon" style={{paddingTop: '10%', paddingRight: '5%'}} onClick={resetStatus}>
+                                    X
+                                    </span>
+                                )}
                             </div>
                             <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 text-center">
                                 <Button
                                     id="payslipunsent_search_btn"
                                     style={{ width: '100%' }}
                                     onClick={() => getAllPayrollFailed(0)}
-                                    className="btn btn-primary mx-2 mt-4">
+                                    className="btn btn-primary mt-4">
                                     Search
                                 </Button>
                             </div>       
