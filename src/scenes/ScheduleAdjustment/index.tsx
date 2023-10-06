@@ -815,7 +815,7 @@ export const ScheduleAdjustment = (props: any) => {
                   setAdjustmentBreakdown([])
                   setAdjustmentId("")
                   setModalShow(true)
-                }}>Request for  Schedule Adjustment</Button>
+                }}>Request Schedule Adjustment</Button>
             </div>
           </div>
         ) : null}
@@ -840,7 +840,7 @@ export const ScheduleAdjustment = (props: any) => {
               Request For Leave/Time-off
             </Modal.Title> */}
           <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
-            {adjustmentId ? 'Edit Schedule Adjustment Request' : 'Request For Schedule Adjustment'}
+            {adjustmentId ? 'Edit Schedule Adjustment Request' : 'Request Schedule Adjustment'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="row px-3">
@@ -1014,7 +1014,7 @@ export const ScheduleAdjustment = (props: any) => {
                       <textarea
                         name="reason"
                         id="reason"
-                        className="form-control"
+                        className="form-control p-2"
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                         style={{height: '150px'}}

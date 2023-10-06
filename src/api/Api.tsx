@@ -355,6 +355,9 @@ const Api: any = {
   // new hire widget 
   getNewHire : process.env.REACT_APP_API_URL + "widget/new-hires-tracker",
 
+  // compensation by department  
+  compensationByDepartment : process.env.REACT_APP_API_URL + "employee/compensation/department"
+
 
 
 

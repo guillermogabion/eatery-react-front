@@ -1023,7 +1023,7 @@ export const Leaves = (props: any) => {
                   setLeaveBreakdown([])
                   setLeaveId("")
                   setModalShow(true)
-                }}>Request for Leave/Time-off</Button>
+                }}>Request Leave/Time-off</Button>
             </div>
           </div>
         ) : null}
@@ -1257,7 +1257,7 @@ export const Leaves = (props: any) => {
                       <textarea
                         name="reason"
                         id="reason"
-                        className="form-control"
+                        className="form-control p-2"
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                         style={{height: '150px'}}
@@ -1352,8 +1352,14 @@ export const Leaves = (props: any) => {
                   <br />
                   <Modal.Footer>
                     <div className="d-flex justify-content-end px-5">
-
-                      {
+                    <button
+                            id="leaves_save1_leavebreakdownbtn"
+                            disabled={!leaveBreakdown.length}
+                            type="submit"
+                            className="btn btn-primary">
+                            Save
+                          </button>
+                      {/* {
                         leaveBreakdown && leaveBreakdown.length == 0 && leaveBreakdown.length > 30 ?
 
                           <button
@@ -1370,7 +1376,7 @@ export const Leaves = (props: any) => {
                           >
                             Save
                           </button>
-                      }
+                      } */}
                     </div>
                   </Modal.Footer>
                 </Form>

@@ -247,29 +247,30 @@ const Shortcut = () => {
         }, {});
     });
 
+    
     const saveSecondaryName = (endpoint: any, secondaryName: any) => {
         console.log('Attempting to save secondary name:', endpoint, secondaryName);
       
         // Add a delay of, for example, 1000 milliseconds (1 second)
-        setTimeout(() => {
-          RequestAPI.postRequest(
-            Api.changeName,
-            "",
-            { endpoint: endpoint, secondaryName: secondaryName },
-            {},
-            async (res) => {
-              const { status, body = { data: {}, error: {} } } = res;
-              if (status === 200 || status === 201) {
-                console.log(endpoint + ' updated');
-                getShortcut();
-              } else {
-                console.log("Failed to update. Response:", res);
-              }
-            }
-          );
+        // setTimeout(() => {
+        //   RequestAPI.postRequest(
+        //     Api.changeName,
+        //     "",
+        //     { endpoint: endpoint, secondaryName: secondaryName },
+        //     {},
+        //     async (res) => {
+        //       const { status, body = { data: {}, error: {} } } = res;
+        //       if (status === 200 || status === 201) {
+        //         console.log(endpoint + ' updated');
+        //         getShortcut();
+        //       } else {
+        //         console.log("Failed to update. Response:", res);
+        //       }
+        //     }
+        //   );
       
-          console.log('Save attempt completed:', endpoint, secondaryName);
-        }, 10000); // Adjust the delay time as needed (in milliseconds)
+        //   console.log('Save attempt completed:', endpoint, secondaryName);
+        // }, 10000); // Adjust the delay time as needed (in milliseconds)
       };
 
       function limitText(text, limit) {
@@ -279,6 +280,8 @@ const Shortcut = () => {
           return text.substring(0, limit) + '...';
         }
       }
+
+      
     return (
         <div className="time-card-width">
             <div className="card-header">
@@ -426,13 +429,21 @@ const Shortcut = () => {
                                                                         type="text"
                                                                         name="secondaryName"
                                                                         value={submenuItemInputValue}
-                                                                        onChange={(e) => {setSubmenuItemInputValue(e.target.value)
-                                                                                        saveSecondaryName(submenuItem.route, submenuItemInputValue)
+                                                                        // onChange={(e) => {setSubmenuItemInputValue(e.target.value)
+                                                                        //                 // saveSecondaryName(submenuItem.route, submenuItemInputValue)
+                                                                        // }}
+                                                                        onChange={(e) => {
+                                                                            const newValue = e.target.value;
+                                                                            setSubmenuItemInputValue(newValue);
+                                                                            // saveSecondaryName(submenuItem.route, newValue)
                                                                         }}
                                                                         onBlur={() => setClickedSubmenuItem(null)}
                                                                         style={{ height: '25px', fontSize: '15px', maxWidth: '200px' }}
                                                                     />
-                                                                 
+                                                                    <label>
+                                                                        <img src={save} onClick={() => saveSecondaryName(submenuItem.route, submenuItemInputValue)} alt="" width={20} style={{ cursor: 'pointer', position: 'relative', zIndex: '9999' }} />
+                                                                    </label>
+
                                                                 </div>
                                                             )
                                                         ) : (
@@ -445,6 +456,7 @@ const Shortcut = () => {
                                                                 </span>
                                                             </div>
                                                             
+                                                            
                                                         )}
                                                     </td>
                                                     <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'center' }}>
@@ -452,7 +464,7 @@ const Shortcut = () => {
                                                             {hasSimilar ? (
                                                                 clickedSubmenuItem !== submenuItem ? (
                                                                     <img src={check_circle} alt="" width={20} style={{ cursor: 'pointer' }} />
-                                                                ) : <img src={save} onClick={() => saveSecondaryName(submenuItem.route, submenuItemInputValue)} alt="" width={20} style={{ cursor: 'pointer', position: 'relative', zIndex: '9999' }} />
+                                                                ) : ""
                                                             ) : (
                                                                 <img src={plus} alt="" onClick={() => {AddShortcut(submenuItem.label, submenuItem.route, submenuItem.type)}} width={20}  style={{ cursor: 'pointer' }} />
                                                             )}

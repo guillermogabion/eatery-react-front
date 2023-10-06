@@ -565,8 +565,8 @@ export const SquadOvertime = (props: any) => {
       <div className="w-100 px-5 py-5" style={{ height: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <div>
           <div className="w-100 pt-2">
-            <div className=" d-flex row pb-1">
-              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3" style={{ width: 200, margin: '0', paddingRight: '8px' }}>
+            <div className=" d-flex row">
+              <div className="col-xs-12 col-sm-12 col-md-3 col-lg-3  pl-3 pr-0 m-0">
                 <label>Employee</label>
                 <EmployeeDropdown
                   id="squadot_employee_maindropdown"

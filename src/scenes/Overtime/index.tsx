@@ -50,7 +50,10 @@ export const Overtime = (props: any) => {
     "shiftDate": moment().format("YYYY-MM-DD"),
     "classification": "NORMAL_OT",
     "otStart": "",
-    "otEnd": ""
+    "otEnd": "",
+    "location": '',
+    "breaktimeDuration": '',
+    "reason": '',
   })
   const formRef: any = useRef()
 
@@ -891,7 +894,7 @@ export const Overtime = (props: any) => {
               }
               setOnSubmit(false)
             }}>
-            {({ values, setFieldValue, handleSubmit, errors, touched }) => {
+            {({ values, setFieldValue, handleSubmit, errors, touched, isValid }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                   <div className="row px-3">
@@ -1012,7 +1015,7 @@ export const Overtime = (props: any) => {
                         name="reason"
                         id="reason"
                         className="form-control p-2"
-                        style={{ minHeight: 100 }}
+                        style={{height: '150px'}}
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                       />
@@ -1027,7 +1030,7 @@ export const Overtime = (props: any) => {
                       <button
                         id="overtime_save_reqovertimebtn"
                         type="submit"
-                        disabled={onSubmit}
+                        disabled={!isValid}
                         className="btn btn-primary">
                         Save
                       </button>

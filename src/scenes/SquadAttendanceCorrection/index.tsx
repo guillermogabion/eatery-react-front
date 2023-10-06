@@ -454,7 +454,7 @@ export const SquadAttendanceCorrection = (props: any) => {
               <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
-              <th style={{ width: 'auto' }}>Filed Date</th>
+              <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
               <th style={{ width: 'auto' }}>Action</th>

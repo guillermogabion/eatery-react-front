@@ -4847,3 +4847,10 @@ input[type="date"]{
 .modal-header .btn-close {
   margin: 0 !important;
 }
+.accordion-custom-button{
+  align-content:end;
+  margin-top: 0 !important;
+}
+.custom-arrow-accordion .accordion-button::after {
+  display: none;
+}

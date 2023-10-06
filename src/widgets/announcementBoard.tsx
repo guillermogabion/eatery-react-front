@@ -39,7 +39,7 @@ const AllAnnouncement = () => {
                     </div>
                 ))
 
-            ): "No Announcement Yet" }
+            ): <p style={{ margin: 'auto', textAlign: 'center' }}>No Announcement Yet</p> }
         
         </div>
     )
@@ -74,7 +74,8 @@ const Events = () => {
                     </div>
                 ))
 
-            ): "No posted Announcement about events Yet" }
+            ): <p style={{ margin: 'auto', textAlign: 'center' }}>No posted Announcement about events Yet</p> 
+            }
         </div>
     )
 
@@ -108,7 +109,7 @@ const IT = () => {
                     </div>
                 ))
 
-            ): "No posted Announcement about IT Security Yet" }
+            ): <p style={{ margin: 'auto', textAlign: 'center' }}>No posted Announcement about IT Security Yet</p> }
         </div>
     )
 
@@ -142,7 +143,7 @@ const Policy = () => {
                     </div>
                 ))
 
-            ): "No posted Announcement about Policy Updates Yet" }
+            ): <p style={{ margin: 'auto', textAlign: 'center' }}>No posted Announcement about Policy Updates Yet</p> }
         </div>
     )
 

@@ -115,10 +115,10 @@ const All = () => {
     }
 
     return (
-        <div style={{marginLeft: '20px', marginRight: '20px'}}>
+        <div>
             <div className="row tracker-input">
                 <div className="col-9 ml-3">
-                    <div className="" style={{ width: '100%', marginRight: '5' }}>
+                    <div className="" style={{ width: '100%', marginRight: 10 }}>
                         <EmployeeDropdown
                             id="dashboardsquadtracker_search_input"
                             squad={true}
@@ -146,7 +146,7 @@ const All = () => {
                 </div>
             </div>
             <Table responsive>
-                <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
+                <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
                     <tbody>
                         {allMember && allMember.length > 0 ? (
                         allMember.map((item: any, index: any) => (
@@ -170,9 +170,9 @@ const All = () => {
                             </tr>
                         ))
                         ) : (
-                        <div className="w-100 text-center">
-                            <label htmlFor="">No Member Found</label>
-                        </div>
+                            <div className="justify-content-center">
+                                <p style={{textAlign: 'center'}}>No Member Found</p>
+                            </div>
                         )}
                     
                     </tbody>
@@ -267,12 +267,19 @@ const OnLeave = () => {
                 </div>
             </div>
             <Table responsive>
-            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
+            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
                 <tbody>
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold">{item.fullname} <br /> {item.jobTitle}</td>
+                        <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
+                            <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                            <div className="pt-2">
+                                {item.fullname}
+                                <br />
+                                <span>{item.jobTitle}</span>
+                            </div>
+                        </td>
                         <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                             {item.status == null && item.todaysTimeIn != null ? (
                                 <>
@@ -283,9 +290,9 @@ const OnLeave = () => {
                         </tr>
                     ))
                     ) : (
-                    <div className="w-100 text-center">
-                        <label htmlFor="">No Member Found</label>
-                    </div>
+                        <div className="justify-content-center d-flex">
+                            <p style={{textAlign: 'center'}}>No Member Found</p>
+                        </div>
                     )}
                 </tbody>
                 </div>
@@ -380,12 +387,19 @@ const Absent = () => {
                 </div>
             </div>
             <Table responsive>
-            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '30px' }}>
+            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
                 <tbody>
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold "> <p className="table-mobile"> {item.fullname} </p> <br /> {item.jobTitle}</td>
+                        <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
+                            <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                            <div className="pt-2">
+                                {item.fullname}
+                                <br />
+                                <span>{item.jobTitle}</span>
+                            </div>
+                        </td>
                         <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                             {item.status == null && item.todaysTimeIn != null ? (
                                 <>
@@ -396,9 +410,9 @@ const Absent = () => {
                         </tr>
                     ))
                     ) : (
-                    <div className="w-100 text-center">
-                        <label htmlFor="">No Member Found</label>
-                    </div>
+                        <div className="justify-content-center">
+                            <p style={{textAlign: 'center'}}>No Member Found</p>
+                        </div>
                     )}
                 </tbody>
                 </div>

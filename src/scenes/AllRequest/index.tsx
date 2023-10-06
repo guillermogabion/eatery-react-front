@@ -283,9 +283,13 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
-
-     
-
+        function limitText(text, limit) {
+            if (text.length <= limit) {
+              return text;
+            } else {
+              return text.substring(0, limit) + '...';
+            }
+          }
 
         return (
 
@@ -329,7 +333,7 @@ export const AllRequest = (props: any) => {
                                                     <td id={"allrequest_type_leavedata_" + item.id}> {item.type} </td>
                                                     <td id={"allrequest_datefrom_leavedata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_dateto_leavedata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                    <td id={"allrequest_reason_leavedata_" + item.id}> {item.reason} </td>
+                                                    <td id={"allrequest_reason_leavedata_" + item.id}> {limitText(item.reason, 20)} </td>
                                                     <td id={"allrequest_filedate_leavedata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_status_leavedata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                                     <td id={"allrequest_labels_leavedata_" + item.id}>
@@ -450,6 +454,13 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
+        function limitText(text, limit) {
+            if (text.length <= limit) {
+              return text;
+            } else {
+              return text.substring(0, limit) + '...';
+            }
+          }
      
         return (
             // coa 
@@ -486,7 +497,7 @@ export const AllRequest = (props: any) => {
                                                 </> : null
                                         }
                                         <td id={"allrequest_type_revdata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
-                                        <td id={"allrequest_reason_revdata_" + item.id}> {item.reason} </td>
+                                        <td id={"allrequest_reason_revdata_" + item.id}>{limitText(item.reason, 20)}</td>
                                         <td id={"allrequest_filedate_revdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td id={"allrequest_status_revdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td id={"allrequest_labels_revdata_" + item.id}>
@@ -600,6 +611,13 @@ export const AllRequest = (props: any) => {
             }
 
         }
+        function limitText(text, limit) {
+            if (text.length <= limit) {
+              return text;
+            } else {
+              return text.substring(0, limit) + '...';
+            }
+          }
 
         return (
             
@@ -642,7 +660,7 @@ export const AllRequest = (props: any) => {
                                         <td id={"allrequest_otstart_otdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"allrequest_otend_otdata_" + item.id}> {Utility.formatDate(item.otEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"allrequest_filedate_otdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id={"allrequest_reason_otdata_" + item.id}> {item.reason} </td>
+                                        <td id={"allrequest_reason_otdata_" + item.id}> {limitText(item.reason, 20)}</td>
                                         <td id={"allrequest_status_otdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td id={"allrequest_labels_otdata_" + item.id}>
 
@@ -756,6 +774,13 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
+        function limitText(text, limit) {
+            if (text.length <= limit) {
+              return text;
+            } else {
+              return text.substring(0, limit) + '...';
+            }
+          }
 
         
         return (
@@ -798,7 +823,7 @@ export const AllRequest = (props: any) => {
                                         <td id={"allrequest_utstart_utdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"allrequest_utend_utdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"allrequest_filedate_utdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
-                                        <td id={"allrequest_reason_utdata_" + item.id}> {item.reason} </td>
+                                        <td id={"allrequest_reason_utdata_" + item.id}>{limitText(item.reason, 20)} </td>
                                         <td id={"allrequest_status_utdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td id={"allrequest_labels_utdata_" + item.id}>
                                             <label id={"allrequest_id_utlabel_" + item.id}
@@ -911,6 +936,13 @@ export const AllRequest = (props: any) => {
                 )
             }
         }
+        function limitText(text, limit) {
+            if (text.length <= limit) {
+              return text;
+            } else {
+              return text.substring(0, limit) + '...';
+            }
+          }
 
        
 
@@ -953,7 +985,7 @@ export const AllRequest = (props: any) => {
                                                     }
                                                     <td id={"allrequest_datefrom_suddata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_dateto_suddata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
-                                                    <td id={"allrequest_reason_suddata_" + item.id}> {item.reason} </td>
+                                                    <td id={"allrequest_reason_suddata_" + item.id}>{limitText(item.reason, 20)}</td>
                                                     <td id={"allrequest_filedate_suddata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_status_suddata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                                     <td id={"allrequest_labels_suddata_" + item.id}>

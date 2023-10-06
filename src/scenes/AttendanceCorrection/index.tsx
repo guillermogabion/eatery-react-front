@@ -736,7 +736,7 @@ export const AttendanceCorrection = (props: any) => {
               onClick={() => {
                 setModalShow(true),
                   handleRemoveAllItems()
-              }}>Request for Attendance Reversal</Button>
+              }}>Request Attendance Reversal</Button>
           </div>
         </div>
       </div>
@@ -758,7 +758,7 @@ export const AttendanceCorrection = (props: any) => {
       >
         <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
-            Attendance Reversal
+            Request Attendance Reversal
             {/* {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'} */}
           </Modal.Title>
         </Modal.Header>
@@ -942,7 +942,7 @@ export const AttendanceCorrection = (props: any) => {
                         name="reason"
                         id="reason"
                         value={values.reason}
-                        className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                        className={`form-control p-2 ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
                         style={{ height: "100px" }}
                         onChange={(e) => {
                           setFieldValue("reason", e.target.value);
