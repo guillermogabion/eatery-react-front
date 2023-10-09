@@ -17,7 +17,7 @@ const Statistics = () => {
             </div>
             <div className="time-card-body row custom-tab-container">
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
-                <Tabs defaultActiveKey="tab1" id="my-tabs" className="flex-column flex-sm-row custom-tab justify-content-center p-0 m-0 mb-0">
+                <Tabs defaultActiveKey="tab1" id="my-tabs" className="overflow-auto flex-column flex-sm-row custom-tab justify-content-center p-0 m-0 mb-0">
                     <Tab id="dashboardstatistic_tab1" className="custom-tabs mb-0 pb-0 fs-sm-4"  eventKey="tab1" title="Employee Status">
                         {/* <All /> */}
                         <EmployeeStatus />
