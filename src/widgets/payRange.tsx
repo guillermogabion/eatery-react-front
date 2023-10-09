@@ -18,18 +18,18 @@ const generateRandomColor = () => {
 const PayRange = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.rootReducer.userData);
-  const [compensation, setCompensation] = useState<any>([]);
+  const [payRange, setPayRange] = useState<any>([]);
 
   useEffect(() => {
     RequestAPI.getRequest(
-      `${Api.compensationByDepartment}`,
+      `${Api.employeePayRange}`,
       "",
       {},
       {},
       async (res: any) => {
         const { status, body = { data: {}, error: {} } }: any = res;
         if (status === 200 && body && body.data) {
-          setCompensation(body.data.compDeptList);
+          setPayRange(body.data);
         } else {
           // Handle the error case if needed
         }
@@ -37,14 +37,14 @@ const PayRange = () => {
     );
   }, []);
 
-  const labels = compensation.map((dept: any) => dept.departmentName);
-  const dataValues = compensation.map((dept: any) => dept.compensation);
+  const labels = Object.keys(payRange);
+  const dataValues = Object.values(payRange);
 
   const data = {
     labels: labels,
     datasets: [
       {
-        label: 'Compensation',
+        label: 'Number of Employees',
         backgroundColor: labels.map(() => generateRandomColor()),
         borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
@@ -65,32 +65,34 @@ const PayRange = () => {
         beginAtZero: true,
       },
     },
+    plugins: {
+      legend: {
+          display: false,
+      },
+  },
   };
 
-  const legendItems = labels.map((label, index) => (
-    <div key={index} style={{ display: 'flex', alignItems: 'center', margin: '5px' }}>
-      <div style={{ width: '10px', height: '10px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
-      {label}
-    </div>
-  ));
+
 
   return (
     <div className="time-card-width">
       <div className="card-header">
-        <span className="">Compensation By Department</span>
+        <span className="">Employee Statistics by Pay Range</span>
       </div>
       <div className="time-card-body row">
-        {/* <Bar data={data} options={options} className="pb-0 m-0" style={{ maxHeight: '600px' }} />
+        <Bar data={data} options={options} className="pb-0 m-0" style={{ maxHeight: '600px' }} />
         <div style={{ width: '100%', height: '50px' }}>
-            <div className="row">
+            <div className="row d-flex">
                 {labels.map((label, index) => (
-                <div key={index} className="col-6 d-flex m-2" style={{ alignItems: 'center' }}>
-                    <div style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
-                    {label}
-                </div>
+                  <div key={index} className="col-6">
+                    <div className="d-flex align-items-center">
+                      <div style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
+                      {label}
+                    </div>
+                  </div>
                 ))}
             </div>
-        </div> */}
+        </div>
 
       </div>
      

@@ -356,12 +356,16 @@ const Api: any = {
   getNewHire : process.env.REACT_APP_API_URL + "widget/new-hires-tracker",
 
   // compensation by department  
-  compensationByDepartment : process.env.REACT_APP_API_URL + "employee/compensation/department"
+  compensationByDepartment : process.env.REACT_APP_API_URL + "employee/compensation/department",
 
+  // employee pay range 
+  employeePayRange : process.env.REACT_APP_API_URL + "employee/payrange/employees",
 
+  // department ot hours 
+  departmentOtHours : process.env.REACT_APP_API_URL + "request/ot/department",
 
-
-
+  // statistic 
+  headCount : process.env.REACT_APP_API_URL + "widget/employee-statistics"
 }
 
 export default Api

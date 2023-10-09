@@ -18,33 +18,54 @@ const generateRandomColor = () => {
 const OtHours = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.rootReducer.userData);
-  const [compensation, setCompensation] = useState<any>([]);
+  const [otHours, setOtHours] = useState<any>([]);
+  const [dateFromState, setDateFrom] = useState("");
+  const [dateToState, setDateTo] = useState("");
+
+  const getDefaultDate = () => {
+    const currentYear = new Date().getFullYear();
+    const defaultDateFrom = `${currentYear}-01-01`;
+    const defaultDateTo = `${currentYear}-12-31`;
+    return { defaultDateFrom, defaultDateTo };
+  };
+
+  const { defaultDateFrom, defaultDateTo } = getDefaultDate();
+
+  const getData = async (dateFrom, dateTo) => {
+    try {
+      const response = await RequestAPI.getRequest(
+        `${Api.departmentOtHours}`,
+        "",
+        { dateFrom: defaultDateFrom, dateTo: defaultDateTo },
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res;
+          if (status === 200 && body && body.data) {
+            setOtHours(body.data);
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Error Request", error);
+    }
+  };
 
   useEffect(() => {
-    RequestAPI.getRequest(
-      `${Api.compensationByDepartment}`,
-      "",
-      {},
-      {},
-      async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res;
-        if (status === 200 && body && body.data) {
-          setCompensation(body.data.compDeptList);
-        } else {
-          // Handle the error case if needed
-        }
-      }
-    );
-  }, []);
+    getData(dateFromState, dateToState);
+  }, [dateFromState, dateToState]);
 
-  const labels = compensation.map((dept: any) => dept.departmentName);
-  const dataValues = compensation.map((dept: any) => dept.compensation);
+  // const labels = otHours.map((dept: any) => dept.departmentName);
+  // const dataValues = otHours.map((dept: any) => dept.otHours);
+
+  const labels = otHours?.otDeptList?.map((dept: any) => dept.departmentName) || [];
+  const dataValues = otHours?.otDeptList?.map((dept: any) => dept.otHours) || [];
+  const totalOt = otHours.totalOt || 0;
 
   const data = {
     labels: labels,
     datasets: [
       {
-        label: 'Compensation',
+        label: 'Overtime Hours',
         backgroundColor: labels.map(() => generateRandomColor()),
         borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
@@ -59,42 +80,46 @@ const OtHours = () => {
       x: {
         type: 'category',
         labels: labels,
-        display: false, // Set this to false to hide x-axis labels
+        display: false,
       },
       y: {
         beginAtZero: true,
       },
     },
+    plugins: {
+      legend: {
+          display: false,
+      },
+    },
   };
-
-  const legendItems = labels.map((label, index) => (
-    <div key={index} style={{ display: 'flex', alignItems: 'center', margin: '5px' }}>
-      <div style={{ width: '10px', height: '10px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
-      {label}
-    </div>
-  ));
 
   return (
     <div className="time-card-width">
       <div className="card-header">
-        <span className="">Compensation By Department</span>
+        <span className="">Overtime Hours By Department</span>
       </div>
       <div className="time-card-body row">
-        {/* <Bar data={data} options={options} className="pb-0 m-0" style={{ maxHeight: '600px' }} />
-        <div style={{ width: '100%', height: '50px' }}>
-            <div className="row">
-                {labels.map((label, index) => (
-                <div key={index} className="col-6 d-flex m-2" style={{ alignItems: 'center' }}>
-                    <div style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
-                    {label}
+        <Bar data={data} options={options} className="pb-0 m-0" style={{ maxHeight: '600px' }} />
+        <div className="p-4">
+          <div className="row d-flex">
+            {labels.map((label, index) => (
+              <div key={index} className="col-6">
+                <div className="d-flex align-items-center">
+                  <div style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
+                  {label}
                 </div>
-                ))}
-            </div>
-        </div> */}
-
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12 d-flex m-2" style={{ alignItems: 'center' }}>
+            <div>Total Overtime:</div>
+            <div>{totalOt.toLocaleString()}</div>
+          </div>
+        </div>
       </div>
-     
-    </div>
+    </div>  
   );
 };
 

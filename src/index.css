@@ -3917,7 +3917,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .time-card-width > .time-card-body{
   width: 100%;
-  padding-top: 5% !important;
+  padding-top: 2% !important;
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -4002,6 +4002,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .custom-tab-notif {
   border: none;
+}
+.bottom-space {
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .custom-tabs {
@@ -4853,4 +4857,6 @@ input[type="date"]{
 }
 .custom-arrow-accordion .accordion-button::after {
   display: none;
+}
+.custom-tab-container .nav-tabs {
 }
