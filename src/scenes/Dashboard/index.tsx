@@ -141,11 +141,16 @@ export const Dashboard = (props: any) => {
             
             </> 
           ) : null}
-          <div className="col-sm-12 col-md-6 col-lg-4">
-            <div className="card">
-              <Statistics />
+          { data.profile.role == 'HR ADMIN' ? (
+            <>
+             <div className="col-sm-12 col-md-6 col-lg-4">
+              <div className="card">
+                <Statistics />
+              </div>
             </div>
-          </div>
+            
+            </> 
+          ) : null}
           
           { data.profile.role == 'FINANCE ADMIN' && 
             (
