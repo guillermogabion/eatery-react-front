@@ -42,14 +42,16 @@ export default function Reimbursement(props: any) {
 
     const selectAllReimbursement = (boolCheck: any) => {
         const valuesObj: any = [...reimbursementList]
-        let idList:any = []
+        let idList: any = []
         valuesObj.forEach((data: any, index: any) => {
-            idList.push(data.id)
+            if (boolCheck) {
+                idList.push(data.id)
+            }
             data.isCheck = boolCheck
         });
         setReimbursementList([...valuesObj])
-        setReimbursementIds(idList)
-        props.setReimbursementIds(idList)
+        setReimbursementIds([...idList])
+        props.setReimbursementIds([...idList])
     }
 
     const onChangeCheckbox = (index: any, boolCheck: any) => {
@@ -57,16 +59,16 @@ export default function Reimbursement(props: any) {
         valuesObj[index].isCheck = boolCheck
         setReimbursementList([...valuesObj])
 
-        let array:any = [...reimbursementIds];
-        let searchValue:any = valuesObj[index].id;
-        let idIndex:any = array.indexOf(searchValue);
+        let array: any = [...reimbursementIds];
+        let searchValue: any = valuesObj[index].id;
+        let idIndex: any = array.indexOf(searchValue);
 
         if (idIndex !== -1) {
             array.splice(idIndex, 1);
         } else {
             array.push(searchValue);
         }
-        
+
         setReimbursementIds([...array])
         props.setReimbursementIds([...array])
     }
