@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { empStat } from "../assets/images";
 
 
+
 const Statistics = () => {
     const dispatch = useDispatch()
     const userData = useSelector((state: any) => state.rootReducer.userData)
@@ -17,8 +18,8 @@ const Statistics = () => {
             </div>
             <div className="time-card-body row custom-tab-container">
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
-                <Tabs defaultActiveKey="tab1" id="my-tabs" className="overflow-auto flex-column flex-sm-row custom-tab justify-content-center p-0 m-0 mb-0">
-                    <Tab id="dashboardstatistic_tab1" className="custom-tabs mb-0 pb-0 fs-sm-4"  eventKey="tab1" title="Employee Status">
+                <Tabs defaultActiveKey="tab1" id="my-tabs" className=" overflow-auto flex-column flex-sm-row custom-tab justify-content-center p-0 m-0 mb-0  custom-statistic-tab">
+                    <Tab id="dashboardstatistic_tab1" className="custom-tabs mb-0    "  eventKey="tab1" title="Employee Status">
                         {/* <All /> */}
                         <EmployeeStatus />
 
@@ -57,7 +58,7 @@ const EmployeeStatus = () => {
 
 
     return (
-        <div className="row d-flex p-0 m-0" style={{marginTop: '100px'}}>
+        <div className="row flex-wrap p-0 m-0 statistic-tab" >
             <div className="col-8">
                 <img src={empStat} alt="" width={200}/>
             </div>

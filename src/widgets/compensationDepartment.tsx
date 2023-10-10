@@ -4,6 +4,8 @@ import { Button, Tabs, Tab } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from 'chart.js';
+import { Utility } from "../utils"
+
 Chart.register(...registerables);
 
 const generateRandomColor = () => {
@@ -84,7 +86,7 @@ const totalCompensation = compensation.totalCompensation || 0;
                     <div key={index} className="col-6">
                         <div className="d-flex align-items-center">
                             <div style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
-                            <div>{label}</div>
+                            <div>{Utility.removeUnderscore(label)}</div>
                         </div>
                     </div>
                 ))}

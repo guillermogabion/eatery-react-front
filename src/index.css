@@ -4712,6 +4712,18 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .items-count {
   font-size: 12px;
 }
+.new-hire-tab {
+  font-size: 20px;
+} 
+.statistic-tab {
+  margin-top: -10px !important;
+} 
+.custom-statistic-tab .nav-item {
+  margin-bottom: 0 !important;
+}
+.custom-statistic-tab .nav-link {
+  padding-bottom: 0 !important;
+}
 @media screen and (min-width : 1600px) {
   .day-date {
     font-size: 20px;
@@ -4742,6 +4754,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .items-count {
     padding-top: 10px;
     font-size: 12px;
+  }
+  .new-hire-tab {
+    font-size: 15px;
+    padding-bottom: 20px !important;
   }
   
 }
@@ -4857,6 +4873,4 @@ input[type="date"]{
 }
 .custom-arrow-accordion .accordion-button::after {
   display: none;
-}
-.custom-tab-container .nav-tabs {
 }
