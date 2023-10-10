@@ -146,8 +146,6 @@ const Api: any = {
   employeeHeaderList: process.env.REACT_APP_API_URL + "employee/report/headerlist",
   employeeExportReport: process.env.REACT_APP_API_URL + "employee/report",
 
-
-
   downloadExcelTemplate: process.env.REACT_APP_API_URL + "employee/downloadTemplate",
   downloadExcelTimekeepingTemplate: process.env.REACT_APP_API_URL + "timekeeping/perday/downloadTemplate",
 
@@ -163,18 +161,18 @@ const Api: any = {
   // recurring 
   getAllRecurringList: process.env.REACT_APP_API_URL + "payroll/recurring/all",
   getAllRecurringType: process.env.REACT_APP_API_URL + "payroll/recurring/type/list",
-  importRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/uploadExcel",
-  exportRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/exportExcel",
-  templateRecurring :  process.env.REACT_APP_API_URL + "payroll/recurring/downloadTemplate",
-  recurringTotalAmounts :  process.env.REACT_APP_API_URL + "payroll/recurring/totalAmounts",
-  
+  importRecurring: process.env.REACT_APP_API_URL + "payroll/recurring/uploadExcel",
+  exportRecurring: process.env.REACT_APP_API_URL + "payroll/recurring/exportExcel",
+  templateRecurring: process.env.REACT_APP_API_URL + "payroll/recurring/downloadTemplate",
+  recurringTotalAmounts: process.env.REACT_APP_API_URL + "payroll/recurring/totalAmounts",
+
 
 
   // adjustment 
-  importAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/uploadExcel",
-  exportAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
-  downloadTemplateAdjustment :  process.env.REACT_APP_API_URL + "payroll/adjustment/downloadTemplate",
-  adjustmentTotalAmounts :  process.env.REACT_APP_API_URL + "payroll/adjustment/totalAmounts",
+  importAdjustment: process.env.REACT_APP_API_URL + "payroll/adjustment/uploadExcel",
+  exportAdjustment: process.env.REACT_APP_API_URL + "payroll/adjustment/exportExcel",
+  downloadTemplateAdjustment: process.env.REACT_APP_API_URL + "payroll/adjustment/downloadTemplate",
+  adjustmentTotalAmounts: process.env.REACT_APP_API_URL + "payroll/adjustment/totalAmounts",
   deleteAdjustment: process.env.REACT_APP_API_URL + "payroll/adjustment/delete",
 
 
@@ -257,11 +255,11 @@ const Api: any = {
   generatedList: process.env.REACT_APP_API_URL + "payroll/generated/list",
   sendIndividual: process.env.REACT_APP_API_URL + "payroll/sendpayslip",
   sendAll: process.env.REACT_APP_API_URL + "payroll/sendpayslip/all",
-  failedEmail : process.env.REACT_APP_API_URL + "payroll/failedemail",
-  resendEmail : process.env.REACT_APP_API_URL + "payroll/resendpayslip",
+  failedEmail: process.env.REACT_APP_API_URL + "payroll/failedemail",
+  resendEmail: process.env.REACT_APP_API_URL + "payroll/resendpayslip",
 
   // export payslip 
-  exportPayslip : process.env.REACT_APP_API_URL + "payroll/payslip/export",
+  exportPayslip: process.env.REACT_APP_API_URL + "payroll/payslip/export",
 
 
 
@@ -272,49 +270,47 @@ const Api: any = {
   lastPayInfo: process.env.REACT_APP_API_URL + "lastpay/info",
   lastPayBankUpload: process.env.REACT_APP_API_URL + "lastpay/bankupload",
 
-  workingCalendarInfo : process.env.REACT_APP_API_URL + "payroll/working-calendar/info",
-  updateWorkingCalendar : process.env.REACT_APP_API_URL + "payroll/working-calendar/update",
-  
+  workingCalendarInfo: process.env.REACT_APP_API_URL + "payroll/working-calendar/info",
+  updateWorkingCalendar: process.env.REACT_APP_API_URL + "payroll/working-calendar/update",
+
   // getDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/info",
   // updateDaysPerMonth : process.env.REACT_APP_API_URL + "payroll/dayspermonth/update",
-  
+
   // getDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/info",
   // updateDaysPerWeek : process.env.REACT_APP_API_URL + "payroll/daysperweek/update",
-  
+
   // getHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/info",
   // updateHourPerDay : process.env.REACT_APP_API_URL + "payroll/hoursperday/update",
 
 
   // AccessRights 
 
-  getRoles : process.env.REACT_APP_API_URL + "role/authority/all-roles",
-  getRolesAuth : process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
-  deleteRoleAuth : process.env.REACT_APP_API_URL + "role/authority/delete",
-  addRoleAuth : process.env.REACT_APP_API_URL + "role/authority/add",
-  getAvailableAuth : process.env.REACT_APP_API_URL + "role/authority/all-authority-not-in-role",
+  getRoles: process.env.REACT_APP_API_URL + "role/authority/all-roles",
+  getRolesAuth: process.env.REACT_APP_API_URL + "role/authority/authority-by-role",
+  deleteRoleAuth: process.env.REACT_APP_API_URL + "role/authority/delete",
+  addRoleAuth: process.env.REACT_APP_API_URL + "role/authority/add",
+  getAvailableAuth: process.env.REACT_APP_API_URL + "role/authority/all-authority-not-in-role",
 
 
   // Reimbursement
-  getAllReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/all",
-  getMyReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/my-reimbursement",
-  getAllReceiptReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getReceiptAll",
-  getMyReceiptReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getMyReceipt",
-  uploadReimbursementReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/saveReceipt",
-  deleteReimbursementReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/delete",
-  reimbursementType : process.env.REACT_APP_API_URL + "payroll/request/reimbursement/type/all",
-  createReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/create",
-  createBulkReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/breakdown/list/create",
-  approveReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/approve",
-  declineReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/decline",
-  cancelReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/cancel",
-  updateReimbursement : process.env.REACT_APP_API_URL + "request/reimbursement/update",
-  updateReceipt : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/updateReceipt",
-  reimbursementBulkApprove : process.env.REACT_APP_API_URL + "request/reimbursement/approve/list",
-  reimbursementBulkDecline : process.env.REACT_APP_API_URL + "request/reimbursement/decline/list",
-  extractFailedReceipts : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/extractFailedReceipts",
-  createReimbursementReceiptList : process.env.REACT_APP_API_URL + "request/reimbursement/receipt/findByUserId",
-
-
+  getAllReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/all",
+  getMyReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/my-reimbursement",
+  getAllReceiptReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getReceiptAll",
+  getMyReceiptReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/getMyReceipt",
+  uploadReimbursementReceipt: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/saveReceipt",
+  deleteReimbursementReceipt: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/delete",
+  reimbursementType: process.env.REACT_APP_API_URL + "payroll/request/reimbursement/type/all",
+  createReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/create",
+  createBulkReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/breakdown/list/create",
+  approveReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/approve",
+  declineReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/decline",
+  cancelReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/cancel",
+  updateReimbursement: process.env.REACT_APP_API_URL + "request/reimbursement/update",
+  updateReceipt: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/updateReceipt",
+  reimbursementBulkApprove: process.env.REACT_APP_API_URL + "request/reimbursement/approve/list",
+  reimbursementBulkDecline: process.env.REACT_APP_API_URL + "request/reimbursement/decline/list",
+  extractFailedReceipts: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/extractFailedReceipts",
+  createReimbursementReceiptList: process.env.REACT_APP_API_URL + "request/reimbursement/receipt/findByUserId",
   getFile : process.env.REACT_APP_API_URL + "file/getUrl",
 
   // widgets

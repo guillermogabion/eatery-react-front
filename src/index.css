@@ -4716,14 +4716,15 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   font-size: 20px;
 } 
 .statistic-tab {
-  margin-top: -10px !important;
+  margin-top: 10px !important;
 } 
-.custom-statistic-tab .nav-item {
-  margin-bottom: 0 !important;
+.custom-statistic-tab {
+  font-size: 20px;
 }
-.custom-statistic-tab .nav-link {
-  padding-bottom: 0 !important;
+.regular-employee-text {
+  padding-top: 30px;
 }
+
 @media screen and (min-width : 1600px) {
   .day-date {
     font-size: 20px;
@@ -4731,6 +4732,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .day-name {
     font-size: 13px;
+  }
+  .custom-statistic-tab {
+    font-size: 10px !important;
   }
   /* .request-leave-button {
     padding-bottom: 15px;
@@ -4758,6 +4762,24 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .new-hire-tab {
     font-size: 15px;
     padding-bottom: 20px !important;
+  }
+  .custom-tab .nav-link {
+    border: none;
+    font-weight: bold !important;
+    font-size: 12px !important;
+  }
+  .custom-tab .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #189FB5;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    color: #189FB5 ;
+  }
+  .regular-employee-text {
+    padding-top: 50px;
+  }
+  .gender-space {
+    padding-top: 50px;
   }
   
 }
