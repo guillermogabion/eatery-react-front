@@ -3917,7 +3917,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .time-card-width > .time-card-body{
   width: 100%;
-  padding-top: 5% !important;
+  padding-top: 2% !important;
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -4002,6 +4002,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .custom-tab-notif {
   border: none;
+}
+.bottom-space {
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .custom-tabs {
@@ -4708,6 +4712,19 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .items-count {
   font-size: 12px;
 }
+.new-hire-tab {
+  font-size: 20px;
+} 
+.statistic-tab {
+  margin-top: 10px !important;
+} 
+.custom-statistic-tab {
+  font-size: 20px;
+}
+.regular-employee-text {
+  padding-top: 30px;
+}
+
 @media screen and (min-width : 1600px) {
   .day-date {
     font-size: 20px;
@@ -4715,6 +4732,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .day-name {
     font-size: 13px;
+  }
+  .custom-statistic-tab {
+    font-size: 10px !important;
   }
   /* .request-leave-button {
     padding-bottom: 15px;
@@ -4738,6 +4758,28 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .items-count {
     padding-top: 10px;
     font-size: 12px;
+  }
+  .new-hire-tab {
+    font-size: 15px;
+    padding-bottom: 20px !important;
+  }
+  .custom-tab .nav-link {
+    border: none;
+    font-weight: bold !important;
+    font-size: 12px !important;
+  }
+  .custom-tab .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #189FB5;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    color: #189FB5 ;
+  }
+  .regular-employee-text {
+    padding-top: 50px;
+  }
+  .gender-space {
+    padding-top: 50px;
   }
   
 }

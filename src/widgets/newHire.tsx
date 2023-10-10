@@ -58,19 +58,21 @@ const NewHire = () => {
         <span className="">New Hire Tracker</span>
       </div>
       <div className="time-card-body row">
-        <div className="d-flex" style={{maxHeight: '20px', textAlign: 'center'}}>
+        <div className="d-flex pt-2 justify-content-center text-center" style={{maxHeight: '20px', alignContent: 'center', textAlign: 'center'}}>
           {numberMonth &&
             numberMonth.map((item, index) => (
               <div
                 key={item.id}
-                className={`pa-1 text-primary text-bold custom-slider-item ${
-                  clickedItem === index ? "underline" : ""
+                className={`new-hire-tab pa-1 custom-slider-item ${
+                  clickedItem === index ? "text-primary text-bold" : ""
                 }`}
                 style={{
                   cursor: "pointer",
-                  // borderBottom:
-                  //   clickedItem === index ? "2px solid #007bff" : "none", 
-                  fontSize: "20px",
+                  fontWeight:
+                    clickedItem === index ? "bold" : "", 
+                  borderBottom: clickedItem === index ? "2px solid #189FB5" : "none",
+                  paddingBottom: clickedItem === index ? "40px" : "",
+                  
                 }}
                 onClick={() => handleItemClick(index, item.value)}
               >
