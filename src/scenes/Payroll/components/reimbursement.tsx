@@ -20,7 +20,7 @@ export default function Reimbursement(props: any) {
 
     useEffect(() => {
         RequestAPI.getRequest(
-            `${Api.getAllReimbursement}?size=2000&page=0&sort=id&sortDir=desc&status=Approved`,
+            `${Api.getAllReimbursement}?size=2000&releasedStatus=No&page=0&sort=id&sortDir=desc&status=Approved`,
             "",
             {},
             {},
