@@ -121,7 +121,7 @@ export const Dashboard = (props: any) => {
             
             </> 
           ) : null}
-          { data.profile.role != 'EMPLOYEE' ? (
+          { data.profile.role == 'HR ADMIN' || data.profile.role == 'FINANCE ADMIN' ? (
             <>
              <div className="col-sm-12 col-md-6 col-lg-4">
               <div className="card">

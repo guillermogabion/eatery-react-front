@@ -363,8 +363,8 @@ export const Login = () => {
 
   return (
     <>
-      <div className="row w-full h-full p-0 m-0 min-h-[100vh]" >
-        <div className="flex justify-center items-center px-4 loginBackground ">
+      <div className="row w-full h-full p-0 m-0 min-h-[100vh]"  >
+        <div className="flex justify-center items-center px-4 loginBackground  mobile-version-login">
           {!isNewAccount ?
             <div className="bg-white relative flex flex-column justify-center items-center rounded-md pb-[180px] pt-[80px] w-full xl:w-[500px] md:w-[450px]">
               <div className="company-logo p-0 m-0">
@@ -436,7 +436,7 @@ export const Login = () => {
                   )}
                 </div>
               </form>
-              <div className="absolute bottom-0" > <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
+              <div className="absolute bottom-0 pb-3" > <label>&copy; 2023 Actimai Philippines Incorporated</label></div>
 
               <div className=" mobile">
 
