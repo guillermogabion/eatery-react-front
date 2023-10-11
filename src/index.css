@@ -4766,7 +4766,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .custom-tab .nav-link {
     border: none;
     font-weight: bold !important;
-    font-size: 12px !important;
+    font-size: 10px !important;
   }
   .custom-tab .nav-link.active {
     border: none;
@@ -4780,6 +4780,12 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .gender-space {
     padding-top: 50px;
+  }
+  .custom-stat {
+    font-size: 10px !important;
+  }
+  .custom-slider-item {
+    font-size: 12px !important;
   }
   
 }

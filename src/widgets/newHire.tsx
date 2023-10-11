@@ -58,7 +58,7 @@ const NewHire = () => {
         <span className="">New Hire Tracker</span>
       </div>
       <div className="time-card-body row">
-        <div className="d-flex pt-2 justify-content-center text-center" style={{maxHeight: '20px', alignContent: 'center', textAlign: 'center'}}>
+        <div className="d-flex pt-2 justify-content-center text-center" style={{height: '20px', alignContent: 'center', textAlign: 'center'}}>
           {numberMonth &&
             numberMonth.map((item, index) => (
               <div
