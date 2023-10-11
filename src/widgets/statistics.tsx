@@ -375,7 +375,7 @@ const Gender = () => {
       <div>
         <div className="row d-flex">
             <div className="col-8">
-                <div className="pt-4 text-center d-flex justify-content-center" style={{ margin: 'auto',width: '150px', height: '150px' }}>
+                <div className="pt-4 text-center d-flex justify-content-center" style={{ margin: 'auto',width: '120px', height: '120px' }}>
                     <Pie data={maleFemaleData} options={options} />
                 </div>
                 <div className="row d-flex pl-4 pt-2">
@@ -519,20 +519,20 @@ const Gender = () => {
                 </div>
             </div>
             <div className="col-4">
-                <div className="text-primary fs-1 pt-6 mt-4 text-center">
-                    <span>{(parseFloat((statusCounts.MALE / statusCounts.FEMALE) * 100).toFixed(2))}</span>
+                <div className="text-primary fs-1 pt-1 text-center">
+                    <span className="fs-3">{(parseFloat((statusCounts.MALE / statusCounts.FEMALE) * 100).toFixed(2))}</span>
                     <div className="text-bold text-primary d-flex text-center flex-column">
                         <span  style={{fontSize: '15px'}}>Gender Ratio</span>
                     </div>
                 </div>
                 <div className="text-primary fs-1 pt-8 text-center gender-space">
-                    <span>{statusCounts.MALE}</span>
+                    <span className="fs-3">{statusCounts.MALE}</span>
                     <div className="text-bold text-primary d-flex text-center flex-column">
                         <span  style={{fontSize: '15px'}}>Male</span>
                     </div>
                 </div>
                 <div className="text-primary fs-1 pt-4 text-center gender-space">
-                    <span>{statusCounts.FEMALE}</span>
+                    <span className="fs-3">{statusCounts.FEMALE}</span>
                     <div className="text-bold text-primary d-flex text-center flex-column">
                         <span  style={{fontSize: '15px'}}>Female</span>
                     </div>

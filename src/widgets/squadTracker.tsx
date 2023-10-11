@@ -153,7 +153,7 @@ const All = () => {
                             <tr key={index}>
                             
                             <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
-                                <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                                <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                                 <div className="pt-2">
                                     {item.fullname}
                                     <br />
@@ -273,7 +273,7 @@ const OnLeave = () => {
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
                         <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
-                            <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                            <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                             <div className="pt-2">
                                 {item.fullname}
                                 <br />
@@ -393,7 +393,7 @@ const Absent = () => {
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
                         <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
-                            <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                            <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                             <div className="pt-2">
                                 {item.fullname}
                                 <br />

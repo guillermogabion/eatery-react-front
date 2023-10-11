@@ -98,7 +98,7 @@ const NewHire = () => {
                         return (
                             <tr key={item.id}>
                                 <td className="text-primary font-bold d-flex" style={{width: '300px'}}>
-                                  <img src={user} width={30} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
+                                  <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
                                   <span style={{ marginTop: '22px' }}>{item.name}</span>
                                   </td>
                                 <td style={{width: '100%'}}>{item.squadName}</td>

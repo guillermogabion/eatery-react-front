@@ -329,3 +329,9 @@ ul {
   font-weight: bold;
 }
 
+@media screen and (max-width : 1600px) {
+  .mobile-version-login {
+    padding-top: 50px !important;
+    padding-bottom: 100px !important;
+  }
+}

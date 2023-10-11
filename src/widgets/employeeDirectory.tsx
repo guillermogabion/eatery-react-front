@@ -226,7 +226,7 @@ const EmployeeDirectory = () => {
                                 return (
                                     <tr key={item.id}>
                                         <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold d-flex" style={{width: '300px'}}>
-                                          <img src={user} width={30} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
+                                          <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
                                           <span style={{ marginTop: '22px' }}>{item.name}</span>
                                           </td>
                                         <td id={"dashboardemployeedirectory_td_squadname_"} style={{width: '100%'}}>{item.squadName}</td>

@@ -804,10 +804,10 @@ const TeamCalendar = () => {
                                 dataWeek.map((item, index) => (
                                     <div key={index}>
                                     {item.leavesList && item.leavesList.length > 0 && (
-                                        <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
+                                        <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
                                         {item.leavesList.slice(0, 2).map((leaveItem, leaveIndex) => (
                                           <li key={leaveIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
-                                            <img src={user} alt="" width={50} className="m-0 p-0 flex-wrap"/>
+                                            <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
                                           </li>
                                         ))}
                                       </ul>
@@ -823,8 +823,8 @@ const TeamCalendar = () => {
                             {dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
                                   <div
                                       style={{
-                                        width: '25px',
-                                        height: '25px',
+                                        width: '30px',
+                                        height: '30px',
                                         borderRadius: '50%',
                                         backgroundColor: 'white',
                                         display: 'flex',
