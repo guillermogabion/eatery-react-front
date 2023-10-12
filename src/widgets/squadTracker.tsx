@@ -145,39 +145,42 @@ const All = () => {
 
                 </div>
             </div>
-            <Table responsive>
-                <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
-                    <tbody>
-                        {allMember && allMember.length > 0 ? (
-                        allMember.map((item: any, index: any) => (
-                            <tr key={index}>
-                            
-                            <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
-                                <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
-                                <div className="pt-2">
-                                    {item.fullname}
-                                    <br />
-                                    <span>{item.jobTitle}</span>
+            <div style={{width: '100%'}}>
+                
+                <Table responsive style={{width: '100%'}}>
+                    <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
+                        <tbody>
+                            {allMember && allMember.length > 0 ? (
+                            allMember.map((item: any, index: any) => (
+                                <tr key={index}>
+                                
+                                <td className="text-primary font-bold d-flex custom-td-width">
+                                    <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                                    <div className="pt-2">
+                                        {item.fullname}
+                                        <br />
+                                        <span className="jobtitle-size">{item.jobTitle}</span>
+                                    </div>
+                                </td>
+                                <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                                    {item.status == null && item.todaysTimeIn != null ? (
+                                        <>
+                                            <p>IN</p>
+                                        </>
+                                    ) : ""}
+                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
+                                </tr>
+                            ))
+                            ) : (
+                                <div className="justify-content-center">
+                                    <p style={{textAlign: 'center'}}>No Member Found</p>
                                 </div>
-                            </td>
-                            <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
-                                {item.status == null && item.todaysTimeIn != null ? (
-                                    <>
-                                        <p>IN</p>
-                                    </>
-                                ) : ""}
-                                {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
-                            </tr>
-                        ))
-                        ) : (
-                            <div className="justify-content-center">
-                                <p style={{textAlign: 'center'}}>No Member Found</p>
-                            </div>
-                        )}
-                    
-                    </tbody>
-                </div>
+                            )}
+                        
+                        </tbody>
+                    </div>
                 </Table>
+            </div>
         </div>
     )
 
@@ -272,7 +275,7 @@ const OnLeave = () => {
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
+                        <td className="text-primary font-bold d-flex">
                             <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                             <div className="pt-2">
                                 {item.fullname}
@@ -392,7 +395,7 @@ const Absent = () => {
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold d-flex" style={{ textAlign: 'center' }}>
+                        <td className="text-primary font-bold d-flex">
                             <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                             <div className="pt-2">
                                 {item.fullname}

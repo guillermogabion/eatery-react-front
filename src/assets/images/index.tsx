@@ -50,6 +50,7 @@ import check_circle from "../images/dist/shortcut/check_circle.png"
 import trash from "../images/dist/shortcut/delete.png"
 import save from "../images/dist/shortcut/save.png"
 import empStat from "../images/dist/statistics/empStat.svg"
+import evaluate from "../images/dist/newhire/evaluate.svg"
 
 export {
   eye,
@@ -102,5 +103,6 @@ export {
   check_circle,
   trash, 
   save,
-  empStat
+  empStat,
+  evaluate
 }

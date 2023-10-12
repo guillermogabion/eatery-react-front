@@ -249,7 +249,7 @@ const TimeCard = () => {
                 {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
                     <div className="col-6" style={{ textAlign: 'left' }}>
                         <div className="">
-                            <h6 id="dashboardwidg_shiftschedule_label" className="bold-text pt-2 pl-7 text-primary">Shift Schedule:</h6>
+                            <h6 id="dashboardwidg_shiftschedule_label" className="bold-text pt-3 pl-7 text-primary">Shift Schedule:</h6>
                         </div>
                         <div className="">
                             <h6 id="dashboardwidg_firstlogin_label" className="bold-text pt-3 pl-7 text-primary">First login:</h6>
@@ -262,7 +262,7 @@ const TimeCard = () => {
                         </div>
                     </div>
                     <div className="col-6 " style={{ textAlign: 'right' }}>
-                        <h6 id="dashboardwidg_shiftschedule_value" className="font-weight-bold pt-2">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
+                        <h6 id="dashboardwidg_shiftschedule_value" className="font-weight-bold pt-3">{moment(userSchedule.startShift, "HH:mm:ss").format("hh:mm A")} - {moment(userSchedule.endShift, "HH:mm:ss").format("hh:mm A")}</h6>
                         <h6 id="dashboardwidg_firstlogin_value" className="font-weight-bold pt-3">{timeInData && timeInData.firstLogin ? moment(timeInData.firstLogin).format("MM-DD-YYYY h:mm A") : 'Not Timed In'}</h6>
                         <h6 id="dashboardwidg_lastlogout_value" className="font-weight-bold pt-3">{timeInData && timeInData.lastLogin ? moment(timeInData.lastLogin).format("MM-DD-YYYY h:mm A") : 'Not Logged Out'}</h6>
                         <label
