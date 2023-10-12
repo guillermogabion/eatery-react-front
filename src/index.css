@@ -4796,6 +4796,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .custom-td-width {
     width: auto !important;
   }
+  .custom-td-width-mobile {
+    width: 200px !important;
+  }
   
 }
 

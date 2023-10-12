@@ -495,226 +495,226 @@ const Reimbursement = () => {
                 
     </div>
     <Modal
-                show={viewReimbursementModal}
-                size={"lg"}
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                backdrop="static"
-                keyboard={false}
-                onHide={() => setViewReimbursementModal(false)}
-                dialogClassName="modal-90w"
-                id="accessrights_authlist_modal"
-            >
-                <Modal.Header className="text-center flex justify-center " >
-                    <Modal.Title id="contained-modal-title-vcenter" className="font-bold text-md" >
-                        View Reimbursement Request
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="row w-100 px-3 m-0">
-                    <div className="col-md-3 bg-[#F6F6F6] py-2 px-2">
-                        <label className="text-lg font-bold">Reimbursement Progress</label>
-                        <div className="mt-3 flex">
-                            <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
-                            <div className="ml-3 ">
-                                <label className="font-bold">Submitted for Approval
-                                </label>
-                            </div>
-                        </div>
-                        {
-                            reimbursementView && reimbursementView.reviewerFirstName ?
-                                <>
-                                    <div className="mt-3 flex">
-                                        <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
-                                        <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.reviewerFirstName} ${reimbursementView.reviewerLastName}`} <br />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
-                        {
-                            reimbursementView && reimbursementView.endorserFirstName ?
-                                <>
-                                    <div className="mt-3 flex">
-                                        <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
-                                        <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.endorserFirstName} ${reimbursementView.endorserLastName}`} <br />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
-                        {
-                            reimbursementView && reimbursementView.approverFirstName ?
-                                <>
-                                    <div className="mt-3 flex">
-                                        <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
-                                        <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.approverFirstName} ${reimbursementView.approverFirstName}`} <br />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
-
-                        {
-                            reimbursementView && reimbursementView.declinerFirstName ?
-                                <>
-                                    <div className="mt-3 flex">
-                                        <FaTimesCircle color={reimbursementView.status == 'DECLINED' ? "#FF3838" : "#B8B8B8"} size={30} />
-                                        {/* <img id="" src={action_decline} width={30} className="hover-icon-pointer" title="Decline" /> */}
-                                        <div className="ml-3 ">
-                                            <label className="font-bold">{`${reimbursementView.declinerFirstName} ${reimbursementView.declinerLastName}`} <br />
-                                            </label>
-                                        </div>
-                                    </div>
-                                </>
-                                :
-                                null
-                        }
+        show={viewReimbursementModal}
+        size={"lg"}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setViewReimbursementModal(false)}
+        dialogClassName="modal-90w"
+        id="accessrights_authlist_modal"
+    >
+        <Modal.Header className="text-center flex justify-center " >
+            <Modal.Title id="contained-modal-title-vcenter" className="font-bold text-md" >
+                View Reimbursement Request
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row w-100 px-3 m-0">
+            <div className="col-md-3 bg-[#F6F6F6] py-2 px-2">
+                <label className="text-lg font-bold">Reimbursement Progress</label>
+                <div className="mt-3 flex">
+                    <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
+                    <div className="ml-3 ">
+                        <label className="font-bold">Submitted for Approval
+                        </label>
                     </div>
-                    <div className="col-md-9">
-                        <div className="row m-0 p-0">
-                            <div className="form-group col-md-4 mb-3" >
-                                <label>Employee Name:</label>
-                                <input type="text"
-                                    name="companyName"
-                                    id="reimbursementlist_companyName_input"
-                                    className="form-control"
-                                    disabled={true}
-                                    value={reimbursementParentValues && reimbursementParentValues.employeeName}
-                                    onChange={(e) => {
-                                    }}
-                                />
+                </div>
+                {
+                    reimbursementView && reimbursementView.reviewerFirstName ?
+                        <>
+                            <div className="mt-3 flex">
+                                <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
+                                <div className="ml-3 ">
+                                    <label className="font-bold" id="reimbursementwidget_reviewer_label">{`${reimbursementView.reviewerFirstName} ${reimbursementView.reviewerLastName}`} <br />
+                                    </label>
+                                </div>
                             </div>
-                            <div className="form-group col-md-4 mb-3" >
+                        </>
+                        :
+                        null
+                }
+                {
+                    reimbursementView && reimbursementView.endorserFirstName ?
+                        <>
+                            <div className="mt-3 flex">
+                                <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
+                                <div className="ml-3 ">
+                                    <label className="font-bold" id="reimbursementwidget_endorser_label">{`${reimbursementView.endorserFirstName} ${reimbursementView.endorserLastName}`} <br />
+                                    </label>
+                                </div>
+                            </div>
+                        </>
+                        :
+                        null
+                }
+                {
+                    reimbursementView && reimbursementView.approverFirstName ?
+                        <>
+                            <div className="mt-3 flex">
+                                <BsFillCheckCircleFill color={"#2B7E88"} size={30} />
+                                <div className="ml-3 ">
+                                    <label className="font-bold" id="reimbursementwidget_approver_label">{`${reimbursementView.approverFirstName} ${reimbursementView.approverFirstName}`} <br />
+                                    </label>
+                                </div>
+                            </div>
+                        </>
+                        :
+                        null
+                }
 
+                {
+                    reimbursementView && reimbursementView.declinerFirstName ?
+                        <>
+                            <div className="mt-3 flex">
+                                <FaTimesCircle color={reimbursementView.status == 'DECLINED' ? "#FF3838" : "#B8B8B8"} size={30} />
+                                {/* <img id="" src={action_decline} width={30} className="hover-icon-pointer" title="Decline" /> */}
+                                <div className="ml-3 ">
+                                    <label className="font-bold" id="reimbursementwidget_decliner_label">{`${reimbursementView.declinerFirstName} ${reimbursementView.declinerLastName}`} <br />
+                                    </label>
+                                </div>
                             </div>
-                            <div className="form-group col-md-4 mb-3" >
-                                <label>Status:</label> <br />
-                                <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
-
-                            </div>
-                            <div className="form-group col-md-6 mb-3" >
-                                <label>Type of Reimbursement:</label>
-                                <select
-                                    className={`form-select`}
-                                    name="typeId"
-                                    id="reimbursementlist_typeId_input"
-                                    disabled={!isEditReimbursement}
-                                    value={reimbursementParentValues && reimbursementParentValues.typeId}
-                                    onChange={(e) => {
-                                        updateParentData('typeId', e.target.value)
-                                    }}>
-                                    <option value="" disabled selected>
-                                        Select reimbursement type
-                                    </option>
-                                    {
-                                        reimbursementType &&
-                                        reimbursementType.length > 0 &&
-                                        reimbursementType.map((item: any, index: string) => {
-                                            return (<option key={`${index}_${item}`} value={item.id}>
-                                                {item.name}
-                                            </option>)
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            <div className="form-group col-md-6 mb-3" >
-                                <label>Total Amount:</label>
-                                <input type="number"
-                                    name="total"
-                                    id="reimbursementlist_total_input"
-                                    className="form-control"
-                                    disabled={!isEditReimbursement}
-                                    value={reimbursementParentValues && reimbursementParentValues.total}
-                                    onChange={(e) => {
-                                        updateParentData('total', e.target.value)
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group col-md-12 mb-3" >
-                                <label>Purpose:</label>
-                                <textarea
-                                    name="purpose"
-                                    id="reimbursementlist_purpose_btn"
-                                    className="form-control p-2"
-                                    disabled={!isEditReimbursement}
-                                    value={reimbursementParentValues && reimbursementParentValues.purpose}
-                                    style={{ minHeight: 100 }}
-                                    onChange={(e) => {
-                                        updateParentData('purpose', e.target.value)
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group col-md-12 mb-3">
-                                <Table responsive style={{ maxHeight: '100vh' }}>
-                                    <thead>
-                                        <tr>
-                                            <th style={{ width: '100px' }}>With Receipt</th>
-                                            <th style={{ width: '100px' }}>Invoice/OR Number</th>
-                                            <th>Company Name</th>
-                                            <th>TIN</th>
-                                            <th>Date</th>
-                                            <th>Amount</th>
-                                            <th>Receipt</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {reimbursementValues &&
-                                            reimbursementValues.length > 0 &&
-                                            reimbursementValues.map((data: any, index: any) => {
-                                                return (
-                                                    <tr key={`reimBreakdown-${index}`}>
-                                                        <td id={"reimbursementlist_receipt_invoicetd_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
-                                                        <td id={"reimbursementlist_invoice_invoicetd_" + data.invoice}>{data.invoice}</td>
-                                                        <td id={"reimbursementlist_companyname_invoicetd_" + data.invoice}>{data.companyName}</td>
-                                                        <td id={"reimbursementlist_tin_invoicetd_" + data.invoice}>{data.tin}</td>
-                                                        <td id={"reimbursementlist_transactiondate_invoicetd_" + data.invoice}>{data.transactionDate}</td>
-                                                        <td id={"reimbursementlist_amount_invoicetd_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
-                                                        <td id={"reimbursementlist_filename_invoicetd_" + data.invoice}>{data.fileName}</td>
-                                                    </tr>
-                                                )
-
-                                            })}
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-center mt-5">
-                        <Button
-                            variant="secondary"
-                            id={"reimbursementlist_close_btn"}
-                            onClick={() => {
-                                setViewReimbursementModal(false)
-                                setIsEditReimbursement(false)
+                        </>
+                        :
+                        null
+                }
+            </div>
+            <div className="col-md-9">
+                <div className="row m-0 p-0">
+                    <div className="form-group col-md-4 mb-3" >
+                        <label>Employee Name:</label>
+                        <input type="text"
+                            name="companyName"
+                            id="reimbursementwidget_companyName_input"
+                            className="form-control"
+                            disabled={true}
+                            value={reimbursementParentValues && reimbursementParentValues.employeeName}
+                            onChange={(e) => {
                             }}
-                            className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
-                            Close
-                        </Button>
-                        {
-                            !isEditReimbursement && reimbursementView && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
-                                <>
-                                    <button
-                                        id={"reimbursementlist_retract_btn"}
-                                        onClick={() => cancelReimbursement(reimbursementView.id)}
-                                        className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
-                                        Retract/Cancel
-                                    </button></>
-                                :
-                                null
-                        }
+                        />
+                    </div>
+                    <div className="form-group col-md-4 mb-3" >
 
                     </div>
-                </Modal.Body>
-            </Modal>
+                    <div className="form-group col-md-4 mb-3" >
+                        <label>Status:</label> <br />
+                        <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
+
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                        <label>Type of Reimbursement:</label>
+                        <select
+                            className={`form-select`}
+                            name="typeId"
+                            id="reimbursementwidget_typeId_input"
+                            disabled={!isEditReimbursement}
+                            value={reimbursementParentValues && reimbursementParentValues.typeId}
+                            onChange={(e) => {
+                                updateParentData('typeId', e.target.value)
+                            }}>
+                            <option value="" disabled selected>
+                                Select reimbursement type
+                            </option>
+                            {
+                                reimbursementType &&
+                                reimbursementType.length > 0 &&
+                                reimbursementType.map((item: any, index: string) => {
+                                    return (<option key={`${index}_${item}`} value={item.id}>
+                                        {item.name}
+                                    </option>)
+                                })
+                            }
+                        </select>
+                    </div>
+                    <div className="form-group col-md-6 mb-3" >
+                        <label>Total Amount:</label>
+                        <input type="number"
+                            name="total"
+                            id="reimbursementwidget_total_input"
+                            className="form-control"
+                            disabled={!isEditReimbursement}
+                            value={reimbursementParentValues && reimbursementParentValues.total}
+                            onChange={(e) => {
+                                updateParentData('total', e.target.value)
+                            }}
+                        />
+                    </div>
+                    <div className="form-group col-md-12 mb-3" >
+                        <label>Purpose:</label>
+                        <textarea
+                            name="purpose"
+                            id="reimbursementwidget_purpose_btn"
+                            className="form-control p-2"
+                            disabled={!isEditReimbursement}
+                            value={reimbursementParentValues && reimbursementParentValues.purpose}
+                            style={{ minHeight: 100 }}
+                            onChange={(e) => {
+                                updateParentData('purpose', e.target.value)
+                            }}
+                        />
+                    </div>
+                    <div className="form-group col-md-12 mb-3">
+                        <Table responsive style={{ maxHeight: '100vh' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ width: '100px' }}>With Receipt</th>
+                                    <th style={{ width: '100px' }}>Invoice/OR Number</th>
+                                    <th>Company Name</th>
+                                    <th>TIN</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reimbursementValues &&
+                                    reimbursementValues.length > 0 &&
+                                    reimbursementValues.map((data: any, index: any) => {
+                                        return (
+                                            <tr key={`reimBreakdown-${index}`}>
+                                                <td id={"reimbursementwidget_receipt_invoicetd_" + data.invoice}>{data.receipt ? "Yes" : "No"}</td>
+                                                <td id={"reimbursementwidget_invoice_invoicetd_" + data.invoice}>{data.invoice}</td>
+                                                <td id={"reimbursementwidget_companyname_invoicetd_" + data.invoice}>{data.companyName}</td>
+                                                <td id={"reimbursementwidget_tin_invoicetd_" + data.invoice}>{data.tin}</td>
+                                                <td id={"reimbursementwidget_transactiondate_invoicetd_" + data.invoice}>{data.transactionDate}</td>
+                                                <td id={"reimbursementwidget_amount_invoicetd_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
+                                                <td id={"reimbursementwidget_filename_invoicetd_" + data.invoice}>{data.fileName}</td>
+                                            </tr>
+                                        )
+
+                                    })}
+                            </tbody>
+                        </Table>
+                    </div>
+                </div>
+            </div>
+            <div className="flex justify-center mt-5">
+                <Button
+                    variant="secondary"
+                    id={"reimbursementwidget_close_btn"}
+                    onClick={() => {
+                        setViewReimbursementModal(false)
+                        setIsEditReimbursement(false)
+                    }}
+                    className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
+                    Close
+                </Button>
+                {
+                    !isEditReimbursement && reimbursementView && reimbursementView.status != "DECLINED" && reimbursementView.status != "CANCELLED" ?
+                        <>
+                            <button
+                                id={"reimbursementwidget_retract_btn"}
+                                onClick={() => cancelReimbursement(reimbursementView.id)}
+                                className="w-[150px] mr-2 rounded-md text-white bg-[#838383]" style={{ borderColor: '#189FB5' }}>
+                                Retract/Cancel
+                            </button></>
+                        :
+                        null
+                }
+
+            </div>
+        </Modal.Body>
+    </Modal>
 </div>
        
     )
