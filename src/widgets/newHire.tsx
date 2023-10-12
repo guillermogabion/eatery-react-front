@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RequestAPI, Api } from "../api";
 import { Table, Button, Carousel } from "react-bootstrap";
-import user from "../assets/images/dist/User1.png"
+import {user, evaluate} from "../assets/images"
 
 const NewHire = () => {
   const [clickedItem, setClickedItem] = useState(null);
@@ -97,11 +97,13 @@ const NewHire = () => {
                     newHire.map((item: any, index: any) => {
                         return (
                             <tr key={item.id}>
-                                <td className="text-primary font-bold d-flex" style={{width: '300px'}}>
+                                <td className="text-primary font-bold d-flex custom-td-width" style={{width: '300px'}}>
                                   <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
                                   <span style={{ marginTop: '22px' }}>{item.name}</span>
                                   </td>
-                                <td style={{width: '100%'}}>{item.squadName}</td>
+                                <td style={{width: '100%'}}>
+                                  <img src={evaluate} alt="" />
+                                </td>
                             </tr>
                         )
                     })}

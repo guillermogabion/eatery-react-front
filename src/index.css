@@ -4172,7 +4172,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 
 .font-adjust {
-  padding-top: 3px;
+  padding-top: -5px;
   font-size: 28px;
 }
 .accordion-custom-header{
@@ -4238,6 +4238,12 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   font-size: 30px ;
   font-weight: bold;
   padding-left: 10px;
+}
+.jobtitle-size {
+  font-size: 12px;
+}
+.custom-td-width {
+  width: 340px !important;
 }
 
 @media screen and (max-width: 600px) and (max-width: 767px) {
@@ -4786,6 +4792,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .custom-slider-item {
     font-size: 12px !important;
+  }
+  .custom-td-width {
+    width: auto !important;
   }
   
 }
