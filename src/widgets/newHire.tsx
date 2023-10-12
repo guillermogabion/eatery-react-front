@@ -62,6 +62,7 @@ const NewHire = () => {
           {numberMonth &&
             numberMonth.map((item, index) => (
               <div
+                id={"newhire_month_button_" + item.id}
                 key={item.id}
                 className={`new-hire-tab pa-1 custom-slider-item ${
                   clickedItem === index ? "text-primary text-bold" : ""
@@ -97,11 +98,11 @@ const NewHire = () => {
                     newHire.map((item: any, index: any) => {
                         return (
                             <tr key={item.id}>
-                                <td className="text-primary font-bold d-flex custom-td-width" style={{width: '300px'}}>
+                                <td id={"newhire_name_td_" + item.name} className="text-primary font-bold d-flex custom-td-width custom-td-width-mobile" style={{width: '300px'}}>
                                   <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
                                   <span style={{ marginTop: '22px' }}>{item.name}</span>
                                   </td>
-                                <td style={{width: '100%'}}>
+                                <td id={"newhire_button_td_" + item.id} >
                                   <img src={evaluate} alt="" />
                                 </td>
                             </tr>

@@ -154,7 +154,7 @@ const All = () => {
                             allMember.map((item: any, index: any) => (
                                 <tr key={index}>
                                 
-                                <td className="text-primary font-bold d-flex custom-td-width">
+                                <td id={"dashboard_squadtracker_membername_all_" + item.id} className="text-primary font-bold d-flex custom-td-width">
                                     <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                                     <div className="pt-2">
                                         {item.fullname}
@@ -162,7 +162,7 @@ const All = () => {
                                         <span className="jobtitle-size">{item.jobTitle}</span>
                                     </div>
                                 </td>
-                                <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                                <td id={"dashboard_squadtracker_status_all_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                                     {item.status == null && item.todaysTimeIn != null ? (
                                         <>
                                             <p>IN</p>
@@ -275,7 +275,7 @@ const OnLeave = () => {
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold d-flex">
+                        <td id={"dashboard_squadtracker_membername_leave_" + item.id} className="text-primary font-bold d-flex custom-td-width">
                             <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                             <div className="pt-2">
                                 {item.fullname}
@@ -283,7 +283,7 @@ const OnLeave = () => {
                                 <span>{item.jobTitle}</span>
                             </div>
                         </td>
-                        <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                        <td id={"dashboard_squadtracker_status_leave_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                             {item.status == null && item.todaysTimeIn != null ? (
                                 <>
                                     <p>IN</p>
@@ -395,7 +395,7 @@ const Absent = () => {
                     {allMember && allMember.length > 0 ? (
                     allMember.map((item: any, index: any) => (
                         <tr key={index}>
-                        <td className="text-primary font-bold d-flex">
+                        <td id={"dashboard_squadtracker_membername_absent_" + item.id} className="text-primary font-bold d-flex custom-td-width">
                             <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
                             <div className="pt-2">
                                 {item.fullname}
@@ -403,7 +403,7 @@ const Absent = () => {
                                 <span>{item.jobTitle}</span>
                             </div>
                         </td>
-                        <td style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                        <td id={"dashboard_squadtracker_status_absent_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                             {item.status == null && item.todaysTimeIn != null ? (
                                 <>
                                     <p>IN</p>

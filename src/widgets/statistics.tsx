@@ -258,13 +258,13 @@ const EmployeeStatus = () => {
                
             </div>
             <div className="col-4 align-items-center text-center">
-                <div className="text-bold fs-3 text-primary text-center d-flex align-items-center flex-column">
+                <div id={"statistic_headcount_label"} className="text-bold fs-3 text-primary text-center d-flex align-items-center flex-column">
                     {headCount.length}
                     <div className="" style={{fontSize: '12px'}}>
                     Total <br />
                     Head Count
                 </div>
-                <div className="pt-5">
+                <div id={"statistic_probationary_label"} className="pt-5">
                     {Object.entries(statusCounts).map(([status, count]) => (
                         <div key={status}>
                             {`${status == 'Probationary' ? count : ""}`}
@@ -274,7 +274,7 @@ const EmployeeStatus = () => {
                         <span  style={{fontSize: '12px'}}>Under<br />Probation</span>
                     </div>
                 </div>
-                <div className="regular-employee-text">
+                <div id={"statistic_regular_label"} className="regular-employee-text">
                     {Object.entries(statusCounts).map(([status, count]) => (
                         <div key={status}>
                             {`${status == 'Regular' ? count : ""}`}
@@ -522,19 +522,19 @@ const Gender = () => {
                 <div className="text-primary fs-1 pt-1 text-center">
                     <span className="fs-3">{(parseFloat((statusCounts.MALE / statusCounts.FEMALE) * 100).toFixed(2))}</span>
                     <div className="text-bold text-primary d-flex text-center flex-column">
-                        <span  style={{fontSize: '15px'}}>Gender Ratio</span>
+                        <span id={"statistic_genderratio_label"} style={{fontSize: '15px'}}>Gender Ratio</span>
                     </div>
                 </div>
                 <div className="text-primary fs-1 pt-8 text-center gender-space">
                     <span className="fs-3">{statusCounts.MALE}</span>
                     <div className="text-bold text-primary d-flex text-center flex-column">
-                        <span  style={{fontSize: '15px'}}>Male</span>
+                        <span id={"statistic_male_span"} style={{fontSize: '15px'}}>Male</span>
                     </div>
                 </div>
                 <div className="text-primary fs-1 pt-4 text-center gender-space">
                     <span className="fs-3">{statusCounts.FEMALE}</span>
                     <div className="text-bold text-primary d-flex text-center flex-column">
-                        <span  style={{fontSize: '15px'}}>Female</span>
+                        <span id={"statistic_female_span"} style={{fontSize: '15px'}}>Female</span>
                     </div>
                 </div>
                 

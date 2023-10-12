@@ -80,13 +80,13 @@ const PayRange = () => {
         <span className="">Employee Statistics by Pay Range</span>
       </div>
       <div className="time-card-body row">
-        <Bar data={data} options={options} className="pb-0 m-0" style={{ maxHeight: '600px' }} />
+        <Bar id={"payrange_data_bar"} data={data} options={options} className="pb-0 m-0" style={{ maxHeight: '600px' }} />
         <div style={{ width: '100%', height: '50px' }}>
             <div className="row d-flex">
                 {labels.map((label, index) => (
                   <div key={index} className="col-6">
                     <div className="d-flex align-items-center">
-                      <div style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
+                      <div id={"othours_data_label"} style={{ borderRadius: '50%', width: '20px', height: '20px', backgroundColor: data.datasets[0].backgroundColor[index], marginRight: '5px' }}></div>
                       {label}
                     </div>
                   </div>
