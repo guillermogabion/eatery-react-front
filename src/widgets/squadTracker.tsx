@@ -10,6 +10,8 @@ import user from "../assets/images/dist/User1.png"
 import { Search} from "../assets/images";
 import icon_search_white from "../assets/images/icon_search_white.png"
 import EmployeeDropdown from "../components/EmployeeDropdown";
+import moment from "moment"
+
 
 
 
@@ -168,7 +170,7 @@ const All = () => {
                                             <p>IN</p>
                                         </>
                                     ) : ""}
-                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
+                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ?  moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A"): item.status}</td>
                                 </tr>
                             ))
                             ) : (
