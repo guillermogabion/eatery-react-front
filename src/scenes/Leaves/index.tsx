@@ -442,59 +442,60 @@ export const Leaves = (props: any) => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: '',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
-        RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
-          const { status, body = { data: {}, error: {} } }: any = res
-          if (status === 200 || status === 201) {
-            if (body.error && body.error.message) {
-              Swal.close()
-              ErrorSwal.fire({
-                title: 'Error!',
-                text: (body.error && body.error.message) || "",
-                didOpen: () => {
-                  const confirmButton = Swal.getConfirmButton();
+        // Swal.fire({
+        //   title: '',
+        //   allowOutsideClick: false,
+        //   didOpen: () => {
+        //     Swal.showLoading();
+        //   }
+        // });
+        getAllLeaves(0, key)
+        // RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
+        //   const { status, body = { data: {}, error: {} } }: any = res
+        //   if (status === 200 || status === 201) {
+        //     if (body.error && body.error.message) {
+        //       Swal.close()
+        //       ErrorSwal.fire({
+        //         title: 'Error!',
+        //         text: (body.error && body.error.message) || "",
+        //         didOpen: () => {
+        //           const confirmButton = Swal.getConfirmButton();
 
-                  if (confirmButton)
-                    confirmButton.id = "login_errorconfirm2_alertbtn"
-                },
-                icon: 'error',
-              })
-            } else {
-              Swal.close()
-              ErrorSwal.fire({
-                title: 'Success!',
-                text: (body.data) || "",
-                didOpen: () => {
-                  const confirmButton = Swal.getConfirmButton();
+        //           if (confirmButton)
+        //             confirmButton.id = "login_errorconfirm2_alertbtn"
+        //         },
+        //         icon: 'error',
+        //       })
+        //     } else {
+        //       Swal.close()
+        //       ErrorSwal.fire({
+        //         title: 'Success!',
+        //         text: (body.data) || "",
+        //         didOpen: () => {
+        //           const confirmButton = Swal.getConfirmButton();
 
-                  if (confirmButton)
-                    confirmButton.id = "login_successconfirm_alertbtn"
-                },
-                icon: 'success',
-              })
-              getAllLeaves(0, key)
-            }
-          } else {
-            Swal.close()
-            ErrorSwal.fire({
-              title: 'Error!',
-              text: "Something Error.",
-              didOpen: () => {
-                const confirmButton = Swal.getConfirmButton();
+        //           if (confirmButton)
+        //             confirmButton.id = "login_successconfirm_alertbtn"
+        //         },
+        //         icon: 'success',
+        //       })
+        //       getAllLeaves(0, key)
+        //     }
+        //   } else {
+        //     Swal.close()
+        //     ErrorSwal.fire({
+        //       title: 'Error!',
+        //       text: "Something Error.",
+        //       didOpen: () => {
+        //         const confirmButton = Swal.getConfirmButton();
 
-                if (confirmButton)
-                  confirmButton.id = "login_errorconfirm3_alertbtn"
-              },
-              icon: 'error',
-            })
-          }
-        })
+        //         if (confirmButton)
+        //           confirmButton.id = "login_errorconfirm3_alertbtn"
+        //       },
+        //       icon: 'error',
+        //     })
+        //   }
+        // })
       }
     })
   }
@@ -1256,7 +1257,7 @@ export const Leaves = (props: any) => {
                       <textarea
                         name="reason"
                         id="reason"
-                        className="form-control p-2"
+                        className={`form-control p-2${touched.reason && errors.reason ? 'is-invalid' : ''}`}
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                         style={{height: '150px'}}
