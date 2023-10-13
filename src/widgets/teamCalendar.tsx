@@ -665,9 +665,9 @@ const TeamCalendar = () => {
                 eventKey="tab1"
                 title={<img src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
             >
-                <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden'  }}>
+                <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden', marginTop: '-10px'  }}>
                     <div className="row d-flex">
-                    <div className="col-1">
+                    <div className="col-1 arrow-space">
                         <div className="arrow-button left">
                           <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left text-primary"></div>
                         </div>
@@ -692,7 +692,7 @@ const TeamCalendar = () => {
                         ))}
                         </div>
                     </div>
-                    <div className="col-1">
+                    <div className="col-1 arrow-space">
                         <div className="arrow-button right">
                             <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
                         </div>
@@ -755,7 +755,48 @@ const TeamCalendar = () => {
                             </div>
                             <div className="col-6">
                               <div className="d-flex justify-content-end">
-                                <span className="accordion-custom-button">
+                                <div className="col-6" style={{ textAlign: 'right'}}>
+                                  {hasBirthdaysThisWeek ? (
+                                    dataWeek.map((item, index) => (
+                                      <div key={index}>
+                                      {item.bdayList && item.bdayList.length > 0 && (
+                                        <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
+                                        {item.bdayList.slice(0, 2).map((birthdayItem, birthdayIndex) => (
+                                          <li key={birthdayIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
+                                            <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
+                                          </li>
+                                        ))}
+                                        </ul>
+                                      )}
+                                      </div>
+                                    ))
+                                    ) : (
+                                    null
+                                  )}
+                                </div>
+                                {dataWeek.reduce((total, item) => total + (item.bdayList ? item.bdayList.length : 0), 0) > 2 && (
+                                    <div
+                                      style={{
+                                        width: '30px',
+                                        height: '30px',
+                                        borderRadius: '50%',
+                                        backgroundColor: 'white',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: 'black',
+                                        fontSize: '15px',
+                                        fontWeight: 'bold',
+                                        marginBottom: '5px',
+                                        marginLeft: '5px',
+                                      }}
+                                    >
+                                      +{dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
+                                    </div>
+                                  )} 
+                              
+                              
+                                  <span className="accordion-custom-button">
                                     <Button
                                       variant="text"
                                       onClick={() => setIsOpenBirth(!isOpenBirth)}
@@ -799,59 +840,57 @@ const TeamCalendar = () => {
                             </div>
                             <div className="col-6">
                               <div className="d-flex justify-content-end">
-                              <div className="col-6" style={{ textAlign: 'right'}}>
-                              {hasLeavesThisWeek ? (
-                                dataWeek.map((item, index) => (
-                                    <div key={index}>
-                                    {item.leavesList && item.leavesList.length > 0 && (
+                                <div className="col-6" style={{ textAlign: 'right'}}>
+                                  {hasLeavesThisWeek ? (
+                                    dataWeek.map((item, index) => (
+                                      <div key={index}>
+                                      {item.leavesList && item.leavesList.length > 0 && (
                                         <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
                                         {item.leavesList.slice(0, 2).map((leaveItem, leaveIndex) => (
                                           <li key={leaveIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
                                             <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
                                           </li>
                                         ))}
-                                      </ul>
-                                    )}
-                                    </div>
-                                ))
-                                ) : (
-                                null
-                                )}
-
-                               
-                            </div>
-                            {dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
+                                        </ul>
+                                      )}
+                                      </div>
+                                    ))
+                                    ) : (
+                                    null
+                                  )}
+                                </div>
+                                {dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
                                   <div
-                                      style={{
-                                        width: '30px',
-                                        height: '30px',
-                                        borderRadius: '50%',
-                                        backgroundColor: 'white',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: 'black',
-                                        fontSize: '15px',
-                                        fontWeight: 'bold',
-                                        marginBottom: '5px',
-                                        marginLeft: '5px',
-                                      }}
-                                    >
-                                      +{dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
-                                    </div>
+                                    style={{
+                                      width: '30px',
+                                      height: '30px',
+                                      borderRadius: '50%',
+                                      backgroundColor: 'white',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      color: 'black',
+                                      fontSize: '15px',
+                                      fontWeight: 'bold',
+                                      marginBottom: '5px',
+                                      marginLeft: '5px',
+                                    }}
+                                  >
+                                    +{dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
+                                  </div>
                                 )} 
                                 <span className="accordion-custom-button">
-                                    <Button
-                                      variant="text"
-                                      onClick={() => setIsOpenOut(!isOpenOut)}
-                                      aria-controls="accordion-body"
-                                      aria-expanded={isOpenOut}
-                                      style={{height: '30px', lineHeight: '10px', marginTop: '10px', cursor:'pointer'}}
-                                      className="pt-0 mt-0"
-                                    >
-                                      {isOpenOut ? '▼':'►'}
-                                    </Button>
-                                  </span>
+                                  <Button
+                                    variant="text"
+                                    onClick={() => setIsOpenOut(!isOpenOut)}
+                                    aria-controls="accordion-body"
+                                    aria-expanded={isOpenOut}
+                                    style={{height: '30px', lineHeight: '10px', marginTop: '10px', cursor:'pointer'}}
+                                    className="pt-0 mt-0"
+                                  >
+                                    {isOpenOut ? '▼':'►'}
+                                  </Button>
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -928,46 +967,44 @@ const TeamCalendar = () => {
                             </div>
                             <div className="col-6">
                               <div className="d-flex justify-content-end">
-                              <div className="col-6" style={{ textAlign: 'right'}}>
-                              {hasNewHiresThisWeek ? (
-                                dataWeek.map((item, index) => (
-                                    <div key={index}>
-                                    {item.newHiresList && item.newHiresList.length > 0 && (
-                                        <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
-                                        {item.newHiresList.slice(0, 2).map((hireItem, hireIndex) => (
-                                          <li key={hireIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
-                                            <img src={user} alt="" width={30} className="m-0 p-0" style={{lineHeight: '0'}} />
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    )}
-                                    </div>
-                                ))
-                                ) : (
-                                null
-                                )}
-
-                               
-                            </div>
-                            {dataWeek.reduce((total, item) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) > 2 && (
+                                <div className="col-6" style={{ textAlign: 'right'}}>
+                                  {hasNewHiresThisWeek ? (
+                                    dataWeek.map((item, index) => (
+                                      <div key={index}>
+                                      {item.newHiresList && item.newHiresList.length > 0 && (
+                                          <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
+                                          {item.newHiresList.slice(0, 2).map((hireItem, hireIndex) => (
+                                            <li key={hireIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
+                                              <img src={user} alt="" width={30} className="m-0 p-0" style={{lineHeight: '0'}} />
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      )}
+                                      </div>
+                                    ))
+                                    ) : (
+                                    null
+                                  )}
+                                </div>
+                                {dataWeek.reduce((total, item) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) > 2 && (
                                   <div
-                                      style={{
-                                        width: '30px',
-                                        height: '30px',
-                                        borderRadius: '50%',
-                                        backgroundColor: 'white',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: 'black',
-                                        fontSize: '15px',
-                                        fontWeight: 'bold',
-                                        marginBottom: '5px',
-                                        marginLeft: '5px',
-                                      }}
-                                    >
-                                      +{dataWeek.reduce((total, item) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) - 2}
-                                    </div>
+                                    style={{
+                                      width: '30px',
+                                      height: '30px',
+                                      borderRadius: '50%',
+                                      backgroundColor: 'white',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      color: 'black',
+                                      fontSize: '15px',
+                                      fontWeight: 'bold',
+                                      marginBottom: '5px',
+                                      marginLeft: '5px',
+                                    }}
+                                  >
+                                    +{dataWeek.reduce((total, item) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) - 2}
+                                  </div>
                                 )} 
                                 <span className="accordion-custom-button">
                                     <Button
@@ -1012,15 +1049,15 @@ const TeamCalendar = () => {
                 </div>
             </Tab>
             <Tab
-                className="custom-calendar-tabs"
-                eventKey="tab2"
-                title={<img src={activeWeekTab !== 'tab1' ? activeCalendar : inactiveCalendar} alt="Tab 2" />}
+              className="custom-calendar-tabs"
+              eventKey="tab2"
+              title={<img src={activeWeekTab !== 'tab1' ? activeCalendar : inactiveCalendar} alt="Tab 2" />}
             >
-                <div style={{ height: '350px', overflowY: 'auto' }}>
-                    <CalendarComponent />
-                </div>
+              <div style={{ height: '350px', overflowY: 'auto' }}>
+                <CalendarComponent />
+              </div>
             </Tab>
-            </Tabs>
+          </Tabs>
         </div>
       </div>
     </div>

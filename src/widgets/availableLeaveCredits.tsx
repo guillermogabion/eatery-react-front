@@ -507,7 +507,7 @@ const AvailableLeaveCredits = () => {
                                             rows={4}
                                             name="reason"
                                             id="availableleavecredits_reason_input"
-                                            className={`form-control ${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                                            className={`form-control p-2${touched.reason && errors.reason ? 'is-invalid' : ''}`}
                                             value={values.reason}
                                             onChange={(e) => setFormField(e, setFieldValue)}
                                         />

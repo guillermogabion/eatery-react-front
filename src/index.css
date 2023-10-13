@@ -3895,6 +3895,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   min-height: 372px;
   padding-top: 2%;
   padding-left: 2%;
+  padding-right: 0%;
   width: 100%
 
 }
@@ -4082,6 +4083,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   background: linear-gradient(to top, #d3d0d0, transparent);
   width: 50px;
   border-bottom: 6px solid #009FB5;
+  height: 70px;
 
 
 }
@@ -4116,6 +4118,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   border-style: solid;
   cursor: pointer;
   padding-top: 45px;
+}
+
+.arrow-space{
+  margin-top: -10px;
 }
 
 .triangle-left {
@@ -4307,7 +4313,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     height: 0;
     border-style: solid;
     cursor: pointer;
-    padding-top: 25px;
+    padding-top: 20px;
   }
   .table-mobile {
     font-size: 4px;
@@ -4798,6 +4804,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .custom-td-width-mobile {
     width: 200px !important;
+  }
+  .arrow-space {
+    padding-top: 10px;
   }
   
 }

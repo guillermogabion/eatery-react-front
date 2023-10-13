@@ -53,7 +53,7 @@ const Reimbursement = () => {
             queryString += `&enableSquad=false`
         }
         RequestAPI.getRequest(
-            `${Api.getAllReimbursement}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=desc`,
+            `${Api.reimbursementPending}?size=10${queryString}&page=${pageNo}&sort=id&sortDir=desc`,
             "",
             {},
             {},
@@ -353,7 +353,7 @@ const Reimbursement = () => {
                             
                                 <th>Employee</th>
                                 <th>Amount</th>
-                                <th className="text-center">Action</th>
+                                <th>Action</th>
                         </tr>
                     </thead>
                 </Table>
@@ -371,7 +371,7 @@ const Reimbursement = () => {
                                         <td style={{width: 'auto', paddingLeft: '20px'}} id={"reimbursement_total_tdtable_" + item.id}>
                                             {Utility.formatToCurrency(item.total)}
                                         </td>
-                                        <td style={{width: 'auto'}} className="text-center">
+                                        <td style={{width: 'auto'}}>
                                         <label
                                             id={"reimbursementlist_setreimbursement_btn_" + item.id}
                                             onClick={() => {
@@ -426,19 +426,6 @@ const Reimbursement = () => {
                                                             declineReimbursement(item.id)
                                                         }}>
                                                         <img id={"reimbursement_declinereimburse_img_" + item.id} src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Decline" />
-                                                    </label>
-                                                </>
-                                            )
-                                        }
-                                        {
-                                            item.status != "DECLINED" && item.status != "CANCELLED" && (
-                                                <>
-                                                    <label
-                                                        id={"reimbursement_cancelreimburse_labelbtn_" + item.id}
-                                                        onClick={() => {
-                                                            cancelReimbursement(item.id)
-                                                        }}>
-                                                        <img id={"reimbursement_cancelreimburse_img_" + item.id} src={action_cancel} width={20} className="hover-icon-pointer mx-1" title="Cancel" />
                                                     </label>
                                                 </>
                                             )
