@@ -73,7 +73,8 @@ const NewHire = () => {
                     clickedItem === index ? "bold" : "", 
                   borderBottom: clickedItem === index ? "2px solid #189FB5" : "none",
                   paddingBottom: clickedItem === index ? "40px" : "",
-                  
+                  display: "inline-block",
+                  position: "relative",
                 }}
                 onClick={() => handleItemClick(index, item.value)}
               >

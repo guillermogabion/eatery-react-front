@@ -361,7 +361,10 @@ const Api: any = {
   departmentOtHours : process.env.REACT_APP_API_URL + "request/ot/department",
 
   // statistic 
-  headCount : process.env.REACT_APP_API_URL + "widget/employee-statistics"
+  headCount : process.env.REACT_APP_API_URL + "widget/employee-statistics",
+  // reimbursement 
+  reimbursementPending : process.env.REACT_APP_API_URL + "request/reimbursement/widget"
+
 }
 
 export default Api
