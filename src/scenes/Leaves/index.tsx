@@ -903,7 +903,7 @@ export const Leaves = (props: any) => {
             <div className="row d-flex pb-1">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2" style={{paddingRight: '0'}}>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2" style={{marginR}}>
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="leaves_employee_leavecreditsdropdown"
@@ -943,7 +943,7 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-1 mt-4" : "col-xs-12 col-sm-12 col-md-4 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '8px' }}>
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-2 mt-4" : "col-xs-12 col-sm-12 col-md-4 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '8px' }}>
                 <Button
                   id="leaves_search_leavecreditsbtn"
                   style={{ width: '100%'}}
@@ -1257,7 +1257,7 @@ export const Leaves = (props: any) => {
                       <textarea
                         name="reason"
                         id="reason"
-                        className={`form-control p-2${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                        className="form-control p-2"
                         value={values.reason}
                         onChange={(e) => setFormField(e, setFieldValue)}
                         style={{height: '150px'}}
