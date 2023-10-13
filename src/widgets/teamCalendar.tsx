@@ -252,7 +252,10 @@ const CalendarComponent = () => {
                       <ul>
                       {item.bdayList.map((bdayItem, bdayIndex) => (
                           <li key={bdayIndex}>
-                          {bdayItem.firstName} {bdayItem.lastName}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                              <img src={user} alt="" width={40} />
+                              {bdayItem.firstName} {bdayItem.lastName}
+                            </div>
                           </li>
                       ))}
                       </ul>
@@ -264,31 +267,6 @@ const CalendarComponent = () => {
               )}
           </Tab>
           <Tab  className="custom-tabs" eventKey="tab3" title="On Leave">
-          {/* {hasLeavesThisWeek ? (
-            <div className="">
-              {dataMonth.map((item, index) => (
-                <div key={index}>
-                  {item.leavesList && item.leavesList.length > 0 ? (
-                    <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list">
-                        {item.leavesList.map((leaveItem, leaveIndex) => (
-                          <li key={leaveIndex} className="horizontal-scroll-item">
-                            <img src={user} alt="" width={40} />
-                            {leaveItem.firstName}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : ""
-                  
-                  }
-                </div>
-              ))}
-            </div>
-          ) : (
-            "No Employee on Leave today"
-          )} */}
-
           {hasLeavesThisWeek ? (
             <div className="">
               {dataMonth.map((item, index) => (
@@ -330,7 +308,7 @@ const CalendarComponent = () => {
                       <ul className="horizontal-scroll-list">
                         {item.leavesList.map((leaveItem, leaveIndex) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
                               <img src={user} alt="" width={40} />
                               {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
                             </div>
@@ -357,7 +335,7 @@ const CalendarComponent = () => {
                     <ul>
                     {item.newHiresList.map((newHireItem, newHireIndex) => (
                         <li key={newHireIndex} className="horizontal-scroll-item">
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
                           <img src={user} alt="" width={40} />
                           {newHireItem.firstName} {newHireItem.lastName}
                         </div>
@@ -656,20 +634,20 @@ const TeamCalendar = () => {
           defaultActiveKey="tab1" 
           id="my-tabs" 
           className="custom-calendar-tab 
-          justify-content-end"
+          justify-content-end pr-8"
           activeKey={activeWeekTab}
             onSelect={handleWeekTabSelect}
           >
           <Tab
                 className="custom-calendar-tabs"
                 eventKey="tab1"
-                title={<img src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
+                title={<img className="ma-0 pa-0" src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
             >
                 <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden', marginTop: '-10px'  }}>
                     <div className="row d-flex">
                     <div className="col-1 arrow-space">
                         <div className="arrow-button left">
-                          <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left text-primary"></div>
+                          <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left "></div>
                         </div>
                     </div>
                     <div className="col-10">
@@ -716,7 +694,7 @@ const TeamCalendar = () => {
                                       onClick={() => setIsOpen(!isOpen)}
                                       aria-controls="accordion-body"
                                       aria-expanded={isOpen}
-                                      style={{height: '30px', lineHeight: '10px', cursor:'pointer'}}
+                                      style={{color: 'white', height: '30px', lineHeight: '10px', cursor:'pointer'}}
                                       className="pt-0 mt-0"
                                     >
                                       {isOpen ? '▼':'►'}
@@ -802,7 +780,7 @@ const TeamCalendar = () => {
                                       onClick={() => setIsOpenBirth(!isOpenBirth)}
                                       aria-controls="accordion-body"
                                       aria-expanded={isOpenBirth}
-                                      style={{height: '30px', lineHeight: '10px', cursor:'pointer'}}
+                                      style={{color: 'white', height: '30px', lineHeight: '10px', cursor:'pointer'}}
                                       className="pt-0 mt-0"
                                     >
                                       {isOpenBirth ? '▼':'►' }
@@ -820,7 +798,10 @@ const TeamCalendar = () => {
                                     <ul>
                                     {item.bdayList.map((bdayItem, bdayIndex) => (
                                         <li key={bdayIndex}>
-                                        {bdayItem.firstName} {bdayItem.lastName}
+                                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                              <img src={user} alt="" width={40} className="flex-wrap" />
+                                              {bdayItem.firstName} {bdayItem.lastName}
+                                          </div>
                                         </li>
                                     ))}
                                     </ul>
@@ -885,7 +866,7 @@ const TeamCalendar = () => {
                                     onClick={() => setIsOpenOut(!isOpenOut)}
                                     aria-controls="accordion-body"
                                     aria-expanded={isOpenOut}
-                                    style={{height: '30px', lineHeight: '10px', marginTop: '10px', cursor:'pointer'}}
+                                    style={{color: 'white', height: '30px', lineHeight: '10px', marginTop: '10px', cursor:'pointer'}}
                                     className="pt-0 mt-0"
                                   >
                                     {isOpenOut ? '▼':'►'}
@@ -1012,7 +993,7 @@ const TeamCalendar = () => {
                                       onClick={() => setIsOpenHire(!isOpenHire)}
                                       aria-controls="accordion-body"
                                       aria-expanded={isOpenHire}
-                                      style={{height: '30px', lineHeight: '10px', cursor:'pointer'}}
+                                      style={{color: 'white', height: '30px', lineHeight: '10px', cursor:'pointer'}}
                                       className="pt-0 mt-0"
                                     >
                                       {isOpenHire ? '▼':'►' }

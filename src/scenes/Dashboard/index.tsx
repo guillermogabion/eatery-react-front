@@ -181,11 +181,6 @@ export const Dashboard = (props: any) => {
           }
           <div className="col-sm-12 col-md-6 col-lg-4">
             <div className="card">
-              <NewHire />
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-6 col-lg-4">
-            <div className="card">
               <Shortcut />
             </div>
           </div>
