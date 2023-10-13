@@ -4146,6 +4146,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .custom-calendar-tabs {
   border: none !important;
   width: 98%;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
 }
 .custom-calendar-tab {
   border: none !important;
@@ -4251,6 +4254,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .custom-td-width {
   width: 340px !important;
 }
+
 
 @media screen and (max-width: 600px) and (max-width: 767px) {
   .NotifActionsLink {
@@ -4922,4 +4926,8 @@ input[type="date"]{
 }
 .custom-arrow-accordion .accordion-button::after {
   display: none;
+}
+.arrow-color {
+
+  color: white !important;
 }
