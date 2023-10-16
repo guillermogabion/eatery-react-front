@@ -187,10 +187,10 @@ export const SquadAttendanceCorrection = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "squadattendancecorrection_approvecoaconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "squadattendancecorrection_approvecoacancel_alertbtn"
       },
       icon: 'warning',
@@ -217,12 +217,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "squadattendancecorrection_errorconfirm_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               Swal.close()
               ErrorSwal.fire({
@@ -230,12 +230,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "squadattendancecorrection_successconfirm_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllCOARequest(0, key)
             }
           } else {
@@ -245,12 +245,12 @@ export const SquadAttendanceCorrection = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "squadattendancecorrection_errorconfirm2_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -264,10 +264,10 @@ export const SquadAttendanceCorrection = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "squadattendancecorrection_declinecoaconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "squadattendancecorrection_declinecoacancel_alertbtn"
       },
       icon: 'warning',
@@ -294,12 +294,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "squadattendancecorrection_errorconfirm3_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               Swal.close()
               ErrorSwal.fire({
@@ -307,12 +307,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "squadattendancecorrection_successconfirm2_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllCOARequest(0, key)
             }
           } else {
@@ -322,12 +322,12 @@ export const SquadAttendanceCorrection = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "squadattendancecorrection_errorconfirm4_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -341,10 +341,10 @@ export const SquadAttendanceCorrection = (props: any) => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "squadattendancecorrection_cancelcoaconfirm_alertbtn"
 
-        if(cancelButton)
+        if (cancelButton)
           cancelButton.id = "squadattendancecorrection_cancelcoacancel_alertbtn"
       },
       icon: 'warning',
@@ -371,12 +371,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "squadattendancecorrection_errorconfirm5_alertbtn"
                 },
                 icon: 'error',
-            })
+              })
             } else {
               Swal.close()
               ErrorSwal.fire({
@@ -384,12 +384,12 @@ export const SquadAttendanceCorrection = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-        
-                  if(confirmButton)
+
+                  if (confirmButton)
                     confirmButton.id = "squadattendancecorrection_successconfirm3_alertbtn"
                 },
                 icon: 'success',
-            })
+              })
               getAllCOARequest(0, key)
             }
           } else {
@@ -399,12 +399,12 @@ export const SquadAttendanceCorrection = (props: any) => {
               text: "Something Error.",
               didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
-      
-                if(confirmButton)
+
+                if (confirmButton)
                   confirmButton.id = "squadattendancecorrection_errorconfirm6_alertbtn"
               },
               icon: 'error',
-          })
+            })
           }
         })
       }
@@ -454,6 +454,7 @@ export const SquadAttendanceCorrection = (props: any) => {
               <th style={{ width: 'auto' }}>Employee Name</th>
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Shift Date</th>
               <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
@@ -466,11 +467,16 @@ export const SquadAttendanceCorrection = (props: any) => {
               allCOA.content &&
               allCOA.content.length > 0 &&
               allCOA.content.map((item: any, index: any) => {
+                let shift_dates: any = []
+                item.breakdown.forEach((breakdown: any, breakdownIndex: any) => {
+                  shift_dates.push(Utility.formatDate(breakdown.shiftDate, 'MM-DD-YYYY'))
+                })
                 return (
                   <tr>
                     <td id={"squadattendancecorrection_name_allcoadata_" + item.id}> {item.lastName}, {item.firstName}</td>
                     <td id={"squadattendancecorrection_type_allcoadata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
                     <td id={"squadattendancecorrection_reason_allcoadata_" + item.id}> {limitText(item.reason, 20)} </td>
+                    <td id={"attendancecorrection_reason_data_" + item.id}> {shift_dates.toString().replaceAll(',', ', ')} </td>
                     <td id={"squadattendancecorrection_filedate_allcoadata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                     <td id={"squadattendancecorrection_statuschangedby_allcoadata_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"squadattendancecorrection_status_allcoadata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
@@ -630,7 +636,7 @@ export const SquadAttendanceCorrection = (props: any) => {
           </div>
         </div>
       </div>
-     
+
       <Modal
         size="lg"
         show={modalViewShow}

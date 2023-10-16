@@ -506,6 +506,7 @@ export const AttendanceCorrection = (props: any) => {
               }
               <th style={{ width: 'auto' }}>Type</th>
               <th style={{ width: 'auto' }}>Reason</th>
+              <th style={{ width: 'auto' }}>Shift Date</th>
               <th style={{ width: 'auto' }}>Date Filed</th>
               <th style={{ width: 'auto' }}>Action Taken By</th>
               <th style={{ width: 'auto' }}>Status</th>
@@ -518,6 +519,11 @@ export const AttendanceCorrection = (props: any) => {
               allCOA.content &&
               allCOA.content.length > 0 &&
               allCOA.content.map((item: any, index: any) => {
+                let shift_dates: any = []
+                item.breakdown.forEach((breakdown: any, breakdownIndex: any) => {
+                  shift_dates.push(Utility.formatDate(breakdown.shiftDate, 'MM-DD-YYYY'))
+                })
+
                 return (
                   <tr>
                     {
@@ -528,6 +534,7 @@ export const AttendanceCorrection = (props: any) => {
                     }
                     <td id={"attendancecorrection_type_data_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
                     <td id={"attendancecorrection_reason_data_" + item.id}> {limitText(item.reason, 20)} </td>
+                    <td id={"attendancecorrection_reason_data_" + item.id}> {shift_dates.toString().replaceAll(',', ', ')} </td>
                     <td id={"attendancecorrection_filedate_data_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')}</td>
                     <td id={"attendancecorrection_statuschangedby_data_" + item.id}> {item.statusChangedBy} </td>
                     <td id={"attendancecorrection_status_data_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
@@ -757,7 +764,7 @@ export const AttendanceCorrection = (props: any) => {
         dialogClassName="modal-90w"
       >
         <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
+          <Modal.Title id="contained-modal-title-vcenter" className="text-center mx-auto">
             Request Attendance Reversal
             {/* {coaId ? 'Update Attendance Reversal' : 'Create Attendance Reversal'} */}
           </Modal.Title>

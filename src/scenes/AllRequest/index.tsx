@@ -80,7 +80,7 @@ export const AllRequest = (props: any) => {
 
     const [dayTypes, setDayTypes] = useState<any>([]);
 
-   
+
     const viewLeave = (id: any = 0) => {
         RequestAPI.getRequest(
             `${Api.getLeave}?id=${id}`,
@@ -217,7 +217,7 @@ export const AllRequest = (props: any) => {
                 setDayTypes(valuesObjDayType)
             }
         }
-        }
+    }
 
     function Leaves(props: any) {
         const [allLeaves, setAllLeaves] = useState<any>([]);
@@ -248,63 +248,39 @@ export const AllRequest = (props: any) => {
                 })
             }
 
-            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
-                RequestAPI.getRequest(
-                    `${Api.allRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setAllLeaves(body.data)
-                            }
+            RequestAPI.getRequest(
+                `${Api.allRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setAllLeaves(body.data)
                         }
                     }
-                )
-            } else {
-
-                RequestAPI.getRequest(
-                    `${Api.allMyRequestLeave}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setAllLeaves(body.data)
-                            }
-                        }
-                    }
-                )
-            }
+                }
+            )
         }
         function limitText(text, limit) {
             if (text.length <= limit) {
-              return text;
+                return text;
             } else {
-              return text.substring(0, limit) + '...';
+                return text.substring(0, limit) + '...';
             }
-          }
+        }
 
         return (
 
             // leaves 
             <div>
-                
+
                 <Table responsive>
                     <thead>
                         <tr>
-                            {
-                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                    <>
-                                        <th>Employee Name</th>
-                                    </> : null
-                            }
+                            <th>Employee Name</th>
                             <th>Type</th>
                             <th>Date From</th>
                             <th>Date To</th>
@@ -324,12 +300,7 @@ export const AllRequest = (props: any) => {
                                         allLeaves.content.map((item: any, index: any) => {
                                             return (
                                                 <tr>
-                                                    {
-                                                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                            <>
-                                                                <td id={"allrequest_name_leavedata_" + item.id}> {item.lastName}, {item.firstName} </td>
-                                                            </> : null
-                                                    }
+                                                    <td id={"allrequest_name_leavedata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                     <td id={"allrequest_type_leavedata_" + item.id}> {item.type} </td>
                                                     <td id={"allrequest_datefrom_leavedata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_dateto_leavedata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
@@ -420,63 +391,41 @@ export const AllRequest = (props: any) => {
                 })
             }
 
-            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
-                RequestAPI.getRequest(
-                    `${Api.getAllCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setAllCOA(body.data)
-                            }
+            RequestAPI.getRequest(
+                `${Api.getAllCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setAllCOA(body.data)
                         }
                     }
-                )
-            } else {
-                RequestAPI.getRequest(
-                    `${Api.allMyCOA}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setAllCOA(body.data)
-                            }
-                        }
-                    }
-                )
-            }
+                }
+            )
         }
         function limitText(text, limit) {
             if (text.length <= limit) {
-              return text;
+                return text;
             } else {
-              return text.substring(0, limit) + '...';
+                return text.substring(0, limit) + '...';
             }
-          }
-     
+        }
+
         return (
             // coa 
             <div>
-                
+
                 <Table responsive>
                     <thead>
                         <tr>
-                            {
-                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                    <>
-                                        <th style={{ width: 'auto' }}>Employee Name</th>
-                                    </> : null
-                            }
+                            <th style={{ width: 'auto' }}>Employee Name</th>
                             <th style={{ width: 'auto' }}>Type</th>
                             <th style={{ width: 'auto' }}>Reason</th>
+                            <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>Date Filed</th>
                             <th style={{ width: 'auto' }}>Status</th>
                             <th style={{ width: 'auto' }}>Action</th>
@@ -488,16 +437,16 @@ export const AllRequest = (props: any) => {
                             allCOA.content &&
                             allCOA.content.length > 0 &&
                             allCOA.content.map((item: any, index: any) => {
+                                let shift_dates: any = []
+                                item.breakdown.forEach((breakdown: any, breakdownIndex: any) => {
+                                    shift_dates.push(Utility.formatDate(breakdown.shiftDate, 'MM-DD-YYYY'))
+                                })
                                 return (
                                     <tr>
-                                        {
-                                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                <>
-                                                    <td id={"allrequest_name_revdata_" + item.id}> {item.lastName}, {item.firstName} </td>
-                                                </> : null
-                                        }
+                                        <td id={"allrequest_name_revdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                         <td id={"allrequest_type_revdata_" + item.id}>{Utility.removeUnderscore(item.type)}</td>
                                         <td id={"allrequest_reason_revdata_" + item.id}>{limitText(item.reason, 20)}</td>
+                                        <td id={"allrequest_reason_revdata_" + item.id}> {shift_dates.toString().replaceAll(',', ', ')} </td>
                                         <td id={"allrequest_filedate_revdata_" + item.id}> {Utility.formatDate(item.fileDate, 'MM-DD-YYYY')} </td>
                                         <td id={"allrequest_status_revdata_" + item.id}> {Utility.removeUnderscore(item.status)} </td>
                                         <td id={"allrequest_labels_revdata_" + item.id}>
@@ -576,62 +525,41 @@ export const AllRequest = (props: any) => {
                     }
                 })
             }
-            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
-                RequestAPI.getRequest(
-                    `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setMyOT(body.data)
-                            }
+            RequestAPI.getRequest(
+                `${Api.allOvertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setMyOT(body.data)
                         }
                     }
-                )
-            } else {
-                RequestAPI.getRequest(
-                    `${Api.myOT}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setMyOT(body.data)
-                            }
-                        }
-                    }
-                )
-            }
+                }
+            )
 
         }
         function limitText(text, limit) {
             if (text.length <= limit) {
-              return text;
+                return text;
             } else {
-              return text.substring(0, limit) + '...';
+                return text.substring(0, limit) + '...';
             }
-          }
+        }
 
         return (
-            
+
 
             // ot 
             <div>
-                
+
                 <Table responsive>
                     <thead>
                         <tr>
-                            {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                <th style={{ width: 'auto' }}>Employee Name</th> :
-                                null
-                            }
+                            <th style={{ width: 'auto' }}>Employee Name</th>
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>Classification</th>
                             <th style={{ width: 'auto' }}>OT Start</th>
@@ -650,11 +578,7 @@ export const AllRequest = (props: any) => {
                             myot.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                        {/* <td> {item.lastName}, {item.firstName}</td> */}
-                                        {data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                            <td id={"allrequest_name_otdata_" + item.id}>{item.lastName}, {item.firstName}</td> :
-                                            null
-                                        }
+                                        <td id={"allrequest_name_otdata_" + item.id}>{item.lastName}, {item.firstName}</td>
                                         <td id={"allrequest_shiftdate_otdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
                                         <td id={"allrequest_classification_otdata_" + item.id}> {Utility.removeUnderscore(item.classification)} </td>
                                         <td id={"allrequest_otstart_otdata_" + item.id}> {Utility.formatDate(item.otStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
@@ -740,62 +664,39 @@ export const AllRequest = (props: any) => {
                     }
                 })
             }
-            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
-                RequestAPI.getRequest(
-                    `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setMyUT(body.data)
-                            }
+            RequestAPI.getRequest(
+                `${Api.allUndertime}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setMyUT(body.data)
                         }
                     }
-                )
-            } else {
-                RequestAPI.getRequest(
-                    `${Api.myUT}?size=10${queryString}&page=${page}&sort=id&sortDir=desc&status=${status}`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setMyUT(body.data)
-                            }
-                        }
-                    }
-                )
-            }
+                }
+            )
         }
         function limitText(text, limit) {
             if (text.length <= limit) {
-              return text;
+                return text;
             } else {
-              return text.substring(0, limit) + '...';
+                return text.substring(0, limit) + '...';
             }
-          }
+        }
 
-        
+
         return (
             // ut 
             <div>
-                
+
                 <Table responsive>
                     <thead>
                         <tr>
-                            {
-                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                    <>
-                                        <th style={{ width: 'auto' }}>Employee Name</th>
-                                    </> : null
-                            }
+                            <th style={{ width: 'auto' }}>Employee Name</th>
                             <th style={{ width: 'auto' }}>Shift Date</th>
                             <th style={{ width: 'auto' }}>UT Start</th>
                             <th style={{ width: 'auto' }}>UT End</th>
@@ -813,12 +714,7 @@ export const AllRequest = (props: any) => {
                             myut.content.map((item: any, index: any) => {
                                 return (
                                     <tr>
-                                        {
-                                            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                <>
-                                                    <td id={"allrequest_name_utdata_" + item.id}> {item.lastName}, {item.firstName} </td>
-                                                </> : null
-                                        }
+                                        <td id={"allrequest_name_utdata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                         <td id={"allrequest_shiftdate_utdata_" + item.id}> {Utility.formatDate(item.shiftDate, 'MM-DD-YYYY')} </td>
                                         <td id={"allrequest_utstart_utdata_" + item.id}> {Utility.formatDate(item.utStart.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
                                         <td id={"allrequest_utend_utdata_" + item.id}> {Utility.formatDate(item.utEnd.replace('T', ' '), 'MM-DD-YYYY hh:mm A', true)} </td>
@@ -902,63 +798,40 @@ export const AllRequest = (props: any) => {
                 })
             }
 
-            if (data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE') {
-                RequestAPI.getRequest(
-                    `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setAllAdjustments(body.data)
-                            }
+            RequestAPI.getRequest(
+                `${Api.allScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
+                "",
+                {},
+                {},
+                async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res
+                    if (status === 200 && body) {
+                        if (body.error && body.error.message) {
+                        } else {
+                            setAllAdjustments(body.data)
                         }
                     }
-                )
-            } else {
-                RequestAPI.getRequest(
-                    `${Api.myScheduleAdjustment}?size=10${queryString}&page=${page}&sort=id&sortDir=desc`,
-                    "",
-                    {},
-                    {},
-                    async (res: any) => {
-                        const { status, body = { data: {}, error: {} } }: any = res
-                        if (status === 200 && body) {
-                            if (body.error && body.error.message) {
-                            } else {
-                                setAllAdjustments(body.data)
-                            }
-                        }
-                    }
-                )
-            }
+                }
+            )
         }
         function limitText(text, limit) {
             if (text.length <= limit) {
-              return text;
+                return text;
             } else {
-              return text.substring(0, limit) + '...';
+                return text.substring(0, limit) + '...';
             }
-          }
+        }
 
-       
+
 
         return (
             // sched adj 
             <div>
-                
+
                 <Table responsive>
                     <thead>
                         <tr>
-                            {
-                                data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                    <>
-                                        <th style={{ width: 'auto' }}>Employee Name</th>
-                                    </> : null
-                            }
+                            <th style={{ width: 'auto' }}>Employee Name</th>
                             <th style={{ width: 'auto' }}>Date From</th>
                             <th style={{ width: 'auto' }}>Date To</th>
                             <th style={{ width: 'auto' }}>Reason</th>
@@ -977,12 +850,7 @@ export const AllRequest = (props: any) => {
                                         allAdjustments.content.map((item: any, index: any) => {
                                             return (
                                                 <tr>
-                                                    {
-                                                        data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-                                                            <>
-                                                                <td id={"allrequest_name_suddata_" + item.id}> {item.lastName}, {item.firstName} </td>
-                                                            </> : null
-                                                    }
+                                                    <td id={"allrequest_name_suddata_" + item.id}> {item.lastName}, {item.firstName} </td>
                                                     <td id={"allrequest_datefrom_suddata_" + item.id}> {Utility.formatDate(item.dateFrom, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_dateto_suddata_" + item.id}> {Utility.formatDate(item.dateTo, 'MM-DD-YYYY')} </td>
                                                     <td id={"allrequest_reason_suddata_" + item.id}>{limitText(item.reason, 20)}</td>
@@ -1092,7 +960,7 @@ export const AllRequest = (props: any) => {
                 <div className="col-md-12 px-3 py-5">
                     <>
                         <div>
-                        <div className="w-100">
+                            <div className="w-100">
                                 <div className="text-[#009FB5] text-lg ">
                                     Search By:
                                 </div>
@@ -1127,34 +995,34 @@ export const AllRequest = (props: any) => {
 
                                     <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                         <label className="ml-[10px]">Date To</label>
-                                            <input
-                                                id="allrequest_dateto_input"
-                                                name="dateTo"
-                                                type="date"
-                                                autoComplete="off"
-                                                className="formControl"
-                                                maxLength={40}
-                                                value={filterData["dateTo"]}
-                                                onChange={(e) => makeFilterData(e)}
-                                                onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
-                                            />
+                                        <input
+                                            id="allrequest_dateto_input"
+                                            name="dateTo"
+                                            type="date"
+                                            autoComplete="off"
+                                            className="formControl"
+                                            maxLength={40}
+                                            value={filterData["dateTo"]}
+                                            onChange={(e) => makeFilterData(e)}
+                                            onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
+                                        />
                                     </div>
                                     <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2">
                                         <label className="ml-[10px]">Status</label>
-                                            <select
-                                                className={`form-select`}
-                                                name="status"
-                                                id="status"
-                                                value={filterData["status"]}
-                                                onChange={(e) => makeFilterData(e)}>
-                                                {statusList &&
-                                                    statusList.length &&
-                                                    statusList.map((item: any, index: string) => (
-                                                        <option key={`${index}_${item}`} value={item}>
-                                                            {Utility.capitalizeFirstLetter(item)}
-                                                        </option>
-                                                    ))}
-                                            </select>
+                                        <select
+                                            className={`form-select`}
+                                            name="status"
+                                            id="status"
+                                            value={filterData["status"]}
+                                            onChange={(e) => makeFilterData(e)}>
+                                            {statusList &&
+                                                statusList.length &&
+                                                statusList.map((item: any, index: string) => (
+                                                    <option key={`${index}_${item}`} value={item}>
+                                                        {Utility.capitalizeFirstLetter(item)}
+                                                    </option>
+                                                ))}
+                                        </select>
                                     </div>
                                 </div>
                             </div>
