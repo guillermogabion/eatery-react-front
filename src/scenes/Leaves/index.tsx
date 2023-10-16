@@ -442,60 +442,59 @@ export const Leaves = (props: any) => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire({
-        //   title: '',
-        //   allowOutsideClick: false,
-        //   didOpen: () => {
-        //     Swal.showLoading();
-        //   }
-        // });
-        getAllLeaves(0, key)
-        // RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
-        //   const { status, body = { data: {}, error: {} } }: any = res
-        //   if (status === 200 || status === 201) {
-        //     if (body.error && body.error.message) {
-        //       Swal.close()
-        //       ErrorSwal.fire({
-        //         title: 'Error!',
-        //         text: (body.error && body.error.message) || "",
-        //         didOpen: () => {
-        //           const confirmButton = Swal.getConfirmButton();
+        Swal.fire({
+          title: '',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        RequestAPI.postRequest(Api.approveLeave, "", { "id": id }, {}, async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res
+          if (status === 200 || status === 201) {
+            if (body.error && body.error.message) {
+              Swal.close()
+              ErrorSwal.fire({
+                title: 'Error!',
+                text: (body.error && body.error.message) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
 
-        //           if (confirmButton)
-        //             confirmButton.id = "login_errorconfirm2_alertbtn"
-        //         },
-        //         icon: 'error',
-        //       })
-        //     } else {
-        //       Swal.close()
-        //       ErrorSwal.fire({
-        //         title: 'Success!',
-        //         text: (body.data) || "",
-        //         didOpen: () => {
-        //           const confirmButton = Swal.getConfirmButton();
+                  if (confirmButton)
+                    confirmButton.id = "login_errorconfirm2_alertbtn"
+                },
+                icon: 'error',
+              })
+            } else {
+              Swal.close()
+              ErrorSwal.fire({
+                title: 'Success!',
+                text: (body.data) || "",
+                didOpen: () => {
+                  const confirmButton = Swal.getConfirmButton();
 
-        //           if (confirmButton)
-        //             confirmButton.id = "login_successconfirm_alertbtn"
-        //         },
-        //         icon: 'success',
-        //       })
-        //       getAllLeaves(0, key)
-        //     }
-        //   } else {
-        //     Swal.close()
-        //     ErrorSwal.fire({
-        //       title: 'Error!',
-        //       text: "Something Error.",
-        //       didOpen: () => {
-        //         const confirmButton = Swal.getConfirmButton();
+                  if (confirmButton)
+                    confirmButton.id = "login_successconfirm_alertbtn"
+                },
+                icon: 'success',
+              })
+              getAllLeaves(0, key)
+            }
+          } else {
+            Swal.close()
+            ErrorSwal.fire({
+              title: 'Error!',
+              text: "Something Error.",
+              didOpen: () => {
+                const confirmButton = Swal.getConfirmButton();
 
-        //         if (confirmButton)
-        //           confirmButton.id = "login_errorconfirm3_alertbtn"
-        //       },
-        //       icon: 'error',
-        //     })
-        //   }
-        // })
+                if (confirmButton)
+                  confirmButton.id = "login_errorconfirm3_alertbtn"
+              },
+              icon: 'error',
+            })
+          }
+        })
       }
     })
   }
@@ -903,7 +902,7 @@ export const Leaves = (props: any) => {
             <div className="row d-flex pb-1">
               {
                 data.profile.role == 'EXECUTIVE' ?
-                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2" style={{marginR}}>
+                  <div className="col-xs-12 col-sm-12 col-md-3 col-lg-2" style={{paddingRight: '0'}}>
                     <label>Employee</label>
                     <EmployeeDropdown
                       id="leaves_employee_leavecreditsdropdown"
@@ -943,7 +942,7 @@ export const Leaves = (props: any) => {
                   onKeyDown={(evt) => !/^[a-zA-Z 0-9-_]+$/gi.test(evt.key) && evt.preventDefault()}
                 />
               </div>
-              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-2 mt-4" : "col-xs-12 col-sm-12 col-md-4 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '8px' }}>
+              <div className={data.profile.role === 'EXECUTIVE' ? "col-xs-12 col-sm-12 col-md-3 col-lg-1 mt-4" : "col-xs-12 col-sm-12 col-md-4 col-lg-1 mt-4"} style={{ margin: '0', paddingLeft: '8px' }}>
                 <Button
                   id="leaves_search_leavecreditsbtn"
                   style={{ width: '100%'}}
@@ -1065,37 +1064,154 @@ export const Leaves = (props: any) => {
                 type: Yup.string().required("Status is required !"),
               })
             }
+            // onSubmit={(values, actions) => {
+
+            //   const dateFromChecker = new Date(values.dateFrom);
+            //   const currentDateChecker = new Date();
+            //   const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+            //   const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
+            //   const breakdownLength = leaveBreakdown.length;
+            //   console.log("breakdownLength:", breakdownLength);
+
+            //   if (breakdownLength >= 8 && values.type === 1) {
+            //     ErrorSwal.fire({
+            //       title: 'Error!',
+            //       text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${breakdownLength} days`,
+            //       didOpen: () => {
+            //         const confirmButton = Swal.getConfirmButton();
+            //         if (confirmButton)
+            //           confirmButton.id = "login_errorconfirm13_alertbtn";
+            //       },
+            //       icon: 'error',
+            //     });
+            //   } else if (timeDifferenceInDays >= 7 && values.type === 1) {
+            //     ErrorSwal.fire({
+            //       title: 'Error!',
+            //       text: "Selected 'Date From' must be within 7 working days from the date of selection.",
+            //       didOpen: () => {
+            //         const confirmButton = Swal.getConfirmButton();
+            //         if (confirmButton)
+            //           confirmButton.id = "login_errorconfirm14_alertbtn";
+            //       },
+            //       icon: 'error',
+            //     });
+            //   } else {
+            //     const loadingSwal = Swal.fire({
+            //       title: '',
+            //       allowOutsideClick: false,
+            //       didOpen: () => {
+            //         Swal.showLoading();
+            //       },
+            //     });
+            //     const formData = new FormData();
+            //     formData.append('dateFrom', values.dateFrom);
+            //     formData.append('dateTo', values.dateTo);
+            //     formData.append('type', values.type);
+            //     formData.append('status', values.status);
+            //     formData.append('reason', values.reason);
+
+            //     leaveBreakdown.forEach((item: any, index: any) => {
+            //       formData.append(`breakdown[${index}].date`, item.date);
+            //       formData.append(`breakdown[${index}].credit`, item.credit);
+            //       formData.append(`breakdown[${index}].dayType`, item.dayType);
+            //     })
+
+            //     if (values.file) {
+            //       formData.append("file", values.file);
+            //     }
+
+            //     return http
+            //       .post(`${Api.requestLeaveCreate}`, formData, {
+            //         headers: {
+            //           "Content-Type": "multipart/form-data",
+            //           Authorization: `Bearer ${Utility.getUserToken() || ""}`,
+            //           credentials: true,
+            //         },
+            //       })
+            //       .then((response) => {
+            //         if (response.data.error) {
+            //           ErrorSwal.fire({
+            //             title: 'Success!',
+            //             text: response.data.error.message || "",
+            //             didOpen: () => {
+            //               const confirmButton = Swal.getConfirmButton();
+            //               if (confirmButton)
+            //                 confirmButton.id = "leave_errorconfirm4_alertbtn";
+            //             },
+            //             icon: 'error',
+            //           });
+            //           return
+
+            //         } else {
+            //           Swal.fire({
+            //             title: 'Success!',
+            //             text: response.data.data || "",
+            //             didOpen: () => {
+            //               const confirmButton = Swal.getConfirmButton();
+            //               if (confirmButton)
+            //                 confirmButton.id = "leave_successconfirm4_alertbtn";
+            //             },
+            //             icon: 'success',
+            //           });
+            //           setLeaveId(null);
+            //           setModalShow(false)
+            //         }
+
+            //         return response;
+            //       })
+            //       .catch((error) => {
+            //         console.error("Error:", error);
+            //         ErrorSwal.fire({
+            //           title: 'Error!',
+            //           text: error.data.data || "",
+            //           didOpen: () => {
+            //             const confirmButton = Swal.getConfirmButton();
+            //             if (confirmButton)
+            //               confirmButton.id = "login_errorconfirm8_alertbtn";
+            //           },
+            //           icon: 'error',
+            //         });
+            //       });
+            //   };
+
+            // }}
+
             onSubmit={(values, actions) => {
 
               const dateFromChecker = new Date(values.dateFrom);
               const currentDateChecker = new Date();
-              const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
-              const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
-              const breakdownLength = leaveBreakdown.length;
-              console.log("breakdownLength:", breakdownLength);
 
-              if (breakdownLength >= 8 && values.type === 1) {
+              const timeDifferenceInMilliseconds = dateFromChecker.getTime() - currentDateChecker.getTime();
+              // const timeDifferenceInDays = timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+              const timeDifferenceInDays = calculateWorkingDays(currentDateChecker, dateFromChecker);
+
+
+              const valuesObj: any = { ...values }
+              valuesObj.breakdown = leaveBreakdown
+              if (valuesObj.breakdown.length >= 8 && values.type === 1) {
                 ErrorSwal.fire({
                   title: 'Error!',
-                  text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${breakdownLength} days`,
+                  text: `Leave type SICK LEAVE must not exceed 7 working days. The user requested a total of ${valuesObj.breakdown.length} days`,
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
+
                     if (confirmButton)
-                      confirmButton.id = "login_errorconfirm13_alertbtn";
+                      confirmButton.id = "login_errorconfirm13_alertbtn"
                   },
                   icon: 'error',
-                });
+                })
               } else if (timeDifferenceInDays >= 7 && values.type === 1) {
                 ErrorSwal.fire({
                   title: 'Error!',
                   text: "Selected 'Date From' must be within 7 working days from the date of selection.",
                   didOpen: () => {
                     const confirmButton = Swal.getConfirmButton();
+
                     if (confirmButton)
-                      confirmButton.id = "login_errorconfirm14_alertbtn";
+                      confirmButton.id = "login_errorconfirm14_alertbtn"
                   },
                   icon: 'error',
-                });
+                })
               } else {
                 const loadingSwal = Swal.fire({
                   title: '',
@@ -1104,83 +1220,116 @@ export const Leaves = (props: any) => {
                     Swal.showLoading();
                   },
                 });
-                const formData = new FormData();
-                formData.append('dateFrom', values.dateFrom);
-                formData.append('dateTo', values.dateTo);
-                formData.append('type', values.type);
-                formData.append('status', values.status);
-                formData.append('reason', values.reason);
 
-                leaveBreakdown.forEach((item: any, index: any) => {
-                  formData.append(`breakdown[${index}].date`, item.date);
-                  formData.append(`breakdown[${index}].credit`, item.credit);
-                  formData.append(`breakdown[${index}].dayType`, item.dayType);
-                })
+                if (leaveId) {
+                  delete valuesObj.userId;
 
-                if (values.file) {
-                  formData.append("file", values.file);
-                }
+                  RequestAPI.putRequest(Api.requestLeaveUpdate, "", valuesObj, {}, async (res: any) => {
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire({
+                          title: 'Error!',
+                          text: (body.error.message) || "",
+                          didOpen: () => {
+                            const confirmButton = Swal.getConfirmButton();
 
-                return http
-                  .post(`${Api.requestLeaveCreate}`, formData, {
-                    headers: {
-                      "Content-Type": "multipart/form-data",
-                      Authorization: `Bearer ${Utility.getUserToken() || ""}`,
-                      credentials: true,
-                    },
-                  })
-                  .then((response) => {
-                    if (response.data.error) {
+                            if (confirmButton)
+                              confirmButton.id = "login_errorconfirm8_alertbtn"
+                          },
+                          icon: 'error',
+                        })
+                      } else {
+                        ErrorSwal.fire({
+                          title: 'Success!',
+                          text: (body.data) || "",
+                          didOpen: () => {
+                            const confirmButton = Swal.getConfirmButton();
+
+                            if (confirmButton)
+                              confirmButton.id = "login_successconfirm4_alertbtn"
+                          },
+                          icon: 'success',
+                        })
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
+                    } else {
                       ErrorSwal.fire({
-                        title: 'Success!',
-                        text: response.data.error.message || "",
+                        title: 'Error!',
+                        text: (body.error && body.error.message) || "",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
+
                           if (confirmButton)
-                            confirmButton.id = "leave_errorconfirm4_alertbtn";
+                            confirmButton.id = "login_errorconfirm9_alertbtn"
                         },
                         icon: 'error',
-                      });
-                      return
+                      })
+                    }
+                  });
+                } else {
+                  RequestAPI.postRequest(Api.requestLeaveCreate, "", valuesObj, {}, async (res: any) => {
+                    Swal.close();
+                    const { status, body = { data: {}, error: {} } }: any = res;
+                    if (status === 200 || status === 201) {
+                      if (body.error && body.error.message) {
+                        ErrorSwal.fire({
+                          title: 'Error!',
+                          text: (body.error.message) || "",
+                          didOpen: () => {
+                            const confirmButton = Swal.getConfirmButton();
 
+                            if (confirmButton)
+                              confirmButton.id = "login_errorconfirm10_alertbtn"
+                          },
+                          icon: 'error',
+                        })
+                      } else {
+                        ErrorSwal.fire({
+                          title: 'Success!',
+                          text: (body.data) || "",
+                          didOpen: () => {
+                            const confirmButton = Swal.getConfirmButton();
+
+                            if (confirmButton)
+                              confirmButton.id = "login_successconfirm5_alertbtn"
+                          },
+                          icon: 'success',
+                        })
+                        setLeaveBreakdown([]);
+                        getAllLeaves(0, key);
+                        setModalShow(false);
+                        formRef.current?.resetForm();
+                      }
                     } else {
-                      Swal.fire({
-                        title: 'Success!',
-                        text: response.data.data || "",
+                      ErrorSwal.fire({
+                        title: 'Error!',
+                        text: "Something Error.",
                         didOpen: () => {
                           const confirmButton = Swal.getConfirmButton();
+
                           if (confirmButton)
-                            confirmButton.id = "leave_successconfirm4_alertbtn";
+                            confirmButton.id = "login_errorconfirm11_alertbtn"
                         },
-                        icon: 'success',
-                      });
-                      setLeaveId(null);
-                      setModalShow(false)
+                        icon: 'error',
+                      })
                     }
-
-                    return response;
-                  })
-                  .catch((error) => {
-                    console.error("Error:", error);
-                    ErrorSwal.fire({
-                      title: 'Error!',
-                      text: error.data.data || "",
-                      didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-                        if (confirmButton)
-                          confirmButton.id = "login_errorconfirm8_alertbtn";
-                      },
-                      icon: 'error',
-                    });
                   });
-              };
+                }
+              }
 
-            }}>
+
+            }}
+
+            >
             {({ values, setFieldValue, handleSubmit, errors, touched }) => {
               return (
                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                   <div className="row px-2">
-                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3 " >
+                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-3 " >
                       <label>Leave Type</label>
                       <select
                         className="form-select"
@@ -1204,14 +1353,14 @@ export const Leaves = (props: any) => {
                         <p id="leaves_errortype_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.type}</p>
                       )}
                     </div>
-                    <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 pt-4 mb-2">
+                    {/* <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 pt-4 mb-2">
                       <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" style={{ width: '100%' }} className="file-input-style" onChange={(e) => {
                         // Set the 'file' property in form values to the selected file
                         setFieldValue("file", e.currentTarget.files[0]);
                       }} />
                       <small className="text-muted" style={{ lineHeight: "0" }}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
-                    </div>
-                    <div className="form-group col-md-6 mb-3" >
+                    </div> */}
+                    <div className="form-group col-md-4 mb-3" >
                       <label>Date From </label>
                       <input type="date"
                         name="dateFrom"
@@ -1229,7 +1378,7 @@ export const Leaves = (props: any) => {
                         <p id="leaves_errordatefrom_leavecreditsp" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                       )}
                     </div>
-                    <div className="form-group col-md-6 mb-3" >
+                    <div className="form-group col-md-4 mb-3" >
                       <label>Date To</label>
                       <input type="date"
                         name="dateTo"
