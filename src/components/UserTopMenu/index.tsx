@@ -114,7 +114,8 @@ const UserTopMenu = (props: any, ) => {
             data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
             <>
               <div className="flex menu-dropdown">
-                <img src={bell} alt="" width={50} className="pr-3" onClick={() => setShowModal(true)} />
+              
+                <img src={bell} alt="" width={50} className="pr-3"  /> {/* onClick={() => setShowModal(true)} */}
               </div>
             </> : null
           }
