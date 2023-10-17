@@ -321,7 +321,6 @@ const sss = (props: any) => {
             <div className="d-flex justify-content-start mt-3 pb-4" >
                 <div>
                     <Button
-                        // id="payrollsettingsss_downloadtemplate_btn"
                         className="mx-2"
                         onClick={() => {setSssModalShow(true)}}>View Table</Button>
                 </div>
@@ -329,15 +328,21 @@ const sss = (props: any) => {
                     <Button
                         id="payrollsettingsss_downloadtemplate_btn"
                         className="mx-2"
-                        onClick={downloadTemplate}>Download Template</Button>
+                        onClick={downloadTemplate}
+                    >
+                        Download Template
+                    </Button>
                 </div>
                 <div>
                     <Button
-                        id="payrollsettingsss_uploadtable_btn"
-                        className="mx-2"
-                        onClick={() => {
-                            setModalUploadShow(true)
-                          }}>Upload Table</Button>
+                    id="payrollsettingsss_uploadtable_btn"
+                    className="mx-2"
+                    onClick={() => {
+                        setModalUploadShow(true)
+                    }}
+                    >
+                        Upload Table
+                    </Button>
                 </div>
             </div>
             <Modal

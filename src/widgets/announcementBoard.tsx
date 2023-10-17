@@ -11,7 +11,6 @@ import http from "../helpers/axios"
 
 const AllAnnouncement = () => {
     const [ allAnnouncement , setAllAnnouncement] = useState<any>([])
-
     useEffect (() => {
         RequestAPI.getRequest(
             `${Api.getAllAnnouncements}`,
@@ -31,7 +30,6 @@ const AllAnnouncement = () => {
 
     return (
         <div style={{height: '52vh'}}>
-            
             { allAnnouncement && allAnnouncement.length > 0 ? (
                 allAnnouncement.map((item, index) => (
                     <div key={index}>
@@ -40,10 +38,8 @@ const AllAnnouncement = () => {
                 ))
 
             ): <p style={{ margin: 'auto', textAlign: 'center' }}>No Announcement Yet</p> }
-        
         </div>
     )
-
 }
 const Events = () => {
     const [ events , setEvents] = useState<any>([])
@@ -82,7 +78,6 @@ const Events = () => {
 }
 const IT = () => {
     const [ IT , setIT] = useState<any>([])
-
     useEffect (() => {
         RequestAPI.getRequest(
             `${Api.getIT}`,
@@ -112,7 +107,6 @@ const IT = () => {
             ): <p style={{ margin: 'auto', textAlign: 'center' }}>No posted Announcement about IT Security Yet</p> }
         </div>
     )
-
 }
 const Policy = () => {
     const [ policy , setPolicy] = useState<any>([])
@@ -146,10 +140,7 @@ const Policy = () => {
             ): <p style={{ margin: 'auto', textAlign: 'center' }}>No posted Announcement about Policy Updates Yet</p> }
         </div>
     )
-
 }
-
-
 
 const AnnouncementBoard = () => {
   const { data } = useSelector((state: any) => state.rootReducer.userData)
@@ -221,7 +212,6 @@ const AnnouncementBoard = () => {
         for (const pair of formData.entries()) {
             console.log(`FormData Entry: ${pair[0]}, ${pair[1]}`);
           }
-
           return http.post(`${Api.createAnnouncement}`, formData, {
             headers: {
                 "Content-Type" : "multipart/form-data",
@@ -229,17 +219,12 @@ const AnnouncementBoard = () => {
                 credentials: true,
             }
           }).then((response) => {
-            // Log the response data to the console
             console.log("Response Data:", response.data);
-      
-            // You can return the response if needed
             return response;
           })
           .catch((error) => {
-            // Handle any errors here
             console.error("Error:", error);
           });
-
     }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -248,7 +233,7 @@ const AnnouncementBoard = () => {
         if (file) {
           setSelectedFile(file);
         }
-      };
+    };
 
 
 
@@ -284,9 +269,9 @@ const AnnouncementBoard = () => {
                                 id="announcementboards_btn_createannouncement"
                                 style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 onClick={() => setModalShow(true)}
-                                >
-                                    Create Announcement
-                                </Button>
+                            >
+                                Create Announcement
+                            </Button>
                         </div>
                     </> : null
                 }
@@ -321,7 +306,6 @@ const AnnouncementBoard = () => {
                             return (
                                 <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
                                     <div className="row w-100 px-5">
-                                        
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 my-2">
                                             <label>Types</label>
                                             <select 
@@ -342,9 +326,6 @@ const AnnouncementBoard = () => {
                                                         <option key={index} value={item}> {Utility.removeUnderscore(item)}</option>
                                                     ))
                                                 )}
-                                                {/* { dropdown.map((item, index) => (
-                                                    <option key={index} value={item}>{item.types}</option>
-                                                ))} */}
                                             </select>
                                         </div>
                                         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 my-2">
@@ -441,7 +422,6 @@ const AnnouncementBoard = () => {
                                                 style={{ width: '100%' }}
                                             />
                                         </div>
-
                                     </div>
                                     <div className="d-flex justify-content-end">
                                     <button
@@ -458,9 +438,7 @@ const AnnouncementBoard = () => {
                     </Formik>
                 </Modal.Body>
             </Modal>
-
         </div>
-       
     )
 }
 

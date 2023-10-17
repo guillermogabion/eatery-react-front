@@ -40,21 +40,20 @@ const tax = (props: any) => {
     
     const getMonthlyTaxInfo = () => {
         RequestAPI.getRequest(
-          `${Api.getMonthTax}`,
-          "",
-          {},
-          {},
-          async (res: any) => {
-            const { status, body = { data: {}, error: {} } }: any = res
-            if (status === 200 && body && body.data) {
-            if (body.data) {
+            `${Api.getMonthTax}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                if (body.data) {
+                    setTaxMonth(body.data)
+                }
+                } else {
 
-                setTaxMonth(body.data)
+                }
             }
-            } else {
-
-            }
-        }
         );
       };
     const getYearlyTaxInfo = () => {
@@ -67,7 +66,6 @@ const tax = (props: any) => {
             const { status, body = { data: {}, error: {} } }: any = res
             if (status === 200 && body && body.data) {
             if (body.data) {
-
                 setTaxYear(body.data)
             }
             } else {
@@ -76,44 +74,36 @@ const tax = (props: any) => {
         }
         );
       };
-    
-    
-      
-      
-
-     useEffect(() => {
-        getMonthlyTaxInfo()
-        getYearlyTaxInfo()
-     }, [])
-       
-    
-    
+    useEffect(() => {
+    getMonthlyTaxInfo()
+    getYearlyTaxInfo()
+    }, [])
     const downloadMonthlyTemplate = () => {
         RequestAPI.getFileAsync(
-          `${Api.downloadTaxMonthly}`,
-          "",
-          "TaxMonthlyTemplate.xlsx",
-          async (res: any) => {
+            `${Api.downloadTaxMonthly}`,
+            "",
+            "TaxMonthlyTemplate.xlsx",
+            async (res: any) => {
             if (res) {
             }
-          }
+            }
         )
-      };
+    };
     const downloadYearlyTemplate = () => {
         RequestAPI.getFileAsync(
-          `${Api.downloadTaxYearly}`,
-          "",
-          "TaxAnnualTemplate.xlsx",
-          async (res: any) => {
+            `${Api.downloadTaxYearly}`,
+            "",
+            "TaxAnnualTemplate.xlsx",
+            async (res: any) => {
             if (res) {
             }
-          }
+            }
         )
-      };
-      const handleCloseModal = () => {
+    };
+    const handleCloseModal = () => {
         setModalMonthlyUploadShow(false);
         setModalYearlyUploadShow(false);
-      };
+    };
     return (
         <div>
             <div className="hide-x">
@@ -142,13 +132,13 @@ const tax = (props: any) => {
                                         <thead>
                                             <tr className="tax-sticky-header">
                                                 {
-                                                    tableAnnualHeaders &&
-                                                    tableAnnualHeaders.length &&
-                                                    tableAnnualHeaders.map((item: any, index: any) => {
-                                                        return (
-                                                            <th style={{ width: '20px' }}>{item}</th>
-                                                        )
-                                                    })
+                                                tableAnnualHeaders &&
+                                                tableAnnualHeaders.length &&
+                                                tableAnnualHeaders.map((item: any, index: any) => {
+                                                    return (
+                                                        <th style={{ width: '20px' }}>{item}</th>
+                                                    )
+                                                })
                                                 }
                                             </tr>
                                         </thead>
@@ -195,44 +185,42 @@ const tax = (props: any) => {
                             <div className="w-100 pb-2">
                                 <div className="tax-table-container">
                                     <Table responsive>
-                                            <thead>
-                                                <tr className="tax-sticky-header">
-                                                    {
-                                                        tableMonthlyHeaders &&
-                                                        tableMonthlyHeaders.length &&
-                                                        tableMonthlyHeaders.map((item: any, index: any) => {
-                                                            return (
-                                                                <th style={{ width: '20px' }}>{item}</th>
-                                                                )
-                                                                
-                                                        })
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody >
+                                        <thead>
+                                            <tr className="tax-sticky-header">
                                                 {
-                                                    taxMonth &&
-                                                    taxMonth.length > 0 &&
-                                                    taxMonth.map((item: any, index: any) => {
-                                                        return (
-                                                            <tr>
-                                                    <td id="payrollsettingstax_basicrangelower_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
-                                                    <td id="payrollsettingstax_basicrangeupper_data"> {Utility.formatToCurrency(item.basicRangeUpper)}</td>
-                                                    <td id="payrollsettingstax_fixedtax_data"> { item.fixedTax }</td>
-                                                    <td id="payrollsettingstax_prescribedwitholdingtax_data"> {Utility.formatToCurrency(item.prescribedWitholdingTax)}</td>    
-                                                    <td id="payrollsettingstax_nontaxablecompensation_data"> {Utility.formatToCurrency(item.nonTaxableCompensation)}</td>    
-                                                    </tr>
-                                                    )
+                                                tableMonthlyHeaders &&
+                                                tableMonthlyHeaders.length &&
+                                                tableMonthlyHeaders.map((item: any, index: any) => {
+                                                    return (
+                                                        <th style={{ width: '20px' }}>{item}</th>
+                                                        )
+                                                        
                                                 })
-                                            }
-                                            </tbody>
-                                        
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {
+                                            taxMonth &&
+                                            taxMonth.length > 0 &&
+                                            taxMonth.map((item: any, index: any) => {
+                                                return (
+                                                    <tr>
+                                            <td id="payrollsettingstax_basicrangelower_data">{Utility.formatToCurrency(item.basicLowerRange)}</td>
+                                            <td id="payrollsettingstax_basicrangeupper_data"> {Utility.formatToCurrency(item.basicRangeUpper)}</td>
+                                            <td id="payrollsettingstax_fixedtax_data"> { item.fixedTax }</td>
+                                            <td id="payrollsettingstax_prescribedwitholdingtax_data"> {Utility.formatToCurrency(item.prescribedWitholdingTax)}</td>    
+                                            <td id="payrollsettingstax_nontaxablecompensation_data"> {Utility.formatToCurrency(item.nonTaxableCompensation)}</td>    
+                                            </tr>
+                                            )
+                                            })
+                                        }
+                                        </tbody>
                                     </Table>
                                 </div>
                             </div>                  
                         </Modal.Body>
                     </Modal>
-                    
                 </div>
                 <div className="d-flex flex-wrap justify-content-start mt-3 pb-4" >
                     <div>
@@ -240,7 +228,9 @@ const tax = (props: any) => {
                             id="payrollsettingstax_downloadtemplatemonthly_btn"
                             className="mx-2 my-1"
                             onClick={() => {setTaxAnnualModalShow(true)}}
-                            >View Annual</Button>
+                        >
+                            View Annual
+                        </Button>
                     </div>
                     <div>
                         <Button
@@ -293,17 +283,15 @@ const tax = (props: any) => {
                 dialogClassName="modal-90w"
             >
                 <Modal.Header closeButton>
-                <Modal.Title>
-                    Upload Excel File (Monthly Tax)
-                </Modal.Title>
+                    <Modal.Title>
+                        Upload Excel File (Monthly Tax)
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="d-flex align-items-center justify-content-center">
-                <div>
-                    <FileUploadMonthly onCloseModal={handleCloseModal} />
-                </div>
-
+                    <div>
+                        <FileUploadMonthly onCloseModal={handleCloseModal} />
+                    </div>
                 </Modal.Body>
-
             </Modal>
             <Modal
                 show={modalYearlyUploadShow}
@@ -316,15 +304,14 @@ const tax = (props: any) => {
                 dialogClassName="modal-90w"
             >
                 <Modal.Header closeButton>
-                <Modal.Title>
-                    Upload Excel File (Annual Tax)
-                </Modal.Title>
+                    <Modal.Title>
+                        Upload Excel File (Annual Tax)
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="d-flex align-items-center justify-content-center">
-                <div>
-                    <FileUploadYearly onCloseModal={handleCloseModal} />
-                </div>
-
+                    <div>
+                        <FileUploadYearly onCloseModal={handleCloseModal} />
+                    </div>
                 </Modal.Body>
 
             </Modal>

@@ -121,9 +121,6 @@ const EmployeeStatus = () => {
                             style={{
                                 whiteSpace: 'nowrap',
                                 overflow: 'hidden',
-                                // borderRadius: `${
-                                //   index === 0 ? '8px 0 0 8px' : index === squadStatusCounts.length - 1 ? '8px 8px 0 0' : '0'
-                                // }`,
                               }}
                             >
                             {squad.includes('Squad') ? (
@@ -455,9 +452,7 @@ const Gender = () => {
                             style={{
                                 whiteSpace: 'nowrap',
                                 overflow: 'hidden',
-                                // borderRadius: `${
-                                //   index === 0 ? '8px 0 0 8px' : index === squadStatusCounts.length - 1 ? '8px 8px 0 0' : '0'
-                                // }`,
+                            
                               }}
                             >
                             {squad.includes('Squad') ? (
@@ -477,7 +472,6 @@ const Gender = () => {
                                     backgroundColor: nonSquadColor,
                                     width: `${totalNonSquadCountFemale * 15}px`,
                                     height: '20px',
-                                    // borderRadius: '0 8px 8px 0',
 
                                     }}
                                 />

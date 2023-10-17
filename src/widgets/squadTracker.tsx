@@ -1,30 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { RequestAPI, Api } from "../api";
-import { Utility } from "../utils"
-import { async } from "validate.js";
-import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux"
 import { Tabs, Tab, Table, Button } from "react-bootstrap"
-import { tr } from "date-fns/locale";
 import user from "../assets/images/dist/User1.png"
-import { Search} from "../assets/images";
 import icon_search_white from "../assets/images/icon_search_white.png"
 import EmployeeDropdown from "../components/EmployeeDropdown";
 import moment from "moment"
-
-
-
-
 
 const SquadTracker = () => {
     const userData = useSelector((state: any) => state.rootReducer.userData)
     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
 
 
-
-    useEffect(() => {
-       
-    }, [])
+   
    
     return (
         <div className="time-card-width">
@@ -32,9 +20,6 @@ const SquadTracker = () => {
                     <span className="">Squad Tracker ({userData.data.profile.squad})</span>
                 </div>
             <div className="tracker-card-body">
-
-             
-                {/* <span className="profile-full-name">{userData.data.profile.firstName} {userData.data.profile.lastName} </span>     */}
                 <Tabs defaultActiveKey="tab1" id="my-tabs" style={{fontSize: '10px'}} className="custom-tab justify-content-center">
                     <Tab id="dashboardsquadtracker_tab1"  className="custom-tabs"  eventKey="tab1" title="All">
                         <All />
@@ -69,7 +54,6 @@ const All = () => {
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp[d]) {
-
                     queryString += `&${d}=${filterDataTemp[d]}`
                 } else {
                     queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -88,13 +72,9 @@ const All = () => {
                 }
             }
         )
-
     }
 
-
     useEffect (() => {
-
-      
         RequestAPI.getRequest(
             `${Api.getAllSquadMember}`,
             "",
@@ -107,15 +87,12 @@ const All = () => {
                 }
             }
         )
-         // all 
     }, [])
     const singleChangeOption = (option: any, name: any) => {
-
         const filterObj: any = { ...filterData }
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
-
     return (
         <div>
             <div className="row tracker-input">
@@ -185,14 +162,12 @@ const All = () => {
             </div>
         </div>
     )
-
 }
 const OnLeave = () => {
     const [ allMember , setAllMember ] = useState<any>([]);
-     const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
+    const [filterData, setFilterData] = useState<{ [key: string]: string }>({});
 
     useEffect (() => {
-         // all 
          RequestAPI.getRequest(
             `${Api.getAllSquadMember}?status=on_leave`,
             "",
@@ -207,7 +182,6 @@ const OnLeave = () => {
         )
     }, [])
     const singleChangeOption = (option: any, name: any) => {
-
         const filterObj: any = { ...filterData }
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)

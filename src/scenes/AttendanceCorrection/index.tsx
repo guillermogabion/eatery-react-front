@@ -39,17 +39,6 @@ export const AttendanceCorrection = (props: any) => {
   const [hasError, setHasError] = useState<any>(false);
   const formRef: any = useRef()
 
-  // const handleAddField = () => {
-  //   setCoaBreakdown([
-  //     ...coaBreakdown,
-  //     {
-  //       date: "",
-  //       time: "",
-  //       coaBdType: "",
-  //     },
-  //   ]);
-  // };
-
   const handleAddField = () => {
     if (coaBreakdownCount < 2) {
       setCoaBreakdown([...coaBreakdown, { shiftDate: "", date: "", coaBdType: "", time: "" }]);
@@ -114,7 +103,6 @@ export const AttendanceCorrection = (props: any) => {
     if (filterDataTemp) {
       Object.keys(filterDataTemp).forEach((d: any) => {
         if (filterDataTemp[d]) {
-
           queryString += `&${d}=${filterDataTemp[d]}`
         } else {
           queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -222,9 +210,8 @@ export const AttendanceCorrection = (props: any) => {
                 text: (body.error && body.error.message) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-
                   if (confirmButton)
-                    confirmButton.id = "attendancecorrection_errorconfirm_alertbtn"
+                  confirmButton.id = "attendancecorrection_errorconfirm_alertbtn"
                 },
                 icon: 'error',
               })
@@ -235,9 +222,8 @@ export const AttendanceCorrection = (props: any) => {
                 text: (body.data) || "",
                 didOpen: () => {
                   const confirmButton = Swal.getConfirmButton();
-
                   if (confirmButton)
-                    confirmButton.id = "attendancecorrection_successconfirm_alertbtn"
+                  confirmButton.id = "attendancecorrection_successconfirm_alertbtn"
                 },
                 icon: 'success',
               })
@@ -252,7 +238,7 @@ export const AttendanceCorrection = (props: any) => {
                 const confirmButton = Swal.getConfirmButton();
 
                 if (confirmButton)
-                  confirmButton.id = "attendancecorrection_errorconfirm2_alertbtn"
+                confirmButton.id = "attendancecorrection_errorconfirm2_alertbtn"
               },
               icon: 'error',
             })

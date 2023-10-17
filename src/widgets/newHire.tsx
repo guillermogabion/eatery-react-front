@@ -86,36 +86,33 @@ const NewHire = () => {
         { newHire &&
             newHire.length == 0 ?
             <div className="w-100 text-center pt-10">
-            <label htmlFor="">No Records Found</label>
+              <label htmlFor="">No Records Found</label>
             </div>
             :
             null
           }
         <div className="col-12" style={{height: '100%'}}>
-            <Table responsive >
-                <div style={{ minHeight: '350px', maxHeight: '350px', overflowY: 'auto', paddingTop: '40px', marginLeft: '20px' }}>
-                <tbody>
-                    {newHire.length > 0 &&
-                    newHire.map((item: any, index: any) => {
-                        return (
-                            <tr key={item.id}>
-                                <td id={"newhire_name_td_" + item.name} className="text-primary font-bold d-flex custom-td-width custom-td-width-mobile" style={{width: '300px'}}>
-                                  <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
-                                  <span style={{ marginTop: '22px' }}>{item.name}</span>
-                                  </td>
-                                <td id={"newhire_button_td_" + item.id} >
-                                  <img src={evaluate} alt="" />
-                                </td>
-                            </tr>
-                        )
-                    })}
-                    
-                </tbody>
-                </div>
-            </Table>
-           
-          </div>
-        
+          <Table responsive >
+            <div style={{ minHeight: '350px', maxHeight: '350px', overflowY: 'auto', paddingTop: '40px', marginLeft: '20px' }}>
+              <tbody>
+                {newHire.length > 0 &&
+                newHire.map((item: any, index: any) => {
+                    return (
+                      <tr key={item.id}>
+                        <td id={"newhire_name_td_" + item.name} className="text-primary font-bold d-flex custom-td-width custom-td-width-mobile" style={{width: '300px'}}>
+                          <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
+                          <span style={{ marginTop: '22px' }}>{item.name}</span>
+                          </td>
+                        <td id={"newhire_button_td_" + item.id} >
+                          <img src={evaluate} alt="" />
+                        </td>
+                      </tr>
+                    )
+                })}
+              </tbody>
+            </div>
+          </Table>
+        </div>
       </div>
     </div>
   );

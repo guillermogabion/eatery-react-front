@@ -16,7 +16,6 @@ import { tr } from "date-fns/locale";
 
 const ErrorSwal = withReactContent(Swal);
 const Shortcut = () => {
-
     const [ modalShow, setModalShow] = useState(false)
     const [ shortcut, setShortcut] = useState<any>([]) 
     const [ menu, setMenu] = useState<any>([]) 
@@ -29,22 +28,17 @@ const Shortcut = () => {
     const [submenuItemInputValue, setSubmenuItemInputValue] = useState("");
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [initialSubmenuItemInputValue, setInitialSubmenuItemInputValue] = useState("");
-    
 
     const formRef = useRef();
-
-
     const [initialValues, setInitialValues] = useState<any>({
         "name" : "",
         "endpoint" : ""
     })
 
     const AddShortcut = (name : any, endpoint: any, parent: any) => {
-
         console.log(name)
         console.log(endpoint)
         console.log(parent)
-
         RequestAPI.postRequest(
             Api.addShortcut,
             "",
@@ -60,56 +54,8 @@ const Shortcut = () => {
                 }
             }
         )
-        // const loading = Swal.fire({
-        //     title: '',
-        //     allowOutsideClick: false,
-        //     didOpen: () => {
-        //         Swal.showLoading();
-        //     }
-        // })
-
-        // const valuesObj : any = { ...values }
-        
-        // RequestAPI.postRequest(Api.addShortcut, "", valuesObj, {},
-        //     async (res) => {
-        //         const { status, body = {data : {}, error: {}}} = res;
-        //         if (status === 200 || status == 201) {
-        //             if (body.error && body.error.message) {
-        //               ErrorSwal.fire({
-        //                 title: 'Error!',
-        //                 text: (body.error && body.error.message) || "",
-        //                 didOpen: () => {
-        //                   const confirmButton = Swal.getConfirmButton();
-        //                   if (confirmButton)
-        //                     confirmButton.id = "dashboardshortcut_errorconfirm_alertbtn";
-        //                 },
-        //                 icon: 'error',
-        //               });
-        //             }else{
-        //                 ErrorSwal.fire({
-        //                     title: 'Create Successfully!!',
-        //                     text: (body.data) || "",
-        //                     didOpen: () => {
-        //                       const confirmButton = Swal.getConfirmButton();
-        //                       if (confirmButton)
-        //                         confirmButton.id = "dashboardshortcut_succsessconfirm_alertbtn";
-        //                     },
-        //                     icon: 'success',
-        //                   }).then((result) => {
-        //                       if (result.isConfirmed) {
-        //                       location.reload();
-        //                       }
-        //                 });
-        //             }
-                 
-        //         }
-        //     }
-        // )
-
-
         console.log('test')
     }
-
     const getShortcut = () => {
         RequestAPI.getRequest(
             `${Api.getShortcut}`,
@@ -163,17 +109,17 @@ const Shortcut = () => {
         setShowAdd(!showAdd);
         setShowShortcut(!showShortcut);
     };
-    const hasSimilarShortcut = (submenuItem) => {
+    const hasSimilarShortcut = (submenuItem : any) => {
     const trimmedSubmenuItemRoute = submenuItem.route.trim().toLowerCase();
     
-    const hasSimilar = shortcut.some((item) => {
+    const hasSimilar = shortcut.some((item : any) => {
         const trimmedShortcutEndpoint = item.endpoint.trim().toLowerCase();
         return trimmedShortcutEndpoint.includes(trimmedSubmenuItemRoute);
         });
     
         return hasSimilar;
     };
-    const handleSubmenuItemClick = (submenuItem) => {
+    const handleSubmenuItemClick = (submenuItem : any) => {
         setInitialSubmenuItemInputValue(submenuItemInputValue);
         
         if (clickedSubmenuItem === submenuItem) {
@@ -186,7 +132,7 @@ const Shortcut = () => {
     };
 
     const initialVisibilityStates = {};
-    shortcut.forEach((item) => {
+    shortcut.forEach((item : any) => {
     initialVisibilityStates[item.id] = item.isVisible;
     });
       
@@ -225,12 +171,6 @@ const Shortcut = () => {
             }
         );
     };
-    
-
-    const changeName = () => {
-
-    }
-
 
     const handleToggle = (id) => {
         console.log("Toggling visibility for item with id:", id);
@@ -239,7 +179,6 @@ const Shortcut = () => {
           [id]: !prevStates[id],
         }));
       };  
-        // Rest of your code...
     const [visibilityStates, setVisibilityStates] = useState(() => {
         return shortcut.reduce((acc, item) => {
             acc[item.id] = item.isVisible;
@@ -250,27 +189,6 @@ const Shortcut = () => {
     
     const saveSecondaryName = (endpoint: any, secondaryName: any) => {
         console.log('Attempting to save secondary name:', endpoint, secondaryName);
-      
-        // Add a delay of, for example, 1000 milliseconds (1 second)
-        // setTimeout(() => {
-        //   RequestAPI.postRequest(
-        //     Api.changeName,
-        //     "",
-        //     { endpoint: endpoint, secondaryName: secondaryName },
-        //     {},
-        //     async (res) => {
-        //       const { status, body = { data: {}, error: {} } } = res;
-        //       if (status === 200 || status === 201) {
-        //         console.log(endpoint + ' updated');
-        //         getShortcut();
-        //       } else {
-        //         console.log("Failed to update. Response:", res);
-        //       }
-        //     }
-        //   );
-      
-        //   console.log('Save attempt completed:', endpoint, secondaryName);
-        // }, 10000); // Adjust the delay time as needed (in milliseconds)
       };
 
       function limitText(text, limit) {
@@ -292,39 +210,39 @@ const Shortcut = () => {
                     <div className="">
                         <div className="shortcut-inner-body">
                             <div style={{ maxHeight: '320px', overflowY: 'auto', overflowX: 'hidden'}}>
-                            <div className="row d-flex pr-2" >
-                                {
-                                    shortcut && shortcut.length > 0 ? (
-                                        shortcut.map((item: any, index: any) => (
-                                            item.isVisible ? (
-                                                <div key={index} id={"dashboardshortcut_div_" + item.endpoint} className="col-6 pb-2">
-                                                  <Link
-                                                    className="non-transparent-border"
-                                                    to={item.endpoint}
-                                                    id={"dashboardshortcut_link_" + item.endpoint}
-                                                  >
-                                                    <span style={{ lineHeight: "0%", color: "white" }}>
-                                                      {item.name}
-                                                    </span>
-                                                  </Link>
-                                                </div>
-                                              ) : null
-                                        ))
-                                    ) : ""
-                                }
-                                <div className="col-6 ">
-                                    <p className="transparent-border"
-                                    id={"dashboardshortcut_addshortcut_btn"}
-                                    onClick={toggleDivs3}
-                                    style={{cursor:'pointer'}}
-                                    >
-                                        <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
-                                        <br />
-                                        <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
-                                    </p>
-                                </div>
+                                <div className="row d-flex pr-2" >
+                                    {
+                                        shortcut && shortcut.length > 0 ? (
+                                            shortcut.map((item: any, index: any) => (
+                                                item.isVisible ? (
+                                                    <div key={index} id={"dashboardshortcut_div_" + item.endpoint} className="col-6 pb-2">
+                                                        <Link
+                                                            className="non-transparent-border"
+                                                            to={item.endpoint}
+                                                            id={"dashboardshortcut_link_" + item.endpoint}
+                                                        >
+                                                            <span style={{ lineHeight: "0%", color: "white" }}>
+                                                            {item.name}
+                                                            </span>
+                                                        </Link>
+                                                    </div>
+                                                ) : null
+                                            ))
+                                        ) : ""
+                                    }
+                                    <div className="col-6 ">
+                                        <p className="transparent-border"
+                                        id={"dashboardshortcut_addshortcut_btn"}
+                                        onClick={toggleDivs3}
+                                        style={{cursor:'pointer'}}
+                                        >
+                                            <p style={{fontSize:"50px", fontWeight: "bold", lineHeight: "0%", color:"#189FB5"}}>+</p> 
+                                            <br />
+                                            <span style={{lineHeight: "0%", color:"#189FB5"}}>Add Shortcut</span>
+                                        </p>
+                                    </div>
 
-                            </div>
+                                </div>
                             </div>
                            
                         </div>
@@ -336,7 +254,6 @@ const Shortcut = () => {
                         <div>
                             <Table>
                                 <div style={{ height: '320px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '30px' }}>
-
                                     <thead>
                                         <tr>
                                             <th>Shortcut Name</th>
@@ -345,7 +262,6 @@ const Shortcut = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
                                         { shortcut &&
                                             shortcut.length > 0 ?
                                             shortcut.map((item: any, index: any) => {
@@ -354,13 +270,13 @@ const Shortcut = () => {
                                                         <td>{item.name}</td>
                                                         <td>
                                                             <label className="switch">
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={item.isVisible}
-                                                                onClick={() => {visibility(item.id)}}
-                                                                style={{height: '10px'}}
-                                                            />
-                                                            <span className="slider round" style={{height: '25px'}}></span>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={item.isVisible}
+                                                                    onClick={() => {visibility(item.id)}}
+                                                                    style={{height: '10px'}}
+                                                                />
+                                                                <span className="slider round" style={{height: '25px'}}></span>
                                                             </label>
                                                         </td>
                                                         <td>
@@ -377,7 +293,6 @@ const Shortcut = () => {
                                                 </div>
                                             )
                                         }
-                                          
                                     </tbody>
                                 </div>
                             </Table>
@@ -429,13 +344,10 @@ const Shortcut = () => {
                                                                         type="text"
                                                                         name="secondaryName"
                                                                         value={submenuItemInputValue}
-                                                                        // onChange={(e) => {setSubmenuItemInputValue(e.target.value)
-                                                                        //                 // saveSecondaryName(submenuItem.route, submenuItemInputValue)
-                                                                        // }}
+                                                                       
                                                                         onChange={(e) => {
                                                                             const newValue = e.target.value;
                                                                             setSubmenuItemInputValue(newValue);
-                                                                            // saveSecondaryName(submenuItem.route, newValue)
                                                                         }}
                                                                         onBlur={() => setClickedSubmenuItem(null)}
                                                                         style={{ height: '25px', fontSize: '15px', maxWidth: '200px' }}
