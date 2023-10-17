@@ -109,12 +109,13 @@ const Shortcut = () => {
         setShowAdd(!showAdd);
         setShowShortcut(!showShortcut);
     };
+    
     const hasSimilarShortcut = (submenuItem : any) => {
     const trimmedSubmenuItemRoute = submenuItem.route.trim().toLowerCase();
     
     const hasSimilar = shortcut.some((item : any) => {
         const trimmedShortcutEndpoint = item.endpoint.trim().toLowerCase();
-        return trimmedShortcutEndpoint.includes(trimmedSubmenuItemRoute);
+        return trimmedShortcutEndpoint === trimmedSubmenuItemRoute;
         });
     
         return hasSimilar;
