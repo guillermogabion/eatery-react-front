@@ -7,10 +7,8 @@ import { Utility } from "../../../utils"
 type FileUploadProps = {
   onCloseModal: () => void;
 };
-
 const FileUpload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setSelectedFile(event.target.files[0]);
@@ -19,9 +17,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onCloseModal }) => {
   const close = async () => {
     onCloseModal(); 
   }
-
   const upload = async () => {
-     
     try {
       if (selectedFile) {
         const formData = new FormData();

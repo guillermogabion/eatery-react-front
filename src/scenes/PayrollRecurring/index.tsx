@@ -124,7 +124,6 @@ export const Recurring = (props: any) => {
         if (filterDataTemp) {
             Object.keys(filterDataTemp).forEach((d: any) => {
                 if (filterDataTemp[d]) {
-
                     queryString += `&${d}=${filterDataTemp[d]}`
                 } else {
                     queryString = queryString.replace(`&${d}=${filterDataTemp[d]}`, "")
@@ -143,7 +142,6 @@ export const Recurring = (props: any) => {
                         setRecurringList(body.data)
                     }
                 } else {
-
                 }
             }
 
@@ -294,11 +292,7 @@ export const Recurring = (props: any) => {
                 }
             }
         );
-
-
-
     }
-
 
     const deleteRecurring = (id: any = 0) => {
         ErrorSwal.fire({
@@ -307,7 +301,6 @@ export const Recurring = (props: any) => {
             didOpen: () => {
                 const confirmButton = Swal.getConfirmButton();
                 const cancelButton = Swal.getCancelButton();
-
                 if (confirmButton)
                     confirmButton.id = "payrollrecurring_deleteconfirm_alertbtn"
 
@@ -564,7 +557,6 @@ export const Recurring = (props: any) => {
                                     },
                                     icon: 'error',
                                 })
-                                // handleCloseModal();
                             } else {
                                 setModalShow(false)
                                 ErrorSwal.fire({
@@ -683,42 +675,7 @@ export const Recurring = (props: any) => {
         )
     };
 
-    // test watch search - start
-
-    // const handleOnChange = (e) => {
-    //     if (e && e.target) {
-    //       // If it's called from an event (handleChange)
-    //       const { name, value } = e.target;
-    //       setFilterData((prevFilterData) => ({
-    //         ...prevFilterData,
-    //         [name]: value,
-    //       }));
-    //     }
-
-    //         getAllRecurringList(0, pageSize);
-
-    //         clearTimeout(typingTimer);
-
-    //         // Set a new timer to trigger the API call after a certain delay
-    //         const typingTimer = setTimeout(() => {
-    //           getAllRecurringList(0, pageSize); // Call the API after the delay
-    //         }, 1000);
-    //   };
-
-
-    // useEffect(() => {
-
-    //     // handleOnChange(filterData);
-
-    //     const timer = setTimeout(() => {
-    //         handleOnChange(filterData);
-    //       }, 3000);
-
-    //       return () => clearTimeout(timer);
-    // }, [filterData]);
-    // useEffect(() => {
-    //     return () => clearTimeout(typingTimer);
-    // }, []);
+    
 
     return (
         <ContainerWrapper contents={<>
@@ -752,14 +709,6 @@ export const Recurring = (props: any) => {
                                         name="adjustmentAmount"
                                         placeholder="Amount"
                                         onChange={(e) => makeFilterData(e)}
-                                    // onChange={(e) => {
-                                    //     // Call handleChange to update filterData
-                                    //     makeFilterData(e);
-                                    //     // Call handleOnChange as you've updated filterData
-                                    //     // (handleOnChange is now also triggered when Amount field changes)
-                                    //     handleOnChange();
-                                    //   }}
-                                    // onChange={handleOnChange}
                                     />
                                 </div>
                             </div>
@@ -923,13 +872,13 @@ export const Recurring = (props: any) => {
                     </Table>
                     {
                         recurringList &&
-                            recurringList.content &&
-                            recurringList.content.length == 0 ?
-                            <div className="w-100 text-center">
-                                <label htmlFor="">No Records Found</label>
-                            </div>
-                            :
-                            null
+                        recurringList.content &&
+                        recurringList.content.length == 0 ?
+                        <div className="w-100 text-center">
+                            <label htmlFor="">No Records Found</label>
+                        </div>
+                        :
+                        null
                     }
                 </div>
                 <div className="text-muted">
@@ -978,7 +927,6 @@ export const Recurring = (props: any) => {
                     <Button className="mx-2 my-1"
                         id="payrollrecurring_addrecurring_recurringlistbtn"
                         onClick={() => {
-                            // setModalUploadShow(true)
                             setModalShow(true)
                         }}
                     >Add Deduction or Loan</Button>
@@ -1209,7 +1157,6 @@ export const Recurring = (props: any) => {
                                         </div>
 
                                     ) :
-
                                         <div>
                                             {recurring.map((values: any, index: any) => {
                                                 return (
@@ -1378,20 +1325,6 @@ export const Recurring = (props: any) => {
                                             }
                                         </div>
                                     }
-
-
-                                    {/* <div className="d-flex justify-content-end px-5">
-                            {values.userId ? null:  (
-                                <button
-                                id="payrollrecurring_addfield_recurringbtn"
-                                type="button"
-                                className="btn btn btn-outline-primary me-2 mb-2 mt-2"
-                                onClick={handleAddField}
-                                >
-                                Add Field
-                                </button>
-                            ) }
-                            </div> */}
                                     <Modal.Footer>
                                         <button
                                             id="payrollrecurring_save_recurringbtn"
@@ -1400,7 +1333,6 @@ export const Recurring = (props: any) => {
                                             Save
                                         </button>
                                     </Modal.Footer>
-
                                 </Form>
                             )
                         }}

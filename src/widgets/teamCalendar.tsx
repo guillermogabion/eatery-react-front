@@ -11,17 +11,16 @@ import moment from "moment";
 import { async } from "validate.js";
 
 function CustomHeader({ date }) {
-    // Extract the month and year from the selected date
-    const month = date.toLocaleString('default', { month: 'long' });
-    const year = date.getFullYear();
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
   
-    return (
-      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <h2 style={{ marginRight: '10px' }}>{month}</h2>
-        <h2>{year}</h2>
-      </div>
-    );
-  }
+  return (
+    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+      <h2 style={{ marginRight: '10px' }}>{month}</h2>
+      <h2>{year}</h2>
+    </div>
+  );
+}
 const CalendarComponent = () => {
 
   const [date, setDate] = useState(new Date());
@@ -35,57 +34,46 @@ const CalendarComponent = () => {
   const hasHolidaysThisWeek = dataMonth.some((item) => item.holidaysList && item.holidaysList.length > 0);
   const hasBirthdaysThisWeek = dataMonth.some((item) => item.bdayList && item.bdayList.length > 0);
   const hasNewHiresThisWeek = dataMonth.some((item) => item.newHiresList && item.newHiresList.length > 0);
+  
 
 
   useEffect(() => {
-    // Set the default selected month to the current month
-    const currentMonth = new Date().getMonth() + 1; // JavaScript months are 0-based
+    const currentMonth = new Date().getMonth() + 1;
     setSelectedMonth(currentMonth);
   }, []);
 
   useEffect(() => {
-    // Update the calendar's displayed month whenever selectedMonth changes
     if (selectedMonth !== null) {
       const newDate = new Date(date);
-      newDate.setMonth(selectedMonth - 1); // JavaScript months are 0-based
-      newDate.setDate(1); // Set the day of the month to 1
+      newDate.setMonth(selectedMonth - 1); 
+      newDate.setDate(1);
       setDate(newDate);
     }
   }, [selectedMonth]);
 
+  const handleMonthSelect = (month) => {
+    setSelectedMonth(month);
+    const newDate = new Date(date);
+    newDate.setMonth(month - 1);
+    newDate.setDate(1);
+    setDate(newDate);
+  };
 
-
-    const handleMonthSelect = (month) => {
-        setSelectedMonth(month);
-        // Update the calendar's displayed month
-        const newDate = new Date(date);
-        newDate.setMonth(month - 1); // JavaScript months are 0-based
-        newDate.setDate(1); // Set the day of the month to 1
-        setDate(newDate);
-    };
-
-    const handleDateClick = (clickedDate) => {
-        setSelectedDate(clickedDate);
-
-        const dateClickedFrom = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
-        const dateClickedTo = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
-        setFromDate(dateClickedFrom);
-        setToDate(dateClickedTo);
-    
-    };
-
-
-  
+  const handleDateClick = (clickedDate) => {
+    setSelectedDate(clickedDate);
+    const dateClickedFrom = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
+    const dateClickedTo = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
+    setFromDate(dateClickedFrom);
+    setToDate(dateClickedTo);
+  };
   
   function getCurrentDate() {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
     currentDate.setDate(currentDate.getDate() + 3 - ((currentDate.getDay() + 6) % 7));
-  
     const year = currentDate.getFullYear();
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
     const day = currentDate.getDate().toString().padStart(2, '0');
-  
     return `${year}-${month}-${day}`;
   }
 
@@ -100,10 +88,6 @@ const CalendarComponent = () => {
           const { status, body = { data: {}, error: {} } }: any = res;
           if (status === 200 && body && body.data) {
            setDataMonth(body.data)
-          //  if (body.data.length > 0 && body.data[0].leavesList && body.data[0].leavesList.length > 0) {
-          //   setSelectedDate(new Date(body.data[0].leavesList[0].date));
-          // }
-
           }
         }
       );
@@ -112,32 +96,29 @@ const CalendarComponent = () => {
       console.error("Error request:", error);
     }
   };
+
   useEffect(() => {
     if (fromDate && toDate ) {
       getData(fromDate, toDate);
     }
   }, [fromDate, toDate]);
-  // useEffect(() => {
-  //   const today = getCurrentDate(); 
-  //   setFromDate(today);
-  //   getData(today, today);
-  // }, []);
-  useEffect(() => {
 
+  useEffect(() => {
     let today = moment().format("YYYY-MM-DD")
-    RequestAPI.getRequest(
-      `${Api.getDataWeekWidget}?fromDate=${today}&toDate=${today}`,
-      "",
-      {},
-      {},
-      async (res: any) => {
-        const { status, body = { data: {}, error: {} } }: any = res;
+      RequestAPI.getRequest(
+        `${Api.getDataWeekWidget}?fromDate=${today}&toDate=${today}`,
+        "",
+        {},
+        {},
+        async (res: any) => {
+          const { status, body = { data: {}, error: {} } }: any = res;
           if (status === 200 && body && body.data) {
             setDataMonth(body.data)
           }
-      }
-    )
-  }, [])
+        }
+      )
+    }, 
+  [])
 
   function formatDate(date) {
     const year = date.getFullYear();
@@ -165,80 +146,36 @@ const CalendarComponent = () => {
   
 
   return (
+  <div>
     <div>
-      {/* <Dropdown style={{ backgroundColor: '', position: 'absolute', fontSize: '5px' }} className="custom-calendar-dropdown">
-        <Dropdown.Toggle id="month-selector" style={{ color: '' }} className="text-primary dropdown-text">
-          {selectedMonth !== null ? new Date(date.getFullYear(), selectedMonth - 1, 1).toLocaleDateString('en-US', { month: 'long' }) : 'Select Month'}
-        </Dropdown.Toggle>
-        <Dropdown.Menu
-          style={{
-            maxHeight: '200px',
-            overflowY: 'auto',
-          }}
-        >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
-            <Dropdown.Item
-              key={month}
-              value={month}
-              onClick={() => handleMonthSelect(month)}
-              active={selectedMonth === month}
-            >
-              {new Date(date.getFullYear(), month - 1, 1).toLocaleDateString('en-US', { month: 'long' })}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown> */}
-      {/* <div className="d-flex calendar-button " style={{ position: 'absolute', justifyContent: 'flex-end' }}>
-        <div className="arrow-button left" style={{ marginRight: '25px' }}>
-          <div
-            onClick={() => {
-              const newDate = new Date(date);
-              newDate.setMonth(newDate.getMonth() - 1);
-              setDate(newDate);
-            }}
-            className="triangle-left text-primary"
-          ></div>
-        </div>
-        <div className="arrow-button right ">
-          <div
-            onClick={() => {
-              const newDate = new Date(date);
-              newDate.setMonth(newDate.getMonth() + 1);
-              setDate(newDate);
-            }}
-            className="triangle-right text-primary"
-          ></div>
-        </div>
-      </div> */}
-      <div>
-        <div className="calendar-container mb-2 pb-6">
-            <Calendar
-            onChange={setDate}
-            calendarType="US"
-            value={date}
-            className="custom-calendar"
-            onClickDay={handleDateClick}
-            tileContent={() => <div />} // Disable tile content for this example
-            renderHeader={({ date }) => <CustomHeader date={date} />}
-            />
-        </div>
+      <div className="calendar-container mb-2 pb-6">
+        <Calendar
+        onChange={setDate}
+        calendarType="US"
+        value={date}
+        className="custom-calendar"
+        onClickDay={handleDateClick}
+        tileContent={() => <div />} // Disable tile content for this example
+        renderHeader={({ date  }) => <CustomHeader date={date} />}
+        />
+      </div>
       </div>
       <div className="pt-12 mt-4">
         <Tabs defaultActiveKey="tab1" id="my-tabs" className=" justify-content-center custom-tab-calendar pt-1  mt-4">
           <Tab className="custom-tabs"  eventKey="tab1" title="Holiday">
           {hasHolidaysThisWeek ? (
-            dataMonth.map((item, index) => (
-                <div key={index}>
+            dataMonth.map((item: any, index: any) => (
+              <div key={index}>
                 {item.holidaysList && item.holidaysList.length > 0 && (
-                    <ul>
-                    {item.holidaysList.map((holidayItem, holidayIndex) => (
-                        <li key={holidayIndex}>
-                        {holidayItem.holidayName}
-                        </li>
-                    ))}
-                    </ul>
+                  <ul>
+                  {item.holidaysList.map((holidayItem: any, holidayIndex: any) => (
+                    <li key={holidayIndex}>
+                    {holidayItem.holidayName}
+                    </li>
+                  ))}
+                  </ul>
                 )}
-                </div>
+              </div>
             ))
             ) : (
             <p style={{ margin: 'auto', textAlign: 'center' }}>Not a holiday today</p>
@@ -246,30 +183,30 @@ const CalendarComponent = () => {
           </Tab>
           <Tab  className="custom-tabs" eventKey="tab2" title="Birthday">
             {hasBirthdaysThisWeek ? (
-              dataMonth.map((item, index) => (
-                  <div key={index}>
-                  {item.bdayList && item.bdayList.length > 0 && (
-                      <ul>
-                      {item.bdayList.map((bdayItem, bdayIndex) => (
-                          <li key={bdayIndex}>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
-                              <img src={user} alt="" width={40} />
-                              {bdayItem.firstName} {bdayItem.lastName}
-                            </div>
-                          </li>
-                      ))}
-                      </ul>
-                  )}
-                  </div>
+              dataMonth.map((item: any, index: any) => (
+                <div key={index}>
+                {item.bdayList && item.bdayList.length > 0 && (
+                  <ul>
+                  {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
+                    <li key={bdayIndex}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                        <img src={user} alt="" width={40} />
+                        {bdayItem.firstName} {bdayItem.lastName}
+                      </div>
+                    </li>
+                  ))}
+                  </ul>
+                )}
+                </div>
               ))
               ) : (
               <p style={{ margin: 'auto', textAlign: 'center' }}>No Birthdays today</p>
-              )}
+            )}
           </Tab>
           <Tab  className="custom-tabs" eventKey="tab3" title="On Leave">
           {hasLeavesThisWeek ? (
             <div className="">
-              {dataMonth.map((item, index) => (
+              {dataMonth.map((item: any, index: any) => (
                 <div key={index}>
                   {item.leavesList && item.leavesList.length > 3 ? (
                   <div className="horizontal-scroll">
@@ -285,9 +222,8 @@ const CalendarComponent = () => {
                     </div>
                     <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
                       <ul className="horizontal-scroll-list">
-
                         <div className="col-3  ">
-                          {item.leavesList.map((leaveItem, leaveIndex) => (
+                          {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                             <li key={leaveIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
                               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={40} />
@@ -297,16 +233,13 @@ const CalendarComponent = () => {
                             </li>
                           ))}
                         </div>
-                        
                       </ul>
                     </div>
-                    
-                    
                   </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
                       <ul className="horizontal-scroll-list">
-                        {item.leavesList.map((leaveItem, leaveIndex) => (
+                        {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
                               <img src={user} alt="" width={40} />
@@ -328,13 +261,13 @@ const CalendarComponent = () => {
 
           </Tab>
           <Tab  className="custom-tabs" eventKey="tab4" title="New Hire">
-          {hasNewHiresThisWeek ? (
-            dataMonth.map((item, index) => (
+            {hasNewHiresThisWeek ? (
+              dataMonth.map((item: any, index: any) => (
                 <div key={index}>
-                {item.newHiresList && item.newHiresList.length > 0 && (
+                  {item.newHiresList && item.newHiresList.length > 0 && (
                     <ul>
-                    {item.newHiresList.map((newHireItem, newHireIndex) => (
-                        <li key={newHireIndex} className="horizontal-scroll-item">
+                    {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
+                      <li key={newHireIndex} className="horizontal-scroll-item">
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
                           <img src={user} alt="" width={40} />
                           {newHireItem.firstName} {newHireItem.lastName}
@@ -342,11 +275,11 @@ const CalendarComponent = () => {
                       </li>
                     ))}
                     </ul>
-                )}
+                  )}
                 </div>
-            ))
-            ) : (
-             <p style={{ margin: 'auto', textAlign: 'center' }}>No newly hired Employee today</p>
+              ))
+              ) : (
+              <p style={{ margin: 'auto', textAlign: 'center' }}>No newly hired Employee today</p>
             )}
           </Tab>
         </Tabs>
@@ -371,6 +304,11 @@ const TeamCalendar = () => {
   const [isOpenBirth, setIsOpenBirth] = useState(false);
   const [isOpenOut, setIsOpenOut] = useState(false);
   const [isOpenHire, setIsOpenHire] = useState(false);
+  const [activeAccordionKey, setActiveAccordionKey] = useState(null);
+
+  const handleAccordionToggle = (key : any) => {
+    setActiveAccordionKey(activeAccordionKey === key ? null : key);
+  };
 
 
 
@@ -380,10 +318,10 @@ const TeamCalendar = () => {
     day: 'numeric',
   };
 
-  const hasLeavesThisWeek = dataWeek.some((item) => item.leavesList && item.leavesList.length > 0);
-  const hasHolidaysThisWeek = dataWeek.some((item) => item.holidaysList && item.holidaysList.length > 0);
-  const hasBirthdaysThisWeek = dataWeek.some((item) => item.bdayList && item.bdayList.length > 0);
-  const hasNewHiresThisWeek = dataWeek.some((item) => item.newHiresList && item.newHiresList.length > 0);
+  const hasLeavesThisWeek = dataWeek.some((item : any) => item.leavesList && item.leavesList.length > 0);
+  const hasHolidaysThisWeek = dataWeek.some((item : any) => item.holidaysList && item.holidaysList.length > 0);
+  const hasBirthdaysThisWeek = dataWeek.some((item : any) => item.bdayList && item.bdayList.length > 0);
+  const hasNewHiresThisWeek = dataWeek.some((item : any) => item.newHiresList && item.newHiresList.length > 0);
   
   function getCurrentWeekNumber() {
     const currentDate = new Date();
@@ -404,13 +342,13 @@ const TeamCalendar = () => {
   
     return `${year}-${month}-${day}`;
   }
-  const changeWeek = (increment) => {
+  const changeWeek = (increment : any) => {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + increment * 7);
     setDate(newDate);
   };
 
-  const getWeekDays = (currentDate) => {
+  const getWeekDays = (currentDate : any) => {
     const startOfWeek = new Date(currentDate);
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
     const weekDays = [];
@@ -427,7 +365,7 @@ const TeamCalendar = () => {
   const weekDays = getWeekDays(date);
   const currentDate = new Date();
 
-  const handleDateClick = (clickedDate) => {
+  const handleDateClick = (clickedDate : any) => {
     setSelectedDate(clickedDate);
   
     const startDateFormatted = `${clickedDate.getFullYear()}-${(clickedDate.getMonth() + 1).toString().padStart(2, '0')}-${clickedDate.getDate().toString().padStart(2, '0')}`;
@@ -448,7 +386,7 @@ const TeamCalendar = () => {
     updateCurrentWeek();
   }, []);
 
-  const getWeekNumber = (inputDate) => {
+  const getWeekNumber = (inputDate: any) => {
     const date = new Date(inputDate);
     date.setHours(0, 0, 0, 0);
     date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
@@ -456,7 +394,7 @@ const TeamCalendar = () => {
     return weekNumber;
   };
 
-  const getWeekNumbersForYear = (year) => {
+  const getWeekNumbersForYear = (year: any) => {
     const weekNumbers = [];
     const startDate = new Date(year, 0, 1);
 
@@ -470,44 +408,38 @@ const TeamCalendar = () => {
 
   const weekNumbersForYear = getWeekNumbersForYear(year);
 
-  const formatWeekLabel = (weekNumber) => {
+  const formatWeekLabel = (weekNumber: any) => {
     const firstDayOfWeek = new Date(year, 0, 1); 
     const daysToAdd = (weekNumber - 1) * 7;
     firstDayOfWeek.setDate(firstDayOfWeek.getDate() + daysToAdd);
-
     const lastDayOfWeek = new Date(firstDayOfWeek);
     lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6);
-
     const startDateString = firstDayOfWeek.toLocaleDateString("en-US", { month: "long", day: "numeric" });
     const endDateString = lastDayOfWeek.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-
     return `Week ${weekNumber} ${startDateString} - ${endDateString}`;
   };
 
-  const handleWeekSelect = (weekNumber) => {
+  const handleWeekSelect = (weekNumber: any) => {
     setSelectedWeek(weekNumber);
     setDate(getStartDateOfWeek(weekNumber));
-
     const startDate = getStartDateOfWeek(weekNumber);
     };
 
-  const getStartDateOfWeek = (weekNumber) => {
+  const getStartDateOfWeek = (weekNumber: any) => {
     const firstDayOfWeek = new Date(year, 0, 1); 
     const daysToAdd = (weekNumber - 1) * 7;
     firstDayOfWeek.setDate(firstDayOfWeek.getDate() + daysToAdd);
     return firstDayOfWeek;
   };
-  const formatWeekLabelForDates = (startDate, endDate) => {
+  const formatWeekLabelForDates = (startDate : any, endDate : any) => {
     const startDateFormat = startDate.toLocaleDateString("en-US", options);
     const endDateFormat = endDate.toLocaleDateString("en-US", options);
     return `${startDateFormat} - ${endDateFormat}`;
   };
-  
-
-   const handleWeekTabSelect = (selectedTab) => {
+   const handleWeekTabSelect = (selectedTab: any) => {
     setActiveWeekTab(selectedTab);
   };
-  const getData = async (fromDate, toDate) => {
+  const getData = async (fromDate: any, toDate: any) => {
     try {
       const response = await RequestAPI.getRequest(
         `${Api.getDataWeekWidget}`,
@@ -521,25 +453,16 @@ const TeamCalendar = () => {
           }
         }
       );
-
     } catch (error) {
       console.error("Error request:", error);
     }
   };
-
   useEffect(() => {
     if (fromDate && toDate) {
       getData(fromDate, toDate);
     }
   }, [fromDate, toDate]);
-  // useEffect(() => {
-  //   const today = getCurrentDate(); 
-  //   setFromDate(today);
-  //   getData(today, today);
-  // }, []);
-
   useEffect(() => {
-
     let today = moment().format("YYYY-MM-DD")
     RequestAPI.getRequest(
       `${Api.getDataWeekWidget}?fromDate=${today}&toDate=${today}`,
@@ -548,9 +471,9 @@ const TeamCalendar = () => {
       {},
       async (res: any) => {
         const { status, body = { data: {}, error: {} } }: any = res;
-          if (status === 200 && body && body.data) {
-           setDataWeek(body.data)
-          }
+        if (status === 200 && body && body.data) {
+          setDataWeek(body.data)
+        }
       }
     )
   }, [])
@@ -578,21 +501,6 @@ const TeamCalendar = () => {
   const handleRightArrowClick = () => {
     setSelectedWeek((selectedWeek + 1) % 53 || 1);
   };
-
-  const handleAccordionToggle = (accordionKey: any) => {
-    if (accordionKey === '0') {
-      setIsOpen(!isOpen);
-    } else if (accordionKey === '1') {
-      setIsOpenBirth(!isOpenBirth);
-    } else if (accordionKey === '2') {
-      setIsOpenOut(!isOpenOut);
-    }else if (accordionKey === '3') {
-      setIsOpenHire(!isOpenHire);
-    }
-  };
-  
-
-
   return (
     <div className="time-card-width">
       <div className="card-header">
@@ -603,33 +511,30 @@ const TeamCalendar = () => {
           { activeWeekTab === 'tab1' && (
             <div className="col-6">
               <Dropdown style={{backgroundColor: "", position: 'absolute', fontSize:"5px"}}  className="custom-dropdown">
-                  <Dropdown.Toggle id="week-selector" style={{ color: '' }}  className="text-primary dropdown-text">
+                <Dropdown.Toggle id="week-selector" style={{ color: '' }}  className="text-primary dropdown-text">
                   {selectedWeek === null ? `Today ${formatWeekLabelForDates(weekDays[0], weekDays[6])}` : formatWeekLabel(selectedWeek)}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu
-                      style={{
-                          maxHeight: '200px', 
-                          overflowY: 'auto',  
-                        }}
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  style={{
+                    maxHeight: '200px', 
+                    overflowY: 'auto',  
+                    }}
                   >
-                      {weekNumbersForYear.map((weekNumber) => (
-                      <Dropdown.Item
-                          key={weekNumber}
-                          value={weekNumber}
-                          onClick={() => handleWeekSelect(weekNumber)}
-                          disabled={selectedWeek === weekNumber}
-                          
-                      >
-                          {formatWeekLabel(weekNumber)}
-                      </Dropdown.Item>
-                      ))}
-                  </Dropdown.Menu>
+                  {weekNumbersForYear.map((weekNumber) => (
+                    <Dropdown.Item
+                      key={weekNumber}
+                      value={weekNumber}
+                      onClick={() => handleWeekSelect(weekNumber)}
+                      disabled={selectedWeek === weekNumber}
+                    >
+                      {formatWeekLabel(weekNumber)}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
               </Dropdown>
             </div>
             )
-            
           }
-            
           <Tabs 
           defaultActiveKey="tab1" 
           id="my-tabs" 
@@ -638,396 +543,384 @@ const TeamCalendar = () => {
           activeKey={activeWeekTab}
             onSelect={handleWeekTabSelect}
           >
-          <Tab
-                className="custom-calendar-tabs"
-                eventKey="tab1"
-                title={<img className="ma-0 pa-0" src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
+            <Tab
+              className="custom-calendar-tabs"
+              eventKey="tab1"
+              title={<img className="ma-0 pa-0" src={activeWeekTab === 'tab1' ? activeWeek : inactiveWeek} alt="Tab 1" />}
             >
-                <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden', marginTop: '-10px'  }}>
-                    <div className="row d-flex">
-                    <div className="col-1 arrow-space">
-                        <div className="arrow-button left">
-                          <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left "></div>
-                        </div>
+              <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden', marginTop: '-10px'  }}>
+                <div className="row d-flex">
+                  <div className="col-1 arrow-space">
+                    <div className="arrow-button left">
+                      <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left "></div>
                     </div>
-                    <div className="col-10">
-                        <div className="week-days ">
-                        {weekDays.map((day) => (
-                            <div
-                            key={day.toDateString()}
-                            className={`day ${selectedDate && day.toDateString() === selectedDate.toDateString() ? "current-day" : ""}`}
-                            onClick={() => handleDateClick(day)}
-                            >
-                            <div className={`day-date text-primary ${selectedDate && day.toDateString() === selectedDate.toDateString() ? "" :  day.getDate() > 9 ? "font-adjust" : ""}`}>
-                                {day.getDate()}
-                            </div>
-                            <div className="day-name">
-                                {day.getDate() === currentDate.getDate() && day.getMonth() === currentDate.getMonth() && day.getFullYear() === currentDate.getFullYear()
-                                ? "Today"
-                                : day.toLocaleDateString("en-US", { weekday: "short" })}
-                            </div>
-                            </div>
-                        ))}
+                  </div>
+                  <div className="col-10">
+                    <div className="week-days ">
+                    {weekDays.map((day) => (
+                      <div
+                      key={day.toDateString()}
+                      className={`day ${selectedDate && day.toDateString() === selectedDate.toDateString() ? "current-day" : ""}`}
+                      onClick={() => handleDateClick(day)}
+                      >
+                        <div className={`day-date text-primary ${selectedDate && day.toDateString() === selectedDate.toDateString() ? "" :  day.getDate() > 9 ? "font-adjust" : ""}`}>
+                            {day.getDate()}
                         </div>
-                    </div>
-                    <div className="col-1 arrow-space">
-                        <div className="arrow-button right">
-                            <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
+                        <div className="day-name">
+                            {day.getDate() === currentDate.getDate() && day.getMonth() === currentDate.getMonth() && day.getFullYear() === currentDate.getFullYear()
+                            ? "Today"
+                            : day.toLocaleDateString("en-US", { weekday: "short" })}
                         </div>
+                      </div>
+                    ))}
                     </div>
+                  </div>
+                  <div className="col-1 arrow-space">
+                      <div className="arrow-button right">
+                          <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
+                      </div>
+                  </div>
                 </div>
-
-{/* leaves  */} 
-                <div className="pt-2">
-                <Accordion activeKey={isOpen ? '0' : isOpenBirth ? '1' : isOpenOut ? '2' : isOpenHire ? '3' : null } onSelect={handleAccordionToggle}style={{border: 'none'}} className="custom-accordion">
-                    <Accordion.Item style={{paddingBottom: '10px'}} className="custom-arrow-accordion" eventKey="0">
-                        <Accordion.Header className="accordion-custom-header" style={{cursor: 'not-allowed'}}>
-                          <div className="col-12 d-flex">
-                            <div className="col-6 pt-1">
-                              <span>Holidays</span>
-                            </div>
-                            <div className="col-6">
-                              <div className="d-flex justify-content-end">
-                                <span className="accordion-custom-button">
-                                    <Button
-                                      variant="text"
-                                      onClick={() => setIsOpen(!isOpen)}
-                                      aria-controls="accordion-body"
-                                      aria-expanded={isOpen}
-                                      style={{color: 'white', height: '30px', lineHeight: '10px', cursor:'pointer'}}
-                                      className="pt-0 mt-0"
-                                    >
-                                      {isOpen ? '▼':'►'}
-                                    </Button>
-                                  </span>
-                              </div>
-                            </div>
+  {/* leaves  */} 
+              <div className="pt-2">
+                <Accordion activeKey={activeAccordionKey} onSelect={handleAccordionToggle} style={{ border: 'none' }} className="custom-accordion">
+                  <Accordion.Item style={{paddingBottom: '10px'}} className="custom-arrow-accordion" eventKey="0">
+                    <Accordion.Header className="accordion-custom-header" style={{cursor: 'not-allowed'}}>
+                      <div className="col-12 d-flex">
+                        <div className="col-6 pt-1">
+                          <span>Holidays</span>
+                        </div>
+                        <div className="col-6">
+                          <div className="d-flex justify-content-end">
+                            <span className="accordion-custom-button">
+                              <Button
+                                variant="text"
+                                aria-controls="accordion-body"
+                                aria-expanded={activeAccordionKey === '0'}
+                                style={{ color: 'white', height: '30px', lineHeight: '10px', cursor: 'pointer' }}
+                                className="pt-0 mt-0"
+                              >
+                                {activeAccordionKey === '0' ? '▼' : '►'}
+                              </Button>
+                            </span>
                           </div>
-                        </Accordion.Header>
-                        <Accordion.Body style={{borderRadius: '10px'}}>
-                        {hasHolidaysThisWeek ? (
-                            dataWeek.map((item, index) => (
-                                <div key={index}>
-                                {item.holidaysList && item.holidaysList.length > 0 && (
-                                    <ul>
-                                    {item.holidaysList.map((holidayItem, holidayIndex) => (
-                                        <li key={holidayIndex}>
-                                        {holidayItem.holidayName}
-                                        </li>
-                                    ))}
-                                    </ul>
-                                )}
-                                </div>
-                            ))
-                            ) : (
-                            <p>Not a holiday today</p>
-                            )}
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="1" className="custom-arrow-accordion">
-                        {/* <Accordion.Header className="accordion-birthday-header">Birthdays</Accordion.Header> */}
-                        <Accordion.Header className="accordion-birthday-header">
-                          <div className="col-12 d-flex">
-                            <div className="col-6 pt-1">
-                              <span>Birthdays</span>
-                            </div>
-                            <div className="col-6">
-                              <div className="d-flex justify-content-end">
-                                <div className="col-6" style={{ textAlign: 'right'}}>
-                                  {hasBirthdaysThisWeek ? (
-                                    dataWeek.map((item, index) => (
-                                      <div key={index}>
-                                      {item.bdayList && item.bdayList.length > 0 && (
-                                        <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
-                                        {item.bdayList.slice(0, 2).map((birthdayItem, birthdayIndex) => (
-                                          <li key={birthdayIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
-                                            <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
-                                          </li>
-                                        ))}
-                                        </ul>
-                                      )}
-                                      </div>
-                                    ))
-                                    ) : (
-                                    null
-                                  )}
-                                </div>
-                                {dataWeek.reduce((total, item) => total + (item.bdayList ? item.bdayList.length : 0), 0) > 2 && (
-                                    <div
-                                      style={{
-                                        width: '30px',
-                                        height: '30px',
-                                        borderRadius: '50%',
-                                        backgroundColor: 'white',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: 'black',
-                                        fontSize: '15px',
-                                        fontWeight: 'bold',
-                                        marginBottom: '5px',
-                                        marginLeft: '5px',
-                                      }}
-                                    >
-                                      +{dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
-                                    </div>
-                                  )} 
-                              
-                              
-                                  <span className="accordion-custom-button">
-                                    <Button
-                                      variant="text"
-                                      onClick={() => setIsOpenBirth(!isOpenBirth)}
-                                      aria-controls="accordion-body"
-                                      aria-expanded={isOpenBirth}
-                                      style={{color: 'white', height: '30px', lineHeight: '10px', cursor:'pointer'}}
-                                      className="pt-0 mt-0"
-                                    >
-                                      {isOpenBirth ? '▼':'►' }
-                                    </Button>
-                                  </span>
-                              </div>
-                            </div>
-                          </div>
-                        </Accordion.Header>
-                        <Accordion.Body>
-                        {hasBirthdaysThisWeek ? (
-                            dataWeek.map((item, index) => (
-                                <div key={index}>
-                                {item.bdayList && item.bdayList.length > 0 && (
-                                    <ul>
-                                    {item.bdayList.map((bdayItem, bdayIndex) => (
-                                        <li key={bdayIndex}>
-                                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                              <img src={user} alt="" width={40} className="flex-wrap" />
-                                              {bdayItem.firstName} {bdayItem.lastName}
-                                          </div>
-                                        </li>
-                                    ))}
-                                    </ul>
-                                )}
-                                </div>
-                            ))
-                            ) : (
-                            <p>No Birthdays today</p>
-                            )}
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="2" className="custom-arrow-accordion">
-                        <Accordion.Header className="accordion-leave-header" >
-                          <div className="col-12 d-flex">
-                            <div className="col-6 pt-1">
-                              <span>Who's Out</span>
-                            </div>
-                            <div className="col-6">
-                              <div className="d-flex justify-content-end">
-                                <div className="col-6" style={{ textAlign: 'right'}}>
-                                  {hasLeavesThisWeek ? (
-                                    dataWeek.map((item, index) => (
-                                      <div key={index}>
-                                      {item.leavesList && item.leavesList.length > 0 && (
-                                        <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
-                                        {item.leavesList.slice(0, 2).map((leaveItem, leaveIndex) => (
-                                          <li key={leaveIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
-                                            <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
-                                          </li>
-                                        ))}
-                                        </ul>
-                                      )}
-                                      </div>
-                                    ))
-                                    ) : (
-                                    null
-                                  )}
-                                </div>
-                                {dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
-                                  <div
-                                    style={{
-                                      width: '30px',
-                                      height: '30px',
-                                      borderRadius: '50%',
-                                      backgroundColor: 'white',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      color: 'black',
-                                      fontSize: '15px',
-                                      fontWeight: 'bold',
-                                      marginBottom: '5px',
-                                      marginLeft: '5px',
-                                    }}
-                                  >
-                                    +{dataWeek.reduce((total, item) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
-                                  </div>
-                                )} 
-                                <span className="accordion-custom-button">
-                                  <Button
-                                    variant="text"
-                                    onClick={() => setIsOpenOut(!isOpenOut)}
-                                    aria-controls="accordion-body"
-                                    aria-expanded={isOpenOut}
-                                    style={{color: 'white', height: '30px', lineHeight: '10px', marginTop: '10px', cursor:'pointer'}}
-                                    className="pt-0 mt-0"
-                                  >
-                                    {isOpenOut ? '▼':'►'}
-                                  </Button>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </Accordion.Header>
-                        <Accordion.Body>
-                        {hasLeavesThisWeek ? (
-                          <div className="">
-                            {dataWeek.map((item, index) => (
+                        </div>
+                      </div>
+                    </Accordion.Header>
+                      <Accordion.Body style={{borderRadius: '10px'}}>
+                      {hasHolidaysThisWeek ? (
+                          dataWeek.map((item : any, index : any) => (
                               <div key={index}>
-                                {item.leavesList && item.leavesList.length > 3 ? (
-                                <div className="horizontal-scroll">
-                                  <div className="d-flex justify-content-start">
+                              {item.holidaysList && item.holidaysList.length > 0 && (
+                                  <ul>
+                                  {item.holidaysList.map((holidayItem : any, holidayIndex : any) => (
+                                      <li key={holidayIndex}>
+                                      {holidayItem.holidayName}
+                                      </li>
+                                  ))}
+                                  </ul>
+                              )}
+                              </div>
+                          ))
+                          ) : (
+                          <p>Not a holiday today</p>
+                          )}
+                      </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item style={{paddingBottom: '10px'}} eventKey="1" className="custom-arrow-accordion">
+                    <Accordion.Header className="accordion-birthday-header">
+                      <div className="col-12 d-flex">
+                        <div className="col-6 pt-1">
+                          <span>Birthdays</span>
+                        </div>
+                        <div className="col-6">
+                          <div className="d-flex justify-content-end">
+                            <div className="col-6" style={{ textAlign: 'right'}}>
+                              {hasBirthdaysThisWeek ? (
+                                dataWeek.map((item: any, index: any) => (
+                                  <div key={index}>
+                                  {item.bdayList && item.bdayList.length > 0 && (
+                                    <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
+                                    {item.bdayList.slice(0, 2).map((birthdayItem: any, birthdayIndex: any) => (
+                                      <li key={birthdayIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
+                                        <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
+                                      </li>
+                                    ))}
+                                    </ul>
+                                  )}
+                                  </div>
+                                ))
+                                ) : (
+                                null
+                              )}
+                            </div>
+                            {dataWeek.reduce((total: any, item: any) => total + (item.bdayList ? item.bdayList.length : 0), 0) > 2 && (
+                                <div
+                                  style={{
+                                    width: '30px',
+                                    height: '30px',
+                                    borderRadius: '50%',
+                                    backgroundColor: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'black',
+                                    fontSize: '15px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '5px',
+                                    marginLeft: '5px',
+                                  }}
+                                >
+                                  +{dataWeek.reduce((total: any, item: any) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
+                                </div>
+                              )} 
+                              <span className="accordion-custom-button">
+                                <Button
+                                  variant="text"
+                                  aria-controls="accordion-body"
+                                  aria-expanded={activeAccordionKey === '1'}
+                                  style={{ color: 'white', height: '30px', lineHeight: '10px', cursor: 'pointer' }}
+                                  className="pt-0 mt-0"
+                                >
+                                  {activeAccordionKey === '1' ? '▼' : '►'}
+                                </Button>
+                              </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      {hasBirthdaysThisWeek ? (
+                        dataWeek.map((item : any, index: any) => (
+                          <div key={index}>
+                          {item.bdayList && item.bdayList.length > 0 && (
+                            <ul>
+                            {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
+                              <li key={bdayIndex}  className="horizontal-scroll-item">
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                  <img src={user} alt="" width={40} className="flex-wrap" />
+                                  {bdayItem.firstName} {bdayItem.lastName}
+                                </div>
+                              </li>
+                            ))}
+                            </ul>
+                          )}
+                          </div>
+                        ))
+                        ) : (
+                        <p>No Birthdays today</p>
+                      )}
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item style={{paddingBottom: '10px'}} eventKey="2" className="custom-arrow-accordion">
+                      <Accordion.Header className="accordion-leave-header" >
+                        <div className="col-12 d-flex">
+                          <div className="col-6 pt-1">
+                            <span>Who's Out</span>
+                          </div>
+                          <div className="col-6">
+                            <div className="d-flex justify-content-end">
+                              <div className="col-6" style={{ textAlign: 'right'}}>
+                                {hasLeavesThisWeek ? (
+                                  dataWeek.map((item: any, index: any) => (
+                                    <div key={index}>
+                                    {item.leavesList && item.leavesList.length > 0 && (
+                                      <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
+                                      {item.leavesList.slice(0, 2).map((leaveItem: any, leaveIndex: any) => (
+                                        <li key={leaveIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
+                                          <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
+                                        </li>
+                                      ))}
+                                      </ul>
+                                    )}
+                                    </div>
+                                  ))
+                                  ) : (
+                                  null
+                                )}
+                              </div>
+                              {dataWeek.reduce((total: any, item: any) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
+                                <div
+                                  style={{
+                                    width: '30px',
+                                    height: '30px',
+                                    borderRadius: '50%',
+                                    backgroundColor: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'black',
+                                    fontSize: '15px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '5px',
+                                    marginLeft: '5px',
+                                  }}
+                                >
+                                  +{dataWeek.reduce((total: any, item: any) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
+                                </div>
+                              )} 
+                              <span className="accordion-custom-button">
+                                <Button
+                                  variant="text"
+                                  aria-controls="accordion-body"
+                                  aria-expanded={activeAccordionKey === '2'}
+                                  style={{ color: 'white', height: '30px', lineHeight: '10px', marginTop: '10px', cursor: 'pointer' }}
+                                  className="pt-0 mt-0"
+                                >
+                                  {activeAccordionKey === '2' ? '▼' : '►'}
+                                </Button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Header>
+                      <Accordion.Body>
+                      {hasLeavesThisWeek ? (
+                        <div className="">
+                          {dataWeek.map((item: any, index: any) => (
+                            <div key={index}>
+                              {item.leavesList && item.leavesList.length > 3 ? (
+                              <div className="horizontal-scroll">
+                                <div className="row d-flex position-relative">
+                                  <div className="col-1">
                                     <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
                                       &#9664;
                                     </button>
                                   </div>
-                                  <div className="d-flex justify-content-end" >
+                                  <div className="col-10">
+                                    <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
+                                      <ul className="horizontal-scroll-list">
+                                        <div className="col-3  ">
+                                          {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
+                                            <li key={leaveIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
+                                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                                <img src={user} alt="" width={40} className="flex-wrap" />
+                                                {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
+                                              </div>
+                                            </li>
+                                          ))}
+                                        </div>
+                                        
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <div className="col-1">
                                     <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
                                       &#9654;
                                     </button>
                                   </div>
-                                  <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
-                                    <ul className="horizontal-scroll-list">
-
-                                      <div className="col-3  ">
-                                        {item.leavesList.map((leaveItem, leaveIndex) => (
-                                          <li key={leaveIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
-                                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                              <img src={user} alt="" width={40} className="flex-wrap" />
-                                              {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
-                                            </div>
-                                            
-                                          </li>
-                                        ))}
-                                      </div>
-                                      
-                                    </ul>
-                                  </div>
-                                 
-                                 
                                 </div>
-                                ) : item.leavesList && item.leavesList.length <= 3 ? (
-                                  <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
-                                    <ul className="horizontal-scroll-list">
-                                      {item.leavesList.map((leaveItem, leaveIndex) => (
-                                        <li key={leaveIndex} className="horizontal-scroll-item">
-                                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                            <img src={user} alt="" width={40} />
-                                            {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
-                                          </div>
+                              </div>
+                              ) : item.leavesList && item.leavesList.length <= 3 ? (
+                                <div className="horizontal-scroll-container mx-5" id="horizontal-scroll-container">
+                                  <ul className="horizontal-scroll-list">
+                                    {item.leavesList.map((leaveItem : any, leaveIndex: any) => (
+                                      <li key={leaveIndex} className="horizontal-scroll-item">
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                          <img src={user} alt="" width={40} />
+                                          {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ) : ""
+                              
+                              }
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        "No Employee on Leave today"
+                      )}
+                      </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item style={{paddingBottom: '10px'}} eventKey="3" className="custom-arrow-accordion">
+                    <Accordion.Header className="accordion-hire-header">
+                      <div className="col-12 d-flex">
+                        <div className="col-6 pt-1">
+                          <span>New Hires</span>
+                        </div>
+                        <div className="col-6">
+                          <div className="d-flex justify-content-end">
+                            <div className="col-6" style={{ textAlign: 'right'}}>
+                              {hasNewHiresThisWeek ? (
+                                dataWeek.map((item: any, index: any) => (
+                                  <div key={index}>
+                                  {item.newHiresList && item.newHiresList.length > 0 && (
+                                      <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
+                                      {item.newHiresList.slice(0, 2).map((hireItem: any, hireIndex: any) => (
+                                        <li key={hireIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
+                                          <img src={user} alt="" width={30} className="m-0 p-0" style={{lineHeight: '0'}} />
                                         </li>
                                       ))}
                                     </ul>
-                                  </div>
-                                ) : ""
-                                
-                                }
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          "No Employee on Leave today"
-                        )}
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item style={{paddingBottom: '10px'}} eventKey="3" className="custom-arrow-accordion">
-                        {/* <Accordion.Header className="accordion-hire-header">New Hires
-                          
-                        </Accordion.Header> */}
-                        <Accordion.Header className="accordion-hire-header">
-                          <div className="col-12 d-flex">
-                            <div className="col-6 pt-1">
-                              <span>New Hires</span>
-                            </div>
-                            <div className="col-6">
-                              <div className="d-flex justify-content-end">
-                                <div className="col-6" style={{ textAlign: 'right'}}>
-                                  {hasNewHiresThisWeek ? (
-                                    dataWeek.map((item, index) => (
-                                      <div key={index}>
-                                      {item.newHiresList && item.newHiresList.length > 0 && (
-                                          <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
-                                          {item.newHiresList.slice(0, 2).map((hireItem, hireIndex) => (
-                                            <li key={hireIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
-                                              <img src={user} alt="" width={30} className="m-0 p-0" style={{lineHeight: '0'}} />
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      )}
-                                      </div>
-                                    ))
-                                    ) : (
-                                    null
                                   )}
-                                </div>
-                                {dataWeek.reduce((total, item) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) > 2 && (
-                                  <div
-                                    style={{
-                                      width: '30px',
-                                      height: '30px',
-                                      borderRadius: '50%',
-                                      backgroundColor: 'white',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      color: 'black',
-                                      fontSize: '15px',
-                                      fontWeight: 'bold',
-                                      marginBottom: '5px',
-                                      marginLeft: '5px',
-                                    }}
-                                  >
-                                    +{dataWeek.reduce((total, item) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) - 2}
                                   </div>
-                                )} 
-                                <span className="accordion-custom-button">
-                                    <Button
-                                      variant="text"
-                                      onClick={() => setIsOpenHire(!isOpenHire)}
-                                      aria-controls="accordion-body"
-                                      aria-expanded={isOpenHire}
-                                      style={{color: 'white', height: '30px', lineHeight: '10px', cursor:'pointer'}}
-                                      className="pt-0 mt-0"
-                                    >
-                                      {isOpenHire ? '▼':'►' }
-                                    </Button>
-                                  </span>
-                              </div>
+                                ))
+                                ) : (
+                                null
+                              )}
                             </div>
+                            {dataWeek.reduce((total: any, item: any) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) > 2 && (
+                              <div
+                                style={{
+                                  width: '30px',
+                                  height: '30px',
+                                  borderRadius: '50%',
+                                  backgroundColor: 'white',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  color: 'black',
+                                  fontSize: '15px',
+                                  fontWeight: 'bold',
+                                  marginBottom: '5px',
+                                  marginLeft: '5px',
+                                }}
+                              >
+                                +{dataWeek.reduce((total: any, item: any) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) - 2}
+                              </div>
+                            )} 
+                            <span className="accordion-custom-button">
+                                <Button
+                                  variant="text"
+                                  aria-controls="accordion-body"
+                                  aria-expanded={activeAccordionKey === '3'}
+                                  style={{ color: 'white', height: '30px', lineHeight: '10px', cursor: 'pointer' }}
+                                  className="pt-0 mt-0"
+                                >
+                                  {activeAccordionKey === '3' ? '▼' : '►'}
+                                </Button>
+                              </span>
                           </div>
-                        </Accordion.Header>
-                        <Accordion.Body>
-                        {hasNewHiresThisWeek ? (
-                            dataWeek.map((item, index) => (
-                                <div key={index}>
-                                {item.newHiresList && item.newHiresList.length > 0 && (
-                                    <ul>
-                                    {item.newHiresList.map((newHireItem, newHireIndex) => (
-                                        <li key={newHireIndex}>
-                                        <img src={user} alt="" width={40} />
-                                        {newHireItem.firstName} {newHireItem.lastName}
-                                        </li>
-                                    ))}
-                                    </ul>
-                                )}
-                                </div>
-                            ))
-                            ) : (
-                            "No newly hired Employee today"
+                        </div>
+                      </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      {hasNewHiresThisWeek ? (
+                          dataWeek.map((item: any, index: any) => (
+                            <div key={index}>
+                            {item.newHiresList && item.newHiresList.length > 0 && (
+                              <ul>
+                              {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
+                                <li key={newHireIndex}>
+                                <img src={user} alt="" width={40} />
+                                {newHireItem.firstName} {newHireItem.lastName}
+                                </li>
+                              ))}
+                              </ul>
                             )}
-                        </Accordion.Body>
-                    </Accordion.Item>
+                            </div>
+                          ))
+                          ) : (
+                          "No newly hired Employee today"
+                        )}
+                    </Accordion.Body>
+                  </Accordion.Item>
                 </Accordion>
-
-                </div>
-                </div>
+              </div>
+              </div>
             </Tab>
             <Tab
               className="custom-calendar-tabs"
@@ -1044,6 +937,5 @@ const TeamCalendar = () => {
     </div>
   );
 };
-
 export default TeamCalendar;
 

@@ -555,7 +555,6 @@ export const PayrollAdjustment = (props: any) => {
                             text: "Something Error.",
                             didOpen: () => {
                                 const confirmButton = Swal.getConfirmButton();
-
                                 if (confirmButton)
                                     confirmButton.id = "payrolladjustment_errorconfirm4_alertbtn"
                             },
@@ -653,8 +652,6 @@ export const PayrollAdjustment = (props: any) => {
         setUploadModalShow(false)
     }
     const resetAdjustment = () => {
-
-        // setAdjustmentTypeName("");
         const selectElement = document.getElementById("typeName");
         if (selectElement) {
             selectElement.selectedIndex = 0;
@@ -850,67 +847,65 @@ export const PayrollAdjustment = (props: any) => {
                         <thead>
                             <tr>
                                 {
-                                    tableHeaders &&
-                                    tableHeaders.length &&
-                                    tableHeaders.map((item: any, index: any) => {
-                                        return (
-                                            <th style={{ width: 'auto' }}>{item}</th>
-                                        )
-                                    })
+                                tableHeaders &&
+                                tableHeaders.length &&
+                                tableHeaders.map((item: any, index: any) => {
+                                    return (
+                                        <th style={{ width: 'auto' }}>{item}</th>
+                                    )
+                                })
                                 }
                             </tr>
                         </thead>
                         <tbody className="custom-row">
                             {
-                                adjustmentList &&
-                                adjustmentList.content &&
-                                adjustmentList.content.length > 0 &&
-                                adjustmentList.content.map((item: any, index: any) => {
+                            adjustmentList &&
+                            adjustmentList.content &&
+                            adjustmentList.content.length > 0 &&
+                            adjustmentList.content.map((item: any, index: any) => {
 
-                                    return (
-                                        <tr>
-                                            <td id="payrolladjustment_id_adjustmentlistdata"> {item.id} </td>
-                                            <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
-                                            <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
-                                            <td id="payrolladjustment_amount_adjustmentlistdata"> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
-                                            <td id="payrolladjustment_adjustmentname_adjustmentlistdata"> {item.adjustmentName} </td>
-                                            <td>
-                                                <label
-                                                    id="payrolladjustment_edit_adjustmentlistlabel"
-                                                    onClick={() => {
-                                                        getAdjustment(item.id)
-                                                    }}
-                                                    className="text-muted cursor-pointer">
-                                                    <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
-                                                </label>
-                                                <label
-                                                    onClick={() => {
-                                                        deleteAdjustment(item.id)
-                                                    }}
-                                                    className="text-muted cursor-pointer">
-                                                    <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
-                                                </label>
-                                            </td>
+                                return (
+                                    <tr>
+                                        <td id="payrolladjustment_id_adjustmentlistdata"> {item.id} </td>
+                                        <td id="payrolladjustment_employeeid_adjustmentlistdata"> {item.employeeId} </td>
+                                        <td id="payrolladjustment_employeename_adjustmentlistdata"> {item.employeeName} </td>
+                                        <td id="payrolladjustment_amount_adjustmentlistdata"> {Utility.formatToCurrency(item.adjustmentAmount)} </td>
+                                        <td id="payrolladjustment_adjustmentname_adjustmentlistdata"> {item.adjustmentName} </td>
+                                        <td>
+                                            <label
+                                                id="payrolladjustment_edit_adjustmentlistlabel"
+                                                onClick={() => {
+                                                    getAdjustment(item.id)
+                                                }}
+                                                className="text-muted cursor-pointer">
+                                                <img src={action_edit} width={20} className="hover-icon-pointer mx-1" title="Update" />
+                                            </label>
+                                            <label
+                                                onClick={() => {
+                                                    deleteAdjustment(item.id)
+                                                }}
+                                                className="text-muted cursor-pointer">
+                                                <img src={action_decline} width={20} className="hover-icon-pointer mx-1" title="Delete" />
+                                            </label>
+                                        </td>
 
-                                        </tr>
-                                    )
-                                })
+                                    </tr>
+                                )
+                            })
                             }
                         </tbody>
                     </Table>
                     {
-                        adjustmentList &&
-                            adjustmentList.content &&
-                            adjustmentList.content.length == 0 ?
-                            <div className="w-100 text-center">
-                                <label htmlFor="">No Records Found</label>
-                            </div>
-                            :
-                            null
+                    adjustmentList &&
+                    adjustmentList.content &&
+                    adjustmentList.content.length == 0 ?
+                    <div className="w-100 text-center">
+                        <label htmlFor="">No Records Found</label>
+                    </div>
+                    :
+                    null
                     }
                 </div>
-
-
                 <div className="text-muted mb-4">
                     <h2>Total Amount: <span>{adjustmentTotal ? Utility.formatToCurrency(adjustmentTotal.amount) : 0}</span></h2>
                 </div>
@@ -962,7 +957,6 @@ export const PayrollAdjustment = (props: any) => {
                     <Button className="mx-2 my-1"
                         id="payrolladjustment_addadjustment_modalbtn"
                         onClick={() => {
-                            // setModalUploadShow(true)
                             setModalShow(true)
                         }}
                     >Add Earnings & Allowances</Button>
@@ -1104,13 +1098,13 @@ export const PayrollAdjustment = (props: any) => {
                                                         Select Earnings & Allowances Name
                                                     </option>
                                                     {adjustmentTypes &&
-                                                        adjustmentTypes &&
-                                                        adjustmentTypes.length &&
-                                                        adjustmentTypes.map((item: any, index: string) => (
-                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                                {item.adjustmentName}
-                                                            </option>
-                                                        ))}
+                                                    adjustmentTypes &&
+                                                    adjustmentTypes.length &&
+                                                    adjustmentTypes.map((item: any, index: string) => (
+                                                        <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                            {item.adjustmentName}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                             </div>
                                             <div className="col-md-4 mb-3">
@@ -1161,144 +1155,142 @@ export const PayrollAdjustment = (props: any) => {
                                         </div>
                                     ) :
 
-                                        <div>
-                                            {adjustment.map((values: any, index: any) => {
-                                                return (
-                                                    <div key={`adjustment-${index}`}>
-                                                        <div className="form-group row">
+                                    <div>
+                                        {adjustment.map((values: any, index: any) => {
+                                            return (
+                                                <div key={`adjustment-${index}`}>
+                                                    <div className="form-group row">
 
-                                                            <div className="col-md-4 mb-3">
-                                                                <label>Employee *</label>
-                                                                <EmployeeDropdown
-                                                                    payrolladjustment_employee_adjustmentdropdown
-                                                                    placeholder={"Employee"}
-                                                                    singleChangeOption={(e: any) => {
-                                                                        createOption(e, 'userId', index)
-                                                                    }}
-                                                                    name="userId"
-                                                                    value={adjustment && adjustment[index] && adjustment[index]['userId'] ? adjustment[index]['userId'] : ""}
-                                                                    withEmployeeID={true}
-                                                                />
-                                                            </div>
+                                                        <div className="col-md-4 mb-3">
+                                                            <label>Employee *</label>
+                                                            <EmployeeDropdown
+                                                                payrolladjustment_employee_adjustmentdropdown
+                                                                placeholder={"Employee"}
+                                                                singleChangeOption={(e: any) => {
+                                                                    createOption(e, 'userId', index)
+                                                                }}
+                                                                name="userId"
+                                                                value={adjustment && adjustment[index] && adjustment[index]['userId'] ? adjustment[index]['userId'] : ""}
+                                                                withEmployeeID={true}
+                                                            />
+                                                        </div>
 
-                                                            <div className="col-md-4 mb-3">
-                                                                <label>Earnings & Allowances Name *</label>
-                                                                <select
-                                                                    className={`form-select ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
-                                                                    name="adjustmentTypeId"
-                                                                    id="payrolladjustment_adjname"
-                                                                    value={values.adjustmentTypeId}
-                                                                    onChange={(e) => {
-                                                                        const selectedValue = e.target.value;
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].adjustmentTypeId = selectedValue;
-                                                                        setAdjustment(updatedFields);
-                                                                        setFormField(e, setFieldValue);
-                                                                        const selectedType = adjustmentTypes.find(
-                                                                            (item) => item.adjustmentTypeId === selectedValue
-                                                                        );
-                                                                        const isDeductionField = document.getElementsByName('adjustmentTypeId')[0];
-                                                                        if (selectedType) {
-                                                                            isDeductionField.value = selectedType.deduction;
-                                                                        } else {
-                                                                            isDeductionField.value = '';
-                                                                        }
-                                                                    }}
-                                                                >
-                                                                    <option value="" disabled={!index} selected={!index}>
-                                                                        Select Earnings & Allowances Name
-                                                                    </option>
-                                                                    {adjustmentTypes &&
-                                                                        adjustmentTypes.length &&
-                                                                        adjustmentTypes.map((item, index) => (
-                                                                            <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
-                                                                                {item.adjustmentName}
-                                                                            </option>
-                                                                        ))}
-                                                                </select>
-                                                                {touched.errors && errors.adjustmentTypeId && (
-                                                                    <p id="payrolladjustment_errorselectadjustmentname_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
-                                                                )}
-                                                            </div>
-
-                                                            <div className="col-md-4 mb-3">
-                                                                <label>Amount</label>
-                                                                <input
-                                                                    id="payrolladjustment_amount_adjustmentminput"
-                                                                    type="number"
-                                                                    className={`form-control ${touched.adjustmentAmount && values.adjustmentAmount == "" ? 'is-invalid' : ''}`}
-                                                                    name="adjustmentAmount"
-                                                                    value={values.adjustmentAmount}
-                                                                    onChange={(e) => {
-                                                                        setFieldValue('adjustmentAmount', e.target.value);
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].adjustmentAmount = e.target.value;
-                                                                        setAdjustment(updatedFields);
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            <div className="col-md-4 mb-3">
-                                                                <label>Start Date</label>
-                                                                <input
-                                                                    id="payrolladjustment_startdate_recurringinput"
-                                                                    type="date"
-                                                                    className={`form-control ${touched.startDate && errors.startDate ? 'is-invalid' : ''}`}
-                                                                    name="startDate"
-                                                                    value={values.startDate}
-                                                                    onChange={(e) => {
-                                                                        setFieldValue('startDate', e.target.value);
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].startDate = e.target.value;
-                                                                        setAdjustment(updatedFields);
-                                                                    }}
-                                                                />
-                                                                {errors && errors.startDate && (
-                                                                    <p id="payrollrecurring_errorstartdate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.startDate}</p>
-                                                                )}
-                                                            </div>
-                                                            <div className="col-md-4 mb-3">
-                                                                <label>End Date</label>
-                                                                <input
-                                                                    id="payrolladjustment_enddate_recurringinput"
-                                                                    type="date"
-                                                                    className={`form-control ${touched.endDate && errors.endDate ? 'is-invalid' : ''}`}
-                                                                    name="endDate"
-                                                                    value={values.endDate}
-                                                                    onChange={(e) => {
-                                                                        setFieldValue('endDate', e.target.value);
-                                                                        const updatedFields = [...adjustment];
-                                                                        updatedFields[index].endDate = e.target.value;
-                                                                        setAdjustment(updatedFields);
-                                                                    }}
-                                                                />
-                                                                {errors && errors.endDate && (
-                                                                    <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
-                                                                )}
-                                                            </div>
-                                                            <div className="col-md-4 mb-3"></div>
-
-                                                            {adjustment.length > 1 && (
-                                                                <div className="col-md-3 mb-3">
-                                                                    <label>&nbsp;</label>
-                                                                    <button
-                                                                        id="payrolladjustment_remove_adjustmentbtn"
-                                                                        type="button"
-                                                                        className="btn btn-outline-danger"
-                                                                        onClick={() => handleRemoveField(index)}
-                                                                    >
-                                                                        Remove
-                                                                    </button>
-                                                                </div>
+                                                        <div className="col-md-4 mb-3">
+                                                            <label>Earnings & Allowances Name *</label>
+                                                            <select
+                                                                className={`form-select ${values.adjustmentTypeId == "" ? 'is-invalid' : ''}`}
+                                                                name="adjustmentTypeId"
+                                                                id="payrolladjustment_adjname"
+                                                                value={values.adjustmentTypeId}
+                                                                onChange={(e) => {
+                                                                    const selectedValue = e.target.value;
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].adjustmentTypeId = selectedValue;
+                                                                    setAdjustment(updatedFields);
+                                                                    setFormField(e, setFieldValue);
+                                                                    const selectedType = adjustmentTypes.find(
+                                                                        (item) => item.adjustmentTypeId === selectedValue
+                                                                    );
+                                                                    const isDeductionField = document.getElementsByName('adjustmentTypeId')[0];
+                                                                    if (selectedType) {
+                                                                        isDeductionField.value = selectedType.deduction;
+                                                                    } else {
+                                                                        isDeductionField.value = '';
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <option value="" disabled={!index} selected={!index}>
+                                                                    Select Earnings & Allowances Name
+                                                                </option>
+                                                                {adjustmentTypes &&
+                                                                    adjustmentTypes.length &&
+                                                                    adjustmentTypes.map((item, index) => (
+                                                                        <option key={`${index}_${item.adjustmentTypeId}`} value={item.adjustmentTypeId}>
+                                                                            {item.adjustmentName}
+                                                                        </option>
+                                                                    ))}
+                                                            </select>
+                                                            {touched.errors && errors.adjustmentTypeId && (
+                                                                <p id="payrolladjustment_errorselectadjustmentname_adjustmentp" style={{ color: "red", fontSize: "10px" }}>{errors.adjustmentTypeId}</p>
                                                             )}
                                                         </div>
+
+                                                        <div className="col-md-4 mb-3">
+                                                            <label>Amount</label>
+                                                            <input
+                                                                id="payrolladjustment_amount_adjustmentminput"
+                                                                type="number"
+                                                                className={`form-control ${touched.adjustmentAmount && values.adjustmentAmount == "" ? 'is-invalid' : ''}`}
+                                                                name="adjustmentAmount"
+                                                                value={values.adjustmentAmount}
+                                                                onChange={(e) => {
+                                                                    setFieldValue('adjustmentAmount', e.target.value);
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].adjustmentAmount = e.target.value;
+                                                                    setAdjustment(updatedFields);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="col-md-4 mb-3">
+                                                            <label>Start Date</label>
+                                                            <input
+                                                                id="payrolladjustment_startdate_recurringinput"
+                                                                type="date"
+                                                                className={`form-control ${touched.startDate && errors.startDate ? 'is-invalid' : ''}`}
+                                                                name="startDate"
+                                                                value={values.startDate}
+                                                                onChange={(e) => {
+                                                                    setFieldValue('startDate', e.target.value);
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].startDate = e.target.value;
+                                                                    setAdjustment(updatedFields);
+                                                                }}
+                                                            />
+                                                            {errors && errors.startDate && (
+                                                                <p id="payrollrecurring_errorstartdate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.startDate}</p>
+                                                            )}
+                                                        </div>
+                                                        <div className="col-md-4 mb-3">
+                                                            <label>End Date</label>
+                                                            <input
+                                                                id="payrolladjustment_enddate_recurringinput"
+                                                                type="date"
+                                                                className={`form-control ${touched.endDate && errors.endDate ? 'is-invalid' : ''}`}
+                                                                name="endDate"
+                                                                value={values.endDate}
+                                                                onChange={(e) => {
+                                                                    setFieldValue('endDate', e.target.value);
+                                                                    const updatedFields = [...adjustment];
+                                                                    updatedFields[index].endDate = e.target.value;
+                                                                    setAdjustment(updatedFields);
+                                                                }}
+                                                            />
+                                                            {errors && errors.endDate && (
+                                                                <p id="payrollrecurring_errorenddate_recurringinputp" style={{ color: "red", fontSize: "12px" }}>{errors.endDate}</p>
+                                                            )}
+                                                        </div>
+                                                        <div className="col-md-4 mb-3"></div>
+
+                                                        {adjustment.length > 1 && (
+                                                            <div className="col-md-3 mb-3">
+                                                                <label>&nbsp;</label>
+                                                                <button
+                                                                    id="payrolladjustment_remove_adjustmentbtn"
+                                                                    type="button"
+                                                                    className="btn btn-outline-danger"
+                                                                    onClick={() => handleRemoveField(index)}
+                                                                >
+                                                                    Remove
+                                                                </button>
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                )
-                                            }
-
-
+                                                </div>
                                             )
-                                            }
-                                        </div>
+                                        }
+                                        )
+                                        }
+                                    </div>
                                     }
 
                                     <Modal.Footer>
