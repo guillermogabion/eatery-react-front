@@ -315,7 +315,7 @@ const Shortcut = () => {
                     <div className="shortcut-inner-body">
                     <div>
                         <Table responsive style={{ width: '100%',overflowX: 'hidden', }}>
-                            <div style={{ height: '350px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '10px' }}>
+                            <div style={{ height: '330px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '10px' }}>
                                 <thead>
                                     <tr style={{ border: 'none' }}>
                                         <th style={{ width: 'auto'}}>Parent / Page Name</th>
@@ -427,7 +427,7 @@ const Shortcut = () => {
                     <div className="row d-flex mx-1 pt-12 mt-4">
                         <div className="col-6">
                             <button
-                            style={{width:'100%', height: '45px'}}
+                            style={{width:'100%', height: '45px', lineHeight: '15px'}}
                             onClick={toggleDivs}
                             className="btn btn btn-outline-primary"
                             >Back to Previous</button>

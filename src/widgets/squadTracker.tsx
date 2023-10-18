@@ -151,7 +151,7 @@ const All = () => {
                                     {item.status == null && item.todaysTimeIn == null ? "Absent" : ""}
                                     {item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null ? (
                                         <>
-                                            <div className="col-12">Out - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
+                                            <div className="col-12">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
 
                                         </>
                                     ) : item.status == null && item.todaysTimeOut != null && item.todaysTimeIn == null ? "" :  ""}
