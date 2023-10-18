@@ -446,7 +446,7 @@ const Shortcut = () => {
                         <div className="row d-flex  mx-1 pt-12 mt-4">
                             <div className="col-6">
                                 <button
-                                style={{width:'100%', height: '45px'}}
+                                style={{width:'100%', height: '45px', lineHeight: '15px'}}
                                 onClick={toggleDivs2}
                                 className="btn btn btn-outline-primary"
                                 >Back to Previous</button>
