@@ -4782,13 +4782,13 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .custom-tab .nav-link {
     border: none;
     font-weight: bold !important;
-    font-size: 10px !important;
+    font-size: 15px !important;
   }
   .custom-tab .nav-link.active {
     border: none;
     border-bottom: 2px solid #189FB5;
     font-weight: bold !important;
-    font-size: 13px !important;
+    font-size: 18px !important;
     color: #189FB5 ;
   }
   .regular-employee-text {
@@ -4801,7 +4801,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     font-size: 10px !important;
   }
   .custom-slider-item {
-    font-size: 12px !important;
+    font-size: 15px !important;
   }
   .custom-td-width {
     width: auto !important;
@@ -4811,6 +4811,18 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   }
   .arrow-space {
     padding-top: 10px;
+  }
+  .custom-tab-announcement .nav-link {
+    border: none;
+    font-weight: bold !important;
+    font-size: 12px !important;
+  }
+  .custom-tab-announcement .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #189FB5;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    color: #189FB5 ;
   }
   
 }
@@ -4930,4 +4942,44 @@ input[type="date"]{
 .arrow-color {
 
   color: white !important;
+}
+
+.custom-numbered-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+.icon-arrangement {
+  text-align: right;
+}
+@media screen and (max-width : 500px) {
+ .dropdown-text {
+  font-size: 12px;
+ }
+ .custom-numbered-icon {
+  width: 3em;
+  height: 3em;
+  font-size: 0.7em;
+  margin-bottom: 1%;
+  margin-left: 15%;
+}
+.icon-arrangement {
+  text-align: center;
+}
+.jobtitle-size {
+  max-width: 100%; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+  
 }

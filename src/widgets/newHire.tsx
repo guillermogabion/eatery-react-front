@@ -17,8 +17,10 @@ const NewHire = () => {
   ];
 
   const newHireList = (month: any) => {
+
+    const apiUrl = month ? `${Api.getNewHire}?month=${month}` : Api.getNewHire;
     RequestAPI.getRequest(
-        `${Api.getNewHire}?month=${month}`,
+        apiUrl,
         "",
         {},
         {},
