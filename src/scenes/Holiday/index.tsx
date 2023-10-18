@@ -489,7 +489,7 @@ export const Holiday = (props: any) => {
                         {masterList.holidayType &&
                           masterList.holidayType.length > 0 &&
                           masterList.holidayType.map((item: any, index: string) => (
-                            <option key={`${index}_${item.item}`} value={item.item}>
+                            <option key={`${index}_${item.item}`} value={item}>
                               { Utility.removeUnderscore(item)}
                             </option>
                           ))}
