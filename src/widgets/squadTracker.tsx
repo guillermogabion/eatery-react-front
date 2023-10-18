@@ -127,7 +127,7 @@ const All = () => {
             <div style={{width: '100%'}}>
                 
                 <Table responsive style={{width: '100%'}}>
-                    <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
+                    <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', overflowX: 'hidden', paddingTop: '20px', marginLeft: '5px' }}>
                         <tbody>
                             {allMember && allMember.length > 0 ? (
                             allMember.map((item: any, index: any) => (
