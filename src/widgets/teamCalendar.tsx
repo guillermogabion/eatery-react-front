@@ -657,19 +657,9 @@ const TeamCalendar = () => {
                             {dataWeek.reduce((total: any, item: any) => total + (item.bdayList ? item.bdayList.length : 0), 0) > 2 && (
                                 <div
                                   style={{
-                                    width: '30px',
-                                    height: '30px',
-                                    borderRadius: '50%',
-                                    backgroundColor: 'white',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'black',
-                                    fontSize: '15px',
-                                    fontWeight: 'bold',
-                                    marginBottom: '5px',
-                                    marginLeft: '5px',
+                                   
                                   }}
+                                  className="custom-numbered-icon"
                                 >
                                   +{dataWeek.reduce((total: any, item: any) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
                                 </div>
@@ -721,11 +711,14 @@ const TeamCalendar = () => {
                           <div className="col-6">
                             <div className="d-flex justify-content-end">
                               <div className="col-6" style={{ textAlign: 'right'}}>
+                                {/* <div style={{display: 'flex', alignItems: 'center', overflow: 'hidden'}}>
+                                  
+                                </div> */}
                                 {hasLeavesThisWeek ? (
                                   dataWeek.map((item: any, index: any) => (
                                     <div key={index}>
                                     {item.leavesList && item.leavesList.length > 0 && (
-                                      <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
+                                      <ul style={{ listStyle: 'none', paddingLeft: '5px', margin: 0, whiteSpace: 'nowrap' }}>
                                       {item.leavesList.slice(0, 2).map((leaveItem: any, leaveIndex: any) => (
                                         <li key={leaveIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
                                           <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
@@ -733,32 +726,23 @@ const TeamCalendar = () => {
                                       ))}
                                       </ul>
                                     )}
+
                                     </div>
                                   ))
+                                  
+                                  
+                                  
                                   ) : (
                                   null
                                 )}
                               </div>
                               {dataWeek.reduce((total: any, item: any) => total + (item.leavesList ? item.leavesList.length : 0), 0) > 2 && (
-                                <div
-                                  style={{
-                                    width: '30px',
-                                    height: '30px',
-                                    borderRadius: '50%',
-                                    backgroundColor: 'white',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'black',
-                                    fontSize: '15px',
-                                    fontWeight: 'bold',
-                                    marginBottom: '5px',
-                                    marginLeft: '5px',
-                                  }}
-                                >
+                                <div className="col-3 custom-numbered-icon">
                                   +{dataWeek.reduce((total: any, item: any) => total + (item.leavesList ? item.leavesList.length : 0), 0) - 2}
                                 </div>
                               )} 
+                              
+                             
                               <span className="accordion-custom-button">
                                 <Button
                                   variant="text"

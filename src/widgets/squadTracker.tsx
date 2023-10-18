@@ -133,21 +133,30 @@ const All = () => {
                             allMember.map((item: any, index: any) => (
                                 <tr key={index}>
                                 
-                                <td id={"dashboard_squadtracker_membername_all_" + item.id} className="text-primary font-bold d-flex custom-td-width">
-                                    <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
-                                    <div className="pt-2">
-                                        {item.fullname}
-                                        <br />
-                                        <span className="jobtitle-size">{item.jobTitle}</span>
-                                    </div>
-                                </td>
+                                <td id={"dashboard_squadtracker_membername_all_" + item.id} className="text-primary font-bold d-flex custom-td-width" style={{ alignItems: 'center' }}>
+                                        <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                                        <div className="pt-2">
+                                            {item.fullname}
+                                            <br />
+                                            <span className="jobtitle-size">{item.jobTitle}</span>
+                                        </div>
+                                    </td>
                                 <td id={"dashboard_squadtracker_status_all_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
                                     {item.status == null && item.todaysTimeIn != null ? (
                                         <>
-                                            <p>IN</p>
+                                            <div className="col-12">IN - {moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A")}</div>
                                         </>
                                     ) : ""}
-                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ?  moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A"): item.status}</td>
+                                    {/* {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ?  moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A"): item.status} */}
+                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : ""}
+                                    {item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null ? (
+                                        <>
+                                            <div className="col-12">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
+
+                                        </>
+                                    ) : item.status == null && item.todaysTimeOut != null && item.todaysTimeIn == null ? "" :  ""}
+                                    {/* {item.status == null && item.todaysTimeIn == null && item.todaysTimeOut == null ? "" : item.status == null && item.todaysTimeIn == null && item.todaysTimeOut != null ? "" : item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null ?  moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A"): item.status} */}
+                                </td>
                                 </tr>
                             ))
                             ) : (

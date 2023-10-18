@@ -348,17 +348,17 @@ const Reimbursement = () => {
             <div>
             <div style={{ paddingLeft: '15px'}}>
                 <Table responsive>
-                    <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white' }}>
-                        <tr>
-                            
-                                <th>Employee</th>
-                                <th>Amount</th>
-                                <th>Action</th>
-                        </tr>
-                    </thead>
-                </Table>
-                <Table responsive>
-                    <tbody style={{ display: 'block', maxHeight: 'calc(300px - 40px)', overflowY: 'auto', width: '100%'}}>
+                    <div>
+                        <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white' }}>
+                            <tr>
+                                
+                                    <th style={{width: '10px'}}>Employee</th>
+                                    <th style={{width: '10px'}}>Amount</th>
+                                    <th style={{width: '10px'}}>Action</th>
+                            </tr>
+                        </thead>
+                    </div>
+                    <tbody style={{ display: 'block', maxHeight: 'calc(360px - 40px)', overflowY: 'auto', width: '100%'}}>
                         {reimbursementList &&
                             reimbursementList.content &&
                             reimbursementList.content.length > 0 &&

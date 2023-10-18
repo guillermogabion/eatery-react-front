@@ -10,6 +10,8 @@ import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { trash, plus, check, action_edit, check_circle, save } from "../assets/images"
 import { tr } from "date-fns/locale";
+import { Utility } from "../utils"
+
 
 
 
@@ -35,14 +37,14 @@ const Shortcut = () => {
         "endpoint" : ""
     })
 
-    const AddShortcut = (name : any, endpoint: any, parent: any) => {
+    const AddShortcut = (name : any, endpoint: any, type: any) => {
         console.log(name)
         console.log(endpoint)
-        console.log(parent)
+        console.log(type)
         RequestAPI.postRequest(
             Api.addShortcut,
             "",
-            { name: name, endpoint : endpoint, parent : parent },
+            { name: name + '(' + type + ')', endpoint : endpoint},
             {},
             async (res) => {
                 const { status, body = { data: {}, error: {} } } = res;
@@ -109,12 +111,13 @@ const Shortcut = () => {
         setShowAdd(!showAdd);
         setShowShortcut(!showShortcut);
     };
+    
     const hasSimilarShortcut = (submenuItem : any) => {
     const trimmedSubmenuItemRoute = submenuItem.route.trim().toLowerCase();
     
     const hasSimilar = shortcut.some((item : any) => {
         const trimmedShortcutEndpoint = item.endpoint.trim().toLowerCase();
-        return trimmedShortcutEndpoint.includes(trimmedSubmenuItemRoute);
+        return trimmedShortcutEndpoint === trimmedSubmenuItemRoute;
         });
     
         return hasSimilar;
@@ -221,9 +224,17 @@ const Shortcut = () => {
                                                             to={item.endpoint}
                                                             id={"dashboardshortcut_link_" + item.endpoint}
                                                         >
-                                                            <span style={{ lineHeight: "0%", color: "white" }}>
-                                                            {item.name}
-                                                            </span>
+                                                            <div style={{ lineHeight: "80%", color: "white" }}>
+                                                                {item.name.includes("(") ? (
+                                                                    <>
+                                                                        {item.name.split("(")[0]}
+                                                                        <br />
+                                                                        <span style={{fontSize: "10px"}}>({Utility.removeUnderscore(item.name.split("(")[1]?.replace(")", ""))})</span>
+                                                                    </>
+                                                                ) : (
+                                                                   ""
+                                                                )}
+                                                            </div>
                                                         </Link>
                                                     </div>
                                                 ) : null
@@ -304,7 +315,7 @@ const Shortcut = () => {
                     <div className="shortcut-inner-body">
                     <div>
                         <Table responsive style={{ width: '100%',overflowX: 'hidden', }}>
-                            <div style={{ height: '350px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '10px' }}>
+                            <div style={{ height: '330px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '10px' }}>
                                 <thead>
                                     <tr style={{ border: 'none' }}>
                                         <th style={{ width: 'auto'}}>Parent / Page Name</th>
@@ -322,7 +333,6 @@ const Shortcut = () => {
                                                     style={{ border: 'none' }}
                                                 >
                                                     <td
-                                                    
                                                     className=""
                                                     style={{
                                                         fontWeight: hasSimilar ? 'bold' : 'normal',
@@ -331,15 +341,16 @@ const Shortcut = () => {
                                                         margin: '0',
                                                         textAlign: 'left',
                                                         height: '25px',
+                                                        paddingLeft: '20px'
                                                     }}
                                                     >
                                                         {clickedSubmenuItem === submenuItem ? (
                                                             hasSimilar && (
-                                                                <div style={{ whiteSpace: 'nowrap' }}>
+                                                                <div style={{ whiteSpace: 'nowrap'}}>
                                                                     <span style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', margin: '0' }} onClick={() => hasSimilar && handleSubmenuItemClick(submenuItem)}>
-                                                                        {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/
+                                                                        {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label && limitText(submenuItem.label, 20)}
                                                                     </span>
-                                                                    <input
+                                                                    {/* <input
                                                                         className="formControl mx-1"
                                                                         type="text"
                                                                         name="secondaryName"
@@ -354,7 +365,7 @@ const Shortcut = () => {
                                                                     />
                                                                     <label>
                                                                         <img src={save} onClick={() => saveSecondaryName(submenuItem.route, submenuItemInputValue)} alt="" width={20} style={{ cursor: 'pointer', position: 'relative', zIndex: '9999' }} />
-                                                                    </label>
+                                                                    </label> */}
 
                                                                 </div>
                                                             )
@@ -373,13 +384,22 @@ const Shortcut = () => {
                                                     </td>
                                                     <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'center' }}>
                                                         <label>
+
                                                             {hasSimilar ? (
+                                                                    <img src={check_circle} alt="" width={20} style={{ cursor: 'pointer' }} />
+                                                                // clickedSubmenuItem !== submenuItem ? (
+                                                                //     <img src={check_circle} alt="" width={20} style={{ cursor: 'pointer' }} />
+                                                                // ) : ""
+                                                            ) : (
+                                                                <img src={plus} alt="" onClick={() => {AddShortcut(submenuItem.label, submenuItem.route, submenuItem.type)}} width={20}  style={{ cursor: 'pointer' }} />
+                                                            )}
+                                                            {/* {hasSimilar ? (
                                                                 clickedSubmenuItem !== submenuItem ? (
                                                                     <img src={check_circle} alt="" width={20} style={{ cursor: 'pointer' }} />
                                                                 ) : ""
                                                             ) : (
                                                                 <img src={plus} alt="" onClick={() => {AddShortcut(submenuItem.label, submenuItem.route, submenuItem.type)}} width={20}  style={{ cursor: 'pointer' }} />
-                                                            )}
+                                                            )} */}
                                                         </label>
                                                     </td>
 
@@ -407,7 +427,7 @@ const Shortcut = () => {
                     <div className="row d-flex mx-1 pt-12 mt-4">
                         <div className="col-6">
                             <button
-                            style={{width:'100%', height: '45px'}}
+                            style={{width:'100%', height: '45px', lineHeight: '15px'}}
                             onClick={toggleDivs}
                             className="btn btn btn-outline-primary"
                             >Back to Previous</button>
