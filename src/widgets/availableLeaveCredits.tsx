@@ -383,12 +383,12 @@ const AvailableLeaveCredits = () => {
         }}
         dialogClassName="modal-90w"
       >  
-        <Modal.Header className="d-flex justify-content-center">
-          <Modal.Title>
+        <Modal.Header>
+          <Modal.Title className="text-center mx-auto">
             Leave Application
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="row w-100 px-5">
+        <Modal.Body className="row px-5">
           <Formik
             innerRef={formRef}
             initialValues={initialValues}
@@ -407,40 +407,38 @@ const AvailableLeaveCredits = () => {
           {({ values, setFieldValue, handleSubmit, errors, touched }) => {
             return (
               <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                <div className="px-5">
-                  <div className="row pb-3">
-                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                      <div className="pb-2">
-                        <label>Leave Type</label>
-                        <select
-                          className="form-select"
-                          name="type"
-                          id="availableleavecredits_leavetype_input"
-                          value={values.type}
-                          // onChange={(e) => setFormField(e, setFieldValue)}>
-                          onChange={(e) => {
-                          setFormField(e, setFieldValue);
+                <div className="row px-2 mb-2">
+                  <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                    
+                      <label>Leave Type</label>
+                      <select
+                        className="form-select"
+                        name="type"
+                        id="availableleavecredits_leavetype_input"
+                        value={values.type}
+                        // onChange={(e) => setFormField(e, setFieldValue)}>
+                        onChange={(e) => {
+                        setFormField(e, setFieldValue);
 
-                          }}
-                        >
-                          {leaveTypes &&
-                          leaveTypes.length &&
-                          leaveTypes.map((item: any, index: string) => (
-                            <option key={`${index}_${item.id}`} value={item.id}>
-                            {item.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
+                        }}
+                      >
+                        {leaveTypes &&
+                        leaveTypes.length &&
+                        leaveTypes.map((item: any, index: string) => (
+                          <option key={`${index}_${item.id}`} value={item.id}>
+                          {item.name}
+                          </option>
+                        ))}
+                      </select>
+                  </div>
                   <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <div className="pb-2">
+                    <div className="">
                       <label>Remaining Leave Credits</label>
                         {getMyLeaves.map((leave: any) => (
                           <div key={leave.id}>
                             <div className="row">
-                              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">{leave.leaveName} :</div>
-                              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6" style={{textAlign: 'right'}}> {leave.creditsLeft}</div>
+                              <div className="col-6">{leave.leaveName} :</div>
+                              <div className="col-6" style={{textAlign: 'right'}}> {leave.creditsLeft}</div>
                             </div>
                           </div>
                           ))
@@ -450,10 +448,12 @@ const AvailableLeaveCredits = () => {
 
                   </div>
                   
-                  <div className="row">
-                      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                          <div className="pb-5">
-                              <label>Date(s)</label>
+                  <div className="row pb-2">
+                    <div className="col-12">
+                      <label>Date(s)</label>
+                    </div>
+                      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-2">
+                          {/* <div className="pb-5"> */}
                               <input type="date"
                                   name="dateFrom"
                                   id="availableleavecredits_datefrom_input"
@@ -469,9 +469,9 @@ const AvailableLeaveCredits = () => {
                               {errors && errors.dateFrom && (
                                   <p id="availableleavecredits_leavetypeerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.dateFrom}</p>
                               )}
-                              
                           </div>
-                          <div>
+                          {/* </div> */}
+                          {/* <div>
                               <span className="font-bold">Please State a Reason</span>
                               <br />
                               <label>Maximum of 250 characters only</label>
@@ -487,41 +487,63 @@ const AvailableLeaveCredits = () => {
                                   <p id="availableleavecredits_reasonerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
                               )}
                               <small className="form-text text-muted">{values.reason.length}/250 characters</small>
+                          </div> */}
+                        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+                            {/* <div className="mt-4"> */}
+                                <input type="date"
+                                    name="dateTo"
+                                    id="availableleavecredits_dateto_input"
+                                    className="form-control"
+                                    value={values.dateTo}
+                                    min={values.dateFrom}
+                                    onChange={(e) => {
+                                    setFormField(e, setFieldValue)
+                                    dateBreakdown(values.dateFrom, e.target.value)
+                                    if (leaveBreakdown.length > 30) {
+                                        const lastDate = leaveBreakdown[29].date;
+                                        setFieldValue('dateTo', values.dateTo);
+                                    }
+                                    }}
+                                />
+            
+            
+                                {errors && errors.dateTo && (
+                                    <p id="availableleavecredits_datetoerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
+                                )}
                           </div>
-                      </div>
-                      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                          <div className="mt-4">
-                              <input type="date"
-                                  name="dateTo"
-                                  id="availableleavecredits_dateto_input"
-                                  className="form-control"
-                                  value={values.dateTo}
-                                  min={values.dateFrom}
-                                  onChange={(e) => {
-                                  setFormField(e, setFieldValue)
-                                  dateBreakdown(values.dateFrom, e.target.value)
-                                  if (leaveBreakdown.length > 30) {
-                                      const lastDate = leaveBreakdown[29].date;
-                                      setFieldValue('dateTo', values.dateTo);
-                                  }
-                                  }}
-                              />
-          
-          
-                              {errors && errors.dateTo && (
-                                  <p id="availableleavecredits_datetoerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.dateTo}</p>
-                              )}
+                        </div>
+                        <div className="row d-flex">
+                          <div className="col-12">
+                            <span className="font-bold">Please State a Reason</span>
+                            <br />
+                            <label>Maximum of 250 characters only</label>
                           </div>
-                          <div className="mt-5 pt-5">
+                          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+                            <textarea
+                                rows={4}
+                                name="reason"
+                                id="availableleavecredits_reason_input"
+                                className={`form-control p-2${touched.reason && errors.reason ? 'is-invalid' : ''}`}
+                                value={values.reason}
+                                onChange={(e) => setFormField(e, setFieldValue)}
+                            />
+                            {errors && errors.reason && (
+                                <p id="availableleavecredits_reasonerror_p" style={{ color: "red", fontSize: "12px" }}>{errors.reason}</p>
+                            )}
+                            <small className="form-text text-muted">{values.reason.length}/250 characters</small>
+                            </div>
+
+                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
                               <input type="file" accept=".jpg, .png, .pdf, .doc" name="fileInput" style={{width: '100%', marginBottom: '0'}} className="file-input-style" onChange={(e) => {
-                                setFieldValue("file", e.currentTarget.files[0]);
-                              }} />
-                              <small className="form-text text-muted " style={{lineHeight: '0'}}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
-                          </div>
-                      </div>
+                                  setFieldValue("file", e.currentTarget.files[0]);
+                                }} />
+                                <small className="form-text text-muted " style={{lineHeight: '0'}}>(3MB maximum file size. Allowed file types; jpg, png, pdf, doc)</small>
+                            </div>
+                        </div>
+                           
+                       
                       
 
-                  </div>
                   <div className="pt-4">
                       <span className="font-bold">BREAKDOWN</span>
                       <Table responsive style={{ maxHeight: '100vh' }}>
@@ -606,29 +628,75 @@ const AvailableLeaveCredits = () => {
                     }
 
                   </div>
-                </div>
                 <br />
-                <Modal.Footer>
-                  <div className="d-flex justify-content-end px-5">
-                    <button
-                      onClick={() => {
-                          setShowModal(false)
-                      }}
-                      id="availableleavecredits_btn_cancel"
-                      type="button"
-                      className="btn btn-outline custom-grey-button mr-3">
+                {/* <Modal.Footer>
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                  <div className="row d-flex flex-column px-3">
+                    <div className="col-12 mb-2">
+                      <button
+                        id="availableleavecredits_save_btn"
+                        type="submit"
+                        className="btn btn-primary w-100"
+                        disabled={leaveBreakdown.length === 0 || leaveBreakdown.length > 30}
+                      >
+                        Save
+                      </button>
+                    </div>
+                    <div className="col-12">
+                      <button
+                        onClick={() => {
+                          setShowModal(false);
+                        }}
+                        id="availableleavecredits_btn_cancel"
+                        type="button"
+                        className="btn btn-outline custom-grey-button w-100"
+                      >
                         Cancel
-                    </button>
-                    <button
-                      id="availableleavecredits_save_btn"
-                      type="submit"
-                      className="btn btn-primary"
-                      disabled={leaveBreakdown.length === 0 || leaveBreakdown.length > 30}
-                    >
-                      Save
-                    </button>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                </Modal.Footer> */}
+                <Modal.Footer>
+                  <div className="d-flex justify-content-end ">
+                    
+                      <div className="mb-2">
+                        <button
+                          style={{width: '100px'}}
+                          id="availableleavecredits_save_btn"
+                          type="submit"
+                          className="btn btn-primary mr-2 button-on-mobile pb-2"
+                          disabled={leaveBreakdown.length === 0 || leaveBreakdown.length > 30}
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                          }}
+                          id="availableleavecredits_btn_cancel"
+                          type="button"
+                          className="btn btn-outline custom-grey-button pb-2"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                      {/* <div className="col-12">
+                        <button
+                          onClick={() => {
+                            setShowModal(false);
+                          }}
+                          id="availableleavecredits_btn_cancel"
+                          type="button"
+                          className="btn btn-outline custom-grey-button w-100"
+                        >
+                          Cancel
+                        </button>
+                      </div> */}
                   </div>
                 </Modal.Footer>
+
               </Form>
             )
           }}

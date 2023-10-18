@@ -4801,7 +4801,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     font-size: 10px !important;
   }
   .custom-slider-item {
-    font-size: 15px !important;
+    font-size: 12px !important;
   }
   .custom-td-width {
     width: auto !important;
@@ -4961,7 +4961,7 @@ input[type="date"]{
 .icon-arrangement {
   text-align: right;
 }
-@media screen and (max-width : 500px) {
+@media screen and (max-width : 500px) and (min-width: 300px) {
  .dropdown-text {
   font-size: 12px;
  }
@@ -4980,6 +4980,15 @@ input[type="date"]{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.custom-tab-announcement .nav-link  {
+  font-size: 10px !important;
+}
+.custom-tab-announcement .nav-link.active  {
+  font-size: 11px !important;
+}
+.button-on-mobile {
+  margin-right: 15px;
 }
   
 }
