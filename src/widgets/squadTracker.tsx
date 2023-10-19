@@ -124,10 +124,10 @@ const All = () => {
 
                 </div>
             </div>
-            <div style={{width: '100%'}}>
+            <div >
                 
-                <Table responsive style={{width: '100%'}}>
-                    <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', overflowX: 'hidden', paddingTop: '20px', marginLeft: '5px' }}>
+                <Table responsive>
+                    <div className="squad-tracker-table">
                         <tbody>
                             {allMember && allMember.length > 0 ? (
                             allMember.map((item: any, index: any) => (
@@ -141,7 +141,7 @@ const All = () => {
                                             <span className="jobtitle-size">{item.jobTitle}</span>
                                         </div>
                                     </td>
-                                <td id={"dashboard_squadtracker_status_all_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                                <td id={"dashboard_squadtracker_status_all_" + item.id} style={{ textAlign: 'end' , fontWeight: 600}}  className="text-primary">
                                     {item.status == null && item.todaysTimeIn != null ? (
                                         <>
                                             <div className="col-12">IN - {moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A")}</div>
@@ -160,8 +160,8 @@ const All = () => {
                                 </tr>
                             ))
                             ) : (
-                                <div className="justify-content-center">
-                                    <p style={{textAlign: 'center'}}>No Member Found</p>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                                    No Record Found
                                 </div>
                             )}
                         
@@ -254,37 +254,40 @@ const OnLeave = () => {
 
                 </div>
             </div>
-            <Table responsive>
-            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
-                <tbody>
-                    {allMember && allMember.length > 0 ? (
-                    allMember.map((item: any, index: any) => (
-                        <tr key={index}>
-                        <td id={"dashboard_squadtracker_membername_leave_" + item.id} className="text-primary font-bold d-flex custom-td-width">
-                            <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
-                            <div className="pt-2">
-                                {item.fullname}
-                                <br />
-                                <span>{item.jobTitle}</span>
-                            </div>
-                        </td>
-                        <td id={"dashboard_squadtracker_status_leave_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
-                            {item.status == null && item.todaysTimeIn != null ? (
-                                <>
-                                    <p>IN</p>
-                                </>
-                            ) : ""}
-                            {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
-                        </tr>
-                    ))
-                    ) : (
-                        <div className="justify-content-center d-flex">
-                            <p style={{textAlign: 'center'}}>No Member Found</p>
-                        </div>
-                    )}
-                </tbody>
+            { allMember && allMember.length == 0 ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                    No Record Found
                 </div>
-                </Table>
+            ) : ""}
+            
+            <Table responsive>
+                <div className="squad-tracker-table">
+                    <tbody>
+                        {allMember && allMember.length > 0 ? (
+                        allMember.map((item: any, index: any) => (
+                            <tr key={index}>
+                            <td id={"dashboard_squadtracker_membername_leave_" + item.id} className="text-primary font-bold d-flex custom-td-width" style={{ alignItems: 'center' }}>
+                                <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                                <div className="pt-2">
+                                    {item.fullname}
+                                    <br />
+                                    <span className="jobtitle-size">{item.jobTitle}</span>
+                                </div>
+                            </td>
+                            <td id={"dashboard_squadtracker_status_leave_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                                {item.status == null && item.todaysTimeIn != null ? (
+                                    <>
+                                        <p>IN</p>
+                                    </>
+                                ) : ""}
+                                {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
+                            </tr>
+                        ))
+                        ) : ""}
+                    </tbody>
+                </div>
+            </Table>
+         
         </div>
     )
 
@@ -375,36 +378,41 @@ const Absent = () => {
                 </div>
             </div>
             <Table responsive>
-            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '20px', marginLeft: '5px' }}>
-                <tbody>
-                    {allMember && allMember.length > 0 ? (
-                    allMember.map((item: any, index: any) => (
-                        <tr key={index}>
-                        <td id={"dashboard_squadtracker_membername_absent_" + item.id} className="text-primary font-bold d-flex custom-td-width">
-                            <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
-                            <div className="pt-2">
-                                {item.fullname}
-                                <br />
-                                <span>{item.jobTitle}</span>
-                            </div>
-                        </td>
-                        <td id={"dashboard_squadtracker_status_absent_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
-                            {item.status == null && item.todaysTimeIn != null ? (
-                                <>
-                                    <p>IN</p>
-                                </>
-                            ) : ""}
-                            {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
-                        </tr>
-                    ))
-                    ) : (
-                        <div className="justify-content-center">
-                            <p style={{textAlign: 'center'}}>No Member Found</p>
-                        </div>
-                    )}
-                </tbody>
+                <div className="squad-tracker-table">
+                    <tbody>
+                        {allMember && allMember.length > 0 && (
+                        allMember.map((item: any, index: any) => (
+                            <tr key={index}>
+                            <td id={"dashboard_squadtracker_membername_absent_" + item.id} className="text-primary font-bold d-flex custom-td-width" style={{ alignItems: 'center' }}>
+                                <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }} alt="User" />
+                                <div className="pt-2">
+                                    {item.fullname}
+                                    <br />
+                                    <span className="jobtitle-size">{item.jobTitle}</span>
+                                </div>
+                            </td>
+                            <td id={"dashboard_squadtracker_status_absent_" + item.id} style={{ textAlign: 'center' , fontWeight: 600}}  className="text-primary">
+                                {item.status == null && item.todaysTimeIn != null ? (
+                                    <>
+                                        <p>IN</p>
+                                    </>
+                                ) : ""}
+                                {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
+                            </tr>
+                        ))
+                        )}
+                    </tbody>
                 </div>
-                </Table>
+            </Table>
+            <div>
+            { allMember && allMember.length == 0 && (
+                <div className="d-flex justify-content-center align-items-center">
+                    No Record Found
+                </div>
+            )}
+
+            </div>
+
         </div>
     )
 

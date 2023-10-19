@@ -158,7 +158,7 @@ const EmployeeDirectory = () => {
       <div className="card-header">
         <span className="">Employee Directory</span>
       </div>
-      <div className="time-card-body row">
+      <div className="time-card-body directory-layout">
         <div className="col-12 pb-3" style={{maxHeight: '20px'}}>
           <Slider {...settings} ref={sliderRef} className="custom-slider">
               {allSquadWithAllOption &&
@@ -179,7 +179,7 @@ const EmployeeDirectory = () => {
             </Slider>
         </div>
         <div className="col-12" style={{height: '100%'}}>
-          <div className="row">
+          <div className="row pb-2">
             <div className="pt-6 col-9 ml-3">
               <div className="" style={{ width: '100%', marginRight: 10 }}>
                   <EmployeeDropdown
@@ -209,14 +209,14 @@ const EmployeeDirectory = () => {
             </div>
           </div>
           <Table responsive >
-            <div style={{ minHeight: '300px', maxHeight: '300px', overflowY: 'auto', paddingTop: '40px', marginLeft: '20px' }}>
+            <div className="employee-directory-table pb-2" >
               <tbody>
                 {allEmployee.map((item: any, index: any) => {
                   return (
                     <tr key={item.id}>
                       <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold d-flex" style={{width: '300px'}}>
                         <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
-                        <span style={{ marginTop: '22px' }}>{item.name}</span>
+                        <span className="employee-directory-table-item">{item.name}</span>
                         </td>
                       <td id={"dashboardemployeedirectory_td_squadname_"} style={{width: '100%'}}>{item.squadName}</td>
                     </tr>

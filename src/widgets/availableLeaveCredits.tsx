@@ -437,7 +437,9 @@ const AvailableLeaveCredits = () => {
                         {getMyLeaves.map((leave: any) => (
                           <div key={leave.id}>
                             <div className="row">
-                              <div className="col-6">{leave.leaveName} :</div>
+                              <div className="col-6">
+                                <span className="leave-credits">{leave.leaveName} :</span>
+                              </div>
                               <div className="col-6" style={{textAlign: 'right'}}> {leave.creditsLeft}</div>
                             </div>
                           </div>
@@ -563,49 +565,68 @@ const AvailableLeaveCredits = () => {
                               <tr>
                                 <td key={index + 'date'} >{date}</td>
                                 <td key={index} >
-                                  <input
-                                    type="radio"
-                                    name={"leaveCredit" + index.toString()}
-                                    id={"availleaveCreditWhole" + index.toString()}
-                                    checked={item.credit == 1}
-                                    onChange={() => {
-                                      setDateOption(index, 1, 'WHOLEDAY')
-                                    }}
-                                  />
-                                  <label id="leaves_wholeday_leavebreakdownlabel" htmlFor={"leaveCreditWhole" + index.toString()}
-                                    style={{ marginRight: 10 }}>Whole Day</label>
-                                  <input
-                                    type="radio"
-                                    name={"leaveCredit" + index.toString()}
-                                    id={"availleaveCreditDay" + index.toString()}
-                                    checked={item.credit == 0.5}
-                                    onChange={() => {
-                                      setDateOption(index, .5, "FIRST_HALF")
-                                    }}
-                                  /> <label id="leaves_halfday_leavebreakdownlabel" htmlFor={"leaveCreditDay" + index.toString()}
-                                    style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
+                                  <div className="row d-flex">
+                                    <div className="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                      <input
+                                        type="radio"
+                                        name={"leaveCredit" + index.toString()}
+                                        id={"availleaveCreditWhole" + index.toString()}
+                                        checked={item.credit == 1}
+                                        onChange={() => {
+                                          setDateOption(index, 1, 'WHOLEDAY')
+                                        }}
+                                      />
+                                      <label id="leaves_wholeday_leavebreakdownlabel" htmlFor={"leaveCreditWhole" + index.toString()}
+                                        style={{ marginRight: 10 }}>Whole Day</label>
+                                      </div>
+                                    <div className="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                                      <input
+                                        type="radio"
+                                        name={"leaveCredit" + index.toString()}
+                                        id={"availleaveCreditDay" + index.toString()}
+                                        checked={item.credit == 0.5}
+                                        onChange={() => {
+                                          setDateOption(index, .5, "FIRST_HALF")
+                                        }}
+                                      /> <label id="leaves_halfday_leavebreakdownlabel" htmlFor={"leaveCreditDay" + index.toString()}
+                                        style={{ paddingTop: -10, marginRight: 10 }}>Half Day</label>
+                                    </div>
+                                  </div>
+                                  
+                                  
                                   {
                                     item.dayType != 'WHOLEDAY' ?
                                       <>
                                         <br />
-                                        <input
-                                          type="radio"
-                                          name={"dayTypes" + index.toString()}
-                                          id={"availleaveCreditWhole1" + index.toString()}
-                                          checked={item.dayType == 'FIRST_HALF'}
-                                          onChange={() => setDateOption(index, .5, "FIRST_HALF")}
-                                        />
-                                        <label id="leaves_leavecreditfirsthalf_leavebreakdownlabel" htmlFor={"leaveCreditWhole1" + index.toString()}
-                                          style={{ marginRight: 10 }}>First Half</label>
-                                        <input
-                                          type="radio"
-                                          name={"dayTypes" + index.toString()}
-                                          checked={item.dayType == 'SECOND_HALF'}
-                                          id={"availleaveCreditDay1" + index.toString()}
-                                          onChange={() => setDateOption(index, .5, "SECOND_HALF")}
-                                        />
-                                        <label id="availleaves_leavecreditsecondhalf_leavebreakdownlabel" htmlFor={"leaveCreditDay1" + index.toString()}
-                                          style={{ paddingTop: -10 }}>Second Half</label>
+                                        <div className="row d-flex">
+                                          <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div className="row d-flex">
+                                              <div className="col-6">
+                                                <input
+                                                  type="radio"
+                                                  name={"dayTypes" + index.toString()}
+                                                  id={"availleaveCreditWhole1" + index.toString()}
+                                                  checked={item.dayType == 'FIRST_HALF'}
+                                                  onChange={() => setDateOption(index, .5, "FIRST_HALF")}
+                                                />
+                                                <label id="leaves_leavecreditfirsthalf_leavebreakdownlabel" htmlFor={"leaveCreditWhole1" + index.toString()}
+                                                style={{ marginRight: 10 }}>First Half</label>
+                                              </div>
+                                              <div className="col-6">
+                                                <input
+                                                  type="radio"
+                                                  name={"dayTypes" + index.toString()}
+                                                  checked={item.dayType == 'SECOND_HALF'}
+                                                  id={"availleaveCreditDay1" + index.toString()}
+                                                  onChange={() => setDateOption(index, .5, "SECOND_HALF")}
+                                                />
+                                                <label id="availleaves_leavecreditsecondhalf_leavebreakdownlabel" htmlFor={"leaveCreditDay1" + index.toString()}
+                                                style={{ paddingTop: -10, marginRight: 10, fontSize: '10px' }}>Second Half</label>
+                                              </div>
+                                              
+                                            </div>
+                                          </div>
+                                        </div>
                                       </>
                                       :
                                       null
