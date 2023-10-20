@@ -154,7 +154,7 @@ const All = () => {
                                             <div className="col-12">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
 
                                         </>
-                                    ) : item.status == null && item.todaysTimeOut != null && item.todaysTimeIn == null ? "" :  ""}
+                                    ) : item.status == null && item.todaysTimeOut != null && item.todaysTimeIn == null ? "" :  item.status}
                                     {/* {item.status == null && item.todaysTimeIn == null && item.todaysTimeOut == null ? "" : item.status == null && item.todaysTimeIn == null && item.todaysTimeOut != null ? "" : item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null ?  moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A"): item.status} */}
                                 </td>
                                 </tr>
