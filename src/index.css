@@ -4504,6 +4504,8 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   margin: 0;
   list-style: none;
   transition: transform 0.3s ease-in-out;
+  padding-left: 10px;
+  padding-top: 5px;
 }
 
 .horizontal-scroll-item {
@@ -4992,11 +4994,13 @@ input[type="date"]{
   overflow: hidden;
 }
 .squad-tracker-table {
-  height: 350px;
-  padding-top: 40px;
+  height: 320px;
+  padding-top: 20px;
   margin-left: -8px;
   margin-right: 15px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+
 }
 .reimbursemnet-layout {
   margin-left: 10px;
@@ -5007,6 +5011,16 @@ input[type="date"]{
 .reimbursement-table {
   width: 450px;
 }
+.new-hire-table {
+  height: 320px;
+  padding-top: 20px;
+  margin-left: -8px;
+  margin-right: 4px;
+  overflow: hidden;
+  width: 97%;
+  max-width: 97%;
+}
+
 @media screen and (max-width : 500px) and (min-width: 300px) {
   .dropdown-text {
     font-size: 12px;
@@ -5067,7 +5081,7 @@ input[type="date"]{
     padding-top: 20px;
     margin-left: -3px;
     margin-right: 2px;
-    overflow: hidden;
+    overflow-y: auto ;
     width: 98%;
     max-width: 98%;
   }
