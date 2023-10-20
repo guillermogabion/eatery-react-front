@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RequestAPI, Api } from "../api";
 import { Table, Button, Carousel } from "react-bootstrap";
-import {user, evaluate} from "../assets/images"
+import {user, evaluate, evaluate_disabled} from "../assets/images"
 
 const NewHire = () => {
   const [clickedItem, setClickedItem] = useState(null);
@@ -106,7 +106,7 @@ const NewHire = () => {
                           <span style={{ marginTop: '22px' }}>{item.name}</span>
                           </td>
                         <td style={{ paddingLeft: '50px' }} id={"newhire_button_td_" + item.id} >
-                          <img src={evaluate} alt="" />
+                          <img src={evaluate_disabled} alt="" />
                         </td>
                       </tr>
                     )

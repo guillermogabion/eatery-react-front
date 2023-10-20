@@ -660,7 +660,7 @@ export const SquadAttendanceCorrection = (props: any) => {
             {/* <h4>reason</h4> {{values.reason}} */}
             <p id="squadattendancecorrection_name_reqinfop">Name : <span>{initialValues.lastName + ' ' + initialValues.firstName}</span> <span>{ }</span></p>
             <p id="squadattendancecorrection_reason_reqinfop">Reason : {initialValues.reason}</p>
-            <p id="squadattendancecorrection_type_reqinfop">Type : {initialValues.type}</p>
+            <p id="squadattendancecorrection_type_reqinfop">Type : {Utility.removeUnderscore(initialValues.type)}</p>
             <p id="squadattendancecorrection_status_reqinfop">Status : {initialValues.status}</p>
 
             <Table responsive style={{ maxHeight: '100vh' }}>
@@ -676,7 +676,7 @@ export const SquadAttendanceCorrection = (props: any) => {
                 {coaBreakdown.map((initialValues, index) => (
                   <tr key={`coaBreakdown-${index}`}>
                     <td id="squadattendancecorrection_shiftdate_reqinfodata">{Utility.formatDate(initialValues.shiftDate, 'MM-DD-YYYY')}</td>
-                    <td id="squadattendancecorrection_coabdtype_reqinfodata">{initialValues.coaBdType}</td>
+                    <td id="squadattendancecorrection_coabdtype_reqinfodata">{Utility.removeUnderscore(initialValues.coaBdType)}</td>
                     <td id="squadattendancecorrection_date_reqinfodata">{Utility.formatDate(initialValues.date, 'MM-DD-YYYY')}</td>
                     <td id="squadattendancecorrection_time_reqinfop">{initialValues.time}</td>
                   </tr>

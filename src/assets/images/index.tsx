@@ -51,6 +51,7 @@ import trash from "../images/dist/shortcut/delete.png"
 import save from "../images/dist/shortcut/save.png"
 import empStat from "../images/dist/statistics/empStat.svg"
 import evaluate from "../images/dist/newhire/evaluate.svg"
+import evaluate_disabled from "../images/dist/newhire/evaluate_disabled.svg"
 
 export {
   eye,
@@ -104,5 +105,6 @@ export {
   trash, 
   save,
   empStat,
-  evaluate
+  evaluate,
+  evaluate_disabled
 }

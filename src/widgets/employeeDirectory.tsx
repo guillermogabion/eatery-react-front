@@ -179,7 +179,7 @@ const EmployeeDirectory = () => {
             </Slider>
         </div>
         <div className="col-12" style={{height: '100%'}}>
-          <div className="row pb-2">
+          <div className="row">
             <div className="pt-6 col-9 ml-3">
               <div className="" style={{ width: '100%', marginRight: 10 }}>
                   <EmployeeDropdown
@@ -208,17 +208,20 @@ const EmployeeDirectory = () => {
               </Button>
             </div>
           </div>
-          <Table responsive >
-            <div className="employee-directory-table pb-2" >
+          </div>
+          <div>
+            
+          <Table>
+            <div className="employee-directory-table pb-2" style={{overflowY: 'auto', height: '320px', marginTop: '0'}} >
               <tbody>
                 {allEmployee.map((item: any, index: any) => {
                   return (
                     <tr key={item.id}>
-                      <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold d-flex" style={{width: '300px'}}>
+                      <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold d-flex custom-td-width" style={{width: 'auto'}} >
                         <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
                         <span className="employee-directory-table-item">{item.name}</span>
                         </td>
-                      <td id={"dashboardemployeedirectory_td_squadname_"} style={{width: '100%'}}>{item.squadName}</td>
+                      <td id={"dashboardemployeedirectory_td_squadname_"} style={{width: '100%', textAlign: 'center'}} className="custom-td-width">{item.squadName}</td>
                     </tr>
                   )
                 })}

@@ -236,6 +236,7 @@ export const Reimbursement = (props: any) => {
                           confirmButton.id = "reimbursementindex_fileuploadsuccessconfirm_alertbtn"
                       },
                 }).then((e) => {
+                    setCreateReimbursementModal(false)
                     if (e.isConfirmed) {
                         location.reload()
                     }
@@ -413,6 +414,7 @@ export const Reimbursement = (props: any) => {
                                     icon: 'success',
                                 }).then((e) => {
                                     setIsSubmitCreateReim(false)
+                                    setCreateReimbursementModal(false)
                                     if (e.isConfirmed) {
                                         location.reload()
                                     }
@@ -431,6 +433,7 @@ export const Reimbursement = (props: any) => {
                                 icon: 'error',
                             })
                             setIsSubmitCreateReim(false)
+                            setCreateReimbursementModal(false)
                         }
                     })
                 }

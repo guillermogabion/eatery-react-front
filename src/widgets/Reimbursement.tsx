@@ -76,6 +76,71 @@ const Reimbursement = () => {
             }
         )
     }
+    const updateReimbursement = () => {
+        if (reimbursementView) {
+            const valuesObj: any = { ...reimbursementParentValues }
+            let payload: any = {
+                "approvedBudget": valuesObj.approvedBudget,
+                "total": valuesObj.total,
+                "purpose": valuesObj.purpose,
+                "remark": valuesObj.remark,
+                "typeId": valuesObj.typeId,
+                "parentId": valuesObj.parentId,
+            }
+            RequestAPI.putRequest(
+                Api.updateReimbursement,
+                "",
+                payload,
+                {},
+                async (res) => {
+                    const { status, body = { data: {}, error: {} } } = res;
+                    if (status === 200 || status === 201) {
+                        if (body.error && body.error.message) {
+                            ErrorSwal.fire({
+                                title: 'Error!',
+                                text: (body.error && body.error.message) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_errorconfirm7_alertbtn"
+                                },
+                                icon: 'error',
+                            })
+                        } else {
+                            ErrorSwal.fire({
+                                title: 'Success!',
+                                text: (body.data) || "",
+                                didOpen: () => {
+                                  const confirmButton = Swal.getConfirmButton();
+                        
+                                  if(confirmButton)
+                                    confirmButton.id = "remibursementlist_successconfirm4_alertbtn"
+                                },
+                                icon: 'success',
+                            })
+                            getReimbursements(0)
+                            setIsEditReimbursement(false)
+                            setViewReimbursementModal(false)
+                        }
+                    } else {
+                        ErrorSwal.fire({
+                            title: 'Error!',
+                            text: "Something Error.",
+                            didOpen: () => {
+                              const confirmButton = Swal.getConfirmButton();
+                    
+                              if(confirmButton)
+                                confirmButton.id = "remibursementlist_errorconfirm8_alertbtn"
+                            },
+                            icon: 'error',
+                        })
+                    }
+                }
+            );
+        }
+
+    }
     const approveReimbursement = (id: any = 0) => {
         ErrorSwal.fire({
             title: 'Are you sure?',
@@ -338,40 +403,61 @@ const Reimbursement = () => {
         valuesObj[key] = value
         setReimbursementParentValues({ ...valuesObj })
     }
+    const getReimbursementType = () => {
+        RequestAPI.getRequest(
+            `${Api.reimbursementType}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                if (status === 200 && body && body.data) {
+                    if (body.error && body.error.message) {
+                    } else {
+                        setReimbursementType(body.data)
+                    }
+                }
+            }
+        )
+    }
+    useEffect(() => {
+        getReimbursements(0)
+        getReimbursementType()
+    }, [])
 
     return (
         <div className="time-card-width">
              <div className="card-header">
                 <span className="">Reimbursement (Pending for Approval)</span>
             </div>
-            <div className="time-card-body row">
+            <div className="time-card-body">
             <div>
-            <div style={{ paddingLeft: '15px'}}>
-                <Table responsive>
+            <div className="reimbursement-layout">
+                <Table className="reimbursement-table">
                     <div>
-                        <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white' }}>
+                        <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white'}}>
                             <tr>
                                 
-                                    <th style={{width: '10px'}}>Employee</th>
-                                    <th style={{width: '10px'}}>Amount</th>
-                                    <th style={{width: '10px'}}>Action</th>
+                                    <th style={{width: 'auto', textAlign: 'center'}}>Employee</th>
+                                    <th style={{width: 'auto', textAlign: 'center'}}>Amount</th>
+                                    <th style={{width: 'auto', textAlign: 'center'}} className="custom-td-width">Action</th>
                             </tr>
                         </thead>
                     </div>
-                    <tbody style={{ display: 'block', maxHeight: 'calc(360px - 40px)', overflowY: 'auto', width: '100%'}}>
+                    <tbody style={{display: 'block', maxHeight: 'calc(360px - 40px)', overflowY: 'auto', width: '100%'}}>
                         {reimbursementList &&
                             reimbursementList.content &&
                             reimbursementList.content.length > 0 &&
                             reimbursementList.content.map((item: any, index: any) => {
                                 return (
-                                    <tr key={item.id}>
-                                        <td style={{width: 'auto'}} id={"reimbursement_name_tdtable_" + item.id}>
+                                    <tr key={item.id} style={{paddingRight: '20px'}}>
+                                        <td style={{width: 'auto', textAlign: 'center'}} id={"reimbursement_name_tdtable_" + item.id}>
                                             {`${item.firstName} ${item.lastName}`}
                                         </td>
-                                        <td style={{width: 'auto', paddingLeft: '20px'}} id={"reimbursement_total_tdtable_" + item.id}>
+                                        <td style={{width: 'auto', paddingLeft: '20px', textAlign: 'center'}} id={"reimbursement_total_tdtable_" + item.id}>
                                             {Utility.formatToCurrency(item.total)}
                                         </td>
-                                        <td style={{width: 'auto'}}>
+                                        <td style={{width: 'auto', textAlign: 'center', marginRight: '-50px'}} className="custom-td-width">
                                         <label
                                             id={"reimbursementlist_setreimbursement_btn_" + item.id}
                                             onClick={() => {

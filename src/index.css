@@ -4853,6 +4853,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   margin: 0; /* Remove any margin */
   padding: 0; /* Remove any padding */
 }
+.table > tbody {
+  vertical-align: middle !important;
+}
 
 .shortcut-inner-body {
   width: 100%;
@@ -4983,7 +4986,7 @@ input[type="date"]{
 }
 .employee-directory-table {
   height: 350px;
-  padding-top: 40px;
+  padding-top: 10px;
   margin-left: -8px;
   margin-right: 15px;
   overflow: hidden;
@@ -4994,6 +4997,15 @@ input[type="date"]{
   margin-left: -8px;
   margin-right: 15px;
   overflow: hidden;
+}
+.reimbursemnet-layout {
+  margin-left: 10px;
+  margin-right: 50px;
+  padding-right: 0;
+  overflow-x: auto;
+}
+.reimbursement-table {
+  width: 450px;
 }
 @media screen and (max-width : 500px) and (min-width: 300px) {
   .dropdown-text {
@@ -5084,6 +5096,15 @@ input[type="date"]{
   } 
   .directory-layout {
     padding-right: 0 !important;
+  }
+  .reimbursement-layout {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-right: 0;
+    overflow-x: auto;
+  }
+  .reimbursement-table {
+    width: 50px;
   }
   
 
