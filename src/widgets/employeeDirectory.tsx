@@ -20,7 +20,7 @@ const EmployeeDirectory = () => {
   const [ allSquad, setAllSquad ] = useState<any>([])
   const [ allEmployee, setAllEmployee ] = useState<any>([])
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [clickedItem, setClickedItem] = useState("");
+  const [clickedItem, setClickedItem] = useState("" );
   const [defaultSelectedItem, setDefaultSelectedItem] = useState(null);
   const scrollContainerRef = useRef(null);
   const [slider, setSlider] = useState(null);
@@ -41,6 +41,11 @@ const EmployeeDirectory = () => {
         if (status === 200 && body && body.data) {
         setAllSquad(body.data)
         console.log(body.data);
+
+         setDefaultSelectedItem({
+            index: 0, // Index of "All" in the allSquadWithAllOption array
+            itemId: '', // ID of the "All" item
+          });
         } else {
         }
 

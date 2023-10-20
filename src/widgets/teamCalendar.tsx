@@ -221,8 +221,8 @@ const CalendarComponent = () => {
                 {item.holidaysList && item.holidaysList.length > 0 && (
                   <ul>
                   {item.holidaysList.map((holidayItem: any, holidayIndex: any) => (
-                    <div key={holidayIndex} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
-                      {holidayItem.holidayName}
+                    <div key={holidayIndex} style={{ display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px', paddingLeft: '45px' }}>
+                        {holidayItem.holidayName}
                     </div>
                   ))}
                   </ul>
@@ -230,7 +230,7 @@ const CalendarComponent = () => {
               </div>
             ))
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+              <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
                 Not a holiday today
               </div>
             )}
@@ -250,9 +250,9 @@ const CalendarComponent = () => {
                         </button>
                       </div>
                       <div className="col-10">
-                        <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                          <ul className="horizontal-scroll-list">
-                            <div className="col-3  ">
+                        <div className="horizontal-scroll-container" id="horizontal-scroll-container" style={{paddingLeft: '50px'}}>
+                          <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
+                            <div className="col-3" >
                               {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                                 <li key={bdayIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'left', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -278,11 +278,11 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.bdayList && item.bdayList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list pa-2">
+                      <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
                         {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                           <li key={bdayIndex} className="horizontal-scroll-item">
                             {/* <div key={bdayIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}> */}
-                            <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={40} />
                               <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
                                 {bdayItem.firstName} <br />{bdayItem.lastName}
@@ -300,7 +300,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+            <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
               No Birthdays today
             </div>
           )}
@@ -320,13 +320,17 @@ const CalendarComponent = () => {
                       </div>
                       <div className="col-10">
                         <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                          <ul className="horizontal-scroll-list">
+                          <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
                             <div className="col-3  ">
                               {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                                 <li key={leaveIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={user} alt="" width={40} className="flex-wrap" />
-                                    {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
+                                    <img src={user} alt="" width={40} />
+                                    <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                    {leaveItem.firstName}<br />{leaveItem.lastName}
+                                    <br />
+                                    {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
+                                 </div> 
                                   </div>
                                 </li>
                               ))}
@@ -345,7 +349,7 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list">
+                      <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -367,8 +371,8 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
-              No Employee on Leave today
+            <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
+              No employee on leave today
             </div>
           )}
 
@@ -389,7 +393,7 @@ const CalendarComponent = () => {
                       </div>
                       <div className="col-10">
                         <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                          <ul className="horizontal-scroll-list">
+                          <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
                             <div className="col-3  ">
                               {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                                 <li key={newHireIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
@@ -413,7 +417,7 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.newHiresList && item.newHiresList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list">
+                      <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                           <li key={newHireIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -433,7 +437,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+            <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
               No newly hired today
             </div>
           )}
