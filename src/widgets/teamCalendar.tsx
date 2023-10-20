@@ -254,10 +254,12 @@ const CalendarComponent = () => {
                           <ul className="horizontal-scroll-list">
                             <div className="col-3  ">
                               {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
-                                <li key={bdayIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
+                                <li key={bdayIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'left', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                     <img src={user} alt="" width={40} />
-                                    {bdayItem.firstName} {bdayItem.lastName}
+                                    <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                      {bdayItem.firstName} <br />{bdayItem.lastName}
+                                    </div>
                                   </div>
                                 </li>
                               ))}
@@ -276,16 +278,20 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.bdayList && item.bdayList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      {/* <ul className="horizontal-scroll-list"> */}
+                      <ul className="horizontal-scroll-list pa-2">
                         {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
-                          // <li key={leaveIndex} className="horizontal-scroll-item">
-                            <div key={bdayIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                          <li key={bdayIndex} className="horizontal-scroll-item">
+                            {/* <div key={bdayIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}> */}
+                            <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={40} />
-                              {bdayItem.firstName} {bdayItem.lastName}
+                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                {bdayItem.firstName} <br />{bdayItem.lastName}
+                              </div>
                             </div>
-                          // </li>
+                            {/* </div> */}
+                           </li>
                         ))}
-                      {/* </ul> */}
+                      </ul>
                     </div>
                   ) : ""
                   
@@ -339,16 +345,20 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      {/* <ul className="horizontal-scroll-list"> */}
+                      <ul className="horizontal-scroll-list">
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
-                          // <li key={leaveIndex} className="horizontal-scroll-item">
-                            <div key={leaveIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                          <li key={leaveIndex} className="horizontal-scroll-item">
+                            <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={40} />
-                              {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
+                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                              {leaveItem.firstName}<br />{leaveItem.lastName}
+                              <br />
+                              {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
+                              </div>
                             </div>
-                          // </li>
+                          </li>
                         ))}
-                      {/* </ul> */}
+                      </ul>
                     </div>
                   ) : ""
                   
@@ -403,16 +413,18 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.newHiresList && item.newHiresList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      {/* <ul className="horizontal-scroll-list"> */}
+                      <ul className="horizontal-scroll-list">
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
-                          // <li key={leaveIndex} className="horizontal-scroll-item">
-                            <div key={newHireIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}>
+                          <li key={newHireIndex} className="horizontal-scroll-item">
+                            <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={40} />
-                              {newHireItem.firstName} {newHireItem.lastName}
+                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                {newHireItem.firstName} <br />{newHireItem.lastName}
+                              </div>
                             </div>
-                          // </li>
+                          </li>
                         ))}
-                      {/* </ul> */}
+                      </ul>
                     </div>
                   ) : ""
                   
@@ -723,10 +735,10 @@ const TeamCalendar = () => {
                           <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
                       </div>
                   </div>
-                </div>
+              </div>
   {/* leaves  */}
-            <div style={{ height: '380px', overflowY: 'auto', overflowX: 'hidden', marginTop: '-10px'  }}>
-              <div className="pt-2">
+            <div  className="pt-2" style={{ height: '320px', overflowY: 'auto', marginTop: '-10px'  }}>
+              {/* <div> */}
                 <Accordion activeKey={activeAccordionKey} onSelect={handleAccordionToggle} style={{ border: 'none' }} className="custom-accordion">
                   <Accordion.Item style={{paddingBottom: '10px'}} className="custom-arrow-accordion" eventKey="0">
                     <Accordion.Header className="accordion-custom-header" style={{cursor: 'not-allowed'}}>
@@ -784,7 +796,7 @@ const TeamCalendar = () => {
                                 dataWeek.map((item: any, index: any) => (
                                   <div key={index}>
                                   {item.bdayList && item.bdayList.length > 0 && (
-                                    <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0, whiteSpace: 'nowrap' }}>
+                                    <ul style={{ listStyle: 'none', paddingLeft: '5px', margin: 0, whiteSpace: 'nowrap' }}>
                                     {item.bdayList.slice(0, 2).map((birthdayItem: any, birthdayIndex: any) => (
                                       <li key={birthdayIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
                                         <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
@@ -799,14 +811,15 @@ const TeamCalendar = () => {
                               )}
                             </div>
                             {dataWeek.reduce((total: any, item: any) => total + (item.bdayList ? item.bdayList.length : 0), 0) > 2 && (
-                                <div
-                                  style={{
-                                   
-                                  }}
-                                  className="custom-numbered-icon"
-                                >
-                                  +{dataWeek.reduce((total: any, item: any) => total + (item.bdayList ? item.bdayList.length : 0), 0) - 2}
-                                </div>
+                              <div
+                                style={{
+                                  
+                                  
+                                }}
+                                className="custom-numbered-icon"
+                              >
+                                +{dataWeek.reduce((total: any, item: any) => total + (item.bdayList ? item.bdayList.length : 0), 0) - 2}
+                              </div>
                               )} 
                               <span className="accordion-custom-button">
                                 <Button
@@ -831,9 +844,11 @@ const TeamCalendar = () => {
                             <ul>
                             {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                               <li key={bdayIndex}  className="horizontal-scroll-item">
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 10px 10px 0 ' }}>
                                   <img src={user} alt="" width={40} className="flex-wrap" />
-                                  {bdayItem.firstName} {bdayItem.lastName}
+                                  <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                    {bdayItem.firstName}<br />{bdayItem.lastName}
+                                  </div>
                                 </div>
                               </li>
                             ))}
@@ -923,7 +938,11 @@ const TeamCalendar = () => {
                                             <li key={leaveIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
                                               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                                 <img src={user} alt="" width={40} className="flex-wrap" />
-                                                {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
+                                                  <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                                    {leaveItem.firstName} <br /> {leaveItem.lastName}
+                                                    <br />
+                                                    {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
+                                                  </div>
                                               </div>
                                             </li>
                                           ))}
@@ -946,7 +965,11 @@ const TeamCalendar = () => {
                                       <li key={leaveIndex} className="horizontal-scroll-item">
                                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                           <img src={user} alt="" width={40} />
-                                          {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} {leaveItem.firstName} {leaveItem.lastName}
+                                          <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                          {leaveItem.firstName} <br /> {leaveItem.lastName}
+                                          <br />
+                                          {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""} 
+                                          </div>
                                         </div>
                                       </li>
                                     ))}
@@ -976,10 +999,10 @@ const TeamCalendar = () => {
                                 dataWeek.map((item: any, index: any) => (
                                   <div key={index}>
                                   {item.newHiresList && item.newHiresList.length > 0 && (
-                                      <ul style={{ listStyle: 'none', paddingLeft: '10px', margin: 0 }}>
+                                      <ul style={{ listStyle: 'none', paddingLeft: '5px', margin: 0, whiteSpace: 'nowrap' }}>
                                       {item.newHiresList.slice(0, 2).map((hireItem: any, hireIndex: any) => (
                                         <li key={hireIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
-                                          <img src={user} alt="" width={30} className="m-0 p-0" style={{lineHeight: '0'}} />
+                                          <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap" />
                                         </li>
                                       ))}
                                     </ul>
@@ -993,19 +1016,20 @@ const TeamCalendar = () => {
                             {dataWeek.reduce((total: any, item: any) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) > 2 && (
                               <div
                                 style={{
-                                  width: '30px',
-                                  height: '30px',
-                                  borderRadius: '50%',
-                                  backgroundColor: 'white',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  color: 'black',
-                                  fontSize: '15px',
-                                  fontWeight: 'bold',
-                                  marginBottom: '5px',
-                                  marginLeft: '5px',
+                                  // width: '30px',
+                                  // height: '30px',
+                                  // borderRadius: '50%',
+                                  // backgroundColor: 'white',
+                                  // display: 'flex',
+                                  // alignItems: 'center',
+                                  // justifyContent: 'center',
+                                  // color: 'black',
+                                  // fontSize: '15px',
+                                  // fontWeight: 'bold',
+                                  // marginBottom: '5px',
+                                  // marginLeft: '5px',
                                 }}
+                                className="custom-numbered-icon"
                               >
                                 +{dataWeek.reduce((total: any, item: any) => total + (item.newHiresList ? item.newHiresList.length : 0), 0) - 2}
                               </div>
@@ -1026,29 +1050,73 @@ const TeamCalendar = () => {
                       </div>
                     </Accordion.Header>
                     <Accordion.Body>
-                      {hasNewHiresThisWeek ? (
-                          dataWeek.map((item: any, index: any) => (
+                         {hasNewHiresThisWeek ? (
+                        <div className="">
+                          {dataWeek.map((item: any, index: any) => (
                             <div key={index}>
-                            {item.newHiresList && item.newHiresList.length > 0 && (
-                              <ul>
-                              {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
-                                <li key={newHireIndex}>
-                                <img src={user} alt="" width={40} />
-                                {newHireItem.firstName} {newHireItem.lastName}
-                                </li>
-                              ))}
-                              </ul>
-                            )}
+                              {item.newHiresList && item.newHiresList.length > 3 ? (
+                              <div className="horizontal-scroll">
+                                <div className="row d-flex position-relative">
+                                  <div className="col-1">
+                                    <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
+                                      &#9664;
+                                    </button>
+                                  </div>
+                                  <div className="col-10">
+                                    <div className="horizontal-scroll-container" id="horizontal-scroll-container">
+                                      <ul className="horizontal-scroll-list">
+                                        <div className="col-3  ">
+                                          {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
+                                            <li key={newHireIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
+                                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                                <img src={user} alt="" width={40} className="flex-wrap" />
+                                                  <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                                    {newHireItem.firstName} <br /> {newHireItem.lastName}
+                                                  </div>
+                                              </div>
+                                            </li>
+                                          ))}
+                                        </div>
+                                        
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <div className="col-1">
+                                    <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
+                                      &#9654;
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              ) : item.newHiresList && item.newHiresList.length <= 3 ? (
+                                <div className="horizontal-scroll-container" id="horizontal-scroll-container">
+                                  <ul className="horizontal-scroll-list">
+                                    {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
+                                      <li key={newHireIndex} className="horizontal-scroll-item">
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                          <img src={user} alt="" width={40} />
+                                          <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                          {newHireItem.firstName} <br /> {newHireItem.lastName}
+                                          </div>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ) : ""
+                              
+                              }
                             </div>
-                          ))
-                          ) : (
-                          "No newly hired Employee today"
-                        )}
+                          ))}
+                        </div>
+                      ) : (
+                        "No Employee on Leave today"
+                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-              </div>
-              </div>
+              {/* </div> */}
+            </div>
             </Tab>
             <Tab
               className="custom-calendar-tabs"

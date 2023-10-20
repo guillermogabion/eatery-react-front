@@ -407,7 +407,7 @@ const AvailableLeaveCredits = () => {
           {({ values, setFieldValue, handleSubmit, errors, touched }) => {
             return (
               <Form noValidate onSubmit={handleSubmit} id="_formid" autoComplete="off">
-                <div className="row px-2 mb-2">
+                <div className="row mb-2">
                   <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                     
                       <label>Leave Type</label>
@@ -684,13 +684,13 @@ const AvailableLeaveCredits = () => {
                     
                       <div className="mb-2">
                         <button
-                          style={{width: '100px'}}
+                          style={{width: '100px', textAlign: 'center', }}
                           id="availableleavecredits_save_btn"
                           type="submit"
-                          className="btn btn-primary mr-2 button-on-mobile pb-2"
+                          className="btn btn-primary mr-2"
                           disabled={leaveBreakdown.length === 0 || leaveBreakdown.length > 30}
                         >
-                          Save
+                          <span className="mt-1 pt-2"> Save</span>
                         </button>
                         <button
                           onClick={() => {
