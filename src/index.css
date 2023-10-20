@@ -4254,6 +4254,10 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .custom-td-width {
   width: 340px !important;
 }
+.employee-directory-table-item {
+  margin-top: 22px;
+
+}
 
 
 @media screen and (max-width: 600px) and (max-width: 767px) {
@@ -4849,8 +4853,12 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   margin: 0; /* Remove any margin */
   padding: 0; /* Remove any padding */
 }
+.table > tbody {
+  vertical-align: middle !important;
+}
 
 .shortcut-inner-body {
+  width: 100%;
   height: 300px;
   max-height: 320px;
   padding: 10px;
@@ -4961,35 +4969,148 @@ input[type="date"]{
 .icon-arrangement {
   text-align: right;
 }
-@media screen and (max-width : 500px) and (min-width: 300px) {
- .dropdown-text {
-  font-size: 12px;
- }
- .custom-numbered-icon {
-  width: 3em;
-  height: 3em;
-  font-size: 0.7em;
-  margin-bottom: 1%;
-  margin-left: 15%;
+.shortcut-table {
+  margin-left: 10px;
 }
-.icon-arrangement {
-  text-align: center;
+.shortcut-header-table {
+  width: 100%;
 }
-.jobtitle-size {
-  max-width: 100%; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.shortcut-inner-table {
+  width: 100%;
 }
-.custom-tab-announcement .nav-link  {
-  font-size: 10px !important;
+.table-responsive .custom-table {
+  overflow-x: hidden !important;
 }
-.custom-tab-announcement .nav-link.active  {
-  font-size: 11px !important;
+.custom-calendar .react-calendar__navigation__label{
+  margin-bottom: 15px;
 }
-.button-on-mobile {
+.employee-directory-table {
+  height: 350px;
+  padding-top: 10px;
+  margin-left: -8px;
   margin-right: 15px;
+  overflow: hidden;
 }
+.squad-tracker-table {
+  height: 350px;
+  padding-top: 40px;
+  margin-left: -8px;
+  margin-right: 15px;
+  overflow: hidden;
+}
+.reimbursemnet-layout {
+  margin-left: 10px;
+  margin-right: 50px;
+  padding-right: 0;
+  overflow-x: auto;
+}
+.reimbursement-table {
+  width: 450px;
+}
+@media screen and (max-width : 500px) and (min-width: 300px) {
+  .dropdown-text {
+    font-size: 12px;
+  }
+  .custom-numbered-icon {
+    width: 3em;
+    height: 3em;
+    font-size: 0.7em;
+    margin-bottom: 1%;
+    margin-left: 15%;
+  }
+  .icon-arrangement {
+    text-align: center;
+  }
+  .jobtitle-size {
+    max-width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .custom-tab-announcement .nav-link  {
+    font-size: 10px !important;
+  }
+  .custom-tab-announcement .nav-link.active  {
+    font-size: 11px !important;
+  }
+  .button-on-mobile {
+    margin-right: 15px;
+  }
+  .leave-credits {
+    font-size: 12px;
+  }
+  .shortcut-table {
+    margin-left: 3px;
+    width: 320px;
+  }
+  .shortcut-header-table {
+    width: 20%;
+  }
+  .shortcut-inner-table {
+    width: 85%;
+  }
+  .action-width {
+    min-width: 70px !important;
+  }
+  .custom-calendar-tab-2nd .nav-link  {
+    font-size: 12px !important;
+  }
+  .custom-calendar-tab-2nd .nav-link.active  {
+    font-size: 13px !important;
+  }
+  .triangle-right {
+    margin-left: -5px !important;
+  }
+
+  .squad-tracker-table {
+    height: 350px;
+    padding-top: 20px;
+    margin-left: -3px;
+    margin-right: 2px;
+    overflow: hidden;
+    width: 98%;
+    max-width: 98%;
+  }
+  .new-hire-table {
+    height: 320px;
+    padding-top: 20px;
+    margin-left: -8px;
+    margin-right: 4px;
+    overflow: hidden;
+    width: 97%;
+    max-width: 97%;
+  }
+  .employee-directory-table {
+    height: 320px;
+    padding-top: 20px;
+    margin-left: -8px;
+    margin-right: 4px;
+    overflow-y: auto;
+    width: 97%;
+    max-width: 97%;
+  }
+  .employee-directory-table-item {
+    font-size: 10px;
+    padding-bottom: 20px;
+    
+  } 
+  .directory-layout {
+    padding-right: 0 !important;
+  }
+  .reimbursement-layout {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-right: 0;
+    overflow-x: auto;
+  }
+  .reimbursement-table {
+    width: 50px;
+  }
   
 
+}
+@media screen and (min-width : 501px) {
+  .wide-screens {
+    padding-right: 120px;
+  }
 }

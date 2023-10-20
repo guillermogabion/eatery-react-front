@@ -263,23 +263,25 @@ const Shortcut = () => {
                 { showManage && 
                     <div className="shortcut-inner-body">
                         <div>
-                            <Table>
-                                <div style={{ height: '320px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '30px' }}>
-                                    <thead>
-                                        <tr>
-                                            <th>Shortcut Name</th>
-                                            <th>Display</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <Table >
+                                    <div className="shortcut-header-table">
+                                        <thead  style={{  position: 'sticky', top: 0, zIndex: 1, background: 'white'}}>
+                                            <tr >
+                                                <th style={{width: '30px', textAlign: 'start'}} className="wide-screens">Shortcut Name</th>
+                                                <th style={{width: 'auto', textAlign: 'center'}}>Display</th>
+                                                <th style={{width: 'auto', textAlign: 'start'}} className="action-width">Action</th>
+                                            </tr>
+                                        </thead>
+                                    </div>
+                                    
+                                    <tbody className="shortcut-inner-table" style={{ display: 'block', maxHeight: 'calc(350px - 40px)', overflowY: 'auto', overflowX: 'hidden'}}>
                                         { shortcut &&
                                             shortcut.length > 0 ?
                                             shortcut.map((item: any, index: any) => {
                                                 return (
                                                     <tr key={index}>
                                                         <td>{item.name}</td>
-                                                        <td>
+                                                        <td style={{textAlign: 'center'}}>
                                                             <label className="switch">
                                                                 <input
                                                                     type="checkbox"
@@ -287,12 +289,12 @@ const Shortcut = () => {
                                                                     onClick={() => {visibility(item.id)}}
                                                                     style={{height: '10px'}}
                                                                 />
-                                                                <span className="slider round" style={{height: '25px'}}></span>
+                                                                <span className="slider round" style={{height: '25px', width: '50px'}}></span>
                                                             </label>
                                                         </td>
-                                                        <td>
+                                                        <td style={{textAlign: 'start'}}>
                                                             <label>
-                                                                <img src={trash} alt="Delete Shortcut"  onClick={() => {deleteItem(item.id)}} width={50} style={{cursor: 'pointer'}} />
+                                                                <img src={trash} alt="Delete Shortcut"  onClick={() => {deleteItem(item.id)}} width={40} style={{cursor: 'pointer'}} />
                                                             </label>
                                                         </td>
 
@@ -305,7 +307,6 @@ const Shortcut = () => {
                                             )
                                         }
                                     </tbody>
-                                </div>
                             </Table>
                         </div>
                     </div>
@@ -382,7 +383,7 @@ const Shortcut = () => {
                                                             
                                                         )}
                                                     </td>
-                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'center' }}>
+                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'start' }}>
                                                         <label>
 
                                                             {hasSimilar ? (
