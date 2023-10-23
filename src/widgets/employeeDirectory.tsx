@@ -121,7 +121,7 @@ const EmployeeDirectory = () => {
     <button
       {...props}
       className="slick-arrow slick-next"
-      style={{ right: '10px', zIndex: 1, marginRight: '-50px' }}
+      style={{ right: '10px', zIndex: 1, marginRight: '5px' }}
       onClick={handleNextClick}
     >
       Next
@@ -163,8 +163,8 @@ const EmployeeDirectory = () => {
       <div className="card-header">
         <span className="">Employee Directory</span>
       </div>
-      <div className="time-card-body directory-layout">
-        <div className="col-12 pb-3" style={{maxHeight: '20px'}}>
+      <div className="directory-card-body ">
+        <div className="col-12 pb-3 pt-3" style={{maxHeight: '20px'}}>
           <Slider {...settings} ref={sliderRef} className="custom-slider">
               {allSquadWithAllOption &&
               allSquadWithAllOption.map((item, index) => (
@@ -183,59 +183,64 @@ const EmployeeDirectory = () => {
               ))}
             </Slider>
         </div>
-        <div className="col-12" style={{height: '100%'}}>
-          <div className="row">
-            <div className="pt-6 col-9 ml-3">
-              <div className="" style={{ width: '100%', marginRight: 10 }}>
-                  <EmployeeDropdown
-                      id="dashboardemployeedirectory_search_input2"
-                      squad={false}
-                      placeholder={"Employee"}
-                      singleChangeOption={singleChangeOption}
-                      name="userId"
-                      value={filterData && filterData['userId']}
-                  />
-              </div>
-            </div>
-            <div className="pt-6 col-2">
-              <Button
-              onClick={() => employeeList(clickedItem)}
-              id="dashboardemployeedirectory_search_btn"
-              style={{ width: '100%',
-              padding: '0',
-              height: '40px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              }} 
-              >
-                <img src={icon_search_white} alt="" width={20} />
-              </Button>
+        <div className="row header-input">
+          <div className="col-9 ml-3" style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="" style={{ flex: 1 }}>
+              <EmployeeDropdown
+                id="dashboardemployeedirectory_search_input2"
+                squad={false}
+                placeholder={"Employee"}
+                singleChangeOption={singleChangeOption}
+                name="userId"
+                value={filterData && filterData['userId']}
+              />
             </div>
           </div>
+          <div className="col-2" style={{ display: 'flex', alignItems: 'center' }}>
+            <Button
+            onClick={() => employeeList(clickedItem)}
+            id="dashboardemployeedirectory_search_btn"
+            style={{ width: '100%',
+            padding: '0',
+            height: '40px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            }} 
+            >
+              <img src={icon_search_white} alt="" width={20} />
+            </Button>
           </div>
-          <div>
-            
-          <Table>
-            <div className="employee-directory-table pb-2" style={{overflowY: 'auto', height: '320px', marginTop: '0'}} >
-              <tbody>
-                {allEmployee.map((item: any, index: any) => {
-                  return (
-                    <tr key={item.id}>
-                      <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold d-flex custom-td-width" style={{width: 'auto'}} >
-                        <img src={user} width={40} style={{borderRadius: '50%', color: 'black', margin: '10px'}}></img>
-                        <span className="employee-directory-table-item">{item.name}</span>
-                        </td>
-                      <td id={"dashboardemployeedirectory_td_squadname_"} style={{width: '100%', textAlign: 'center'}} className="custom-td-width">{item.squadName}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </div>
+        </div>
+        <div className="employee-directory-table">
+          <Table responsive className="custom-directory-table">
+            <tbody>
+              {allEmployee.length > 0 ? (allEmployee.map((item: any, index: any) => {
+                return (
+                  <tr key={item.id}>
+                    <td id={"dashboardemployeedirectory_td_itemname_"} className="text-primary font-bold custom-td-width" style={{width: 'auto'}} >
+                      <div className="d-flex">
+                          <img src={user} width={20} style={{ borderRadius: '50%', margin: '20px 10px 10px 10px'}} alt="User" />
+                          <div className="pt-3">
+                            {item.name}
+                          </div>
+                      </div>
+                    </td>
+                    <td id={"dashboardemployeedirectory_td_squadname_"} style={{ textAlign: 'center'}} className="text-primary">{item.squadName}</td>
+                  </tr>
+                )
+              })) : (
+                <tr>
+                  <td colSpan="2" className="text-center">
+                      No Record Found
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </Table>
         </div>
-      </div>
-    </div>
+  </div>
+</div>
       
   )
 }

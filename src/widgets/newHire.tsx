@@ -69,8 +69,8 @@ const NewHire = () => {
       <div className="card-header">
         <span className="">New Hire Tracker</span>
       </div>
-      <div className="time-card-body row">
-        <div className="d-flex pt-2 justify-content-center text-center" style={{ height: '20px', alignContent: 'center', textAlign: 'center' }}>
+      <div className="tracker-card-body">
+        <div className="d-flex pt-2 justify-content-center text-center" style={{ height: '20px', alignContent: 'center', textAlign: 'center', marginBottom: '33px' }}>
           {numberMonth &&
             numberMonth.map((item, index) => (
               <div
@@ -91,59 +91,65 @@ const NewHire = () => {
               </div>
             ))}
         </div>
-        <div className="d-flex justify-content-center align-items-center pt-8">
-          <div className="col-10">
-            <input
-              id="newhiretracker_name_input"
-              type="text"
-              name="name"
-              autoComplete="off"
-              className="formControl pl-3"
-              onChange={(e) => makeFilterData(e)}
-            />
+      
+        <div className="row header-input">
+          <div className="col-9 ml-3" style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{flex: 1}}>
+                <input
+                  id="newhiretracker_name_input"
+                  type="text"
+                  name="name"
+                  autoComplete="off"
+                  className="formControl"
+                  onChange={(e) => makeFilterData(e)}
+                />
+              </div>
           </div>
-          <div className="col-2 ml-2">
+          <div className="col-2" style={{ display: 'flex', alignItems: 'center' }}>
             <Button
-              onClick={() => newHireList(numberMonth[clickedItem].value, filterData.name)}
-              style={{
-                width: '100%',
-                padding: '0',
-                height: '40px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <img src={icon_search_white} alt="" width={20} />
-            </Button>
+                onClick={() => newHireList(numberMonth[clickedItem].value, filterData.name)}
+                style={{
+                  width: '100%',
+                  padding: '0',
+                  height: '40px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <img src={icon_search_white} alt="" width={20} />
+              </Button>
           </div>
         </div>
-        {newHire &&
-          newHire.length === 0 ? (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '30px' }}>
-              No Record Found
-            </div>
-          ) : null}
-        <div>
-          <Table className="table-responsive custom-table">
-            <div className="new-hire-table">
-              <tbody>
-                {newHire.length > 0 &&
-                  newHire.map((item: any, index: any) => {
-                    return (
-                      <tr key={item.id}>
-                        <td id={"newhire_name_td_" + item.name} className="text-primary font-bold d-flex custom-td-width custom-td-width-mobile">
-                          <img src={user} width={40} style={{ borderRadius: '50%', color: 'black', margin: '10px' }}></img>
+        
+        <div className="newhire-tracker-table">
+          <Table responsive className="custom-newhire-table">
+            <tbody>
+              {newHire.length > 0 ? (
+                newHire.map((item: any, index: any) => {
+                  return (
+                    <tr key={item.id}>
+                      <td id={"newhire_name_td_" + item.name} className="text-primary font-bold custom-td-width custom-td-width-mobile">
+                        <div className="d-flex">
+                          <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }}></img>
                           <span style={{ marginTop: '22px' }}>{item.name}</span>
-                        </td>
-                        <td style={{ paddingLeft: '50px' }} id={"newhire_button_td_" + item.id}>
+                        </div>
+                      </td>
+                      <td className="" id={"newhire_button_td_" + item.id}>
+                        <div className="d-flex justify-content-end">
                           <img src={evaluate_disabled} alt="" />
-                        </td>
-                      </tr>
-                    )
-                  })}
-              </tbody>
-            </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })) : (
+                  <tr>
+                    <td colSpan="2" className="text-center">
+                        No Record Found
+                    </td>
+                  </tr>
+                )}
+            </tbody>
           </Table>
         </div>
       </div>
