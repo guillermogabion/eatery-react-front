@@ -142,13 +142,15 @@ const All = () => {
                                 </div>
                             </td>
                             <td id={`dashboard_squadtracker_status_all_${item.id}`} style={{ fontWeight: 600, textAlign: 'left' }} className="text-primary">
-                                {item.status == null && item.todaysTimeIn != null && (
-                                    <div className="col-12">IN - {moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A")}</div>
-                                )}
-                                {item.status == null && item.todaysTimeIn == null ? "Absent" : ""}
-                                {item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null && (
-                                    <div className="col-12">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
-                                )}
+                                <div className="d-flex justify-content-end">
+                                    {item.status == null && item.todaysTimeIn != null && (
+                                        <div className="col-12">IN - {moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A")}</div>
+                                    )}
+                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : ""}
+                                    {item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null && (
+                                        <div className="col-12">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
+                                    )}
+                                </div>
                             </td>
                         </tr>
                         ))
@@ -267,12 +269,16 @@ const OnLeave = () => {
                                     </div>
                                 </td>
                                 <td id={`dashboard_squadtracker_status_all_${item.id}`} style={{ fontWeight: 600, textAlign: 'left' }} className="text-primary">
+                                    <div className="d-flex justify-content-end">
                                         {item.status == null && item.todaysTimeIn != null ? (
                                             <>
                                                 <p>IN</p>
                                             </>
                                         ) : ""}
-                                        {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
+                                        {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}
+
+                                    </div>
+                                </td>
                             </tr>
                         ))
                         ) : (
@@ -392,13 +398,16 @@ const Absent = () => {
                                         </div>
                                     </div>
                                 </td>
-                                <td id={`dashboard_squadtracker_status_all_${item.id}`} style={{ fontWeight: 600, textAlign: 'left' }} className="text-primary">
-                                    {item.status == null && item.todaysTimeIn != null ? (
-                                        <>
-                                            <p>IN</p>
-                                        </>
-                                    ) : ""}
-                                    {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}</td>
+                                <td id={`dashboard_squadtracker_status_all_${item.id}`} style={{ fontWeight: 600, textAlign: 'left' }} className="text-primary ">
+                                        <div className="justify-content-end d-flex">
+                                            {item.status == null && item.todaysTimeIn != null ? (
+                                                <>
+                                                    <p>IN</p>
+                                                </>
+                                            ) : ""}
+                                            {item.status == null && item.todaysTimeIn == null ? "Absent" : item.status == null && item.todaysTimeIn != null ? item.todaysTimeIn : item.status}
+                                        </div>
+                                    </td>
                             </tr>
                         ))
                         )}
