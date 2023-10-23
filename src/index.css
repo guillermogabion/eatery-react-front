@@ -3901,10 +3901,26 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .tracker-card-body{
   max-height: 372px;
-  min-height: 372px;
   padding-top: 2%;
   padding-left: 2%;
-  width: 100%
+  width: 100%;
+
+
+}
+.reimbursement-card-body{
+  max-height: 372px;
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-right: 0%;
+  width: 100%;
+
+
+}
+.directory-card-body{
+  padding-top: 2%;
+  width: 100%;
+  margin: 8px -25px 20px 15px;
+
 
 }
 .time-card-width > div > .time-card-button {
@@ -3997,6 +4013,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .custom-tab {
   border: none;
+  padding-bottom: 1em;
 }
 .custom-tab-calendar {
   border: none;
@@ -4018,6 +4035,19 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   font-weight: bold !important;
   font-size: 20px;
   color: #189FB5 ;
+}
+.custom-stat .nav-link.active {
+  border: none;
+  border-bottom: 2px solid #189FB5;
+  font-weight: bold !important;
+  font-size: 20px;
+  color: #189FB5 ;
+}
+.custom-stat .nav-link {
+  border: none;
+  font-weight: bold !important;
+  font-size: 17px;
+  color: #0a0a0a ;
 }
 .custom-tab-calendar .nav-link.active {
   border: none;
@@ -4127,6 +4157,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .triangle-left {
   border-width: 5px 10px 5px 0;
   border-color: transparent #009FB5 transparent transparent;
+  padding-left: 10px;
 }
 
 .triangle-right {
@@ -4194,6 +4225,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .accordion-custom-header .accordion-button {
   background: #E15554 !important;
   border-radius: 10px !important;
+  height: 50px;
 }
 .holiday-accordion > .accordion-body {
   
@@ -4210,6 +4242,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .accordion-birthday-header .accordion-button {
   background: #8067AB !important;
   border-radius: 10px !important;
+  height: 50px;
 }
 .accordion-birthday-header .accordion-button:not(.collapsed)  {
   background: #8067AB !important;
@@ -4221,6 +4254,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .accordion-leave-header .accordion-button {
   background: #2EBF91 !important;
   border-radius: 10px !important;
+  height: 50px;
 }
 .accordion-leave-header .accordion-button:not(.collapsed)  {
   background: #2EBF91 !important;
@@ -4232,6 +4266,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .accordion-hire-header .accordion-button {
   background: #189FB5 !important;
   border-radius: 10px !important;
+  height: 50px;
 }
 .accordion-hire-header .accordion-button:not(.collapsed)  {
   background: #189FB5 !important;
@@ -4254,10 +4289,53 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 .custom-td-width {
   width: 340px !important;
 }
+.custom-td-width >.squad {
+  width: 500px !important;
+}
 .employee-directory-table-item {
   margin-top: 22px;
 
 }
+.custom-squadtracker-table {
+  overflow-x: hidden ;
+}
+.custom-squadtracker-table tbody tr td {
+  /* min-width: 200px !important; */
+  /* width: 200px !important; */
+}
+.custom-squadtracker-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* Light gray background for odd rows */
+}
+.custom-squadtracker-table tbody tr:nth-child(even) {
+  background-color: #ffffff; /* Slightly darker gray background for even rows */
+}
+.custom-newhire-table {
+  overflow-x: hidden ;
+}
+.custom-newhire-table tbody tr td {
+  /* min-width: 200px !important; */
+  /* width: 200px !important; */
+}
+.custom-newhire-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* Light gray background for odd rows */
+}
+.custom-newhire-table tbody tr:nth-child(even) {
+  background-color: #ffffff; /* Slightly darker gray background for even rows */
+}
+.custom-directory-table {
+  /* overflow-x: hidden ; */
+}
+.custom-directory-table tbody tr td {
+  /* min-width: 200px !important; */
+  /* width: 200px !important; */
+}
+.custom-directory-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* Light gray background for odd rows */
+}
+.custom-directory-table tbody tr:nth-child(even) {
+  background-color: #ffffff; /* Slightly darker gray background for even rows */
+}
+
 
 
 @media screen and (max-width: 600px) and (max-width: 767px) {
@@ -4322,6 +4400,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     border-style: solid;
     cursor: pointer;
     padding-top: 20px;
+    padding-left: 10px;
   }
   .table-mobile {
     font-size: 4px;
@@ -4495,7 +4574,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   overflow: hidden;
   position: relative;
   white-space: nowrap;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 .horizontal-scroll-list {
@@ -4597,6 +4676,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 
 .custom-tab-calendar {
+  border: none;
+}
+.custom-stat {
   border: none;
 }
 .custom-tab-calendar .nav-link.active {
@@ -4809,8 +4891,8 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   .custom-slider-item {
     font-size: 12px !important;
   }
-  .custom-td-width {
-    width: auto !important;
+  .custom-td-width .squad {
+    width: 100px !important;
   }
   .custom-td-width-mobile {
     width: 200px !important;
@@ -4829,6 +4911,9 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     font-weight: bold !important;
     font-size: 12px !important;
     color: #189FB5 ;
+  }
+  .reimbursement-pagination {
+    padding-top: 100px;
   }
   
 }
@@ -4933,7 +5018,7 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-.tracker-input{
+.header-input{
   padding-top: 0.5em !important;
 }
 input[type="date"]{
@@ -4987,16 +5072,35 @@ input[type="date"]{
   margin-bottom: 15px;
 }
 .employee-directory-table {
-  height: 350px;
+  height: 320px;
   padding-top: 10px;
-  margin-left: -8px;
+  margin-left: 0px;
+  margin-right: 25px;
+  /* overflow-x: hidden; */
+}
+.reimbursement-table {
+  height: 320px;
+  padding-top: 10px;
+  margin-left: 0px;
   margin-right: 15px;
-  overflow: hidden;
+  /* overflow-x: hidden; */
+}
+.reimbursement-pagination {
+  padding-top: 50px;
 }
 .squad-tracker-table {
   height: 320px;
   padding-top: 20px;
   margin-left: -8px;
+  margin-right: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+.newhire-tracker-table {
+  height: 320px;
+  padding-top: 20px;
+  margin-left: 0px;
   margin-right: 15px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -5008,9 +5112,9 @@ input[type="date"]{
   padding-right: 0;
   overflow-x: auto;
 }
-.reimbursement-table {
+/* .reimbursement-table {
   width: 450px;
-}
+} */
 .new-hire-table {
   height: 320px;
   padding-top: 20px;
@@ -5077,8 +5181,9 @@ input[type="date"]{
   }
 
   .squad-tracker-table {
-    height: 350px;
-    padding-top: 20px;
+    height: 300px;
+    margin-top: 5px;
+    padding-top: 0;
     margin-left: -3px;
     margin-right: 2px;
     overflow-y: auto ;
@@ -5099,9 +5204,19 @@ input[type="date"]{
     padding-top: 20px;
     margin-left: -8px;
     margin-right: 4px;
-    overflow-y: auto;
+    overflow: auto;
     width: 97%;
     max-width: 97%;
+  }
+  .reimbursement-table {
+    height: 300px;
+    padding-top: 10px;
+    margin-left: 0px;
+    margin-right: 25px;
+    /* overflow-x: hidden; */
+  }
+  .reimbursement-pagination {
+    padding-top: 80px !important;
   }
   .employee-directory-table-item {
     font-size: 10px;
@@ -5118,8 +5233,30 @@ input[type="date"]{
     overflow-x: auto;
   }
   .reimbursement-table {
-    width: 50px;
+    height: 300px;
+    padding-top: 10px;
+    margin-left: 0px;
+    margin-right: 25px;
+    /* overflow-x: hidden; */
   }
+  .reimbursement-pagination {
+    padding-top: 90px;
+  }
+  
+  .custom-stat .nav-link.active {
+    border: none;
+    border-bottom: 2px solid #189FB5;
+    font-weight: bold !important;
+    font-size: 12px;
+    color: #189FB5 ;
+  }
+  .custom-stat .nav-link {
+    border: none;
+    font-weight: bold !important;
+    font-size: 10px;
+    color: #060707 ;
+  }
+  
   
 
 }
@@ -5128,3 +5265,29 @@ input[type="date"]{
     padding-right: 120px;
   }
 }
+  /* statistics  */
+  .statistic-indicator {
+    width: 20px;
+    border-radius: 50%;
+    height: 20px;
+    margin-right: 0;
+  }
+  
+  @media screen and (min-width : 1000px) and (max-width: 1600) {
+    .statistic-indicator {
+      width: 18px;
+      border-radius: 50%;
+      height: 20px;
+      margin-right: 0;
+    }
+    
+  }
+  @media screen and (min-width : 300) and (max-width: 500) {
+    .statistic-indicator {
+      width: 15px;
+      border-radius: 50%;
+      height: 20px;
+      margin-right: 0;
+    }
+    
+  }

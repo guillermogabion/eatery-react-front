@@ -430,27 +430,26 @@ const Reimbursement = () => {
              <div className="card-header">
                 <span className="">Reimbursement (Pending for Approval)</span>
             </div>
-            <div className="time-card-body">
-            <div>
-            <div className="reimbursement-layout">
-                <Table className="reimbursement-table">
+    <div className="reimbursement-card-body">
+        <div>
+            <div className="reimbursement-table">
+                <Table responsive className="custom-reimbursement-table">
                     <div>
                         <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white'}}>
                             <tr>
-                                
-                                    <th style={{width: 'auto', textAlign: 'center'}}>Employee</th>
-                                    <th style={{width: 'auto', textAlign: 'center'}}>Amount</th>
-                                    <th style={{width: 'auto', textAlign: 'center'}} className="custom-td-width">Action</th>
+                                <th style={{width: 'auto', textAlign: 'center'}}>Employee</th>
+                                <th style={{width: 'auto', textAlign: 'center'}}>Amount</th>
+                                <th style={{width: 'auto', textAlign: 'center'}} className="custom-td-width">Action</th>
                             </tr>
                         </thead>
                     </div>
                     <tbody style={{display: 'block', maxHeight: 'calc(360px - 40px)', overflowY: 'auto', width: '100%'}}>
                         {reimbursementList &&
                             reimbursementList.content &&
-                            reimbursementList.content.length > 0 &&
+                            reimbursementList.content.length > 0 ? (
                             reimbursementList.content.map((item: any, index: any) => {
                                 return (
-                                    <tr key={item.id} style={{paddingRight: '20px'}}>
+                                    <tr key={item.id}>
                                         <td style={{width: 'auto', textAlign: 'center'}} id={"reimbursement_name_tdtable_" + item.id}>
                                             {`${item.firstName} ${item.lastName}`}
                                         </td>
@@ -519,42 +518,35 @@ const Reimbursement = () => {
                                         </td>
                                     </tr>
                                 );
-                            })}
+                            })) : (
+                                <tr>
+                                    <td colSpan="2" className="text-center">
+                                        No Record Found
+                                    </td>
+                                </tr>
+                            )}
                     </tbody>
                 </Table>
             </div>
-
-            {
-                reimbursementList &&
-                    reimbursementList.content &&
-                    reimbursementList.content.length == 0 ?
-                    <div className="w-100 text-center">
-                        <label htmlFor="">No Records Found</label>
-                    </div>
-                    :
-                    null
-            }
-            <div className="row">
+            <div className="row reimbursement-pagination mt-3 pr-4">
                 <div className="col-8">
                     <div className="d-flex justify-content-start">
-                        <div className="">
-                            <ReactPaginate
-                            className="d-flex justify-content-center align-items-center widget-pagination"
-                            breakLabel="..."
-                            nextLabel=">"
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={1}
-                            marginPagesDisplayed={1}
-                            pageCount={(reimbursementList && reimbursementList.totalPages) || 0}
-                            previousLabel="<"
-                            previousLinkClassName="prev-next-pagination arrow-page"
-                            nextLinkClassName="prev-next-pagination arrow-page"
-                            activeLinkClassName="active-page-link  widget-pagination-link-active"
-                            disabledLinkClassName="prev-next-disabled"
-                            pageLinkClassName="page-link widget-pagination-link"
-                            renderOnZeroPageCount={null}
-                            />
-                        </div>
+                        <ReactPaginate
+                        className="d-flex justify-content-center align-items-center widget-pagination"
+                        breakLabel="..."
+                        nextLabel=">"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={1}
+                        marginPagesDisplayed={1}
+                        pageCount={(reimbursementList && reimbursementList.totalPages) || 0}
+                        previousLabel="<"
+                        previousLinkClassName="prev-next-pagination arrow-page"
+                        nextLinkClassName="prev-next-pagination arrow-page"
+                        activeLinkClassName="active-page-link  widget-pagination-link-active"
+                        disabledLinkClassName="prev-next-disabled"
+                        pageLinkClassName="page-link widget-pagination-link"
+                        renderOnZeroPageCount={null}
+                        />
                     </div>
                 </div>
                 <div className="col-4">

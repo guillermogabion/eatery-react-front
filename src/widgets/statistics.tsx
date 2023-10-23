@@ -16,7 +16,7 @@ const Statistics = () => {
                 <span className="">Statistics</span>
             </div>
             <div className="time-card-body">
-                <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-tab custom-stat justify-content-center">
+                <Tabs defaultActiveKey="tab1" id="my-tabs" className="custom-stat justify-content-center">
                     <Tab id="dashboardstatistic_tab1" className="custom-tabs" eventKey="tab1" title="Employee Status">
                         <EmployeeStatus />
 
@@ -169,7 +169,7 @@ const EmployeeStatus = () => {
                             </>
                         ) : !nonSquadDisplayed && (
                             <>
-                            <div style={{ backgroundColor: nonSquadColor, borderRadius: '50%', width: '20px', height: '20px', marginRight: '0' }}>
+                            <div style={{ backgroundColor: nonSquadColor }} className="statistic-indicator">
                                 <span className="pl-6 pb-1">
                                     {`Non-Squad - ${totalNonSquadCount}`}
                                 </span>
@@ -231,7 +231,7 @@ const EmployeeStatus = () => {
                             >
                             {squad.includes('Squad') ? (
                                 <>
-                                <div style={{  backgroundColor: squadColors[index % squadColors.length], borderRadius: '50%', width: '20px', height: '20px', marginRight: '0' }}>
+                                <div style={{  backgroundColor: squadColors[index % squadColors.length]}} className="statistic-indicator">
                                     <span className="pl-6 pb-1">
                                         {`${squad.replace(/Squad/g, '')}- ${statusCounts.Regular}`}
                                     </span>
@@ -239,7 +239,7 @@ const EmployeeStatus = () => {
                                 </>
                             ) : !nonSquadDisplayed && (
                                 <>
-                                <div style={{ backgroundColor: nonSquadColor, borderRadius: '50%', width: '20px', height: '20px', marginRight: '0' }}>
+                                <div style={{ backgroundColor: nonSquadColor}} className="statistic-indicator">
                                     <span className="pl-6 pb-1">
                                         {`Non-Squad - ${totalNonSquadCountRegular}`}
                                     </span>
