@@ -100,12 +100,12 @@ const NewHire = () => {
                   type="text"
                   name="name"
                   autoComplete="off"
-                  className="formControl"
+                  className="formControl new-hire-layout"
                   onChange={(e) => makeFilterData(e)}
                 />
               </div>
           </div>
-          <div className="col-2" style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="col-2 new-hire-search">
             <Button
                 onClick={() => newHireList(numberMonth[clickedItem].value, filterData.name)}
                 style={{

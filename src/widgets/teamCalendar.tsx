@@ -722,7 +722,7 @@ const TeamCalendar = () => {
                   </div>
                   <div className="col-1 arrow-space">
                       <div className="arrow-button right">
-                          <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right text-primary"></div>
+                          <div onClick={() => { changeWeek(1); handleRightArrowClick();}} className="triangle-right "></div>
                       </div>
                   </div>
               </div>
@@ -786,7 +786,7 @@ const TeamCalendar = () => {
                                 dataWeek.map((item: any, index: any) => (
                                   <div key={index}>
                                   {item.bdayList && item.bdayList.length > 0 && (
-                                    <ul style={{ listStyle: 'none', paddingLeft: '5px', margin: 0, whiteSpace: 'nowrap' }}>
+                                    <ul style={{ listStyle: 'none', paddingLeft: '5px', whiteSpace: 'nowrap' }}>
                                     {item.bdayList.slice(0, 2).map((birthdayItem: any, birthdayIndex: any) => (
                                       <li key={birthdayIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
                                         <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
@@ -811,13 +811,13 @@ const TeamCalendar = () => {
                                 +{dataWeek.reduce((total: any, item: any) => total + (item.bdayList ? item.bdayList.length : 0), 0) - 2}
                               </div>
                               )} 
-                              <span className="accordion-custom-button">
+                              <span className="accordion-custom-button " >
                                 <Button
                                   variant="text"
                                   aria-controls="accordion-body"
                                   aria-expanded={activeAccordionKey === '1'}
                                   style={{ color: 'white', height: '30px', lineHeight: '10px', cursor: 'pointer' }}
-                                  className="pt-0 mt-0"
+                                  className="pt-0 mt-0 mobile-arrow"
                                 >
                                   {activeAccordionKey === '1' ? '▼' : '►'}
                                 </Button>
@@ -1097,7 +1097,7 @@ const TeamCalendar = () => {
               eventKey="tab2"
               title={<img src={activeWeekTab !== 'tab1' ? activeCalendar : inactiveCalendar} alt="Tab 2" />}
             >
-              <div style={{ height: '350px', overflowY: 'auto' }}>
+              <div style={{ height: '370px', overflowY: 'hidden' }}>
                 <CalendarComponent />
               </div>
             </Tab>
