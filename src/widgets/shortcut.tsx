@@ -208,7 +208,7 @@ const Shortcut = () => {
             <div className="card-header">
                 <span className="">Quick Shortcut</span>
             </div>
-            <div className="shortcut-card-body">
+            <div className="shortcuts-card-body">
                 {showShortcut && 
                     <div className="">
                         <div className="shortcut-inner-body">
@@ -261,55 +261,55 @@ const Shortcut = () => {
                     </div>
                 }
                 { showManage && 
-                    <div className="shortcut-inner-body">
-                        <div>
-                            <Table >
-                                    <div className="shortcut-header-table">
-                                        <thead  style={{  position: 'sticky', top: 0, zIndex: 1, background: 'white'}}>
-                                            <tr >
-                                                <th style={{width: '30px', textAlign: 'start'}} className="wide-screens">Shortcut Name</th>
-                                                <th style={{width: 'auto', textAlign: 'center'}}>Display</th>
-                                                <th style={{width: 'auto', textAlign: 'start'}} className="action-width">Action</th>
-                                            </tr>
-                                        </thead>
-                                    </div>
-                                    
-                                    <tbody className="shortcut-inner-table" style={{ display: 'block', maxHeight: 'calc(350px - 40px)', overflowY: 'auto', overflowX: 'hidden'}}>
-                                        { shortcut &&
-                                            shortcut.length > 0 ?
-                                            shortcut.map((item: any, index: any) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{item.name}</td>
-                                                        <td style={{textAlign: 'center'}}>
-                                                            <label className="switch">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={item.isVisible}
-                                                                    onClick={() => {visibility(item.id)}}
-                                                                    style={{height: '10px'}}
-                                                                />
-                                                                <span className="slider round" style={{height: '25px', width: '50px'}}></span>
-                                                            </label>
-                                                        </td>
-                                                        <td style={{textAlign: 'start'}}>
-                                                            <label>
-                                                                <img src={trash} alt="Delete Shortcut"  onClick={() => {deleteItem(item.id)}} width={40} style={{cursor: 'pointer'}} />
-                                                            </label>
-                                                        </td>
-
-                                                    </tr>
-                                                )
-                                            }) :  (
-                                                <div className="w-100 text-center">
-                                                    <label>No Shortcuts Added Yet</label>
-                                                </div>
-                                            )
-                                        }
-                                    </tbody>
-                            </Table>
-                        </div>
-                    </div>
+                    <div className="shortcuts-table">
+                     <Table className="custom-squadtracker-table">
+                       <thead>
+                         <tr>
+                           <th>Shortcut Name</th>
+                           <th style={{textAlign: 'center'}}>Display</th>
+                           <th className="custom-width-shortcut">Action</th>
+                         </tr>
+                       </thead>
+                       <tbody>
+                         {shortcut && shortcut.length > 0 ? (
+                           shortcut.map((item, index) => (
+                             <tr key={index}>
+                               <td>{item.name}</td>
+                               <td style={{textAlign: 'center'}}>
+                                 <label className="switch">
+                                   <input
+                                     type="checkbox"
+                                     checked={item.isVisible}
+                                     onClick={() => visibility(item.id)}
+                                     style={{ height: '10px' }}
+                                   />
+                                   <span className="slider round" style={{ height: '25px', width: '50px' }}></span>
+                                 </label>
+                               </td>
+                               <td className="custom-width-shortcut">
+                                 <label>
+                                   <img
+                                     src={trash}
+                                     alt="Delete Shortcut"
+                                     onClick={() => deleteItem(item.id)}
+                                     width={40}
+                                     style={{ cursor: 'pointer' }}
+                                   />
+                                 </label>
+                               </td>
+                             </tr>
+                           ))
+                         ) : (
+                           <tr>
+                             <td colSpan="3" className="w-100 text-center">
+                               No Shortcuts Added Yet
+                             </td>
+                           </tr>
+                         )}
+                       </tbody>
+                     </Table>
+                   </div>
+               
                 }
 
                 { showAdd &&
@@ -383,7 +383,7 @@ const Shortcut = () => {
                                                             
                                                         )}
                                                     </td>
-                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'start' }}>
+                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'start' }} className="d-flex justify-content-end">
                                                         <label>
 
                                                             {hasSimilar ? (
@@ -425,7 +425,7 @@ const Shortcut = () => {
                     </div>
                 }
                  { showManage && 
-                    <div className="row d-flex mx-1 pt-12 mt-4">
+                    <div className="row d-flex mx-1 mt-4">
                         <div className="col-6">
                             <button
                             style={{width:'100%', height: '45px', lineHeight: '15px'}}

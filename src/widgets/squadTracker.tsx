@@ -143,12 +143,19 @@ const All = () => {
                             </td>
                             <td id={`dashboard_squadtracker_status_all_${item.id}`} style={{ fontWeight: 600, textAlign: 'left' }} className="text-primary">
                                 <div className="d-flex justify-content-end">
-                                    {item.status == null && item.todaysTimeIn != null && (
-                                        <div className="col-12">IN - {moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A")}</div>
-                                    )}
                                     {item.status == null && item.todaysTimeIn == null ? "Absent" : ""}
-                                    {item.status == null && item.todaysTimeIn != null && item.todaysTimeOut != null && (
-                                        <div className="col-12">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
+                                    {item.status == null && (
+                                        <div>
+                                            {item.todaysTimeIn != null && (
+                                            <div className="col-12 d-flex justify-content-end">IN - {moment(item.todaysTimeIn, "HH:mm:ss").format("hh:mm A")}</div>
+                                            )}
+                                            {item.todaysTimeIn != null && item.todaysTimeOut != null && (
+                                                <div className="col-12 d-flex justify-content-end">OUT - {moment(item.todaysTimeOut, "HH:mm:ss").format("hh:mm A")}</div>
+                                            )}
+                                        </div>
+                                    )}
+                                    {item.status != null && (
+                                        <div>{item.status}</div>
                                     )}
                                 </div>
                             </td>
