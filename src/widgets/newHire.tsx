@@ -136,7 +136,7 @@ const NewHire = () => {
                         </div>
                       </td>
                       <td className="" id={"newhire_button_td_" + item.id}>
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-end pr-2">
                           <img src={evaluate_disabled} alt="" />
                         </div>
                       </td>

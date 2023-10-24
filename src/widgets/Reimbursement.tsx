@@ -431,14 +431,13 @@ const Reimbursement = () => {
                 <span className="">Reimbursement (Pending for Approval)</span>
             </div>
     <div className="reimbursement-card-body">
-        <div>
             <div className="reimbursement-table">
                 <Table responsive className="custom-reimbursement-table">
                     <div>
                         <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white'}}>
                             <tr>
-                                <th style={{width: 'auto', textAlign: 'center'}}>Employee</th>
-                                <th style={{width: 'auto', textAlign: 'center'}}>Amount</th>
+                                <th style={{width: 'auto', textAlign: 'left'}}>Employee</th>
+                                <th style={{width: 'auto', textAlign: 'left'}}>Amount</th>
                                 <th style={{width: 'auto', textAlign: 'center'}} className="custom-td-width">Action</th>
                             </tr>
                         </thead>
@@ -450,10 +449,10 @@ const Reimbursement = () => {
                             reimbursementList.content.map((item: any, index: any) => {
                                 return (
                                     <tr key={item.id}>
-                                        <td style={{width: 'auto', textAlign: 'center'}} id={"reimbursement_name_tdtable_" + item.id}>
+                                        <td style={{width: 'auto', textAlign: 'left'}} id={"reimbursement_name_tdtable_" + item.id}>
                                             {`${item.firstName} ${item.lastName}`}
                                         </td>
-                                        <td style={{width: 'auto', paddingLeft: '20px', textAlign: 'center'}} id={"reimbursement_total_tdtable_" + item.id}>
+                                        <td style={{width: 'auto', textAlign: 'left'}} id={"reimbursement_total_tdtable_" + item.id}>
                                             {Utility.formatToCurrency(item.total)}
                                         </td>
                                         <td style={{width: 'auto', textAlign: 'center', marginRight: '-50px'}} className="custom-td-width">
@@ -555,9 +554,6 @@ const Reimbursement = () => {
                     </div>
                 </div>
             </div>
-           
-        </div>
-                
     </div>
     <Modal
         show={viewReimbursementModal}

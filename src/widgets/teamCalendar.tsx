@@ -161,24 +161,10 @@ const CalendarComponent = () => {
     return `${year}-${month}-${day}`;
   }
 
-  // const scrollLeft = () => {
-  //   const scrollContainer = document.getElementById('horizontal-scroll-container');
-  //   if (scrollContainer) {
-  //     setScrollPosition(scrollPosition - 100);
-  //     scrollContainer.scrollLeft -= 100;
-  //   }
-  // };
-
-  // const scrollRight = () => {
-  //   const scrollContainer = document.getElementById('horizontal-scroll-container');
-  //   if (scrollContainer) {
-  //     setScrollPosition(scrollPosition + 100);
-  //     scrollContainer.scrollLeft += 100;
-  //   }
-  // };
+  
 
   const scrollLeft = () => {
-    const scrollContainer = document.getElementById('horizontal-scroll-container');
+    const scrollContainer = document.getElementById('horizontal-scroll-container-1st');
     if (scrollContainer) {
       setScrollPosition(scrollPosition - 100);
       scrollContainer.scrollLeft -= 100;
@@ -186,7 +172,7 @@ const CalendarComponent = () => {
   };
 
   const scrollRight = () => {
-    const scrollContainer = document.getElementById('horizontal-scroll-container');
+    const scrollContainer = document.getElementById('horizontal-scroll-container-1st');
     if (scrollContainer) {
       setScrollPosition(scrollPosition + 100);
       scrollContainer.scrollLeft += 100;
@@ -201,14 +187,12 @@ const CalendarComponent = () => {
       <div className="calendar-container mb-2 pb-6">
         <Calendar
         onChange={setDate}
-       
         calendarType="US"
         value={date}
         className="custom-calendar"
         onClickDay={handleDateClick}
         tileContent={() => <div />} 
         renderHeader={({ date  }) => <CustomHeader date={date} />}
-        
         />
       </div>
       </div>
@@ -256,7 +240,7 @@ const CalendarComponent = () => {
                               {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                                 <li key={bdayIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'left', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={user} alt="" width={40} />
+                                    <img src={user} alt="" width={30} />
                                     <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
                                       {bdayItem.firstName} <br />{bdayItem.lastName}
                                     </div>
@@ -283,8 +267,8 @@ const CalendarComponent = () => {
                           <li key={bdayIndex} className="horizontal-scroll-item">
                             {/* <div key={bdayIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}> */}
                             <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <img src={user} alt="" width={40} />
-                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                              <img src={user} alt="" width={30} />
+                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
                                 {bdayItem.firstName} <br />{bdayItem.lastName}
                               </div>
                             </div>
@@ -311,50 +295,49 @@ const CalendarComponent = () => {
               {dataMonth.map((item: any, index: any) => (
                 <div key={index}>
                   {item.leavesList && item.leavesList.length > 3 ? (
-                  <div className="horizontal-scroll">
-                    <div className="row d-flex position-relative">
-                      <div className="col-1">
-                        <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
-                          &#9664;
-                        </button>
-                      </div>
-                      <div className="col-10">
-                        <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                          <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
-                            <div className="col-3  ">
-                              {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
-                                <li key={leaveIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
-                                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={user} alt="" width={40} />
-                                    <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
-                                    {leaveItem.firstName}<br />{leaveItem.lastName}
-                                    <br />
-                                    {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
-                                 </div> 
-                                  </div>
-                                </li>
-                              ))}
-                            </div>
-                            
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="col-1">
-                        <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
-                          &#9654;
-                        </button>
-                      </div>
-                    </div>
-                 
-                  </div>
+                   <div className="horizontal-scroll">
+                   <div className="row d-flex position-relative">
+                     <div className="col-1">
+                       <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px', color: '#009FB5'}} onClick={scrollLeft}>
+                         &#9664;
+                       </button>
+                     </div>
+                     <div className="col-10">
+                       <div className="horizontal-scroll-container" id="horizontal-scroll-container-1st">
+                         <ul className="horizontal-scroll-list">
+                           <div className="col-3">
+                             {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
+                               <li key={leaveIndex} className="horizontal-scroll-item m-2"  style={{ textAlign: 'center' }}>
+                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                   <img src={user} alt="" width={30} className="flex-wrap" />
+                                     <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                                       {leaveItem.firstName} <br /> {leaveItem.lastName}
+                                       <br />
+                                       {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
+                                     </div>
+                                 </div>
+                               </li>
+                             ))}
+                           </div>
+                           
+                         </ul>
+                       </div>
+                     </div>
+                     <div className="col-1">
+                       <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px', color: '#009FB5'}} onClick={scrollRight} >
+                         &#9654;
+                       </button>
+                     </div>
+                   </div>
+                 </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
                       <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <img src={user} alt="" width={40} />
-                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                              <img src={user} alt="" width={30} />
+                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
                               {leaveItem.firstName}<br />{leaveItem.lastName}
                               <br />
                               {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
@@ -387,7 +370,7 @@ const CalendarComponent = () => {
                   <div className="horizontal-scroll">
                     <div className="row d-flex position-relative">
                       <div className="col-1">
-                        <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px'}} onClick={scrollLeft}>
+                        <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px', color: '#009FB5'}} onClick={scrollLeft}>
                           &#9664;
                         </button>
                       </div>
@@ -398,7 +381,10 @@ const CalendarComponent = () => {
                               {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                                 <li key={newHireIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                  <img src={user} alt="" width={40} />
+                                    <img src={user} alt="" width={30} />
+                                    <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                                      {newHireItem.firstName}<br />{newHireItem.lastName}
+                                    </div>
                                   </div>
                                 </li>
                               ))}
@@ -408,7 +394,7 @@ const CalendarComponent = () => {
                         </div>
                       </div>
                       <div className="col-1">
-                        <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px'}} onClick={scrollRight} >
+                        <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px', color: '#009FB5'}} onClick={scrollRight} >
                           &#9654;
                         </button>
                       </div>
@@ -421,9 +407,9 @@ const CalendarComponent = () => {
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                           <li key={newHireIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <img src={user} alt="" width={40} />
-                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
-                                {newHireItem.firstName} <br />{newHireItem.lastName}
+                              <img src={user} alt="" width={30} />
+                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                                {newHireItem.firstName}<br />{newHireItem.lastName}
                               </div>
                             </div>
                           </li>
