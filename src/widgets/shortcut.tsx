@@ -349,7 +349,7 @@ const Shortcut = () => {
                                                             hasSimilar && (
                                                                 <div style={{ whiteSpace: 'nowrap'}}>
                                                                     <span style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', margin: '0' }} onClick={() => hasSimilar && handleSubmenuItemClick(submenuItem)}>
-                                                                        {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label && limitText(submenuItem.label, 20)}
+                                                                        {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label && limitText(submenuItem.label, 15)}
                                                                     </span>
                                                                     {/* <input
                                                                         className="formControl mx-1"
@@ -376,7 +376,7 @@ const Shortcut = () => {
                                                                 style={{ cursor: hasSimilar ? 'pointer' : 'not-allowed', paddingRight: '0px' }}
                                                                 onClick={() => hasSimilar && handleSubmenuItemClick(submenuItem)}
                                                                 >
-                                                                    {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label && limitText(submenuItem.label, 20)}
+                                                                    {submenuItem.type.charAt(0).toUpperCase() + submenuItem.type.slice(1).toLowerCase()}/{submenuItem.label && limitText(submenuItem.label, 15)}
                                                                 </span>
                                                             </div>
                                                             
