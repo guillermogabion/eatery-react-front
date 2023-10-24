@@ -320,7 +320,7 @@ const Shortcut = () => {
                                 <thead>
                                     <tr style={{ border: 'none' }}>
                                         <th style={{ width: 'auto'}}>Parent / Page Name</th>
-                                        <th style={{ width: 'auto'}}>Action</th>
+                                        <th style={{ width: 'auto', textAlign: 'start'}}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -383,7 +383,7 @@ const Shortcut = () => {
                                                             
                                                         )}
                                                     </td>
-                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'start' }} className="d-flex justify-content-end">
+                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'start' }} className="">
                                                         <label>
 
                                                             {hasSimilar ? (
