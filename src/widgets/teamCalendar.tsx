@@ -284,7 +284,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div className="birthday-items">
+            <div className="holiday-items">
               No Birthdays today
             </div>
           )}
@@ -332,7 +332,7 @@ const CalendarComponent = () => {
                  </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list caledar-items" style={{marginLeft: '30px'}}>
+                      <ul className="horizontal-scroll-list caledar-items">
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -354,7 +354,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
+            <div  className="holiday-items">
               No employee on leave today
             </div>
           )}
@@ -376,7 +376,7 @@ const CalendarComponent = () => {
                       </div>
                       <div className="col-10">
                         <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                          <ul className="horizontal-scroll-list caledar-items" style={{marginLeft: '30px'}}>
+                          <ul className="horizontal-scroll-list caledar-items">
                             <div className="col-3  ">
                               {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                                 <li key={newHireIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
@@ -403,7 +403,7 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.newHiresList && item.newHiresList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list caledar-items" style={{marginLeft: '30px'}}>
+                      <ul className="horizontal-scroll-list caledar-items">
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                           <li key={newHireIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -423,7 +423,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
+            <div className="holiday-items">
               No newly hired today
             </div>
           )}
