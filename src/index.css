@@ -4921,7 +4921,7 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
     color: #189FB5 ;
   }
   .reimbursement-pagination {
-    padding-top: 100px;
+    padding-top: 1px;
   }
   
 }
@@ -5105,7 +5105,7 @@ input[type="date"]{
   /* overflow-x: hidden; */
 }
 .reimbursement-pagination {
-  padding-top: 50px;
+  padding-top: 5px;
 }
 .squad-tracker-table {
   height: 320px;
@@ -5157,6 +5157,9 @@ input[type="date"]{
 }
 .action-space {
   text-align: center;
+}
+.reimbursement-pagination {
+  padding-top: 70px;
 }
 
 @media screen and (max-width : 500px) and (min-width: 300px) {
@@ -5247,14 +5250,14 @@ input[type="date"]{
     padding-top: 10px;
     margin-left: 0px;
     margin-right: 25px;
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
   }
   .shortcut-table-manage {
     height: 280px;
     padding-top: 10px;
   }
   .reimbursement-pagination {
-    padding-top: 80px !important;
+    padding-top: 8px;
   }
   .employee-directory-table-item {
     font-size: 10px;
@@ -5271,14 +5274,14 @@ input[type="date"]{
     overflow-x: auto;
   }
   .reimbursement-table {
-    height: 300px;
+    height: 400px;
     padding-top: 10px;
     margin-left: 0px;
-    margin-right: 25px;
-    /* overflow-x: hidden; */
+    margin-right: 10px;
+    overflow: auto;
   }
   .reimbursement-pagination {
-    padding-top: 90px;
+    padding-top: 0px;
   }
   
   .custom-stat .nav-link.active {
@@ -5312,6 +5315,9 @@ input[type="date"]{
   }
   .action-space {
     text-align: start;
+  }
+  .number-items {
+    flex-wrap: wrap;
   }
 
 }

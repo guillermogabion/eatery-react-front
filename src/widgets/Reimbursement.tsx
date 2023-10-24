@@ -527,7 +527,7 @@ const Reimbursement = () => {
                     </tbody>
                 </Table>
             </div>
-            <div className="row reimbursement-pagination mt-3 pr-4">
+            <div className="row reimbursement-pagination pr-4">
                 <div className="col-8">
                     <div className="d-flex justify-content-start">
                         <ReactPaginate
@@ -549,7 +549,7 @@ const Reimbursement = () => {
                     </div>
                 </div>
                 <div className="col-4">
-                    <div className="d-flex justify-content-end">
+                    <div className="d-flex justify-content-end number-items" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                         <span className="text-primary font-bold items-count" > Showing {reimbursementList.numberOfElements} of {reimbursementList.totalElements} </span>
                     </div>
                 </div>
