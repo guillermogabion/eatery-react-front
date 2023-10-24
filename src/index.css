@@ -5077,17 +5077,7 @@ input[type="date"]{
   max-width: 10px;
   max-height: 100px;
 }
-.custom-reimbursement-table {
-  max-width: 10px;
-  max-height: 100px;
-  max-width: 10px !important;
-}
-/* .shortcut-card-body {
-  padding: 5px 10px 5px 10px !important;
-} */
-.custom-reimbursement-table {
-  height: 200px;
-}
+
 .shortcut-header-table {
   width: 100%;
 }
@@ -5163,6 +5153,9 @@ input[type="date"]{
 }
 .custom-width-shortcut {
   width: 100px;
+  text-align: center;
+}
+.action-space {
   text-align: center;
 }
 
@@ -5316,6 +5309,9 @@ input[type="date"]{
   .custom-width-shortcut {
     width: 100px;
     text-align: left;
+  }
+  .action-space {
+    text-align: start;
   }
 
 }

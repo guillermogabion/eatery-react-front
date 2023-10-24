@@ -392,7 +392,7 @@ const Absent = () => {
             <div className="squad-tracker-table">
                 <Table responsive className="custom-squadtracker-table">
                     <tbody>
-                        {allMember && allMember.length > 0 && (
+                        {allMember && allMember.length > 0 ? (
                         allMember.map((item: any, index: any) => (
                             <tr key={index}>
                                 <td id={`dashboard_squadtracker_membername_all_${item.id}`} className="text-primary font-bold custom-td-width squad" colSpan={2}>
@@ -417,17 +417,17 @@ const Absent = () => {
                                     </td>
                             </tr>
                         ))
+                        ) : (
+                            <tr>
+                            <td colSpan="2" className="text-center">
+                                No Record Found
+                            </td>
+                            </tr>
                         )}
                     </tbody>
                 </Table>
             </div>
             <div>
-            { allMember && allMember.length == 0 && (
-                <div className="d-flex justify-content-center align-items-center">
-                    No Record Found
-                </div>
-            )}
-
             </div>
 
         </div>

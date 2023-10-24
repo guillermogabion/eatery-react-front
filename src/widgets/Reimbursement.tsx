@@ -432,9 +432,9 @@ const Reimbursement = () => {
             </div>
     <div className="reimbursement-card-body">
             <div className="reimbursement-table">
-                <Table responsive className="custom-reimbursement-table">
+                <Table className="custom-reimbursement-table">
                     <div>
-                        <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white'}}>
+                        <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white', width: '100%'}}>
                             <tr>
                                 <th style={{width: 'auto', textAlign: 'left'}}>Employee</th>
                                 <th style={{width: 'auto', textAlign: 'left'}}>Amount</th>

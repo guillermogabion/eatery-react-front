@@ -132,7 +132,7 @@ const NewHire = () => {
                       <td id={"newhire_name_td_" + item.name} className="text-primary font-bold custom-td-width custom-td-width-mobile">
                         <div className="d-flex">
                           <img src={user} width={30} style={{ borderRadius: '50%', color: 'black', margin: '10px' }}></img>
-                          <span style={{ marginTop: '22px' }}>{item.name}</span>
+                          <span style={{ marginTop: '12px' }}>{item.name}</span>
                         </div>
                       </td>
                       <td className="" id={"newhire_button_td_" + item.id}>
