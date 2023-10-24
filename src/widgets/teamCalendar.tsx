@@ -205,7 +205,7 @@ const CalendarComponent = () => {
                 {item.holidaysList && item.holidaysList.length > 0 && (
                   <ul>
                   {item.holidaysList.map((holidayItem: any, holidayIndex: any) => (
-                    <div key={holidayIndex} style={{ display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px', paddingLeft: '45px' }}>
+                    <div key={holidayIndex} className="holiday-items">
                         {holidayItem.holidayName}
                     </div>
                   ))}
@@ -214,7 +214,7 @@ const CalendarComponent = () => {
               </div>
             ))
             ) : (
-              <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
+              <div className="holiday-items">
                 Not a holiday today
               </div>
             )}
@@ -234,8 +234,8 @@ const CalendarComponent = () => {
                         </button>
                       </div>
                       <div className="col-10">
-                        <div className="horizontal-scroll-container" id="horizontal-scroll-container" style={{paddingLeft: '50px'}}>
-                          <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
+                        <div className="horizontal-scroll-container" id="horizontal-scroll-container">
+                          <ul className="horizontal-scroll-list calendar-items">
                             <div className="col-3" >
                               {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                                 <li key={bdayIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'left', padding: '20px' }}>
@@ -262,7 +262,7 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.bdayList && item.bdayList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
+                      <ul className="horizontal-scroll-list calendar-items">
                         {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                           <li key={bdayIndex} className="horizontal-scroll-item">
                             {/* <div key={bdayIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}> */}
@@ -284,7 +284,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div style={{ paddingLeft: '45px', display: 'flex', flexDirection: 'column', alignItems: 'left', paddingTop: '10px' }}>
+            <div className="birthday-items">
               No Birthdays today
             </div>
           )}
@@ -304,7 +304,7 @@ const CalendarComponent = () => {
                      </div>
                      <div className="col-10">
                        <div className="horizontal-scroll-container" id="horizontal-scroll-container-1st">
-                         <ul className="horizontal-scroll-list">
+                         <ul className="horizontal-scroll-list caledar-items">
                            <div className="col-3">
                              {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                                <li key={leaveIndex} className="horizontal-scroll-item m-2"  style={{ textAlign: 'center' }}>
@@ -324,7 +324,7 @@ const CalendarComponent = () => {
                        </div>
                      </div>
                      <div className="col-1">
-                       <button className="scroll-button right" style={{position:'absolute', paddingTop: '18px', color: '#009FB5'}} onClick={scrollRight} >
+                       <button className="scroll-button right mobile-right" style={{position:'absolute', paddingTop: '18px', color: '#009FB5'}} onClick={scrollRight} >
                          &#9654;
                        </button>
                      </div>
@@ -332,7 +332,7 @@ const CalendarComponent = () => {
                  </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
+                      <ul className="horizontal-scroll-list caledar-items" style={{marginLeft: '30px'}}>
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -376,7 +376,7 @@ const CalendarComponent = () => {
                       </div>
                       <div className="col-10">
                         <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                          <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
+                          <ul className="horizontal-scroll-list caledar-items" style={{marginLeft: '30px'}}>
                             <div className="col-3  ">
                               {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                                 <li key={newHireIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
@@ -403,7 +403,7 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.newHiresList && item.newHiresList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list" style={{marginLeft: '30px'}}>
+                      <ul className="horizontal-scroll-list caledar-items" style={{marginLeft: '30px'}}>
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                           <li key={newHireIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
