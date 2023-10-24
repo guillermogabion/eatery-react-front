@@ -5110,11 +5110,12 @@ input[type="date"]{
 }
 .squad-tracker-table {
   height: 320px;
-  padding-top: 20px;
+  padding-top: 0px;
   margin-left: -8px;
   margin-right: 15px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: 10px;
 
 }
 .shortcuts-table {
@@ -5127,12 +5128,12 @@ input[type="date"]{
 }
 .newhire-tracker-table {
   height: 320px;
-  padding-top: 20px;
   margin-left: 0px;
   margin-right: 15px;
   overflow-y: auto;
   overflow-x: hidden;
-
+  padding-top: 0px;
+  margin-top: 10px;
 }
 .reimbursemnet-layout {
   margin-left: 10px;
@@ -5169,6 +5170,16 @@ input[type="date"]{
 /* .new-hire-layout {
   flex: 1;
 } */
+.holiday-items {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding-top: 10px;
+  padding-left: 45px;
+}
+.calendar-items {
+  padding-left: 50px;
+}
 
 @media screen and (max-width : 500px) and (min-width: 300px) {
   .dropdown-text {
@@ -5341,18 +5352,31 @@ input[type="date"]{
   .triangle-left {
     padding-left: 2px;
   }
-  /* .triangle-right {
-    margin-right: 10px;
-  } */
+  .triangle-right {
+    padding-right: 2px;
+  }
+  .triangle-left {
+    padding-left: 2px;
+  }
+ 
   .arrow-space {
     padding: 6px 2px 0 0;
-    /* margin: 0px 1px 0px 1px; */
   }
   .font-adjust {
     margin-top: 2px;
   }
   .mobile-arrow {
     padding-left: 16px;
+  }
+  .mobile-right {
+    display: flex;
+  }
+  .holiday-items {
+   
+    padding-left: 10px;
+  }
+  .calendar-items {
+    padding-left: 10px;
   }
   
 }
