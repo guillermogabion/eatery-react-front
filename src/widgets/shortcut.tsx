@@ -316,11 +316,11 @@ const Shortcut = () => {
                     <div className="shortcut-inner-body">
                     <div>
                         <Table responsive style={{ width: '100%',overflowX: 'hidden', }}>
-                            <div style={{ height: '330px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '10px' }}>
+                            <div style={{ height: '330px', overflowY: 'auto', overflowX: 'hidden', marginLeft: '7px' }}>
                                 <thead>
                                     <tr style={{ border: 'none' }}>
                                         <th style={{ width: 'auto'}}>Parent / Page Name</th>
-                                        <th style={{ width: 'auto', textAlign: 'start'}}>Action</th>
+                                        <th style={{ width: 'auto'}} className="action-space">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -383,7 +383,7 @@ const Shortcut = () => {
                                                             
                                                         )}
                                                     </td>
-                                                    <td style={{ height: '25px', margin: '0', padding: '15px', textAlign: 'start' }} className="">
+                                                    <td style={{ height: '25px', margin: '0', padding: '15px '}} className="action-space">
                                                         <label>
 
                                                             {hasSimilar ? (
