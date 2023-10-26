@@ -3684,10 +3684,12 @@ table thead tr th{
 .tab-content{
   overflow: auto;
   overflow-x: hidden;
+ 
 }
 .tax-table-container {
   max-height: 400px;
   overflow: auto;
+
 }
 
 .tax-sticky-header {
@@ -4186,8 +4188,13 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   border: none !important;
   width: 98%;
   margin: 0;
-  padding: 0;
   object-fit: contain;
+  display: flex;
+  padding: 0;
+}
+.calendar-card-body > div > .tab-content {
+  padding: 0;
+  display: flex;
 }
 .custom-calendar-tab {
   border: none !important;
@@ -4591,8 +4598,8 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
   margin: 0;
   list-style: none;
   transition: transform 0.3s ease-in-out;
-  padding-left: 10px;
-  padding-top: 5px;
+  padding-left: 12px;
+  /* padding-top: 5px; */
 }
 
 .horizontal-scroll-item {
@@ -4835,6 +4842,31 @@ table > tbody.custom-row > tr > td, table > thead.custom-row > tr > td, table > 
 }
 .regular-employee-text {
   padding-top: 30px;
+}
+/* .mobile-right-col {
+  margin: 0 12px 0 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-left-col {
+  margin: 0 0 0 12px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+.responsive-image {
+  width: 30px;
+}
+
+.responsive-text {
+  align-items: center;
+  text-align: center;
+  display: flex;
+  font-size: 12px;
+  line-height: 12px;
 }
 
 @media screen and (min-width : 1600px) {
@@ -5178,7 +5210,11 @@ input[type="date"]{
   padding-left: 45px;
 }
 .calendar-items {
-  padding-left: 50px;
+  padding: 0 !important;
+}
+.item-space {
+  padding: 0 !important;
+  
 }
 
 @media screen and (max-width : 500px) and (min-width: 300px) {
@@ -5387,7 +5423,20 @@ input[type="date"]{
    padding-right: 0;
    margin: 0;
    }
+   .responsive-image {
+    width: 20px;
+  }
   
+  .responsive-text {
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 8px;
+    line-height: 8px;
+  }
+  .mobile-right-arrow {
+    padding-left: 0;
+  }
 }
 @media screen and (min-width : 501px) {
   .wide-screens {

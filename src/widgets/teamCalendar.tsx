@@ -214,7 +214,7 @@ const CalendarComponent = () => {
               </div>
             ))
             ) : (
-              <div className="holiday-items">
+              <div className="justify-content-center d-flex">
                 Not a holiday today
               </div>
             )}
@@ -222,7 +222,7 @@ const CalendarComponent = () => {
           <Tab  className="custom-tabs" eventKey="tab2" title="Birthday">
             
             {hasBirthdaysThisWeek ? (
-            <div className="">
+            <div className="justify-content-center d-flex">
               {dataMonth.map((item: any, index: any) => (
                 <div key={index}>
                   {item.bdayList && item.bdayList.length > 3 ? (
@@ -233,7 +233,7 @@ const CalendarComponent = () => {
                           &#9664;
                         </button>
                       </div>
-                      <div className="col-10">
+                      <div className="col-10 item-space">
                         <div className="horizontal-scroll-container" id="horizontal-scroll-container">
                           <ul className="horizontal-scroll-list calendar-items">
                             <div className="col-3" >
@@ -284,33 +284,33 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div className="holiday-items">
+            <div className="justify-content-center d-flex">
               No Birthdays today
             </div>
           )}
           </Tab>
           <Tab  className="custom-tabs" eventKey="tab3" title="On Leave">
           {hasLeavesThisWeek ? (
-            <div className="">
+            <div className="justify-content-center d-flex">
               {dataMonth.map((item: any, index: any) => (
                 <div key={index}>
                   {item.leavesList && item.leavesList.length > 3 ? (
                    <div className="horizontal-scroll">
                    <div className="row d-flex position-relative">
-                     <div className="col-1">
+                     <div className="col-1  mobile-left-col">
                        <button className="scroll-button left" style={{position:'absolute', paddingTop: '20px', color: '#009FB5'}} onClick={scrollLeft}>
                          &#9664;
                        </button>
                      </div>
-                     <div className="col-10">
+                     <div className="col-10 item-space">
                        <div className="horizontal-scroll-container" id="horizontal-scroll-container-1st">
-                         <ul className="horizontal-scroll-list caledar-items">
+                         <ul className="horizontal-scroll-list calendar-items">
                            <div className="col-3">
                              {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                                <li key={leaveIndex} className="horizontal-scroll-item m-2"  style={{ textAlign: 'center' }}>
                                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                   <img src={user} alt="" width={30} className="flex-wrap" />
-                                     <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                                   <img src={user} alt="" className="flex-wrap responsive-image" />
+                                     <div className="responsive-text">
                                        {leaveItem.firstName} <br /> {leaveItem.lastName}
                                        <br />
                                        {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
@@ -323,8 +323,8 @@ const CalendarComponent = () => {
                          </ul>
                        </div>
                      </div>
-                     <div className="col-1 mobile-right-col">
-                       <button className="scroll-button right mobile-right" style={{position:'absolute', paddingTop: '18px', color: '#009FB5'}} onClick={scrollRight} >
+                     <div className="col-1 mobile-right-arrow">
+                       <button className="scroll-button right mobile-right" style={{position:'absolute', paddingTop: '20px', color: '#009FB5'}} onClick={scrollRight} >
                          &#9654;
                        </button>
                      </div>
@@ -354,7 +354,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div  className="holiday-items">
+            <div  className="justify-content-center d-flex">
               No employee on leave today
             </div>
           )}
@@ -363,7 +363,7 @@ const CalendarComponent = () => {
           <Tab  className="custom-tabs" eventKey="tab4" title="New Hire">
            
           {hasNewHiresThisWeek ? (
-            <div className="">
+            <div className="justify-content-center d-flex">
               {dataMonth.map((item: any, index: any) => (
                 <div key={index}>
                   {item.newHiresList && item.newHiresList.length > 3 ? (
@@ -423,7 +423,7 @@ const CalendarComponent = () => {
               ))}
             </div>
           ) : (
-            <div className="holiday-items">
+            <div className="justify-content-center d-flex">
               No newly hired today
             </div>
           )}
