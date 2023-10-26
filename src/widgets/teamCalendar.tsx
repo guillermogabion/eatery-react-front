@@ -323,7 +323,7 @@ const CalendarComponent = () => {
                          </ul>
                        </div>
                      </div>
-                     <div className="col-1">
+                     <div className="col-1 mobile-right-col">
                        <button className="scroll-button right mobile-right" style={{position:'absolute', paddingTop: '18px', color: '#009FB5'}} onClick={scrollRight} >
                          &#9654;
                        </button>
