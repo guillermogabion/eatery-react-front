@@ -5211,6 +5211,7 @@ input[type="date"]{
 }
 .calendar-items {
   padding: 0 !important;
+  width: 400px;
 }
 .item-space {
   padding: 0 !important;
@@ -5417,6 +5418,7 @@ input[type="date"]{
   }
   .calendar-items {
     padding-left: 10px;
+    max-width: 300px ;
   }
   .custom-calendar-tab .nav-link.active {
    padding-left: 0;
@@ -5437,6 +5439,10 @@ input[type="date"]{
   .mobile-right-arrow {
     padding-left: 0;
   }
+  .custom-calendar {
+    padding: 0 20px;
+  }
+
 }
 @media screen and (min-width : 501px) {
   .wide-screens {

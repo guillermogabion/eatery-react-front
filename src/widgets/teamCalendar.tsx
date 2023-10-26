@@ -728,7 +728,7 @@ const TeamCalendar = () => {
                   </div>
               </div>
   {/* leaves  */}
-            <div  className="pt-2" style={{ height: '320px', overflowY: 'auto', marginTop: '-10px'  }}>
+            <div  className="pt-2" style={{ height: '320px', overflowY: 'auto', marginTop: '-10px', padding: '0 10px'  }}>
               {/* <div> */}
                 <Accordion activeKey={activeAccordionKey} onSelect={handleAccordionToggle} style={{ border: 'none' }} className="custom-accordion">
                   <Accordion.Item style={{paddingBottom: '10px'}} className="custom-arrow-accordion" eventKey="0">
