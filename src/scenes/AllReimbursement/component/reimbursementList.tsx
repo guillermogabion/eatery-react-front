@@ -26,6 +26,9 @@ export const ReimbursementList = (props: any) => {
     const [isApproving, setIsApproving] = useState<any>(false)
     const [isCancelling, setIsCancelling] = useState<any>(false);
     const [reimbursementList, setReimbursementList] = useState<any>([]);
+    const [receiptImage, setReceiptImage] = useState<any>("");
+    const [ viewRecieptImageModal, setViewReceiptModal] = useState<any>(false)
+    const [ displayReciept, setDisplayReceipt ] = useState<any>(null);
     const tableHeaders = [
         'Employee Name',
         'Reimbursement Type',
@@ -139,15 +142,31 @@ export const ReimbursementList = (props: any) => {
     }, [reimbursementList])
 
 
-    const onChangeCheckbox = (index: any, boolCheck: any) => {
-        const valuesObj: any = { ...reimbursementList }
-        if (valuesObj.content) {
-            let tempArray = [...valuesObj.content]
-            tempArray[index].isCheck = boolCheck
-            setReimbursementList({ ...valuesObj })
-        }
+    // const onChangeCheckbox = (index: any, boolCheck: any) => {
+    //     const valuesObj: any = { ...reimbursementList }
+    //     if (valuesObj.content) {
+    //         let tempArray = [...valuesObj.content]
+    //         tempArray[index].isCheck = boolCheck
+    //         setReimbursementList({ ...valuesObj })
+    //     }
 
-    }
+    // }
+
+    const onChangeCheckbox = (index, boolCheck) => {
+        setReimbursementList((prevList) => {
+            if (!prevList || !prevList.content || index < 0 || index >= prevList.content.length) {
+                return prevList;
+            }
+            const tempArray = [...prevList.content];
+            tempArray[index].isCheck = boolCheck;
+    
+            return {
+                ...prevList,
+                content: tempArray,
+            };
+        });
+    };
+    
 
     const unSelectAll = () => {
         let reimTemp: any = { ...reimbursementList }
@@ -315,6 +334,8 @@ export const ReimbursementList = (props: any) => {
                                 },
                                 icon: 'error',
                             })
+                            uncheckAllCheckboxes()
+
                         } else {
                             Swal.close()
                             ErrorSwal.fire({
@@ -329,6 +350,7 @@ export const ReimbursementList = (props: any) => {
                                 icon: 'success',
                             })
                             getReimbursements(0)
+                            uncheckAllCheckboxes()
                         }
                     } else {
                         Swal.close()
@@ -342,7 +364,9 @@ export const ReimbursementList = (props: any) => {
                                     confirmButton.id = "reimbursement_errorconfirm4_alertbtn"
                             },
                             icon: 'error',
+                            
                         })
+                        
                     }
                 })
             }
@@ -397,6 +421,7 @@ export const ReimbursementList = (props: any) => {
                                 },
                                 icon: 'error',
                             })
+                            uncheckAllCheckboxes()
                         } else {
                             Swal.close()
                             ErrorSwal.fire({
@@ -411,6 +436,7 @@ export const ReimbursementList = (props: any) => {
                                 icon: 'success',
                             })
                             getReimbursements(0)
+                            uncheckAllCheckboxes()
                         }
                     } else {
                         Swal.close()
@@ -691,6 +717,16 @@ export const ReimbursementList = (props: any) => {
         }
 
     }
+    function uncheckAllCheckboxes() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach((checkbox, index) => {
+            if (checkbox.id !== "SelectAllCheckbox") {
+                checkbox.checked = false;
+            }
+        });
+    
+        // Optionally, you can also update the state or perform other actions here.
+    }
 
     const updateParentData = (key: any, value: any) => {
         const valuesObj: any = { ...reimbursementParentValues }
@@ -710,7 +746,21 @@ export const ReimbursementList = (props: any) => {
         filterObj[name] = name && option && option.value !== "Select" ? option.value : ""
         setFilterData(filterObj)
     }
-
+    const getReceiptImage = (path: any) => {
+        RequestAPI.getRequest(
+            `${Api.getFile}?path=${path}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                console.log(body)
+                if (status === 200 && body) {
+                    setReceiptImage(body)
+                }
+            }
+        )
+    }
 
 
     const [isSelectAll, setIsSelectAll] = useState<any>(false)
@@ -828,16 +878,30 @@ export const ReimbursementList = (props: any) => {
                             <tr>
                                 <th style={{ width: 10 }}>
                                     Select
-                                    {/* <Form.Check
+                                    <Form.Check
                                         type="checkbox"
                                         id="Select All"
                                         label="Select All"
-                                        checked={isSelectAll}
+                                        // checked={isSelectAll}
                                         onChange={(e) => {
-                                            setIsSelectAll(e.target.checked)
-                                            selectAllEmployees(e.target.checked)
+                                            const isChecked = e.target.checked;
+                                            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                                            checkboxes.forEach((checkbox, index) => {
+                                                if (checkbox.id !== "SelectAllCheckbox") {
+                                                    checkbox.checked = isChecked;
+                                                    if (isChecked) {
+                                                        const item = reimbursementList.content[index];
+                                                        if (item) { // Check if item is defined
+                                                            onChangeCheckbox(index, true);
+                                                        }
+                                                    } else {
+                                                        // You may also want to handle unchecking here
+                                                        onChangeCheckbox(index, false);
+                                                    }
+                                                }
+                                            });
                                         }}
-                                    /> */}
+                                    />
                                 </th>
                                 {
                                     tableHeaders &&
@@ -1171,7 +1235,18 @@ export const ReimbursementList = (props: any) => {
                                                         <td id={"reimbursement_tin_modaltable_" + data.invoice}>{data.tin}</td>
                                                         <td id={"reimbursement_transactionDate_modaltable_" + data.invoice}>{data.transactionDate}</td>
                                                         <td id={"reimbursement_amount_modaltable_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
-                                                        <td id={"reimbursement_filename_modaltable_" + data.invoice}>{data.fileName}</td>
+                                                        {/* <td id={"reimbursement_filename_modaltable_" + data.invoice}>{data.fileName}</td> */}
+                                                        <td id={"reimbursement_image_modaltable_" + data.invoice}>
+                                                            <label
+                                                            id="reimbursement__modaltable_label"
+                                                            onClick={() => {
+                                                                setViewReceiptModal(true)
+                                                                getReceiptImage(data.fileNamePath)
+                                                            }}
+                                                            >
+                                                                <img id={"reimbursement__modaltable_img" + data.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                            </label>
+                                                        </td>
                                                     </tr>
                                                 )
 
@@ -1277,6 +1352,43 @@ export const ReimbursementList = (props: any) => {
 
                     </div>
                 </Modal.Body>
+            </Modal>
+            <Modal
+                show={viewRecieptImageModal}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+                onHide={() => setViewReceiptModal(false)}
+                dialogClassName="modal-90w"
+                id="view_image_modal"
+            >
+                <Modal.Header className="text-center flex justify-center">
+                    <Modal.Title id="contained-modal-title-vcenter" className="font-bold text-md">
+                        View Receipt
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className=" px-3 m-0">
+                    <div>
+                        <label>Receipt Preview</label>
+                        <div className="w-full flex justify-center object-contain">
+                            <img id={"reimbursementuploadreceipt_receiptimg_modalimg"} src={`${receiptImage}`} alt="Base64 Image" />;
+                        </div>
+                    </div>
+                    <div className="flex justify-center mt-5">
+                        <Button
+                            variant="secondary"
+                            onClick={() => {
+                                setViewReceiptModal(false)
+                            }}
+                            id={"reimbursement_close_modalbtn"}
+                            className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
+                            Close
+                        </Button>
+                    </div>
+                </Modal.Body>
+
             </Modal>
         </div>);
 }

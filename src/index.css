@@ -5368,6 +5368,10 @@ input[type="date"]{
   .mobile-arrow {
     padding-left: 16px;
   }
+  .mobile-right-col {
+    padding-left: 0;
+    margin-left: 0;
+  }
   .mobile-right {
     display: flex;
   }
