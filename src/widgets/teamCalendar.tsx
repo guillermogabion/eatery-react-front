@@ -332,10 +332,10 @@ const CalendarComponent = () => {
                  </div>
                   ) : item.leavesList && item.leavesList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list caledar-items">
+                      <ul className="horizontal-scroll-list calendar-items">
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
-                            <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={30} />
                               <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
                               {leaveItem.firstName}<br />{leaveItem.lastName}
@@ -403,10 +403,10 @@ const CalendarComponent = () => {
                   </div>
                   ) : item.newHiresList && item.newHiresList.length <= 3 ? (
                     <div className="horizontal-scroll-container" id="horizontal-scroll-container">
-                      <ul className="horizontal-scroll-list caledar-items">
+                      <ul className="horizontal-scroll-list calendar-items">
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                           <li key={newHireIndex} className="horizontal-scroll-item">
-                            <div style={{ margin: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                               <img src={user} alt="" width={30} />
                               <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
                                 {newHireItem.firstName}<br />{newHireItem.lastName}
