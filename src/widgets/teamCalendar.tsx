@@ -240,8 +240,8 @@ const CalendarComponent = () => {
                               {item.bdayList.map((bdayItem: any, bdayIndex: any) => (
                                 <li key={bdayIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'left', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={user} alt="" width={30} />
-                                    <div style={{alignItems: 'center', textAlign: 'center', display: 'flex'}}>
+                                    <img src={user} alt="" className="flex-wrap responsive-image" />
+                                    <div className="responsive-text">
                                       {bdayItem.firstName} <br />{bdayItem.lastName}
                                     </div>
                                   </div>
@@ -267,8 +267,8 @@ const CalendarComponent = () => {
                           <li key={bdayIndex} className="horizontal-scroll-item">
                             {/* <div key={bdayIndex}  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '10px' }}> */}
                             <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <img src={user} alt="" width={30} />
-                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                              <img src={user} alt=""  className="flex-wrap responsive-image" />
+                              <div className="responsive-text">
                                 {bdayItem.firstName} <br />{bdayItem.lastName}
                               </div>
                             </div>
@@ -336,8 +336,8 @@ const CalendarComponent = () => {
                         {item.leavesList.map((leaveItem: any, leaveIndex: any) => (
                           <li key={leaveIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <img src={user} alt="" width={30} />
-                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                              <img src={user} alt=""  className="flex-wrap responsive-image" />
+                              <div className="responsive-text">
                               {leaveItem.firstName}<br />{leaveItem.lastName}
                               <br />
                               {leaveItem.leaveName === "Actimai Angel Benefits" ? "(AAB)" : leaveItem.leaveName === "Vacation Leave" ? "(VL)" :  leaveItem.leaveName === "Sick Leave" ? "(SL)" : ""}
@@ -381,8 +381,8 @@ const CalendarComponent = () => {
                               {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                                 <li key={newHireIndex} className="horizontal-scroll-item ma-5 pa-5"  style={{ textAlign: 'center', padding: '20px' }}>
                                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <img src={user} alt="" width={30} />
-                                    <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                                    <img src={user} alt=""  className="flex-wrap responsive-image" />
+                                    <div className="responsive-text">
                                       {newHireItem.firstName}<br />{newHireItem.lastName}
                                     </div>
                                   </div>
@@ -407,8 +407,8 @@ const CalendarComponent = () => {
                         {item.newHiresList.map((newHireItem: any, newHireIndex: any) => (
                           <li key={newHireIndex} className="horizontal-scroll-item">
                             <div style={{ margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                              <img src={user} alt="" width={30} />
-                              <div style={{alignItems: 'center', textAlign: 'center', display: 'flex', fontSize: '12px', lineHeight: '12px'}}>
+                              <img src={user} alt="" className="flex-wrap responsive-image" />
+                              <div className="responsive-text">
                                 {newHireItem.firstName}<br />{newHireItem.lastName}
                               </div>
                             </div>

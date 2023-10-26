@@ -32,6 +32,9 @@ const Reimbursement = () => {
     const [reimbursementView, setReimbursementView] = React.useState();
     const [isEditReimbursement, setIsEditReimbursement] = useState<any>(false);
     const [reimbursementType, setReimbursementType] = React.useState([])
+    const [ viewRecieptImageModal, setViewReceiptModal] = useState<any>(false)
+    const [receiptImage, setReceiptImage] = useState<any>("");
+    
 
 
     const getReimbursements = (pageNo: any) => {
@@ -425,6 +428,22 @@ const Reimbursement = () => {
         getReimbursementType()
     }, [])
 
+    const getReceiptImage = (path: any) => {
+        RequestAPI.getRequest(
+            `${Api.getFile}?path=${path}`,
+            "",
+            {},
+            {},
+            async (res: any) => {
+                const { status, body = { data: {}, error: {} } }: any = res
+                console.log(body)
+                if (status === 200 && body) {
+                    setReceiptImage(body)
+                }
+            }
+        )
+    }
+
     return (
         <div className="time-card-width">
              <div className="card-header">
@@ -657,9 +676,9 @@ const Reimbursement = () => {
                     <div className="form-group col-md-4 mb-3" >
 
                     </div>
-                    <div className="form-group col-md-4 mb-3" >
+                    <div className="form-group col-md-4 col-xs-12 col-sm-12 mb-3" >
                         <label>Status:</label> <br />
-                        <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white`}>{reimbursementParentValues && reimbursementParentValues.status}</label>
+                        <label className={`bg-[${Utility.reimbursementStatus(reimbursementParentValues && reimbursementParentValues.status)}] rounded-md px-5 py-2 text-white justify-content-center d-flex `} style={{textAlign: 'center'}}>{reimbursementParentValues && reimbursementParentValues.status}</label>
 
                     </div>
                     <div className="form-group col-md-6 mb-3" >
@@ -739,7 +758,18 @@ const Reimbursement = () => {
                                                 <td id={"reimbursementwidget_tin_invoicetd_" + data.invoice}>{data.tin}</td>
                                                 <td id={"reimbursementwidget_transactiondate_invoicetd_" + data.invoice}>{data.transactionDate}</td>
                                                 <td id={"reimbursementwidget_amount_invoicetd_" + data.invoice}>{Utility.formatToCurrency(data.amount)}</td>
-                                                <td id={"reimbursementwidget_filename_invoicetd_" + data.invoice}>{data.fileName}</td>
+                                                {/* <td id={"reimbursementwidget_filename_invoicetd_" + data.invoice}>{data.fileName}</td> */}
+                                                <td id={"reimbursement_image_modaltable_" + data.invoice}>
+                                                    <label
+                                                    id="reimbursement__modaltable_label"
+                                                    onClick={() => {
+                                                        setViewReceiptModal(true)
+                                                        getReceiptImage(data.fileNamePath)
+                                                    }}
+                                                    >
+                                                        <img id={"reimbursement__modaltable_img" + data.id} src={eye} width={20} className="hover-icon-pointer mx-1" title="View" />
+                                                    </label>
+                                                </td>
                                             </tr>
                                         )
 
@@ -775,6 +805,43 @@ const Reimbursement = () => {
 
             </div>
         </Modal.Body>
+    </Modal>
+    <Modal
+        show={viewRecieptImageModal}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop="static"
+        keyboard={false}
+        onHide={() => setViewReceiptModal(false)}
+        dialogClassName="modal-90w"
+        id="view_image_modal"
+    >
+        <Modal.Header className="text-center flex justify-center">
+            <Modal.Title id="contained-modal-title-vcenter" className="font-bold text-md">
+                View Receipt
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className=" px-3 m-0">
+            <div>
+                <label>Receipt Preview</label>
+                <div className="w-full flex justify-center object-contain">
+                    <img id={"reimbursementuploadreceipt_receiptimg_modalimg"} src={`${receiptImage}`} alt="Base64 Image" />;
+                </div>
+            </div>
+            <div className="flex justify-center mt-5">
+                <Button
+                    variant="secondary"
+                    onClick={() => {
+                        setViewReceiptModal(false)
+                    }}
+                    id={"reimbursement_close_modalbtn"}
+                    className="w-[150px] mr-2 text-[#189FB5]" style={{ borderColor: '#189FB5' }}>
+                    Close
+                </Button>
+            </div>
+        </Modal.Body>
+
     </Modal>
 </div>
        
