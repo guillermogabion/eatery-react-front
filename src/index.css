@@ -5397,7 +5397,7 @@ input[type="date"]{
   }
  
   .arrow-space {
-    padding: 6px 2px 0 0;
+    /* padding: 6px 2px 0 0; */
   }
   .font-adjust {
     margin-top: 2px;
@@ -5442,7 +5442,10 @@ input[type="date"]{
   .custom-calendar {
     padding: 0 20px;
   }
-
+  .mobile-week-dates {
+    padding: 0 0 0 15px !important;
+    width: 280px;
+  }
 }
 @media screen and (min-width : 501px) {
   .wide-screens {

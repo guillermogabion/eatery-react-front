@@ -653,7 +653,7 @@ const TeamCalendar = () => {
         <span className="">Employee Calendar</span>
       </div>
       <div className="calendar-card-body">
-        <div className="row d-flex">
+        <div className="row">
           { activeWeekTab === 'tab1' && (
             <div className="col-6">
               <Dropdown style={{backgroundColor: "", position: 'absolute', fontSize:"5px"}}  className="custom-dropdown">
@@ -701,7 +701,7 @@ const TeamCalendar = () => {
                       <div onClick={() => { changeWeek(-1); handleLeftArrowClick(); }} className="triangle-left "></div>
                     </div>
                   </div>
-                  <div className="col-10">
+                  <div className="col-10 mobile-week-dates">
                     <div className="week-days ">
                     {weekDays.map((day) => (
                       <div
