@@ -1,13 +1,13 @@
 export const saveState = (state: any) => {
   try {
     const serialState = JSON.stringify(state)
-    sessionStorage.setItem("appState", serialState)
+    localStorage.setItem("appState", serialState)
   } catch (err) {}
 }
 
 export const loadState = () => {
   try {
-    const serialState = sessionStorage.getItem("appState")
+    const serialState = localStorage.getItem("appState")
     if (serialState === null) {
       return undefined
     }

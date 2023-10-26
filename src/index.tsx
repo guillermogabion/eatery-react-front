@@ -16,7 +16,7 @@ import { saveState } from "./redux/sessionStorage";
 
 store.subscribe(() => {
   const { rootReducer }: any = store.getState()
-  if (sessionStorage.getItem("_as175errepc")) {
+  if (localStorage.getItem("_as175errepc")) {
     saveState({
       userData: rootReducer && rootReducer.userData,
       units: rootReducer && rootReducer.units,

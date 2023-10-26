@@ -53,7 +53,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
 
   const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
   const isLogin = useSelector((state: any) => state.rootReducer.isLogin)
-  const originalUser = CryptoJS.AES.decrypt(sessionStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+  const originalUser = CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
   const decoded: any = originalUser ? jwt_decode(originalUser) : {}
   
   useEffect(() => {
@@ -62,6 +62,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
         // const originalRole = CryptoJS.AES.decrypt(sessionStorage.getItem('_ug583k'), 'process.env.REACT_APP_ENCRYPTION_KEY').toString(CryptoJS.enc.Utf8);
         if (decoded.sub && decoded.exp && !isLogin) {
           Utility.startResetTokenTimer()
+          Utility.refreshTokenProcess()
           dispatch({ type: "IS_LOGIN", payload: true })
         }
       } catch (e) { }

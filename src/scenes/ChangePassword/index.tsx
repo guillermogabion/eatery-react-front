@@ -234,7 +234,7 @@ export const ChangePassword = (props: any) => {
                         className="btn btn-primary btn btn-primary"
                         onClick={() => {
                           Utility.deleteUserData()
-                          sessionStorage.clear()
+                          localStorage.clear()
                         }}>
                         LOGIN
                       </button>

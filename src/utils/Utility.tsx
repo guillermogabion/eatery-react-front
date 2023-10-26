@@ -18,13 +18,13 @@ export const Utility = {
   symbols: "!@#$%&",
   isUserActive: false,
   isLoggedIn() {
-    return !!sessionStorage.getItem("roles")
+    return !!localStorage.getItem("roles")
   },
   isArrayWithLength(arr: any) {
     return Array.isArray(arr) && arr.length
   },
   getAllowedRoutes(routes: any) {
-    const roles = JSON.parse(sessionStorage.getItem("roles") || "")
+    const roles = JSON.parse(localStorage.getItem("roles") || "")
     return routes.filter(({ permission }: any) => {
       if (!permission) return true
       else if (!Utility.isArrayWithLength(permission)) return true
@@ -33,15 +33,15 @@ export const Utility = {
   },
   getUserToken() {
     return (
-      CryptoJS.AES.decrypt(sessionStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+      CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
     )
   },
   getRefreshToken() {
-    return CryptoJS.AES.decrypt(sessionStorage.getItem("_tyg883oh") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+    return CryptoJS.AES.decrypt(localStorage.getItem("_tyg883oh") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
   },
   deleteUserData() {
     const { location } = history
-    sessionStorage.clear()
+    localStorage.clear()
     if (location.pathname != "/") {
       window.location.href = "/"
     }
@@ -56,7 +56,7 @@ export const Utility = {
       didOpen: () => {
         const confirmButton = Swal.getConfirmButton();
 
-        if(confirmButton)
+        if (confirmButton)
           confirmButton.id = "util_errorconfirm_alertbtn"
       },
     })
@@ -142,15 +142,15 @@ export const Utility = {
     clearInterval(activetimerHandler)
   },
   userActiveTimerFun() {
-    sessionLoginDate = window.sessionStorage.getItem("_setSessionLoginTimer");
+    sessionLoginDate = window.localStorage.getItem("_setSessionLoginTimer");
     activetimerHandler = setInterval(() => {
       if (userActiveTime - moment().diff(moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a"), 'seconds') <= 0) {
         // Logout the user if this script executed
         clearInterval(activetimerHandler)
-        window.sessionStorage.removeItem("_setSessionLoginTimer")
+        window.localStorage.removeItem("_setSessionLoginTimer")
         Utility.stopResetTokenTimer();
         const { location } = history
-        sessionStorage.clear()
+        localStorage.clear()
         if (location.pathname != "/") {
           window.location.href = "/"
         }
@@ -172,16 +172,34 @@ export const Utility = {
           } else {
             const { data } = body
             const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
-            window.sessionStorage.setItem("_setSessionLoginTimer", sessionDateTime)
+            window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
             sessionLoginDate = sessionDateTime;
-            window.sessionStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-            window.sessionStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+            window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+            window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
           }
         }
       })
     }
   },
 
+  refreshTokenProcess() {
+    RequestAPI.postRequest(Api.refreshToken, "", { "refreshToken": Utility.getRefreshToken() }, {}, async (res: any) => {
+      const { status, body } = res;
+      isFetch = true
+      if (status === 200) {
+        if (body.error && body.error.message) {
+        } else {
+          const { data } = body
+          const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
+          window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
+          sessionLoginDate = sessionDateTime;
+          window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+          window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+        }
+      }
+    })
+  },
+  
   stopResetTokenTimer() {
     document.removeEventListener("mousemove", Utility.startTokenProcess, false)
     document.removeEventListener("mousedown", Utility.startTokenProcess, false)

@@ -57,7 +57,7 @@ const RequestAPI = {
               }).then(() => {
                 Utility.deleteUserData()
               })
-              sessionStorage.clear()
+              localStorage.clear()
               return
             }
             if (code === 403 && message === "Forbidden") {
