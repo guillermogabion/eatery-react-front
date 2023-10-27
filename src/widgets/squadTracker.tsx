@@ -105,10 +105,12 @@ const All = () => {
                             singleChangeOption={singleChangeOption}
                             name="userId"
                             value={filterData && filterData['userId']}
+                            className="formControl new-hire-layout"
+
                         />
                     </div>
                 </div>
-                <div className="col-2" style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="col-2 new-hire-search" >
                 <Button
                     onClick={() => getAll()}
                     style={{

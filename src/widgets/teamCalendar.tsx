@@ -787,7 +787,7 @@ const TeamCalendar = () => {
                                 dataWeek.map((item: any, index: any) => (
                                   <div key={index}>
                                   {item.bdayList && item.bdayList.length > 0 && (
-                                    <ul style={{ listStyle: 'none', paddingLeft: '5px', whiteSpace: 'nowrap' }}>
+                                    <ul style={{ listStyle: 'none', paddingLeft: '5px', margin: 0, whiteSpace: 'nowrap' }}>
                                     {item.bdayList.slice(0, 2).map((birthdayItem: any, birthdayIndex: any) => (
                                       <li key={birthdayIndex} style={{ display: 'inline-block', marginLeft: '5px', marginRight: '5px'}}>
                                         <img src={user} alt="" width={30} className="m-0 p-0 flex-wrap"/>
@@ -818,7 +818,7 @@ const TeamCalendar = () => {
                                   aria-controls="accordion-body"
                                   aria-expanded={activeAccordionKey === '1'}
                                   style={{ color: 'white', height: '30px', lineHeight: '10px', cursor: 'pointer' }}
-                                  className="pt-0 mt-0 mobile-arrow"
+                                  className="pt-0 mt-0"
                                 >
                                   {activeAccordionKey === '1' ? '▼' : '►'}
                                 </Button>
