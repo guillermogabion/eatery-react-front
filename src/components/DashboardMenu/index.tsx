@@ -21,18 +21,18 @@ const DashboardMenu = (props: any) => {
     const [isRoleCheck, setIsRoleCheck] = useState(false);
     const dispatch = useDispatch()
     const [index, setIndex] = useState<any>("")
-    const [nav, setNav] = useState(userData.data.profile.menus)
+    // const [nav, setNav] = useState(userData.data.profile.menus)
 
     useEffect(() => {
-        nav.map((a: any, index: any) => {
-            const { name, menu } = a
-            menu.map((d: any, i: any) => {
-                const { route } = d
-                if (currentRoutePath == route) {
-                    setIndex(index)
-                }
-            })
-        })
+        // nav.map((a: any, index: any) => {
+        //     const { name, menu } = a
+        //     menu.map((d: any, i: any) => {
+        //         const { route } = d
+        //         if (currentRoutePath == route) {
+        //             setIndex(index)
+        //         }
+        //     })
+        // })
     }, [index])
 
     const getMenuIcon = (iconName: any) => {
@@ -85,70 +85,12 @@ const DashboardMenu = (props: any) => {
 
 
                 {
-                    nav.length > 0 && nav.map((d: any, i: any) => {
-                        const { name, menu, route } = d
-                        if (route != "") {
-                            return (
-                                <div >
-                                    
-                                    <NavLink
-                                        id={"navlink_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}
-                                        key={`${index}${route}`}
-                                        activeClassName={currentRoutePath == route ? "activeMenu" : ""}
-                                        className="text-white flex items-center cursor-pointer accordionMenu justify-start "
-                                        style={{ minHeight: 60, textDecoration: 'none', paddingLeft: 18}}
-                                        to={route}
-                                        onClick={() => {
-                                            setCurrentRoutePath(route)
-                                        }}>
-                                        <img id={"navlinkimg_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')} src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
-                                        <span>
-                                            <span id={"navlinkspan_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}>{name}</span>
-                                        </span>
-                                    </NavLink>
-                                </div>
-                            )
-                        }
-                        return (
-                            <Accordion defaultActiveKey={menu_index} key={name} style={{ borderRadius: 0, border: 0 }} >
-                                <Accordion.Item eventKey={i} key={`${i}${name}`} style={{ borderRadius: 0, border: 0, backgroundColor: "#009FB5" }} >
-                                    <Accordion.Header id={"menuaccordheader_" + name}  key={`${i}`} style={{ fontWeight: 'bolder' }}>
-                                        <img src={getMenuIcon(name)} width={20} style={{ marginRight: 12 }} alt={name} />
-                                        {name}
-                                    </Accordion.Header>
-                                    <Accordion.Body className="p-0 cursor-pointer " style={{ backgroundColor: '#009FB5' }}>
-                                        {
-                                            menu.length > 0 && menu.map((menu_data: any, index: any) => {
-                                                const { label, route } = menu_data
-
-                                                return (
-                                                    <NavLink
-                                                        id={"navlinksub_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '') + "_" +  label.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}
-                                                        key={`${index}${label}`}
-                                                        activeClassName={currentRoutePath == route ? "activeMenu" : ""}
-                                                        className="text-white d-flex align-items-center cursor-pointer accordionMenu"
-                                                        style={{ minHeight: 60, textDecoration: 'none', paddingLeft: 50 }}
-                                                        to={route}
-                                                        onClick={() => {
-                                                            setCurrentRoutePath(route)
-                                                        }}>
-                                                        <span>
-                                                            <span id={"navlinksubspan_" + name.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '') + "_" + label.replace(/[\s~`!@#$%^&*()\-_=+[{\]}\\|;:'",<.>/?]+/g, '')}>{label}</span>
-                                                        </span>
-                                                    </NavLink>
-                                                )
-                                            })
-                                        }
-                                    </Accordion.Body>
-                                </Accordion.Item>
-                            </Accordion>
-                        )
-                    })
+                   
                 }
 
             </div>
         )
-    }, [nav])
+    }, [])
 
     return <>
         {

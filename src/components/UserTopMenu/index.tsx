@@ -31,7 +31,7 @@ const UserTopMenu = (props: any, ) => {
   const [showModal, setShowModal] = useState(false)
   const setCurrentRoutePath = (path: string) => dispatch({ type: "SET_CURENT_ROUTE_PATH", payload: path })
   const { data } = useSelector((state: any) => state.rootReducer.userData)
-  const { authorizations } = data?.profile
+  // const { authorizations } = data?.profile
 
   // Format the time passed
   // const formattedTimePassed = moment.utc(timePassed.asMilliseconds()).format('HH:mm:ss');
@@ -99,7 +99,7 @@ const UserTopMenu = (props: any, ) => {
         </div>
         <div className="ml-5 headerMessage">
             <div className="text-lg font-bold text-primary">
-              Good Day, {userData.data.profile.firstName}!
+              {/* Good Day, {userData.data.profile.firstName}! */}
             </div>
             <div className="text-md text-muted">
                 Stay up-to-date with the latest HR policies and procedures.
@@ -110,20 +110,11 @@ const UserTopMenu = (props: any, ) => {
       <div className="flex items-center">
       
         <div className="mr-5 flex">
-          {
-            data.profile.role == 'HR ADMIN' || data.profile.role == 'EXECUTIVE' ?
-            <>
-              <div className="flex menu-dropdown">
-              
-                <img src={bell} alt="" width={50} className="pr-3"  /> {/* onClick={() => setShowModal(true)} */}
-              </div>
-            </> : null
-          }
+         
              <div className="flex menu-dropdown">
                 <img src={mail} alt="" width={50} className="pr-3"  />
               </div>
             <div className="flex items-center mr-5 font-bold user-name">
-              <h3> {userData.data.profile.firstName} {userData.data.profile.lastName}</h3>
             </div>
             <div>
               <img src={user} alt="user" />

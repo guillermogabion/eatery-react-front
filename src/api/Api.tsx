@@ -1,5 +1,5 @@
 const Api: any = {
-  Login: process.env.REACT_APP_API_URL + "user/auth/token",
+  Login: process.env.REACT_APP_API_URL + "login",
   timeIn: process.env.REACT_APP_API_URL + "timekeeping/timeIn",
   timeOut: process.env.REACT_APP_API_URL + "timekeeping/timeOut",
   myTimeKeeping: process.env.REACT_APP_API_URL + "mytimekeeping/perday/all",
@@ -9,7 +9,7 @@ const Api: any = {
   createEmployee: process.env.REACT_APP_API_URL + "employee/create",
   updateEmployee: process.env.REACT_APP_API_URL + "employee/update",
   changePassword: process.env.REACT_APP_API_URL + "user/password",
-  refreshToken: process.env.REACT_APP_API_URL + "user/auth/refresh",
+  // refreshToken: process.env.REACT_APP_API_URL + "token-refresh",
   leaveTypes: process.env.REACT_APP_API_URL + "request/getTypes",
   leaveDayTypes: process.env.REACT_APP_API_URL + "request/leave/daytypes",
   uploadExcelFile: process.env.REACT_APP_API_URL + "employee/uploadExcel",

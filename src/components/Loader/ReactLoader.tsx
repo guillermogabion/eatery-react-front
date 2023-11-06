@@ -1,20 +1,30 @@
-import FadeLoader from "react-spinners/FadeLoader"
+import React, { useState } from "react";
 
-const ReactLoader = (props: any) => {
-  const { isLoading = false } = props
-  return (
-    <>
-      {isLoading ? (
-        <div
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}>
-          <FadeLoader color="#73bf45" loading={isLoading} height={15} width={5} radius={2} margin={2} />
-        </div>
-      ) : null}
-    </>
-  )
+interface LoaderProps {
+  show: boolean;
 }
-export default ReactLoader
+
+const Loader = ({ show }: LoaderProps) => {
+  const modalStyle = {
+    display: show ? "block" : "none",
+  };
+
+  return (
+    <div className="custom-modal" style={modalStyle}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <span className="close">&times;</span>
+        </div>
+        <div className="modal-body">
+          <div className="loader triangle">
+            <svg viewBox="0 0 86 80">
+              <polygon points="43 8 79 72 7 72"></polygon>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Loader;

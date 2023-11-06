@@ -37,13 +37,13 @@ export const Utility = {
     )
   },
   getRefreshToken() {
-    return CryptoJS.AES.decrypt(localStorage.getItem("_tyg883oh") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+    return CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
   },
   deleteUserData() {
     const { location } = history
     localStorage.clear()
     if (location.pathname != "/") {
-      window.location.href = "/"
+      window.location.href = "/home"
     }
   },
   showError(message: any) {
@@ -144,6 +144,7 @@ export const Utility = {
   userActiveTimerFun() {
     sessionLoginDate = window.localStorage.getItem("_setSessionLoginTimer");
     activetimerHandler = setInterval(() => {
+      // console.log(userActiveTime - moment().diff(moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a"), 'seconds'))
       if (userActiveTime - moment().diff(moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a"), 'seconds') <= 0) {
         // Logout the user if this script executed
         clearInterval(activetimerHandler)
@@ -164,7 +165,7 @@ export const Utility = {
 
     if (timeDiffSecond > 0 && (userActiveTime - timeDiffSecond < 400) && isFetch) {
       isFetch = false
-      RequestAPI.postRequest(Api.refreshToken, "", { "refreshToken": Utility.getRefreshToken() }, {}, async (res: any) => {
+      RequestAPI.postRequest(Api.Login, "", { "accessToken": Utility.getRefreshToken() }, {}, async (res: any) => {
         const { status, body } = res;
         isFetch = true
         if (status === 200) {
@@ -175,7 +176,7 @@ export const Utility = {
             window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
             sessionLoginDate = sessionDateTime;
             window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-            window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+            // window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
           }
         }
       })
@@ -194,7 +195,7 @@ export const Utility = {
           window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
           sessionLoginDate = sessionDateTime;
           window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-          window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+          // window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
         }
       }
     })

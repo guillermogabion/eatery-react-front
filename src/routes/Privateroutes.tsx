@@ -1,40 +1,46 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Route, Switch, Redirect, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
+import RootLayout from "../shared/components/Layouts/RootLayout"
+import Home from "../pages/Home"
+import About from "../pages/About"
+import Stores from "../pages/stores"
+import SideBar from "../shared/components/Partials/SideBar"
+import Header from "../shared/components/Partials/Header"
 import {
   Login,
-  ChangePassword,
+  // ChangePassword,
   Dashboard,
-  Employee,
-  Leaves,
-  Overtime,
-  Undertime,
-  ScheduleAdjustment,
-  AttendanceCorrection,
-  AttendanceSummary,
-  MyAttendanceSummary,
-  Report,
-  Squad,
-  Holiday,
-  SquadLeaves,
-  SquadAttendanceCorrection,
-  SquadOvertime,
-  SquadUndertime,
-  LeaveTypes,
-  SquadScheduleAdjustment,
-  MissingLogs,
-  PayrollAdjustment,
-  Recurring,
-  PayrollSetting,
-  AllRequest,
-  Payroll,
-  LastPay,
-  Payslip,
-  ApproverLogin,
-  Access,
-  Page404,
-  Reimbursement,
-  AllReimbursement
+  // Employee,
+  // Leaves,
+  // Overtime,
+  // Undertime,
+  // ScheduleAdjustment,
+  // AttendanceCorrection,
+  // AttendanceSummary,
+  // MyAttendanceSummary,
+  // Report,
+  // Squad,
+  // Holiday,
+  // SquadLeaves,
+  // SquadAttendanceCorrection,
+  // SquadOvertime,
+  // SquadUndertime,
+  // LeaveTypes,
+  // SquadScheduleAdjustment,
+  // MissingLogs,
+  // PayrollAdjustment,
+  // Recurring,
+  // PayrollSetting,
+  // AllRequest,
+  // Payroll,
+  // LastPay,
+  // Payslip,
+  // ApproverLogin,
+  // Access,
+  // Page404,
+  // Reimbursement,
+  // AllReimbursement
 } from "../scenes"
 
 import jwt_decode from "jwt-decode"
@@ -42,6 +48,9 @@ import { Utility } from "../utils"
 const CryptoJS = require("crypto-js")
 
 const Privateroutes: React.FunctionComponent = (props) => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mainContentClass, setMainContentClass] = useState('col-8');
+
   const dispatch = useDispatch()
   const { data } = useSelector((state: any) => state.rootReducer.userData)
   let menu: any = []
@@ -56,6 +65,25 @@ const Privateroutes: React.FunctionComponent = (props) => {
   const originalUser = CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
   const decoded: any = originalUser ? jwt_decode(originalUser) : {}
   
+  
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        setSidebarOpen(false);
+        setMainContentClass('col-12');
+      } else {
+        setSidebarOpen(true);
+        setMainContentClass('col-8');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
@@ -71,41 +99,10 @@ const Privateroutes: React.FunctionComponent = (props) => {
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
   
   const routes: any = [
-    { path: "/page/404", component: Page404 },
-    { path: "/request/leave", component: Leaves },
-    { path: "/request/ot", component: Overtime },
-    { path: "/request/ut", component: Undertime },
-    { path: "/request/schedule-adjustment", component: ScheduleAdjustment },
-    { path: "/allrequest", component: AllRequest },
-    { path: "/request/coa", component: AttendanceCorrection },
-    { path: "/timekeeping/attendancesummary", component: AttendanceSummary },
-    { path: "/timekeeping/myattendancesummary", component: MyAttendanceSummary },
-    { path: "/timekeeping/missinglogs", component: MissingLogs },
-    { path: "/user", component: ChangePassword },
-    { path: "/user/reimbursement", component: Reimbursement },
-    { path: "/manage/reimbursement", component: AllReimbursement },
-    { path: "/reimbursement/squadmembers", component: AllReimbursement },
-    
-    { path: "/report", component: Report },
+  
     { path: "/dashboard", component: Dashboard },
     { path: "/timekeeping", component: Dashboard },
-    { path: "/employee", component: Employee },
-    { path: "/holiday", component: Holiday },
-    { path: "/request", component: Squad },
-    { path: "/request/leave/squadmembers", component: SquadLeaves },
-    { path: "/request/coa/squadmembers", component: SquadAttendanceCorrection },
-    { path: "/request/ot/squadmembers", component: SquadOvertime },
-    { path: "/request/Ut/squadmembers", component: SquadUndertime },
-    { path: "/request/schedule-adjustment/squadmembers", component: SquadScheduleAdjustment },
-    { path: "/request/type", component: LeaveTypes },
-    { path: "/payroll", component: Payroll },
-    { path: "/payroll/last-pay", component: LastPay },
-    { path: "/payroll/reimbursement", component: Reimbursement },
-    { path: "/payroll/adjustment", component: PayrollAdjustment },
-    { path: "/payroll/recurring", component: Recurring },
-    { path: "/payroll/settings", component: PayrollSetting },
-    { path: "/payroll/payslip", component: Payslip },
-    { path: "/manage/user-access", component: Access },
+   
   ]
 
   if (location.pathname != "/"){
@@ -117,44 +114,58 @@ const Privateroutes: React.FunctionComponent = (props) => {
       currentPath = "/dashboard"
     }
   }
+
   
-  if (isLogin) {
-    const loginedPath = routes.map((item: any) => item.path);
-    pathList = loginedPath
-  } else {
-    const loginPath = ['/login/:id/:action/:type']
-    pathList = loginPath
-  }
+  
+  // if (isLogin) {
+  //   const loginedPath = routes.map((item: any) => item.path);
+  //   pathList = loginedPath
+  // } else {
+  //   const loginPath = ['/login/:id/:action/:type']
+  //   pathList = loginPath
+  // }
 
   const isCurrentPathInList = pathList.some((path: any) => {
     const pathRegex = new RegExp(`^${path.replace(/:[^\s/]+/g, '[^/]+')}$`);
     return pathRegex.test(currentPath);
   });
+  const closeSidebar = () => {
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(false);
+    }
+  };
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return isLogin ? (
     <>
-      <Switch>
-        {routes.map((d: any) => (
-          <Route key={d.path} exact path={d.path} component={d.component} />
-        ))}
-        {(currentRoutePath || (menu && menu.length > 1)) && isCurrentPathInList ? (
-          <Route path="*" render={() => <Redirect to={currentPath || "/timekeeping"} />} />
-        ) : (
-          <Route path="*" render={() => <Redirect to="/page/404" />} />
+    <div className="fluid">
+      <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
+      <div className="row">
+        {sidebarOpen && (
+          <div className="col-2">
+            <SideBar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+          </div>
         )}
-      </Switch>
+        <div className={`${mainContentClass} ${sidebarOpen ? 'main-content-open col-8' : 'col-12'}`}>
+          <Switch>
+            {/* <Route path="/" component={Home}/> */}
+            <Route exact path={"/" || "/home"} component={Home} />
+            <Route path="/store" component={Stores} />
+            <Route path="/about" component={About} />
+          </Switch>
+        </div>
+      </div>
+    </div>
+     
     </>
   ) : (
     <>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/login/:id/:action/:type" component={ApproverLogin} />
-      {isCurrentPathInList ? (
-        <Route path="*" render={() => <Redirect to={currentPath} />} />
-      ) : (
-        <Route path="*" render={() => <Redirect to="/" />} />
-      )}
+      <Route exact path="/"  render={() => <Login />}/>
+      <Route path="*" render={() => <Login />} />
     </>
-  )
+  );
 }
 
 export default React.memo(Privateroutes)
