@@ -1,3 +1,4 @@
+// SideBar.js
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -24,8 +25,8 @@ const SideBar = ({ sidebarOpen, closeSidebar }) => {
         <div className='d-flex justify-content-center'>
           <img src={sidebarlogo} width={150} alt="" />
         </div>
-        <Nav defaultActiveKey="/home" className="flex-column sidebar-nav">
-          <Nav.Link as={NavLink} to="/home" className='sidebar-nav-link' onClick={closeSidebar} >
+        <Nav className="flex-column sidebar-nav">
+          <Nav.Link as={NavLink} exact to="/" className='sidebar-nav-link' onClick={closeSidebar}>
             Home
           </Nav.Link>
           <Nav.Link as={NavLink} to="/store" className='sidebar-nav-link' onClick={closeSidebar}>

@@ -151,7 +151,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
         <div className={`${mainContentClass} ${sidebarOpen ? 'main-content-open col-8' : 'col-12'}`}>
           <Switch>
             {/* <Route path="/" component={Home}/> */}
-            <Route exact path={"/" || "/home"} component={Home} />
+            <Route exact path={"/"} component={Home} />
             <Route path="/store" component={Stores} />
             <Route path="/about" component={About} />
           </Switch>

@@ -148,6 +148,7 @@
     text-decoration: none; 
     height: 60px;
     padding-top: 15px;
+    text-align: center;
 }
 .sidebar-nav .sidebar-nav-link.active {
     color: #fcf9f8;
