@@ -33,11 +33,14 @@ export const Utility = {
   },
   getUserToken() {
     return (
-      CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+      // CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+      localStorage.getItem("_as175errepc")
     )
   },
   getRefreshToken() {
-    return CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+    // return CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8) || ""
+    localStorage.getItem("_as175errepc")
+
   },
   deleteUserData() {
     const { location } = history
@@ -160,45 +163,51 @@ export const Utility = {
     }, 1000)
   },
   startTokenProcess() {
-    const sessionLogin = moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a");
-    const timeDiffSecond = moment().diff(sessionLogin, 'seconds')
+    // const sessionLogin = moment(sessionLoginDate, "DD/MM/YYYY H:mm:ss a");
+    // const timeDiffSecond = moment().diff(sessionLogin, 'seconds')
 
-    if (timeDiffSecond > 0 && (userActiveTime - timeDiffSecond < 400) && isFetch) {
-      isFetch = false
-      RequestAPI.postRequest(Api.Login, "", { "accessToken": Utility.getRefreshToken() }, {}, async (res: any) => {
-        const { status, body } = res;
-        isFetch = true
-        if (status === 200) {
-          if (body.error && body.error.message) {
-          } else {
-            const { data } = body
-            const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
-            window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
-            sessionLoginDate = sessionDateTime;
-            window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-            // window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
-          }
-        }
-      })
-    }
+    // if (timeDiffSecond > 0 && (userActiveTime - timeDiffSecond < 400) && isFetch) {
+    //   isFetch = false
+    //   RequestAPI.postRequest(Api.Login, "", { "accessToken": Utility.getRefreshToken() }, {}, async (res: any) => {
+    //     const { status, body } = res;
+    //     isFetch = true
+    //     if (status === 200) {
+    //       if (body.error && body.error.message) {
+    //       } else {
+    //         const { data } = body
+    //         const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
+    //         window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
+    //         sessionLoginDate = sessionDateTime;
+    //         window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+    //         // window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+    //       }
+    //     }
+    //   })
+    // }
+
+    const token = localStorage.getItem('_as175errepc')
+    return token;
   },
 
   refreshTokenProcess() {
-    RequestAPI.postRequest(Api.refreshToken, "", { "refreshToken": Utility.getRefreshToken() }, {}, async (res: any) => {
-      const { status, body } = res;
-      isFetch = true
-      if (status === 200) {
-        if (body.error && body.error.message) {
-        } else {
-          const { data } = body
-          const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
-          window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
-          sessionLoginDate = sessionDateTime;
-          window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
-          // window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
-        }
-      }
-    })
+    // RequestAPI.postRequest(Api.refreshToken, "", { "refreshToken": Utility.getRefreshToken() }, {}, async (res: any) => {
+    //   const { status, body } = res;
+    //   isFetch = true
+    //   if (status === 200) {
+    //     if (body.error && body.error.message) {
+    //     } else {
+    //       const { data } = body
+    //       const sessionDateTime = moment().format("DD/MM/YYYY H:mm:ss a");
+    //       window.localStorage.setItem("_setSessionLoginTimer", sessionDateTime)
+    //       sessionLoginDate = sessionDateTime;
+    //       window.localStorage.setItem("_as175errepc", CryptoJS.AES.encrypt(data.accessToken, process.env.REACT_APP_ENCRYPTION_KEY))
+    //       // window.localStorage.setItem("_tyg883oh", CryptoJS.AES.encrypt(`${data.refreshToken}`, process.env.REACT_APP_ENCRYPTION_KEY))
+    //     }
+    //   }
+    // })
+
+    const token = localStorage.getItem('_as175errepc')
+    return token;
   },
   
   stopResetTokenTimer() {

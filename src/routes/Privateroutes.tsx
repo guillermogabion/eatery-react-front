@@ -7,41 +7,46 @@ import About from "../pages/About"
 import Stores from "../pages/stores"
 import SideBar from "../shared/components/Partials/SideBar"
 import Header from "../shared/components/Partials/Header"
-import {
-  Login,
-  // ChangePassword,
-  Dashboard,
-  // Employee,
-  // Leaves,
-  // Overtime,
-  // Undertime,
-  // ScheduleAdjustment,
-  // AttendanceCorrection,
-  // AttendanceSummary,
-  // MyAttendanceSummary,
-  // Report,
-  // Squad,
-  // Holiday,
-  // SquadLeaves,
-  // SquadAttendanceCorrection,
-  // SquadOvertime,
-  // SquadUndertime,
-  // LeaveTypes,
-  // SquadScheduleAdjustment,
-  // MissingLogs,
-  // PayrollAdjustment,
-  // Recurring,
-  // PayrollSetting,
-  // AllRequest,
-  // Payroll,
-  // LastPay,
-  // Payslip,
-  // ApproverLogin,
-  // Access,
-  // Page404,
-  // Reimbursement,
-  // AllReimbursement
-} from "../scenes"
+import MyStore from "../pages/MyStore"
+import Login from "../pages/Login"
+import SignUp from "../pages/Register"
+// import {
+//   Login,
+//   // ChangePassword,
+//   Dashboard,
+//   // Employee,
+//   // Leaves,
+//   // Overtime,
+//   // Undertime,
+//   // ScheduleAdjustment,
+//   // AttendanceCorrection,
+//   // AttendanceSummary,
+//   // MyAttendanceSummary,
+//   // Report,
+//   // Squad,
+//   // Holiday,
+//   // SquadLeaves,
+//   // SquadAttendanceCorrection,
+//   // SquadOvertime,
+//   // SquadUndertime,
+//   // LeaveTypes,
+//   // SquadScheduleAdjustment,
+//   // MissingLogs,
+//   // PayrollAdjustment,
+//   // Recurring,
+//   // PayrollSetting,
+//   // AllRequest,
+//   // Payroll,
+//   // LastPay,
+//   // Payslip,
+//   // ApproverLogin,
+//   // Access,
+//   // Page404,
+//   // Reimbursement,
+//   // AllReimbursement
+// } from "../scenes"
+
+
 
 import jwt_decode from "jwt-decode"
 import { Utility } from "../utils"
@@ -62,7 +67,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
 
   const currentRoutePath = useSelector((state: any) => state.rootReducer.currentRoutePath)
   const isLogin = useSelector((state: any) => state.rootReducer.isLogin)
-  const originalUser = CryptoJS.AES.decrypt(localStorage.getItem("_as175errepc") || "", process.env.REACT_APP_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+  const originalUser = localStorage.getItem("_as175errepc")
   const decoded: any = originalUser ? jwt_decode(originalUser) : {}
   
   
@@ -98,22 +103,22 @@ const Privateroutes: React.FunctionComponent = (props) => {
     bootstrapAsync()
   }, [dispatch, isLogin, decoded.sub, decoded.exp])
   
-  const routes: any = [
+  // const routes: any = [
   
-    { path: "/dashboard", component: Dashboard },
-    { path: "/timekeeping", component: Dashboard },
+  //   { path: "/dashboard", component: Dashboard },
+  //   { path: "/timekeeping", component: Dashboard },
    
-  ]
+  // ]
 
-  if (location.pathname != "/"){
-    currentPath = location.pathname 
-  }else {
-    if (currentRoutePath != ""){
-      currentPath = currentRoutePath
-    }else {
-      currentPath = "/dashboard"
-    }
-  }
+  // if (location.pathname != "/"){
+  //   currentPath = location.pathname 
+  // }else {
+  //   if (currentRoutePath != ""){
+  //     currentPath = currentRoutePath
+  //   }else {
+  //     currentPath = "/dashboard"
+  //   }
+  // }
 
   
   
@@ -154,6 +159,7 @@ const Privateroutes: React.FunctionComponent = (props) => {
             <Route exact path={"/"} component={Home} />
             <Route path="/store" component={Stores} />
             <Route path="/about" component={About} />
+            <Route path="/my-store" component={MyStore} />
           </Switch>
         </div>
       </div>
@@ -163,7 +169,8 @@ const Privateroutes: React.FunctionComponent = (props) => {
   ) : (
     <>
       <Route exact path="/"  render={() => <Login />}/>
-      <Route path="*" render={() => <Login />} />
+      {/* <Route path="*" render={() => <Login />} /> */}
+      <Route path="/sign-up" component={SignUp} />
     </>
   );
 }

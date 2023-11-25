@@ -2,15 +2,18 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Utility } from '../../../utils';
 import { sidebarlogo } from '../../../assets/images';
 
+
 const SideBar = ({ sidebarOpen, closeSidebar }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
+  const user = useSelector((state: any) => state.rootReducer.userData.user) || {};
+
 
   const handleLogout = () => {
     // Redirect to the Login component using history
@@ -32,6 +35,13 @@ const SideBar = ({ sidebarOpen, closeSidebar }) => {
           <Nav.Link as={NavLink} to="/store" className='sidebar-nav-link' onClick={closeSidebar}>
             Stores
           </Nav.Link>
+          {
+            user.hasStore == true ? (
+              <Nav.Link as={NavLink} to="/my-store" className='sidebar-nav-link' onClick={closeSidebar}>
+                My Store            
+              </Nav.Link>
+            ) : null
+          }
           <Nav.Link as={NavLink} to="/about" className='sidebar-nav-link' onClick={closeSidebar}>
             About
           </Nav.Link>

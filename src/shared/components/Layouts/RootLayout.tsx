@@ -53,10 +53,10 @@ const RootLayout = () => {
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
       </Row>
       <Row>
-        <div className={`col-md-3 ${sidebarOpen ? 'open' : ''}`}>
+        <div className={`${sidebarOpen ? 'open' : ''}`}>
           <SideBar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
         </div>
-        <div className={`${mainContentClass} ${sidebarOpen ? 'main-content-open col-8' : 'col-12'}`}>
+        <div className={`${sidebarOpen ? 'main-content-open' : 'col-12'}`}>
           <Switch>
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/profile" component={Profile} />

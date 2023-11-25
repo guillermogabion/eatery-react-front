@@ -19,10 +19,12 @@ const handleResponse = (response: any, jsonResponse: any, blob = false) => {
 
 const RequestAPI = {
   getHeaders(accessToken: any, lang: any, blob = false) {
+    const token = localStorage.getItem('accessToken');
     return {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken ? accessToken : Utility.getUserToken() || ""}`,
+      Authorization: `Bearer ${token ? token : Utility.getUserToken() || ""}`,
+      // Authorization: `Bearer ${token}`,
       credentials: true,
       responseType: blob ? "arraybuffer" : "json",
       "X-Frame-Options": "DENY",

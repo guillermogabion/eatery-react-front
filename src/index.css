@@ -41,6 +41,7 @@
     justify-content: center;
     align-items: center;
     
+    
 }
 .login-input:hover {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -49,6 +50,7 @@
     background-color: #fa4d22 !important;
     border: none !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+    min-height: 40px;
 }
 .login-button {
     width: 90%;
@@ -63,9 +65,7 @@
 .header-open {
     flex: 0 0 2500px; 
 }
-.main-content-open {
-    flex: 1;
-}
+/*  */
 @keyframes slideIn {
   from {
       transform: translateX(-100%);
@@ -80,13 +80,14 @@
       transform: translateX(0);
   }
   to {
-      transform: translateX(-100%);
+      transform: translateX(-100);
   }
 }
 
 .collapsible-sidebar {
-  animation: slideOut 0.2s ease-in-out;
-  transform: translateX(-100%);
+  /* animation: slideOut 0.2s ease-in-out; */
+ transform: translateX(100%);
+  /* transition: transform 0.8s ease-in-out; */
   position: fixed;
   top: 0;
   left: 0;
@@ -94,17 +95,17 @@
   width: 310px;
   background: #f3f1f1;
   color: #fff;
-  overflow-y: auto;
+  overflow-y: hidden;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .collapsible-sidebar.open {
-  animation: slideIn 0.2s ease-in-out;
+  animation: slideIn 0.3s ease-in-out;
   transform: translateX(0);
 }
 .collapsible-sidebar.close {
-  animation: slideOut 0.8s ease-in-out;
-  transform: translateX(0);
+  animation: slideOut 0.8s ease-out;
+  /* transform: translateX(-100%); */
 }
 
 .header-container {
@@ -123,13 +124,9 @@
 .toggle-sidebar-icon.pushed {
     margin-left: 17%;
 }
-.col-md-3.open {
-    width: 250px;
-}
-  
-.col-md-9.main-content-open {
-    margin-left: 250px;
-}
+
+
+/*  */
 .toggle-button {
     background-color: transparent;
     border: none;
@@ -312,10 +309,151 @@
     stroke-dashoffset: 275;
   }
 }
+.spinner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+}
+
+.spinner div {
+  position: absolute;
+  width: 50%;
+  height: 80%;
+  background: #faf9f9;
+  transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
+  animation: spinner-fzua35 1s calc(var(--delay) * 1s) infinite ease;
+}
+
+.spinner div:nth-child(1) {
+  --delay: 0.1;
+  --rotation: 36;
+  --translation: 150;
+}
+
+.spinner div:nth-child(2) {
+  --delay: 0.2;
+  --rotation: 72;
+  --translation: 150;
+}
+
+.spinner div:nth-child(3) {
+  --delay: 0.3;
+  --rotation: 108;
+  --translation: 150;
+}
+
+.spinner div:nth-child(4) {
+  --delay: 0.4;
+  --rotation: 144;
+  --translation: 150;
+}
+
+.spinner div:nth-child(5) {
+  --delay: 0.5;
+  --rotation: 180;
+  --translation: 150;
+}
+
+.spinner div:nth-child(6) {
+  --delay: 0.6;
+  --rotation: 216;
+  --translation: 150;
+}
+
+.spinner div:nth-child(7) {
+  --delay: 0.7;
+  --rotation: 252;
+  --translation: 150;
+}
+
+.spinner div:nth-child(8) {
+  --delay: 0.8;
+  --rotation: 288;
+  --translation: 150;
+}
+
+.spinner div:nth-child(9) {
+  --delay: 0.9;
+  --rotation: 324;
+  --translation: 150;
+}
+
+.spinner div:nth-child(10) {
+  --delay: 1;
+  --rotation: 360;
+  --translation: 150;
+}
+
+@keyframes spinner-fzua35 {
+  0%, 10%, 20%, 30%, 50%, 60%, 70%, 80%, 90%, 100% {
+    transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1%));
+  }
+
+  50% {
+    transform: rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation) * 1.5%));
+  }
+}
+ 
 
 .loader {
   display: inline-block;
   margin: 0 16px;
 }
 
- 
+.alert {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.alert.show {
+  opacity: 1;
+}
+
+
+.instructions {
+  background-color: rgba(56, 55, 55, 0.5);
+  position: absolute;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+.hide {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+.valid {
+  /* border-color: greenyellow; */
+  color: green;
+}
+
+.invalid {
+  color: red;
+}
+.option:hover {
+  background-color: #5628ee;
+}
+
+@media screen and (max-width : 755px){
+
+ .main-content-open {
+    width: 100% !important;
+    float: left !important;
+  } 
+}

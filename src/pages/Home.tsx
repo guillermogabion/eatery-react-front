@@ -8,6 +8,24 @@ const Home = () => {
     const buttonRef = useRef(null)
       
     const handleIncrement = () => setCount(count + 1)   
+    useEffect(() => {
+        console.log(process.env)
+    
+        RequestAPI.getRequest(
+          `${Api.Test}`,
+          "",
+          {},
+          {},
+          async (res: any) => {
+            const { status, body = { data: {}, error: {} } }: any = res;
+      
+            if (status === 200) {
+              const data = body.data;
+              console.log(data)
+            }
+          }
+        );
+      }, []);
 
     useEffect(()=>{
         // if(buttonRef.current) {
